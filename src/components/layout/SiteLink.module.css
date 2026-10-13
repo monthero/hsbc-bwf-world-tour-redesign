@@ -1,0 +1,58 @@
+.link {
+  color: inherit;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.tail {
+  white-space: nowrap;
+}
+
+.external {
+  flex: none;
+  width: 0.85em;
+  height: 0.85em;
+  margin-left: 4px;
+  vertical-align: -0.05em;
+  color: var(--bwf-faint);
+  transition: color 0.15s;
+}
+
+.link:hover .external {
+  color: var(--bwf-text-3);
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.socialLink {
+  --size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 8px;
+  color: var(--bwf-dim);
+  font-size: 14px;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+
+.social[data-size='md'] {
+  gap: 6px;
+  font-size: 16px;
+}
+
+.socialLink:hover {
+  background: var(--bwf-raised);
+  color: var(--bwf-text);
+}

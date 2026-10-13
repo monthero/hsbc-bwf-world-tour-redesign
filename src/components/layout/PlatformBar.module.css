@@ -1,0 +1,160 @@
+.bar {
+  background: var(--bwf-brand-deep);
+  font-size: 12px;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 36px;
+}
+
+.bwf {
+  height: 12px;
+  margin-right: 8px;
+  color: var(--bwf-on-brand);
+}
+
+.family {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  gap: clamp(14px, 2vw, 24px);
+  min-width: 0;
+}
+
+.familyLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--bwf-dim);
+  font: inherit;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition: color 0.15s;
+}
+
+.familyLink:hover,
+.familyLink[aria-expanded='true'] {
+  color: var(--bwf-text);
+}
+
+.current {
+  color: var(--bwf-text);
+  font-weight: 600;
+}
+
+.family .current::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--bwf-on-brand);
+}
+
+.chevron {
+  width: 12px;
+  height: 12px;
+  margin-left: 4px;
+  transition: transform 0.2s var(--bwf-ease);
+}
+
+[aria-expanded='true'] > .chevron {
+  transform: rotate(180deg);
+}
+
+.switcher {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  margin-left: -8px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.switcher:hover,
+.switcher[aria-expanded='true'] {
+  background: var(--bwf-raised);
+}
+
+.social {
+  margin-left: auto;
+  margin-right: -6px;
+}
+
+.menu {
+  padding: 6px;
+  border-radius: 14px;
+}
+
+.menuItem {
+  min-height: 36px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  color: var(--bwf-text-2);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.menuItem[data-hovered] {
+  background: var(--bwf-raised);
+  color: var(--bwf-text);
+}
+
+.menuItem.current {
+  color: var(--bwf-text);
+  font-weight: 600;
+}
+
+.menuIcon {
+  width: 13px;
+  height: 13px;
+  color: var(--bwf-faint);
+}
+
+.current .menuIcon {
+  color: var(--bwf-text);
+}
+
+.menuLabel {
+  padding: 10px 10px 4px;
+  color: var(--bwf-faint);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.menuDivider {
+  margin: 6px 4px;
+  border-color: var(--bwf-line);
+}
+
+@mixin smaller-than $mantine-breakpoint-md {
+  .family,
+  .social {
+    display: none;
+  }
+
+  .switcher {
+    display: inline-flex;
+  }
+}

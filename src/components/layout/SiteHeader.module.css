@@ -1,0 +1,83 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: linear-gradient(100deg, var(--bwf-brand) 30%, var(--bwf-brand-hi));
+  border-bottom: 1px solid var(--bwf-on-brand-line);
+  box-shadow: 0 6px 20px alpha(var(--mantine-color-black), 0.28);
+}
+
+.row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 48px);
+  height: 60px;
+}
+
+.nav {
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+  gap: clamp(18px, 2.4vw, 30px);
+  min-width: 0;
+}
+
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--bwf-dim);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.link:hover,
+.link[data-active] {
+  color: var(--bwf-text);
+}
+
+.link[data-active] {
+  font-weight: 600;
+}
+
+.link[data-active]::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--bwf-on-brand);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+@mixin smaller-than $mantine-breakpoint-md {
+  .row {
+    height: 52px;
+  }
+
+  .nav {
+    display: none;
+  }
+}
+
+@mixin smaller-than $mantine-breakpoint-md {
+  .wordmark {
+    transition: opacity 0.2s;
+  }
+
+  .row:has([data-open]) .wordmark {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

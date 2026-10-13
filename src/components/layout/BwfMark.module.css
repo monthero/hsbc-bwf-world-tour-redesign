@@ -1,0 +1,13 @@
+.mark {
+  flex: none;
+  display: block;
+  aspect-ratio: 105 / 26;
+  background: currentColor;
+  mask: url('/assets/brand/bwf-logo.svg') center / contain no-repeat;
+  opacity: 0.9;
+  transition: opacity 0.15s;
+}
+
+.mark:hover {
+  opacity: 1;
+}
