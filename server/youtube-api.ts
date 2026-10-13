@@ -1,5 +1,6 @@
+import { cdnCache, IMMUTABLE_CACHE } from './cache-control.ts';
 import type { Endpoint } from './endpoints.ts';
-import { cdnCache, IMMUTABLE_CACHE, sendJson } from './http.ts';
+import { sendJson } from './http.ts';
 import { createMediaService, mediaPhase, type MediaPhase, type MediaServiceOptions } from './youtube.ts';
 
 const MEDIA_URL = /^\/media\/([\dA-F-]{36})$/i;

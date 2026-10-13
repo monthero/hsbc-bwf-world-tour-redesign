@@ -1,8 +1,10 @@
 import type { z } from 'zod';
 
+import { BWF_RELAY_URL } from '~/constants';
+
 import { ApiError } from '../client';
 
-const BASE = import.meta.env.VITE_BWF_API_BASE ?? '/bwf-api';
+const BASE = import.meta.env.VITE_BWF_API_BASE || (import.meta.env.PROD ? BWF_RELAY_URL : '/bwf-api');
 const TIMEOUT_MS = 15_000;
 const BREAKER_LIMIT = 3;
 const UNAVAILABLE = 503;

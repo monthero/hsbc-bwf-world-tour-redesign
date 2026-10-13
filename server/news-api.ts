@@ -1,7 +1,8 @@
 import type { ServerResponse } from 'node:http';
 
+import { IMMUTABLE_CACHE } from './cache-control.ts';
 import type { Endpoint } from './endpoints.ts';
-import { IMMUTABLE_CACHE, sendJson } from './http.ts';
+import { sendJson } from './http.ts';
 import { createNewsService, isNewsMonth, isSettledNewsMonth } from './news.ts';
 
 const RECENT_CACHE = 'public, max-age=600';

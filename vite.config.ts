@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
       tanstackRouter({ target: 'react', autoCodeSplitting: true }),
       react(),
       Icons({ compiler: 'jsx', jsx: 'react', scale: 1 }),
-      vitePlugin(bwfProxy({ relayUrl: env.BWF_RELAY_URL, relayKey: env.BWF_RELAY_KEY })),
+      vitePlugin(bwfProxy),
       vitePlugin(youtubeEndpoint({ key: env.YOUTUBE_API_KEY, root, persist: true })),
       vitePlugin(newsEndpoint(root)),
       adminApi(root),

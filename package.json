@@ -18,8 +18,7 @@
     "countries": "node scripts/build-countries.mjs",
     "assets:map": "node --disable-warning=ExperimentalWarning scripts/assets/world-map.ts",
     "relay:dev": "wrangler dev --config workers/bwf-relay/wrangler.toml",
-    "relay:deploy": "wrangler deploy --config workers/bwf-relay/wrangler.toml",
-    "relay:secret": "wrangler secret put RELAY_KEY --config workers/bwf-relay/wrangler.toml"
+    "relay:deploy": "wrangler deploy --config workers/bwf-relay/wrangler.toml"
   },
   "dependencies": {
     "@mantine/core": "^9.7.1",

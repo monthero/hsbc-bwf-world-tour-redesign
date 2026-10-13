@@ -1,93 +1,12 @@
-import { z } from 'zod';
-
-import { addDays, todayIso } from '../scripts/sync/dates.ts';
-import { BWF_API, BWF_HEADERS, type BwfPath, isBwfPath, RELAY_KEY_HEADER } from './bwf-upstream.ts';
+import { bwfReply } from './bwf-upstream.ts';
 import type { Endpoint } from './endpoints.ts';
-import { cdnCache, sendJson } from './http.ts';
+import { sendJson } from './http.ts';
 
-const TIMEOUT_MS = 10_000;
-const SETTLE_DAYS = 3;
-
-const LIVE_CACHE = cdnCache(15, 15);
-const SCHEDULE_CACHE = cdnCache(300, 600, 60);
-const SETTLED_CACHE = cdnCache(86_400, 604_800, 3600);
-const ERROR_CACHE = cdnCache(30, 0);
-
-const Id = z.string().regex(/^\d{1,10}$/);
-const Flag = z.enum(['0', '1', 'true', 'false']);
-const TournamentCode = z.string().regex(/^[\dA-F]{8}(-[\dA-F]{4}){3}-[\dA-F]{12}$/i);
-const IsoDay = z.iso.date();
-
-const dayCache = (day: string) => {
-  const today = todayIso();
-  if (day < addDays(today, -SETTLE_DAYS)) return SETTLED_CACHE;
-  return day > addDays(today, 1) ? SCHEDULE_CACHE : LIVE_CACHE;
-};
-
-interface Route {
-  parse: (params: URLSearchParams) => { search: string; cache: string } | null;
-}
-
-const route = <S extends z.ZodType<Record<string, string>>>(
-  schema: S,
-  cache: (query: z.infer<S>) => string,
-): Route => ({
-  parse: (params) => {
-    const query = schema.safeParse(Object.fromEntries(params));
-    return query.success ? { search: new URLSearchParams(query.data).toString(), cache: cache(query.data) } : null;
+export const bwfProxy: Endpoint = {
+  name: 'bwf-api',
+  prefix: '/bwf-api',
+  serve: async (url, res) => {
+    const { status, body, cache } = await bwfReply(url);
+    sendJson(res, status, body, cache);
   },
-});
-
-const ROUTES: Record<BwfPath, Route> = {
-  '/tournaments/day-matches': route(
-    z.strictObject({ tournamentCode: TournamentCode, date: IsoDay, order: Id, court: Id }),
-    (q) => dayCache(q.date),
-  ),
-  '/match-center/vue-match-stat': route(z.strictObject({ tmtId: Id, matchId: Id }), () => LIVE_CACHE),
-  '/vue-tournament-draws': route(z.strictObject({ tmtTab: z.literal('draw'), tmtId: Id }), () => SCHEDULE_CACHE),
-  '/vue-tournament-draw-data': route(
-    z.strictObject({ tmtTab: z.literal('draw'), tmtId: Id, drawId: Id, isPara: Flag }),
-    () => SCHEDULE_CACHE,
-  ),
-  '/entries/vue-tournament-events': route(z.strictObject({ tmtId: Id }), () => SCHEDULE_CACHE),
-  '/entries/vue-tournament-players': route(
-    z.strictObject({ searchKey: z.literal(''), tmtId: Id, tmtType: Id, eventName: Id, isPara: Flag }),
-    () => SCHEDULE_CACHE,
-  ),
-};
-
-interface BwfProxyConfig {
-  relayUrl?: string;
-  relayKey?: string;
-}
-
-const upstreamOf = (config: BwfProxyConfig) => {
-  const relayUrl = config.relayUrl?.trim();
-  const relayKey = config.relayKey?.trim();
-  return relayUrl && relayKey
-    ? { via: 'relay', base: relayUrl.replace(/\/+$/, ''), headers: { [RELAY_KEY_HEADER]: relayKey } }
-    : { via: 'direct', base: BWF_API, headers: BWF_HEADERS };
-};
-
-export const bwfProxy = (config: BwfProxyConfig): Endpoint => {
-  const { via, base, headers } = upstreamOf(config);
-  return {
-    name: 'bwf-api',
-    prefix: '/bwf-api',
-    serve: async (url, res) => {
-      const target = isBwfPath(url.pathname) ? ROUTES[url.pathname].parse(url.searchParams) : null;
-      res.setHeader('x-bwf-upstream', via);
-      if (!target) return sendJson(res, 404, { error: 'Unknown BWF route' }, ERROR_CACHE);
-      const upstream = await fetch(`${base}${url.pathname}?${target.search}`, {
-        headers,
-        signal: AbortSignal.timeout(TIMEOUT_MS),
-      }).catch(() => null);
-      if (!upstream) return sendJson(res, 504, { error: 'upstream unavailable' }, ERROR_CACHE);
-      const body: unknown = await upstream.json().catch(() => undefined);
-      if (via === 'relay' && upstream.status === 401)
-        return sendJson(res, 502, { error: 'relay rejected key' }, ERROR_CACHE);
-      if (body === undefined) return sendJson(res, 502, { error: 'upstream blocked' }, ERROR_CACHE);
-      sendJson(res, upstream.status, body, upstream.ok ? target.cache : ERROR_CACHE);
-    },
-  };
 };

@@ -1,35 +1,49 @@
-import { BWF_API, BWF_HEADERS, isBwfPath, RELAY_KEY_HEADER } from '../../../server/bwf-upstream.ts';
+import { type BwfReply, bwfTarget, fetchBwf, UNKNOWN_ROUTE } from '../../../server/bwf-upstream.ts';
 
-interface Env {
-  RELAY_KEY?: string;
-}
+const ALLOWED_ORIGIN = /^(https:\/\/hsbc-bwf-world-tour-redesign(-[\da-z-]+)?\.vercel\.app|http:\/\/localhost(:\d+)?)$/;
+const ALLOWED_METHODS = 'GET, OPTIONS';
+const CACHE_HEADER = 'x-relay-cache';
 
-const TIMEOUT_MS = 10_000;
-const encoder = new TextEncoder();
-
-const digest = (value: string) => crypto.subtle.digest('SHA-256', encoder.encode(value));
-
-const authorized = async (given: string | null, expected: string | undefined) => {
-  if (!given || !expected) return false;
-  const [a, b] = await Promise.all([digest(given), digest(expected)]);
-  return crypto.subtle.timingSafeEqual(a, b);
+const corsHeaders = (origin: string | null) => {
+  const headers = new Headers({ vary: 'Origin' });
+  if (origin && ALLOWED_ORIGIN.test(origin)) headers.set('access-control-allow-origin', origin);
+  return headers;
 };
 
-const empty = (status: number, headers?: HeadersInit) => new Response(null, { status, headers });
+const jsonResponse = ({ status, body, cache }: BwfReply) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { 'content-type': 'application/json', 'cache-control': cache },
+  });
+
+const withCors = (response: Response, origin: string | null, extra: Record<string, string> = {}) => {
+  const out = new Response(response.body, response);
+  for (const [key, value] of [...corsHeaders(origin), ...Object.entries(extra)]) out.headers.set(key, value);
+  return out;
+};
+
+const preflight = (origin: string | null) => {
+  const headers = corsHeaders(origin);
+  headers.set('access-control-allow-methods', ALLOWED_METHODS);
+  headers.set('access-control-allow-headers', 'accept');
+  headers.set('access-control-max-age', '86400');
+  return new Response(null, { status: 204, headers });
+};
 
 export default {
-  fetch: async (request, env) => {
-    if (request.method !== 'GET') return empty(405, { allow: 'GET' });
-    if (!(await authorized(request.headers.get(RELAY_KEY_HEADER), env.RELAY_KEY))) return empty(401);
-    const { pathname, search } = new URL(request.url);
-    if (!isBwfPath(pathname)) return empty(404);
-    const upstream = await fetch(`${BWF_API}${pathname}${search}`, {
-      headers: BWF_HEADERS,
-      redirect: 'manual',
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    }).catch(() => null);
-    if (!upstream) return empty(504);
-    const type = upstream.headers.get('content-type');
-    return new Response(upstream.body, { status: upstream.status, headers: type ? { 'content-type': type } : {} });
+  fetch: async (request, _env, ctx) => {
+    const origin = request.headers.get('origin');
+    if (request.method === 'OPTIONS') return preflight(origin);
+    if (request.method !== 'GET') return new Response(null, { status: 405, headers: { allow: ALLOWED_METHODS } });
+    const url = new URL(request.url);
+    const target = bwfTarget(url);
+    if (!target) return withCors(jsonResponse(UNKNOWN_ROUTE), origin);
+    const key = new Request(`${url.origin}${target.path}?${target.search}`);
+    const cache = caches.default;
+    const hit = await cache.match(key);
+    if (hit) return withCors(hit, origin, { [CACHE_HEADER]: 'HIT' });
+    const response = jsonResponse(await fetchBwf(target));
+    ctx.waitUntil(cache.put(key, response.clone()));
+    return withCors(response, origin, { [CACHE_HEADER]: 'MISS' });
   },
-} satisfies ExportedHandler<Env>;
+} satisfies ExportedHandler;

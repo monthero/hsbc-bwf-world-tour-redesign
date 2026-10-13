@@ -5,11 +5,9 @@
   "outputDirectory": "dist",
   "git": { "deploymentEnabled": false },
   "functions": {
-    "api/bwf.ts": { "maxDuration": 15 },
     "api/youtube.ts": { "maxDuration": 30, "includeFiles": "{public/data/calendar-*.json,data/media/*.json}" }
   },
   "rewrites": [
-    { "source": "/bwf-api/(.*)", "destination": "/api/bwf" },
     { "source": "/yt-api/(.*)", "destination": "/api/youtube" },
     { "source": "/((?!data/|assets/|api/|bwf-api/|yt-api/|news-api/|admin-api/).*)", "destination": "/index.html" }
   ],
