@@ -1,9 +1,8 @@
-.title {
-  margin-top: 10px;
-}
-
 .count {
   font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
   color: var(--bwf-faint);
 }

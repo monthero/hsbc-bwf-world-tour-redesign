@@ -25,6 +25,8 @@ const STALE_NOTE = 'Live scores are unavailable right now. Showing results that 
 
 const byCourt = (a: Match, b: Match) => a.court - b.court;
 
+const isSettled = (m: Match) => m.status === 'F';
+
 const emptyMessage = (
   d: TournamentDay | undefined,
   future: boolean,
@@ -34,7 +36,7 @@ const emptyMessage = (
 ) => {
   if (d?.isRest) return `${d.shortLabel} is a rest day with no matches.`;
   if (future && d && !d.matches.length) return `The order of play for ${d.shortLabel} is published the evening before.`;
-  if (view.upCount || view.resCount) return '';
+  if (view.upcoming.count || view.results.count) return '';
   if (view.liveIn) return 'Only live matches match these filters — see Live now above.';
   if (following && !followCount) return 'Star a player, country or continent to follow them here.';
   return 'No matches for these filters.';
@@ -58,6 +60,7 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
   );
   const base = useMemo(() => filterBase(dayMatches, q, f.following, matcher), [dayMatches, q, f.following, matcher]);
   const view = useMemo(() => buildView(dayMatches, base, f.events, f.courts), [dayMatches, base, f.events, f.courts]);
+  const dayOver = useMemo(() => dayMatches.every(isSettled), [dayMatches]);
   const empty = emptyMessage(dayData, f.day > todayIndex, view, f.following, followCount);
 
   return (
@@ -70,27 +73,28 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
       )}
       {live.length > 0 && (
         <div className={clsx(utils.container, classes.live)}>
-          <LiveSection matches={live} tmtId={tournament.tmtId} onOpen={openMatch} />
+          <LiveSection matches={live} tournament={tournament} onOpen={openMatch} />
         </div>
       )}
       <section className={clsx(utils.container, page.tabSection, classes.section)}>
         <DayPicker days={days} day={f.day} onChange={f.setDay} />
         <InlineFilters ref={filtersRef} filters={f} view={view} />
-        {view.upCount > 0 && (
+        {view.upcoming.count > 0 && (
           <MatchGroups
             title="Up next"
-            count={view.upCount}
-            groups={view.upcoming}
+            storeKey="matches:up"
+            defaultOpen
+            section={view.upcoming}
             nextIds={view.nextIds}
             onOpen={openMatch}
           />
         )}
-        {view.resCount > 0 && (
+        {view.results.count > 0 && (
           <MatchGroups
             title="Results"
-            count={view.resCount}
-            suffix="· latest first"
-            groups={view.results}
+            storeKey={dayOver ? 'matches:results:done' : 'matches:results:live'}
+            defaultOpen={dayOver}
+            section={view.results}
             nextIds={view.nextIds}
             onOpen={openMatch}
           />

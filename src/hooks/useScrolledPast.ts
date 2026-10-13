@@ -1,10 +1,6 @@
 import { useCallback, useState, type RefCallback } from 'react';
 
-import { cssPx, headerOffset, TABBAR_VAR } from '~/utils/layout';
-
-const TABBAR_FALLBACK = 51;
-
-const tabbarHeight = (el: Element) => cssPx(el, TABBAR_VAR) || TABBAR_FALLBACK;
+import { headerOffset, tabbarHeight } from '~/utils/layout';
 
 export const useScrolledPast = <T extends Element>({ offset }: { offset?: number } = {}) => {
   const [past, setPast] = useState(false);

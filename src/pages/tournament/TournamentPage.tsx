@@ -3,12 +3,14 @@ import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { useLayoutEffect, useMemo, useRef, type FC, type RefObject } from 'react';
 
+import { NotFound } from '~/components/layout';
 import { MatchDetailModal } from '~/components/match';
-import { BackPill, EmptyState } from '~/components/ui';
+import { EmptyState } from '~/components/ui';
 import { NOT_FOUND } from '~/constants';
 import { TournamentContext } from '~/contexts';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useSlideIn } from '~/hooks/useSlideIn';
+import { useLiveStreamSync } from '~/hooks/useTournamentMedia';
 import { useSchedule, useTournament } from '~/hooks/useTournaments';
 import type { Tournament } from '~/types';
 import { headerOffset, TABBAR_VAR } from '~/utils/layout';
@@ -31,6 +33,8 @@ import classes from './TournamentPage.module.css';
 import utils from '~/styles/utils.module.css';
 
 const route = getRouteApi('/world-tour/$year/$slug');
+
+const MISSING_TITLE = 'We couldn’t find that tournament';
 
 const TABS = {
   overview: OverviewTab,
@@ -73,6 +77,7 @@ const TournamentView: FC<{
 }> = ({ tournament, prev, next }) => {
   const search = route.useSearch();
   const { data: schedule } = useSchedule(tournament);
+  useLiveStreamSync(tournament);
   const closeMatch = useCloseMatch();
   const rootRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
@@ -137,17 +142,19 @@ export const TournamentPage: FC = () => {
   const back = useCalendarBack(Number(year));
   const missing = !tournament && !isPending;
   useDocumentTitle(missing ? NOT_FOUND : tournament?.title, missing ? 'bwf' : { season: tournament?.year });
+  const action = useMemo(() => ({ label: `Back to the ${year} calendar`, link: back.link }), [year, back.link]);
   if (tournament) return <TournamentView key={tournament.code} tournament={tournament} prev={prev} next={next} />;
+  if (missing)
+    return (
+      <NotFound
+        title={MISSING_TITLE}
+        description={`There’s no “${slug}” on the ${year} World Tour calendar.`}
+        action={action}
+      />
+    );
   return (
     <div className={classes.status}>
-      {isPending ? (
-        <Loader color="red" size="sm" />
-      ) : (
-        <>
-          <p>We couldn’t find a tournament called “{slug}”.</p>
-          <BackPill link={back.link}>{back.label}</BackPill>
-        </>
-      )}
+      <Loader color="red" size="sm" />
     </div>
   );
 };

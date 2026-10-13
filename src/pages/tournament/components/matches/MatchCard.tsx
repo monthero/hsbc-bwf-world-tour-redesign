@@ -15,7 +15,7 @@ import utils from '~/styles/utils.module.css';
 
 const followedMark = (p: Player) => <FollowedMark id={p.id} />;
 
-const TeamRow: FC<{ match: Match; side: Side; doubles: boolean }> = ({ match: m, side, doubles }) => {
+export const TeamRow: FC<{ match: Match; side: Side; doubles: boolean }> = ({ match: m, side, doubles }) => {
   const result = sideResult(m, side);
   const note = result === 'lost' ? noteLabel(m.note, 'short') : '';
   return (

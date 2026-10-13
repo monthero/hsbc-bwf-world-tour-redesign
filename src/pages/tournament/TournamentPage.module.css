@@ -6,19 +6,8 @@
 
 .status {
   min-height: 60vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 48px var(--bwf-gutter);
-  color: var(--bwf-muted);
-  font-size: 15px;
-  text-align: center;
-}
-
-.status p {
-  margin: 0;
+  display: grid;
+  place-items: center;
 }
 
 .tabSection {

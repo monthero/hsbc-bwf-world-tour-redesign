@@ -2,12 +2,18 @@ import { EventCode } from '~/api/schemas';
 import type { useFavoritesMatcher } from '~/stores/favorites';
 import type { Match } from '~/types';
 import { hourOf } from '~/utils/dates';
-import { matchesQuery, matchRoundName, teamLabel, teamPlayers } from '~/utils/matches';
+import { matchesQuery, roundsLabel, teamLabel, teamPlayers } from '~/utils/matches';
 
 export interface MatchGroup {
   key: string;
   label: string;
   items: Match[];
+}
+
+export interface MatchSection {
+  groups: MatchGroup[];
+  count: number;
+  rounds: string;
 }
 
 export interface EventChipModel {
@@ -26,10 +32,8 @@ export interface CourtChipModel {
 export interface MatchesView {
   evChips: EventChipModel[];
   courtChips: CourtChipModel[];
-  upcoming: MatchGroup[];
-  results: MatchGroup[];
-  upCount: number;
-  resCount: number;
+  upcoming: MatchSection;
+  results: MatchSection;
   liveIn: number;
   nextIds: ReadonlySet<string>;
 }
@@ -48,25 +52,33 @@ export const parseEvents = (s: string) => (s ? (s.split(',') as EventCode[]) : [
 
 export const parseCourts = (s: string) => (s ? s.split(',').map(Number) : []);
 
-const groupBy = (list: Match[], keyOf: (m: Match) => string, labelOf: (m: Match) => string) => {
-  const groups: MatchGroup[] = [];
+const slotsOf = (list: Match[]) => {
+  const slots: { key: string; items: Match[] }[] = [];
   for (const m of list) {
-    const key = keyOf(m);
-    const last = groups.at(-1);
+    const key = hourOf(m);
+    const last = slots.at(-1);
     if (last?.key === key) last.items.push(m);
-    else groups.push({ key, label: labelOf(m), items: [m] });
+    else slots.push({ key, items: [m] });
   }
-  return groups;
+  return slots;
 };
 
-const hourLabel = (m: Match) => `From ${hourOf(m)}`;
+const roundsOf = (items: readonly Match[]) => roundsLabel(items.map((m) => m.round));
 
-const roundKey = (m: Match) => `${m.group ?? ''}${m.round}`;
-
-const byGroupRound = (a: Match, b: Match) =>
-  b.round.localeCompare(a.round) || (a.group ?? '').localeCompare(b.group ?? '');
-
-const orderResults = (list: Match[]) => (list.some((m) => m.group) ? list.sort(byGroupRound) : list);
+const toSection = (list: Match[]): MatchSection => {
+  const rounds = roundsOf(list);
+  const slots = slotsOf(list).map((s) => ({ ...s, rounds: roundsOf(s.items) }));
+  const mixed = slots.some((s) => s.rounds !== rounds);
+  return {
+    count: list.length,
+    rounds: mixed ? '' : rounds,
+    groups: slots.map(({ key, items, rounds: r }) => ({
+      key,
+      items,
+      label: mixed ? `From ${key} · ${r}` : `From ${key}`,
+    })),
+  };
+};
 
 const nextPerCourt = (matches: Match[]) => {
   const seen = new Map<number, string>();
@@ -96,16 +108,14 @@ export const buildView = (dayMatches: Match[], base: Match[], events: EventCode[
         })
       : [];
   const list = base.filter((m) => evOk(m) && ctOk(m));
-  const up = list.filter((m) => m.status === 'N');
-  const res = orderResults(list.filter((m) => m.status === 'F').reverse());
+  const upcoming = toSection(list.filter((m) => m.status === 'N'));
+  const results = toSection(list.filter((m) => m.status === 'F'));
   return {
     evChips,
     courtChips,
-    upcoming: groupBy(up, hourOf, hourLabel),
-    results: groupBy(res, roundKey, matchRoundName),
-    upCount: up.length,
-    resCount: res.length,
-    liveIn: list.length - up.length - res.length,
+    upcoming,
+    results,
+    liveIn: list.length - upcoming.count - results.count,
     nextIds: nextPerCourt(dayMatches),
   };
 };
