@@ -1,0 +1,83 @@
+name: Sync and deploy (first run is a cold full sync and can take hours)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */3 * * *'
+    - cron: '0 1,2,4,5,7,8,10,11,13,14,16,17,19,20 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-and-deploy
+  cancel-in-progress: false
+
+env:
+  VERCEL_CLI: vercel@60.1.3
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.22.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Restore sync cache
+        id: restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data/bwf.sqlite*
+            data/cache
+            data/reports
+          key: bwf-sync-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: bwf-sync-
+
+      - name: Note cold sync
+        if: steps.restore.outputs.cache-matched-key == ''
+        run: echo '### No sync cache found, running a cold full sync since 2018 (can take hours)' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Sync BWF data
+        timeout-minutes: 300
+        shell: bash
+        run: pnpm sync 2>&1 | tee sync.log
+
+      - name: Save sync cache
+        if: always() && steps.restore.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            data/bwf.sqlite*
+            data/cache
+            data/reports
+          key: bwf-sync-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Check export
+        run: |
+          test -s public/data/seasons.json
+          test -s public/data/players.json
+          echo "Sync: $(tail -n 1 sync.log)" >> "$GITHUB_STEP_SUMMARY"
+          echo "HTTP 403 without cached fallback (Cloudflare block if high): $(grep -c '^  ! 403 ' sync.log || true)" >> "$GITHUB_STEP_SUMMARY"
+
+      - run: pnpm dlx $VERCEL_CLI pull --yes --environment=production --token=$VERCEL_TOKEN
+
+      - run: pnpm dlx $VERCEL_CLI build --prod --token=$VERCEL_TOKEN
+
+      - run: pnpm dlx $VERCEL_CLI deploy --prebuilt --prod --token=$VERCEL_TOKEN

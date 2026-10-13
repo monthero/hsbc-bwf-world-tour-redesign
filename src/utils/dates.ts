@@ -1,7 +1,6 @@
 import dayjs, { type Dayjs } from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { LIVE_DATA, SNAPSHOT_DATE } from '~/constants'
 import type { Match } from '~/types'
 
 dayjs.extend(utc)
@@ -12,7 +11,9 @@ export const date = (iso: string) => dayjs.utc(iso)
 
 export const ISO_DAY = 'YYYY-MM-DD'
 
-export const todayIso = () => (LIVE_DATA ? dayjs().format(ISO_DAY) : SNAPSHOT_DATE)
+const PINNED_DATE = import.meta.env.VITE_SNAPSHOT_DATE
+
+export const todayIso = () => PINNED_DATE || dayjs().format(ISO_DAY)
 
 export const today = () => date(todayIso())
 

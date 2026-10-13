@@ -2,10 +2,10 @@ import type { CSSProperties } from 'react'
 
 import { EventCode, Level } from '~/api/schemas'
 import type { SegmentedOption } from '~/components/ui'
+import { today } from '~/utils/dates'
 
-export const SNAPSHOT_DATE = '2026-10-09'
 export const LIVE_DATA = import.meta.env.VITE_DATA_SOURCE === 'live'
-export const SEASON_YEAR = 2026
+export const SEASON_YEAR = today().year()
 export const FIRST_SEASON = 2018
 export const NOT_FOUND = 'Not found'
 
