@@ -18,6 +18,7 @@ import { dayjs } from './dates.ts';
 import { all, type Db } from './db.ts';
 import { createMapPlacer } from './geo.ts';
 import { FOREVER, type Client } from './http.ts';
+import type { Output } from './output.ts';
 
 interface Person {
   id: string;
@@ -175,14 +176,9 @@ export const exportData = async (
   currentYear: number,
   overridesFile: string,
   reportFile: string,
+  output: Output,
 ) => {
-  const out = path.join(publicDir, 'data');
-  const write = (rel: string, data: unknown) => {
-    const file = path.join(out, rel);
-    fs.mkdirSync(path.dirname(file), { recursive: true });
-    fs.writeFileSync(file, JSON.stringify(data));
-  };
-  fs.rmSync(out, { recursive: true, force: true });
+  const write = (rel: string, data: unknown) => output.write(rel, JSON.stringify(data));
 
   const editions = all<EditionRow>(
     db,

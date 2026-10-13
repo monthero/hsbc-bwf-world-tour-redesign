@@ -8,6 +8,7 @@ import { openDb } from './db.ts';
 import { exportData } from './export.ts';
 import { createClient, httpStats } from './http.ts';
 import { exportNews } from './news-export.ts';
+import { createOutput } from './output.ts';
 import { syncCalendar } from './steps/calendar.ts';
 import { syncDetails } from './steps/details.ts';
 import { syncImages } from './steps/images.ts';
@@ -61,6 +62,7 @@ if (only.has('news'))
   });
 if (only.has('images')) await syncImages(ROOT, OVERRIDES, values.offline ?? false);
 if (only.has('export')) {
+  const output = createOutput(path.join(ROOT, 'public/data'));
   await exportData(
     db,
     ctx.client,
@@ -68,8 +70,11 @@ if (only.has('export')) {
     currentYear,
     OVERRIDES,
     path.join(ROOT, 'data/reports/missing-photos.csv'),
+    output,
   );
-  exportNews(db, path.join(ROOT, 'public/data'));
+  exportNews(db, output);
+  const pruned = output.prune();
+  if (pruned) console.log(`export: removed ${pruned} stale files`);
 }
 
 const s = httpStats();

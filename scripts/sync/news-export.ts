@@ -1,19 +1,12 @@
-import fs from 'node:fs';
-import path from 'node:path';
-
 import { byNewest, monthCounts, NEWS_LATEST, newsMonthOf, newsOfTournament } from '../../server/news.ts';
 import type { NewsIndex, NewsItem, NewsMonth, NewsTournament } from '../../src/api/schemas.ts';
 import { nowIso } from './dates.ts';
 import { all, type Db } from './db.ts';
+import type { Output } from './output.ts';
 
-export const exportNews = (db: Db, out: string) => {
-  const dir = path.join(out, 'news');
-  fs.rmSync(dir, { recursive: true, force: true });
-  fs.mkdirSync(dir, { recursive: true });
-  fs.mkdirSync(path.join(dir, 'tournaments'));
-  fs.mkdirSync(path.join(dir, 'articles'));
+export const exportNews = (db: Db, output: Output) => {
   const write = (rel: string, data: NewsIndex | NewsMonth | NewsTournament) =>
-    fs.writeFileSync(path.join(dir, rel), JSON.stringify(data));
+    output.write(`news/${rel}`, JSON.stringify(data));
 
   const items = all<{ item: string }>(db, 'SELECT item FROM news')
     .map((r) => JSON.parse(r.item) as NewsItem)
@@ -38,7 +31,7 @@ export const exportNews = (db: Db, out: string) => {
   let articleBytes = 0;
   const articles = all<{ id: number; article: string }>(db, 'SELECT id, article FROM news_articles');
   for (const a of articles) {
-    fs.writeFileSync(path.join(dir, 'articles', `${a.id}.json`), a.article);
+    output.write(`news/articles/${a.id}.json`, a.article);
     articleBytes += a.article.length;
   }
 
