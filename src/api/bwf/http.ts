@@ -21,8 +21,9 @@ const settle = (ok: boolean) => {
   if (failures >= BREAKER_LIMIT) openUntil = Date.now() + LIVE_COOLDOWN_MS;
 };
 
-export const liveRetry = (count: number, error: unknown) =>
-  count < 1 && !liveBlocked() && !(error instanceof ApiError && error.status < 500);
+export const isRejected = (error: unknown) => error instanceof ApiError && error.status < 500;
+
+export const liveRetry = (count: number, error: unknown) => count < 1 && !liveBlocked() && !isRejected(error);
 
 export const livePollMs = (ms: number) => (liveBlocked() ? LIVE_COOLDOWN_MS : ms);
 
@@ -38,7 +39,7 @@ const request = async (url: string, signal?: AbortSignal): Promise<unknown> => {
     settle(true);
     return body;
   } catch (e) {
-    if (!signal?.aborted) settle(false);
+    if (!signal?.aborted && !isRejected(e)) settle(false);
     throw e;
   }
 };

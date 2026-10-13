@@ -1,7 +1,7 @@
 import { EventCode } from '../schemas';
 import { bwfGet } from './http';
-import { toDrawMatches, toEntryDto, toMatchDto, toMatchStats, type NameOf } from './normalize';
-import { BwfDayMatches, BwfDrawData, BwfDraws, BwfEntries, BwfMatchStat, BwfOptions } from './schemas';
+import { toDrawMatches, toEntryDto, toLiveServers, toMatchDto, toMatchStats, type NameOf } from './normalize';
+import { BwfDayMatches, BwfDrawData, BwfDraws, BwfEntries, BwfLiveMatches, BwfMatchStat, BwfOptions } from './schemas';
 
 const MAIN_DRAW = 0;
 
@@ -17,6 +17,9 @@ export const fetchDayMatches = async (code: string, day: string, names: NameOf, 
 
 export const fetchMatchStats = async (tmtId: number, matchCode: string, signal?: AbortSignal) =>
   toMatchStats(await bwfGet('match-center/vue-match-stat', { tmtId, matchId: matchCode }, BwfMatchStat, signal));
+
+export const fetchLiveServers = async (tmtId: number, signal?: AbortSignal) =>
+  toLiveServers(await bwfGet('match-center/vue-live-matches', { tmtId }, BwfLiveMatches, signal));
 
 export const fetchDraw = async (tmtId: number, names: NameOf, signal?: AbortSignal) => {
   const { results } = await bwfGet('vue-tournament-draws', { tmtTab: 'draw', tmtId }, BwfDraws, signal);

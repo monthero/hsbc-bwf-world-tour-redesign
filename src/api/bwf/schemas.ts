@@ -94,3 +94,25 @@ export const BwfMatchStat = z.object({
     .nullable(),
 });
 export type BwfMatchStat = z.infer<typeof BwfMatchStat>;
+
+const PlayerId = Idish.nullish().transform((id) => (id ? String(id) : null));
+
+export const BwfLiveMatches = z.object({
+  results: z
+    .array(
+      z.object({
+        live_detail: z.object({ service_player: z.number().nullish() }).nullish(),
+        match_detail: z
+          .object({
+            code: Idish.transform(String),
+            team1_player1_id: PlayerId,
+            team1_player2_id: PlayerId,
+            team2_player1_id: PlayerId,
+            team2_player2_id: PlayerId,
+          })
+          .nullish(),
+      }),
+    )
+    .nullish(),
+});
+export type BwfLiveMatches = z.infer<typeof BwfLiveMatches>;

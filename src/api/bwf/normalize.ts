@@ -1,9 +1,21 @@
+import { gameDone } from '~/utils/live';
+
 import { EventCode, type EntryStage, type MatchDto } from '../schemas';
-import type { BwfDrawData, BwfEntry, BwfMatch, BwfMatchStat } from './schemas';
+import { BWF_ROUNDS, BWF_STATUSES } from './codes';
+import type { BwfDrawData, BwfEntry, BwfLiveMatches, BwfMatch, BwfMatchStat } from './schemas';
 
-const ROUNDS: Record<string, string> = { 'Qual. R16': 'Q-R16', 'Qual. QF': 'Q-QF', Final: 'F' };
+const REVIEW = 'H';
+const OFF_COURT = 'O';
 
-const STATUSES: Record<string, MatchDto['status']> = { F: 'F', P: 'P', C: 'P', W: 'P', H: 'P' };
+type Score = NonNullable<BwfMatch['score']>;
+
+const winnerOf = (score: Score) => {
+  const done = score.filter((s) => gameDone([s.home, s.away]));
+  const home = done.filter((s) => s.home > s.away).length;
+  const away = done.length - home;
+  if (home === away) return 0;
+  return home > away ? 1 : 2;
+};
 
 type TeamDto = MatchDto['teams'][number];
 
@@ -26,14 +38,14 @@ export const toMatchDto = (m: BwfMatch, names: NameOf): MatchDto | null => {
   const event = EventCode.safeParse(m.eventName);
   if (m.isTeamMatch || !event.success) return null;
   const score = m.score ?? [];
-  const status = STATUSES[m.matchStatus] ?? 'N';
+  const status = BWF_STATUSES[m.matchStatus] ?? 'N';
   return {
     court: Number(m.courtCode) || (m.courtIndex ?? 0) + 1,
     time: m.matchTime?.slice(11, 16) ?? '',
     event: event.data,
-    round: ROUNDS[m.roundName] ?? m.roundName,
+    round: BWF_ROUNDS[m.roundName] ?? m.roundName,
     status,
-    winner: m.winner ?? 0,
+    winner: m.winner || (m.matchStatus === OFF_COURT ? winnerOf(score) : 0),
     teams: [toTeam(m.team1, m.team1seed, names), toTeam(m.team2, m.team2seed, names)],
     games: score.map((s) => [s.home, s.away]),
     durationMin: m.duration ?? 0,
@@ -42,6 +54,7 @@ export const toMatchDto = (m: BwfMatch, names: NameOf): MatchDto | null => {
     code: m.code ?? undefined,
     pause: status === 'P' && m.matchStatus !== 'P' ? (m.matchStatusValue ?? null) : null,
     lastPoint: status === 'P' ? (score.at(-1)?.lastPointWinner ?? 0) : 0,
+    review: m.matchStatus === REVIEW || undefined,
   };
 };
 
@@ -98,3 +111,18 @@ export const toMatchStats = ({ results: r }: BwfMatchStat): MatchStats | null =>
       challenges: { used: r.team2_challenge_used, won: r.team2_challenge_won, lost: r.team2_challenge_lost },
     },
   ];
+
+export interface LiveServer {
+  id: string;
+  side: 0 | 1;
+}
+
+export const toLiveServers = ({ results }: BwfLiveMatches): Record<string, LiveServer> =>
+  Object.fromEntries(
+    (results ?? []).flatMap(({ live_detail: live, match_detail: d }) => {
+      const n = live?.service_player ?? 0;
+      const id = d && [d.team1_player1_id, d.team1_player2_id, d.team2_player1_id, d.team2_player2_id][n - 1];
+      const server: LiveServer | null = id ? { id, side: n > 2 ? 1 : 0 } : null;
+      return d && server ? [[d.code, server] as const] : [];
+    }),
+  );

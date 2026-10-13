@@ -36,6 +36,21 @@ export type PhotoCrop = z.infer<typeof PhotoCrop>;
 
 const Team = z.object({ seed: NullableNumber, players: z.array(Person) });
 
+export const IsoDay = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
+
+export const MonthKey = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/);
+export type MonthKey = z.infer<typeof MonthKey>;
+
+export const EditionRef = z.object({ code: z.string(), slug: z.string(), name: z.string(), year: z.number() });
+export type EditionRef = z.infer<typeof EditionRef>;
+
+export const Retirement = z.object({
+  since: MonthKey,
+  lastPlayed: IsoDay.optional(),
+  lastTournament: EditionRef.optional(),
+});
+export type Retirement = z.infer<typeof Retirement>;
+
 export const MapPoint = z.object({ x: z.number(), y: z.number() });
 export type MapPoint = z.infer<typeof MapPoint>;
 
@@ -90,6 +105,7 @@ export const MatchDto = z.object({
   code: z.string().optional(),
   pause: NullableString.optional(),
   lastPoint: z.number().optional(),
+  review: z.boolean().optional(),
 });
 export type MatchDto = z.infer<typeof MatchDto>;
 
@@ -149,6 +165,7 @@ export const PlayerRecord = z.object({
   photo: OptionalString,
   photoCrop: PhotoCrop.optional(),
   ranks: z.array(CurrentRank).optional(),
+  retired: Retirement.optional(),
 });
 export type PlayerRecord = z.infer<typeof PlayerRecord>;
 
@@ -170,6 +187,7 @@ export const PlayerProfileDto = z.object({
   heroFocus: Focus.nullish(),
   slug: NullableString,
   bio: PlayerBio,
+  retired: Retirement.optional(),
   matches: z.array(CareerMatchDto),
 });
 export type PlayerProfileDto = z.infer<typeof PlayerProfileDto>;
@@ -301,6 +319,11 @@ export const MediaItem = z.object({
   round: NullableString,
   day: NullableNumber,
   court: NullableNumber,
+  scheduledAt: NullableString.default(null),
+  region: z
+    .object({ allowed: z.array(z.string()).optional(), blocked: z.array(z.string()).optional() })
+    .nullable()
+    .default(null),
 });
 export type MediaItem = z.infer<typeof MediaItem>;
 
@@ -311,6 +334,9 @@ export const TournamentMedia = z.object({
   items: z.array(MediaItem),
 });
 export type TournamentMedia = z.infer<typeof TournamentMedia>;
+
+export const ViewerGeo = z.object({ country: NullableString });
+export type ViewerGeo = z.infer<typeof ViewerGeo>;
 
 export const NewsSite = z.enum(['world-tour', 'world-tour-finals']);
 export type NewsSite = z.infer<typeof NewsSite>;
@@ -358,6 +384,22 @@ export type NewsIndex = z.infer<typeof NewsIndex>;
 
 export const NewsTournament = z.object({ code: z.string(), items: z.array(NewsItem) });
 export type NewsTournament = z.infer<typeof NewsTournament>;
+
+export const PlayerVideo = MediaItem.extend({
+  tournament: z.string(),
+  event: EventCode,
+  opponents: z.array(z.string()),
+});
+export type PlayerVideo = z.infer<typeof PlayerVideo>;
+
+export const NewsBrief = NewsItem.pick({ id: true, title: true, publishedAt: true, image: true, tournaments: true });
+export type NewsBrief = z.infer<typeof NewsBrief>;
+
+export const PlayerMedia = z.object({ id: z.string(), news: z.array(NewsBrief), videos: z.array(PlayerVideo) });
+export type PlayerMedia = z.infer<typeof PlayerMedia>;
+
+export const PlayerMediaIndex = z.object({ counts: z.record(z.string(), z.tuple([z.number(), z.number()])) });
+export type PlayerMediaIndex = z.infer<typeof PlayerMediaIndex>;
 
 export const NewsLink = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('player'), id: z.string() }),

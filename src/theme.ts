@@ -1,5 +1,6 @@
 import {
   ActionIcon,
+  Badge,
   Button,
   createTheme,
   defaultVariantColorsResolver,
@@ -161,9 +162,16 @@ const mix = (a: string, b: string, pct: number) => `color-mix(in srgb, ${a} ${pc
 const tourRed = '#d72630';
 
 const variantColorResolver: VariantColorsResolver = (input) => {
-  if (input.variant !== 'soft') return defaultVariantColorsResolver(input);
+  if (input.variant !== 'soft' && input.variant !== 'tint') return defaultVariantColorsResolver(input);
   const parsed = parseThemeColor({ color: input.color || input.theme.primaryColor, theme: input.theme });
   const base = parsed.isThemeColor ? `var(${parsed.variable})` : parsed.value;
+  if (input.variant === 'tint')
+    return {
+      background: tint(base, 18),
+      hover: tint(base, 24),
+      color: parsed.isThemeColor ? `var(--mantine-color-${parsed.color}-2)` : base,
+      border: 'none',
+    };
   return {
     background: tint(base, 8),
     hover: tint(base, 20),
@@ -187,6 +195,7 @@ export const theme = createTheme({
   variantColorResolver,
   components: {
     ActionIcon: ActionIcon.extend({ classNames: { root: variants.root } }),
+    Badge: Badge.extend({ classNames: { root: variants.root } }),
     Button: Button.extend({ classNames: { root: variants.root } }),
     Modal: { defaultProps: { overlayProps: { backgroundOpacity: 0.62, blur: 4 } } },
     Tooltip: { defaultProps: { color: 'dark.0', c: 'dark.7', fz: 12, fw: 500, multiline: true, maw: 240 } },
@@ -199,6 +208,7 @@ export const cssVariablesResolver: CSSVariablesResolver = () => ({
     '--bwf-ease-out': 'cubic-bezier(0.16, 1, 0.3, 1)',
     '--bwf-gutter': 'clamp(16px, 3vw, 56px)',
     '--bwf-page-max': '1520px',
+    '--bwf-footer-gap': '48px',
     '--bwf-card-radius': '18px',
     '--bwf-tabbar-h': '51px',
     '--bwf-header-h': '60px',

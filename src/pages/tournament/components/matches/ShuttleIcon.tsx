@@ -1,12 +1,10 @@
-import type { FC } from 'react';
+import { memo } from 'react';
 
-const PATH =
+const SERVE =
   'M90.804,52.909l1.254,1.255c2.981,3.137,8,3.137,11.137,0.156c3.138-2.979,3.138-7.999,0.156-11.136 c-0.469-0.471-0.94-0.94-1.412-1.411L90.804,52.909z M88.45,20.285l-2.822,6.432l8.469,12.076l-1.253,0.941l-8.313-11.92l-5.176,1.569 c-0.472,0.155-0.785,0.47-0.941,0.94l-1.726,5.332l12.548,7.528l-0.785,1.412l-13.018-7.842l-6.116,2.666 c-1.098,0.471-1.255,2.195,0,2.823l20.703,9.881l11.136-11.137l-9.882-20.703C90.804,19.188,89.079,19.188,88.45,20.285z';
 
-export const ShuttleIcon: FC<{ className?: string }> = ({ className }) => {
-  return (
-    <svg viewBox="67 18 40 40" className={className} aria-hidden="true">
-      <path d={PATH} />
-    </svg>
-  );
-};
+export const ShuttleIcon = memo<{ className?: string }>(({ className }) => (
+  <svg viewBox="67 18 40 40" className={className} aria-hidden="true">
+    <path d={SERVE} />
+  </svg>
+));

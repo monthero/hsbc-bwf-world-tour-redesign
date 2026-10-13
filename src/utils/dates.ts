@@ -39,6 +39,10 @@ export const monthKeyOf = (iso: string) => date(iso).format('YYYY-MM');
 
 export const monthOf = (key: string) => date(`${key}-01`);
 
+export const formatMonth = (key: string) => monthOf(key).format('MMMM YYYY');
+
+export const formatLocalDayTime = (iso: string) => dayjs(iso).format('ddd D MMM, HH:mm');
+
 export const hoursSince = (iso: string) => dayjs.utc().diff(date(iso), 'hour', true);
 
 export const ageOn = (born: string, at: Dayjs = today()) => at.diff(date(born), 'year');

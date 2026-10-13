@@ -4,6 +4,7 @@ export type {
   CareerMatchDto,
   Continent,
   CurrentRank,
+  EditionRef,
   EntryStage,
   EventCode,
   Focus,
@@ -20,6 +21,7 @@ export type {
   RankingPlayer,
   RankingRow,
   RankingTable,
+  Retirement,
   Seasons,
   Series,
   TournamentMatches,
@@ -102,6 +104,7 @@ export interface Match {
   code: string | null;
   pause: string | null;
   lastPoint: number;
+  review: boolean;
 }
 
 export interface DrawSlot {

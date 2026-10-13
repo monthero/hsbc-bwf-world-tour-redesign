@@ -87,6 +87,7 @@ export const toMatch = (m: MatchDto, day: string, dayIndex: number, i: number): 
     code: m.code ?? null,
     pause: m.pause ?? null,
     lastPoint: m.lastPoint ?? 0,
+    review: m.review ?? false,
   };
 };
 

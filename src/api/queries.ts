@@ -5,13 +5,15 @@ import { dayjs, ISO_DAY, isoRange, today, todayIso } from '~/utils/dates';
 import { trackLiveStats, type LiveStats } from '~/utils/live';
 import { finalDayOver } from '~/utils/matches';
 
-import { LIVE_COOLDOWN_MS, livePollMs, liveRetry } from './bwf/http';
+import { isRejected, LIVE_COOLDOWN_MS, livePollMs, liveRetry } from './bwf/http';
 import type { NameOf } from './bwf/normalize';
-import { fetchDayMatches, fetchDraw, fetchEntries, fetchMatchStats } from './bwf/tournaments';
+import { fetchDayMatches, fetchDraw, fetchEntries, fetchLiveServers, fetchMatchStats } from './bwf/tournaments';
 import { fetchJson, getJson, retryUnless } from './client';
 import {
   Calendar,
   type CalendarEventDto,
+  PlayerMedia,
+  PlayerMediaIndex,
   PlayerProfileDto,
   PlayersData,
   RaceRankings,
@@ -22,6 +24,7 @@ import {
   Series,
   TournamentMatches,
   TournamentMedia,
+  ViewerGeo,
 } from './schemas';
 
 const STATIC = { staleTime: Infinity, gcTime: Infinity };
@@ -105,6 +108,16 @@ export const liveMatchStatsQuery = (tmtId: number, matchCode: string) =>
     refetchInterval: () => livePollMs(STATS_POLL_MS),
   });
 
+export const liveServersQuery = (tmtId: number) =>
+  queryOptions({
+    queryKey: ['bwf', 'live-servers', tmtId],
+    queryFn: ({ signal }) => fetchLiveServers(tmtId, signal),
+    staleTime: 5_000,
+    gcTime: 60_000,
+    retry: liveRetry,
+    refetchInterval: (q) => (isRejected(q.state.error) ? false : livePollMs(STATS_POLL_MS)),
+  });
+
 const fetchLiveMatches = async (t: TournamentRef, client: QueryClient): Promise<TournamentMatches> => {
   const last = t.end < dayOffset(1) ? t.end : dayOffset(1);
   const days = t.start <= last ? isoRange(t.start, last) : [];
@@ -166,12 +179,30 @@ const mediaPolicy = (t: TournamentRef) => {
   return { staleTime: MEDIA_REFRESH_MS, refetchInterval: MEDIA_REFRESH_MS };
 };
 
+const mediaUrl = (code: string) => `/yt-api/media/${code}`;
+
 export const tournamentMediaQuery = (t: TournamentRef) =>
   queryOptions({
     queryKey: ['media', t.code],
-    queryFn: ({ signal }) => getJson(`/yt-api/media/${t.code}`, TournamentMedia, signal),
+    queryFn: ({ signal }) => getJson(mediaUrl(t.code), TournamentMedia, signal),
     retry: retryUnless(404, 503),
     ...mediaPolicy(t),
+  });
+
+export const refreshTournamentMedia = (client: QueryClient, t: TournamentRef, reason: string) =>
+  client.fetchQuery({
+    ...tournamentMediaQuery(t),
+    queryFn: ({ signal }) =>
+      getJson(`${mediaUrl(t.code)}?fresh=${encodeURIComponent(reason)}`, TournamentMedia, signal),
+    staleTime: 0,
+  });
+
+export const viewerGeoQuery = () =>
+  queryOptions({
+    queryKey: ['geo'],
+    queryFn: ({ signal }) => getJson('/yt-api/geo', ViewerGeo, signal),
+    ...STATIC,
+    retry: false,
   });
 
 export const rankingHistoryQuery = (playerId: string) =>
@@ -209,4 +240,18 @@ export const playerQuery = (id: string) =>
     queryFn: ({ signal }) => fetchJson(`players/${id}.json`, PlayerProfileDto, signal),
     ...STATIC,
     retry: false,
+  });
+
+export const playerMediaIndexQuery = () =>
+  queryOptions({
+    queryKey: ['player-media'],
+    queryFn: ({ signal }) => fetchJson('player-media/index.json', PlayerMediaIndex, signal),
+    ...STATIC,
+  });
+
+export const playerMediaQuery = (id: string) =>
+  queryOptions({
+    queryKey: ['player-media', id],
+    queryFn: ({ signal }) => fetchJson(`player-media/${id}.json`, PlayerMedia, signal),
+    ...STATIC,
   });

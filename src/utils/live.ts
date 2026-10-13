@@ -1,6 +1,7 @@
 import type { MatchStats } from '~/api/bwf/normalize';
 import type { Game, Match, Side } from '~/types';
 
+import { plural } from './format';
 import { gameWon, opposite } from './matches';
 
 export type ChallengeOutcome = 'won' | 'lost' | 'void';
@@ -22,10 +23,39 @@ export interface LiveStats {
   challenge: ChallengeResult | null;
 }
 
+export const STREAK_MIN = 3;
+
+export const CHALLENGE_LABELS: Record<ChallengeOutcome, string> = {
+  won: 'Challenge won',
+  lost: 'Challenge lost',
+  void: 'Challenge · no decision',
+};
+
+export const challengeTip = (s: MatchStats[number]) =>
+  `${plural(s.challenges.used, 'challenge')} used · ${s.challenges.won} won · ${s.challenges.lost} lost`;
+
 const SIDES: readonly Side[] = [0, 1];
 
 const GAME_TO = 21;
 const GAME_CAP = 30;
+const GAMES_TO_WIN = 2;
+
+export const gameDone = (g: Game) => {
+  const hi = Math.max(g[0], g[1]);
+  return hi >= GAME_CAP || (hi >= GAME_TO && hi - Math.min(g[0], g[1]) >= 2);
+};
+
+export type LivePhase = 'play' | 'between' | 'over';
+
+export const livePhase = (m: Match): LivePhase => {
+  const g = m.current;
+  if (!g || !gameDone(g)) return 'play';
+  const all = [...m.games, g];
+  return SIDES.some((s) => all.filter((x) => gameWon(x, s)).length >= GAMES_TO_WIN) ? 'over' : 'between';
+};
+
+export const reviewBy = (m: Match): Side | null =>
+  m.review && m.lastPoint ? opposite(m.lastPoint === 1 ? 0 : 1) : null;
 
 const nextStreak = (prev: LiveStats, sides: MatchStats): Streak | null => {
   const a = sides[0].ralliesWon - prev.sides[0].ralliesWon;
@@ -60,10 +90,6 @@ const hasGamePoint = (own: number, opp: number) => own >= GAME_TO - 1 && (own > 
 
 export const pointCall = (m: Match, side: Side) => {
   const g = m.current;
-  if (!g || !hasGamePoint(g[side], g[opposite(side)])) return null;
+  if (!g || gameDone(g) || !hasGamePoint(g[side], g[opposite(side)])) return null;
   return m.games.some((x) => gameWon(x, side)) ? 'Match point' : 'Game point';
 };
-
-export const shareOf = (a: number, b: number) => (a + b ? a / (a + b) : 0.5);
-
-export const gameShare = (g: Game) => shareOf(g[0], g[1]);

@@ -1,17 +1,7 @@
+import { BWF_ROUNDS, BWF_STATUSES } from '../../src/api/bwf/codes.ts';
 import { EVENTS, type ApiMatch, type ApiPlayer, type EventCode } from './bwf.ts';
 
-const ROUNDS: Record<string, string> = {
-  'Qual. R32': 'Q-R32',
-  'Qual. R16': 'Q-R16',
-  'Qual. QF': 'Q-QF',
-  'Qual. SF': 'Q-SF',
-  'Qual. Final': 'Q-F',
-  Final: 'F',
-};
-
 const WALKOVER = 1;
-
-const STATUSES: Record<string, string> = { F: 'F', P: 'P', C: 'P', W: 'P', H: 'P', O: 'F' };
 
 export interface NormPlayer {
   id: string;
@@ -75,12 +65,12 @@ export const normalizeMatch = (m: ApiMatch): NormMatch | null => {
   const t1 = m.team1?.players ?? [];
   const t2 = m.team2?.players ?? [];
   if (!t1.length || !t2.length) return null;
-  const status = STATUSES[m.matchStatus] ?? 'N';
+  const status = BWF_STATUSES[m.matchStatus] ?? 'N';
   return {
     id: m.id,
     code: m.code,
     event,
-    round: ROUNDS[m.roundName ?? ''] ?? m.roundName ?? '',
+    round: BWF_ROUNDS[m.roundName ?? ''] ?? m.roundName ?? '',
     group: m.drawName?.match(/Group\s+(\w+)/i)?.[1] ?? null,
     time: m.matchTime?.slice(11, 16) ?? '',
     court: Number(m.courtCode) || (m.courtIndex ?? 0) + 1,
