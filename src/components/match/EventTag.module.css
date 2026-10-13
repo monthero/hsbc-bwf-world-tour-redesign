@@ -1,0 +1,15 @@
+.eventTag {
+  flex: none;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: alpha(var(--bwf-red), 0.22);
+  color: var(--bwf-red-pale);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.eventTag[data-tip] {
+  position: relative;
+  z-index: 1;
+  cursor: help;
+}

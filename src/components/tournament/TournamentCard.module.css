@@ -1,0 +1,136 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card[data-status='up'] {
+  background: var(--bwf-surface-2);
+}
+
+.card[data-next] {
+  border-color: var(--bwf-border-hover);
+}
+
+.card[data-status='done'],
+.card[data-status='cancelled'] {
+  background: var(--bwf-bg-sunken);
+  border-color: var(--bwf-surface-3);
+}
+
+.media {
+  flex: none;
+  height: 96px;
+}
+
+.level,
+.status {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+}
+
+.level {
+  right: 10px;
+}
+
+.status {
+  left: 10px;
+}
+
+.logo {
+  position: absolute;
+  z-index: 1;
+  left: 16px;
+  bottom: -22px;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 34px 18px 18px;
+}
+
+.dates {
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--bwf-muted);
+}
+
+.title {
+  margin-top: -2px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+
+.card[data-status='done'] .dates,
+.card[data-status='cancelled'] .dates,
+.card[data-status='cancelled'] .title {
+  color: var(--bwf-faint);
+}
+
+.card[data-status='done'] .title {
+  color: var(--bwf-text-3);
+}
+
+.place {
+  font-size: 13px;
+  color: var(--bwf-muted);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--bwf-border);
+}
+
+.card[data-status='live'] .footer {
+  border-top-color: alpha(var(--bwf-red), 0.25);
+}
+
+.prize {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--bwf-faint);
+}
+
+.results {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bwf-text-3);
+}
+
+.countdown {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bwf-dim);
+}
+
+.countdown[data-next] {
+  color: var(--bwf-red-text);
+}
+
+.kicker {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bwf-faint);
+}

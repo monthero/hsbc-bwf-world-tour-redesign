@@ -1,0 +1,51 @@
+.winners {
+  display: flex;
+  flex-direction: column;
+}
+
+.winners[data-bordered] {
+  margin-top: 14px;
+  border-top: 1px solid var(--mantine-color-slate-4);
+}
+
+.winnerRow {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bwf-border);
+}
+
+.event {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  color: var(--bwf-dim);
+}
+
+.player {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.podium {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--bwf-red-text);
+  text-decoration: none;
+}
+
+.podium:hover {
+  color: var(--bwf-red-soft);
+}
+
+.dropdown {
+  padding: 6px 16px 14px;
+  border-radius: 16px;
+}

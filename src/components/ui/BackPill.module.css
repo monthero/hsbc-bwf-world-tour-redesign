@@ -1,0 +1,28 @@
+.back {
+  align-self: flex-start;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 12px 0 8px;
+  border-radius: 999px;
+  border: 1px solid var(--bwf-border-strong);
+  background: transparent;
+  color: var(--bwf-text-3);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.back:hover {
+  border-color: var(--bwf-border-focus);
+  color: var(--bwf-text);
+}

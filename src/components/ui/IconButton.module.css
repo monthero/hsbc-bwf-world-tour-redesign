@@ -1,0 +1,60 @@
+.iconButton {
+  --size: 34px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--bwf-text-3);
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.iconButton[data-size='sm'] {
+  --size: 28px;
+}
+
+.iconButton[data-shape='rounded'] {
+  border-radius: 10px;
+}
+
+.iconButton[data-size='sm'][data-shape='rounded'] {
+  border-radius: 8px;
+}
+
+.iconButton[data-variant='outline'] {
+  border-color: var(--bwf-border-strong);
+}
+
+.iconButton[data-variant='filled'] {
+  background: var(--bwf-raised);
+}
+
+.iconButton:hover:not([aria-disabled]) {
+  background: var(--bwf-raised);
+  color: var(--bwf-text);
+}
+
+.iconButton[data-variant='outline']:hover:not([aria-disabled]) {
+  border-color: var(--bwf-border-hover);
+}
+
+.iconButton[data-variant='filled']:hover:not([aria-disabled]) {
+  background: var(--bwf-border-strong);
+}
+
+.iconButton[aria-disabled] {
+  opacity: 0.35;
+  cursor: default;
+}

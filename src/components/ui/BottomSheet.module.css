@@ -1,0 +1,27 @@
+.sheet {
+  height: auto;
+  max-height: var(--sheet-max-h);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 22px 22px 0 0;
+  background: var(--bwf-surface-2);
+  border: 1px solid var(--bwf-border-strong);
+  border-bottom: 0;
+  box-shadow: 0 30px 80px alpha(var(--mantine-color-black), 0.6);
+  color: var(--bwf-text);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.handle {
+  display: block;
+  width: 36px;
+  height: 4px;
+  margin: 10px auto 0;
+  border-radius: 2px;
+  background: var(--bwf-border-hover);
+}

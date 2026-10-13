@@ -1,0 +1,167 @@
+.medal {
+  display: block;
+  flex: none;
+}
+
+.medal[data-kind='gold'] {
+  color: var(--bwf-gold);
+}
+
+.medal[data-kind='silver'] {
+  color: var(--bwf-silver);
+}
+
+.medal[data-kind='bronze'] {
+  color: var(--bwf-bronze);
+}
+
+.count {
+  --tone: var(--bwf-text);
+  --value: var(--bwf-text);
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--bwf-surface-3);
+  border: 1px solid var(--bwf-surface-4);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    opacity 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.count[data-kind='gold'] {
+  --tone: var(--bwf-gold);
+  --value: var(--bwf-gold-text);
+}
+
+.count[data-kind='silver'] {
+  --tone: var(--bwf-silver);
+  --value: var(--bwf-silver-text);
+}
+
+.count[data-kind='bronze'] {
+  --tone: var(--bwf-bronze);
+  --value: var(--bwf-bronze-text);
+}
+
+.count[data-size='sm'] {
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 0;
+  border-top: 2px solid var(--value);
+}
+
+button.count {
+  cursor: pointer;
+}
+
+button.count::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, alpha(var(--tone), 0.7) 50%, transparent);
+  opacity: 0.55;
+}
+
+button.count:hover:not(:disabled) {
+  border-color: alpha(var(--tone), 0.45);
+}
+
+.count[data-active] {
+  background: linear-gradient(180deg, alpha(var(--tone), 0.16) 0%, alpha(var(--tone), 0.05) 100%), var(--bwf-surface-3);
+  border-color: alpha(var(--tone), 0.55);
+  box-shadow:
+    0 0 0 1px alpha(var(--tone), 0.35),
+    0 6px 22px -10px alpha(var(--tone), 0.55);
+}
+
+.count[data-active]::before {
+  opacity: 1;
+}
+
+.count[data-dimmed] {
+  opacity: 0.45;
+}
+
+.count:disabled {
+  cursor: default;
+}
+
+.count[data-zero] {
+  --value: var(--bwf-faint);
+}
+
+.count[data-zero]::before {
+  opacity: 0;
+}
+
+.countMedal {
+  flex: none;
+  pointer-events: none;
+  transition:
+    opacity 0.25s,
+    filter 0.25s;
+}
+
+.count[data-zero] .countMedal {
+  opacity: 0.3;
+  filter: grayscale(1);
+}
+
+.countText {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.count[data-size='sm'] .countText {
+  flex: 1;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.countLabel {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--bwf-muted);
+  white-space: nowrap;
+}
+
+.count[data-size='sm'] .countLabel {
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.countValue {
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--value);
+}
+
+.count[data-size='sm'] .countValue {
+  font-size: 24px;
+}

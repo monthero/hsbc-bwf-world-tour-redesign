@@ -1,0 +1,30 @@
+.levelBadge {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  color: var(--lv);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.levelBadge[data-variant='tint'] {
+  padding: 2px 9px;
+  background: alpha(var(--lv), 0.14);
+}
+
+.levelBadge[data-variant='tint'][data-size='sm'] {
+  padding: 1px 8px;
+  font-size: 11px;
+}
+
+.levelBadge[data-dot]::before {
+  content: '';
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}

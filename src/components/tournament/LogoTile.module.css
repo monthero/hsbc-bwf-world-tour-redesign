@@ -1,0 +1,32 @@
+.tile {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size);
+  height: var(--size);
+  padding: calc(var(--size) * 0.12);
+  border-radius: calc(var(--size) * 0.25);
+  background: var(--mantine-color-white);
+  box-shadow: 0 4px 14px alpha(var(--mantine-color-black), 0.35);
+}
+
+.tile[data-flat] {
+  box-shadow: none;
+}
+
+.mono {
+  font-size: calc(var(--size) * 0.34);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--bwf-bg);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

@@ -1,0 +1,25 @@
+.partner {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  font-size: 12px;
+  color: var(--bwf-muted);
+}
+
+.label {
+  flex: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--bwf-text-2);
+}

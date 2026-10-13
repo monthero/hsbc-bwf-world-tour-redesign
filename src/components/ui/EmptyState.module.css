@@ -1,0 +1,18 @@
+.empty {
+  padding: 48px 24px;
+  border-radius: var(--bwf-card-radius);
+  border: 1px dashed var(--bwf-border-strong);
+  text-align: center;
+  color: var(--bwf-muted);
+  font-size: 14px;
+  text-wrap: pretty;
+}
+
+.empty:where([data-variant='note']) {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  text-align: left;
+  color: var(--bwf-dim);
+  font-size: 13px;
+}

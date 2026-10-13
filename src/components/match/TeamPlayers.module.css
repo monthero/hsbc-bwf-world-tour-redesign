@@ -1,0 +1,92 @@
+.team {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.team[data-layout='inline'] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+}
+
+.team[data-align='end'] {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.team[data-pair-seed] {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) auto;
+  justify-content: start;
+  gap: 2px 6px;
+}
+
+.team[data-pair-seed][data-align='end'] {
+  grid-template-columns: auto minmax(0, max-content);
+  justify-content: end;
+}
+
+.team[data-pair-seed] > .player {
+  grid-column: 1;
+}
+
+.team[data-pair-seed][data-align='end'] > .player {
+  grid-column: 2;
+}
+
+.pairSeed {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.team[data-align='end'] .pairSeed {
+  grid-column: 1;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+}
+
+.team[data-align='end'] .player {
+  flex-direction: row-reverse;
+}
+
+.name {
+  min-width: 0;
+  text-wrap: pretty;
+}
+
+.team[data-truncate] .name {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team[data-wrap] .player {
+  align-items: flex-start;
+}
+
+.nameLine {
+  min-width: 0;
+  text-wrap: pretty;
+}
+
+.nameLine > :not(:first-child) {
+  margin-left: 6px;
+}
+
+.flagLine {
+  flex: none;
+  display: flex;
+  align-items: center;
+  height: 1lh;
+}

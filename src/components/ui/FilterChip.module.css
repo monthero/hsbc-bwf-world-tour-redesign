@@ -1,0 +1,65 @@
+.chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 13px;
+  border-radius: 999px;
+  border: 1px solid var(--bwf-border-strong);
+  background: transparent;
+  color: var(--bwf-text-3);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.chip:hover:not(:disabled) {
+  border-color: var(--bwf-border-focus);
+}
+
+.chip[data-active] {
+  background: var(--bwf-red-tint);
+  border-color: var(--bwf-red-edge);
+  color: var(--bwf-red-pale);
+}
+
+.chip[data-tone][data-active] {
+  background: alpha(var(--tone), 0.16);
+  border-color: alpha(var(--tone), 0.55);
+  color: var(--tone);
+}
+
+.chip[data-dot]::before {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--tone, currentColor);
+}
+
+.chip:disabled {
+  color: var(--bwf-ghost);
+  cursor: default;
+}
+
+.chip[data-size='sm'] {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.chip[data-size='lg'] {
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+}

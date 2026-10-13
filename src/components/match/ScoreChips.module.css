@@ -1,0 +1,157 @@
+.chips {
+  flex: none;
+  display: flex;
+  gap: 3px;
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  padding: 4px 5px;
+  border-radius: 7px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+}
+
+.me {
+  font-size: 14px;
+}
+
+.opp {
+  font-size: 12px;
+}
+
+.chip[data-state='win'] {
+  background: alpha(var(--bwf-green), 0.1);
+}
+
+.chip[data-state='win'] .me {
+  font-weight: 700;
+  color: var(--bwf-text);
+}
+
+.chip[data-state='win'] .opp {
+  color: var(--bwf-faint);
+}
+
+.chip[data-state='loss'] {
+  background: var(--bwf-loss-bg);
+}
+
+.chip[data-state='loss'] .me {
+  font-weight: 500;
+  color: var(--bwf-dim);
+}
+
+.chip[data-state='loss'] .opp {
+  color: var(--mantine-color-red-2);
+}
+
+.chip[data-state='live'] {
+  background: alpha(var(--bwf-blue), 0.16);
+}
+
+.chip[data-state='live'] .me {
+  font-weight: 700;
+  color: var(--mantine-color-blue-0);
+}
+
+.chip[data-state='live'] .opp {
+  color: var(--mantine-color-blue-4);
+}
+
+.chips[data-size='sm'] {
+  gap: 4px;
+}
+
+.chips[data-size='sm'] .chip {
+  min-width: 28px;
+  padding: 3px 4px;
+}
+
+.chips[data-size='sm'] .me {
+  font-size: 13px;
+}
+
+.chips[data-size='sm'] .opp {
+  font-size: 11px;
+}
+
+.scores {
+  flex: none;
+  display: flex;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.score {
+  text-align: right;
+  color: var(--bwf-faint);
+}
+
+.score[data-won] {
+  font-weight: 600;
+  color: var(--bwf-text);
+}
+
+.scores[data-variant='card'] {
+  gap: 4px;
+}
+
+.scores[data-variant='card'] .score {
+  width: clamp(22px, 2.6vw, 28px);
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.scores[data-variant='card'] .score[data-won] {
+  font-weight: 600;
+}
+
+.scores[data-variant='live'] {
+  gap: 8px;
+}
+
+.scores[data-variant='live'] .score {
+  width: 24px;
+  font-size: 15px;
+}
+
+.scores[data-variant='live'] .current {
+  width: 44px;
+  text-align: right;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--mantine-color-white);
+}
+
+.scores[data-variant='compact'] {
+  gap: 4px;
+  font-size: 11px;
+}
+
+.scores[data-variant='compact'] .score,
+.scores[data-variant='compact'] .score[data-won] {
+  color: inherit;
+  font-weight: inherit;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .chip {
+    min-width: 26px;
+    padding: 3px;
+  }
+
+  .me {
+    font-size: 13px;
+  }
+
+  .opp {
+    font-size: 11px;
+  }
+}

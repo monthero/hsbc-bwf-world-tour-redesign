@@ -1,0 +1,14 @@
+.root[data-variant='quiet'] {
+  border: 1px solid var(--bwf-border-strong);
+  background: transparent;
+  color: var(--bwf-text-3);
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.root[data-variant='quiet']:is(:hover, :focus-visible):not(:disabled, [data-disabled], [aria-disabled]) {
+  border-color: var(--bwf-border-focus);
+  background: transparent;
+  color: var(--bwf-text);
+}

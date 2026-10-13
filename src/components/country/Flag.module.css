@@ -1,0 +1,12 @@
+.flag {
+  flex: none;
+  display: block;
+  border-radius: 2px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px alpha(var(--mantine-color-white), 0.08);
+}
+
+.flag[data-tip] {
+  position: relative;
+  z-index: 1;
+}

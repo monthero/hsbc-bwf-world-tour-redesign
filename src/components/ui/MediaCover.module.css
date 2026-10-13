@@ -1,0 +1,33 @@
+.media {
+  position: relative;
+  background: var(--bwf-surface-2);
+}
+
+.media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.img {
+  border-radius: inherit;
+}
+
+.media[data-fade='bottom']::after {
+  background: linear-gradient(180deg, transparent 30%, alpha(var(--bwf-bg), 0.6));
+}
+
+.media[data-fade='strong']::after {
+  background: linear-gradient(180deg, transparent 30%, alpha(var(--bwf-bg), 0.85));
+}
+
+.media > :not(.img) {
+  z-index: 1;
+}
+
+.media[data-muted] .img {
+  opacity: 0.45;
+  filter: grayscale(1);
+}

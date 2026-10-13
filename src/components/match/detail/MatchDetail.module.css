@@ -1,0 +1,417 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 18px 14px 20px;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.tour {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--bwf-red-text);
+}
+
+.event {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--bwf-muted);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px 22px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--bwf-muted);
+}
+
+.status[data-live] {
+  color: var(--bwf-red-text);
+}
+
+.stats {
+  margin: 0 20px 14px;
+  padding: 4px 16px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--bwf-border-strong);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.statNames {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--bwf-text-3);
+}
+
+.statNames > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.statRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.statValues {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 56px;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.statValue {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--bwf-dim);
+}
+
+.statValue:last-child {
+  text-align: right;
+}
+
+.statValue[data-win] {
+  font-weight: 700;
+  color: var(--bwf-text);
+}
+
+.statRow[data-neutral] .statValue {
+  color: var(--bwf-text-3);
+}
+
+.statLabel {
+  text-align: center;
+  font-size: 12px;
+  color: var(--bwf-dim);
+}
+
+.split,
+.hhBar {
+  display: flex;
+  gap: 3px;
+  height: 4px;
+}
+
+.splitA,
+.splitB,
+.hhBar span {
+  border-radius: 2px;
+}
+
+.splitA,
+.hhBar span:first-child {
+  width: var(--w);
+  background: alpha(var(--bwf-red), 0.32);
+  transition: width 0.35s var(--bwf-ease);
+}
+
+.splitA[data-lead] {
+  background: var(--bwf-red);
+}
+
+.splitB {
+  flex: 1;
+  background: var(--mantine-color-dark-4);
+}
+
+.splitB[data-lead] {
+  background: var(--bwf-dim);
+}
+
+.statRow[data-neutral] .splitA,
+.statRow[data-neutral] .splitB {
+  background: var(--mantine-color-dark-4);
+}
+
+.h2h {
+  margin: 0 20px 20px;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid var(--bwf-border-strong);
+  background: var(--bwf-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.scope {
+  width: 190px;
+  flex: none;
+}
+
+.hhHeader {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  margin: -6px -18px 0;
+  padding: 10px 18px 12px;
+  background: var(--bwf-surface);
+  border-bottom: 1px solid var(--bwf-line);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+}
+
+.hhSide {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.hhSide[data-side='b'] {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+
+.hhNames {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.hhSide[data-side='b'] .hhNames {
+  align-items: flex-end;
+}
+
+.hhTeam {
+  gap: 5px;
+  font-size: 14px;
+  color: var(--bwf-text);
+}
+
+.hhName {
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.hhScore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.wins {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.winsNum {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--bwf-dim);
+}
+
+.winsNum[data-lead] {
+  color: var(--bwf-text);
+}
+
+.winsLabel {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--bwf-faint);
+}
+
+.pts {
+  font-size: 11px;
+  color: var(--bwf-dim);
+}
+
+.hhBar {
+  height: 6px;
+}
+
+.hhBar span {
+  border-radius: 3px;
+}
+
+.hhBar span:first-child {
+  background: var(--bwf-red);
+}
+
+.hhBar span:last-child {
+  flex: 1;
+  background: var(--mantine-color-dark-4);
+}
+
+.hhText {
+  margin-top: -10px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--bwf-muted);
+}
+
+.cmp {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--bwf-border);
+}
+
+.cmpRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 10px 2px;
+  border-bottom: 1px solid var(--bwf-line);
+}
+
+.cmpRow[data-last] {
+  border-bottom: 0;
+}
+
+.cmpValue {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--bwf-muted);
+}
+
+.cmpValue:last-child {
+  text-align: right;
+}
+
+.cmpValue[data-better] {
+  font-weight: 700;
+  color: var(--bwf-text);
+}
+
+.cmpLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--bwf-dim);
+}
+
+.meets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meet {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--bwf-surface-3);
+}
+
+.meetHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.meetTour {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bwf-red-text);
+  text-wrap: pretty;
+}
+
+.meetStage {
+  flex: none;
+  font-size: 11px;
+  color: var(--bwf-dim);
+}
+
+.meetBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  justify-items: start;
+  gap: 10px;
+}
+
+.resultEnd {
+  justify-self: end;
+}
+
+.meetGames {
+  justify-self: center;
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.gameScore {
+  font-weight: 400;
+  color: var(--bwf-dim);
+}
+
+.gameScore[data-win] {
+  font-weight: 700;
+  color: var(--bwf-text);
+}
+
+.colon {
+  color: var(--bwf-faint);
+}
+
+.meetSub {
+  font-size: 11px;
+  color: var(--bwf-faint);
+}
+
+.dur {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  vertical-align: middle;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .hhHeader {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .hhSide {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hhSide[data-side='b'] {
+    flex-direction: column;
+    align-items: flex-end;
+    order: 2;
+  }
+
+  .hhScore {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+}

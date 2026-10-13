@@ -1,0 +1,10 @@
+.modal {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
