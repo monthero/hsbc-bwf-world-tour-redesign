@@ -1,0 +1,19 @@
+.new {
+  flex: none;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: alpha(var(--bwf-blue), 0.14);
+  color: var(--bwf-blue);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.same {
+  flex: none;
+  font-size: 11px;
+  color: var(--bwf-ghost);
+}

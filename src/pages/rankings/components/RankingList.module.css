@@ -1,0 +1,205 @@
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.head th {
+  padding: 14px 12px 10px;
+  border-bottom: 1px solid var(--bwf-line);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--bwf-dim);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.row td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--bwf-line);
+  vertical-align: middle;
+  transition: background 0.15s;
+}
+
+.row:hover td {
+  background: var(--bwf-surface);
+}
+
+.rank {
+  width: 76px;
+}
+
+td.rank {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.move {
+  width: 64px;
+}
+
+.who {
+  min-width: 0;
+}
+
+.whoInner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  --avatar-ring: var(--bwf-bg);
+}
+
+.row:hover .whoInner {
+  --avatar-ring: var(--bwf-surface);
+}
+
+.avatars {
+  flex: none;
+}
+
+.names {
+  flex: 0 1 auto;
+  font-size: 14px;
+}
+
+.played {
+  width: 120px;
+}
+
+.head .played,
+.head .points,
+td.played,
+td.points {
+  text-align: right;
+}
+
+td.played {
+  font-size: 13px;
+  color: var(--bwf-muted);
+}
+
+.points {
+  width: 130px;
+}
+
+td.points {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.row[data-qualify='qualified'] td {
+  background: alpha(var(--bwf-green), 0.045);
+}
+
+.row[data-qualify='qualified'] td:first-child {
+  box-shadow: inset 3px 0 0 var(--bwf-green);
+}
+
+.row[data-qualify='qualified']:hover td {
+  background: alpha(var(--bwf-green), 0.09);
+}
+
+.row[data-qualify='blocked'] td.rank {
+  color: var(--bwf-faint);
+}
+
+.cutoff td {
+  padding: 0;
+}
+
+.spacer {
+  padding: 0;
+  border: 0;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .table,
+  .table tbody {
+    display: block;
+  }
+
+  .head {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    grid-template-areas:
+      'rank who points'
+      'move who points';
+    align-items: center;
+    column-gap: 10px;
+    padding: 10px 4px;
+    border-bottom: 1px solid var(--bwf-line);
+  }
+
+  .row td {
+    display: block;
+    width: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .row:hover td {
+    background: none;
+  }
+
+  .row[data-qualify='qualified'] {
+    background: alpha(var(--bwf-green), 0.045);
+    box-shadow: inset 3px 0 0 var(--bwf-green);
+    padding-left: 10px;
+  }
+
+  .row[data-qualify='qualified'] td,
+  .row[data-qualify='qualified']:hover td,
+  .row[data-qualify='qualified'] td:first-child {
+    background: none;
+    box-shadow: none;
+  }
+
+  td.rank {
+    grid-area: rank;
+    align-self: end;
+    font-size: 16px;
+  }
+
+  td.move {
+    grid-area: move;
+    align-self: start;
+  }
+
+  td.who {
+    grid-area: who;
+  }
+
+  td.points {
+    grid-area: points;
+    font-size: 14px;
+  }
+
+  td.played {
+    display: none;
+  }
+
+  .names {
+    font-size: 13px;
+  }
+
+  .cutoff,
+  .cutoff td {
+    display: block;
+  }
+}

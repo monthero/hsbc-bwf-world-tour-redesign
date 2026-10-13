@@ -1,0 +1,133 @@
+.section {
+  padding-bottom: 28px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  --tone: var(--bwf-gold);
+  --tone-text: var(--bwf-gold-text);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border-radius: var(--bwf-card-radius);
+  border: 1px solid alpha(var(--tone), 0.24);
+  background: linear-gradient(160deg, alpha(var(--tone), 0.13) 0%, transparent 60%), var(--bwf-bg-sunken);
+  --avatar-ring: var(--bwf-bg-sunken);
+}
+
+.card[data-medal='silver'] {
+  --tone: var(--bwf-silver);
+  --tone-text: var(--bwf-silver-text);
+}
+
+.card[data-medal='bronze'] {
+  --tone: var(--bwf-bronze);
+  --tone-text: var(--bwf-bronze-text);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.place {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--tone-text);
+}
+
+.rank {
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.avatars {
+  flex: none;
+}
+
+.names {
+  flex: 1;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.name {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--bwf-text);
+  text-wrap: pretty;
+}
+
+.stats {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid alpha(var(--tone), 0.16);
+  font-size: 12px;
+  color: var(--bwf-muted);
+}
+
+.points {
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--bwf-text);
+}
+
+.unit {
+  margin-left: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--bwf-muted);
+}
+
+.played {
+  margin-right: auto;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .section {
+    padding-bottom: 20px;
+  }
+
+  .grid {
+    display: flex;
+    gap: 10px;
+  }
+
+  .card {
+    flex: none;
+    width: 84%;
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .names {
+    font-size: 15px;
+  }
+}

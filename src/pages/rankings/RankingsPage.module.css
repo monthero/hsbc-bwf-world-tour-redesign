@@ -1,0 +1,24 @@
+.page {
+  overflow-anchor: none;
+}
+
+.main {
+  padding-top: 4px;
+  padding-bottom: 120px;
+}
+
+.clear {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--bwf-red-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.clear:hover {
+  text-decoration: underline;
+}
