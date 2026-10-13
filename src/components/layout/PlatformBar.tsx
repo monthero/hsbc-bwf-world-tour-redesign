@@ -1,11 +1,11 @@
-import { Menu } from '@mantine/core'
-import { Link } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo, type ButtonHTMLAttributes, type FC, type Ref } from 'react'
+import { Menu } from '@mantine/core';
+import { Link } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo, type ButtonHTMLAttributes, type FC, type Ref } from 'react';
 
-import { IconCheck, IconExpand, IconExternal, IconNext } from '~/components/ui'
+import { IconCheck, IconExpand, IconExternal, IconNext } from '~/components/ui';
 
-import { BwfMark } from './BwfMark'
+import { BwfMark } from './BwfMark';
 import {
   CURRENT_SITE,
   isGroup,
@@ -14,18 +14,18 @@ import {
   SOCIAL_LINKS,
   type ExternalItem,
   type PlatformEntry,
-} from './links'
-import { ExternalLink, SocialLinks } from './SiteLink'
+} from './links';
+import { ExternalLink, SocialLinks } from './SiteLink';
 
-import classes from './PlatformBar.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './PlatformBar.module.css';
+import utils from '~/styles/utils.module.css';
 
 const MENU_CLASSES = {
   dropdown: clsx(utils.popover, classes.menu),
   item: classes.menuItem,
   label: classes.menuLabel,
   divider: classes.menuDivider,
-}
+};
 
 const MenuLink: FC<{ item: ExternalItem }> = ({ item }) => (
   <Menu.Item
@@ -37,10 +37,10 @@ const MenuLink: FC<{ item: ExternalItem }> = ({ item }) => (
   >
     {item.label}
   </Menu.Item>
-)
+);
 
 const MoreEntry: FC<{ entry: PlatformEntry }> = ({ entry }) => {
-  if (!isGroup(entry)) return <MenuLink item={entry} />
+  if (!isGroup(entry)) return <MenuLink item={entry} />;
   return (
     <Menu.Sub>
       <Menu.Sub.Target>
@@ -52,11 +52,11 @@ const MoreEntry: FC<{ entry: PlatformEntry }> = ({ entry }) => {
         ))}
       </Menu.Sub.Dropdown>
     </Menu.Sub>
-  )
-}
+  );
+};
 
 const SwitcherEntry: FC<{ entry: PlatformEntry }> = ({ entry }) => {
-  if (!isGroup(entry)) return <MenuLink item={entry} />
+  if (!isGroup(entry)) return <MenuLink item={entry} />;
   return (
     <>
       <Menu.Label>{entry.label}</Menu.Label>
@@ -64,14 +64,14 @@ const SwitcherEntry: FC<{ entry: PlatformEntry }> = ({ entry }) => {
         <MenuLink key={it.label} item={it} />
       ))}
     </>
-  )
-}
+  );
+};
 
 const CurrentSite: FC<{ className?: string }> = ({ className }) => (
   <Link to="/" className={className} aria-current="page">
     {CURRENT_SITE}
   </Link>
-)
+);
 
 const Trigger: FC<ButtonHTMLAttributes<HTMLButtonElement> & { label: string; ref?: Ref<HTMLButtonElement> }> = ({
   label,
@@ -81,7 +81,7 @@ const Trigger: FC<ButtonHTMLAttributes<HTMLButtonElement> & { label: string; ref
     {label}
     <IconExpand className={classes.chevron} />
   </button>
-)
+);
 
 const FamilyLinks: FC = () => (
   <nav className={classes.family} aria-label="BWF websites">
@@ -100,7 +100,7 @@ const FamilyLinks: FC = () => (
       </Menu.Dropdown>
     </Menu>
   </nav>
-)
+);
 
 const FamilySwitcher: FC = () => (
   <Menu position="bottom-start" offset={6} classNames={MENU_CLASSES} width={280}>
@@ -127,7 +127,7 @@ const FamilySwitcher: FC = () => (
       ))}
     </Menu.Dropdown>
   </Menu>
-)
+);
 
 export const PlatformBar = memo(() => (
   <div className={clsx(utils.onBrand, classes.bar)}>
@@ -138,4 +138,4 @@ export const PlatformBar = memo(() => (
       <SocialLinks items={SOCIAL_LINKS} className={classes.social} />
     </div>
   </div>
-))
+));

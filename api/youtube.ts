@@ -1,7 +1,7 @@
-import path from 'node:path'
+import path from 'node:path';
 
-import { vercelFunction } from '../server/endpoints.ts'
-import { youtubeEndpoint } from '../server/youtube-api.ts'
+import { vercelFunction } from '../server/endpoints.ts';
+import { youtubeEndpoint } from '../server/youtube-api.ts';
 
 export default vercelFunction(
   youtubeEndpoint({
@@ -9,4 +9,4 @@ export default vercelFunction(
     root: path.resolve(import.meta.dirname, '..'),
     persist: false,
   }),
-)
+);

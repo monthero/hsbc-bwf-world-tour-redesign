@@ -1,68 +1,68 @@
-import fs from 'node:fs/promises'
-import type { IncomingMessage, ServerResponse } from 'node:http'
+import fs from 'node:fs/promises';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 
-import { z } from 'zod'
+import { z } from 'zod';
 
-const MAX_BODY_BYTES = 1024 * 1024
+const MAX_BODY_BYTES = 1024 * 1024;
 
 export class HttpError extends Error {
-  readonly status: number
+  readonly status: number;
 
   constructor(status: number, message: string) {
-    super(message)
-    this.status = status
+    super(message);
+    this.status = status;
   }
 }
 
 export const cdnCache = (sMaxAge: number, staleWhileRevalidate: number, maxAge = 0) =>
-  `public, max-age=${maxAge}, s-maxage=${sMaxAge}, stale-while-revalidate=${staleWhileRevalidate}`
+  `public, max-age=${maxAge}, s-maxage=${sMaxAge}, stale-while-revalidate=${staleWhileRevalidate}`;
 
-export const IMMUTABLE_CACHE = 'public, max-age=31536000, s-maxage=31536000, immutable'
+export const IMMUTABLE_CACHE = 'public, max-age=31536000, s-maxage=31536000, immutable';
 
 export const sendJson = (res: ServerResponse, status: number, body: unknown, cache = 'no-store') => {
-  res.statusCode = status
-  res.setHeader('content-type', 'application/json')
-  res.setHeader('cache-control', cache)
-  res.end(JSON.stringify(body))
-}
+  res.statusCode = status;
+  res.setHeader('content-type', 'application/json');
+  res.setHeader('cache-control', cache);
+  res.end(JSON.stringify(body));
+};
 
 export const readBody = async (req: IncomingMessage): Promise<unknown> => {
-  const chunks: Buffer[] = []
-  let size = 0
+  const chunks: Buffer[] = [];
+  let size = 0;
   for await (const chunk of req as AsyncIterable<Buffer>) {
-    size += chunk.length
-    if (size > MAX_BODY_BYTES) throw new HttpError(413, 'Body too large')
-    chunks.push(chunk)
+    size += chunk.length;
+    if (size > MAX_BODY_BYTES) throw new HttpError(413, 'Body too large');
+    chunks.push(chunk);
   }
   try {
-    return JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}')
+    return JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}');
   } catch {
-    throw new HttpError(400, 'Invalid JSON')
+    throw new HttpError(400, 'Invalid JSON');
   }
-}
+};
 
 export const parseWith = <S extends z.ZodType>(schema: S, value: unknown): z.infer<S> => {
-  const result = schema.safeParse(value)
-  if (!result.success) throw new HttpError(400, z.prettifyError(result.error))
-  return result.data
-}
+  const result = schema.safeParse(value);
+  if (!result.success) throw new HttpError(400, z.prettifyError(result.error));
+  return result.data;
+};
 
 export const readText = (file: string, missing: () => string) =>
   fs.readFile(file, 'utf8').catch((e: NodeJS.ErrnoException) => {
-    if (e.code === 'ENOENT') return missing()
-    throw e
-  })
+    if (e.code === 'ENOENT') return missing();
+    throw e;
+  });
 
 export const readJson = async <T>(file: string): Promise<T | null> => {
   try {
-    return JSON.parse(await fs.readFile(file, 'utf8')) as T
+    return JSON.parse(await fs.readFile(file, 'utf8')) as T;
   } catch {
-    return null
+    return null;
   }
-}
+};
 
 export const writeAtomic = async (file: string, content: string | Uint8Array) => {
-  const tmp = `${file}.${process.pid}.${Date.now()}.tmp`
-  await fs.writeFile(tmp, content)
-  await fs.rename(tmp, file)
-}
+  const tmp = `${file}.${process.pid}.${Date.now()}.tmp`;
+  await fs.writeFile(tmp, content);
+  await fs.rename(tmp, file);
+};

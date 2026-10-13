@@ -1,20 +1,20 @@
-import { Link } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo, useMemo } from 'react'
+import { Link } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo, useMemo } from 'react';
 
-import { LevelBadge, TournamentPlace, TournamentStatusBadge } from '~/components/tournament'
-import { IconNext, LiveDot } from '~/components/ui'
-import { useTournaments } from '~/hooks/useTournaments'
-import { isHeld, liveAndNext, tournamentParams } from '~/utils/tournaments'
+import { LevelBadge, TournamentPlace, TournamentStatusBadge } from '~/components/tournament';
+import { IconNext, LiveDot } from '~/components/ui';
+import { useTournaments } from '~/hooks/useTournaments';
+import { isHeld, liveAndNext, tournamentParams } from '~/utils/tournaments';
 
-import classes from './TourTicker.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './TourTicker.module.css';
+import utils from '~/styles/utils.module.css';
 
 export const TourTicker = memo(() => {
-  const { data } = useTournaments()
-  const { live, next } = useMemo(() => liveAndNext(data?.filter(isHeld) ?? []), [data])
-  const t = live ?? next
-  if (!t) return null
+  const { data } = useTournaments();
+  const { live, next } = useMemo(() => liveAndNext(data?.filter(isHeld) ?? []), [data]);
+  const t = live ?? next;
+  if (!t) return null;
   return (
     <Link
       to="/world-tour/$year/$slug"
@@ -34,5 +34,5 @@ export const TourTicker = memo(() => {
         <IconNext className={classes.arrow} />
       </span>
     </Link>
-  )
-})
+  );
+});

@@ -1,15 +1,15 @@
-import { memo, type CSSProperties } from 'react'
+import { memo, type CSSProperties } from 'react';
 
-import type { Tournament } from '~/types'
+import type { Tournament } from '~/types';
 
-import classes from './SeasonCells.module.css'
+import classes from './SeasonCells.module.css';
 
 const SeasonCell = memo<{
-  tournament: Tournament
-  index: number
-  selected: boolean
-  onHover: (index: number, pointerType: string) => void
-  onActivate: (index: number) => void
+  tournament: Tournament;
+  index: number;
+  selected: boolean;
+  onHover: (index: number, pointerType: string) => void;
+  onActivate: (index: number) => void;
 }>(({ tournament: t, index, selected, onHover, onActivate }) => {
   return (
     <button
@@ -25,18 +25,18 @@ const SeasonCell = memo<{
     >
       <span />
     </button>
-  )
-})
+  );
+});
 
 export const SeasonCells = memo<{
-  tournaments: Tournament[]
-  size: 'sm' | 'md'
-  selected: number
-  label?: string
-  onHover: (index: number, pointerType: string) => void
-  onActivate: (index: number) => void
+  tournaments: Tournament[];
+  size: 'sm' | 'md';
+  selected: number;
+  label?: string;
+  onHover: (index: number, pointerType: string) => void;
+  onActivate: (index: number) => void;
 }>(({ tournaments, size, selected, label, onHover, onActivate }) => {
-  const Tag = label ? 'nav' : 'div'
+  const Tag = label ? 'nav' : 'div';
   return (
     <Tag
       className={classes.cells}
@@ -55,5 +55,5 @@ export const SeasonCells = memo<{
         />
       ))}
     </Tag>
-  )
-})
+  );
+});

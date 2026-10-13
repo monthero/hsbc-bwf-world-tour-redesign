@@ -1,4 +1,4 @@
-import type { DrawMatchDto, EntryDto } from '~/api/bwf/normalize'
+import type { DrawMatchDto, EntryDto } from '~/api/bwf/normalize';
 import {
   DOUBLES_EVENTS,
   GROUP_ROUND_NAMES,
@@ -8,7 +8,7 @@ import {
   REST_DAY,
   ROUND_NAMES,
   ROUND_ORDER,
-} from '~/constants'
+} from '~/constants';
 import type {
   DrawSlot,
   EntryListing,
@@ -24,49 +24,49 @@ import type {
   TournamentDay,
   TournamentMatches,
   TournamentSchedule,
-} from '~/types'
+} from '~/types';
 
-import { countryName } from './countries'
-import { date, isoRange } from './dates'
-import { compareText, foldText, toPlayer } from './names'
+import { countryName } from './countries';
+import { date, isoRange } from './dates';
+import { compareText, foldText, toPlayer } from './names';
 
-export const roundName = (r: string) => ROUND_NAMES[r] ?? r
+export const roundName = (r: string) => ROUND_NAMES[r] ?? r;
 
-export const groupName = (g: string) => `Group ${g}`
+export const groupName = (g: string) => `Group ${g}`;
 
-const dayRoundName = (r: string) => (r in GROUP_ROUND_NAMES ? GROUP_STAGE : roundName(r))
+const dayRoundName = (r: string) => (r in GROUP_ROUND_NAMES ? GROUP_STAGE : roundName(r));
 
-const byRoundOrder = (a: string, b: string) => (ROUND_ORDER[a] ?? 0) - (ROUND_ORDER[b] ?? 0)
+const byRoundOrder = (a: string, b: string) => (ROUND_ORDER[a] ?? 0) - (ROUND_ORDER[b] ?? 0);
 
 export const roundsLabel = (rounds: readonly string[]) =>
-  [...new Set([...rounds].sort(byRoundOrder).map(dayRoundName).filter(Boolean))].join(' · ')
+  [...new Set([...rounds].sort(byRoundOrder).map(dayRoundName).filter(Boolean))].join(' · ');
 
 export const matchRoundName = (m: Pick<Match, 'round' | 'group'>) =>
-  m.group ? `${groupName(m.group)} · ${GROUP_ROUND_NAMES[m.round] ?? roundName(m.round)}` : roundName(m.round)
+  m.group ? `${groupName(m.group)} · ${GROUP_ROUND_NAMES[m.round] ?? roundName(m.round)}` : roundName(m.round);
 
-export const isDoubles = (ev: EventCode) => DOUBLES_EVENTS.has(ev)
+export const isDoubles = (ev: EventCode) => DOUBLES_EVENTS.has(ev);
 
-export const opposite = (side: Side): Side => (side === 0 ? 1 : 0)
+export const opposite = (side: Side): Side => (side === 0 ? 1 : 0);
 
 export const teamKey = (players: readonly { id: string }[]) =>
   players
     .map((p) => p.id)
     .sort(compareText)
-    .join('&')
+    .join('&');
 
-export const teamEventKey = (ev: EventCode, key: string) => `${ev}|${key}`
+export const teamEventKey = (ev: EventCode, key: string) => `${ev}|${key}`;
 
 export const byMatchTime = (a: Match, b: Match) =>
-  a.date.localeCompare(b.date) || a.time.localeCompare(b.time) || a.court - b.court
+  a.date.localeCompare(b.date) || a.time.localeCompare(b.time) || a.court - b.court;
 
 export const toTeam = (t: MatchDto['teams'][number]): Team => {
-  const players = t.players.filter((p) => p.name).map((p) => toPlayer(p.name, p.cc, p.id))
-  return { seed: t.seed, players, key: teamKey(players) }
-}
+  const players = t.players.filter((p) => p.name).map((p) => toPlayer(p.name, p.cc, p.id));
+  return { seed: t.seed, players, key: teamKey(players) };
+};
 
 export const toMatch = (m: MatchDto, day: string, dayIndex: number, i: number): Match => {
-  const live = m.status === 'P'
-  const games = m.games.map((g) => [g[0], g[1]] as const)
+  const live = m.status === 'P';
+  const games = m.games.map((g) => [g[0], g[1]] as const);
   return {
     id: m.code ? `c${m.code}` : `${day}-${i}`,
     date: day,
@@ -87,55 +87,55 @@ export const toMatch = (m: MatchDto, day: string, dayIndex: number, i: number): 
     code: m.code ?? null,
     pause: m.pause ?? null,
     lastPoint: m.lastPoint ?? 0,
-  }
-}
+  };
+};
 
 export const toDrawSlots = (list: readonly DrawMatchDto[]): DrawSlot[] =>
-  list.map(({ match, slot }, i) => ({ match: toMatch(match, '', -1, i), slot }))
+  list.map(({ match, slot }, i) => ({ match: toMatch(match, '', -1, i), slot }));
 
 export const toEntryListings = (list: readonly EntryDto[]): EntryListing[] =>
-  list.map((e) => ({ ...e, team: toTeam(e.team) }))
+  list.map((e) => ({ ...e, team: toTeam(e.team) }));
 
-export const isScheduled = (m: Match) => m.date !== ''
+export const isScheduled = (m: Match) => m.date !== '';
 
-const TBA = 'To be announced'
+const TBA = 'To be announced';
 
-const unknownLabel = (t: Tournament) => (t.status === 'up' || t.status === 'live' ? TBA : '—')
+const unknownLabel = (t: Tournament) => (t.status === 'up' || t.status === 'live' ? TBA : '—');
 
 const todayIndexOf = (t: Tournament, days: readonly TournamentDay[]) => {
-  if (t.status === 'live') return days.findIndex((d) => d.isToday)
-  return t.status === 'done' ? days.length - 1 : -1
-}
+  if (t.status === 'live') return days.findIndex((d) => d.isToday);
+  return t.status === 'done' ? days.length - 1 : -1;
+};
 
 const focusIndexOf = (days: readonly TournamentDay[], todayIndex: number) => {
-  const next = days.findIndex((d) => d.index >= todayIndex && !d.isRest)
-  return next < 0 ? todayIndex : next
-}
+  const next = days.findIndex((d) => d.index >= todayIndex && !d.isRest);
+  return next < 0 ? todayIndex : next;
+};
 
 const dayMatches = (data: TournamentMatches, day: string, index: number, settled: boolean) =>
   (data.days[day] ?? [])
     .map((m, i) => toMatch(m, day, index, i))
     .filter((m) => !settled || m.status !== 'N')
-    .sort(byMatchTime)
+    .sort(byMatchTime);
 
 export const finalDayOver = (end: string, data: TournamentMatches | undefined) => {
-  const last = data?.days[end] ?? []
-  return last.length > 0 && last.every((m) => m.status === 'F')
-}
+  const last = data?.days[end] ?? [];
+  return last.length > 0 && last.every((m) => m.status === 'F');
+};
 
 export const buildSchedule = (t: Tournament, data: TournamentMatches, todayIso: string): TournamentSchedule => {
-  const settled = t.status === 'done'
+  const settled = t.status === 'done';
   const raw = isoRange(t.start, t.end).map((day, index) => {
-    const matches = dayMatches(data, day, index, settled)
-    const planned = data.plannedDays[day]
-    const rounds = [...new Set(matches.length ? matches.map((m) => m.round) : (planned?.rounds ?? []))]
-    return { day, index, matches, rounds, count: matches.length || planned?.count || 0 }
-  })
-  const lastKnown = raw.findLastIndex((r) => r.rounds.length > 0)
+    const matches = dayMatches(data, day, index, settled);
+    const planned = data.plannedDays[day];
+    const rounds = [...new Set(matches.length ? matches.map((m) => m.round) : (planned?.rounds ?? []))];
+    return { day, index, matches, rounds, count: matches.length || planned?.count || 0 };
+  });
+  const lastKnown = raw.findLastIndex((r) => r.rounds.length > 0);
   const days = raw.map(({ day, index, matches, rounds, count }): TournamentDay => {
-    const d = date(day)
-    const isPast = day < todayIso
-    const isRest = !rounds.length && index < lastKnown
+    const d = date(day);
+    const isPast = day < todayIso;
+    const isRest = !rounds.length && index < lastKnown;
     return {
       index,
       date: day,
@@ -154,9 +154,9 @@ export const buildSchedule = (t: Tournament, data: TournamentMatches, todayIso: 
       isPast,
       isRest,
       matches,
-    }
-  })
-  const todayIndex = todayIndexOf(t, days)
+    };
+  });
+  const todayIndex = todayIndexOf(t, days);
   return {
     asOf: data.asOf,
     stale: !!data.stale,
@@ -164,83 +164,83 @@ export const buildSchedule = (t: Tournament, data: TournamentMatches, todayIso: 
     todayIndex,
     focusIndex: focusIndexOf(days, todayIndex),
     matches: days.flatMap((d) => d.matches),
-  }
-}
+  };
+};
 
-export const winnerSide = (m: Match): Side | null => (m.status === 'F' && m.winner ? ((m.winner - 1) as Side) : null)
+export const winnerSide = (m: Match): Side | null => (m.status === 'F' && m.winner ? ((m.winner - 1) as Side) : null);
 
 export const winnerTeam = (m: Match): Team | null => {
-  const side = winnerSide(m)
-  return side === null ? null : m.teams[side]
-}
+  const side = winnerSide(m);
+  return side === null ? null : m.teams[side];
+};
 
 export const sideResult = (m: Match, side: Side): SideResult => {
-  if (m.status === 'P') return 'live'
-  const w = winnerSide(m)
-  if (w === null) return 'up'
-  return w === side ? 'won' : 'lost'
-}
+  if (m.status === 'P') return 'live';
+  const w = winnerSide(m);
+  if (w === null) return 'up';
+  return w === side ? 'won' : 'lost';
+};
 
 export const advanceLabel = (round: string) =>
-  round === 'F' ? 'Champion' : `Into ${NEXT_ROUND[round] ?? 'next round'}`
+  round === 'F' ? 'Champion' : `Into ${NEXT_ROUND[round] ?? 'next round'}`;
 
 export const sideStatus = (m: Match, side: Side, { court = false } = {}): { tone: SideResult; label: string } => {
-  const tone = sideResult(m, side)
-  const at = court ? ` · Court ${m.court}` : ''
+  const tone = sideResult(m, side);
+  const at = court ? ` · Court ${m.court}` : '';
   switch (tone) {
     case 'won':
-      return { tone, label: m.group ? `Won · ${groupName(m.group)}` : advanceLabel(m.round) }
+      return { tone, label: m.group ? `Won · ${groupName(m.group)}` : advanceLabel(m.round) };
     case 'lost':
-      return { tone, label: m.group ? `Lost · ${groupName(m.group)}` : `Out · ${m.round}` }
+      return { tone, label: m.group ? `Lost · ${groupName(m.group)}` : `Out · ${m.round}` };
     case 'live':
-      return { tone, label: `Live${at}` }
+      return { tone, label: `Live${at}` };
     default:
-      return { tone, label: `${m.time}${at}` }
+      return { tone, label: `${m.time}${at}` };
   }
-}
+};
 
-export const allGames = (m: Match): Game[] => (m.current ? [...m.games, m.current] : m.games)
+export const allGames = (m: Match): Game[] => (m.current ? [...m.games, m.current] : m.games);
 
-export const gameWon = (g: Game, side: Side) => g[side] > g[opposite(side)]
+export const gameWon = (g: Game, side: Side) => g[side] > g[opposite(side)];
 
 export const formatGames = (games: readonly Game[], side: Side = 0) =>
-  games.map((g) => `${g[side]}–${g[opposite(side)]}`).join(', ')
+  games.map((g) => `${g[side]}–${g[opposite(side)]}`).join(', ');
 
 export const noteLabel = (note: string | null, form: 'short' | 'long') =>
-  note && note in NOTE_LABELS ? NOTE_LABELS[note as keyof typeof NOTE_LABELS][form] : ''
+  note && note in NOTE_LABELS ? NOTE_LABELS[note as keyof typeof NOTE_LABELS][form] : '';
 
 export const teamLabel = (t: Team, sep: ' / ' | ' & ' = ' / ') =>
-  t.players.length === 1 ? (t.players[0]?.name ?? 'TBD') : t.players.map((p) => p.surname).join(sep) || 'TBD'
+  t.players.length === 1 ? (t.players[0]?.name ?? 'TBD') : t.players.map((p) => p.surname).join(sep) || 'TBD';
 
-export const teamPlayers = (m: Match) => m.teams.flatMap((t) => t.players)
+export const teamPlayers = (m: Match) => m.teams.flatMap((t) => t.players);
 
-export const isMainDraw = (m: Pick<Match, 'round'>) => (ROUND_ORDER[m.round] ?? 1) > 0
+export const isMainDraw = (m: Pick<Match, 'round'>) => (ROUND_ORDER[m.round] ?? 1) > 0;
 
 export const latestByTeam = (matches: readonly Match[]) => {
-  const map = new Map<string, { match: Match; team: Team; side: Side }>()
+  const map = new Map<string, { match: Match; team: Team; side: Side }>();
   for (const match of matches)
     match.teams.forEach((team, i) => {
-      if (team.players.length) map.set(teamEventKey(match.event, team.key), { match, team, side: i as Side })
-    })
-  return map
-}
+      if (team.players.length) map.set(teamEventKey(match.event, team.key), { match, team, side: i as Side });
+    });
+  return map;
+};
 
-export const normQuery = (q: string) => foldText(q.trim())
+export const normQuery = (q: string) => foldText(q.trim());
 
 const playerHas = (p: Player, s: string) =>
-  foldText(p.name).includes(s) || p.cc.toLowerCase() === s || foldText(countryName(p.cc)).includes(s)
+  foldText(p.name).includes(s) || p.cc.toLowerCase() === s || foldText(countryName(p.cc)).includes(s);
 
 export const playerMatchesQuery = (p: Player, q: string) => {
-  const s = normQuery(q)
-  return !s || playerHas(p, s)
-}
+  const s = normQuery(q);
+  return !s || playerHas(p, s);
+};
 
 export const teamMatchesQuery = (t: Pick<Team, 'players'>, q: string) => {
-  const s = normQuery(q)
-  return !s || t.players.some((p) => playerHas(p, s))
-}
+  const s = normQuery(q);
+  return !s || t.players.some((p) => playerHas(p, s));
+};
 
 export const matchesQuery = (m: Match, q: string) => {
-  const s = normQuery(q)
-  return !s || m.teams.some((t) => t.players.some((p) => playerHas(p, s)))
-}
+  const s = normQuery(q);
+  return !s || m.teams.some((t) => t.players.some((p) => playerHas(p, s)));
+};

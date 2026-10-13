@@ -1,21 +1,21 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
-import { FlagTipGroup } from '~/components/country'
-import { SectionTitle } from '~/components/ui'
-import { plural } from '~/utils/format'
+import { FlagTipGroup } from '~/components/country';
+import { SectionTitle } from '~/components/ui';
+import { plural } from '~/utils/format';
 
-import { MatchCard } from './MatchCard'
-import type { MatchGroup } from './utils'
+import { MatchCard } from './MatchCard';
+import type { MatchGroup } from './utils';
 
-import classes from './MatchGroups.module.css'
+import classes from './MatchGroups.module.css';
 
 export const MatchGroups = memo<{
-  title: string
-  count: number
-  suffix?: string
-  groups: MatchGroup[]
-  nextIds: ReadonlySet<string>
-  onOpen: (id: string) => void
+  title: string;
+  count: number;
+  suffix?: string;
+  groups: MatchGroup[];
+  nextIds: ReadonlySet<string>;
+  onOpen: (id: string) => void;
 }>(({ title, count, suffix, groups, nextIds, onOpen }) => {
   return (
     <FlagTipGroup>
@@ -37,5 +37,5 @@ export const MatchGroups = memo<{
         </div>
       ))}
     </FlagTipGroup>
-  )
-})
+  );
+});

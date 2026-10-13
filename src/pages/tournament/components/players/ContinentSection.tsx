@@ -1,20 +1,20 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
-import { FollowButton } from '~/components/follow'
-import { plural } from '~/utils/format'
+import { FollowButton } from '~/components/follow';
+import { plural } from '~/utils/format';
 
-import { CountryCard } from './CountryCard'
-import type { ContinentGroup } from './entries'
+import { CountryCard } from './CountryCard';
+import type { ContinentGroup } from './entries';
 
-import classes from './Players.module.css'
+import classes from './Players.module.css';
 
 export const ContinentSection = memo<{
-  continent: ContinentGroup
-  accordion: boolean
-  forceOpen: boolean
-  onOpen: (id: string) => void
+  continent: ContinentGroup;
+  accordion: boolean;
+  forceOpen: boolean;
+  onOpen: (id: string) => void;
 }>(({ continent, accordion, forceOpen, onOpen }) => {
-  const { name, count, countries } = continent
+  const { name, count, countries } = continent;
   return (
     <div className={classes.continent}>
       <div className={classes.continentHead}>
@@ -30,5 +30,5 @@ export const ContinentSection = memo<{
         ))}
       </div>
     </div>
-  )
-})
+  );
+});

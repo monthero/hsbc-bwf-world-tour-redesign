@@ -1,8 +1,8 @@
-import type { FC } from 'react'
+import type { FC } from 'react';
 
-import { RankChange } from '~/components/player'
+import { RankChange } from '~/components/player';
 
-import classes from './Movement.module.css'
+import classes from './Movement.module.css';
 
 export const Movement: FC<{ change: number; isNew: boolean; variant?: 'text' | 'pill' }> = ({
   change,
@@ -14,11 +14,11 @@ export const Movement: FC<{ change: number; isNew: boolean; variant?: 'text' | '
       <span className={classes.new} title="New entry">
         New
       </span>
-    )
-  if (change) return <RankChange value={change} variant={variant} />
+    );
+  if (change) return <RankChange value={change} variant={variant} />;
   return (
     <span className={classes.same} title="No change">
       –
     </span>
-  )
-}
+  );
+};

@@ -1,12 +1,12 @@
-import { useDebouncedCallback } from '@mantine/hooks'
-import { clsx } from 'clsx'
-import { memo, useCallback, useEffect, useRef, useState, type FC, type ReactNode } from 'react'
+import { useDebouncedCallback } from '@mantine/hooks';
+import { clsx } from 'clsx';
+import { memo, useCallback, useEffect, useRef, useState, type FC, type ReactNode } from 'react';
 
-import { Flag } from '~/components/country'
-import { FilterChip, SearchField, Segmented, StickyBar } from '~/components/ui'
-import { EVENT_OPTIONS } from '~/constants'
-import type { EventCode } from '~/types'
-import { formatNumber, plural } from '~/utils/format'
+import { Flag } from '~/components/country';
+import { FilterChip, SearchField, Segmented, StickyBar } from '~/components/ui';
+import { EVENT_OPTIONS } from '~/constants';
+import type { EventCode } from '~/types';
+import { formatNumber, plural } from '~/utils/format';
 
 import {
   ACTIVITY_OPTIONS,
@@ -17,16 +17,16 @@ import {
   type CountOption,
   type Criteria,
   type Toggle,
-} from '../filters'
-import type { Activity, AdminSearch, SortKey } from '../types'
-import { CountSelect } from './CountSelect'
+} from '../filters';
+import type { Activity, AdminSearch, SortKey } from '../types';
+import { CountSelect } from './CountSelect';
 
-import classes from './FilterBar.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './FilterBar.module.css';
+import utils from '~/styles/utils.module.css';
 
-const DEBOUNCE = { delay: 200, flushOnUnmount: true }
+const DEBOUNCE = { delay: 200, flushOnUnmount: true };
 
-const flagIcon = (cc: string) => <Flag cc={cc} size="sm" tip={false} />
+const flagIcon = (cc: string) => <Flag cc={cc} size="sm" tip={false} />;
 
 const ToggleChip = memo<{ toggle: Toggle; active: boolean; onToggle: (key: string) => void }>(
   ({ toggle, active, onToggle }) => (
@@ -34,29 +34,29 @@ const ToggleChip = memo<{ toggle: Toggle; active: boolean; onToggle: (key: strin
       {toggle.label}
     </FilterChip>
   ),
-)
+);
 
 const DebouncedSearch = memo<{ value: string; onChange: (q: string) => void }>(({ value, onChange }) => {
-  const [text, setText] = useState(value)
-  const pushed = useRef(value)
+  const [text, setText] = useState(value);
+  const pushed = useRef(value);
   const push = useDebouncedCallback((v: string) => {
-    pushed.current = v.trim()
-    onChange(pushed.current)
-  }, DEBOUNCE)
+    pushed.current = v.trim();
+    onChange(pushed.current);
+  }, DEBOUNCE);
 
   useEffect(() => {
-    if (value === pushed.current) return
-    pushed.current = value
-    setText(value)
-  }, [value])
+    if (value === pushed.current) return;
+    pushed.current = value;
+    setText(value);
+  }, [value]);
 
   const onText = useCallback(
     (v: string) => {
-      setText(v)
-      push(v)
+      setText(v);
+      push(v);
     },
     [push],
-  )
+  );
   return (
     <SearchField
       value={text}
@@ -65,42 +65,42 @@ const DebouncedSearch = memo<{ value: string; onChange: (q: string) => void }>((
       aria-label="Search players"
       className={classes.search}
     />
-  )
-})
+  );
+});
 
 export const FilterShell: FC<{ children: ReactNode }> = ({ children }) => (
   <StickyBar glass zIndex={5} className={classes.bar}>
     <div className={clsx(utils.container, classes.inner)}>{children}</div>
   </StickyBar>
-)
+);
 
 export const FilterControls = memo<{
-  criteria: Criteria
-  onPatch: (next: Partial<AdminSearch>) => void
-  countries: readonly CountOption[]
-  brands: readonly CountOption[]
-  shown: number
-  total: number
+  criteria: Criteria;
+  onPatch: (next: Partial<AdminSearch>) => void;
+  countries: readonly CountOption[];
+  brands: readonly CountOption[];
+  shown: number;
+  total: number;
 }>(({ criteria, onPatch, countries, brands, shown, total }) => {
-  const onQuery = useCallback((q: string) => onPatch({ q: q || undefined }), [onPatch])
-  const onCountry = useCallback((cc: string | undefined) => onPatch({ cc }), [onPatch])
-  const onBrand = useCallback((brand: string | undefined) => onPatch({ brand }), [onPatch])
-  const onEvent = useCallback((ev: EventCode | null) => onPatch({ ev: ev ?? undefined }), [onPatch])
+  const onQuery = useCallback((q: string) => onPatch({ q: q || undefined }), [onPatch]);
+  const onCountry = useCallback((cc: string | undefined) => onPatch({ cc }), [onPatch]);
+  const onBrand = useCallback((brand: string | undefined) => onPatch({ brand }), [onPatch]);
+  const onEvent = useCallback((ev: EventCode | null) => onPatch({ ev: ev ?? undefined }), [onPatch]);
   const onActive = useCallback(
     (v: Activity | null) => onPatch({ active: !v || v === DEFAULT_ACTIVITY ? undefined : v }),
     [onPatch],
-  )
+  );
   const onSort = useCallback(
     (v: SortKey | null) => onPatch({ sort: !v || v === DEFAULT_SORT ? undefined : v }),
     [onPatch],
-  )
+  );
   const onToggle = useCallback(
     (key: string) => {
-      const flags = criteria.flags.includes(key) ? criteria.flags.filter((f) => f !== key) : [...criteria.flags, key]
-      onPatch({ flags: flags.length ? flags : undefined })
+      const flags = criteria.flags.includes(key) ? criteria.flags.filter((f) => f !== key) : [...criteria.flags, key];
+      onPatch({ flags: flags.length ? flags : undefined });
     },
     [criteria.flags, onPatch],
-  )
+  );
 
   return (
     <>
@@ -157,5 +157,5 @@ export const FilterControls = memo<{
         ))}
       </div>
     </>
-  )
-})
+  );
+});

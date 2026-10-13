@@ -1,12 +1,12 @@
-import { Link } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import type { FC } from 'react'
+import { Link } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import type { FC } from 'react';
 
-import { localAsset } from '~/utils/images'
+import { localAsset } from '~/utils/images';
 
-import classes from './Wordmark.module.css'
+import classes from './Wordmark.module.css';
 
-const LOGO = localAsset('/assets/brand/logo-wt-white.svg')
+const LOGO = localAsset('/assets/brand/logo-wt-white.svg');
 
 export const Wordmark: FC<{ onNavigate?: () => void; className?: string }> = ({ onNavigate, className }) => (
   <Link
@@ -18,4 +18,4 @@ export const Wordmark: FC<{ onNavigate?: () => void; className?: string }> = ({ 
     <img src={LOGO} alt="" className={classes.logo} width={151} height={46} />
     <span className={classes.tag}>Concept</span>
   </Link>
-)
+);

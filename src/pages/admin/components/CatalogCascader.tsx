@@ -1,27 +1,27 @@
-import { Button, Cascader, Select, TextInput, type CascaderFormatValue } from '@mantine/core'
-import { memo, useCallback, useMemo, useState, type ChangeEvent, type FC } from 'react'
+import { Button, Cascader, Select, TextInput, type CascaderFormatValue } from '@mantine/core';
+import { memo, useCallback, useMemo, useState, type ChangeEvent, type FC } from 'react';
 
-import { useAddBrand, useAddEquipment, useAdminPlayers, useEquipment } from '../api'
-import { brandMatchers, catalogPath, catalogSearch, catalogTree, guessParts } from '../catalog'
-import { buildRows } from '../filters'
-import type { AdminPlayer, Brand, EquipmentKind, EquipmentRow } from '../schema'
-import { FLOATING_PROPS, INPUT_CLASSES } from './inputs'
+import { useAddBrand, useAddEquipment, useAdminPlayers, useEquipment } from '../api';
+import { brandMatchers, catalogPath, catalogSearch, catalogTree, guessParts } from '../catalog';
+import { buildRows } from '../filters';
+import type { AdminPlayer, Brand, EquipmentKind, EquipmentRow } from '../schema';
+import { FLOATING_PROPS, INPUT_CLASSES } from './inputs';
 
-import classes from './CatalogCascader.module.css'
+import classes from './CatalogCascader.module.css';
 
-const NO_ROWS: readonly EquipmentRow[] = []
-const NO_BRANDS: readonly Brand[] = []
-const NO_PLAYERS: readonly AdminPlayer[] = []
-const DROPDOWN_HEIGHT = 300
-const COLUMN_WIDTH = 190
-const COMBOBOX_PROPS = { ...FLOATING_PROPS, width: 'max-content' }
+const NO_ROWS: readonly EquipmentRow[] = [];
+const NO_BRANDS: readonly Brand[] = [];
+const NO_PLAYERS: readonly AdminPlayer[] = [];
+const DROPDOWN_HEIGHT = 300;
+const COLUMN_WIDTH = 190;
+const COMBOBOX_PROPS = { ...FLOATING_PROPS, width: 'max-content' };
 
-const formatName: CascaderFormatValue = ({ value }) => value.at(-1) ?? ''
+const formatName: CascaderFormatValue = ({ value }) => value.at(-1) ?? '';
 
 const NewBrand: FC<{ onAdded: (id: string) => void; onCancel: () => void }> = ({ onAdded, onCancel }) => {
-  const [name, setName] = useState('')
-  const { mutate, isPending, error } = useAddBrand()
-  const onSave = () => mutate({ name: name.trim() }, { onSuccess: ({ brand }) => onAdded(brand.id) })
+  const [name, setName] = useState('');
+  const { mutate, isPending, error } = useAddBrand();
+  const onSave = () => mutate({ name: name.trim() }, { onSuccess: ({ brand }) => onAdded(brand.id) });
   return (
     <div className={classes.newBrand}>
       <TextInput
@@ -39,52 +39,52 @@ const NewBrand: FC<{ onAdded: (id: string) => void; onCancel: () => void }> = ({
       </button>
       {error && <span className={classes.error}>{error.message}</span>}
     </div>
-  )
-}
+  );
+};
 
 const AddToCatalog: FC<{
-  kind: EquipmentKind
-  value: string
-  brands: readonly Brand[]
-  onAdded: (name: string) => void
+  kind: EquipmentKind;
+  value: string;
+  brands: readonly Brand[];
+  onAdded: (name: string) => void;
 }> = ({ kind, value, brands, onAdded }) => {
-  const matchers = useMemo(() => brandMatchers(brands), [brands])
-  const brandOptions = useMemo(() => brands.map((b) => ({ value: b.id, label: b.name })), [brands])
-  const [open, setOpen] = useState(false)
-  const [creatingBrand, setCreatingBrand] = useState(false)
-  const [parts, setParts] = useState(() => guessParts(value, matchers))
-  const { mutate, isPending, error } = useAddEquipment()
+  const matchers = useMemo(() => brandMatchers(brands), [brands]);
+  const brandOptions = useMemo(() => brands.map((b) => ({ value: b.id, label: b.name })), [brands]);
+  const [open, setOpen] = useState(false);
+  const [creatingBrand, setCreatingBrand] = useState(false);
+  const [parts, setParts] = useState(() => guessParts(value, matchers));
+  const { mutate, isPending, error } = useAddEquipment();
 
   const onOpen = useCallback(() => {
-    setParts(guessParts(value, matchers))
-    setOpen(true)
-  }, [value, matchers])
+    setParts(guessParts(value, matchers));
+    setOpen(true);
+  }, [value, matchers]);
   const onSave = () =>
     mutate(
       { kind, ...parts },
       {
         onSuccess: ({ row }) => {
-          setOpen(false)
-          onAdded(row.name)
+          setOpen(false);
+          onAdded(row.name);
         },
       },
-    )
+    );
   const onModel = (e: ChangeEvent<HTMLInputElement>) => {
-    const model = e.currentTarget.value
-    setParts((p) => ({ ...p, model }))
-  }
-  const onBrand = (brandId: string | null) => setParts((p) => ({ ...p, brandId: brandId ?? '' }))
+    const model = e.currentTarget.value;
+    setParts((p) => ({ ...p, model }));
+  };
+  const onBrand = (brandId: string | null) => setParts((p) => ({ ...p, brandId: brandId ?? '' }));
   const onBrandAdded = (brandId: string) => {
-    setCreatingBrand(false)
-    onBrand(brandId)
-  }
+    setCreatingBrand(false);
+    onBrand(brandId);
+  };
 
   if (!open)
     return (
       <button type="button" className={classes.add} onClick={onOpen}>
         + Add new to catalog
       </button>
-    )
+    );
   return (
     <div className={classes.form}>
       <div className={classes.parts}>
@@ -123,30 +123,30 @@ const AddToCatalog: FC<{
         {error && <span className={classes.error}>{error.message}</span>}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const CatalogCascader = memo<{
-  kind: EquipmentKind
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
-  label: string
+  kind: EquipmentKind;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  label: string;
 }>(({ kind, value, onChange, placeholder, label }) => {
-  const { data } = useEquipment(kind)
-  const { data: admin } = useAdminPlayers()
-  const rows = data?.rows ?? NO_ROWS
-  const brands = data?.brands ?? NO_BRANDS
-  const matchers = useMemo(() => brandMatchers(brands), [brands])
+  const { data } = useEquipment(kind);
+  const { data: admin } = useAdminPlayers();
+  const rows = data?.rows ?? NO_ROWS;
+  const brands = data?.brands ?? NO_BRANDS;
+  const matchers = useMemo(() => brandMatchers(brands), [brands]);
   const order = useMemo(
     () => buildRows(admin?.players ?? NO_PLAYERS, matchers).brands.map((b) => b.value),
     [admin, matchers],
-  )
-  const tree = useMemo(() => catalogTree(rows, order), [rows, order])
-  const typed = value.trim()
-  const path = useMemo(() => catalogPath(rows, typed), [rows, typed])
-  const unknown = !!data && !!typed && !path
-  const onPick = useCallback((next: string[] | null) => onChange(next?.at(-1) ?? ''), [onChange])
+  );
+  const tree = useMemo(() => catalogTree(rows, order), [rows, order]);
+  const typed = value.trim();
+  const path = useMemo(() => catalogPath(rows, typed), [rows, typed]);
+  const unknown = !!data && !!typed && !path;
+  const onPick = useCallback((next: string[] | null) => onChange(next?.at(-1) ?? ''), [onChange]);
 
   return (
     <div className={classes.root}>
@@ -177,5 +177,5 @@ export const CatalogCascader = memo<{
       )}
       <AddToCatalog key={typed} kind={kind} value={unknown ? typed : ''} brands={brands} onAdded={onChange} />
     </div>
-  )
-})
+  );
+});

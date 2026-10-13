@@ -1,44 +1,44 @@
-import { Button, Skeleton } from '@mantine/core'
-import { getRouteApi, Link } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { useCallback, useMemo, type FC } from 'react'
+import { Button, Skeleton } from '@mantine/core';
+import { getRouteApi, Link } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { useCallback, useMemo, type FC } from 'react';
 
-import { isNotFound, useNewsArticle, useNewsIndex, useRelatedNews } from '~/api/news'
-import type { NewsArticle, NewsItem } from '~/api/schemas'
-import { PopularNews, SubscribeCard } from '~/components/news'
-import { BackPill, EmptyState, IconExternal } from '~/components/ui'
-import { NOT_FOUND } from '~/constants'
-import { useDocumentTitle } from '~/hooks/useDocumentTitle'
-import { useIsMobile } from '~/hooks/useIsMobile'
-import { useTournamentLookup } from '~/hooks/useNews'
-import { usePlayerDirectory } from '~/hooks/usePlayers'
-import { toStory, type TournamentLookup } from '~/utils/news'
+import { isNotFound, useNewsArticle, useNewsIndex, useRelatedNews } from '~/api/news';
+import type { NewsArticle, NewsItem } from '~/api/schemas';
+import { PopularNews, SubscribeCard } from '~/components/news';
+import { BackPill, EmptyState, IconExternal } from '~/components/ui';
+import { NOT_FOUND } from '~/constants';
+import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useIsMobile } from '~/hooks/useIsMobile';
+import { useTournamentLookup } from '~/hooks/useNews';
+import { usePlayerDirectory } from '~/hooks/usePlayers';
+import { toStory, type TournamentLookup } from '~/utils/news';
 
-import { ArticleHeader } from './components/ArticleHeader'
-import { Block } from './components/blocks/Blocks'
-import { RelatedSection } from './components/RelatedSection'
-import { OFFICIAL_HOST } from './constants'
-import { LookupContext } from './context'
-import { featuredPlayers, readMinutes } from './utils'
+import { ArticleHeader } from './components/ArticleHeader';
+import { Block } from './components/blocks/Blocks';
+import { RelatedSection } from './components/RelatedSection';
+import { OFFICIAL_HOST } from './constants';
+import { LookupContext } from './context';
+import { featuredPlayers, readMinutes } from './utils';
 
-import classes from './ArticlePage.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './ArticlePage.module.css';
+import utils from '~/styles/utils.module.css';
 
-const route = getRouteApi('/news_/$id')
+const route = getRouteApi('/news_/$id');
 
-const BACK = { to: '/news' } as const
-const TITLE_SITE = {}
-const BODY_SKELETON = ['100%', '94%', '97%', '62%', '100%', '91%', '78%'] as const
+const BACK = { to: '/news' } as const;
+const TITLE_SITE = {};
+const BODY_SKELETON = ['100%', '94%', '97%', '62%', '100%', '91%', '78%'] as const;
 
 const storiesOf = (items: readonly NewsItem[], lookup: TournamentLookup | undefined) =>
-  items.map((i) => toStory(i, lookup))
+  items.map((i) => toStory(i, lookup));
 
 export const ArticlePage: FC = () => {
-  const { id } = route.useParams()
-  const { data: article, error, isError, refetch } = useNewsArticle(id)
-  const missing = isNotFound(error)
-  useDocumentTitle(missing ? NOT_FOUND : [article?.title, 'News'], TITLE_SITE)
-  const retry = useCallback(() => void refetch(), [refetch])
+  const { id } = route.useParams();
+  const { data: article, error, isError, refetch } = useNewsArticle(id);
+  const missing = isNotFound(error);
+  useDocumentTitle(missing ? NOT_FOUND : [article?.title, 'News'], TITLE_SITE);
+  const retry = useCallback(() => void refetch(), [refetch]);
 
   if (isError && !article)
     return (
@@ -57,28 +57,28 @@ export const ArticlePage: FC = () => {
           )}
         </EmptyState>
       </div>
-    )
+    );
 
-  return <Article key={id} article={article} />
-}
+  return <Article key={id} article={article} />;
+};
 
 const Article: FC<{ article: NewsArticle | undefined }> = ({ article }) => {
-  const isMobile = useIsMobile()
-  const lookup = useTournamentLookup()
-  const { data: directory } = usePlayerDirectory()
-  const { data: index } = useNewsIndex()
-  const related = useRelatedNews(article)
+  const isMobile = useIsMobile();
+  const lookup = useTournamentLookup();
+  const { data: directory } = usePlayerDirectory();
+  const { data: index } = useNewsIndex();
+  const related = useRelatedNews(article);
 
-  const story = useMemo(() => article && toStory(article, lookup), [article, lookup])
-  const minutes = useMemo(() => (article ? readMinutes(article.blocks) : 0), [article])
+  const story = useMemo(() => article && toStory(article, lookup), [article, lookup]);
+  const minutes = useMemo(() => (article ? readMinutes(article.blocks) : 0), [article]);
   const players = useMemo(
     () => featuredPlayers(article ? [...article.players, ...article.matchedPlayers] : [], directory),
     [article, directory],
-  )
-  const popular = useMemo(() => index?.popular.map((i) => toStory(i, lookup)), [index, lookup])
-  const more = useMemo(() => storiesOf(related.tournament, lookup), [related.tournament, lookup])
-  const latest = useMemo(() => storiesOf(related.latest, lookup), [related.latest, lookup])
-  const loadingRelated = related.isLoading
+  );
+  const popular = useMemo(() => index?.popular.map((i) => toStory(i, lookup)), [index, lookup]);
+  const more = useMemo(() => storiesOf(related.tournament, lookup), [related.tournament, lookup]);
+  const latest = useMemo(() => storiesOf(related.latest, lookup), [related.latest, lookup]);
+  const loadingRelated = related.isLoading;
 
   return (
     <LookupContext value={lookup}>
@@ -128,5 +128,5 @@ const Article: FC<{ article: NewsArticle | undefined }> = ({ article }) => {
         )}
       </div>
     </LookupContext>
-  )
-}
+  );
+};

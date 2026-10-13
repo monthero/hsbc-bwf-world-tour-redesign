@@ -1,51 +1,51 @@
-import { Tooltip } from '@mantine/core'
-import { clsx } from 'clsx'
-import { memo, useMemo, type FC } from 'react'
+import { Tooltip } from '@mantine/core';
+import { clsx } from 'clsx';
+import { memo, useMemo, type FC } from 'react';
 
-import { Flag } from '~/components/country'
-import { TeamPlayers } from '~/components/match'
-import { AvatarGroup, SeedTag } from '~/components/player'
-import { Medal } from '~/components/tournament'
-import { SectionTitle } from '~/components/ui'
-import { usePlayerDirectory } from '~/hooks/usePlayers'
-import type { EventCode, PlayerDirectory, Team } from '~/types'
-import { formatRank } from '~/utils/format'
-import { playerPhoto } from '~/utils/players'
-import { worldRank } from '~/utils/rankings'
+import { Flag } from '~/components/country';
+import { TeamPlayers } from '~/components/match';
+import { AvatarGroup, SeedTag } from '~/components/player';
+import { Medal } from '~/components/tournament';
+import { SectionTitle } from '~/components/ui';
+import { usePlayerDirectory } from '~/hooks/usePlayers';
+import type { EventCode, PlayerDirectory, Team } from '~/types';
+import { formatRank } from '~/utils/format';
+import { playerPhoto } from '~/utils/players';
+import { worldRank } from '~/utils/rankings';
 
-import type { TabProps } from '../types'
-import { buildPodium, type PodiumEvent, type PodiumPlace, type SeedEntry } from '../utils'
-import { ChampionPhotos } from './Champions'
+import type { TabProps } from '../types';
+import { buildPodium, type PodiumEvent, type PodiumPlace, type SeedEntry } from '../utils';
+import { ChampionPhotos } from './Champions';
 
-import page from '../TournamentPage.module.css'
-import classes from './PodiumTab.module.css'
-import utils from '~/styles/utils.module.css'
+import page from '../TournamentPage.module.css';
+import classes from './PodiumTab.module.css';
+import utils from '~/styles/utils.module.css';
 
-const LINE_AVATAR = 32
+const LINE_AVATAR = 32;
 
-const LINE_CROP = 96
+const LINE_CROP = 96;
 
-const MISSING_TIP = 'Withdrew, or their matches are missing from this data'
+const MISSING_TIP = 'Withdrew, or their matches are missing from this data';
 
-const RANK_TIP = 'Current BWF World Ranking in this category'
+const RANK_TIP = 'Current BWF World Ranking in this category';
 
 interface PlaceProps {
-  place: PodiumPlace
-  event: EventCode
-  dir: PlayerDirectory | undefined
+  place: PodiumPlace;
+  event: EventCode;
+  dir: PlayerDirectory | undefined;
 }
 
 const WorldRank: FC<{ team: Team; event: EventCode; dir: PlayerDirectory | undefined }> = ({ team, event, dir }) => {
-  const rank = worldRank(dir, team.players, event)
-  if (!rank) return null
+  const rank = worldRank(dir, team.players, event);
+  if (!rank) return null;
   return (
     <Tooltip label={RANK_TIP}>
       <span className={classes.rank}>
         World rank <b>{formatRank(rank)}</b>
       </span>
     </Tooltip>
-  )
-}
+  );
+};
 
 const PlaceMedal: FC<{ place: PodiumPlace; size: number }> = ({ place: p, size }) => {
   return (
@@ -54,13 +54,13 @@ const PlaceMedal: FC<{ place: PodiumPlace; size: number }> = ({ place: p, size }
         <Medal kind={p.medal} size={size} />
       </span>
     </Tooltip>
-  )
-}
+  );
+};
 
 const ChampionBlock: FC<PlaceProps> = ({ place: p, event, dir }) => {
-  const team = p.teams?.[0]
-  const countries = team ? [...new Set(team.players.map((pl) => pl.cc))] : []
-  const photos = !!team?.players.some((pl) => playerPhoto(dir, pl.id).src)
+  const team = p.teams?.[0];
+  const countries = team ? [...new Set(team.players.map((pl) => pl.cc))] : [];
+  const photos = !!team?.players.some((pl) => playerPhoto(dir, pl.id).src);
   return (
     <div className={classes.hero} data-decided={team ? true : undefined} data-photos={photos || undefined}>
       {photos && team && <ChampionPhotos players={team.players} />}
@@ -94,8 +94,8 @@ const ChampionBlock: FC<PlaceProps> = ({ place: p, event, dir }) => {
         <span className={classes.tbd}>To be decided</span>
       )}
     </div>
-  )
-}
+  );
+};
 
 const PlaceList: FC<PlaceProps> = ({ place: p, event, dir }) => {
   return (
@@ -120,8 +120,8 @@ const PlaceList: FC<PlaceProps> = ({ place: p, event, dir }) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
   return (
@@ -142,8 +142,8 @@ const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
         </Tooltip>
       )}
     </div>
-  )
-}
+  );
+};
 
 const CardHead: FC<{ name: string; note: string }> = ({ name, note }) => {
   return (
@@ -151,11 +151,11 @@ const CardHead: FC<{ name: string; note: string }> = ({ name, note }) => {
       <span className={classes.name}>{name}</span>
       <span className={classes.note}>{note}</span>
     </div>
-  )
-}
+  );
+};
 
 const MedalCard = memo<{ data: PodiumEvent; dir: PlayerDirectory | undefined }>(({ data: e, dir }) => {
-  const [champion, ...rest] = e.places
+  const [champion, ...rest] = e.places;
   return (
     <div className={clsx(utils.card, classes.card, classes.medalCard)}>
       <CardHead name={e.name} note={e.when} />
@@ -164,8 +164,8 @@ const MedalCard = memo<{ data: PodiumEvent; dir: PlayerDirectory | undefined }>(
         <PlaceList key={p.label} place={p} event={e.event} dir={dir} />
       ))}
     </div>
-  )
-})
+  );
+});
 
 const SeedCard = memo<{ data: PodiumEvent; hasMatches: boolean }>(({ data: e, hasMatches }) => {
   return (
@@ -182,13 +182,13 @@ const SeedCard = memo<{ data: PodiumEvent; hasMatches: boolean }>(({ data: e, ha
         )}
       </div>
     </div>
-  )
-})
+  );
+});
 
 export const PodiumTab: FC<TabProps> = ({ tournament, schedule }) => {
-  const events = useMemo(() => buildPodium(tournament, schedule), [tournament, schedule])
-  const hasMatches = schedule.matches.length > 0
-  const { data: dir } = usePlayerDirectory()
+  const events = useMemo(() => buildPodium(tournament, schedule), [tournament, schedule]);
+  const hasMatches = schedule.matches.length > 0;
+  const { data: dir } = usePlayerDirectory();
   return (
     <div className={clsx(utils.container, page.tabSection, classes.tab)}>
       <section className={classes.section}>
@@ -212,5 +212,5 @@ export const PodiumTab: FC<TabProps> = ({ tournament, schedule }) => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};

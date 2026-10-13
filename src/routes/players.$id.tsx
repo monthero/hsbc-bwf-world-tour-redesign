@@ -1,8 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router';
 
-import { calendarQuery, playersQuery } from '~/api/queries'
-import { PlayerPage } from '~/pages/player/PlayerPage'
-import { PlayerSearch } from '~/pages/player/types'
+import { calendarQuery, playersQuery } from '~/api/queries';
+import { PlayerPage } from '~/pages/player/PlayerPage';
+import { PlayerSearch } from '~/pages/player/types';
 
 export const Route = createFileRoute('/players/$id')({
   validateSearch: PlayerSearch,
@@ -12,4 +12,4 @@ export const Route = createFileRoute('/players/$id')({
       context.queryClient.ensureQueryData(playersQuery()),
     ]),
   component: PlayerPage,
-})
+});

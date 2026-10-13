@@ -1,22 +1,22 @@
-import { Link } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { Link } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import { LevelBadge, LogoTile, TournamentPlace, TournamentStatusBadge } from '~/components/tournament'
-import { IconNext, MediaCover } from '~/components/ui'
-import { LEVEL_META, LEVEL_VARS } from '~/constants'
-import type { Tournament } from '~/types'
-import { countdownLabel, tournamentParams } from '~/utils/tournaments'
+import { LevelBadge, LogoTile, TournamentPlace, TournamentStatusBadge } from '~/components/tournament';
+import { IconNext, MediaCover } from '~/components/ui';
+import { LEVEL_META, LEVEL_VARS } from '~/constants';
+import type { Tournament } from '~/types';
+import { countdownLabel, tournamentParams } from '~/utils/tournaments';
 
-import type { AnchorRef } from '../types'
+import type { AnchorRef } from '../types';
 
-import classes from './EventRow.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './EventRow.module.css';
+import utils from '~/styles/utils.module.css';
 
 export const EventRow = memo<{
-  tournament: Tournament
-  isNext: boolean
-  anchorRef?: AnchorRef
+  tournament: Tournament;
+  isNext: boolean;
+  anchorRef?: AnchorRef;
 }>(({ tournament: t, isNext, anchorRef }) => {
   return (
     <Link
@@ -45,12 +45,12 @@ export const EventRow = memo<{
         </span>
       </div>
     </Link>
-  )
-})
+  );
+});
 
 export const LiveCard = memo<{
-  tournament: Tournament
-  anchorRef?: AnchorRef
+  tournament: Tournament;
+  anchorRef?: AnchorRef;
 }>(({ tournament: t, anchorRef }) => {
   return (
     <Link
@@ -75,5 +75,5 @@ export const LiveCard = memo<{
         <span className={utils.num}>{t.prizeLabel}</span>
       </div>
     </Link>
-  )
-})
+  );
+});

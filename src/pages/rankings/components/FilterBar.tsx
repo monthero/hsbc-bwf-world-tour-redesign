@@ -1,15 +1,15 @@
-import { Select, type ComboboxItem, type SelectProps } from '@mantine/core'
-import { clsx } from 'clsx'
-import { memo, useCallback, useMemo } from 'react'
+import { Select, type ComboboxItem, type SelectProps } from '@mantine/core';
+import { clsx } from 'clsx';
+import { memo, useCallback, useMemo } from 'react';
 
-import { Flag } from '~/components/country'
-import { SearchField, StickyBar } from '~/components/ui'
-import { formatNumber, plural } from '~/utils/format'
+import { Flag } from '~/components/country';
+import { SearchField, StickyBar } from '~/components/ui';
+import { formatNumber, plural } from '~/utils/format';
 
-import type { CountryOption } from '../types'
+import type { CountryOption } from '../types';
 
-import classes from './FilterBar.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './FilterBar.module.css';
+import utils from '~/styles/utils.module.css';
 
 const SELECT_CLASSES = {
   root: classes.country,
@@ -17,23 +17,23 @@ const SELECT_CLASSES = {
   section: classes.countrySection,
   dropdown: clsx(utils.popover, classes.dropdown),
   option: classes.option,
-}
+};
 
-const COMBOBOX_PROPS = { offset: 6, width: 260, position: 'bottom-end' } as const
+const COMBOBOX_PROPS = { offset: 6, width: 260, position: 'bottom-end' } as const;
 
-const unitOf = (doubles: boolean) => (doubles ? 'pair' : 'player')
+const unitOf = (doubles: boolean) => (doubles ? 'pair' : 'player');
 
 export const FilterBar = memo<{
-  query: string
-  onQuery: (q: string) => void
-  cc: string | undefined
-  onCountry: (cc: string | null) => void
-  countries: CountryOption[]
-  shown: number
-  total: number
-  doubles: boolean
+  query: string;
+  onQuery: (q: string) => void;
+  cc: string | undefined;
+  onCountry: (cc: string | null) => void;
+  countries: CountryOption[];
+  shown: number;
+  total: number;
+  doubles: boolean;
 }>(({ query, onQuery, cc, onCountry, countries, shown, total, doubles }) => {
-  const counts = useMemo(() => new Map(countries.map((c) => [c.value, c.count])), [countries])
+  const counts = useMemo(() => new Map(countries.map((c) => [c.value, c.count])), [countries]);
   const renderOption = useCallback<NonNullable<SelectProps['renderOption']>>(
     ({ option }: { option: ComboboxItem }) => (
       <>
@@ -43,8 +43,8 @@ export const FilterBar = memo<{
       </>
     ),
     [counts],
-  )
-  const filtered = shown !== total
+  );
+  const filtered = shown !== total;
   return (
     <StickyBar glass zIndex={5}>
       <div className={clsx(utils.container, classes.inner)}>
@@ -76,5 +76,5 @@ export const FilterBar = memo<{
         </span>
       </div>
     </StickyBar>
-  )
-})
+  );
+});

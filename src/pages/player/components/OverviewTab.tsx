@@ -1,56 +1,56 @@
-import { Skeleton, Tooltip } from '@mantine/core'
-import { clsx } from 'clsx'
-import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react'
+import { Skeleton, Tooltip } from '@mantine/core';
+import { clsx } from 'clsx';
+import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react';
 
-import { FormStrip, TeamPlayers } from '~/components/match'
-import { BioStat, FactTile, Partner } from '~/components/player'
-import { CardHit, EmptyState, Eyebrow, Footnote, IconExternal, SectionTitle } from '~/components/ui'
-import { EVENT_NAMES, SEASON_YEAR } from '~/constants'
-import type { BioView, EventCode, PlayerMatch } from '~/types'
-import { formatNumber } from '~/utils/format'
-import { roundName } from '~/utils/matches'
-import { opponentsOf, outcomeLabel, recentForm } from '~/utils/season'
+import { FormStrip, TeamPlayers } from '~/components/match';
+import { BioStat, FactTile, Partner } from '~/components/player';
+import { CardHit, EmptyState, Eyebrow, Footnote, IconExternal, SectionTitle } from '~/components/ui';
+import { EVENT_NAMES, SEASON_YEAR } from '~/constants';
+import type { BioView, EventCode, PlayerMatch } from '~/types';
+import { formatNumber } from '~/utils/format';
+import { roundName } from '~/utils/matches';
+import { opponentsOf, outcomeLabel, recentForm } from '~/utils/season';
 
-import { EQUIPMENT_NOTE, RECENT_LIMIT, RESULT_TAGS } from '../constants'
-import type { CareerView, HistoryView, PartnerRow, SeasonView } from '../types'
-import { resultLabel, resultTier, teammateOf } from '../utils'
-import { CareerCard } from './CareerCard'
-import { PartnersCard } from './PartnersCard'
+import { EQUIPMENT_NOTE, RECENT_LIMIT, RESULT_TAGS } from '../constants';
+import type { CareerView, HistoryView, PartnerRow, SeasonView } from '../types';
+import { resultLabel, resultTier, teammateOf } from '../utils';
+import { CareerCard } from './CareerCard';
+import { PartnersCard } from './PartnersCard';
 
-import classes from './OverviewTab.module.css'
-import shared from './shared.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './OverviewTab.module.css';
+import shared from './shared.module.css';
+import utils from '~/styles/utils.module.css';
 
 interface OverviewTabProps {
-  playerId: string
-  season: SeasonView | undefined
-  career: CareerView
-  events: readonly EventCode[]
-  event: EventCode | undefined
-  partners: PartnerRow[]
-  ready: boolean
-  bio: BioView
-  history: HistoryView | undefined
-  historyLoading: boolean
-  onOpenMatch: (pm: PlayerMatch) => void
-  onSeason: (year: number) => void
-  onEvent: (event: EventCode | undefined) => void
-  onResults: () => void
+  playerId: string;
+  season: SeasonView | undefined;
+  career: CareerView;
+  events: readonly EventCode[];
+  event: EventCode | undefined;
+  partners: PartnerRow[];
+  ready: boolean;
+  bio: BioView;
+  history: HistoryView | undefined;
+  historyLoading: boolean;
+  onOpenMatch: (pm: PlayerMatch) => void;
+  onSeason: (year: number) => void;
+  onEvent: (event: EventCode | undefined) => void;
+  onResults: () => void;
 }
 
-const NO_MATCHES: PlayerMatch[] = []
+const NO_MATCHES: PlayerMatch[] = [];
 
-const FORM_SKELETON = Array.from({ length: RECENT_LIMIT }, (_, i) => i)
+const FORM_SKELETON = Array.from({ length: RECENT_LIMIT }, (_, i) => i);
 
-const formOutcome = (pm: PlayerMatch): 'W' | 'L' => (pm.outcome === 'W' ? 'W' : 'L')
+const formOutcome = (pm: PlayerMatch): 'W' | 'L' => (pm.outcome === 'W' ? 'W' : 'L');
 
 const formTip = (pm: PlayerMatch) =>
   `${pm.outcome === 'W' ? 'Won' : 'Lost'} vs ${opponentsOf(pm)
     .map((p) => p.name)
-    .join(' / ')} · ${pm.tournament.shortTitle}`
+    .join(' / ')} · ${pm.tournament.shortTitle}`;
 
 const barStyle = (points: number, max: number) =>
-  ({ '--h': `${Math.max(5, Math.round((points / max) * 100))}%` }) as CSSProperties
+  ({ '--h': `${Math.max(5, Math.round((points / max) * 100))}%` }) as CSSProperties;
 
 export const OverviewTab: FC<OverviewTabProps> = ({
   playerId,
@@ -68,11 +68,11 @@ export const OverviewTab: FC<OverviewTabProps> = ({
   onEvent,
   onResults,
 }) => {
-  const matches = season?.matches ?? NO_MATCHES
-  const upNext = matches.find((pm) => pm.outcome === 'up' || pm.outcome === 'Live')
-  const hasPersonal = bio.stats.length > 0 || bio.details.length > 0 || bio.links.length > 0
-  const hasAbout = !!bio.ambition || bio.notes.length > 0
-  const hasExtra = bio.equipment.length > 0 || hasAbout
+  const matches = season?.matches ?? NO_MATCHES;
+  const upNext = matches.find((pm) => pm.outcome === 'up' || pm.outcome === 'Live');
+  const hasPersonal = bio.stats.length > 0 || bio.details.length > 0 || bio.links.length > 0;
+  const hasAbout = !!bio.ambition || bio.notes.length > 0;
+  const hasExtra = bio.equipment.length > 0 || hasAbout;
   return (
     <div className={shared.stack}>
       {(hasPersonal || hasExtra) && (
@@ -118,13 +118,13 @@ export const OverviewTab: FC<OverviewTabProps> = ({
       {partners.length > 0 && <PartnersCard rows={partners} />}
       <RankingGlance history={history} loading={historyLoading} onResults={onResults} />
     </div>
-  )
-}
+  );
+};
 
 const UpNext = memo<{ pm: PlayerMatch; self: string; multi: boolean; onOpen: (pm: PlayerMatch) => void }>(
   ({ pm, self, multi, onOpen }) => {
-    const open = useCallback(() => onOpen(pm), [onOpen, pm])
-    const partner = teammateOf(pm, self)
+    const open = useCallback(() => onOpen(pm), [onOpen, pm]);
+    const partner = teammateOf(pm, self);
     return (
       <div className={clsx(utils.live, classes.upNext)}>
         <CardHit label={`Open match details · ${pm.tournament.shortTitle}`} onClick={open} />
@@ -139,21 +139,21 @@ const UpNext = memo<{ pm: PlayerMatch; self: string; multi: boolean; onOpen: (pm
           {partner && <Partner player={partner} />}
         </span>
       </div>
-    )
+    );
   },
-)
+);
 
 const FormCard = memo<{
-  season: SeasonView | undefined
-  ready: boolean
-  onOpen: (pm: PlayerMatch) => void
+  season: SeasonView | undefined;
+  ready: boolean;
+  onOpen: (pm: PlayerMatch) => void;
 }>(({ season, ready, onOpen }) => {
-  const matches = season?.matches ?? NO_MATCHES
-  const form = useMemo(() => recentForm(matches, RECENT_LIMIT), [matches])
+  const matches = season?.matches ?? NO_MATCHES;
+  const form = useMemo(() => recentForm(matches, RECENT_LIMIT), [matches]);
   const items = useMemo(
     () => form.map((pm) => ({ key: pm.key, outcome: formOutcome(pm), tip: formTip(pm), onClick: () => onOpen(pm) })),
     [form, onOpen],
-  )
+  );
   return (
     <div className={clsx(utils.card, shared.panel)}>
       <Eyebrow>
@@ -174,19 +174,19 @@ const FormCard = memo<{
       )}
       {ready && !items.length && <EmptyState variant="note">No completed matches this season.</EmptyState>}
     </div>
-  )
-})
+  );
+});
 
 const RankingGlance = memo<{
-  history: HistoryView | undefined
-  loading: boolean
-  onResults: () => void
+  history: HistoryView | undefined;
+  loading: boolean;
+  onResults: () => void;
 }>(({ history, loading, onResults }) => {
-  const group = history?.results[0]
-  const items = useMemo(() => (group ? group.items.toReversed() : []), [group])
-  if (loading) return <Skeleton height={260} radius={18} />
-  if (!group || items.length < 2) return null
-  const max = Math.max(1, ...items.map((t) => t.points))
+  const group = history?.results[0];
+  const items = useMemo(() => (group ? group.items.toReversed() : []), [group]);
+  if (loading) return <Skeleton height={260} radius={18} />;
+  if (!group || items.length < 2) return null;
+  const max = Math.max(1, ...items.map((t) => t.points));
   return (
     <div className={clsx(utils.card, shared.panel)}>
       <SectionTitle
@@ -210,8 +210,8 @@ const RankingGlance = memo<{
         ))}
       </div>
     </div>
-  )
-})
+  );
+});
 
 const PersonalDetails = memo<{ bio: BioView }>(({ bio }) => {
   return (
@@ -226,8 +226,8 @@ const PersonalDetails = memo<{ bio: BioView }>(({ bio }) => {
         ))}
       </div>
     </div>
-  )
-})
+  );
+});
 
 const SocialLinks = memo<{ bio: BioView }>(({ bio }) => {
   return (
@@ -239,8 +239,8 @@ const SocialLinks = memo<{ bio: BioView }>(({ bio }) => {
         </a>
       ))}
     </span>
-  )
-})
+  );
+});
 
 const About = memo<{ bio: BioView }>(({ bio }) => {
   return (
@@ -251,5 +251,5 @@ const About = memo<{ bio: BioView }>(({ bio }) => {
         <FactTile key={n.key} label={n.label} value={n.value} size="sm" tone="plain" />
       ))}
     </div>
-  )
-})
+  );
+});

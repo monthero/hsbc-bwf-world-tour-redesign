@@ -1,31 +1,31 @@
-import type { BioView, FactItem, PhotoCrop, PlayerBio, PlayerDirectory, StatItem } from '~/types'
+import type { BioView, FactItem, PhotoCrop, PlayerBio, PlayerDirectory, StatItem } from '~/types';
 
-import { ageOn, formatDayMonthYear } from './dates'
-import { formatFeetInches, HEIGHT_UNIT } from './format'
-import { playerSquareUrl, playerThumbUrl } from './images'
-import { unshout } from './names'
+import { ageOn, formatDayMonthYear } from './dates';
+import { formatFeetInches, HEIGHT_UNIT } from './format';
+import { playerSquareUrl, playerThumbUrl } from './images';
+import { unshout } from './names';
 
 const facts = (list: { key: string; label: string; value: string | undefined }[], fmt: (s: string) => string) =>
-  list.flatMap((f): FactItem[] => (f.value ? [{ key: f.key, label: f.label, value: fmt(f.value) }] : []))
+  list.flatMap((f): FactItem[] => (f.value ? [{ key: f.key, label: f.label, value: fmt(f.value) }] : []));
 
-const keep = (s: string) => s
+const keep = (s: string) => s;
 
 const sentence = (s: string) => {
-  const t = unshout(s)
-  return t.charAt(0).toUpperCase() + t.slice(1)
-}
+  const t = unshout(s);
+  return t.charAt(0).toUpperCase() + t.slice(1);
+};
 
 const socialUrl = (value: string | undefined, host: string) => {
-  if (!value?.includes(host) || /\s/.test(value)) return undefined
-  return /^https?:\/\//i.test(value) ? value : `https://${value}`
-}
+  if (!value?.includes(host) || /\s/.test(value)) return undefined;
+  return /^https?:\/\//i.test(value) ? value : `https://${value}`;
+};
 
 export const buildBio = (bio: PlayerBio | undefined): BioView => {
-  const b = bio ?? {}
-  const stats: StatItem[] = []
+  const b = bio ?? {};
+  const stats: StatItem[] = [];
   if (b.born)
-    stats.push({ key: 'age', label: 'Age', value: String(ageOn(b.born)), sub: `Born ${formatDayMonthYear(b.born)}` })
-  else if (b.age) stats.push({ key: 'age', label: 'Age', value: String(b.age) })
+    stats.push({ key: 'age', label: 'Age', value: String(ageOn(b.born)), sub: `Born ${formatDayMonthYear(b.born)}` });
+  else if (b.age) stats.push({ key: 'age', label: 'Age', value: String(b.age) });
   if (b.height)
     stats.push({
       key: 'height',
@@ -33,12 +33,12 @@ export const buildBio = (bio: PlayerBio | undefined): BioView => {
       value: String(b.height),
       unit: HEIGHT_UNIT,
       inline: formatFeetInches(b.height),
-    })
+    });
   if (b.plays) {
-    const hand = b.plays.replace(/-handed$/i, '').split('-')[0] ?? ''
-    stats.push({ key: 'hand', label: 'Playing hand', value: unshout(hand) })
+    const hand = b.plays.replace(/-handed$/i, '').split('-')[0] ?? '';
+    stats.push({ key: 'hand', label: 'Playing hand', value: unshout(hand) });
   }
-  const natTeam = b.natTeam?.trim()
+  const natTeam = b.natTeam?.trim();
   const details = facts(
     [
       { key: 'nickname', label: 'Nickname', value: b.nickname },
@@ -55,7 +55,7 @@ export const buildBio = (bio: PlayerBio | undefined): BioView => {
       { key: 'club', label: 'Club', value: b.club },
     ],
     unshout,
-  )
+  );
   const equipment = facts(
     [
       { key: 'racket', label: 'Racket', value: b.racket },
@@ -64,7 +64,7 @@ export const buildBio = (bio: PlayerBio | undefined): BioView => {
       { key: 'bag', label: 'Bag', value: b.bag },
     ],
     keep,
-  )
+  );
   const notes = facts(
     [
       { key: 'achievements', label: 'Memorable achievements', value: b.achievements },
@@ -72,21 +72,21 @@ export const buildBio = (bio: PlayerBio | undefined): BioView => {
       { key: 'started', label: 'Started competing', value: b.started },
     ],
     sentence,
-  )
+  );
   const links = facts(
     [
       { key: 'instagram', label: 'Instagram', value: socialUrl(b.instagram, 'instagram.com') },
       { key: 'facebook', label: 'Facebook', value: socialUrl(b.facebook, 'facebook.com') },
     ],
     keep,
-  )
-  return { stats, details, equipment, notes, links, prize: b.prize ?? '', ambition: b.ambition ?? '' }
-}
+  );
+  return { stats, details, equipment, notes, links, prize: b.prize ?? '', ambition: b.ambition ?? '' };
+};
 
 export interface PhotoOptions {
-  photo?: string | null
-  size?: number
-  framing?: PhotoCrop | null
+  photo?: string | null;
+  size?: number;
+  framing?: PhotoCrop | null;
 }
 
 export const playerPhoto = (
@@ -94,9 +94,9 @@ export const playerPhoto = (
   id: string,
   { photo, size, framing }: PhotoOptions = {},
 ) => {
-  const record = dir?.get(id)
-  const own = photo || record?.photo
-  const crop = framing === undefined ? (own === record?.photo && record?.photoCrop) || null : framing
-  const thumb = playerThumbUrl(own)
-  return { src: size && !crop ? playerSquareUrl(thumb, size) : thumb, crop }
-}
+  const record = dir?.get(id);
+  const own = photo || record?.photo;
+  const crop = framing === undefined ? (own === record?.photo && record?.photoCrop) || null : framing;
+  const thumb = playerThumbUrl(own);
+  return { src: size && !crop ? playerSquareUrl(thumb, size) : thumb, crop };
+};

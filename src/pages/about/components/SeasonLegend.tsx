@@ -1,10 +1,10 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
-import { LEVEL_META, LEVEL_VARS } from '~/constants'
+import { LEVEL_META, LEVEL_VARS } from '~/constants';
 
-import { LEGEND_LEVELS, LEGEND_STATUS } from '../constants'
+import { LEGEND_LEVELS, LEGEND_STATUS } from '../constants';
 
-import classes from './SeasonLegend.module.css'
+import classes from './SeasonLegend.module.css';
 
 export const SeasonLegend = memo<{ compact: boolean }>(({ compact }) => (
   <div className={classes.legend} data-compact={compact || undefined}>
@@ -25,4 +25,4 @@ export const SeasonLegend = memo<{ compact: boolean }>(({ compact }) => (
       ))}
     </div>
   </div>
-))
+));

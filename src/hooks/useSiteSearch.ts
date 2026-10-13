@@ -1,44 +1,44 @@
-import { useMemo } from 'react'
+import { useMemo } from 'react';
 
-import { SEASON_YEAR } from '~/constants'
-import type { Tournament } from '~/types'
-import { byStanding, parseQuery, rankHits, searchKey } from '~/utils/search'
+import { SEASON_YEAR } from '~/constants';
+import type { Tournament } from '~/types';
+import { byStanding, parseQuery, rankHits, searchKey } from '~/utils/search';
 
-import { usePlayerSearchIndex, type PlayerSearchEntry } from './usePlayers'
-import { useAllTournaments } from './useTournaments'
+import { usePlayerSearchIndex, type PlayerSearchEntry } from './usePlayers';
+import { useAllTournaments } from './useTournaments';
 
-const PLAYER_LIMIT = 6
-const TOURNAMENT_LIMIT = 5
+const PLAYER_LIMIT = 6;
+const TOURNAMENT_LIMIT = 5;
 
 interface TournamentEntry {
-  tournament: Tournament
-  keys: readonly string[]
+  tournament: Tournament;
+  keys: readonly string[];
 }
 
 export interface SiteSearchResults {
-  players: PlayerSearchEntry[]
-  tournaments: TournamentEntry[]
+  players: PlayerSearchEntry[];
+  tournaments: TournamentEntry[];
 }
 
-const EMPTY: SiteSearchResults = { players: [], tournaments: [] }
+const EMPTY: SiteSearchResults = { players: [], tournaments: [] };
 
 const toEntry = (t: Tournament): TournamentEntry => ({
   tournament: t,
   keys: [searchKey(t.title, t.city, t.country, t.levelLabel), searchKey(t.name), searchKey(t.city)],
-})
+});
 
-const byPlayerRelevance = (a: PlayerSearchEntry, b: PlayerSearchEntry) => byStanding(a.standing, b.standing)
+const byPlayerRelevance = (a: PlayerSearchEntry, b: PlayerSearchEntry) => byStanding(a.standing, b.standing);
 
-const seasonOrder = (t: Tournament) => (t.year === SEASON_YEAR ? 0 : 1)
+const seasonOrder = (t: Tournament) => (t.year === SEASON_YEAR ? 0 : 1);
 
 const byTournamentRelevance = ({ tournament: a }: TournamentEntry, { tournament: b }: TournamentEntry) =>
-  seasonOrder(a) - seasonOrder(b) || b.year - a.year || Math.abs(a.daysUntil) - Math.abs(b.daysUntil)
+  seasonOrder(a) - seasonOrder(b) || b.year - a.year || Math.abs(a.daysUntil) - Math.abs(b.daysUntil);
 
 export const useSiteSearch = (query: string, enabled: boolean) => {
-  const { data: players } = usePlayerSearchIndex(enabled)
-  const all = useAllTournaments(enabled)
-  const tournaments = useMemo(() => all.map(toEntry), [all])
-  const q = useMemo(() => parseQuery(query), [query])
+  const { data: players } = usePlayerSearchIndex(enabled);
+  const all = useAllTournaments(enabled);
+  const tournaments = useMemo(() => all.map(toEntry), [all]);
+  const q = useMemo(() => parseQuery(query), [query]);
   const results = useMemo(
     () =>
       q.terms.length
@@ -48,6 +48,6 @@ export const useSiteSearch = (query: string, enabled: boolean) => {
           }
         : EMPTY,
     [players, tournaments, q],
-  )
-  return { results, ready: !!players, searching: q.terms.length > 0 }
-}
+  );
+  return { results, ready: !!players, searching: q.terms.length > 0 };
+};

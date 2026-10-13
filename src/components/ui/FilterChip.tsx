@@ -1,14 +1,14 @@
-import { clsx } from 'clsx'
-import type { ComponentPropsWithoutRef, CSSProperties, FC } from 'react'
+import { clsx } from 'clsx';
+import type { ComponentPropsWithoutRef, CSSProperties, FC } from 'react';
 
-import classes from './FilterChip.module.css'
+import classes from './FilterChip.module.css';
 
 export const FilterChip: FC<
   ComponentPropsWithoutRef<'button'> & {
-    active?: boolean
-    size?: 'sm' | 'md' | 'lg'
-    tone?: { color: string }
-    dot?: boolean
+    active?: boolean;
+    size?: 'sm' | 'md' | 'lg';
+    tone?: { color: string };
+    dot?: boolean;
   }
 > = ({ active, size, tone, dot, className, style, ...rest }) => {
   return (
@@ -23,5 +23,5 @@ export const FilterChip: FC<
       style={tone ? ({ ...style, '--tone': tone.color } as CSSProperties) : style}
       {...rest}
     />
-  )
-}
+  );
+};

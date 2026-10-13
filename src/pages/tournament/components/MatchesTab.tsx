@@ -1,29 +1,29 @@
-import { clsx } from 'clsx'
-import { useDeferredValue, useMemo, type FC } from 'react'
+import { clsx } from 'clsx';
+import { useDeferredValue, useMemo, type FC } from 'react';
 
-import { EmptyState } from '~/components/ui'
-import { useScrolledPast } from '~/hooks/useScrolledPast'
-import { FOLLOW_KINDS, useFavoriteCount, useFavoritesMatcher } from '~/stores/favorites'
-import type { Match, TournamentDay } from '~/types'
+import { EmptyState } from '~/components/ui';
+import { useScrolledPast } from '~/hooks/useScrolledPast';
+import { FOLLOW_KINDS, useFavoriteCount, useFavoritesMatcher } from '~/stores/favorites';
+import type { Match, TournamentDay } from '~/types';
 
-import { useOpenMatch } from '../hooks'
-import type { TabProps } from '../types'
-import { DayPicker } from './matches/DayPicker'
-import { CondensedFilters, InlineFilters, MobileFilters } from './matches/FilterBars'
-import { LiveSection } from './matches/LiveSection'
-import { MatchGroups } from './matches/MatchGroups'
-import { useMatchFilters } from './matches/useMatchFilters'
-import { buildView, filterBase, type MatchesView } from './matches/utils'
+import { useOpenMatch } from '../hooks';
+import type { TabProps } from '../types';
+import { DayPicker } from './matches/DayPicker';
+import { CondensedFilters, InlineFilters, MobileFilters } from './matches/FilterBars';
+import { LiveSection } from './matches/LiveSection';
+import { MatchGroups } from './matches/MatchGroups';
+import { useMatchFilters } from './matches/useMatchFilters';
+import { buildView, filterBase, type MatchesView } from './matches/utils';
 
-import page from '../TournamentPage.module.css'
-import classes from './MatchesTab.module.css'
-import utils from '~/styles/utils.module.css'
+import page from '../TournamentPage.module.css';
+import classes from './MatchesTab.module.css';
+import utils from '~/styles/utils.module.css';
 
-const NO_MATCHES: Match[] = []
+const NO_MATCHES: Match[] = [];
 
-const STALE_NOTE = 'Live scores are unavailable right now. Showing results that may be up to an hour old.'
+const STALE_NOTE = 'Live scores are unavailable right now. Showing results that may be up to an hour old.';
 
-const byCourt = (a: Match, b: Match) => a.court - b.court
+const byCourt = (a: Match, b: Match) => a.court - b.court;
 
 const emptyMessage = (
   d: TournamentDay | undefined,
@@ -32,33 +32,33 @@ const emptyMessage = (
   following: boolean,
   followCount: number,
 ) => {
-  if (d?.isRest) return `${d.shortLabel} is a rest day with no matches.`
-  if (future && d && !d.matches.length) return `The order of play for ${d.shortLabel} is published the evening before.`
-  if (view.upCount || view.resCount) return ''
-  if (view.liveIn) return 'Only live matches match these filters — see Live now above.'
-  if (following && !followCount) return 'Star a player, country or continent to follow them here.'
-  return 'No matches for these filters.'
-}
+  if (d?.isRest) return `${d.shortLabel} is a rest day with no matches.`;
+  if (future && d && !d.matches.length) return `The order of play for ${d.shortLabel} is published the evening before.`;
+  if (view.upCount || view.resCount) return '';
+  if (view.liveIn) return 'Only live matches match these filters — see Live now above.';
+  if (following && !followCount) return 'Star a player, country or continent to follow them here.';
+  return 'No matches for these filters.';
+};
 
 export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
-  const { days, todayIndex, focusIndex } = schedule
-  const f = useMatchFilters(days.length, focusIndex)
-  const openMatch = useOpenMatch()
-  const q = useDeferredValue(f.q)
-  const matcher = useFavoritesMatcher()
-  const followCount = useFavoriteCount(FOLLOW_KINDS)
-  const [filtersRef, filtersOut] = useScrolledPast<HTMLDivElement>()
+  const { days, todayIndex, focusIndex } = schedule;
+  const f = useMatchFilters(days.length, focusIndex);
+  const openMatch = useOpenMatch();
+  const q = useDeferredValue(f.q);
+  const matcher = useFavoritesMatcher();
+  const followCount = useFavoriteCount(FOLLOW_KINDS);
+  const [filtersRef, filtersOut] = useScrolledPast<HTMLDivElement>();
 
-  const dayData = days[f.day]
-  const dayMatches = dayData?.matches ?? NO_MATCHES
+  const dayData = days[f.day];
+  const dayMatches = dayData?.matches ?? NO_MATCHES;
 
   const live = useMemo(
     () => (days[todayIndex]?.matches ?? NO_MATCHES).filter((m) => m.status === 'P').sort(byCourt),
     [days, todayIndex],
-  )
-  const base = useMemo(() => filterBase(dayMatches, q, f.following, matcher), [dayMatches, q, f.following, matcher])
-  const view = useMemo(() => buildView(dayMatches, base, f.events, f.courts), [dayMatches, base, f.events, f.courts])
-  const empty = emptyMessage(dayData, f.day > todayIndex, view, f.following, followCount)
+  );
+  const base = useMemo(() => filterBase(dayMatches, q, f.following, matcher), [dayMatches, q, f.following, matcher]);
+  const view = useMemo(() => buildView(dayMatches, base, f.events, f.courts), [dayMatches, base, f.events, f.courts]);
+  const empty = emptyMessage(dayData, f.day > todayIndex, view, f.following, followCount);
 
   return (
     <div className={classes.root}>
@@ -99,5 +99,5 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
       </section>
       <MobileFilters filters={f} view={view} days={days} visible={filtersOut} />
     </div>
-  )
-}
+  );
+};

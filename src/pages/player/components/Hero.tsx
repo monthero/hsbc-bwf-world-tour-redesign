@@ -1,34 +1,34 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
-import { CountryLabel } from '~/components/country'
-import { Partner, PlayerAvatar, PlayerName, RankChange, SeedTag } from '~/components/player'
-import { useIsMobile } from '~/hooks/useIsMobile'
-import { usePlayerPhoto } from '~/hooks/usePlayers'
-import type { EventCode, Focus, Player, RankView } from '~/types'
-import { formatRank, plural } from '~/utils/format'
-import { heroVars, playerHeroUrl } from '~/utils/images'
+import { CountryLabel } from '~/components/country';
+import { Partner, PlayerAvatar, PlayerName, RankChange, SeedTag } from '~/components/player';
+import { useIsMobile } from '~/hooks/useIsMobile';
+import { usePlayerPhoto } from '~/hooks/usePlayers';
+import type { EventCode, Focus, Player, RankView } from '~/types';
+import { formatRank, plural } from '~/utils/format';
+import { heroVars, playerHeroUrl } from '~/utils/images';
 
-import type { CareerHigh } from '../types'
+import type { CareerHigh } from '../types';
 
-import classes from './Hero.module.css'
+import classes from './Hero.module.css';
 
 interface HeroProps {
-  player: Player
-  hero: string | null | undefined
-  seed: number | null
-  prize: string
-  ranks: RankView[]
-  highs: ReadonlyMap<EventCode, CareerHigh>
-  focus?: Focus | null
+  player: Player;
+  hero: string | null | undefined;
+  seed: number | null;
+  prize: string;
+  ranks: RankView[];
+  highs: ReadonlyMap<EventCode, CareerHigh>;
+  focus?: Focus | null;
 }
 
-const AVATAR_CROP = 240
+const AVATAR_CROP = 240;
 
 export const Hero = memo<HeroProps>(({ player, hero, seed, prize, ranks, highs, focus }) => {
-  const isMobile = useIsMobile()
-  const hasPhoto = !!usePlayerPhoto(player.id).src
-  const heroStyle = hero ? heroVars(playerHeroUrl(player.id, hero, isMobile, !!focus), focus) : undefined
-  const cards = ranks.filter((k) => k.rank).slice(0, 3)
+  const isMobile = useIsMobile();
+  const hasPhoto = !!usePlayerPhoto(player.id).src;
+  const heroStyle = hero ? heroVars(playerHeroUrl(player.id, hero, isMobile, !!focus), focus) : undefined;
+  const cards = ranks.filter((k) => k.rank).slice(0, 3);
   return (
     <div className={classes.hero} style={heroStyle} data-image={hero ? true : undefined}>
       <div className={classes.content}>
@@ -66,8 +66,8 @@ export const Hero = memo<HeroProps>(({ player, hero, seed, prize, ranks, highs, 
         )}
       </div>
     </div>
-  )
-})
+  );
+});
 
 const RankTile = memo<{ rank: RankView; high: CareerHigh | undefined }>(({ rank: k, high }) => {
   return (
@@ -88,5 +88,5 @@ const RankTile = memo<{ rank: RankView; high: CareerHigh | undefined }>(({ rank:
         </span>
       )}
     </div>
-  )
-})
+  );
+});

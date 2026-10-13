@@ -1,8 +1,8 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
-import type { SeasonStat } from '../types'
+import type { SeasonStat } from '../types';
 
-import classes from './SeasonStats.module.css'
+import classes from './SeasonStats.module.css';
 
 export const SeasonStats = memo<{ stats: SeasonStat[] }>(({ stats }) => (
   <dl className={classes.stats}>
@@ -16,4 +16,4 @@ export const SeasonStats = memo<{ stats: SeasonStat[] }>(({ stats }) => (
       </div>
     ))}
   </dl>
-))
+));

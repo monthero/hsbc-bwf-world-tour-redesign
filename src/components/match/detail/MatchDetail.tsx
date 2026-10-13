@@ -1,24 +1,24 @@
-import { useMemo, type FC } from 'react'
+import { useMemo, type FC } from 'react';
 
-import { MatchVideos } from '~/components/media'
-import { IconButton, IconClose, LiveDot } from '~/components/ui'
-import { EVENT_NAMES } from '~/constants'
-import type { Match, Tournament } from '~/types'
-import { allGames } from '~/utils/matches'
+import { MatchVideos } from '~/components/media';
+import { IconButton, IconClose, LiveDot } from '~/components/ui';
+import { EVENT_NAMES } from '~/constants';
+import type { Match, Tournament } from '~/types';
+import { allGames } from '~/utils/matches';
 
-import { HeadToHead } from './HeadToHead'
-import { StatsPanel } from './StatsPanel'
-import { metaLine, statusLine } from './utils'
+import { HeadToHead } from './HeadToHead';
+import { StatsPanel } from './StatsPanel';
+import { metaLine, statusLine } from './utils';
 
-import classes from './MatchDetail.module.css'
+import classes from './MatchDetail.module.css';
 
 export const MatchDetail: FC<{
-  match: Match
-  tournament: Tournament
-  onClose: () => void
+  match: Match;
+  tournament: Tournament;
+  onClose: () => void;
 }> = ({ match, tournament, onClose }) => {
-  const games = useMemo(() => allGames(match), [match])
-  const live = match.status === 'P'
+  const games = useMemo(() => allGames(match), [match]);
+  const live = match.status === 'P';
   return (
     <>
       <header className={classes.header}>
@@ -39,5 +39,5 @@ export const MatchDetail: FC<{
       <MatchVideos match={match} tournament={tournament} />
       <HeadToHead match={match} tournament={tournament} />
     </>
-  )
-}
+  );
+};

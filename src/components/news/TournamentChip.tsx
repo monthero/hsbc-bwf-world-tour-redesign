@@ -1,13 +1,13 @@
-import { Link } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { Link } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import { LEVEL_VARS } from '~/constants'
-import type { Tournament } from '~/types'
-import { tournamentParams } from '~/utils/tournaments'
+import { LEVEL_VARS } from '~/constants';
+import type { Tournament } from '~/types';
+import { tournamentParams } from '~/utils/tournaments';
 
-import classes from './TournamentChip.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './TournamentChip.module.css';
+import utils from '~/styles/utils.module.css';
 
 export const TournamentChip = memo<{ tournament: Tournament; variant?: 'glass' | 'outline'; className?: string }>(
   ({ tournament: t, variant = 'outline', className }) => {
@@ -21,6 +21,6 @@ export const TournamentChip = memo<{ tournament: Tournament; variant?: 'glass' |
       >
         {t.name}
       </Link>
-    )
+    );
   },
-)
+);

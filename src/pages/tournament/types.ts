@@ -1,13 +1,13 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
-import { EventCode } from '~/api/schemas'
-import type { DrawSlot, EntryListing, Tournament, TournamentSchedule } from '~/types'
+import { EventCode } from '~/api/schemas';
+import type { DrawSlot, EntryListing, Tournament, TournamentSchedule } from '~/types';
 
-export const TournamentTab = z.enum(['overview', 'matches', 'draw', 'players', 'podium', 'media', 'news'])
-export type TournamentTab = z.infer<typeof TournamentTab>
+export const TournamentTab = z.enum(['overview', 'matches', 'draw', 'players', 'podium', 'media', 'news']);
+export type TournamentTab = z.infer<typeof TournamentTab>;
 
-export const PlayersView = z.enum(['country', 'discipline'])
-export type PlayersView = z.infer<typeof PlayersView>
+export const PlayersView = z.enum(['country', 'discipline']);
+export type PlayersView = z.infer<typeof PlayersView>;
 
 export const TournamentSearch = z.object({
   tab: TournamentTab.optional().catch(undefined),
@@ -22,15 +22,15 @@ export const TournamentSearch = z.object({
   pev: EventCode.optional().catch(undefined),
   top10: z.boolean().optional().catch(undefined),
   pby: PlayersView.optional().catch(undefined),
-})
+});
 
-export type TournamentSearch = z.infer<typeof TournamentSearch>
+export type TournamentSearch = z.infer<typeof TournamentSearch>;
 
-export type TabAvailability = Record<TournamentTab, boolean>
+export type TabAvailability = Record<TournamentTab, boolean>;
 
 export interface TabProps {
-  tournament: Tournament
-  schedule: TournamentSchedule
-  draw: DrawSlot[] | null
-  entries: EntryListing[] | undefined
+  tournament: Tournament;
+  schedule: TournamentSchedule;
+  draw: DrawSlot[] | null;
+  entries: EntryListing[] | undefined;
 }

@@ -1,27 +1,27 @@
-import { clsx } from 'clsx'
-import { memo, type Ref } from 'react'
+import { clsx } from 'clsx';
+import { memo, type Ref } from 'react';
 
-import { Level } from '~/api/schemas'
-import { FilterChip, IconLive, Segmented, StickyBar } from '~/components/ui'
-import { LEVEL_META } from '~/constants'
+import { Level } from '~/api/schemas';
+import { FilterChip, IconLive, Segmented, StickyBar } from '~/components/ui';
+import { LEVEL_META } from '~/constants';
 
-import { STATUS_OPTIONS } from '../constants'
-import type { StatusFilter } from '../types'
+import { STATUS_OPTIONS } from '../constants';
+import type { StatusFilter } from '../types';
 
-import classes from './FilterBar.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './FilterBar.module.css';
+import utils from '~/styles/utils.module.css';
 
 export const FilterBar = memo<{
-  ref: Ref<HTMLDivElement>
-  compact: boolean
-  levels: Level[] | undefined
-  status: StatusFilter
-  showStatus: boolean
-  onLevel: (level: Level) => void
-  onStatus: (status: StatusFilter | null) => void
-  jumpLabel: string | null
-  onJump: () => void
-  isMobile: boolean
+  ref: Ref<HTMLDivElement>;
+  compact: boolean;
+  levels: Level[] | undefined;
+  status: StatusFilter;
+  showStatus: boolean;
+  onLevel: (level: Level) => void;
+  onStatus: (status: StatusFilter | null) => void;
+  jumpLabel: string | null;
+  onJump: () => void;
+  isMobile: boolean;
 }>(({ ref, compact, levels, status, showStatus, onLevel, onStatus, jumpLabel, onJump, isMobile }) => {
   return (
     <StickyBar ref={ref} glass zIndex={5} top={compact ? 'var(--cal-compact-h)' : 0} className={classes.bar}>
@@ -53,5 +53,5 @@ export const FilterBar = memo<{
         )}
       </div>
     </StickyBar>
-  )
-})
+  );
+});

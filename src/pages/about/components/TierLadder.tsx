@@ -1,21 +1,21 @@
-import { Link } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo, useMemo, type CSSProperties } from 'react'
+import { Link } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo, useMemo, type CSSProperties } from 'react';
 
-import { LevelBadge } from '~/components/tournament'
-import { LEVEL_META, LEVEL_VARS, SUPER_100_POINTS } from '~/constants'
-import type { Tournament } from '~/types'
-import { formatNumber, plural } from '~/utils/format'
-import { tournamentParams } from '~/utils/tournaments'
+import { LevelBadge } from '~/components/tournament';
+import { LEVEL_META, LEVEL_VARS, SUPER_100_POINTS } from '~/constants';
+import type { Tournament } from '~/types';
+import { formatNumber, plural } from '~/utils/format';
+import { tournamentParams } from '~/utils/tournaments';
 
-import { PATHWAY_NOTE } from '../constants'
-import type { TierSummary } from '../types'
+import { PATHWAY_NOTE } from '../constants';
+import type { TierSummary } from '../types';
 
-import classes from './TierLadder.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './TierLadder.module.css';
+import utils from '~/styles/utils.module.css';
 
-const FILL_MIN = 28
-const FILL_RANGE = 150
+const FILL_MIN = 28;
+const FILL_RANGE = 150;
 
 const EventChip = memo<{ tournament: Tournament }>(({ tournament: t }) => (
   <Link
@@ -27,12 +27,12 @@ const EventChip = memo<{ tournament: Tournament }>(({ tournament: t }) => (
   >
     {t.name}
   </Link>
-))
+));
 
 const unitOf = (t: TierSummary) => {
-  if (t.level === 'Finals') return 'finale'
-  return t.events.length === 1 ? 'event' : 'events'
-}
+  if (t.level === 'Finals') return 'finale';
+  return t.events.length === 1 ? 'event' : 'events';
+};
 
 const TierCard = memo<{ tier: TierSummary }>(({ tier: t }) => {
   const style = useMemo(
@@ -43,8 +43,8 @@ const TierCard = memo<{ tier: TierSummary }>(({ tier: t }) => {
         '--w': `${t.share * 100}%`,
       }) as CSSProperties,
     [t.level, t.share],
-  )
-  const search = useMemo(() => ({ levels: [t.level] }), [t.level])
+  );
+  const search = useMemo(() => ({ levels: [t.level] }), [t.level]);
   return (
     <article className={classes.tier} style={style}>
       <Link
@@ -79,8 +79,8 @@ const TierCard = memo<{ tier: TierSummary }>(({ tier: t }) => {
         ))}
       </div>
     </article>
-  )
-})
+  );
+});
 
 const PathwayCard = memo(() => (
   <article className={clsx(classes.tier, classes.path)}>
@@ -95,7 +95,7 @@ const PathwayCard = memo(() => (
       </span>
     </div>
   </article>
-))
+));
 
 export const TierLadder = memo<{ tiers: readonly TierSummary[]; pathway: boolean }>(({ tiers, pathway }) => (
   <div className={classes.ladder}>
@@ -104,4 +104,4 @@ export const TierLadder = memo<{ tiers: readonly TierSummary[]; pathway: boolean
     ))}
     {pathway && <PathwayCard />}
   </div>
-))
+));

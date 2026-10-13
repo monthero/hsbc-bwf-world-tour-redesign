@@ -1,18 +1,18 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
-import type { MediaItem } from '~/api/schemas'
-import { EventTag } from '~/components/match/EventTag'
-import type { Match } from '~/types'
-import { formatDayMonth } from '~/utils/dates'
-import { matchRoundName } from '~/utils/matches'
-import { durationLabel, thumbUrl, watchUrl } from '~/utils/media'
+import type { MediaItem } from '~/api/schemas';
+import { EventTag } from '~/components/match/EventTag';
+import type { Match } from '~/types';
+import { formatDayMonth } from '~/utils/dates';
+import { matchRoundName } from '~/utils/matches';
+import { durationLabel, thumbUrl, watchUrl } from '~/utils/media';
 
-import classes from './VideoCard.module.css'
+import classes from './VideoCard.module.css';
 
-const LIVE_LABELS = { live: 'Live', upcoming: 'Upcoming' } as const
+const LIVE_LABELS = { live: 'Live', upcoming: 'Upcoming' } as const;
 
 export const VideoCard = memo<{ item: MediaItem; match?: Match; label?: string }>(({ item, match, label }) => {
-  const duration = durationLabel(item.durationSec)
+  const duration = durationLabel(item.durationSec);
   return (
     <a href={watchUrl(item.id)} target="_blank" rel="noreferrer" className={classes.card}>
       <span className={classes.thumb}>
@@ -33,5 +33,5 @@ export const VideoCard = memo<{ item: MediaItem; match?: Match; label?: string }
         </span>
       </span>
     </a>
-  )
-})
+  );
+});

@@ -1,12 +1,12 @@
-import type { CSSProperties, FC } from 'react'
+import type { CSSProperties, FC } from 'react';
 
-import { GAP, type Bracket } from './bracket'
-import { DrawBox } from './DrawBox'
+import { GAP, type Bracket } from './bracket';
+import { DrawBox } from './DrawBox';
 
-import classes from './Draw.module.css'
+import classes from './Draw.module.css';
 
 export const BracketView: FC<{ bracket: Bracket; onOpen: (id: string) => void }> = ({ bracket, onOpen }) => {
-  const { columns, height, boxHeight } = bracket
+  const { columns, height, boxHeight } = bracket;
   return (
     <div className={classes.scroller}>
       <div className={classes.grid} style={{ '--cols': columns.length } as CSSProperties}>
@@ -38,5 +38,5 @@ export const BracketView: FC<{ bracket: Bracket; onOpen: (id: string) => void }>
         ))}
       </div>
     </div>
-  )
-}
+  );
+};

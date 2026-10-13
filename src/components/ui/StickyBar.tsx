@@ -1,16 +1,16 @@
-import { clsx } from 'clsx'
-import type { CSSProperties, FC, HTMLAttributes, Ref } from 'react'
+import { clsx } from 'clsx';
+import type { CSSProperties, FC, HTMLAttributes, Ref } from 'react';
 
-import { HEADER_VAR } from '~/utils/layout'
+import { HEADER_VAR } from '~/utils/layout';
 
-import classes from './StickyBar.module.css'
+import classes from './StickyBar.module.css';
 
 export const StickyBar: FC<
   HTMLAttributes<HTMLDivElement> & {
-    top?: number | string
-    zIndex?: number
-    glass?: boolean
-    ref?: Ref<HTMLDivElement>
+    top?: number | string;
+    zIndex?: number;
+    glass?: boolean;
+    ref?: Ref<HTMLDivElement>;
   }
 > = ({ top = 0, zIndex = 20, glass, className, style, ref, ...rest }) => {
   return (
@@ -27,5 +27,5 @@ export const StickyBar: FC<
       }
       {...rest}
     />
-  )
-}
+  );
+};

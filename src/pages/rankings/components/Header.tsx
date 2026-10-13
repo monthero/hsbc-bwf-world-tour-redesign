@@ -1,34 +1,34 @@
-import { Skeleton } from '@mantine/core'
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { Skeleton } from '@mantine/core';
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import { Segmented } from '~/components/ui'
-import { EVENT_OPTIONS, QUALIFY_PER_COUNTRY, QUALIFY_SPOTS } from '~/constants'
-import { useFinalsCity } from '~/hooks/useTournaments'
-import type { EventCode, RankingKind, RankingTable } from '~/types'
+import { Segmented } from '~/components/ui';
+import { EVENT_OPTIONS, QUALIFY_PER_COUNTRY, QUALIFY_SPOTS } from '~/constants';
+import { useFinalsCity } from '~/hooks/useTournaments';
+import type { EventCode, RankingKind, RankingTable } from '~/types';
 
-import { KIND_OPTIONS } from '../constants'
-import { publicationLabel } from '../utils'
+import { KIND_OPTIONS } from '../constants';
+import { publicationLabel } from '../utils';
 
-import classes from './Header.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './Header.module.css';
+import utils from '~/styles/utils.module.css';
 
 const RaceNote = memo(() => {
-  const city = useFinalsCity()
+  const city = useFinalsCity();
   return (
     <p className={classes.note}>
       Top {QUALIFY_SPOTS} qualify for the World Tour Finals{city ? ` in ${city}` : ''} · max. {QUALIFY_PER_COUNTRY} per
       country
     </p>
-  )
-})
+  );
+});
 
 export const Header = memo<{
-  table: RankingTable | undefined
-  kind: RankingKind
-  ev: EventCode
-  onKind: (kind: RankingKind | null) => void
-  onEv: (ev: EventCode | null) => void
+  table: RankingTable | undefined;
+  kind: RankingKind;
+  ev: EventCode;
+  onKind: (kind: RankingKind | null) => void;
+  onEv: (ev: EventCode | null) => void;
 }>(({ table, kind, ev, onKind, onEv }) => {
   return (
     <header className={clsx(utils.container, classes.header)}>
@@ -43,5 +43,5 @@ export const Header = memo<{
         <Segmented options={EVENT_OPTIONS} value={ev} onChange={onEv} className={classes.ev} />
       </div>
     </header>
-  )
-})
+  );
+});

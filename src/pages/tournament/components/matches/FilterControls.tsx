@@ -1,34 +1,34 @@
-import { clsx } from 'clsx'
-import { memo, useCallback, useLayoutEffect, useMemo, useRef, type FC } from 'react'
+import { clsx } from 'clsx';
+import { memo, useCallback, useLayoutEffect, useMemo, useRef, type FC } from 'react';
 
-import { FilterChip, LiveDot, SearchField, Segmented, StarButton, type SegmentedOption } from '~/components/ui'
-import type { TournamentDay } from '~/types'
+import { FilterChip, LiveDot, SearchField, Segmented, StarButton, type SegmentedOption } from '~/components/ui';
+import type { TournamentDay } from '~/types';
 
-import type { MatchFilters } from './useMatchFilters'
-import { centerChild, type CourtChipModel, type EventChipModel } from './utils'
+import type { MatchFilters } from './useMatchFilters';
+import { centerChild, type CourtChipModel, type EventChipModel } from './utils';
 
-import classes from './FilterControls.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './FilterControls.module.css';
+import utils from '~/styles/utils.module.css';
 
-export type FilterVariant = 'inline' | 'compact' | 'sheet'
+export type FilterVariant = 'inline' | 'compact' | 'sheet';
 
-const SIZE = { compact: 'sm', inline: 'md', sheet: 'lg' } as const satisfies Record<FilterVariant, string>
+const SIZE = { compact: 'sm', inline: 'md', sheet: 'lg' } as const satisfies Record<FilterVariant, string>;
 
-const STAR_SIZE: Record<FilterVariant, number> = { compact: 12, inline: 14, sheet: 15 }
+const STAR_SIZE: Record<FilterVariant, number> = { compact: 12, inline: 14, sheet: 15 };
 
-const DAY_HEIGHT: Record<FilterVariant, number> = { compact: 28, inline: 32, sheet: 44 }
+const DAY_HEIGHT: Record<FilterVariant, number> = { compact: 28, inline: 32, sheet: 44 };
 
 const SEARCH_CLASS: Record<FilterVariant, string | undefined> = {
   inline: classes.searchInline,
   compact: classes.searchCompact,
   sheet: classes.searchSheet,
-}
+};
 
-const TODAY_BADGE = <LiveDot pulse size={4} />
+const TODAY_BADGE = <LiveDot pulse size={4} />;
 
 interface ChipsProps {
-  variant: FilterVariant
-  className?: string
+  variant: FilterVariant;
+  className?: string;
 }
 
 export const EventChips = memo<ChipsProps & { chips: EventChipModel[]; onToggle: MatchFilters['toggleEvent'] }>(
@@ -47,9 +47,9 @@ export const EventChips = memo<ChipsProps & { chips: EventChipModel[]; onToggle:
           </FilterChip>
         ))}
       </div>
-    )
+    );
   },
-)
+);
 
 export const CourtChips = memo<ChipsProps & { chips: CourtChipModel[]; onToggle: MatchFilters['toggleCourt'] }>(
   ({ chips, onToggle, variant, className }) => {
@@ -68,14 +68,14 @@ export const CourtChips = memo<ChipsProps & { chips: CourtChipModel[]; onToggle:
           </FilterChip>
         ))}
       </div>
-    )
+    );
   },
-)
+);
 
 export const FollowToggle = memo<{
-  active: boolean
-  onToggle: () => void
-  variant: FilterVariant
+  active: boolean;
+  onToggle: () => void;
+  variant: FilterVariant;
 }>(({ active, onToggle, variant }) => {
   return (
     <StarButton
@@ -86,14 +86,14 @@ export const FollowToggle = memo<{
       size={STAR_SIZE[variant]}
       onClick={onToggle}
     />
-  )
-})
+  );
+});
 
 export const DaySegment = memo<{
-  days: TournamentDay[]
-  day: number
-  onChange: (day: number) => void
-  variant: FilterVariant
+  days: TournamentDay[];
+  day: number;
+  onChange: (day: number) => void;
+  variant: FilterVariant;
 }>(({ days, day, onChange, variant }) => {
   const options = useMemo(
     (): SegmentedOption<string>[] =>
@@ -106,14 +106,14 @@ export const DaySegment = memo<{
           muted: d.isPast,
         })),
     [days],
-  )
-  const select = useCallback((v: string | null) => v !== null && onChange(Number(v)), [onChange])
-  const lane = useRef<HTMLDivElement>(null)
+  );
+  const select = useCallback((v: string | null) => v !== null && onChange(Number(v)), [onChange]);
+  const lane = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
-    const el = lane.current
-    const btn = el?.querySelectorAll<HTMLElement>('button')[options.findIndex((o) => o.value === String(day))]
-    if (el && btn) centerChild(el, btn)
-  }, [day, options])
+    const el = lane.current;
+    const btn = el?.querySelectorAll<HTMLElement>('button')[options.findIndex((o) => o.value === String(day))];
+    if (el && btn) centerChild(el, btn);
+  }, [day, options]);
   return (
     <div ref={lane} className={clsx(utils.noScrollbar, classes.dayLane)} data-variant={variant}>
       <Segmented
@@ -125,21 +125,21 @@ export const DaySegment = memo<{
         className={classes.days}
       />
     </div>
-  )
-})
+  );
+});
 
 export const ClearButton: FC<{ onClick: () => void; variant: FilterVariant }> = ({ onClick, variant }) => {
   return (
     <button type="button" className={classes.clear} data-variant={variant} onClick={onClick}>
       Clear
     </button>
-  )
-}
+  );
+};
 
 export const FilterSearch: FC<{
-  value: string
-  onChange: (v: string) => void
-  variant: FilterVariant
+  value: string;
+  onChange: (v: string) => void;
+  variant: FilterVariant;
 }> = ({ value, onChange, variant }) => {
   return (
     <SearchField
@@ -149,9 +149,9 @@ export const FilterSearch: FC<{
       onChange={onChange}
       placeholder={variant === 'compact' ? 'Search' : undefined}
     />
-  )
-}
+  );
+};
 
 export const Divider: FC<{ fade?: boolean; className?: string }> = ({ fade, className }) => {
-  return <span className={clsx(classes.divider, className)} data-fade={fade || undefined} />
-}
+  return <span className={clsx(classes.divider, className)} data-fade={fade || undefined} />;
+};

@@ -1,57 +1,57 @@
-import { clsx } from 'clsx'
-import { memo, useCallback, useLayoutEffect, useMemo, useRef, type FC, type KeyboardEvent } from 'react'
+import { clsx } from 'clsx';
+import { memo, useCallback, useLayoutEffect, useMemo, useRef, type FC, type KeyboardEvent } from 'react';
 
-import { IconBack, IconButton, IconNext, LiveDot, type IconProps } from '~/components/ui'
-import { useIsMobile } from '~/hooks/useIsMobile'
-import { useScrollEdges } from '~/hooks/useScrollEdges'
-import type { TournamentDay } from '~/types'
-import { prefersReducedMotion } from '~/utils/motion'
+import { IconBack, IconButton, IconNext, LiveDot, type IconProps } from '~/components/ui';
+import { useIsMobile } from '~/hooks/useIsMobile';
+import { useScrollEdges } from '~/hooks/useScrollEdges';
+import type { TournamentDay } from '~/types';
+import { prefersReducedMotion } from '~/utils/motion';
 
-import { daySlots } from '../../utils'
-import { RestBreak } from '../RestBreak'
-import { centerChild } from './utils'
+import { daySlots } from '../../utils';
+import { RestBreak } from '../RestBreak';
+import { centerChild } from './utils';
 
-import classes from './DayPicker.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './DayPicker.module.css';
+import utils from '~/styles/utils.module.css';
 
-const PAGE_RATIO = 0.75
+const PAGE_RATIO = 0.75;
 
-const scrollBehavior = (): ScrollBehavior => (prefersReducedMotion() ? 'auto' : 'smooth')
+const scrollBehavior = (): ScrollBehavior => (prefersReducedMotion() ? 'auto' : 'smooth');
 
 const step = (days: readonly TournamentDay[], from: number, dir: number) => {
-  for (let i = from + dir; i >= 0 && i < days.length; i += dir) if (!days[i]?.isRest) return i
-  return null
-}
+  for (let i = from + dir; i >= 0 && i < days.length; i += dir) if (!days[i]?.isRest) return i;
+  return null;
+};
 
 const keyTarget = (key: string, days: readonly TournamentDay[], pos: number) => {
   switch (key) {
     case 'ArrowLeft':
-      return step(days, pos, -1) ?? pos
+      return step(days, pos, -1) ?? pos;
     case 'ArrowRight':
-      return step(days, pos, 1) ?? pos
+      return step(days, pos, 1) ?? pos;
     case 'Home':
-      return step(days, -1, 1)
+      return step(days, -1, 1);
     case 'End':
-      return step(days, days.length, -1)
+      return step(days, days.length, -1);
     default:
-      return null
+      return null;
   }
-}
+};
 
 const dayButton = (el: HTMLElement | null, index: number) =>
-  el?.querySelector<HTMLElement>(`[data-day="${index}"]`) ?? null
+  el?.querySelector<HTMLElement>(`[data-day="${index}"]`) ?? null;
 
 const ARROWS = [
   { dir: -1, label: 'Earlier days', Icon: IconBack, className: classes.prev },
   { dir: 1, label: 'Later days', Icon: IconNext, className: classes.next },
-] as const
+] as const;
 
 const Arrow = memo<{
-  dir: number
-  label: string
-  Icon: FC<IconProps>
-  className: string | undefined
-  onPage: (dir: number) => void
+  dir: number;
+  label: string;
+  Icon: FC<IconProps>;
+  className: string | undefined;
+  onPage: (dir: number) => void;
 }>(({ dir, label, Icon, className, onPage }) => (
   <IconButton
     label={label}
@@ -63,13 +63,13 @@ const Arrow = memo<{
   >
     <Icon size={14} />
   </IconButton>
-))
+));
 
 const DayButton = memo<{
-  d: TournamentDay
-  selected: boolean
-  short: boolean
-  onChange: (day: number) => void
+  d: TournamentDay;
+  selected: boolean;
+  short: boolean;
+  onChange: (day: number) => void;
 }>(({ d, selected, short, onChange }) => {
   return (
     <button
@@ -89,46 +89,46 @@ const DayButton = memo<{
       </span>
       {d.isLive && <LiveDot pulse size={5} className={classes.today} />}
     </button>
-  )
-})
+  );
+});
 
 export const DayPicker = memo<{
-  days: TournamentDay[]
-  day: number
-  onChange: (day: number) => void
+  days: TournamentDay[];
+  day: number;
+  onChange: (day: number) => void;
 }>(({ days, day, onChange }) => {
-  const short = useIsMobile()
-  const ref = useRef<HTMLDivElement>(null)
-  const shown = useRef(-1)
-  const edges = useScrollEdges(ref)
-  const pos = useMemo(() => days.findIndex((d) => d.index === day), [days, day])
-  const slots = useMemo(() => daySlots(days), [days])
+  const short = useIsMobile();
+  const ref = useRef<HTMLDivElement>(null);
+  const shown = useRef(-1);
+  const edges = useScrollEdges(ref);
+  const pos = useMemo(() => days.findIndex((d) => d.index === day), [days, day]);
+  const slots = useMemo(() => daySlots(days), [days]);
 
   useLayoutEffect(() => {
-    const el = ref.current
-    const btn = dayButton(el, day)
-    if (!el || !btn) return
-    const animate = shown.current >= 0 && shown.current !== day
-    shown.current = day
-    centerChild(el, btn, animate ? scrollBehavior() : 'auto')
-  }, [day])
+    const el = ref.current;
+    const btn = dayButton(el, day);
+    if (!el || !btn) return;
+    const animate = shown.current >= 0 && shown.current !== day;
+    shown.current = day;
+    centerChild(el, btn, animate ? scrollBehavior() : 'auto');
+  }, [day]);
 
   const onPage = useCallback((dir: number) => {
-    const el = ref.current
-    el?.scrollBy({ left: dir * el.clientWidth * PAGE_RATIO, behavior: scrollBehavior() })
-  }, [])
+    const el = ref.current;
+    el?.scrollBy({ left: dir * el.clientWidth * PAGE_RATIO, behavior: scrollBehavior() });
+  }, []);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
-      const next = keyTarget(e.key, days, pos)
-      const target = next === null ? undefined : days[next]
-      if (!target || next === null) return
-      e.preventDefault()
-      dayButton(e.currentTarget, target.index)?.focus({ preventScroll: true })
-      if (next !== pos) onChange(target.index)
+      const next = keyTarget(e.key, days, pos);
+      const target = next === null ? undefined : days[next];
+      if (!target || next === null) return;
+      e.preventDefault();
+      dayButton(e.currentTarget, target.index)?.focus({ preventScroll: true });
+      if (next !== pos) onChange(target.index);
     },
     [days, pos, onChange],
-  )
+  );
 
   return (
     <div className={classes.root} data-start={edges.start || undefined} data-end={edges.end || undefined}>
@@ -152,5 +152,5 @@ export const DayPicker = memo<{
         <Arrow key={a.dir} {...a} onPage={onPage} />
       ))}
     </div>
-  )
-})
+  );
+});

@@ -1,21 +1,21 @@
-import { ActionIcon, Button, Tooltip } from '@mantine/core'
-import { useClipboard } from '@mantine/hooks'
-import { memo, useCallback, type FC } from 'react'
+import { ActionIcon, Button, Tooltip } from '@mantine/core';
+import { useClipboard } from '@mantine/hooks';
+import { memo, useCallback, type FC } from 'react';
 
-import { IconCheck, IconFacebook, IconLink, IconShare, IconWeibo, IconX, type IconProps } from '~/components/ui'
-import { useIsMobile } from '~/hooks/useIsMobile'
+import { IconCheck, IconFacebook, IconLink, IconShare, IconWeibo, IconX, type IconProps } from '~/components/ui';
+import { useIsMobile } from '~/hooks/useIsMobile';
 
-import { COPIED_MS } from '../constants'
+import { COPIED_MS } from '../constants';
 
-import classes from './ShareBar.module.css'
+import classes from './ShareBar.module.css';
 
 interface ShareTarget {
-  label: string
-  icon: FC<IconProps>
-  href: (url: string, title: string) => string
+  label: string;
+  icon: FC<IconProps>;
+  href: (url: string, title: string) => string;
 }
 
-const enc = encodeURIComponent
+const enc = encodeURIComponent;
 
 const SHARE_TARGETS: readonly ShareTarget[] = [
   {
@@ -25,14 +25,14 @@ const SHARE_TARGETS: readonly ShareTarget[] = [
   },
   { label: 'Facebook', icon: IconFacebook, href: (url) => `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}` },
   { label: 'X', icon: IconX, href: (url, title) => `https://x.com/intent/post?text=${enc(title)}&url=${enc(url)}` },
-]
+];
 
-const canShare = () => typeof navigator !== 'undefined' && typeof navigator.share === 'function'
+const canShare = () => typeof navigator !== 'undefined' && typeof navigator.share === 'function';
 
-const pageUrl = () => window.location.href
+const pageUrl = () => window.location.href;
 
 const ShareLinks = memo<{ title: string }>(({ title }) => {
-  const url = pageUrl()
+  const url = pageUrl();
   return SHARE_TARGETS.map(({ label, icon: Icon, href }) => (
     <Tooltip key={label} label={`Share on ${label}`}>
       <ActionIcon
@@ -49,23 +49,23 @@ const ShareLinks = memo<{ title: string }>(({ title }) => {
         <Icon />
       </ActionIcon>
     </Tooltip>
-  ))
-})
+  ));
+});
 
 export const ShareBar = memo<{ title: string }>(({ title }) => {
-  const isMobile = useIsMobile()
-  const clipboard = useClipboard({ timeout: COPIED_MS })
-  const share = useCallback(() => void navigator.share({ title, url: pageUrl() }).catch(() => undefined), [title])
-  const copy = useCallback(() => clipboard.copy(pageUrl()), [clipboard])
-  const copyLabel = clipboard.copied ? 'Link copied' : 'Copy link'
-  const copyIcon = clipboard.copied ? <IconCheck /> : <IconLink />
+  const isMobile = useIsMobile();
+  const clipboard = useClipboard({ timeout: COPIED_MS });
+  const share = useCallback(() => void navigator.share({ title, url: pageUrl() }).catch(() => undefined), [title]);
+  const copy = useCallback(() => clipboard.copy(pageUrl()), [clipboard]);
+  const copyLabel = clipboard.copied ? 'Link copied' : 'Copy link';
+  const copyIcon = clipboard.copied ? <IconCheck /> : <IconLink />;
 
   if (isMobile && canShare())
     return (
       <ActionIcon variant="soft" radius="xl" size={32} onClick={share} aria-label="Share" className={classes.icon}>
         <IconShare />
       </ActionIcon>
-    )
+    );
 
   return (
     <div className={classes.bar}>
@@ -80,5 +80,5 @@ export const ShareBar = memo<{ title: string }>(({ title }) => {
         </Button>
       )}
     </div>
-  )
-})
+  );
+});

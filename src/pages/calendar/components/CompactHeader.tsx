@@ -1,19 +1,19 @@
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import type { SeasonSummary, Tournament } from '~/types'
+import type { SeasonSummary, Tournament } from '~/types';
 
-import { SeasonBar } from './SeasonBar'
-import { SeasonHeading } from './SeasonHeading'
+import { SeasonBar } from './SeasonBar';
+import { SeasonHeading } from './SeasonHeading';
 
-import classes from './CompactHeader.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './CompactHeader.module.css';
+import utils from '~/styles/utils.module.css';
 
 export const CompactHeader = memo<{
-  visible: boolean
-  tournaments: Tournament[]
-  season: SeasonSummary
-  isMobile: boolean
+  visible: boolean;
+  tournaments: Tournament[];
+  season: SeasonSummary;
+  isMobile: boolean;
 }>(({ visible, tournaments, season, isMobile }) => {
   return (
     <header
@@ -47,5 +47,5 @@ export const CompactHeader = memo<{
         />
       </div>
     </header>
-  )
-})
+  );
+});

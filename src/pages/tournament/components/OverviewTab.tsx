@@ -1,30 +1,30 @@
-import { getRouteApi } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo, useCallback, useMemo, type FC, type ReactNode } from 'react'
+import { getRouteApi } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo, useCallback, useMemo, type FC, type ReactNode } from 'react';
 
-import { TeamLabel } from '~/components/match'
-import { LevelBadge, TournamentPlace } from '~/components/tournament'
-import { CardHit, EmptyState, IconCalendar, IconMapPin, IconStarFilled, SectionTitle } from '~/components/ui'
-import { DRAW_SIZE, EVENT_NAMES, QUALIFY_SPOTS } from '~/constants'
-import { usePlayerDirectory } from '~/hooks/usePlayers'
-import { useSeries } from '~/hooks/useTournaments'
-import { FOLLOW_KINDS, useFavoriteCount, useFavoritesMatcher } from '~/stores/favorites'
-import type { Match, TournamentDay } from '~/types'
-import { teamPlayers } from '~/utils/matches'
-import { mapsUrl } from '~/utils/tournaments'
+import { TeamLabel } from '~/components/match';
+import { LevelBadge, TournamentPlace } from '~/components/tournament';
+import { CardHit, EmptyState, IconCalendar, IconMapPin, IconStarFilled, SectionTitle } from '~/components/ui';
+import { DRAW_SIZE, EVENT_NAMES, QUALIFY_SPOTS } from '~/constants';
+import { usePlayerDirectory } from '~/hooks/usePlayers';
+import { useSeries } from '~/hooks/useTournaments';
+import { FOLLOW_KINDS, useFavoriteCount, useFavoritesMatcher } from '~/stores/favorites';
+import type { Match, TournamentDay } from '~/types';
+import { teamPlayers } from '~/utils/matches';
+import { mapsUrl } from '~/utils/tournaments';
 
-import { FOLLOW_EMPTY, FOLLOW_HINT } from '../constants'
-import { useOpenMatch } from '../hooks'
-import type { TabProps } from '../types'
-import { buildPastWinners, type PastYear } from '../utils'
-import { Champions, ChampionStrip } from './Champions'
-import { matchTitle } from './matches/utils'
+import { FOLLOW_EMPTY, FOLLOW_HINT } from '../constants';
+import { useOpenMatch } from '../hooks';
+import type { TabProps } from '../types';
+import { buildPastWinners, type PastYear } from '../utils';
+import { Champions, ChampionStrip } from './Champions';
+import { matchTitle } from './matches/utils';
 
-import page from '../TournamentPage.module.css'
-import classes from './OverviewTab.module.css'
-import utils from '~/styles/utils.module.css'
+import page from '../TournamentPage.module.css';
+import classes from './OverviewTab.module.css';
+import utils from '~/styles/utils.module.css';
 
-const route = getRouteApi('/world-tour/$year/$slug')
+const route = getRouteApi('/world-tour/$year/$slug');
 
 const Row: FC<{ label: string; children: ReactNode }> = ({ label, children }) => {
   return (
@@ -32,14 +32,14 @@ const Row: FC<{ label: string; children: ReactNode }> = ({ label, children }) =>
       <span className={classes.rowLabel}>{label}</span>
       {children}
     </div>
-  )
-}
+  );
+};
 
 const DayRow = memo<{
-  day: TournamentDay
-  past: boolean
-  disabled: boolean
-  onOpen: (index: number) => void
+  day: TournamentDay;
+  past: boolean;
+  disabled: boolean;
+  onOpen: (index: number) => void;
 }>(({ day, past, disabled, onOpen }) => {
   return (
     <button
@@ -65,11 +65,11 @@ const DayRow = memo<{
       </span>
       <span className={classes.dayCount}>{day.count || ''}</span>
     </button>
-  )
-})
+  );
+});
 
 const FollowRow = memo<{ match: Match; onOpen: (id: string) => void }>(({ match: m, onOpen }) => {
-  const live = m.status === 'P'
+  const live = m.status === 'P';
   return (
     <div className={classes.follow}>
       <CardHit label={`Match details: ${matchTitle(m)}`} onClick={() => onOpen(m.id)} />
@@ -85,8 +85,8 @@ const FollowRow = memo<{ match: Match; onOpen: (id: string) => void }>(({ match:
         </span>
       </span>
     </div>
-  )
-})
+  );
+});
 
 const PastYearBlock = memo<{ year: PastYear }>(({ year }) => {
   return (
@@ -97,30 +97,30 @@ const PastYearBlock = memo<{ year: PastYear }>(({ year }) => {
       </div>
       <ChampionStrip items={year.items} past />
     </div>
-  )
-})
+  );
+});
 
 export const OverviewTab: FC<TabProps> = ({ tournament: t, schedule }) => {
-  const navigate = route.useNavigate()
-  const openMatch = useOpenMatch()
-  const matcher = useFavoritesMatcher()
-  const followed = useFavoriteCount(FOLLOW_KINDS)
-  const { data: series } = useSeries(t.series)
-  const { data: dir } = usePlayerDirectory()
+  const navigate = route.useNavigate();
+  const openMatch = useOpenMatch();
+  const matcher = useFavoritesMatcher();
+  const followed = useFavoriteCount(FOLLOW_KINDS);
+  const { data: series } = useSeries(t.series);
+  const { data: dir } = usePlayerDirectory();
 
   const following = useMemo(
     () =>
       (schedule.days[schedule.todayIndex]?.matches ?? []).filter((m) => m.status !== 'F' && matcher(teamPlayers(m))),
     [schedule, matcher],
-  )
-  const past = useMemo(() => (series ? buildPastWinners(t, series, dir) : []), [t, series, dir])
+  );
+  const past = useMemo(() => (series ? buildPastWinners(t, series, dir) : []), [t, series, dir]);
 
   const openDay = useCallback(
     (day: number) => navigate({ search: (s) => ({ ...s, tab: 'matches', day }), replace: true, resetScroll: false }),
     [navigate],
-  )
+  );
 
-  const hasMatches = schedule.matches.length > 0
+  const hasMatches = schedule.matches.length > 0;
 
   return (
     <>
@@ -202,5 +202,5 @@ export const OverviewTab: FC<TabProps> = ({ tournament: t, schedule }) => {
         )}
       </section>
     </>
-  )
-}
+  );
+};

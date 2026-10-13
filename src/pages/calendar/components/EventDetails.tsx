@@ -1,5 +1,5 @@
-import { Link } from '@tanstack/react-router'
-import { memo } from 'react'
+import { Link } from '@tanstack/react-router';
+import { memo } from 'react';
 
 import {
   LevelBadge,
@@ -8,13 +8,13 @@ import {
   TournamentPlace,
   TournamentStatusBadge,
   WinnersList,
-} from '~/components/tournament'
-import { IconNext } from '~/components/ui'
-import type { Tournament } from '~/types'
-import { hasWinners, tournamentParams } from '~/utils/tournaments'
+} from '~/components/tournament';
+import { IconNext } from '~/components/ui';
+import type { Tournament } from '~/types';
+import { hasWinners, tournamentParams } from '~/utils/tournaments';
 
-import classes from './EventDetails.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './EventDetails.module.css';
+import utils from '~/styles/utils.module.css';
 
 export const EventDetails = memo<{ tournament: Tournament }>(({ tournament: t }) => {
   return (
@@ -48,5 +48,5 @@ export const EventDetails = memo<{ tournament: Tournament }>(({ tournament: t })
         <IconNext size={14} />
       </Link>
     </>
-  )
-})
+  );
+});

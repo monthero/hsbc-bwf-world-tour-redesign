@@ -1,34 +1,34 @@
-import { Link } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo, type FC, type RefCallback } from 'react'
+import { Link } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo, type FC, type RefCallback } from 'react';
 
-import { MediaCover } from '~/components/ui'
-import type { Tournament } from '~/types'
-import { finalsCountdown } from '~/utils/season'
-import { tournamentParams } from '~/utils/tournaments'
+import { MediaCover } from '~/components/ui';
+import type { Tournament } from '~/types';
+import { finalsCountdown } from '~/utils/season';
+import { tournamentParams } from '~/utils/tournaments';
 
-import { LogoTile } from './LogoTile'
-import { TournamentPlace } from './TournamentStatus'
+import { LogoTile } from './LogoTile';
+import { TournamentPlace } from './TournamentStatus';
 
-import classes from './FinaleCard.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './FinaleCard.module.css';
+import utils from '~/styles/utils.module.css';
 
-const FINALS_TAGLINE = 'Final stop · Top 8 per discipline'
+const FINALS_TAGLINE = 'Final stop · Top 8 per discipline';
 
 const Countdown: FC<{ tournament: Tournament; className?: string }> = ({ tournament, className }) => {
-  const cd = finalsCountdown(tournament)
+  const cd = finalsCountdown(tournament);
   return (
     <span className={className}>
       <span className={classes.days}>{cd.value}</span>
       <span className={classes.daysLabel}>{cd.label}</span>
     </span>
-  )
-}
+  );
+};
 
 interface CardProps {
-  tournament: Tournament
-  anchorRef?: RefCallback<HTMLElement>
-  className?: string
+  tournament: Tournament;
+  anchorRef?: RefCallback<HTMLElement>;
+  className?: string;
 }
 
 const WideCard: FC<CardProps> = ({ tournament: t, anchorRef, className }) => (
@@ -55,7 +55,7 @@ const WideCard: FC<CardProps> = ({ tournament: t, anchorRef, className }) => (
       <Countdown tournament={t} className={classes.countdown} />
     </div>
   </Link>
-)
+);
 
 const CompactCard: FC<CardProps> = ({ tournament: t, anchorRef, className }) => (
   <Link
@@ -79,8 +79,8 @@ const CompactCard: FC<CardProps> = ({ tournament: t, anchorRef, className }) => 
       </span>
     </div>
   </Link>
-)
+);
 
 export const FinaleCard = memo<CardProps & { compact: boolean }>(({ compact, ...props }) =>
   compact ? <CompactCard {...props} /> : <WideCard {...props} />,
-)
+);

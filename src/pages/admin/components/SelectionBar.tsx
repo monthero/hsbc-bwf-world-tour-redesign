@@ -1,19 +1,19 @@
-import { Button } from '@mantine/core'
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { Button } from '@mantine/core';
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import { formatNumber } from '~/utils/format'
+import { formatNumber } from '~/utils/format';
 
-import classes from './SelectionBar.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './SelectionBar.module.css';
+import utils from '~/styles/utils.module.css';
 
 export const SelectionBar = memo<{
-  count: number
-  filtered: number
-  allFiltered: boolean
-  onSelectAll: () => void
-  onClear: () => void
-  onBulk: () => void
+  count: number;
+  filtered: number;
+  allFiltered: boolean;
+  onSelectAll: () => void;
+  onClear: () => void;
+  onBulk: () => void;
 }>(({ count, filtered, allFiltered, onSelectAll, onClear, onBulk }) => (
   <div className={classes.bar} data-active={count > 0 || undefined}>
     <span className={clsx(utils.num, classes.count)}>
@@ -35,4 +35,4 @@ export const SelectionBar = memo<{
       </>
     )}
   </div>
-))
+));

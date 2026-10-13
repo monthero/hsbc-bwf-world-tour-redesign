@@ -1,27 +1,27 @@
-import { clsx } from 'clsx'
-import { memo, type FC, type ReactNode } from 'react'
+import { clsx } from 'clsx';
+import { memo, type FC, type ReactNode } from 'react';
 
-import { LogoTile, TournamentHoverCard, TournamentPlace, TournamentStatusBadge } from '~/components/tournament'
-import { BackPill, IconBack, IconButton, IconNext, MediaCover } from '~/components/ui'
-import { LEVEL_META, LEVEL_VARS } from '~/constants'
-import type { Tournament, TournamentSchedule } from '~/types'
-import { tournamentParams } from '~/utils/tournaments'
+import { LogoTile, TournamentHoverCard, TournamentPlace, TournamentStatusBadge } from '~/components/tournament';
+import { BackPill, IconBack, IconButton, IconNext, MediaCover } from '~/components/ui';
+import { LEVEL_META, LEVEL_VARS } from '~/constants';
+import type { Tournament, TournamentSchedule } from '~/types';
+import { tournamentParams } from '~/utils/tournaments';
 
-import { useCalendarBack } from '../hooks'
-import { DayTimeline } from './DayTimeline'
+import { useCalendarBack } from '../hooks';
+import { DayTimeline } from './DayTimeline';
 
-import classes from './TournamentHeader.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './TournamentHeader.module.css';
+import utils from '~/styles/utils.module.css';
 
 const RoundButton: FC<{
-  from: Tournament
-  target: Tournament | undefined
-  dir: 'Previous' | 'Next'
-  edge: string
-  children: ReactNode
+  from: Tournament;
+  target: Tournament | undefined;
+  dir: 'Previous' | 'Next';
+  edge: string;
+  children: ReactNode;
 }> = ({ from, target, dir, edge, children }) => {
-  const other = !!target && target.year !== from.year
-  const label = target ? `${dir}: ${other ? target.heading : target.title}` : edge
+  const other = !!target && target.year !== from.year;
+  const label = target ? `${dir}: ${other ? target.heading : target.title}` : edge;
   return (
     <TournamentHoverCard tournament={target} kicker={other ? `${dir} season` : `${dir} event`}>
       <IconButton
@@ -33,16 +33,16 @@ const RoundButton: FC<{
         {children}
       </IconButton>
     </TournamentHoverCard>
-  )
-}
+  );
+};
 
 export const TournamentHeader = memo<{
-  tournament: Tournament
-  prev: Tournament | undefined
-  next: Tournament | undefined
-  schedule: TournamentSchedule | undefined
+  tournament: Tournament;
+  prev: Tournament | undefined;
+  next: Tournament | undefined;
+  schedule: TournamentSchedule | undefined;
 }>(({ tournament: t, prev, next, schedule }) => {
-  const back = useCalendarBack(t.year)
+  const back = useCalendarBack(t.year);
   return (
     <header className={clsx(utils.container, classes.header)} style={LEVEL_VARS[t.level]}>
       <div className={classes.top}>
@@ -82,5 +82,5 @@ export const TournamentHeader = memo<{
       </div>
       {schedule && <DayTimeline tournament={t} schedule={schedule} />}
     </header>
-  )
-})
+  );
+});

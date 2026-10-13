@@ -1,9 +1,9 @@
-import { EventCode } from '../schemas'
-import { bwfGet } from './http'
-import { toDrawMatches, toEntryDto, toMatchDto, toMatchStats, type NameOf } from './normalize'
-import { BwfDayMatches, BwfDrawData, BwfDraws, BwfEntries, BwfMatchStat, BwfOptions } from './schemas'
+import { EventCode } from '../schemas';
+import { bwfGet } from './http';
+import { toDrawMatches, toEntryDto, toMatchDto, toMatchStats, type NameOf } from './normalize';
+import { BwfDayMatches, BwfDrawData, BwfDraws, BwfEntries, BwfMatchStat, BwfOptions } from './schemas';
 
-const MAIN_DRAW = 0
+const MAIN_DRAW = 0;
 
 export const fetchDayMatches = async (code: string, day: string, names: NameOf, signal?: AbortSignal) => {
   const raw = await bwfGet(
@@ -11,16 +11,16 @@ export const fetchDayMatches = async (code: string, day: string, names: NameOf, 
     { tournamentCode: code, date: day, order: 2, court: 0 },
     BwfDayMatches,
     signal,
-  )
-  return raw.flatMap((m) => toMatchDto(m, names) ?? [])
-}
+  );
+  return raw.flatMap((m) => toMatchDto(m, names) ?? []);
+};
 
 export const fetchMatchStats = async (tmtId: number, matchCode: string, signal?: AbortSignal) =>
-  toMatchStats(await bwfGet('match-center/vue-match-stat', { tmtId, matchId: matchCode }, BwfMatchStat, signal))
+  toMatchStats(await bwfGet('match-center/vue-match-stat', { tmtId, matchId: matchCode }, BwfMatchStat, signal));
 
 export const fetchDraw = async (tmtId: number, names: NameOf, signal?: AbortSignal) => {
-  const { results } = await bwfGet('vue-tournament-draws', { tmtTab: 'draw', tmtId }, BwfDraws, signal)
-  const main = (results ?? []).filter((d) => d.type === MAIN_DRAW)
+  const { results } = await bwfGet('vue-tournament-draws', { tmtTab: 'draw', tmtId }, BwfDraws, signal);
+  const main = (results ?? []).filter((d) => d.type === MAIN_DRAW);
   const data = await Promise.all(
     main.map((d) =>
       bwfGet(
@@ -30,9 +30,9 @@ export const fetchDraw = async (tmtId: number, names: NameOf, signal?: AbortSign
         signal,
       ),
     ),
-  )
-  return data.flatMap((d) => toDrawMatches(d, names))
-}
+  );
+  return data.flatMap((d) => toDrawMatches(d, names));
+};
 
 const fetchEventEntries = async (
   tmtId: number,
@@ -46,17 +46,17 @@ const fetchEventEntries = async (
     { searchKey: '', tmtId, tmtType: 0, eventName: value, isPara: 0 },
     BwfEntries,
     signal,
-  )
-  return (results ?? []).flatMap((e) => toEntryDto(event, e, names) ?? [])
-}
+  );
+  return (results ?? []).flatMap((e) => toEntryDto(event, e, names) ?? []);
+};
 
 export const fetchEntries = async (tmtId: number, names: NameOf, signal?: AbortSignal) => {
-  const { results } = await bwfGet('entries/vue-tournament-events', { tmtId }, BwfOptions, signal)
+  const { results } = await bwfGet('entries/vue-tournament-events', { tmtId }, BwfOptions, signal);
   const lists = await Promise.all(
     (results ?? []).map((o) => {
-      const event = EventCode.safeParse(o.text)
-      return event.success ? fetchEventEntries(tmtId, o.value, event.data, names, signal) : Promise.resolve([])
+      const event = EventCode.safeParse(o.text);
+      return event.success ? fetchEventEntries(tmtId, o.value, event.data, names, signal) : Promise.resolve([]);
     }),
-  )
-  return lists.flat()
-}
+  );
+  return lists.flat();
+};

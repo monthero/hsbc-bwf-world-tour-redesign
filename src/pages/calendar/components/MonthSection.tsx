@@ -1,27 +1,27 @@
-import { clsx } from 'clsx'
-import { memo, useCallback, type CSSProperties } from 'react'
+import { clsx } from 'clsx';
+import { memo, useCallback, type CSSProperties } from 'react';
 
-import { EmptyState } from '~/components/ui'
+import { EmptyState } from '~/components/ui';
 
-import type { AnchorRef, MonthGroup } from '../types'
-import { eventCountLabel } from '../utils'
-import { EventCard } from './EventCard'
-import { EventRow, LiveCard } from './EventRow'
+import type { AnchorRef, MonthGroup } from '../types';
+import { eventCountLabel } from '../utils';
+import { EventCard } from './EventCard';
+import { EventRow, LiveCard } from './EventRow';
 
-import classes from './MonthSection.module.css'
-import timeline from './Timeline.module.css'
+import classes from './MonthSection.module.css';
+import timeline from './Timeline.module.css';
 
 export const MonthSection = memo<{
-  group: MonthGroup
-  first: boolean
-  isMobile: boolean
-  nextCode: string | undefined
-  targetCode: string | undefined
-  anchorRef: AnchorRef
-  register: (month: number, el: HTMLElement | null) => void
+  group: MonthGroup;
+  first: boolean;
+  isMobile: boolean;
+  nextCode: string | undefined;
+  targetCode: string | undefined;
+  anchorRef: AnchorRef;
+  register: (month: number, el: HTMLElement | null) => void;
 }>(({ group, first, isMobile, nextCode, targetCode, anchorRef, register }) => {
-  const ref = useCallback((el: HTMLElement | null) => register(group.month, el), [register, group.month])
-  const { items } = group
+  const ref = useCallback((el: HTMLElement | null) => register(group.month, el), [register, group.month]);
+  const { items } = group;
   return (
     <section
       ref={ref}
@@ -42,11 +42,11 @@ export const MonthSection = memo<{
       {items.length ? (
         <div className={clsx(timeline.body, classes.list)}>
           {items.map((t) => {
-            const anchor = t.code === targetCode ? anchorRef : undefined
-            const isNext = t.code === nextCode
-            if (!isMobile) return <EventCard key={t.code} tournament={t} isNext={isNext} anchorRef={anchor} />
-            if (t.status === 'live') return <LiveCard key={t.code} tournament={t} anchorRef={anchor} />
-            return <EventRow key={t.code} tournament={t} isNext={isNext} anchorRef={anchor} />
+            const anchor = t.code === targetCode ? anchorRef : undefined;
+            const isNext = t.code === nextCode;
+            if (!isMobile) return <EventCard key={t.code} tournament={t} isNext={isNext} anchorRef={anchor} />;
+            if (t.status === 'live') return <LiveCard key={t.code} tournament={t} anchorRef={anchor} />;
+            return <EventRow key={t.code} tournament={t} isNext={isNext} anchorRef={anchor} />;
           })}
         </div>
       ) : (
@@ -55,5 +55,5 @@ export const MonthSection = memo<{
         </EmptyState>
       )}
     </section>
-  )
-})
+  );
+});

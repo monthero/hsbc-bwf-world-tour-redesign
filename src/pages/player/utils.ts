@@ -1,11 +1,11 @@
-import { EventCode } from '~/api/schemas'
-import type { Player, PlayerDirectory, PlayerMatch, RankingHistory, RankView, SeasonIndex } from '~/types'
-import { formatDayMonthYear } from '~/utils/dates'
-import { formatRank } from '~/utils/format'
-import { medalOfResult } from '~/utils/medals'
-import { ownTeam, playerById, winLoss } from '~/utils/season'
+import { EventCode } from '~/api/schemas';
+import type { Player, PlayerDirectory, PlayerMatch, RankingHistory, RankView, SeasonIndex } from '~/types';
+import { formatDayMonthYear } from '~/utils/dates';
+import { formatRank } from '~/utils/format';
+import { medalOfResult } from '~/utils/medals';
+import { ownTeam, playerById, winLoss } from '~/utils/season';
 
-import { LOSS_RESULT, RESULT_LABELS } from './constants'
+import { LOSS_RESULT, RESULT_LABELS } from './constants';
 import type {
   BreakdownItem,
   CareerHigh,
@@ -19,30 +19,30 @@ import type {
   ResultGroup,
   SeasonView,
   TournamentRuns,
-} from './types'
+} from './types';
 
-type HistoryEntry = RankingHistory['history'][number]
+type HistoryEntry = RankingHistory['history'][number];
 
-export const resultLabel = (n: number) => RESULT_LABELS[n] ?? formatRank(n)
+export const resultLabel = (n: number) => RESULT_LABELS[n] ?? formatRank(n);
 
-export const resultTier = (n: number) => medalOfResult(n) ?? (n === 5 ? 'qf' : 'other')
+export const resultTier = (n: number) => medalOfResult(n) ?? (n === 5 ? 'qf' : 'other');
 
 export const medalCounts = (items: readonly BreakdownItem[]): MedalCounts => {
-  const counts: MedalCounts = { gold: 0, silver: 0, bronze: 0 }
+  const counts: MedalCounts = { gold: 0, silver: 0, bronze: 0 };
   for (const t of items) {
-    const kind = medalOfResult(t.result)
-    if (kind) counts[kind]++
+    const kind = medalOfResult(t.result);
+    if (kind) counts[kind]++;
   }
-  return counts
-}
+  return counts;
+};
 
 const partnerOf = (r: HistoryEntry, self: string, index: SeasonIndex | undefined, dir: PlayerDirectory | undefined) => {
-  if (!r.player2Id) return null
-  const mine = String(r.player1Id) === self
-  const name = (mine ? r.player2Name : r.player1Name) ?? ''
-  if (!name) return null
-  return playerById(String((mine ? r.player2Id : r.player1Id) ?? ''), name, index, dir)
-}
+  if (!r.player2Id) return null;
+  const mine = String(r.player1Id) === self;
+  const name = (mine ? r.player2Name : r.player1Name) ?? '';
+  if (!name) return null;
+  return playerById(String((mine ? r.player2Id : r.player1Id) ?? ''), name, index, dir);
+};
 
 export const buildHistory = (
   h: RankingHistory,
@@ -50,7 +50,7 @@ export const buildHistory = (
   dir: PlayerDirectory | undefined,
 ): HistoryView => {
   const rows = h.history.flatMap((r, i) => {
-    if (!r.event) return []
+    if (!r.event) return [];
     const row: HistoryRow = {
       key: `h${i}`,
       partner: partnerOf(r, h.id, index, dir),
@@ -59,15 +59,15 @@ export const buildHistory = (
       date: r.date ? formatDayMonthYear(r.date) : '',
       weeks: r.totalWeeks,
       current: false,
-    }
-    return [{ r, ev: r.event, live: r.publicationId === h.publicationId, row }]
-  })
-  const bestLive = new Map<EventCode, (typeof rows)[number]>()
+    };
+    return [{ r, ev: r.event, live: r.publicationId === h.publicationId, row }];
+  });
+  const bestLive = new Map<EventCode, (typeof rows)[number]>();
   for (const x of rows) {
-    const cur = bestLive.get(x.ev)
-    if (x.live && (!cur || x.r.rank < cur.r.rank)) bestLive.set(x.ev, x)
+    const cur = bestLive.get(x.ev);
+    if (x.live && (!cur || x.r.rank < cur.r.rank)) bestLive.set(x.ev, x);
   }
-  for (const x of bestLive.values()) x.row.current = true
+  for (const x of bestLive.values()) x.row.current = true;
 
   const results: ResultGroup[] = rows
     .filter((x) => x.live)
@@ -84,87 +84,87 @@ export const buildHistory = (
         points: t.points,
         counted: t.counted,
       })),
-    }))
+    }));
 
   const groups = [...Map.groupBy(rows, (x) => x.ev)]
     .map(([ev, xs]) => {
-      xs.sort((a, b) => (b.r.date ?? '').localeCompare(a.r.date ?? '') || a.r.rank - b.r.rank)
-      const live = xs.filter((y) => y.live).map((y) => y.r.rank)
+      xs.sort((a, b) => (b.r.date ?? '').localeCompare(a.r.date ?? '') || a.r.rank - b.r.rank);
+      const live = xs.filter((y) => y.live).map((y) => y.r.rank);
       return {
         group: { ev, rows: xs.map((y) => y.row) } satisfies HistoryGroup,
         cur: live.length ? Math.min(...live) : Infinity,
         best: Math.min(...xs.map((y) => y.r.rank || Infinity)),
         last: xs[0]?.r.date ?? '',
-      }
+      };
     })
     .sort((a, b) => a.cur - b.cur || a.best - b.best || b.last.localeCompare(a.last))
-    .map((g) => g.group)
+    .map((g) => g.group);
 
-  return { groups, results }
-}
+  return { groups, results };
+};
 
-const isTitle = (pm: PlayerMatch) => pm.match.round === 'F' && pm.outcome === 'W'
+const isTitle = (pm: PlayerMatch) => pm.match.round === 'F' && pm.outcome === 'W';
 
 const matchResult = (pm: PlayerMatch) => {
-  if (isTitle(pm)) return 1
-  return pm.outcome === 'L' ? LOSS_RESULT[pm.match.round] : undefined
-}
+  if (isTitle(pm)) return 1;
+  return pm.outcome === 'L' ? LOSS_RESULT[pm.match.round] : undefined;
+};
 
 export const bestResult = (list: readonly PlayerMatch[]) => {
-  let best: number | null = null
+  let best: number | null = null;
   for (const pm of list) {
-    const r = matchResult(pm)
-    if (r && (best === null || r < best)) best = r
+    const r = matchResult(pm);
+    if (r && (best === null || r < best)) best = r;
   }
-  return best
-}
+  return best;
+};
 
-const runKey = (pm: PlayerMatch) => `${pm.tournament.code}|${pm.match.event}`
+const runKey = (pm: PlayerMatch) => `${pm.tournament.code}|${pm.match.event}`;
 
 export const careerOf = (matches: readonly PlayerMatch[]): CareerView => {
-  const counts: MedalCounts = { gold: 0, silver: 0, bronze: 0 }
+  const counts: MedalCounts = { gold: 0, silver: 0, bronze: 0 };
   const seasons = [...Map.groupBy(matches, (pm) => pm.tournament.year)]
     .sort(([a], [b]) => b - a)
     .map(([year, list]): SeasonView => {
-      const [wins, losses] = winLoss(list)
-      let titles = 0
-      let best: number | null = null
+      const [wins, losses] = winLoss(list);
+      let titles = 0;
+      let best: number | null = null;
       for (const run of Map.groupBy(list, runKey).values()) {
-        const r = bestResult(run)
-        if (r === null) continue
-        const kind = medalOfResult(r)
-        if (kind) counts[kind]++
-        if (r === 1) titles++
-        if (best === null || r < best) best = r
+        const r = bestResult(run);
+        if (r === null) continue;
+        const kind = medalOfResult(r);
+        if (kind) counts[kind]++;
+        if (r === 1) titles++;
+        if (best === null || r < best) best = r;
       }
-      return { year, matches: list, wins, losses, titles, best }
-    })
+      return { year, matches: list, wins, losses, titles, best };
+    });
   return {
     seasons,
     wins: seasons.reduce((n, s) => n + s.wins, 0),
     losses: seasons.reduce((n, s) => n + s.losses, 0),
     counts,
     titles: matches.filter(isTitle),
-  }
-}
+  };
+};
 
 export const eventsOf = (matches: readonly PlayerMatch[]) => {
-  const seen = new Set(matches.map((pm) => pm.match.event))
-  return EventCode.options.filter((ev) => seen.has(ev))
-}
+  const seen = new Set(matches.map((pm) => pm.match.event));
+  return EventCode.options.filter((ev) => seen.has(ev));
+};
 
 export const teammateOf = (pm: PlayerMatch, self: string) => {
-  const { players } = ownTeam(pm)
-  return players.length > 1 ? (players.find((p) => p.id !== self) ?? null) : null
-}
+  const { players } = ownTeam(pm);
+  return players.length > 1 ? (players.find((p) => p.id !== self) ?? null) : null;
+};
 
 const eventRun = (event: EventCode, matches: PlayerMatch[], self: string): EventRun => {
-  const partners = new Map<string, Player>()
+  const partners = new Map<string, Player>();
   for (const pm of matches) {
-    const p = teammateOf(pm, self)
-    if (p) partners.set(p.id || p.name, p)
+    const p = teammateOf(pm, self);
+    if (p) partners.set(p.id || p.name, p);
   }
-  const [only] = partners.values()
+  const [only] = partners.values();
   return {
     key: event,
     event,
@@ -172,25 +172,25 @@ const eventRun = (event: EventCode, matches: PlayerMatch[], self: string): Event
     perMatch: partners.size > 1,
     result: bestResult(matches),
     matches,
-  }
-}
+  };
+};
 
 export const tournamentRuns = (matches: readonly PlayerMatch[], self: string): TournamentRuns[] =>
   [...Map.groupBy(matches, (pm) => pm.tournament.code)].flatMap(([key, list]) => {
-    const tournament = list[0]?.tournament
-    if (!tournament) return []
-    const runs = [...Map.groupBy(list, (pm) => pm.match.event)].map(([ev, xs]) => eventRun(ev, xs, self))
-    return [{ key, tournament, runs }]
-  })
+    const tournament = list[0]?.tournament;
+    if (!tournament) return [];
+    const runs = [...Map.groupBy(list, (pm) => pm.match.event)].map(([ev, xs]) => eventRun(ev, xs, self));
+    return [{ key, tournament, runs }];
+  });
 
 export const partnerHistory = (matches: readonly PlayerMatch[], self: string): PartnerRow[] => {
-  const rows = new Map<string, PartnerRow>()
+  const rows = new Map<string, PartnerRow>();
   for (const pm of matches) {
-    const partner = teammateOf(pm, self)
-    if (!partner) continue
-    const { event, round } = pm.match
-    const year = pm.tournament.year
-    const key = `${event}|${partner.id || partner.name}`
+    const partner = teammateOf(pm, self);
+    if (!partner) continue;
+    const { event, round } = pm.match;
+    const year = pm.tournament.year;
+    const key = `${event}|${partner.id || partner.name}`;
     const row = rows.get(key) ?? {
       key,
       event,
@@ -202,40 +202,40 @@ export const partnerHistory = (matches: readonly PlayerMatch[], self: string): P
       losses: 0,
       titles: 0,
       finals: 0,
-    }
-    rows.set(key, row)
-    row.first = Math.min(row.first, year)
-    row.last = Math.max(row.last, year)
-    row.matches++
-    if (pm.outcome === 'W') row.wins++
-    if (pm.outcome === 'L') row.losses++
-    if (round === 'F' && (pm.outcome === 'W' || pm.outcome === 'L')) row.finals++
-    if (isTitle(pm)) row.titles++
+    };
+    rows.set(key, row);
+    row.first = Math.min(row.first, year);
+    row.last = Math.max(row.last, year);
+    row.matches++;
+    if (pm.outcome === 'W') row.wins++;
+    if (pm.outcome === 'L') row.losses++;
+    if (round === 'F' && (pm.outcome === 'W' || pm.outcome === 'L')) row.finals++;
+    if (isTitle(pm)) row.titles++;
   }
-  return [...rows.values()].sort((a, b) => b.last - a.last || b.matches - a.matches)
-}
+  return [...rows.values()].sort((a, b) => b.last - a.last || b.matches - a.matches);
+};
 
 const highOf = (k: RankView, view: HistoryView | undefined): CareerHigh | null => {
-  let best: HistoryRow | undefined
+  let best: HistoryRow | undefined;
   for (const row of view?.groups.find((g) => g.ev === k.ev)?.rows ?? []) {
     if (row.best && (!best || row.best < best.best || (row.best === best.best && (row.weeks ?? 0) > (best.weeks ?? 0))))
-      best = row
+      best = row;
   }
-  if (best) return { rank: best.best, weeks: best.weeks, partner: best.partner }
-  return k.highest ? { rank: k.highest, weeks: null, partner: k.highestPartner } : null
-}
+  if (best) return { rank: best.best, weeks: best.weeks, partner: best.partner };
+  return k.highest ? { rank: k.highest, weeks: null, partner: k.highestPartner } : null;
+};
 
 export const careerHighs = (ranks: readonly RankView[], view: HistoryView | undefined) =>
   new Map(
     ranks.flatMap((k) => {
-      const high = highOf(k, view)
-      return high ? [[k.ev, high] as const] : []
+      const high = highOf(k, view);
+      return high ? [[k.ev, high] as const] : [];
     }),
-  )
+  );
 
-export const winShare = (wins: number, losses: number) => (wins + losses ? wins / (wins + losses) : null)
+export const winShare = (wins: number, losses: number) => (wins + losses ? wins / (wins + losses) : null);
 
 export const winRate = (wins: number, losses: number) => {
-  const share = winShare(wins, losses)
-  return share === null ? '—' : `${Math.round(share * 100)}%`
-}
+  const share = winShare(wins, losses);
+  return share === null ? '—' : `${Math.round(share * 100)}%`;
+};

@@ -1,9 +1,9 @@
-import { clsx } from 'clsx'
-import type { FC } from 'react'
+import { clsx } from 'clsx';
+import type { FC } from 'react';
 
-import { FAN_ZONE } from './links'
+import { FAN_ZONE } from './links';
 
-import classes from './BwfMark.module.css'
+import classes from './BwfMark.module.css';
 
 export const BwfMark: FC<{ className?: string }> = ({ className }) => (
   <a
@@ -13,4 +13,4 @@ export const BwfMark: FC<{ className?: string }> = ({ className }) => (
     className={clsx(classes.mark, className)}
     aria-label="BWF (opens in a new tab)"
   />
-)
+);

@@ -1,16 +1,16 @@
-import '@mantine/core/styles.layer.css'
-import '@mantine/dates/styles.layer.css'
-import { MantineProvider } from '@mantine/core'
-import { DatesProvider } from '@mantine/dates'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createRouter, RouterProvider } from '@tanstack/react-router'
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import '@mantine/core/styles.layer.css';
+import '@mantine/dates/styles.layer.css';
+import { MantineProvider } from '@mantine/core';
+import { DatesProvider } from '@mantine/dates';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
-import { routeTree } from './routeTree.gen'
-import { cssVariablesResolver, theme } from './theme'
+import { routeTree } from './routeTree.gen';
+import { cssVariablesResolver, theme } from './theme';
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 const router = createRouter({
   routeTree,
@@ -18,11 +18,11 @@ const router = createRouter({
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0,
   scrollRestoration: true,
-})
+});
 
 declare module '@tanstack/react-router' {
   interface Register {
-    router: typeof router
+    router: typeof router;
   }
 }
 
@@ -36,4 +36,4 @@ createRoot(document.getElementById('root')!).render(
       </DatesProvider>
     </MantineProvider>
   </StrictMode>,
-)
+);

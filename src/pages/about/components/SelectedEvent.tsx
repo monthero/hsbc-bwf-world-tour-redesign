@@ -1,17 +1,17 @@
-import { Link } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { Link } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import { Flag } from '~/components/country'
-import { LogoTile } from '~/components/tournament'
-import { IconNext } from '~/components/ui'
-import type { Tournament } from '~/types'
-import { tournamentParams } from '~/utils/tournaments'
+import { Flag } from '~/components/country';
+import { LogoTile } from '~/components/tournament';
+import { IconNext } from '~/components/ui';
+import type { Tournament } from '~/types';
+import { tournamentParams } from '~/utils/tournaments';
 
-import { shortStatus } from '../utils'
+import { shortStatus } from '../utils';
 
-import classes from './SelectedEvent.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './SelectedEvent.module.css';
+import utils from '~/styles/utils.module.css';
 
 export const SelectedEvent = memo<{ tournament: Tournament }>(({ tournament: t }) => (
   <Link
@@ -36,4 +36,4 @@ export const SelectedEvent = memo<{ tournament: Tournament }>(({ tournament: t }
       <IconNext size={14} />
     </span>
   </Link>
-))
+));

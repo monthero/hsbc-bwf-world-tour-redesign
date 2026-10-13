@@ -1,16 +1,16 @@
-import { clsx } from 'clsx'
-import { memo, type CSSProperties, type FC } from 'react'
+import { clsx } from 'clsx';
+import { memo, type CSSProperties, type FC } from 'react';
 
-import { Flag } from '~/components/country'
-import { PlayerAvatar, PlayerName } from '~/components/player'
-import { SectionTitle } from '~/components/ui'
-import type { Player } from '~/types'
-import { plural } from '~/utils/format'
+import { Flag } from '~/components/country';
+import { PlayerAvatar, PlayerName } from '~/components/player';
+import { SectionTitle } from '~/components/ui';
+import type { Player } from '~/types';
+import { plural } from '~/utils/format';
 
-import type { NationTitles, TitlesSummary } from '../types'
+import type { NationTitles, TitlesSummary } from '../types';
 
-import classes from './TitlesSoFar.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './TitlesSoFar.module.css';
+import utils from '~/styles/utils.module.css';
 
 const NationBar = memo<{ nation: NationTitles }>(({ nation: n }) => (
   <li className={classes.bar} style={{ '--w': `${n.share * 100}%` } as CSSProperties}>
@@ -19,14 +19,14 @@ const NationBar = memo<{ nation: NationTitles }>(({ nation: n }) => (
     <span className={classes.track} />
     <span className={clsx(utils.num, classes.n)}>{n.titles}</span>
   </li>
-))
+));
 
 const leadText = (others: number, most: number) =>
-  others ? ` and ${plural(others, 'other')} lead with ${most} titles each` : ` leads with ${plural(most, 'title')}`
+  others ? ` and ${plural(others, 'other')} lead with ${most} titles each` : ` leads with ${plural(most, 'title')}`;
 
 const Leader: FC<{ leaders: Player[]; most: number }> = ({ leaders, most }) => {
-  const [p] = leaders
-  if (!p) return null
+  const [p] = leaders;
+  if (!p) return null;
   return (
     <p className={classes.leader}>
       <PlayerAvatar player={p} size={32} link />
@@ -36,8 +36,8 @@ const Leader: FC<{ leaders: Player[]; most: number }> = ({ leaders, most }) => {
       </span>
       <Flag cc={p.cc} />
     </p>
-  )
-}
+  );
+};
 
 export const TitlesSoFar = memo<{ summary: TitlesSummary }>(({ summary: s }) => (
   <div className={clsx(utils.card, classes.card)}>
@@ -51,4 +51,4 @@ export const TitlesSoFar = memo<{ summary: TitlesSummary }>(({ summary: s }) => 
     </ol>
     <Leader leaders={s.leaders} most={s.most} />
   </div>
-))
+));

@@ -1,27 +1,27 @@
-import { clsx } from 'clsx'
-import type { CSSProperties, ReactNode } from 'react'
+import { clsx } from 'clsx';
+import type { CSSProperties, ReactNode } from 'react';
 
-import classes from './Segmented.module.css'
+import classes from './Segmented.module.css';
 
 export interface SegmentedOption<T extends string> {
-  value: T
-  label: string
-  tip?: string
-  badge?: ReactNode
-  muted?: boolean
-  disabled?: boolean
+  value: T;
+  label: string;
+  tip?: string;
+  badge?: ReactNode;
+  muted?: boolean;
+  disabled?: boolean;
 }
 
 interface SegmentedProps<T extends string> {
-  options: readonly SegmentedOption<T>[]
-  value: T | null | undefined
-  onChange: (value: T | null) => void
-  deselectable?: boolean
-  variant?: 'tint' | 'solid'
-  height?: number
-  maxWidth?: number | string
-  center?: boolean
-  className?: string
+  options: readonly SegmentedOption<T>[];
+  value: T | null | undefined;
+  onChange: (value: T | null) => void;
+  deselectable?: boolean;
+  variant?: 'tint' | 'solid';
+  height?: number;
+  maxWidth?: number | string;
+  center?: boolean;
+  className?: string;
 }
 
 export const Segmented = <T extends string>({
@@ -35,8 +35,8 @@ export const Segmented = <T extends string>({
   center,
   className,
 }: SegmentedProps<T>) => {
-  const n = Math.max(1, options.length)
-  const hit = options.findIndex((o) => o.value === value)
+  const n = Math.max(1, options.length);
+  const hit = options.findIndex((o) => o.value === value);
   return (
     <div
       className={clsx(classes.root, className)}
@@ -46,7 +46,7 @@ export const Segmented = <T extends string>({
     >
       <span className={classes.pill} data-hidden={hit < 0 || undefined} />
       {options.map((o) => {
-        const on = o.value === value
+        const on = o.value === value;
         return (
           <button
             key={o.value}
@@ -61,8 +61,8 @@ export const Segmented = <T extends string>({
             {o.label}
             {o.badge}
           </button>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};

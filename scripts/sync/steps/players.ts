@@ -1,35 +1,35 @@
-import { parseHeightCm } from '../../../src/utils/format.ts'
-import { bioPath, summaryPath, type ApiBio, type ApiSummary } from '../bwf.ts'
-import type { Context } from '../context.ts'
-import { addDays } from '../dates.ts'
-import { all, tx } from '../db.ts'
-import { DAY_MS, pool, within } from '../http.ts'
-import { photoOf } from '../normalize.ts'
+import { parseHeightCm } from '../../../src/utils/format.ts';
+import { bioPath, summaryPath, type ApiBio, type ApiSummary } from '../bwf.ts';
+import type { Context } from '../context.ts';
+import { addDays } from '../dates.ts';
+import { all, tx } from '../db.ts';
+import { DAY_MS, pool, within } from '../http.ts';
+import { photoOf } from '../normalize.ts';
 
-const ACTIVE_REFRESH = within(30 * DAY_MS)
-const IDLE_REFRESH = within(180 * DAY_MS)
-const JUNK = /^(?:-+|n\/?a|none|null|nil|\.|0)$/i
+const ACTIVE_REFRESH = within(30 * DAY_MS);
+const IDLE_REFRESH = within(180 * DAY_MS);
+const JUNK = /^(?:-+|n\/?a|none|null|nil|\.|0)$/i;
 
 const text = (...values: (string | null | undefined)[]) => {
   for (const v of values) {
-    const s = v?.replace(/\s+/g, ' ').trim()
-    if (s && !JUNK.test(s)) return s
+    const s = v?.replace(/\s+/g, ' ').trim();
+    if (s && !JUNK.test(s)) return s;
   }
-  return undefined
-}
+  return undefined;
+};
 
-const HANDS: Record<string, string> = { R: 'Right-handed', L: 'Left-handed', '1': 'Right-handed', '2': 'Left-handed' }
+const HANDS: Record<string, string> = { R: 'Right-handed', L: 'Left-handed', '1': 'Right-handed', '2': 'Left-handed' };
 
 const heightOf = (...values: (string | null | undefined)[]) =>
-  values.map(parseHeightCm).find((cm) => cm !== null) ?? undefined
+  values.map(parseHeightCm).find((cm) => cm !== null) ?? undefined;
 
 const compact = (o: Record<string, unknown>) =>
-  Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined && v !== null && v !== ''))
+  Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined && v !== null && v !== ''));
 
 export const buildBio = (summary: ApiSummary['results'], bio: ApiBio | null) => {
-  const m = summary?.bio_model ?? {}
-  const qa = bio?.qa ?? {}
-  const prize = text(bio?.prize_money)
+  const m = summary?.bio_model ?? {};
+  const qa = bio?.qa ?? {};
+  const prize = text(bio?.prize_money);
   return compact({
     born: summary?.date_of_birth?.slice(0, 10),
     age: bio?.age ?? undefined,
@@ -51,28 +51,28 @@ export const buildBio = (summary: ApiSummary['results'], bio: ApiBio | null) => 
     idol: text(m.sporting_hero),
     instagram: text(m.instagram),
     facebook: text(m.facebook),
-  })
-}
+  });
+};
 
-const heroOf = (url: string | null | undefined) => url?.match(/\/(v\d+)\/assets\/players\/hero\//)?.[1] ?? null
+const heroOf = (url: string | null | undefined) => url?.match(/\/(v\d+)\/assets\/players\/hero\//)?.[1] ?? null;
 
 export const syncPlayers = async ({ db, client, today }: Context) => {
-  const activeSince = addDays(today, -365)
-  const players = all<{ id: string; last_played: string }>(db, 'SELECT id, last_played FROM players ORDER BY id')
+  const activeSince = addDays(today, -365);
+  const players = all<{ id: string; last_played: string }>(db, 'SELECT id, last_played FROM players ORDER BY id');
   const update = db.prepare(`
     UPDATE players SET name = COALESCE(?, name), cc = COALESCE(?, cc), photo = COALESCE(photo, ?), hero = ?, slug = COALESCE(?, slug), bio = ?
-    WHERE id = ?`)
+    WHERE id = ?`);
 
-  let done = 0
+  let done = 0;
   const results = await pool(players, async (p) => {
-    const fresh = p.last_played >= activeSince ? ACTIVE_REFRESH : IDLE_REFRESH
+    const fresh = p.last_played >= activeSince ? ACTIVE_REFRESH : IDLE_REFRESH;
     const [summary, bio] = await Promise.all([
       client.get<ApiSummary>(summaryPath(p.id), fresh),
       client.get<ApiBio>(bioPath(p.id), fresh),
-    ])
-    if (++done % 500 === 0) console.log(`  players ${done}/${players.length}`)
-    return { id: p.id, summary: summary?.data.results ?? null, bio: bio?.data ?? null }
-  })
+    ]);
+    if (++done % 500 === 0) console.log(`  players ${done}/${players.length}`);
+    return { id: p.id, summary: summary?.data.results ?? null, bio: bio?.data ?? null };
+  });
 
   tx(db, () => {
     for (const { id, summary, bio } of results)
@@ -84,7 +84,7 @@ export const syncPlayers = async ({ db, client, today }: Context) => {
         summary?.slug ?? null,
         JSON.stringify(buildBio(summary, bio)),
         id,
-      )
-  })
-  console.log(`players: ${players.length} profiles`)
-}
+      );
+  });
+  console.log(`players: ${players.length} profiles`);
+};

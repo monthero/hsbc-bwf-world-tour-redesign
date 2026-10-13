@@ -1,11 +1,11 @@
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import type { NewsStory } from '~/utils/news'
+import type { NewsStory } from '~/utils/news';
 
-import { TournamentChip } from './TournamentChip'
+import { TournamentChip } from './TournamentChip';
 
-import classes from './NewsMeta.module.css'
+import classes from './NewsMeta.module.css';
 
 export const NewsMeta = memo<{ story: NewsStory; chip?: boolean; className?: string }>(({ story, chip, className }) => {
   return (
@@ -14,5 +14,5 @@ export const NewsMeta = memo<{ story: NewsStory; chip?: boolean; className?: str
       {story.fresh && <span className={classes.fresh}>New</span>}
       <time dateTime={story.item.publishedAt}>{story.when}</time>
     </span>
-  )
-})
+  );
+});

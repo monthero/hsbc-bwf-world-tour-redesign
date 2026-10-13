@@ -1,5 +1,5 @@
-import { createContext } from 'react'
+import { createContext } from 'react';
 
-import type { TournamentLookup } from '~/utils/news'
+import type { TournamentLookup } from '~/utils/news';
 
-export const LookupContext = createContext<TournamentLookup | undefined>(undefined)
+export const LookupContext = createContext<TournamentLookup | undefined>(undefined);

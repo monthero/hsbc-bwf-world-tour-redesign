@@ -1,1 +1,1 @@
-export { DisclaimerModal } from './DisclaimerModal'
+export { DisclaimerModal } from './DisclaimerModal';

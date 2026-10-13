@@ -8,9 +8,9 @@ import {
   type VariantColorsResolver,
   type DefaultMantineColor,
   type MantineColorsTuple,
-} from '@mantine/core'
+} from '@mantine/core';
 
-import variants from '~/components/ui/variants.module.css'
+import variants from '~/components/ui/variants.module.css';
 
 const red: MantineColorsTuple = [
   '#ffe9ea',
@@ -23,7 +23,7 @@ const red: MantineColorsTuple = [
   '#c81e25',
   '#a3171d',
   '#7c1115',
-]
+];
 const dark: MantineColorsTuple = [
   '#f3f3f4',
   '#d4d4d8',
@@ -35,7 +35,7 @@ const dark: MantineColorsTuple = [
   '#131315',
   '#0f0f11',
   '#0b0b0c',
-]
+];
 const slate: MantineColorsTuple = [
   '#e4e4e7',
   '#8a8a92',
@@ -47,7 +47,7 @@ const slate: MantineColorsTuple = [
   '#202024',
   '#1a1a1d',
   '#151517',
-]
+];
 const gold: MantineColorsTuple = [
   '#fdf1d6',
   '#fbe8bc',
@@ -59,7 +59,7 @@ const gold: MantineColorsTuple = [
   '#a8873a',
   '#81682f',
   '#5b4a24',
-]
+];
 const green: MantineColorsTuple = [
   '#d6f4ea',
   '#bbeddc',
@@ -71,7 +71,7 @@ const green: MantineColorsTuple = [
   '#389073',
   '#2d6f5a',
   '#224e41',
-]
+];
 const blue: MantineColorsTuple = [
   '#e5eeff',
   '#d4e4ff',
@@ -83,7 +83,7 @@ const blue: MantineColorsTuple = [
   '#637faf',
   '#4e6287',
   '#384660',
-]
+];
 const violet: MantineColorsTuple = [
   '#eee8ff',
   '#e3d9ff',
@@ -95,7 +95,7 @@ const violet: MantineColorsTuple = [
   '#7e6caf',
   '#615487',
   '#453c60',
-]
+];
 const sky: MantineColorsTuple = [
   '#ddeeff',
   '#c6e3ff',
@@ -107,7 +107,7 @@ const sky: MantineColorsTuple = [
   '#4c7eaf',
   '#3c6187',
   '#2c4560',
-]
+];
 const pink: MantineColorsTuple = [
   '#ffe9f2',
   '#ffdae9',
@@ -119,7 +119,7 @@ const pink: MantineColorsTuple = [
   '#af6e89',
   '#86566a',
   '#5e3d4c',
-]
+];
 const silver: MantineColorsTuple = [
   '#f6f8fb',
   '#eef0f4',
@@ -131,7 +131,7 @@ const silver: MantineColorsTuple = [
   '#6f7684',
   '#626468',
   '#494a4e',
-]
+];
 const bronze: MantineColorsTuple = [
   '#f8e8dc',
   '#f2d7c3',
@@ -143,35 +143,35 @@ const bronze: MantineColorsTuple = [
   '#8a664c',
   '#6c513d',
   '#4f3b2f',
-]
+];
 
-const colors = { red, dark, slate, gold, green, blue, violet, sky, pink, silver, bronze }
+const colors = { red, dark, slate, gold, green, blue, violet, sky, pink, silver, bronze };
 
-type BwfColor = keyof typeof colors
+type BwfColor = keyof typeof colors;
 
 declare module '@mantine/core' {
   export interface MantineThemeColorsOverride {
-    colors: Record<BwfColor | DefaultMantineColor, MantineColorsTuple>
+    colors: Record<BwfColor | DefaultMantineColor, MantineColorsTuple>;
   }
 }
 
-const c = (name: BwfColor, shade: number) => `var(--mantine-color-${name}-${shade})`
-const tint = (color: string, pct: number) => `color-mix(in srgb, ${color} ${pct}%, transparent)`
-const mix = (a: string, b: string, pct: number) => `color-mix(in srgb, ${a} ${pct}%, ${b})`
-const tourRed = '#d72630'
+const c = (name: BwfColor, shade: number) => `var(--mantine-color-${name}-${shade})`;
+const tint = (color: string, pct: number) => `color-mix(in srgb, ${color} ${pct}%, transparent)`;
+const mix = (a: string, b: string, pct: number) => `color-mix(in srgb, ${a} ${pct}%, ${b})`;
+const tourRed = '#d72630';
 
 const variantColorResolver: VariantColorsResolver = (input) => {
-  if (input.variant !== 'soft') return defaultVariantColorsResolver(input)
-  const parsed = parseThemeColor({ color: input.color || input.theme.primaryColor, theme: input.theme })
-  const base = parsed.isThemeColor ? `var(${parsed.variable})` : parsed.value
+  if (input.variant !== 'soft') return defaultVariantColorsResolver(input);
+  const parsed = parseThemeColor({ color: input.color || input.theme.primaryColor, theme: input.theme });
+  const base = parsed.isThemeColor ? `var(${parsed.variable})` : parsed.value;
   return {
     background: tint(base, 8),
     hover: tint(base, 20),
     color: mix(c('red', 2), c('dark', 2), 25),
     hoverColor: 'var(--mantine-color-white)',
     border: `1px solid ${mix(base, c('dark', 5), 30)}`,
-  }
-}
+  };
+};
 
 export const theme = createTheme({
   primaryColor: 'red',
@@ -191,7 +191,7 @@ export const theme = createTheme({
     Modal: { defaultProps: { overlayProps: { backgroundOpacity: 0.62, blur: 4 } } },
     Tooltip: { defaultProps: { color: 'dark.0', c: 'dark.7', fz: 12, fw: 500, multiline: true, maw: 240 } },
   },
-})
+});
 
 export const cssVariablesResolver: CSSVariablesResolver = () => ({
   variables: {
@@ -264,4 +264,4 @@ export const cssVariablesResolver: CSSVariablesResolver = () => ({
     '--mantine-color-default-border': 'var(--bwf-border-strong)',
     '--mantine-color-dimmed': 'var(--bwf-muted)',
   },
-})
+});

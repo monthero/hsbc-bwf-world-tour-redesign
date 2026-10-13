@@ -1,101 +1,101 @@
-import { Continent, EntryStage, EventCode } from '~/api/schemas'
-import { EVENT_NAMES } from '~/constants'
-import type { PlayerDirectory } from '~/hooks/usePlayers'
-import type { DrawSlot, EntryListing, Match, Side, SideResult, Team } from '~/types'
-import { continentOf, countryName } from '~/utils/countries'
-import { isDoubles, isMainDraw, latestByTeam, sideStatus, teamEventKey, teamMatchesQuery } from '~/utils/matches'
-import { worldRank } from '~/utils/rankings'
+import { Continent, EntryStage, EventCode } from '~/api/schemas';
+import { EVENT_NAMES } from '~/constants';
+import type { PlayerDirectory } from '~/hooks/usePlayers';
+import type { DrawSlot, EntryListing, Match, Side, SideResult, Team } from '~/types';
+import { continentOf, countryName } from '~/utils/countries';
+import { isDoubles, isMainDraw, latestByTeam, sideStatus, teamEventKey, teamMatchesQuery } from '~/utils/matches';
+import { worldRank } from '~/utils/rankings';
 
 export interface LatestEntry {
-  key: string
-  event: EventCode
-  team: Team
-  match: Match | null
-  side: Side
-  stage: EntryStage
-  qualifier: boolean
-  listedRank: number | null
+  key: string;
+  event: EventCode;
+  team: Team;
+  match: Match | null;
+  side: Side;
+  stage: EntryStage;
+  qualifier: boolean;
+  listedRank: number | null;
 }
 
 export interface Entry extends LatestEntry {
-  rank: number
+  rank: number;
 }
 
 export interface CountryGroup {
-  cc: string
-  name: string
-  entries: Entry[]
+  cc: string;
+  name: string;
+  entries: Entry[];
 }
 
 export interface ContinentGroup {
-  name: Continent
-  count: number
-  countries: CountryGroup[]
+  name: Continent;
+  count: number;
+  countries: CountryGroup[];
 }
 
 export interface StageGroup {
-  stage: EntryStage
-  label: string
-  seeded: Entry[]
-  rest: Entry[]
+  stage: EntryStage;
+  label: string;
+  seeded: Entry[];
+  rest: Entry[];
 }
 
 export interface EventSection {
-  event: EventCode
-  name: string
-  count: number
-  seeds: number
-  groups: StageGroup[]
+  event: EventCode;
+  name: string;
+  count: number;
+  seeds: number;
+  groups: StageGroup[];
 }
 
 export interface EntryFilters {
-  ev: EventCode | undefined
-  q: string
-  top10: boolean
+  ev: EventCode | undefined;
+  q: string;
+  top10: boolean;
 }
 
-export const disciplineId = (event: EventCode) => `entries-${event}`
+export const disciplineId = (event: EventCode) => `entries-${event}`;
 
-const NO_MATCHES: Match[] = []
+const NO_MATCHES: Match[] = [];
 
 const STAGE_LABELS: Record<EntryStage, string> = {
   main: 'Main draw',
   qual: 'Qualifying',
   reserve: 'Alternate',
   withdrawn: 'Withdrawn',
-}
+};
 
 const STAGE_GROUPS: Record<EntryStage, string> = {
   main: 'Main draw',
   qual: 'Qualifying',
   reserve: 'Alternates',
   withdrawn: 'Withdrawn',
-}
+};
 
-const STAGE_TONES: Record<EntryStage, SideResult> = { main: 'up', qual: 'up', reserve: 'lost', withdrawn: 'lost' }
+const STAGE_TONES: Record<EntryStage, SideResult> = { main: 'up', qual: 'up', reserve: 'lost', withdrawn: 'lost' };
 
-const STATUS_OPTS = { court: true }
+const STATUS_OPTS = { court: true };
 
 export const entryStatus = (e: LatestEntry): { tone: SideResult; label: string } =>
-  e.match ? sideStatus(e.match, e.side, STATUS_OPTS) : { tone: STAGE_TONES[e.stage], label: STAGE_LABELS[e.stage] }
+  e.match ? sideStatus(e.match, e.side, STATUS_OPTS) : { tone: STAGE_TONES[e.stage], label: STAGE_LABELS[e.stage] };
 
 const qualifyingKeys = (matches: readonly Match[]) =>
-  new Set(matches.filter((m) => !isMainDraw(m)).flatMap((m) => m.teams.map((t) => teamEventKey(m.event, t.key))))
+  new Set(matches.filter((m) => !isMainDraw(m)).flatMap((m) => m.teams.map((t) => teamEventKey(m.event, t.key))));
 
 const drawnStage = (stage: EntryStage, drawn: boolean): EntryStage =>
-  drawn && (stage === 'qual' || stage === 'reserve') ? 'main' : stage
+  drawn && (stage === 'qual' || stage === 'reserve') ? 'main' : stage;
 
 export const latestEntries = (
   matches: readonly Match[],
   draw: readonly DrawSlot[] | null,
   listed: readonly EntryListing[] | undefined,
 ): LatestEntry[] => {
-  const drawn = latestByTeam(draw?.map((s) => s.match) ?? NO_MATCHES)
-  const viaQual = qualifyingKeys(matches)
-  const out = new Map<string, LatestEntry>()
+  const drawn = latestByTeam(draw?.map((s) => s.match) ?? NO_MATCHES);
+  const viaQual = qualifyingKeys(matches);
+  const out = new Map<string, LatestEntry>();
   for (const { event, stage, rank, team } of listed ?? []) {
-    const key = teamEventKey(event, team.key)
-    const d = drawn.get(key)
+    const key = teamEventKey(event, team.key);
+    const d = drawn.get(key);
     out.set(key, {
       key,
       event,
@@ -105,7 +105,7 @@ export const latestEntries = (
       stage: drawnStage(stage, !!d),
       qualifier: !!d && stage === 'qual',
       listedRank: rank,
-    })
+    });
   }
   for (const [key, { match, team }] of drawn)
     if (!out.has(key))
@@ -118,10 +118,10 @@ export const latestEntries = (
         stage: 'main',
         qualifier: false,
         listedRank: null,
-      })
+      });
   for (const [key, { match, team, side }] of latestByTeam(matches)) {
-    const prev = out.get(key)
-    const main = isMainDraw(match)
+    const prev = out.get(key);
+    const main = isMainDraw(match);
     out.set(key, {
       key,
       event: match.event,
@@ -131,74 +131,76 @@ export const latestEntries = (
       stage: main ? 'main' : 'qual',
       qualifier: main && (!!prev?.qualifier || prev?.stage === 'qual' || viaQual.has(key)),
       listedRank: prev?.listedRank ?? null,
-    })
+    });
   }
-  return [...out.values()]
-}
+  return [...out.values()];
+};
 
-const pairRank = (e: LatestEntry) => (isDoubles(e.event) ? (e.listedRank ?? 0) : 0)
+const pairRank = (e: LatestEntry) => (isDoubles(e.event) ? (e.listedRank ?? 0) : 0);
 
 export const rankEntries = (entries: LatestEntry[], dir: PlayerDirectory | undefined): Entry[] =>
   entries.map((e) => ({
     ...e,
     rank: pairRank(e) || worldRank(dir, e.team.players, e.event) || (e.listedRank ?? 0),
-  }))
+  }));
 
-const byRank = (a: Entry, b: Entry) => (a.rank || 1e6) - (b.rank || 1e6)
+const byRank = (a: Entry, b: Entry) => (a.rank || 1e6) - (b.rank || 1e6);
 
 const byRankThenEvent = (a: Entry, b: Entry) =>
-  byRank(a, b) || EventCode.options.indexOf(a.event) - EventCode.options.indexOf(b.event)
+  byRank(a, b) || EventCode.options.indexOf(a.event) - EventCode.options.indexOf(b.event);
 
-const bySeedThenRank = (a: Entry, b: Entry) => (a.team.seed || 1e3) - (b.team.seed || 1e3) || byRank(a, b)
+const bySeedThenRank = (a: Entry, b: Entry) => (a.team.seed || 1e3) - (b.team.seed || 1e3) || byRank(a, b);
 
-const isAttending = (e: Entry) => e.stage === 'main' || e.stage === 'qual'
+const isAttending = (e: Entry) => e.stage === 'main' || e.stage === 'qual';
 
 const passes = (e: Entry, { q, top10 }: Pick<EntryFilters, 'q' | 'top10'>) =>
-  (!top10 || (e.rank > 0 && e.rank <= 10)) && teamMatchesQuery(e.team, q)
+  (!top10 || (e.rank > 0 && e.rank <= 10)) && teamMatchesQuery(e.team, q);
 
 export const groupEntries = (entries: Entry[], filters: EntryFilters): ContinentGroup[] => {
-  const visible = entries.filter((e) => isAttending(e) && (!filters.ev || e.event === filters.ev) && passes(e, filters))
-  const byCountry = Map.groupBy(visible, (e) => e.team.players[0]?.cc ?? '')
+  const visible = entries.filter(
+    (e) => isAttending(e) && (!filters.ev || e.event === filters.ev) && passes(e, filters),
+  );
+  const byCountry = Map.groupBy(visible, (e) => e.team.players[0]?.cc ?? '');
   const countries = [...byCountry].map(([cc, list]): CountryGroup => ({
     cc,
     name: countryName(cc),
     entries: list.sort(byRankThenEvent),
-  }))
+  }));
   return Continent.options
     .map((name): ContinentGroup => {
       const cs = countries
         .filter((c) => continentOf(c.cc) === name)
-        .sort((a, b) => b.entries.length - a.entries.length || a.name.localeCompare(b.name))
-      return { name, count: cs.reduce((n, c) => n + c.entries.length, 0), countries: cs }
+        .sort((a, b) => b.entries.length - a.entries.length || a.name.localeCompare(b.name));
+      return { name, count: cs.reduce((n, c) => n + c.entries.length, 0), countries: cs };
     })
     .filter((c) => c.countries.length)
-    .sort((a, b) => b.count - a.count)
-}
+    .sort((a, b) => b.count - a.count);
+};
 
 const stageGroup = (stage: EntryStage, list: readonly Entry[]): StageGroup => {
-  const rows = list.filter((e) => e.stage === stage).sort(bySeedThenRank)
+  const rows = list.filter((e) => e.stage === stage).sort(bySeedThenRank);
   return {
     stage,
     label: STAGE_GROUPS[stage],
     seeded: rows.filter((e) => e.team.seed),
     rest: rows.filter((e) => !e.team.seed),
-  }
-}
+  };
+};
 
 export const sectionEntries = (entries: Entry[], filters: Pick<EntryFilters, 'q' | 'top10'>): EventSection[] =>
   EventCode.options
     .map((event): EventSection => {
-      const list = entries.filter((e) => e.event === event && passes(e, filters))
+      const list = entries.filter((e) => e.event === event && passes(e, filters));
       const groups = EntryStage.options
         .map((stage) => stageGroup(stage, list))
-        .filter((g) => g.seeded.length + g.rest.length > 0)
-      const main = groups.find((g) => g.stage === 'main')
+        .filter((g) => g.seeded.length + g.rest.length > 0);
+      const main = groups.find((g) => g.stage === 'main');
       return {
         event,
         name: EVENT_NAMES[event],
         count: list.filter(isAttending).length,
         seeds: main?.seeded.length ?? 0,
         groups,
-      }
+      };
     })
-    .filter((s) => s.groups.length > 0)
+    .filter((s) => s.groups.length > 0);

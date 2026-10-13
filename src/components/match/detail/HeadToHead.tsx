@@ -1,31 +1,31 @@
-import { clsx } from 'clsx'
-import { memo, useCallback, useMemo, useState, type CSSProperties, type FC } from 'react'
+import { clsx } from 'clsx';
+import { memo, useCallback, useMemo, useState, type CSSProperties, type FC } from 'react';
 
-import { FollowButton } from '~/components/follow'
-import { AvatarGroup } from '~/components/player/PlayerAvatar'
-import { Eyebrow, IconTimer, SectionTitle, Segmented, type SegmentedOption } from '~/components/ui'
-import { FIRST_SEASON } from '~/constants'
-import type { Match, Team, Tournament } from '~/types'
-import { plural } from '~/utils/format'
-import { gameWon } from '~/utils/matches'
+import { FollowButton } from '~/components/follow';
+import { AvatarGroup } from '~/components/player/PlayerAvatar';
+import { Eyebrow, IconTimer, SectionTitle, Segmented, type SegmentedOption } from '~/components/ui';
+import { FIRST_SEASON } from '~/constants';
+import type { Match, Team, Tournament } from '~/types';
+import { plural } from '~/utils/format';
+import { gameWon } from '~/utils/matches';
 
-import { FormStrip, OutcomeBadge } from '../Outcome'
-import { TeamPlayers } from '../TeamPlayers'
-import { useMatchInsights } from './useMatchInsights'
-import type { CompareRow, Meeting } from './utils'
+import { FormStrip, OutcomeBadge } from '../Outcome';
+import { TeamPlayers } from '../TeamPlayers';
+import { useMatchInsights } from './useMatchInsights';
+import type { CompareRow, Meeting } from './utils';
 
-import classes from './MatchDetail.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './MatchDetail.module.css';
+import utils from '~/styles/utils.module.css';
 
-type Scope = 'season' | 'all'
-type Side = 'a' | 'b'
+type Scope = 'season' | 'all';
+type Side = 'a' | 'b';
 
 const SCOPES: readonly SegmentedOption<Scope>[] = [
   { value: 'season', label: 'This season' },
   { value: 'all', label: 'All time' },
-]
+];
 
-const MAX_MEETINGS = 6
+const MAX_MEETINGS = 6;
 
 const SideHeader: FC<{ team: Team; side: Side }> = ({ team, side }) => (
   <div className={classes.hhSide} data-side={side}>
@@ -41,7 +41,7 @@ const SideHeader: FC<{ team: Team; side: Side }> = ({ team, side }) => (
       <FollowButton players={team.players} variant="outline" box="sm" />
     </div>
   </div>
-)
+);
 
 const CompareLine: FC<{ row: CompareRow }> = ({ row: r }) => (
   <div className={classes.cmpRow}>
@@ -53,7 +53,7 @@ const CompareLine: FC<{ row: CompareRow }> = ({ row: r }) => (
       {r.b}
     </span>
   </div>
-)
+);
 
 const MeetingCard = memo<{ meet: Meeting }>(({ meet: x }) => {
   return (
@@ -97,40 +97,40 @@ const MeetingCard = memo<{ meet: Meeting }>(({ meet: x }) => {
         </span>
       )}
     </div>
-  )
-})
+  );
+});
 
 export const HeadToHead = memo<{ match: Match; tournament: Tournament }>(({ match, tournament }) => {
-  const [scope, setScope] = useState<Scope>('season')
-  const onScope = useCallback((v: Scope | null) => v && setScope(v), [])
-  const { record, history, allMeets, compare } = useMatchInsights(match, tournament)
-  const [tA, tB] = match.teams
-  const all = scope === 'all'
+  const [scope, setScope] = useState<Scope>('season');
+  const onScope = useCallback((v: Scope | null) => v && setScope(v), []);
+  const { record, history, allMeets, compare } = useMatchInsights(match, tournament);
+  const [tA, tB] = match.teams;
+  const all = scope === 'all';
 
   const summary = useMemo(() => {
     if (all) {
-      if (!record) return { a: null, b: null, share: 50, pts: '', text: 'Loading World Tour history…' }
-      const t = record.a + record.b
+      if (!record) return { a: null, b: null, share: 50, pts: '', text: 'Loading World Tour history…' };
+      const t = record.a + record.b;
       return {
         a: record.a,
         b: record.b,
         share: t ? (record.a / t) * 100 : 50,
         pts: t ? `Points ${record.pa} – ${record.pb}` : '',
         text: t ? `${plural(t, 'meeting')} on the World Tour since ${FIRST_SEASON}` : 'First World Tour meeting',
-      }
+      };
     }
-    const n = history.meets.length
-    const w = history.meets.filter((x) => x.won).length
-    let text = 'Loading season…'
-    if (history.ready) text = n ? `${plural(n, 'meeting')} this season` : 'First meeting this season'
-    return { a: w, b: n - w, share: n ? (w / n) * 100 : 50, pts: '', text }
-  }, [all, record, history.meets, history.ready])
+    const n = history.meets.length;
+    const w = history.meets.filter((x) => x.won).length;
+    let text = 'Loading season…';
+    if (history.ready) text = n ? `${plural(n, 'meeting')} this season` : 'First meeting this season';
+    return { a: w, b: n - w, share: n ? (w / n) * 100 : 50, pts: '', text };
+  }, [all, record, history.meets, history.ready]);
 
-  const meets = (all ? allMeets : history.meets).slice(0, MAX_MEETINGS)
-  const { a: winsA, b: winsB } = summary
-  const aLead = winsA !== null && winsB !== null && winsA > winsB
-  const bLead = winsA !== null && winsB !== null && winsB > winsA
-  const hasForm = history.formA.length > 0 || history.formB.length > 0
+  const meets = (all ? allMeets : history.meets).slice(0, MAX_MEETINGS);
+  const { a: winsA, b: winsB } = summary;
+  const aLead = winsA !== null && winsB !== null && winsA > winsB;
+  const bLead = winsA !== null && winsB !== null && winsB > winsA;
+  const hasForm = history.formA.length > 0 || history.formB.length > 0;
 
   return (
     <div className={classes.h2h}>
@@ -182,5 +182,5 @@ export const HeadToHead = memo<{ match: Match; tournament: Tournament }>(({ matc
         </div>
       )}
     </div>
-  )
-})
+  );
+});

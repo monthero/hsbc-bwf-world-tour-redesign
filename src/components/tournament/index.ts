@@ -1,8 +1,8 @@
-export { FinaleCard } from './FinaleCard'
-export { LevelBadge } from './LevelBadge'
-export { LogoTile } from './LogoTile'
-export { Medal, MedalCount } from './Medal'
-export { TournamentCard } from './TournamentCard'
-export { TournamentHoverCard } from './TournamentPreview'
-export { TournamentPlace, TournamentStatusBadge } from './TournamentStatus'
-export { PodiumLink, WinnersHoverCard, WinnersList } from './Winners'
+export { FinaleCard } from './FinaleCard';
+export { LevelBadge } from './LevelBadge';
+export { LogoTile } from './LogoTile';
+export { Medal, MedalCount } from './Medal';
+export { TournamentCard } from './TournamentCard';
+export { TournamentHoverCard } from './TournamentPreview';
+export { TournamentPlace, TournamentStatusBadge } from './TournamentStatus';
+export { PodiumLink, WinnersHoverCard, WinnersList } from './Winners';

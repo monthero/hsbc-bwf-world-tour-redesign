@@ -1,19 +1,19 @@
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import { today } from '~/utils/dates'
-import { localAsset } from '~/utils/images'
+import { today } from '~/utils/dates';
+import { localAsset } from '~/utils/images';
 
-import { BwfMark } from './BwfMark'
-import { BWF_HQ, FOOTER_GROUPS, OFFICIAL_LEGAL, OFFICIAL_SITE, SOCIAL_LINKS, TITLE_PARTNER } from './links'
-import { ExternalButton, ExternalLink, SiteLink, SocialLinks } from './SiteLink'
-import { Wordmark } from './Wordmark'
+import { BwfMark } from './BwfMark';
+import { BWF_HQ, FOOTER_GROUPS, OFFICIAL_LEGAL, OFFICIAL_SITE, SOCIAL_LINKS, TITLE_PARTNER } from './links';
+import { ExternalButton, ExternalLink, SiteLink, SocialLinks } from './SiteLink';
+import { Wordmark } from './Wordmark';
 
-import classes from './SiteFooter.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './SiteFooter.module.css';
+import utils from '~/styles/utils.module.css';
 
-const YEAR = today().year()
-const HSBC_LOGO = localAsset('/assets/brand/hsbc.svg')
+const YEAR = today().year();
+const HSBC_LOGO = localAsset('/assets/brand/hsbc.svg');
 
 export const SiteFooter = memo(() => (
   <footer className={classes.footer}>
@@ -78,4 +78,4 @@ export const SiteFooter = memo(() => (
       </div>
     </div>
   </footer>
-))
+));

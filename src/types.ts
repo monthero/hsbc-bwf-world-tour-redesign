@@ -23,236 +23,236 @@ export type {
   Seasons,
   Series,
   TournamentMatches,
-} from '~/api/schemas'
+} from '~/api/schemas';
 
-import type { CalendarEventDto, EntryStage, EventCode, PlayerRecord } from '~/api/schemas'
+import type { CalendarEventDto, EntryStage, EventCode, PlayerRecord } from '~/api/schemas';
 
-export type MedalKind = 'gold' | 'silver' | 'bronze'
+export type MedalKind = 'gold' | 'silver' | 'bronze';
 
 export interface Player {
-  id: string
-  raw: string
-  name: string
-  first: string
-  last: string
-  surnameFirst: boolean
-  surname: string
-  cc: string
+  id: string;
+  raw: string;
+  name: string;
+  first: string;
+  last: string;
+  surnameFirst: boolean;
+  surname: string;
+  cc: string;
 }
 
-export type TournamentStatus = 'done' | 'live' | 'up' | 'cancelled'
+export type TournamentStatus = 'done' | 'live' | 'up' | 'cancelled';
 
 export interface Champion {
-  event: EventCode
-  players: Player[]
+  event: EventCode;
+  players: Player[];
 }
 
 export interface Tournament extends CalendarEventDto {
-  index: number
-  year: number
-  month: number
-  status: TournamentStatus
-  daysUntil: number
-  dayNumber: number
-  totalDays: number
-  dates: string
-  datesLong: string
-  place: string
-  cc: string
-  prizeLabel: string
-  levelLabel: string
-  levelColor: string
-  logo: string
-  header: string
-  headerSquare: string
-  shortTitle: string
-  heading: string
-  champions: Champion[]
+  index: number;
+  year: number;
+  month: number;
+  status: TournamentStatus;
+  daysUntil: number;
+  dayNumber: number;
+  totalDays: number;
+  dates: string;
+  datesLong: string;
+  place: string;
+  cc: string;
+  prizeLabel: string;
+  levelLabel: string;
+  levelColor: string;
+  logo: string;
+  header: string;
+  headerSquare: string;
+  shortTitle: string;
+  heading: string;
+  champions: Champion[];
 }
 
-export type MatchStatus = 'F' | 'P' | 'N'
-export type Game = readonly [number, number]
-export type Side = 0 | 1
-export type SideResult = 'won' | 'lost' | 'live' | 'up'
-export type MatchOutcome = 'W' | 'L' | 'Live' | 'up'
+export type MatchStatus = 'F' | 'P' | 'N';
+export type Game = readonly [number, number];
+export type Side = 0 | 1;
+export type SideResult = 'won' | 'lost' | 'live' | 'up';
+export type MatchOutcome = 'W' | 'L' | 'Live' | 'up';
 
 export interface Team {
-  seed: number | null
-  players: Player[]
-  key: string
+  seed: number | null;
+  players: Player[];
+  key: string;
 }
 
 export interface Match {
-  id: string
-  date: string
-  dayIndex: number
-  court: number
-  time: string
-  event: EventCode
-  round: string
-  group: string | null
-  status: MatchStatus
-  winner: 0 | 1 | 2
-  teams: [Team, Team]
-  games: Game[]
-  current: Game | null
-  durationMin: number
-  serve: number
-  note: string | null
-  code: string | null
-  pause: string | null
-  lastPoint: number
+  id: string;
+  date: string;
+  dayIndex: number;
+  court: number;
+  time: string;
+  event: EventCode;
+  round: string;
+  group: string | null;
+  status: MatchStatus;
+  winner: 0 | 1 | 2;
+  teams: [Team, Team];
+  games: Game[];
+  current: Game | null;
+  durationMin: number;
+  serve: number;
+  note: string | null;
+  code: string | null;
+  pause: string | null;
+  lastPoint: number;
 }
 
 export interface DrawSlot {
-  match: Match
-  slot: number
+  match: Match;
+  slot: number;
 }
 
 export interface EntryListing {
-  event: EventCode
-  stage: EntryStage
-  rank: number | null
-  team: Team
+  event: EventCode;
+  stage: EntryStage;
+  rank: number | null;
+  team: Team;
 }
 
 export interface TournamentDay {
-  index: number
-  date: string
-  weekday: string
-  weekdayLong: string
-  dayOfMonth: string
-  dayNum: string
-  shortLabel: string
-  month: string
-  monthLong: string
-  rounds: string[]
-  roundsLabel: string
-  count: number
-  isToday: boolean
-  isLive: boolean
-  isPast: boolean
-  isRest: boolean
-  matches: Match[]
+  index: number;
+  date: string;
+  weekday: string;
+  weekdayLong: string;
+  dayOfMonth: string;
+  dayNum: string;
+  shortLabel: string;
+  month: string;
+  monthLong: string;
+  rounds: string[];
+  roundsLabel: string;
+  count: number;
+  isToday: boolean;
+  isLive: boolean;
+  isPast: boolean;
+  isRest: boolean;
+  matches: Match[];
 }
 
 export interface TournamentSchedule {
-  asOf: string
-  stale: boolean
-  days: TournamentDay[]
-  todayIndex: number
-  focusIndex: number
-  matches: Match[]
+  asOf: string;
+  stale: boolean;
+  days: TournamentDay[];
+  todayIndex: number;
+  focusIndex: number;
+  matches: Match[];
 }
 
 export interface SeasonMatch {
-  match: Match
-  tournament: Tournament
+  match: Match;
+  tournament: Tournament;
 }
 
 export interface DirectoryRecord extends PlayerRecord {
-  id: string
+  id: string;
 }
 
 export interface PlayerDirectory {
-  week: string
-  get: (id: string) => DirectoryRecord | undefined
+  week: string;
+  get: (id: string) => DirectoryRecord | undefined;
 }
 
 export interface PlayerMatch {
-  key: string
-  match: Match
-  tournament: Tournament
-  side: Side
-  outcome: MatchOutcome
+  key: string;
+  match: Match;
+  tournament: Tournament;
+  side: Side;
+  outcome: MatchOutcome;
 }
 
 export interface SeasonIndex {
-  players: Map<string, Player>
-  matches: Map<string, PlayerMatch[]>
-  teams: Map<string, PlayerMatch[]>
+  players: Map<string, Player>;
+  matches: Map<string, PlayerMatch[]>;
+  teams: Map<string, PlayerMatch[]>;
 }
 
 export interface PerspectiveGame {
-  key: number
-  me: number
-  opp: number
-  state: 'win' | 'loss' | 'live'
+  key: number;
+  me: number;
+  opp: number;
+  state: 'win' | 'loss' | 'live';
 }
 
 export interface StatItem {
-  key: string
-  label: string
-  value: string
-  unit?: string
-  inline?: string
-  sub?: string
+  key: string;
+  label: string;
+  value: string;
+  unit?: string;
+  inline?: string;
+  sub?: string;
 }
 
 export interface FactItem {
-  key: string
-  label: string
-  value: string
+  key: string;
+  label: string;
+  value: string;
 }
 
 export interface BioView {
-  stats: StatItem[]
-  details: FactItem[]
-  equipment: FactItem[]
-  notes: FactItem[]
-  links: FactItem[]
-  prize: string
-  ambition: string
+  stats: StatItem[];
+  details: FactItem[];
+  equipment: FactItem[];
+  notes: FactItem[];
+  links: FactItem[];
+  prize: string;
+  ambition: string;
 }
 
 export interface RaceView {
-  rank: number
-  change: number
-  points: number
-  qualified: boolean
-  blocked: boolean
+  rank: number;
+  change: number;
+  points: number;
+  qualified: boolean;
+  blocked: boolean;
 }
 
 export interface RankView {
-  ev: EventCode
-  rank: number | null
-  change: number
-  race: RaceView | null
-  partner: Player | null
-  highest: number | null
-  highestPartner: Player | null
-  samePartner: boolean
+  ev: EventCode;
+  rank: number | null;
+  change: number;
+  race: RaceView | null;
+  partner: Player | null;
+  highest: number | null;
+  highestPartner: Player | null;
+  samePartner: boolean;
 }
 
-export type SeasonPhase = 'past' | 'current' | 'future'
+export type SeasonPhase = 'past' | 'current' | 'future';
 
 export interface SeasonSummary {
-  year: number
-  phase: SeasonPhase
-  total: number
-  done: number
-  cancelled: number
-  liveCount: number
-  live: Tournament | undefined
-  next: Tournament | undefined
-  target: Tournament | undefined
-  finals: Tournament | undefined
+  year: number;
+  phase: SeasonPhase;
+  total: number;
+  done: number;
+  cancelled: number;
+  liveCount: number;
+  live: Tournament | undefined;
+  next: Tournament | undefined;
+  target: Tournament | undefined;
+  finals: Tournament | undefined;
 }
 
-export type RankedPlayer = Player & { known: boolean; photo: string | null }
+export type RankedPlayer = Player & { known: boolean; photo: string | null };
 
-export type QualifyStatus = 'qualified' | 'blocked' | null
+export type QualifyStatus = 'qualified' | 'blocked' | null;
 
 export interface RankRow {
-  key: string
-  rank: number
-  change: number
-  isNew: boolean
-  points: number
-  tournaments: number | null
-  players: RankedPlayer[]
-  countries: string[]
-  text: string
-  qualify: QualifyStatus
-  cutoff: boolean
+  key: string;
+  rank: number;
+  change: number;
+  isNew: boolean;
+  points: number;
+  tournaments: number | null;
+  players: RankedPlayer[];
+  countries: string[];
+  text: string;
+  qualify: QualifyStatus;
+  cutoff: boolean;
 }

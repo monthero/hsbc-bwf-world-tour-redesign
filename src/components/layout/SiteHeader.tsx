@@ -1,36 +1,36 @@
-import { clsx } from 'clsx'
-import { memo, useLayoutEffect, useRef, type RefObject } from 'react'
+import { clsx } from 'clsx';
+import { memo, useLayoutEffect, useRef, type RefObject } from 'react';
 
-import { HEADER_VAR } from '~/utils/layout'
+import { HEADER_VAR } from '~/utils/layout';
 
-import { SITE_NAV } from './links'
-import { MobileMenu } from './MobileMenu'
-import { PlatformBar } from './PlatformBar'
-import { SiteLink } from './SiteLink'
-import { SiteSearch } from './SiteSearch'
-import { TourTicker } from './TourTicker'
-import { Wordmark } from './Wordmark'
+import { SITE_NAV } from './links';
+import { MobileMenu } from './MobileMenu';
+import { PlatformBar } from './PlatformBar';
+import { SiteLink } from './SiteLink';
+import { SiteSearch } from './SiteSearch';
+import { TourTicker } from './TourTicker';
+import { Wordmark } from './Wordmark';
 
-import classes from './SiteHeader.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './SiteHeader.module.css';
+import utils from '~/styles/utils.module.css';
 
 const usePublishHeight = (ref: RefObject<HTMLElement | null>) => {
   useLayoutEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const root = document.documentElement
-    const ro = new ResizeObserver(() => root.style.setProperty(HEADER_VAR, `${el.offsetHeight}px`))
-    ro.observe(el)
+    const el = ref.current;
+    if (!el) return;
+    const root = document.documentElement;
+    const ro = new ResizeObserver(() => root.style.setProperty(HEADER_VAR, `${el.offsetHeight}px`));
+    ro.observe(el);
     return () => {
-      ro.disconnect()
-      root.style.removeProperty(HEADER_VAR)
-    }
-  }, [ref])
-}
+      ro.disconnect();
+      root.style.removeProperty(HEADER_VAR);
+    };
+  }, [ref]);
+};
 
 export const SiteHeader = memo(() => {
-  const ref = useRef<HTMLElement>(null)
-  usePublishHeight(ref)
+  const ref = useRef<HTMLElement>(null);
+  usePublishHeight(ref);
   return (
     <>
       <PlatformBar />
@@ -50,5 +50,5 @@ export const SiteHeader = memo(() => {
       </header>
       <TourTicker />
     </>
-  )
-})
+  );
+});

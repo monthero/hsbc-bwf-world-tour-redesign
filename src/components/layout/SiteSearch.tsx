@@ -1,7 +1,7 @@
-import { Combobox, Loader, useCombobox } from '@mantine/core'
-import { useHotkeys } from '@mantine/hooks'
-import { useNavigate } from '@tanstack/react-router'
-import { clsx } from 'clsx'
+import { Combobox, Loader, useCombobox } from '@mantine/core';
+import { useHotkeys } from '@mantine/hooks';
+import { useNavigate } from '@tanstack/react-router';
+import { clsx } from 'clsx';
 import {
   memo,
   useCallback,
@@ -12,32 +12,32 @@ import {
   useState,
   type FocusEvent,
   type KeyboardEvent,
-} from 'react'
+} from 'react';
 
-import { Flag } from '~/components/country'
-import { PlayerAvatar } from '~/components/player'
-import { LevelBadge, LogoTile, TournamentStatusBadge } from '~/components/tournament'
-import { IconClose, IconSearch } from '~/components/ui'
-import type { PlayerSearchEntry } from '~/hooks/usePlayers'
-import { useSiteSearch, type SiteSearchResults } from '~/hooks/useSiteSearch'
-import type { Tournament } from '~/types'
-import { standingHint } from '~/utils/search'
+import { Flag } from '~/components/country';
+import { PlayerAvatar } from '~/components/player';
+import { LevelBadge, LogoTile, TournamentStatusBadge } from '~/components/tournament';
+import { IconClose, IconSearch } from '~/components/ui';
+import type { PlayerSearchEntry } from '~/hooks/usePlayers';
+import { useSiteSearch, type SiteSearchResults } from '~/hooks/useSiteSearch';
+import type { Tournament } from '~/types';
+import { standingHint } from '~/utils/search';
 
-import classes from './SiteSearch.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './SiteSearch.module.css';
+import utils from '~/styles/utils.module.css';
 
-const MOD_KEY = typeof navigator !== 'undefined' && /Mac|iP(hone|ad)/.test(navigator.userAgent) ? '⌘' : 'Ctrl'
-const SEP = '|'
+const MOD_KEY = typeof navigator !== 'undefined' && /Mac|iP(hone|ad)/.test(navigator.userAgent) ? '⌘' : 'Ctrl';
+const SEP = '|';
 
-const LABEL = 'Search players and tournaments'
-const GROUP_CLASSES = { groupLabel: classes.group }
+const LABEL = 'Search players and tournaments';
+const GROUP_CLASSES = { groupLabel: classes.group };
 
-const DROPDOWN_TRANSITION = { transition: 'pop-top-right', duration: 160 } as const
+const DROPDOWN_TRANSITION = { transition: 'pop-top-right', duration: 160 } as const;
 
-const hasHits = (r: SiteSearchResults) => r.players.length > 0 || r.tournaments.length > 0
+const hasHits = (r: SiteSearchResults) => r.players.length > 0 || r.tournaments.length > 0;
 
 const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, standing } }) => {
-  const hint = standingHint(standing)
+  const hint = standingHint(standing);
   return (
     <Combobox.Option value={`p${SEP}${player.id}`} className={classes.option}>
       <PlayerAvatar player={player} size={34} />
@@ -54,8 +54,8 @@ const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, stan
         </span>
       )}
     </Combobox.Option>
-  )
-})
+  );
+});
 
 const TournamentOption = memo<{ tournament: Tournament }>(({ tournament: t }) => (
   <Combobox.Option value={`t${SEP}${t.year}${SEP}${t.slug}`} className={classes.option}>
@@ -69,84 +69,84 @@ const TournamentOption = memo<{ tournament: Tournament }>(({ tournament: t }) =>
     </span>
     <TournamentStatusBadge tournament={t} variant="line" short className={classes.status} />
   </Combobox.Option>
-))
+));
 
 export const SiteSearch = memo(() => {
-  const [open, setOpen] = useState(false)
-  const [query, setQuery] = useState('')
-  const deferred = useDeferredValue(query)
-  const { results, ready, searching } = useSiteSearch(deferred, open)
-  const combobox = useCombobox({ opened: open && searching, loop: true })
-  const { selectFirstOption } = combobox
-  const navigate = useNavigate()
-  const fieldId = useId()
-  const rootRef = useRef<HTMLDivElement>(null)
-  const triggerRef = useRef<HTMLButtonElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const deferred = useDeferredValue(query);
+  const { results, ready, searching } = useSiteSearch(deferred, open);
+  const combobox = useCombobox({ opened: open && searching, loop: true });
+  const { selectFirstOption } = combobox;
+  const navigate = useNavigate();
+  const fieldId = useId();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const isInside = useCallback(
     (node: EventTarget | null) =>
       node instanceof Node && !!(rootRef.current?.contains(node) || dropdownRef.current?.contains(node)),
     [],
-  )
+  );
 
   const expand = useCallback(() => {
-    setOpen(true)
-    inputRef.current?.focus()
-  }, [])
+    setOpen(true);
+    inputRef.current?.focus();
+  }, []);
 
   const collapse = useCallback((restoreFocus: boolean) => {
-    setOpen(false)
-    setQuery('')
-    if (restoreFocus) triggerRef.current?.focus()
-  }, [])
+    setOpen(false);
+    setQuery('');
+    if (restoreFocus) triggerRef.current?.focus();
+  }, []);
 
-  useHotkeys([['mod+K', expand]])
-
-  useEffect(() => {
-    if (open) inputRef.current?.focus()
-  }, [open])
+  useHotkeys([['mod+K', expand]]);
 
   useEffect(() => {
-    if (hasHits(results)) selectFirstOption()
-  }, [results, selectFirstOption])
+    if (open) inputRef.current?.focus();
+  }, [open]);
 
   useEffect(() => {
-    if (!open) return
+    if (hasHits(results)) selectFirstOption();
+  }, [results, selectFirstOption]);
+
+  useEffect(() => {
+    if (!open) return;
     const onDown = (e: PointerEvent) => {
-      if (!isInside(e.target)) collapse(false)
-    }
-    document.addEventListener('pointerdown', onDown)
-    return () => document.removeEventListener('pointerdown', onDown)
-  }, [open, isInside, collapse])
+      if (!isInside(e.target)) collapse(false);
+    };
+    document.addEventListener('pointerdown', onDown);
+    return () => document.removeEventListener('pointerdown', onDown);
+  }, [open, isInside, collapse]);
 
   const onBlur = useCallback(
     (e: FocusEvent) => {
-      if (e.relatedTarget && !isInside(e.relatedTarget)) collapse(false)
+      if (e.relatedTarget && !isInside(e.relatedTarget)) collapse(false);
     },
     [isInside, collapse],
-  )
+  );
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (e.key === 'Escape') collapse(true)
+      if (e.key === 'Escape') collapse(true);
     },
     [collapse],
-  )
+  );
 
   const onSubmit = useCallback(
     (value: string) => {
-      const [kind = '', a = '', b = ''] = value.split(SEP)
-      collapse(false)
-      inputRef.current?.blur()
-      if (kind === 'p') void navigate({ to: '/players/$id', params: { id: a } })
-      else void navigate({ to: '/world-tour/$year/$slug', params: { year: a, slug: b } })
+      const [kind = '', a = '', b = ''] = value.split(SEP);
+      collapse(false);
+      inputRef.current?.blur();
+      if (kind === 'p') void navigate({ to: '/players/$id', params: { id: a } });
+      else void navigate({ to: '/world-tour/$year/$slug', params: { year: a, slug: b } });
     },
     [navigate, collapse],
-  )
+  );
 
-  const onClose = useCallback(() => collapse(true), [collapse])
+  const onClose = useCallback(() => collapse(true), [collapse]);
 
   return (
     <div ref={rootRef} className={classes.search} data-open={open || undefined} onBlur={onBlur}>
@@ -217,5 +217,5 @@ export const SiteSearch = memo(() => {
         </Combobox.Dropdown>
       </Combobox>
     </div>
-  )
-})
+  );
+});

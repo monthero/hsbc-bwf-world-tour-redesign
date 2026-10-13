@@ -1,23 +1,23 @@
-import { clsx } from 'clsx'
-import type { FC, ReactNode } from 'react'
+import { clsx } from 'clsx';
+import type { FC, ReactNode } from 'react';
 
-import { IconStar, IconStarFilled } from './icons'
+import { IconStar, IconStarFilled } from './icons';
 
-import classes from './StarButton.module.css'
+import classes from './StarButton.module.css';
 
-export type StarVariant = 'ghost' | 'outline' | 'pill' | 'glass'
-export type StarBox = 'sm' | 'md' | 'lg'
+export type StarVariant = 'ghost' | 'outline' | 'pill' | 'glass';
+export type StarBox = 'sm' | 'md' | 'lg';
 
 export const StarButton: FC<{
-  active: boolean
-  implied?: boolean
-  label: string
-  size?: number
-  box?: StarBox
-  variant?: StarVariant
-  className?: string
-  onClick: () => void
-  children?: ReactNode
+  active: boolean;
+  implied?: boolean;
+  label: string;
+  size?: number;
+  box?: StarBox;
+  variant?: StarVariant;
+  className?: string;
+  onClick: () => void;
+  children?: ReactNode;
 }> = ({ active, implied, label, size = 16, box = 'md', variant = 'ghost', className, onClick, children }) => {
   return (
     <button
@@ -30,12 +30,12 @@ export const StarButton: FC<{
       aria-label={label}
       aria-pressed={active}
       onClick={(e) => {
-        e.stopPropagation()
-        onClick()
+        e.stopPropagation();
+        onClick();
       }}
     >
       {active ? <IconStarFilled size={size} /> : <IconStar size={size} />}
       {children && <span className={classes.starLabel}>{children}</span>}
     </button>
-  )
-}
+  );
+};

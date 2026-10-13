@@ -1,27 +1,27 @@
-import { useCallback, useState, type RefCallback } from 'react'
+import { useCallback, useState, type RefCallback } from 'react';
 
-import { cssPx, headerOffset, TABBAR_VAR } from '~/utils/layout'
+import { cssPx, headerOffset, TABBAR_VAR } from '~/utils/layout';
 
-const TABBAR_FALLBACK = 51
+const TABBAR_FALLBACK = 51;
 
-const tabbarHeight = (el: Element) => cssPx(el, TABBAR_VAR) || TABBAR_FALLBACK
+const tabbarHeight = (el: Element) => cssPx(el, TABBAR_VAR) || TABBAR_FALLBACK;
 
 export const useScrolledPast = <T extends Element>({ offset }: { offset?: number } = {}) => {
-  const [past, setPast] = useState(false)
+  const [past, setPast] = useState(false);
   const ref = useCallback<RefCallback<T>>(
     (el) => {
-      if (!el) return
-      const top = headerOffset() + (offset ?? tabbarHeight(el))
+      if (!el) return;
+      const top = headerOffset() + (offset ?? tabbarHeight(el));
       const io = new IntersectionObserver(
         ([e]) => {
-          if (e) setPast(!e.isIntersecting && e.boundingClientRect.top < (e.rootBounds?.top ?? top))
+          if (e) setPast(!e.isIntersecting && e.boundingClientRect.top < (e.rootBounds?.top ?? top));
         },
         { rootMargin: `-${top}px 0px 0px 0px` },
-      )
-      io.observe(el)
-      return () => io.disconnect()
+      );
+      io.observe(el);
+      return () => io.disconnect();
     },
     [offset],
-  )
-  return [ref, past] as const
-}
+  );
+  return [ref, past] as const;
+};

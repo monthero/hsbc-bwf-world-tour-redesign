@@ -1,23 +1,23 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
-import { BWF_SITE, CURRENT_SITE } from '~/components/layout/links'
+import { BWF_SITE, CURRENT_SITE } from '~/components/layout/links';
 
-type TitlePart = string | undefined
+type TitlePart = string | undefined;
 
-type TitleSite = 'bwf' | { season?: number }
+type TitleSite = 'bwf' | { season?: number };
 
 const siteName = (site: TitleSite) => {
-  if (site === 'bwf') return BWF_SITE
-  return site.season ? `${CURRENT_SITE} ${site.season}` : CURRENT_SITE
-}
+  if (site === 'bwf') return BWF_SITE;
+  return site.season ? `${CURRENT_SITE} ${site.season}` : CURRENT_SITE;
+};
 
 export const useDocumentTitle = (parts: TitlePart | readonly TitlePart[], site: TitleSite = {}) => {
-  const title = [parts, siteName(site)].flat().filter(Boolean).join(' · ')
+  const title = [parts, siteName(site)].flat().filter(Boolean).join(' · ');
   useEffect(() => {
-    const prev = document.title
-    document.title = title
+    const prev = document.title;
+    document.title = title;
     return () => {
-      document.title = prev
-    }
-  }, [title])
-}
+      document.title = prev;
+    };
+  }, [title]);
+};

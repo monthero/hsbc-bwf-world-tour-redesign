@@ -1,18 +1,18 @@
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import { FollowButton } from '~/components/follow'
-import { EventTag, TeamPlayers } from '~/components/match'
-import { plural } from '~/utils/format'
+import { FollowButton } from '~/components/follow';
+import { EventTag, TeamPlayers } from '~/components/match';
+import { plural } from '~/utils/format';
 
-import { disciplineId, type Entry, type EventSection, type StageGroup } from './entries'
-import { EntryRank, EntryStatus } from './EntryRow'
+import { disciplineId, type Entry, type EventSection, type StageGroup } from './entries';
+import { EntryRank, EntryStatus } from './EntryRow';
 
-import classes from './Players.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './Players.module.css';
+import utils from '~/styles/utils.module.css';
 
 const DisciplineRow = memo<{ entry: Entry }>(({ entry }) => {
-  const { team, rank, stage } = entry
+  const { team, rank, stage } = entry;
   return (
     <div className={classes.row} data-out={stage === 'reserve' || stage === 'withdrawn' || undefined}>
       <span className={classes.rowMain}>
@@ -22,8 +22,8 @@ const DisciplineRow = memo<{ entry: Entry }>(({ entry }) => {
       <EntryRank rank={rank} className={classes.rowRank} />
       <FollowButton players={team.players} iconSize={15} />
     </div>
-  )
-})
+  );
+});
 
 const Group = memo<{ group: StageGroup }>(({ group: g }) => {
   return (
@@ -45,8 +45,8 @@ const Group = memo<{ group: StageGroup }>(({ group: g }) => {
         <DisciplineRow key={e.key} entry={e} />
       ))}
     </>
-  )
-})
+  );
+});
 
 export const DisciplineSection = memo<{ section: EventSection }>(({ section: s }) => {
   return (
@@ -63,5 +63,5 @@ export const DisciplineSection = memo<{ section: EventSection }>(({ section: s }
         <Group key={g.stage} group={g} />
       ))}
     </section>
-  )
-})
+  );
+});

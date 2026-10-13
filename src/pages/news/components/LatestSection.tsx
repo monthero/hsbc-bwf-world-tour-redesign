@@ -1,27 +1,27 @@
-import { clsx } from 'clsx'
-import { memo, useCallback } from 'react'
+import { clsx } from 'clsx';
+import { memo, useCallback } from 'react';
 
-import { NewsCard, StorySkeleton, SubscribeCard } from '~/components/news'
-import { SectionTitle } from '~/components/ui'
-import type { NewsStory } from '~/utils/news'
+import { NewsCard, StorySkeleton, SubscribeCard } from '~/components/news';
+import { SectionTitle } from '~/components/ui';
+import type { NewsStory } from '~/utils/news';
 
-import { LATEST_COUNT, SECTION } from '../constants'
-import type { RegisterSection } from '../types'
-import { LeadStory } from './LeadStory'
+import { LATEST_COUNT, SECTION } from '../constants';
+import type { RegisterSection } from '../types';
+import { LeadStory } from './LeadStory';
 
-import classes from './LatestSection.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './LatestSection.module.css';
+import utils from '~/styles/utils.module.css';
 
-const SLOTS = Array.from({ length: LATEST_COUNT - 1 }, (_, i) => i)
+const SLOTS = Array.from({ length: LATEST_COUNT - 1 }, (_, i) => i);
 
 export const LatestSection = memo<{
-  stories: NewsStory[] | undefined
-  isMobile: boolean
-  register: RegisterSection
+  stories: NewsStory[] | undefined;
+  isMobile: boolean;
+  register: RegisterSection;
 }>(({ stories, isMobile, register }) => {
-  const ref = useCallback((el: HTMLElement | null) => register(SECTION.latest, el), [register])
-  const [lead, ...rest] = stories ?? []
-  const variant = isMobile ? 'row' : 'list'
+  const ref = useCallback((el: HTMLElement | null) => register(SECTION.latest, el), [register]);
+  const [lead, ...rest] = stories ?? [];
+  const variant = isMobile ? 'row' : 'list';
   return (
     <section ref={ref} className={classes.section}>
       <SectionTitle className={classes.heading}>Latest</SectionTitle>
@@ -45,5 +45,5 @@ export const LatestSection = memo<{
         </div>
       </div>
     </section>
-  )
-})
+  );
+});

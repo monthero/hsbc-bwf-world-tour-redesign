@@ -1,17 +1,17 @@
-import { Link } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { Link } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import { LogoTile } from '~/components/tournament'
-import { LEVEL_VARS } from '~/constants'
-import type { Tournament } from '~/types'
-import { tournamentParams } from '~/utils/tournaments'
+import { LogoTile } from '~/components/tournament';
+import { LEVEL_VARS } from '~/constants';
+import type { Tournament } from '~/types';
+import { tournamentParams } from '~/utils/tournaments';
 
-import type { SeasonFocus } from '../types'
-import { kickerOf, shortStatus } from '../utils'
+import type { SeasonFocus } from '../types';
+import { kickerOf, shortStatus } from '../utils';
 
-import classes from './MapEventRow.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './MapEventRow.module.css';
+import utils from '~/styles/utils.module.css';
 
 export const MapEventRow = memo<{ tournament: Tournament; focus: SeasonFocus }>(({ tournament: t, focus }) => (
   <Link
@@ -32,4 +32,4 @@ export const MapEventRow = memo<{ tournament: Tournament; focus: SeasonFocus }>(
     </span>
     <span className={classes.status}>{shortStatus(t)}</span>
   </Link>
-))
+));

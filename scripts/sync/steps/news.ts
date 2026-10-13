@@ -1,9 +1,9 @@
-import fs from 'node:fs'
-import path from 'node:path'
-import { gunzipSync, gzipSync } from 'node:zlib'
+import fs from 'node:fs';
+import path from 'node:path';
+import { gunzipSync, gzipSync } from 'node:zlib';
 
-import { createArticleBuilder } from '../../../server/news-blocks.ts'
-import type { PlayerName } from '../../../server/news-players.ts'
+import { createArticleBuilder } from '../../../server/news-blocks.ts';
+import type { PlayerName } from '../../../server/news-players.ts';
 import {
   createNewsLinker,
   fetchNewsBySlug,
@@ -16,163 +16,163 @@ import {
   type NewsSeries,
   type RawNews,
   type RawNewsPage,
-} from '../../../server/news.ts'
-import { WORLD } from '../bwf.ts'
-import type { Context } from '../context.ts'
-import { all, readState, tx, writeState, type Db } from '../db.ts'
+} from '../../../server/news.ts';
+import { WORLD } from '../bwf.ts';
+import type { Context } from '../context.ts';
+import { all, readState, tx, writeState, type Db } from '../db.ts';
 
-const PER_PAGE = 20
-const MAX_PAGES = 40
-const BUDGET_MS = 10 * 60_000
-const CURSOR = 'news.archive'
-const SYNC_REQUEST: NewsRequest = { timeoutMs: 90_000, retries: 2 }
+const PER_PAGE = 20;
+const MAX_PAGES = 40;
+const BUDGET_MS = 10 * 60_000;
+const CURSOR = 'news.archive';
+const SYNC_REQUEST: NewsRequest = { timeoutMs: 90_000, retries: 2 };
 
 interface Stored {
-  id: number
-  published: number
-  fetched_at: number
+  id: number;
+  published: number;
+  fetched_at: number;
 }
 
 interface Cursor {
-  offset: number
-  total: number
-  done: boolean
+  offset: number;
+  total: number;
+  done: boolean;
 }
 
 const readRaw = (db: Db) =>
   all<{ body: Uint8Array }>(db, 'SELECT body FROM news_raw').map(
     (r) => JSON.parse(gunzipSync(r.body).toString('utf8')) as RawNews,
-  )
+  );
 
-const slugOf = (r: RawNews) => decodeURIComponent(r.link.split('/').filter(Boolean).at(-1) ?? '')
+const slugOf = (r: RawNews) => decodeURIComponent(r.link.split('/').filter(Boolean).at(-1) ?? '');
 
-const isFrozen = (s: Stored) => s.fetched_at - s.published > NEWS_FREEZE_MS
+const isFrozen = (s: Stored) => s.fetched_at - s.published > NEWS_FREEZE_MS;
 
 const fetchSpan = async (page: number) => {
   try {
-    return await fetchNewsPage(page, PER_PAGE, SYNC_REQUEST)
+    return await fetchNewsPage(page, PER_PAGE, SYNC_REQUEST);
   } catch (e) {
-    console.warn(`  ! news page ${page}: ${(e as Error).message}; retrying as two half pages`)
-    const half = PER_PAGE / 2
-    const a = await fetchNewsPage(page * 2 - 1, half, SYNC_REQUEST)
-    const b = await fetchNewsPage(page * 2, half, SYNC_REQUEST)
-    return { results: a.results, data: [...a.data, ...b.data] }
+    console.warn(`  ! news page ${page}: ${(e as Error).message}; retrying as two half pages`);
+    const half = PER_PAGE / 2;
+    const a = await fetchNewsPage(page * 2 - 1, half, SYNC_REQUEST);
+    const b = await fetchNewsPage(page * 2, half, SYNC_REQUEST);
+    return { results: a.results, data: [...a.data, ...b.data] };
   }
-}
+};
 
 const stopReason = (pages: number, maxPages: number, started: number) => {
-  if (pages >= maxPages) return `page cap (${maxPages}) reached`
-  if (Date.now() - started > BUDGET_MS) return `time budget (${BUDGET_MS / 60_000} min) used`
-  return null
-}
+  if (pages >= maxPages) return `page cap (${maxPages}) reached`;
+  if (Date.now() - started > BUDGET_MS) return `time budget (${BUDGET_MS / 60_000} min) used`;
+  return null;
+};
 
 const advance = (cursor: Cursor | null, page: number, total: number, stored: number) => {
-  const base = cursor ?? { offset: 0, total, done: stored >= total }
-  const covered = Math.max(0, base.offset + total - base.total)
-  const reached = Math.min(page * PER_PAGE, total)
-  const done = base.done || reached >= total
-  const next: Cursor = reached >= covered ? { offset: reached, total, done } : { ...base, done }
-  return { covered, next }
-}
+  const base = cursor ?? { offset: 0, total, done: stored >= total };
+  const covered = Math.max(0, base.offset + total - base.total);
+  const reached = Math.min(page * PER_PAGE, total);
+  const done = base.done || reached >= total;
+  const next: Cursor = reached >= covered ? { offset: reached, total, done } : { ...base, done };
+  return { covered, next };
+};
 
 const fetchArchive = async (db: Db, maxPages: number) => {
-  const stored = new Map(all<Stored>(db, 'SELECT id, published, fetched_at FROM news_raw').map((s) => [s.id, s]))
+  const stored = new Map(all<Stored>(db, 'SELECT id, published, fetched_at FROM news_raw').map((s) => [s.id, s]));
   const upsert = db.prepare(
     `INSERT INTO news_raw (id, published, fetched_at, body) VALUES (?, ?, ?, ?)
      ON CONFLICT(id) DO UPDATE SET published = excluded.published, fetched_at = excluded.fetched_at, body = excluded.body`,
-  )
-  let cursor = readState<Cursor | null>(db, CURSOR, null)
-  const started = Date.now()
-  let written = 0
-  let pages = 0
-  let stop: string | null = null
+  );
+  let cursor = readState<Cursor | null>(db, CURSOR, null);
+  const started = Date.now();
+  let written = 0;
+  let pages = 0;
+  let stop: string | null = null;
   for (let page = 1; ;) {
-    stop = stopReason(pages, maxPages, started)
-    if (stop) break
-    let res: RawNewsPage
+    stop = stopReason(pages, maxPages, started);
+    if (stop) break;
+    let res: RawNewsPage;
     try {
-      res = await fetchSpan(page)
+      res = await fetchSpan(page);
     } catch (e) {
-      stop = `page ${page} failed: ${(e as Error).message}`
-      break
+      stop = `page ${page} failed: ${(e as Error).message}`;
+      break;
     }
-    pages++
-    const now = Date.now()
-    const total = res.results.total_posts
+    pages++;
+    const now = Date.now();
+    const total = res.results.total_posts;
     const fresh = res.data.filter((r) => {
-      const s = stored.get(r.id)
-      return !s || !isFrozen(s)
-    })
-    for (const r of fresh) stored.set(r.id, { id: r.id, published: publishedMs(r), fetched_at: now })
-    const { covered, next } = advance(cursor, page, total, stored.size)
+      const s = stored.get(r.id);
+      return !s || !isFrozen(s);
+    });
+    for (const r of fresh) stored.set(r.id, { id: r.id, published: publishedMs(r), fetched_at: now });
+    const { covered, next } = advance(cursor, page, total, stored.size);
     tx(db, () => {
-      for (const r of fresh) upsert.run(r.id, publishedMs(r), now, gzipSync(JSON.stringify(r)))
-      writeState(db, CURSOR, next)
-    })
-    cursor = next
-    written += fresh.length
-    if (page * PER_PAGE >= total || (!fresh.length && cursor.done)) break
-    page = fresh.length ? page + 1 : Math.max(page + 1, Math.floor(covered / PER_PAGE) + 1)
+      for (const r of fresh) upsert.run(r.id, publishedMs(r), now, gzipSync(JSON.stringify(r)));
+      writeState(db, CURSOR, next);
+    });
+    cursor = next;
+    written += fresh.length;
+    if (page * PER_PAGE >= total || (!fresh.length && cursor.done)) break;
+    page = fresh.length ? page + 1 : Math.max(page + 1, Math.floor(covered / PER_PAGE) + 1);
   }
-  return { written, pages, total: stored.size, cursor, stop }
-}
+  return { written, pages, total: stored.size, cursor, stop };
+};
 
 const lastPopular = (db: Db) =>
-  all<{ slug: string }>(db, 'SELECT slug FROM news_popular ORDER BY rank').map((r) => r.slug)
+  all<{ slug: string }>(db, 'SELECT slug FROM news_popular ORDER BY rank').map((r) => r.slug);
 
 const scrapePopular = async (db: Db) => {
   try {
-    const slugs = await fetchPopularSlugs(SYNC_REQUEST)
-    const insert = db.prepare('INSERT INTO news_popular (rank, slug, fetched_at) VALUES (?, ?, ?)')
+    const slugs = await fetchPopularSlugs(SYNC_REQUEST);
+    const insert = db.prepare('INSERT INTO news_popular (rank, slug, fetched_at) VALUES (?, ?, ?)');
     tx(db, () => {
-      db.exec('DELETE FROM news_popular')
-      slugs.forEach((slug, i) => insert.run(i + 1, slug, Date.now()))
-    })
-    return { slugs, note: `${slugs.length} popular` }
+      db.exec('DELETE FROM news_popular');
+      slugs.forEach((slug, i) => insert.run(i + 1, slug, Date.now()));
+    });
+    return { slugs, note: `${slugs.length} popular` };
   } catch (e) {
-    const slugs = lastPopular(db)
-    console.warn(`  ! news popular: scrape failed, keeping the last known ${slugs.length}: ${(e as Error).message}`)
-    return { slugs, note: `${slugs.length} popular (kept)` }
+    const slugs = lastPopular(db);
+    console.warn(`  ! news popular: scrape failed, keeping the last known ${slugs.length}: ${(e as Error).message}`);
+    return { slugs, note: `${slugs.length} popular (kept)` };
   }
-}
+};
 
 const fetchPopular = async (db: Db) => {
-  const { slugs, note } = await scrapePopular(db)
-  const known = new Set(readRaw(db).map(slugOf))
-  const missing = slugs.filter((s) => !known.has(s))
+  const { slugs, note } = await scrapePopular(db);
+  const known = new Set(readRaw(db).map(slugOf));
+  const missing = slugs.filter((s) => !known.has(s));
   const upsert = db.prepare(
     'INSERT INTO news_raw (id, published, fetched_at, body) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO NOTHING',
-  )
-  let failed = 0
+  );
+  let failed = 0;
   for (const slug of missing) {
     try {
-      const r = await fetchNewsBySlug(slug, SYNC_REQUEST)
-      if (r) upsert.run(r.id, publishedMs(r), Date.now(), gzipSync(JSON.stringify(r)))
+      const r = await fetchNewsBySlug(slug, SYNC_REQUEST);
+      if (r) upsert.run(r.id, publishedMs(r), Date.now(), gzipSync(JSON.stringify(r)));
     } catch (e) {
-      failed++
-      console.warn(`  ! news popular article ${slug}: ${(e as Error).message}`)
+      failed++;
+      console.warn(`  ! news popular article ${slug}: ${(e as Error).message}`);
     }
   }
-  return failed ? `${note}, ${failed} missing` : note
-}
+  return failed ? `${note}, ${failed} missing` : note;
+};
 
-const RANKED_TOP = 200
+const RANKED_TOP = 200;
 
 const candidatesFrom = (db: Db, overridesFile: string) => {
   const overrides = fs.existsSync(overridesFile)
     ? ((JSON.parse(fs.readFileSync(overridesFile, 'utf8')) as { players?: Record<string, { name?: string }> })
         .players ?? {})
-    : {}
-  const names = new Map<string, Set<string>>()
+    : {};
+  const names = new Map<string, Set<string>>();
   const add = (id: string, name: string | undefined) => {
-    const n = name?.trim()
-    if (n) names.set(id, (names.get(id) ?? new Set()).add(n))
-  }
-  for (const r of all<{ id: string; name: string }>(db, 'SELECT id, name FROM players')) add(r.id, r.name)
+    const n = name?.trim();
+    if (n) names.set(id, (names.get(id) ?? new Set()).add(n));
+  };
+  for (const r of all<{ id: string; name: string }>(db, 'SELECT id, name FROM players')) add(r.id, r.name);
   for (const r of all<{ id: string; name: string }>(db, 'SELECT DISTINCT player_id AS id, name FROM match_players'))
-    add(r.id, r.name)
-  for (const [id, o] of Object.entries(overrides)) add(id, o.name)
-  const toName = (id: string): PlayerName => ({ id, names: [...(names.get(id) ?? [])] })
+    add(r.id, r.name);
+  for (const [id, o] of Object.entries(overrides)) add(id, o.name);
+  const toName = (id: string): PlayerName => ({ id, names: [...(names.get(id) ?? [])] });
   const ranked = all<{ id: string }>(
     db,
     `SELECT player1 AS id FROM rankings WHERE ranking = ? AND rank <= ?
@@ -181,75 +181,75 @@ const candidatesFrom = (db: Db, overridesFile: string) => {
     RANKED_TOP,
     WORLD,
     RANKED_TOP,
-  ).map((r) => toName(r.id))
-  const entrants = new Map<string, string[]>()
+  ).map((r) => toName(r.id));
+  const entrants = new Map<string, string[]>();
   for (const r of all<{ code: string; id: string }>(
     db,
     'SELECT DISTINCT m.edition AS code, mp.player_id AS id FROM match_players mp JOIN matches m ON m.id = mp.match_id',
   ))
-    entrants.set(r.code, [...(entrants.get(r.code) ?? []), r.id])
-  const cache = new Map<string, PlayerName[]>()
+    entrants.set(r.code, [...(entrants.get(r.code) ?? []), r.id]);
+  const cache = new Map<string, PlayerName[]>();
   return (codes: string[]) => {
-    const ids = [...new Set(codes.flatMap((c) => entrants.get(c) ?? []))]
-    if (!ids.length) return ranked
-    const key = [...codes].sort((a, b) => a.localeCompare(b)).join(',')
-    const known = new Set(ids)
-    const hit = cache.get(key) ?? [...ids.map(toName), ...ranked.filter((p) => !known.has(p.id))]
-    cache.set(key, hit)
-    return hit
-  }
-}
+    const ids = [...new Set(codes.flatMap((c) => entrants.get(c) ?? []))];
+    if (!ids.length) return ranked;
+    const key = [...codes].sort((a, b) => a.localeCompare(b)).join(',');
+    const known = new Set(ids);
+    const hit = cache.get(key) ?? [...ids.map(toName), ...ranked.filter((p) => !known.has(p.id))];
+    cache.set(key, hit);
+    return hit;
+  };
+};
 
 const derive = (db: Db, catalogFile: string) => {
-  const series = (JSON.parse(fs.readFileSync(catalogFile, 'utf8')) as { series: NewsSeries[] }).series
+  const series = (JSON.parse(fs.readFileSync(catalogFile, 'utf8')) as { series: NewsSeries[] }).series;
   const events = all<{ code: string; tmt_id: number; series_id: string; start: string }>(
     db,
     'SELECT code, tmt_id, series_id, start FROM editions',
-  ).map((e) => ({ code: e.code, tmtId: e.tmt_id, series: e.series_id, start: e.start }))
-  const link = createNewsLinker(events, series)
+  ).map((e) => ({ code: e.code, tmtId: e.tmt_id, series: e.series_id, start: e.start }));
+  const link = createNewsLinker(events, series);
   const linked = readRaw(db)
     .map((raw) => ({ raw, item: link(raw) }))
-    .filter((r) => r.item !== null)
-  const items = linked.map((r) => r.item).filter((i) => i !== null)
-  const codeOf = new Map(events.map((e) => [e.tmtId, e.code]))
-  const idOf = new Map(items.map((i) => [i.slug, i.id]))
-  const build = createArticleBuilder({ tournamentOf: (tmt) => codeOf.get(tmt), newsOf: (slug) => idOf.get(slug) })
-  const candidates = candidatesFrom(db, path.join(path.dirname(catalogFile), 'overrides.json'))
-  const insertArticle = db.prepare('INSERT INTO news_articles (id, article) VALUES (?, ?)')
-  const insert = db.prepare('INSERT INTO news (id, month, published_at, item) VALUES (?, ?, ?, ?)')
-  const insertTournament = db.prepare('INSERT INTO news_tournaments (news_id, code) VALUES (?, ?)')
-  const insertPlayer = db.prepare('INSERT INTO news_players (news_id, player_id) VALUES (?, ?)')
+    .filter((r) => r.item !== null);
+  const items = linked.map((r) => r.item).filter((i) => i !== null);
+  const codeOf = new Map(events.map((e) => [e.tmtId, e.code]));
+  const idOf = new Map(items.map((i) => [i.slug, i.id]));
+  const build = createArticleBuilder({ tournamentOf: (tmt) => codeOf.get(tmt), newsOf: (slug) => idOf.get(slug) });
+  const candidates = candidatesFrom(db, path.join(path.dirname(catalogFile), 'overrides.json'));
+  const insertArticle = db.prepare('INSERT INTO news_articles (id, article) VALUES (?, ?)');
+  const insert = db.prepare('INSERT INTO news (id, month, published_at, item) VALUES (?, ?, ?, ?)');
+  const insertTournament = db.prepare('INSERT INTO news_tournaments (news_id, code) VALUES (?, ?)');
+  const insertPlayer = db.prepare('INSERT INTO news_players (news_id, player_id) VALUES (?, ?)');
   tx(db, () => {
-    db.exec('DELETE FROM news_articles; DELETE FROM news_tournaments; DELETE FROM news_players; DELETE FROM news;')
+    db.exec('DELETE FROM news_articles; DELETE FROM news_tournaments; DELETE FROM news_players; DELETE FROM news;');
     for (const i of items) {
-      insert.run(Number(i.id), newsMonthOf(i), i.publishedAt, JSON.stringify(i))
-      for (const code of i.tournaments) insertTournament.run(Number(i.id), code)
-      for (const p of i.players) insertPlayer.run(Number(i.id), p)
+      insert.run(Number(i.id), newsMonthOf(i), i.publishedAt, JSON.stringify(i));
+      for (const code of i.tournaments) insertTournament.run(Number(i.id), code);
+      for (const p of i.players) insertPlayer.run(Number(i.id), p);
     }
     for (const { raw, item } of linked)
-      if (item) insertArticle.run(Number(item.id), JSON.stringify(build(raw, item, candidates(item.tournaments))))
-  })
-  return items
-}
+      if (item) insertArticle.run(Number(item.id), JSON.stringify(build(raw, item, candidates(item.tournaments))));
+  });
+  return items;
+};
 
 const cursorNote = (c: Cursor | null) => {
-  if (!c) return 'archive not started'
-  return c.done ? 'archive complete' : `backfill ${Math.min(c.offset, c.total)}/${c.total}`
-}
+  if (!c) return 'archive not started';
+  return c.done ? 'archive complete' : `backfill ${Math.min(c.offset, c.total)}/${c.total}`;
+};
 
 export const syncNews = async (
   { db }: Context,
   { offline, catalogFile, maxPages = MAX_PAGES }: { offline: boolean; catalogFile: string; maxPages?: number },
 ) => {
-  let note = 'offline'
+  let note = 'offline';
   if (!offline) {
-    const a = await fetchArchive(db, maxPages)
-    if (a.stop) console.warn(`  ! news: ${a.stop}; kept ${a.total} stored, the next run resumes`)
-    const popular = await fetchPopular(db)
-    note = `${a.pages} pages · ${a.written} refreshed · ${a.total} stored · ${cursorNote(a.cursor)} · ${popular}`
+    const a = await fetchArchive(db, maxPages);
+    if (a.stop) console.warn(`  ! news: ${a.stop}; kept ${a.total} stored, the next run resumes`);
+    const popular = await fetchPopular(db);
+    note = `${a.pages} pages · ${a.written} refreshed · ${a.total} stored · ${cursorNote(a.cursor)} · ${popular}`;
   }
-  const items = derive(db, catalogFile)
+  const items = derive(db, catalogFile);
   console.log(
     `news: ${items.length} articles · ${items.filter((i) => i.tournaments.length).length} linked to tournaments · ${note}`,
-  )
-}
+  );
+};

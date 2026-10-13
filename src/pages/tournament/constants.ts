@@ -1,6 +1,6 @@
-import type { MedalKind } from '~/types'
+import type { MedalKind } from '~/types';
 
-import type { TournamentTab } from './types'
+import type { TournamentTab } from './types';
 
 export const TAB_LABELS: Record<TournamentTab, string> = {
   overview: 'Overview',
@@ -10,7 +10,7 @@ export const TAB_LABELS: Record<TournamentTab, string> = {
   podium: 'Podium',
   media: 'Media',
   news: 'News',
-}
+};
 
 export const OFF_TIPS: Record<TournamentTab, string> = {
   overview: '',
@@ -20,13 +20,13 @@ export const OFF_TIPS: Record<TournamentTab, string> = {
   podium: 'Available once play starts',
   media: 'Videos appear once play starts',
   news: 'Stories appear once BWF publishes coverage',
-}
+};
 
-export const CANCELLED_NOTE = 'This edition was cancelled, so no matches were played.'
+export const CANCELLED_NOTE = 'This edition was cancelled, so no matches were played.';
 
-const QUALIFYING = { long: 'Qualifying', short: 'Q' }
+const QUALIFYING = { long: 'Qualifying', short: 'Q' };
 
-const GROUPS = { long: 'Group stage', short: 'Groups' }
+const GROUPS = { long: 'Group stage', short: 'Groups' };
 
 export const DAY_ROUNDS: Record<string, { long: string; short: string }> = {
   'Q-R32': QUALIFYING,
@@ -41,22 +41,22 @@ export const DAY_ROUNDS: Record<string, { long: string; short: string }> = {
   QF: { long: 'Quarter-finals', short: 'QF' },
   SF: { long: 'Semi-finals', short: 'SF' },
   F: { long: 'Finals', short: 'F' },
-}
+};
 
-export const PRIZE_BASE = 500000
+export const PRIZE_BASE = 500000;
 
-export const DRAW_SEEDS = 8
+export const DRAW_SEEDS = 8;
 
 export const PODIUM_PRIZES = {
   singles: [37500, 19000, 7250],
   doubles: [39500, 19000, 7000],
-} as const
+} as const;
 
 export const PODIUM_PLACES: readonly { label: string; medal: MedalKind }[] = [
   { label: 'Champion', medal: 'gold' },
   { label: 'Runner-up', medal: 'silver' },
   { label: 'Semi-finalists', medal: 'bronze' },
-]
+];
 
-export const FOLLOW_EMPTY = 'Nobody you follow has a match left today.'
-export const FOLLOW_HINT = 'Star a player or country in Players or on any match to see their next matches here.'
+export const FOLLOW_EMPTY = 'Nobody you follow has a match left today.';
+export const FOLLOW_HINT = 'Star a player or country in Players or on any match to see their next matches here.';

@@ -1,17 +1,17 @@
-import { clsx } from 'clsx'
-import type { FC, InputHTMLAttributes } from 'react'
+import { clsx } from 'clsx';
+import type { FC, InputHTMLAttributes } from 'react';
 
-import { IconClose, IconSearch } from './icons'
+import { IconClose, IconSearch } from './icons';
 
-import classes from './SearchField.module.css'
+import classes from './SearchField.module.css';
 
 export const SearchField: FC<
   Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange' | 'size' | 'className'> & {
-    value: string
-    onChange: (v: string) => void
-    placeholder?: string
-    size?: 'sm' | 'md' | 'lg'
-    className?: string
+    value: string;
+    onChange: (v: string) => void;
+    placeholder?: string;
+    size?: 'sm' | 'md' | 'lg';
+    className?: string;
   }
 > = ({ value, onChange, placeholder = 'Search player or country', size = 'md', className, ...rest }) => {
   return (
@@ -24,5 +24,5 @@ export const SearchField: FC<
         </button>
       )}
     </label>
-  )
-}
+  );
+};

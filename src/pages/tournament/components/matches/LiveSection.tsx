@@ -1,16 +1,16 @@
-import { Tooltip } from '@mantine/core'
-import { clamp } from '@mantine/hooks'
-import { useQuery } from '@tanstack/react-query'
-import { clsx } from 'clsx'
-import { memo, type CSSProperties, type FC, type ReactNode } from 'react'
+import { Tooltip } from '@mantine/core';
+import { clamp } from '@mantine/hooks';
+import { useQuery } from '@tanstack/react-query';
+import { clsx } from 'clsx';
+import { memo, type CSSProperties, type FC, type ReactNode } from 'react';
 
-import { liveMatchStatsQuery } from '~/api/queries'
-import { TeamPlayers } from '~/components/match'
-import { AvatarGroup } from '~/components/player'
-import { CardHit, IconFire, LiveDot, SectionTitle } from '~/components/ui'
-import { EVENT_NAMES } from '~/constants'
-import type { Match, Side } from '~/types'
-import { formatDuration, plural } from '~/utils/format'
+import { liveMatchStatsQuery } from '~/api/queries';
+import { TeamPlayers } from '~/components/match';
+import { AvatarGroup } from '~/components/player';
+import { CardHit, IconFire, LiveDot, SectionTitle } from '~/components/ui';
+import { EVENT_NAMES } from '~/constants';
+import type { Match, Side } from '~/types';
+import { formatDuration, plural } from '~/utils/format';
 import {
   gameShare,
   pointCall,
@@ -18,34 +18,34 @@ import {
   type ChallengeOutcome,
   type ChallengeResult,
   type LiveStats,
-} from '~/utils/live'
-import { allGames, matchRoundName } from '~/utils/matches'
+} from '~/utils/live';
+import { allGames, matchRoundName } from '~/utils/matches';
 
-import { ShuttleIcon } from './ShuttleIcon'
-import { matchTitle } from './utils'
+import { ShuttleIcon } from './ShuttleIcon';
+import { matchTitle } from './utils';
 
-import classes from './LiveSection.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './LiveSection.module.css';
+import utils from '~/styles/utils.module.css';
 
-const LIVE_ICON = <LiveDot pulse size={8} />
-const STREAK_MIN = 3
-const CHALLENGE_SHOW_MS = 60_000
-const AVATAR_SIZE = 48
+const LIVE_ICON = <LiveDot pulse size={8} />;
+const STREAK_MIN = 3;
+const CHALLENGE_SHOW_MS = 60_000;
+const AVATAR_SIZE = 48;
 
 const CHALLENGE_LABELS: Record<ChallengeOutcome, string> = {
   won: 'Challenge won',
   lost: 'Challenge lost',
   void: 'Challenge · no decision',
-}
+};
 
 const useLiveStats = (tmtId: number | null, m: Match) => {
-  const q = useQuery({ ...liveMatchStatsQuery(tmtId ?? 0, m.code ?? ''), enabled: !!tmtId && !!m.code })
-  const challenge = q.data?.challenge
+  const q = useQuery({ ...liveMatchStatsQuery(tmtId ?? 0, m.code ?? ''), enabled: !!tmtId && !!m.code });
+  const challenge = q.data?.challenge;
   return {
     stats: q.data ?? null,
     challenge: challenge && q.dataUpdatedAt - challenge.at < CHALLENGE_SHOW_MS ? challenge : null,
-  }
-}
+  };
+};
 
 const Serve: FC<{ on: boolean }> = ({ on }) => {
   return (
@@ -58,8 +58,8 @@ const Serve: FC<{ on: boolean }> = ({ on }) => {
         </Tooltip>
       )}
     </span>
-  )
-}
+  );
+};
 
 const LiveTeam: FC<{ match: Match; side: Side; stats: LiveStats | null; challenge: ChallengeResult | null }> = ({
   match: m,
@@ -67,9 +67,9 @@ const LiveTeam: FC<{ match: Match; side: Side; stats: LiveStats | null; challeng
   stats,
   challenge,
 }) => {
-  const team = m.teams[side]
-  const call = pointCall(m, side)
-  const streak = stats?.streak?.side === side && stats.streak.count >= STREAK_MIN ? stats.streak.count : 0
+  const team = m.teams[side];
+  const call = pointCall(m, side);
+  const streak = stats?.streak?.side === side && stats.streak.count >= STREAK_MIN ? stats.streak.count : 0;
   return (
     <div className={classes.team} data-side={side}>
       <AvatarGroup players={team.players} size={AVATAR_SIZE} className={classes.avatars} />
@@ -99,11 +99,11 @@ const LiveTeam: FC<{ match: Match; side: Side; stats: LiveStats | null; challeng
         )}
       </span>
     </div>
-  )
-}
+  );
+};
 
 const LiveScore: FC<{ match: Match }> = ({ match: m }) => {
-  const [a, b] = m.current ?? [0, 0]
+  const [a, b] = m.current ?? [0, 0];
   return (
     <div className={classes.score}>
       <Serve on={m.serve === 1} />
@@ -116,8 +116,8 @@ const LiveScore: FC<{ match: Match }> = ({ match: m }) => {
       </span>
       <Serve on={m.serve === 2} />
     </div>
-  )
-}
+  );
+};
 
 const StatRow: FC<{ left: ReactNode; right: ReactNode; label: string; share?: number; tip?: string }> = ({
   left,
@@ -126,7 +126,7 @@ const StatRow: FC<{ left: ReactNode; right: ReactNode; label: string; share?: nu
   share,
   tip,
 }) => {
-  const lead = share === undefined || share === 0.5 ? undefined : share > 0.5
+  const lead = share === undefined || share === 0.5 ? undefined : share > 0.5;
   return (
     <>
       <span className={classes.statValue} data-lead={lead === true || undefined}>
@@ -146,15 +146,15 @@ const StatRow: FC<{ left: ReactNode; right: ReactNode; label: string; share?: nu
         {right}
       </span>
     </>
-  )
-}
+  );
+};
 
 const challengeTip = (s: LiveStats['sides'][number]) =>
-  `${plural(s.challenges.used, 'challenge')} used · ${s.challenges.won} won · ${s.challenges.lost} lost`
+  `${plural(s.challenges.used, 'challenge')} used · ${s.challenges.won} won · ${s.challenges.lost} lost`;
 
 const LiveStatsGrid: FC<{ match: Match; stats: LiveStats | null }> = ({ match: m, stats }) => {
-  const games = allGames(m)
-  const [a, b] = stats?.sides ?? []
+  const games = allGames(m);
+  const [a, b] = stats?.sides ?? [];
   return (
     <div className={classes.stats}>
       {games.map((g, i) => (
@@ -184,12 +184,12 @@ const LiveStatsGrid: FC<{ match: Match; stats: LiveStats | null }> = ({ match: m
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
 const LiveCard = memo<{ match: Match; tmtId: number | null; onOpen: (id: string) => void }>(
   ({ match: m, tmtId, onOpen }) => {
-    const { stats, challenge } = useLiveStats(tmtId, m)
+    const { stats, challenge } = useLiveStats(tmtId, m);
     return (
       <div className={clsx(utils.live, classes.card)}>
         <CardHit label={`Live match details: ${matchTitle(m)}`} onClick={() => onOpen(m.id)} />
@@ -212,16 +212,16 @@ const LiveCard = memo<{ match: Match; tmtId: number | null; onOpen: (id: string)
         </div>
         <LiveStatsGrid match={m} stats={stats} />
       </div>
-    )
+    );
   },
-)
+);
 
 export const LiveSection = memo<{
-  matches: Match[]
-  tmtId: number | null
-  onOpen: (id: string) => void
+  matches: Match[];
+  tmtId: number | null;
+  onOpen: (id: string) => void;
 }>(({ matches, tmtId, onOpen }) => {
-  const n = matches.length
+  const n = matches.length;
   return (
     <section className={classes.root}>
       <SectionTitle icon={LIVE_ICON} count={`${plural(n, 'match', 'matches')} on court`}>
@@ -237,5 +237,5 @@ export const LiveSection = memo<{
         ))}
       </div>
     </section>
-  )
-})
+  );
+});

@@ -1,23 +1,23 @@
-import { Skeleton } from '@mantine/core'
-import { clsx } from 'clsx'
-import { memo, useCallback, useState } from 'react'
+import { Skeleton } from '@mantine/core';
+import { clsx } from 'clsx';
+import { memo, useCallback, useState } from 'react';
 
-import type { NewsArticle } from '~/api/schemas'
-import { NewsImage, TournamentChip } from '~/components/news'
-import { PlayerAvatar, PlayerName } from '~/components/player'
-import { BackPill, Eyebrow } from '~/components/ui'
-import { formatDayMonthYear } from '~/utils/dates'
-import type { NewsStory } from '~/utils/news'
+import type { NewsArticle } from '~/api/schemas';
+import { NewsImage, TournamentChip } from '~/components/news';
+import { PlayerAvatar, PlayerName } from '~/components/player';
+import { BackPill, Eyebrow } from '~/components/ui';
+import { formatDayMonthYear } from '~/utils/dates';
+import type { NewsStory } from '~/utils/news';
 
-import { HERO_SIZES, HERO_WIDTHS } from '../constants'
-import { MAX_PLAYERS } from '../constants'
-import type { FeaturedPlayer } from '../utils'
-import { ShareBar } from './ShareBar'
+import { HERO_SIZES, HERO_WIDTHS } from '../constants';
+import { MAX_PLAYERS } from '../constants';
+import type { FeaturedPlayer } from '../utils';
+import { ShareBar } from './ShareBar';
 
-import classes from './ArticleHeader.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './ArticleHeader.module.css';
+import utils from '~/styles/utils.module.css';
 
-const BACK = { to: '/news' } as const
+const BACK = { to: '/news' } as const;
 
 const Byline = memo<{ article: NewsArticle; minutes: number }>(({ article, minutes }) => (
   <p className={classes.meta}>
@@ -25,12 +25,12 @@ const Byline = memo<{ article: NewsArticle; minutes: number }>(({ article, minut
     <time dateTime={article.publishedAt}>{formatDayMonthYear(article.publishedAt)}</time>
     <span>{`${minutes} min read`}</span>
   </p>
-))
+));
 
 const Players = memo<{ players: readonly FeaturedPlayer[] }>(({ players }) => {
-  const [expanded, setExpanded] = useState(false)
-  const expand = useCallback(() => setExpanded(true), [])
-  const hidden = expanded ? 0 : Math.max(0, players.length - MAX_PLAYERS)
+  const [expanded, setExpanded] = useState(false);
+  const expand = useCallback(() => setExpanded(true), []);
+  const hidden = expanded ? 0 : Math.max(0, players.length - MAX_PLAYERS);
   return (
     <div className={clsx(utils.noScrollbar, classes.players)} data-expanded={expanded || undefined}>
       <Eyebrow>Featuring</Eyebrow>
@@ -46,14 +46,14 @@ const Players = memo<{ players: readonly FeaturedPlayer[] }>(({ players }) => {
         </button>
       )}
     </div>
-  )
-})
+  );
+});
 
 export const ArticleHeader = memo<{
-  article: NewsArticle | undefined
-  story: NewsStory | undefined
-  minutes: number
-  players: readonly FeaturedPlayer[]
+  article: NewsArticle | undefined;
+  story: NewsStory | undefined;
+  minutes: number;
+  players: readonly FeaturedPlayer[];
 }>(({ article, story, minutes, players }) => {
   return (
     <header className={classes.header}>
@@ -100,5 +100,5 @@ export const ArticleHeader = memo<{
         )}
       </figure>
     </header>
-  )
-})
+  );
+});

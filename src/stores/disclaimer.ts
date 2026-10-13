@@ -1,25 +1,25 @@
-import { z } from 'zod'
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { z } from 'zod';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-import { safeJSONStorage } from './persistence'
+import { safeJSONStorage } from './persistence';
 
-const STORAGE_KEY = 'bwf-disclaimer'
-const STORE_VERSION = 1
+const STORAGE_KEY = 'bwf-disclaimer';
+const STORE_VERSION = 1;
 
-const DisclaimerData = z.object({ acknowledgedAt: z.number().nullable().catch(null) })
-type DisclaimerData = z.infer<typeof DisclaimerData>
+const DisclaimerData = z.object({ acknowledgedAt: z.number().nullable().catch(null) });
+type DisclaimerData = z.infer<typeof DisclaimerData>;
 
 interface DisclaimerState extends DisclaimerData {
-  acknowledge: () => void
+  acknowledge: () => void;
 }
 
-const EMPTY: DisclaimerData = { acknowledgedAt: null }
+const EMPTY: DisclaimerData = { acknowledgedAt: null };
 
 const parseData = (raw: unknown): DisclaimerData => {
-  const parsed = DisclaimerData.safeParse(raw)
-  return parsed.success ? parsed.data : EMPTY
-}
+  const parsed = DisclaimerData.safeParse(raw);
+  return parsed.success ? parsed.data : EMPTY;
+};
 
 export const useDisclaimer = create<DisclaimerState>()(
   persist(
@@ -36,6 +36,6 @@ export const useDisclaimer = create<DisclaimerState>()(
       merge: (persisted, current) => ({ ...current, ...parseData(persisted) }),
     },
   ),
-)
+);
 
-export const useDisclaimerAcknowledged = (): boolean => useDisclaimer((s) => s.acknowledgedAt !== null)
+export const useDisclaimerAcknowledged = (): boolean => useDisclaimer((s) => s.acknowledgedAt !== null);

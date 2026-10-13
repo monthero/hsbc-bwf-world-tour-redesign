@@ -1,28 +1,28 @@
-import { HoverCard } from '@mantine/core'
-import type { FC, ReactElement } from 'react'
+import { HoverCard } from '@mantine/core';
+import type { FC, ReactElement } from 'react';
 
-import { IconBack } from '~/components/ui'
-import type { Tournament } from '~/types'
-import { hasWinners } from '~/utils/tournaments'
+import { IconBack } from '~/components/ui';
+import type { Tournament } from '~/types';
+import { hasWinners } from '~/utils/tournaments';
 
-import { TournamentCard } from './TournamentCard'
-import { WinnersHoverCard } from './Winners'
+import { TournamentCard } from './TournamentCard';
+import { WinnersHoverCard } from './Winners';
 
-import classes from './TournamentPreview.module.css'
+import classes from './TournamentPreview.module.css';
 
 const WINNERS_HINT = (
   <span className={classes.hint}>
     <IconBack size={14} />
     Winners
   </span>
-)
+);
 
 export const TournamentHoverCard: FC<{
-  tournament: Tournament | undefined
-  kicker?: string
-  children: ReactElement
+  tournament: Tournament | undefined;
+  kicker?: string;
+  children: ReactElement;
 }> = ({ tournament, kicker, children }) => {
-  if (!tournament) return children
+  if (!tournament) return children;
   return (
     <HoverCard width={300} openDelay={150} closeDelay={150} position="bottom-end" shadow="none">
       <HoverCard.Target>{children}</HoverCard.Target>
@@ -39,5 +39,5 @@ export const TournamentHoverCard: FC<{
         </WinnersHoverCard>
       </HoverCard.Dropdown>
     </HoverCard>
-  )
-}
+  );
+};

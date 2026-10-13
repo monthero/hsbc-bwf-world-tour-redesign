@@ -1,9 +1,9 @@
-import { Tooltip } from '@mantine/core'
-import type { FC } from 'react'
+import { Tooltip } from '@mantine/core';
+import type { FC } from 'react';
 
-import classes from './Footnote.module.css'
+import classes from './Footnote.module.css';
 
-const EVENTS = { hover: true, focus: true, touch: true }
+const EVENTS = { hover: true, focus: true, touch: true };
 
 export const Footnote: FC<{ note: string }> = ({ note }) => (
   <Tooltip label={note} events={EVENTS}>
@@ -11,4 +11,4 @@ export const Footnote: FC<{ note: string }> = ({ note }) => (
       *
     </button>
   </Tooltip>
-)
+);

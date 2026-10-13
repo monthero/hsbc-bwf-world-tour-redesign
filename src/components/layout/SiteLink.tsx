@@ -1,22 +1,22 @@
-import { ActionIcon, Button, VisuallyHidden } from '@mantine/core'
-import { Link, useRouterState } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo, type FC } from 'react'
+import { ActionIcon, Button, VisuallyHidden } from '@mantine/core';
+import { Link, useRouterState } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo, type FC } from 'react';
 
-import { IconExternal } from '~/components/ui'
+import { IconExternal } from '~/components/ui';
 
-import type { ExternalItem, InternalItem, SiteItem, SocialItem } from './links'
+import type { ExternalItem, InternalItem, SiteItem, SocialItem } from './links';
 
-import classes from './SiteLink.module.css'
+import classes from './SiteLink.module.css';
 
 interface LinkProps<T> {
-  item: T
-  className?: string
-  onNavigate?: () => void
+  item: T;
+  className?: string;
+  onNavigate?: () => void;
 }
 
 export const ExternalLink: FC<LinkProps<ExternalItem>> = ({ item, className, onNavigate }) => {
-  const cut = item.label.lastIndexOf(' ') + 1
+  const cut = item.label.lastIndexOf(' ') + 1;
   return (
     <a href={item.href} target="_blank" rel="noreferrer" className={clsx(classes.link, className)} onClick={onNavigate}>
       <span>
@@ -28,14 +28,14 @@ export const ExternalLink: FC<LinkProps<ExternalItem>> = ({ item, className, onN
       </span>
       <VisuallyHidden>(opens in a new tab)</VisuallyHidden>
     </a>
-  )
-}
+  );
+};
 
 const useSectionActive = (sections: readonly string[]) =>
-  useRouterState({ select: (s) => sections.some((p) => s.location.pathname.startsWith(p)) || undefined })
+  useRouterState({ select: (s) => sections.some((p) => s.location.pathname.startsWith(p)) || undefined });
 
 const InternalLink: FC<LinkProps<InternalItem>> = ({ item, className, onNavigate }) => {
-  const active = useSectionActive(item.sections)
+  const active = useSectionActive(item.sections);
   return (
     <Link
       to={item.to}
@@ -46,14 +46,14 @@ const InternalLink: FC<LinkProps<InternalItem>> = ({ item, className, onNavigate
     >
       {item.label}
     </Link>
-  )
-}
+  );
+};
 
 const SiteLinkBody: FC<LinkProps<SiteItem>> = ({ item, ...rest }) => {
-  return 'href' in item ? <ExternalLink item={item} {...rest} /> : <InternalLink item={item} {...rest} />
-}
+  return 'href' in item ? <ExternalLink item={item} {...rest} /> : <InternalLink item={item} {...rest} />;
+};
 
-export const SiteLink = memo(SiteLinkBody)
+export const SiteLink = memo(SiteLinkBody);
 
 export const SocialLinks = memo<{ items: readonly SocialItem[]; size?: 'sm' | 'md'; className?: string }>(
   ({ items, size = 'sm', className }) => (
@@ -89,7 +89,7 @@ export const SocialLinks = memo<{ items: readonly SocialItem[]; size?: 'sm' | 'm
       ))}
     </ul>
   ),
-)
+);
 
 export const ExternalButton = memo<{ item: ExternalItem; className?: string }>(({ item, className }) => (
   <Button
@@ -106,4 +106,4 @@ export const ExternalButton = memo<{ item: ExternalItem; className?: string }>((
   >
     {item.label}
   </Button>
-))
+));

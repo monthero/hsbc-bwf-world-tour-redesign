@@ -1,5 +1,5 @@
-import { Button, Textarea } from '@mantine/core'
-import { clsx } from 'clsx'
+import { Button, Textarea } from '@mantine/core';
+import { clsx } from 'clsx';
 import {
   memo,
   useCallback,
@@ -10,16 +10,16 @@ import {
   type ChangeEvent,
   type FC,
   type RefObject,
-} from 'react'
+} from 'react';
 
-import { Flag } from '~/components/country'
-import { EventTag } from '~/components/match'
-import { PlayerAvatar } from '~/components/player'
-import { IconButton, IconExternal } from '~/components/ui'
-import { countryName } from '~/utils/countries'
-import { formatRank } from '~/utils/format'
+import { Flag } from '~/components/country';
+import { EventTag } from '~/components/match';
+import { PlayerAvatar } from '~/components/player';
+import { IconButton, IconExternal } from '~/components/ui';
+import { countryName } from '~/utils/countries';
+import { formatRank } from '~/utils/format';
 
-import { useSaveOverride } from '../api'
+import { useSaveOverride } from '../api';
 import {
   displayName,
   effectiveImage,
@@ -30,21 +30,21 @@ import {
   toDraft,
   type Draft,
   type FieldChange,
-} from '../fields'
-import { canonicalOverride, FRAMING_OF, isImageField, sameOverride, type AdminPlayer, type ImageKind } from '../schema'
-import { AdminModal } from './AdminModal'
-import { FieldRow } from './FieldRow'
-import { HeroFramingField, PhotoFramingField } from './FramingField'
-import { exportedIn, INPUT_CLASSES } from './inputs'
-import { SaveStatus } from './SaveStatus'
+} from '../fields';
+import { canonicalOverride, FRAMING_OF, isImageField, sameOverride, type AdminPlayer, type ImageKind } from '../schema';
+import { AdminModal } from './AdminModal';
+import { FieldRow } from './FieldRow';
+import { HeroFramingField, PhotoFramingField } from './FramingField';
+import { exportedIn, INPUT_CLASSES } from './inputs';
+import { SaveStatus } from './SaveStatus';
 
-import classes from './PlayerEditor.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './PlayerEditor.module.css';
+import utils from '~/styles/utils.module.css';
 
-const DISCARD_PROMPT = 'Discard unsaved changes?'
-const EDITOR_SIZE = 'min(1360px, calc(100vw - 48px))'
+const DISCARD_PROMPT = 'Discard unsaved changes?';
+const EDITOR_SIZE = 'min(1360px, calc(100vw - 48px))';
 
-const blockUnload = (e: BeforeUnloadEvent) => e.preventDefault()
+const blockUnload = (e: BeforeUnloadEvent) => e.preventDefault();
 
 const EditorTitle = memo<{ player: AdminPlayer; name: string }>(({ player, name }) => (
   <>
@@ -60,69 +60,69 @@ const EditorTitle = memo<{ player: AdminPlayer; name: string }>(({ player, name 
       </span>
     </div>
   </>
-))
+));
 
 const EditorBody: FC<{
-  player: AdminPlayer
-  dirtyRef: RefObject<boolean>
-  opened: boolean
-  onClose: () => void
-  onExited: () => void
+  player: AdminPlayer;
+  dirtyRef: RefObject<boolean>;
+  opened: boolean;
+  onClose: () => void;
+  onExited: () => void;
 }> = ({ player, dirtyRef, opened, onClose, onExited }) => {
-  const [base, setBase] = useState(() => canonicalOverride(player.override))
-  const [draft, setDraft] = useState<Draft>(() => toDraft(base))
-  const [versions, setVersions] = useState<Partial<Record<ImageKind, number>>>({})
-  const { mutate, isPending, error, data, reset } = useSaveOverride(player.id)
-  const next = useMemo(() => fromDraft(draft, base), [draft, base])
-  const dirty = !sameOverride(next, base)
-  const name = displayName(player)
-  const invalid = !!nameError(draft)
+  const [base, setBase] = useState(() => canonicalOverride(player.override));
+  const [draft, setDraft] = useState<Draft>(() => toDraft(base));
+  const [versions, setVersions] = useState<Partial<Record<ImageKind, number>>>({});
+  const { mutate, isPending, error, data, reset } = useSaveOverride(player.id);
+  const next = useMemo(() => fromDraft(draft, base), [draft, base]);
+  const dirty = !sameOverride(next, base);
+  const name = displayName(player);
+  const invalid = !!nameError(draft);
 
   useEffect(() => {
-    dirtyRef.current = dirty
-  }, [dirty, dirtyRef])
+    dirtyRef.current = dirty;
+  }, [dirty, dirtyRef]);
 
   useEffect(() => {
-    if (!dirty) return
-    window.addEventListener('beforeunload', blockUnload)
-    return () => window.removeEventListener('beforeunload', blockUnload)
-  }, [dirty])
+    if (!dirty) return;
+    window.addEventListener('beforeunload', blockUnload);
+    return () => window.removeEventListener('beforeunload', blockUnload);
+  }, [dirty]);
 
   const onField = useCallback<FieldChange>(
     (key, value, image) => {
-      reset()
-      if (isImageField(key) && image) setVersions((v) => ({ ...v, [key]: Date.now() }))
+      reset();
+      if (isImageField(key) && image) setVersions((v) => ({ ...v, [key]: Date.now() }));
       setDraft((d) => {
-        const fields = { ...d.fields }
+        const fields = { ...d.fields };
         if (isImageField(key) && (image || value?.value !== fields[key]?.value)) {
-          delete fields[FRAMING_OF[key].focus]
-          delete fields[FRAMING_OF[key].flip]
+          delete fields[FRAMING_OF[key].focus];
+          delete fields[FRAMING_OF[key].flip];
         }
-        if (value) fields[key] = value
-        else delete fields[key]
-        return { ...d, fields }
-      })
+        if (value) fields[key] = value;
+        else delete fields[key];
+        return { ...d, fields };
+      });
     },
     [reset],
-  )
+  );
   const onNotes = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) => {
-      const notes = e.currentTarget.value
-      reset()
-      setDraft((d) => ({ ...d, notes }))
+      const notes = e.currentTarget.value;
+      reset();
+      setDraft((d) => ({ ...d, notes }));
     },
     [reset],
-  )
+  );
   const onSave = useCallback(
     () =>
       mutate(next, {
         onSuccess: ({ entry }) => {
-          setBase(entry)
-          setDraft(toDraft(entry))
+          setBase(entry);
+          setDraft(toDraft(entry));
         },
       }),
     [mutate, next],
-  )
+  );
 
   return (
     <AdminModal
@@ -200,22 +200,22 @@ const EditorBody: FC<{
         />
       </section>
     </AdminModal>
-  )
-}
+  );
+};
 
 export const PlayerEditor = memo<{ player: AdminPlayer | null; onClose: () => void }>(({ player, onClose }) => {
-  const dirtyRef = useRef(false)
-  const [shown, setShown] = useState(player)
-  if (player && player !== shown) setShown(player)
+  const dirtyRef = useRef(false);
+  const [shown, setShown] = useState(player);
+  if (player && player !== shown) setShown(player);
 
   const onGuardedClose = useCallback(() => {
-    if (dirtyRef.current && !window.confirm(DISCARD_PROMPT)) return
-    dirtyRef.current = false
-    onClose()
-  }, [onClose])
-  const onExited = useCallback(() => setShown(null), [])
+    if (dirtyRef.current && !window.confirm(DISCARD_PROMPT)) return;
+    dirtyRef.current = false;
+    onClose();
+  }, [onClose]);
+  const onExited = useCallback(() => setShown(null), []);
 
-  if (!shown) return null
+  if (!shown) return null;
   return (
     <EditorBody
       key={shown.id}
@@ -225,5 +225,5 @@ export const PlayerEditor = memo<{ player: AdminPlayer | null; onClose: () => vo
       onClose={onGuardedClose}
       onExited={onExited}
     />
-  )
-})
+  );
+});

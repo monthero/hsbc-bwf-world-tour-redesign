@@ -1,151 +1,151 @@
-import { getRouteApi } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type FC } from 'react'
+import { getRouteApi } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type FC } from 'react';
 
-import { EmptyState, FloatingPill, IconCollapse, IconExpand, LiveDot } from '~/components/ui'
-import { SEASON_YEAR } from '~/constants'
-import { useDocumentTitle } from '~/hooks/useDocumentTitle'
-import { useIsMobile } from '~/hooks/useIsMobile'
-import { useScrolledPast } from '~/hooks/useScrolledPast'
-import { useTournaments } from '~/hooks/useTournaments'
-import type { Level, Tournament } from '~/types'
-import { headerOffset } from '~/utils/layout'
-import { summarize } from '~/utils/season'
-import { isHeld } from '~/utils/tournaments'
+import { EmptyState, FloatingPill, IconCollapse, IconExpand, LiveDot } from '~/components/ui';
+import { SEASON_YEAR } from '~/constants';
+import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useIsMobile } from '~/hooks/useIsMobile';
+import { useScrolledPast } from '~/hooks/useScrolledPast';
+import { useTournaments } from '~/hooks/useTournaments';
+import type { Level, Tournament } from '~/types';
+import { headerOffset } from '~/utils/layout';
+import { summarize } from '~/utils/season';
+import { isHeld } from '~/utils/tournaments';
 
-import { CompactHeader } from './components/CompactHeader'
-import { FilterBar } from './components/FilterBar'
-import { FinaleSection } from './components/FinaleSection'
-import { Hero } from './components/Hero'
-import { MonthSection } from './components/MonthSection'
-import { AUTO_SCROLL_DELAYS, COMPACT_HEIGHT, USER_SCROLL_EVENTS } from './constants'
-import type { JumpDirection, StatusFilter } from './types'
-import { buildMonths, canFilterStatus, filterTournaments, finalsReached, isFiltered } from './utils'
+import { CompactHeader } from './components/CompactHeader';
+import { FilterBar } from './components/FilterBar';
+import { FinaleSection } from './components/FinaleSection';
+import { Hero } from './components/Hero';
+import { MonthSection } from './components/MonthSection';
+import { AUTO_SCROLL_DELAYS, COMPACT_HEIGHT, USER_SCROLL_EVENTS } from './constants';
+import type { JumpDirection, StatusFilter } from './types';
+import { buildMonths, canFilterStatus, filterTournaments, finalsReached, isFiltered } from './utils';
 
-import classes from './CalendarPage.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './CalendarPage.module.css';
+import utils from '~/styles/utils.module.css';
 
-const route = getRouteApi('/calendar')
+const route = getRouteApi('/calendar');
 
-const SENTINEL_OPTS = { offset: 0 }
+const SENTINEL_OPTS = { offset: 0 };
 
-let autoScrolled = false
+let autoScrolled = false;
 
 export const CalendarPage: FC = () => {
-  const year = route.useSearch({ select: (s) => s.year ?? SEASON_YEAR })
-  const { data } = useTournaments(year)
-  useDocumentTitle('Calendar', { season: year })
-  return data ? <Calendar key={year} year={year} tournaments={data} /> : null
-}
+  const year = route.useSearch({ select: (s) => s.year ?? SEASON_YEAR });
+  const { data } = useTournaments(year);
+  useDocumentTitle('Calendar', { season: year });
+  return data ? <Calendar key={year} year={year} tournaments={data} /> : null;
+};
 
 const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tournaments }) => {
-  const isMobile = useIsMobile()
-  const { levels, status: picked = 'all' } = route.useSearch()
-  const navigate = route.useNavigate()
+  const isMobile = useIsMobile();
+  const { levels, status: picked = 'all' } = route.useSearch();
+  const navigate = route.useNavigate();
 
-  const season = useMemo(() => summarize(tournaments, year), [tournaments, year])
-  const held = useMemo(() => tournaments.filter(isHeld), [tournaments])
-  const showStatus = canFilterStatus(season)
-  const status = showStatus ? picked : 'all'
-  const list = useMemo(() => filterTournaments(tournaments, levels, status), [tournaments, levels, status])
-  const filtered = isFiltered(levels, status)
+  const season = useMemo(() => summarize(tournaments, year), [tournaments, year]);
+  const held = useMemo(() => tournaments.filter(isHeld), [tournaments]);
+  const showStatus = canFilterStatus(season);
+  const status = showStatus ? picked : 'all';
+  const list = useMemo(() => filterTournaments(tournaments, levels, status), [tournaments, levels, status]);
+  const filtered = isFiltered(levels, status);
   const months = useMemo(
     () => buildMonths(tournaments, list, filtered, season.phase),
     [tournaments, list, filtered, season.phase],
-  )
-  const { finals, target, live, next } = season
-  const showFinals = !!finals && list.includes(finals)
+  );
+  const { finals, target, live, next } = season;
+  const showFinals = !!finals && list.includes(finals);
 
-  const [sentinelRef, compact] = useScrolledPast<HTMLDivElement>(SENTINEL_OPTS)
-  const [jump, setJump] = useState<JumpDirection>(null)
-  const stickyRef = useRef<HTMLDivElement>(null)
-  const targetRef = useRef<HTMLElement | null>(null)
-  const mainRef = useRef<HTMLElement>(null)
-  const monthEls = useRef(new Map<number, HTMLElement>())
-  const compactH = isMobile ? COMPACT_HEIGHT.mobile : COMPACT_HEIGHT.desktop
-  const pageStyle = useMemo(() => ({ '--cal-compact-h': `${compactH}px` }) as CSSProperties, [compactH])
+  const [sentinelRef, compact] = useScrolledPast<HTMLDivElement>(SENTINEL_OPTS);
+  const [jump, setJump] = useState<JumpDirection>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const targetRef = useRef<HTMLElement | null>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  const monthEls = useRef(new Map<number, HTMLElement>());
+  const compactH = isMobile ? COMPACT_HEIGHT.mobile : COMPACT_HEIGHT.desktop;
+  const pageStyle = useMemo(() => ({ '--cal-compact-h': `${compactH}px` }) as CSSProperties, [compactH]);
 
   const setTarget = useCallback((el: HTMLElement | null) => {
-    targetRef.current = el
-  }, [])
+    targetRef.current = el;
+  }, []);
 
   const registerMonth = useCallback((month: number, el: HTMLElement | null) => {
-    if (el) monthEls.current.set(month, el)
-    else monthEls.current.delete(month)
-  }, [])
+    if (el) monthEls.current.set(month, el);
+    else monthEls.current.delete(month);
+  }, []);
 
   useEffect(() => {
-    let raf = 0
+    let raf = 0;
     const measure = () => {
-      const el = targetRef.current
-      const bar = stickyRef.current
-      if (!el || !bar) return setJump(null)
-      const r = el.getBoundingClientRect()
-      if (r.bottom < bar.getBoundingClientRect().bottom) return setJump('up')
-      setJump(r.top > window.innerHeight ? 'down' : null)
-    }
+      const el = targetRef.current;
+      const bar = stickyRef.current;
+      if (!el || !bar) return setJump(null);
+      const r = el.getBoundingClientRect();
+      if (r.bottom < bar.getBoundingClientRect().bottom) return setJump('up');
+      setJump(r.top > window.innerHeight ? 'down' : null);
+    };
     const onScroll = () => {
-      cancelAnimationFrame(raf)
-      raf = requestAnimationFrame(measure)
-    }
-    const ro = new ResizeObserver(onScroll)
-    if (mainRef.current) ro.observe(mainRef.current)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(measure);
+    };
+    const ro = new ResizeObserver(onScroll);
+    if (mainRef.current) ro.observe(mainRef.current);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     return () => {
-      cancelAnimationFrame(raf)
-      ro.disconnect()
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
-  }, [])
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
 
   const scrollToTarget = useCallback(
     (smooth: boolean) => {
-      const el = target && monthEls.current.get(target.month)
-      if (!el) return
-      const offset = headerOffset() + compactH + (stickyRef.current?.offsetHeight ?? 0)
-      const top = el.getBoundingClientRect().top + window.scrollY - offset + 1
-      window.scrollTo({ top: Math.max(0, top), behavior: smooth ? 'smooth' : 'auto' })
+      const el = target && monthEls.current.get(target.month);
+      if (!el) return;
+      const offset = headerOffset() + compactH + (stickyRef.current?.offsetHeight ?? 0);
+      const top = el.getBoundingClientRect().top + window.scrollY - offset + 1;
+      window.scrollTo({ top: Math.max(0, top), behavior: smooth ? 'smooth' : 'auto' });
     },
     [target, compactH],
-  )
+  );
 
   useEffect(() => {
-    if (autoScrolled || !target) return
-    let moved = false
+    if (autoScrolled || !target) return;
+    let moved = false;
     const stop = () => {
-      moved = true
-    }
-    USER_SCROLL_EVENTS.forEach((e) => window.addEventListener(e, stop, { passive: true }))
+      moved = true;
+    };
+    USER_SCROLL_EVENTS.forEach((e) => window.addEventListener(e, stop, { passive: true }));
     const timers = AUTO_SCROLL_DELAYS.map((ms) =>
       window.setTimeout(() => {
-        if (moved) return
-        autoScrolled = true
-        scrollToTarget(false)
+        if (moved) return;
+        autoScrolled = true;
+        scrollToTarget(false);
       }, ms),
-    )
+    );
     return () => {
-      timers.forEach((t) => window.clearTimeout(t))
-      USER_SCROLL_EVENTS.forEach((e) => window.removeEventListener(e, stop))
-    }
-  }, [target, scrollToTarget])
+      timers.forEach((t) => window.clearTimeout(t));
+      USER_SCROLL_EVENTS.forEach((e) => window.removeEventListener(e, stop));
+    };
+  }, [target, scrollToTarget]);
 
-  const onJump = useCallback(() => scrollToTarget(true), [scrollToTarget])
+  const onJump = useCallback(() => scrollToTarget(true), [scrollToTarget]);
 
   const onLevel = useCallback(
     (level: Level) =>
       void navigate({
         search: (s) => {
-          const cur = s.levels ?? []
-          const nextLevels = cur.includes(level) ? cur.filter((l) => l !== level) : [...cur, level]
-          return { ...s, levels: nextLevels.length ? nextLevels : undefined }
+          const cur = s.levels ?? [];
+          const nextLevels = cur.includes(level) ? cur.filter((l) => l !== level) : [...cur, level];
+          return { ...s, levels: nextLevels.length ? nextLevels : undefined };
         },
         replace: true,
         resetScroll: false,
       }),
     [navigate],
-  )
+  );
 
   const onStatus = useCallback(
     (v: StatusFilter | null) =>
@@ -155,14 +155,14 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
         resetScroll: false,
       }),
     [navigate],
-  )
+  );
 
   const onYear = useCallback(
     (y: number) => void navigate({ search: (s) => ({ levels: s.levels, year: y === SEASON_YEAR ? undefined : y }) }),
     [navigate],
-  )
+  );
 
-  const jumpPrefix = live ? 'Live now' : 'Up next'
+  const jumpPrefix = live ? 'Live now' : 'Up next';
 
   return (
     <div className={classes.page} style={pageStyle}>
@@ -214,5 +214,5 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
         </FloatingPill>
       )}
     </div>
-  )
-}
+  );
+};

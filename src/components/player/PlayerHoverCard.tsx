@@ -1,30 +1,30 @@
-import { HoverCard, Skeleton, type PopoverProps } from '@mantine/core'
-import { clsx } from 'clsx'
-import { useMemo, type FC, type ReactNode } from 'react'
+import { HoverCard, Skeleton, type PopoverProps } from '@mantine/core';
+import { clsx } from 'clsx';
+import { useMemo, type FC, type ReactNode } from 'react';
 
-import { CountryLabel } from '~/components/country'
-import { FollowButton } from '~/components/follow'
-import { OutcomeBadge, ScoreChips, TeamLabel } from '~/components/match'
-import { Eyebrow, IconButton, IconProfile } from '~/components/ui'
-import { PlayerHoverContext } from '~/contexts'
-import { useIsMobile } from '~/hooks/useIsMobile'
-import { usePlayerProfile } from '~/hooks/useSeason'
-import type { PlayerMatch } from '~/types'
-import { byMatchTime, opposite, roundName } from '~/utils/matches'
-import { outcomeLabel } from '~/utils/season'
+import { CountryLabel } from '~/components/country';
+import { FollowButton } from '~/components/follow';
+import { OutcomeBadge, ScoreChips, TeamLabel } from '~/components/match';
+import { Eyebrow, IconButton, IconProfile } from '~/components/ui';
+import { PlayerHoverContext } from '~/contexts';
+import { useIsMobile } from '~/hooks/useIsMobile';
+import { usePlayerProfile } from '~/hooks/useSeason';
+import type { PlayerMatch } from '~/types';
+import { byMatchTime, opposite, roundName } from '~/utils/matches';
+import { outcomeLabel } from '~/utils/season';
 
-import { BioStat, FactTile } from './BioFacts'
-import { PlayerAvatar } from './PlayerAvatar'
-import { PlayerName } from './PlayerName'
-import { RankCard } from './Rank'
-import { SeedTag } from './SeedTag'
+import { BioStat, FactTile } from './BioFacts';
+import { PlayerAvatar } from './PlayerAvatar';
+import { PlayerName } from './PlayerName';
+import { RankCard } from './Rank';
+import { SeedTag } from './SeedTag';
 
-import classes from './PlayerHoverCard.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './PlayerHoverCard.module.css';
+import utils from '~/styles/utils.module.css';
 
-const byTime = (a: PlayerMatch, b: PlayerMatch) => byMatchTime(a.match, b.match)
+const byTime = (a: PlayerMatch, b: PlayerMatch) => byMatchTime(a.match, b.match);
 
-const EDGE = 30
+const EDGE = 30;
 
 const MIDDLEWARES: PopoverProps['middlewares'] = {
   flip: { fallbackStrategy: 'bestFit', padding: EDGE },
@@ -32,14 +32,14 @@ const MIDDLEWARES: PopoverProps['middlewares'] = {
   size: {
     padding: EDGE,
     apply: ({ availableHeight, elements }) => {
-      elements.floating.style.maxHeight = `${availableHeight}px`
+      elements.floating.style.maxHeight = `${availableHeight}px`;
     },
   },
-}
+};
 
 export const PlayerHoverCard: FC<{ id: string; children: ReactNode }> = ({ id, children }) => {
-  const isMobile = useIsMobile()
-  if (isMobile) return children
+  const isMobile = useIsMobile();
+  if (isMobile) return children;
   return (
     <HoverCard
       openDelay={300}
@@ -59,12 +59,12 @@ export const PlayerHoverCard: FC<{ id: string; children: ReactNode }> = ({ id, c
         </PlayerHoverContext>
       </HoverCard.Dropdown>
     </HoverCard>
-  )
-}
+  );
+};
 
 const PlayerCard: FC<{ id: string }> = ({ id }) => {
-  const { status, player, record, bio, ranks, seed, matches, week } = usePlayerProfile(id)
-  const runs = useMemo(() => matches.filter((pm) => pm.tournament.status === 'live').sort(byTime), [matches])
+  const { status, player, record, bio, ranks, seed, matches, week } = usePlayerProfile(id);
+  const runs = useMemo(() => matches.filter((pm) => pm.tournament.status === 'live').sort(byTime), [matches]);
   if (!player)
     return status === 'missing' ? (
       <p className={classes.empty}>No profile data for this player.</p>
@@ -73,7 +73,7 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
         <Skeleton height={60} circle />
         <Skeleton height={14} width="60%" />
       </div>
-    )
+    );
   return (
     <>
       <div className={classes.header}>
@@ -154,5 +154,5 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};

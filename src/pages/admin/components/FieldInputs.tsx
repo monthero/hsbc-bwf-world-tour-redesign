@@ -1,13 +1,13 @@
-import { Button, NumberInput, Select, Textarea, TextInput } from '@mantine/core'
-import { DateInput } from '@mantine/dates'
-import { useCallback, useMemo, useState, type ChangeEvent, type FC } from 'react'
+import { Button, NumberInput, Select, Textarea, TextInput } from '@mantine/core';
+import { DateInput } from '@mantine/dates';
+import { useCallback, useMemo, useState, type ChangeEvent, type FC } from 'react';
 
-import { PlayerName } from '~/components/player'
-import { HEIGHT_UNIT } from '~/utils/format'
-import { toPlayer } from '~/utils/names'
-import { nameIssue } from '~/utils/surname'
+import { PlayerName } from '~/components/player';
+import { HEIGHT_UNIT } from '~/utils/format';
+import { toPlayer } from '~/utils/names';
+import { nameIssue } from '~/utils/surname';
 
-import { useFetchImage } from '../api'
+import { useFetchImage } from '../api';
 import {
   formatField,
   imageSummary,
@@ -16,25 +16,25 @@ import {
   PLAYS_OPTIONS,
   versioned,
   type FieldDef,
-} from '../fields'
-import type { ImageKind, ImageResult, Provenance } from '../schema'
-import { CatalogCascader } from './CatalogCascader'
-import { DATE_FORMAT, FLOATING_PROPS, INPUT_CLASSES } from './inputs'
+} from '../fields';
+import type { ImageKind, ImageResult, Provenance } from '../schema';
+import { CatalogCascader } from './CatalogCascader';
+import { DATE_FORMAT, FLOATING_PROPS, INPUT_CLASSES } from './inputs';
 
-import classes from './FieldInputs.module.css'
+import classes from './FieldInputs.module.css';
 
 export interface FieldInputProps {
-  field: FieldDef
-  playerId: string
-  value: string
-  placeholder: string
-  bwf?: string
-  onValue: (value: string) => void
-  onImage: (image: ImageResult) => void
+  field: FieldDef;
+  playerId: string;
+  value: string;
+  placeholder: string;
+  bwf?: string;
+  onValue: (value: string) => void;
+  onImage: (image: ImageResult) => void;
 }
 
 const textValue = (onValue: (v: string) => void) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-  onValue(e.currentTarget.value)
+  onValue(e.currentTarget.value);
 
 export const TextField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <TextInput
@@ -44,11 +44,11 @@ export const TextField: FC<FieldInputProps> = ({ field, value, placeholder, onVa
     onChange={textValue(onValue)}
     classNames={INPUT_CLASSES}
   />
-)
+);
 
 export const NameField: FC<FieldInputProps> = ({ field, playerId, value, placeholder, bwf = '', onValue }) => {
-  const shown = value || bwf
-  const preview = useMemo(() => (shown ? toPlayer(shown, '', playerId) : null), [shown, playerId])
+  const shown = value || bwf;
+  const preview = useMemo(() => (shown ? toPlayer(shown, '', playerId) : null), [shown, playerId]);
   return (
     <div className={classes.name}>
       <TextInput
@@ -69,17 +69,17 @@ export const NameField: FC<FieldInputProps> = ({ field, playerId, value, placeho
         </span>
       )}
     </div>
-  )
-}
+  );
+};
 
-const HEIGHT_MIN = 120
-const HEIGHT_MAX = 230
-const HEIGHT_START = 175
+const HEIGHT_MIN = 120;
+const HEIGHT_MAX = 230;
+const HEIGHT_START = 175;
 
-const HEIGHT_SUFFIX = ` ${HEIGHT_UNIT}`
+const HEIGHT_SUFFIX = ` ${HEIGHT_UNIT}`;
 
 export const HeightField: FC<FieldInputProps> = ({ field, value, placeholder, bwf = '', onValue }) => {
-  const bwfCm = Number(bwf)
+  const bwfCm = Number(bwf);
   return (
     <NumberInput
       aria-label={`${field.label} override`}
@@ -94,8 +94,8 @@ export const HeightField: FC<FieldInputProps> = ({ field, value, placeholder, bw
       allowNegative={false}
       classNames={INPUT_CLASSES}
     />
-  )
-}
+  );
+};
 
 export const LongField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <Textarea
@@ -108,7 +108,7 @@ export const LongField: FC<FieldInputProps> = ({ field, value, placeholder, onVa
     maxRows={8}
     classNames={INPUT_CLASSES}
   />
-)
+);
 
 export const DateField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <DateInput
@@ -122,7 +122,7 @@ export const DateField: FC<FieldInputProps> = ({ field, value, placeholder, onVa
     popoverProps={FLOATING_PROPS}
     classNames={INPUT_CLASSES}
   />
-)
+);
 
 export const CatalogField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <CatalogCascader
@@ -132,7 +132,7 @@ export const CatalogField: FC<FieldInputProps> = ({ field, value, placeholder, o
     placeholder={placeholder}
     label={`${field.label} override`}
   />
-)
+);
 
 export const PlaysField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <Select
@@ -145,28 +145,28 @@ export const PlaysField: FC<FieldInputProps> = ({ field, value, placeholder, onV
     comboboxProps={FLOATING_PROPS}
     classNames={INPUT_CLASSES}
   />
-)
+);
 
 export const ImageField: FC<FieldInputProps> = ({ field, playerId, value, onImage }) => {
-  const kind = field.key as ImageKind
-  const [url, setUrl] = useState('')
-  const [version, setVersion] = useState(0)
-  const { mutate, isPending, error, data } = useFetchImage()
-  const src = overrideImageUrl(kind, playerId, value)
+  const kind = field.key as ImageKind;
+  const [url, setUrl] = useState('');
+  const [version, setVersion] = useState(0);
+  const { mutate, isPending, error, data } = useFetchImage();
+  const src = overrideImageUrl(kind, playerId, value);
   const onFetch = useCallback(
     () =>
       mutate(
         { id: playerId, kind, url: url.trim() },
         {
           onSuccess: (image) => {
-            setVersion(Date.now())
-            setUrl('')
-            onImage(image)
+            setVersion(Date.now());
+            setUrl('');
+            onImage(image);
           },
         },
       ),
     [mutate, playerId, kind, url, onImage],
-  )
+  );
   return (
     <div className={classes.image}>
       {src && <img className={classes.preview} data-kind={kind} src={versioned(src, version)} alt="" />}
@@ -185,18 +185,18 @@ export const ImageField: FC<FieldInputProps> = ({ field, playerId, value, onImag
       </div>
       <ImageStatus error={error} image={data} />
     </div>
-  )
-}
+  );
+};
 
 export const ImageStatus: FC<{ error: Error | null; image: ImageResult | undefined }> = ({ error, image }) => {
-  if (error) return <span className={classes.error}>{error.message}</span>
-  return image ? <span className={classes.stats}>Stored {imageSummary(image)}</span> : null
-}
+  if (error) return <span className={classes.error}>{error.message}</span>;
+  return image ? <span className={classes.stats}>Stored {imageSummary(image)}</span> : null;
+};
 
 export const ImageThumb: FC<{ kind: ImageKind; playerId: string; value: string }> = ({ kind, playerId, value }) => {
-  const src = imageUrl(kind, playerId, value)
-  return src ? <img className={classes.preview} data-kind={kind} src={src} alt="" /> : null
-}
+  const src = imageUrl(kind, playerId, value);
+  return src ? <img className={classes.preview} data-kind={kind} src={src} alt="" /> : null;
+};
 
 export const ProvenanceInputs: FC<{ value: Provenance; onChange: (value: Provenance) => void }> = ({
   value,
@@ -223,4 +223,4 @@ export const ProvenanceInputs: FC<{ value: Provenance; onChange: (value: Provena
       className={classes.asOf}
     />
   </div>
-)
+);

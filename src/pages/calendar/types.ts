@@ -1,9 +1,9 @@
-import type { RefCallback } from 'react'
-import { z } from 'zod'
+import type { RefCallback } from 'react';
+import { z } from 'zod';
 
-import { Level } from '~/api/schemas'
-import { FIRST_SEASON, SEASON_YEAR } from '~/constants'
-import type { Tournament } from '~/types'
+import { Level } from '~/api/schemas';
+import { FIRST_SEASON, SEASON_YEAR } from '~/constants';
+import type { Tournament } from '~/types';
 
 export const CalendarSearch = z.object({
   year: z
@@ -15,23 +15,23 @@ export const CalendarSearch = z.object({
     .catch(undefined),
   levels: z.array(Level).optional().catch(undefined),
   status: z.enum(['done', 'up']).optional().catch(undefined),
-})
+});
 
-export type CalendarSearch = z.infer<typeof CalendarSearch>
+export type CalendarSearch = z.infer<typeof CalendarSearch>;
 
-export type StatusFilter = 'all' | 'done' | 'up'
+export type StatusFilter = 'all' | 'done' | 'up';
 
-export type MonthTone = 'past' | 'current' | 'future'
+export type MonthTone = 'past' | 'current' | 'future';
 
-export type JumpDirection = 'up' | 'down' | null
+export type JumpDirection = 'up' | 'down' | null;
 
-export type AnchorRef = RefCallback<HTMLElement>
+export type AnchorRef = RefCallback<HTMLElement>;
 
 export interface MonthGroup {
-  month: number
-  name: string
-  items: Tournament[]
-  tone: MonthTone
-  progress: number
-  muted: boolean
+  month: number;
+  name: string;
+  items: Tournament[];
+  tone: MonthTone;
+  progress: number;
+  muted: boolean;
 }

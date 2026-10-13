@@ -1,16 +1,16 @@
-import { Button, Modal } from '@mantine/core'
-import { clsx } from 'clsx'
-import type { FC, ReactNode } from 'react'
+import { Button, Modal } from '@mantine/core';
+import { clsx } from 'clsx';
+import type { FC, ReactNode } from 'react';
 
-import { IconInfo } from '~/components/ui'
-import { useIsMobile } from '~/hooks/useIsMobile'
-import { useDisclaimer, useDisclaimerAcknowledged } from '~/stores/disclaimer'
+import { IconInfo } from '~/components/ui';
+import { useIsMobile } from '~/hooks/useIsMobile';
+import { useDisclaimer, useDisclaimerAcknowledged } from '~/stores/disclaimer';
 
-import classes from './DisclaimerModal.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './DisclaimerModal.module.css';
+import utils from '~/styles/utils.module.css';
 
-const BWF_URL = 'https://bwfbadminton.com'
-const WORLD_TOUR_URL = 'https://bwfworldtour.bwfbadminton.com'
+const BWF_URL = 'https://bwfbadminton.com';
+const WORLD_TOUR_URL = 'https://bwfworldtour.bwfbadminton.com';
 
 const MODAL_CLASSES = {
   inner: classes.inner,
@@ -18,17 +18,17 @@ const MODAL_CLASSES = {
   header: classes.header,
   title: classes.title,
   body: classes.body,
-}
-const DESKTOP_TRANSITION = { transition: 'pop', duration: 200 } as const
-const MOBILE_TRANSITION = { transition: 'slide-up', duration: 260 } as const
+};
+const DESKTOP_TRANSITION = { transition: 'pop', duration: 200 } as const;
+const MOBILE_TRANSITION = { transition: 'slide-up', duration: 260 } as const;
 
-const noop = () => {}
+const noop = () => {};
 
 const ExternalLink: FC<{ href: string; children: ReactNode }> = ({ href, children }) => (
   <a href={href} target="_blank" rel="noreferrer" className={classes.link}>
     {children}
   </a>
-)
+);
 
 const TITLE = (
   <>
@@ -37,7 +37,7 @@ const TITLE = (
     </span>
     A quick note before you start
   </>
-)
+);
 
 const MESSAGE = (
   <>
@@ -55,12 +55,12 @@ const MESSAGE = (
       <ExternalLink href={BWF_URL}>bwfbadminton.com</ExternalLink>.
     </p>
   </>
-)
+);
 
 export const DisclaimerModal: FC = () => {
-  const acknowledged = useDisclaimerAcknowledged()
-  const acknowledge = useDisclaimer((s) => s.acknowledge)
-  const mobile = useIsMobile()
+  const acknowledged = useDisclaimerAcknowledged();
+  const acknowledge = useDisclaimer((s) => s.acknowledge);
+  const mobile = useIsMobile();
 
   return (
     <Modal
@@ -81,5 +81,5 @@ export const DisclaimerModal: FC = () => {
         I understand
       </Button>
     </Modal>
-  )
-}
+  );
+};

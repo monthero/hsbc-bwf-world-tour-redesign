@@ -1,29 +1,29 @@
-import { useCallback, useMemo, useRef, type FC } from 'react'
+import { useCallback, useMemo, useRef, type FC } from 'react';
 
-import { Segmented } from '~/components/ui'
-import { useSlideIn } from '~/hooks/useSlideIn'
+import { Segmented } from '~/components/ui';
+import { useSlideIn } from '~/hooks/useSlideIn';
 
-import type { Bracket } from './bracket'
-import { DrawBox } from './DrawBox'
+import type { Bracket } from './bracket';
+import { DrawBox } from './DrawBox';
 
-import classes from './Draw.module.css'
+import classes from './Draw.module.css';
 
-const SLIDE_OPTS = { distance: (d: number) => 28 + Math.min(3, Math.abs(d)) * 12, duration: 300 }
+const SLIDE_OPTS = { distance: (d: number) => 28 + Math.min(3, Math.abs(d)) * 12, duration: 300 };
 
 export const MobileDraw: FC<{
-  bracket: Bracket
-  round: number
-  onRound: (round: number) => void
-  onOpen: (id: string) => void
+  bracket: Bracket;
+  round: number;
+  onRound: (round: number) => void;
+  onOpen: (id: string) => void;
 }> = ({ bracket, round, onRound, onOpen }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const { columns } = bracket
-  const index = Math.min(round, columns.length - 1)
-  const col = columns[index]
-  const options = useMemo(() => columns.map((c, i) => ({ value: String(i), label: c.id, tip: c.label })), [columns])
-  const select = useCallback((v: string | null) => v !== null && onRound(Number(v)), [onRound])
+  const ref = useRef<HTMLDivElement>(null);
+  const { columns } = bracket;
+  const index = Math.min(round, columns.length - 1);
+  const col = columns[index];
+  const options = useMemo(() => columns.map((c, i) => ({ value: String(i), label: c.id, tip: c.label })), [columns]);
+  const select = useCallback((v: string | null) => v !== null && onRound(Number(v)), [onRound]);
 
-  useSlideIn(ref, index, SLIDE_OPTS)
+  useSlideIn(ref, index, SLIDE_OPTS);
 
   return (
     <>
@@ -37,5 +37,5 @@ export const MobileDraw: FC<{
         </div>
       </div>
     </>
-  )
-}
+  );
+};

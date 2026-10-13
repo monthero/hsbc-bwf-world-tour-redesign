@@ -1,8 +1,8 @@
-import { Tooltip } from '@mantine/core'
-import { clsx } from 'clsx'
-import { memo } from 'react'
+import { Tooltip } from '@mantine/core';
+import { clsx } from 'clsx';
+import { memo } from 'react';
 
-import classes from './RestBreak.module.css'
+import classes from './RestBreak.module.css';
 
 export const RestBreak = memo<{ label: string; active?: boolean; className?: string }>(
   ({ label, active, className }) => (
@@ -12,4 +12,4 @@ export const RestBreak = memo<{ label: string; active?: boolean; className?: str
       </span>
     </Tooltip>
   ),
-)
+);

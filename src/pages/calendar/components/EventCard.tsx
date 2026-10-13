@@ -1,19 +1,19 @@
-import { memo, useMemo } from 'react'
+import { memo, useMemo } from 'react';
 
-import { FollowButton } from '~/components/follow'
-import { TournamentCard, WinnersHoverCard } from '~/components/tournament'
-import type { Tournament } from '~/types'
+import { FollowButton } from '~/components/follow';
+import { TournamentCard, WinnersHoverCard } from '~/components/tournament';
+import type { Tournament } from '~/types';
 
-import type { AnchorRef } from '../types'
+import type { AnchorRef } from '../types';
 
-import classes from './EventCard.module.css'
+import classes from './EventCard.module.css';
 
 export const EventCard = memo<{
-  tournament: Tournament
-  isNext: boolean
-  anchorRef?: AnchorRef
+  tournament: Tournament;
+  isNext: boolean;
+  anchorRef?: AnchorRef;
 }>(({ tournament: t, isNext, anchorRef }) => {
-  const meta = useMemo(() => ({ name: t.name, slug: t.slug, year: t.year }), [t.name, t.slug, t.year])
+  const meta = useMemo(() => ({ name: t.name, slug: t.slug, year: t.year }), [t.name, t.slug, t.year]);
   return (
     <WinnersHoverCard tournament={t} position="right-start">
       <div ref={anchorRef} className={classes.wrap}>
@@ -29,5 +29,5 @@ export const EventCard = memo<{
         />
       </div>
     </WinnersHoverCard>
-  )
-})
+  );
+});

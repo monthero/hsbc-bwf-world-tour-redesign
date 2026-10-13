@@ -1,29 +1,29 @@
-import { clsx } from 'clsx'
-import { Fragment, memo, type FC, type ReactNode } from 'react'
+import { clsx } from 'clsx';
+import { Fragment, memo, type FC, type ReactNode } from 'react';
 
-import { Flag, type FlagSize } from '~/components/country'
-import { PlayerName } from '~/components/player/PlayerName'
-import { SeedTag } from '~/components/player/SeedTag'
-import type { Player } from '~/types'
+import { Flag, type FlagSize } from '~/components/country';
+import { PlayerName } from '~/components/player/PlayerName';
+import { SeedTag } from '~/components/player/SeedTag';
+import type { Player } from '~/types';
 
-import classes from './TeamPlayers.module.css'
+import classes from './TeamPlayers.module.css';
 
 const Wrap: FC<{ when?: boolean; children: ReactNode }> = ({ when, children }) =>
-  when ? <span className={classes.nameLine}>{children}</span> : children
+  when ? <span className={classes.nameLine}>{children}</span> : children;
 
 export const TeamPlayers = memo<{
-  players: readonly Player[]
-  seed?: number | null
-  flag?: FlagSize | false
-  link?: boolean | ((p: Player) => boolean)
-  layout?: 'stack' | 'inline'
-  align?: 'start' | 'end'
-  truncate?: boolean
-  wrap?: boolean
-  empty?: ReactNode
-  after?: (p: Player, i: number) => ReactNode
-  className?: string
-  nameClassName?: string
+  players: readonly Player[];
+  seed?: number | null;
+  flag?: FlagSize | false;
+  link?: boolean | ((p: Player) => boolean);
+  layout?: 'stack' | 'inline';
+  align?: 'start' | 'end';
+  truncate?: boolean;
+  wrap?: boolean;
+  empty?: ReactNode;
+  after?: (p: Player, i: number) => ReactNode;
+  className?: string;
+  nameClassName?: string;
 }>(
   ({
     players,
@@ -39,7 +39,7 @@ export const TeamPlayers = memo<{
     className,
     nameClassName,
   }) => {
-    const pairSeed = !!seed && layout === 'stack' && players.length > 1
+    const pairSeed = !!seed && layout === 'stack' && players.length > 1;
     return (
       <span
         className={clsx(classes.team, className)}
@@ -74,17 +74,17 @@ export const TeamPlayers = memo<{
           : empty && <span className={classes.player}>{empty}</span>}
         {pairSeed && <SeedTag seed={seed} className={classes.pairSeed} />}
       </span>
-    )
+    );
   },
-)
+);
 
 export const TeamLabel = memo<{
-  players: readonly Player[]
-  sep?: ' / ' | ' & '
-  link?: boolean
-  className?: string
+  players: readonly Player[];
+  sep?: ' / ' | ' & ';
+  link?: boolean;
+  className?: string;
 }>(({ players, sep = ' / ', link = true, className }) => {
-  const short = players.length > 1
+  const short = players.length > 1;
   return (
     <span className={className}>
       {players.length
@@ -96,5 +96,5 @@ export const TeamLabel = memo<{
           ))
         : 'TBD'}
     </span>
-  )
-})
+  );
+});

@@ -1,8 +1,8 @@
-import fs from 'node:fs'
-import path from 'node:path'
+import fs from 'node:fs';
+import path from 'node:path';
 
-import { imageAssetPath, ImageKind } from '../../src/pages/admin/schema.ts'
-import { parseHeightCm } from '../../src/utils/format.ts'
+import { imageAssetPath, ImageKind } from '../../src/pages/admin/schema.ts';
+import { parseHeightCm } from '../../src/utils/format.ts';
 import {
   EVENTS,
   historyPath,
@@ -13,160 +13,160 @@ import {
   type ApiHistory,
   type ApiHistoryRow,
   type EventCode,
-} from './bwf.ts'
-import { dayjs } from './dates.ts'
-import { all, type Db } from './db.ts'
-import { createMapPlacer } from './geo.ts'
-import { FOREVER, type Client } from './http.ts'
+} from './bwf.ts';
+import { dayjs } from './dates.ts';
+import { all, type Db } from './db.ts';
+import { createMapPlacer } from './geo.ts';
+import { FOREVER, type Client } from './http.ts';
 
 interface Person {
-  id: string
-  name: string
-  cc: string
+  id: string;
+  name: string;
+  cc: string;
 }
 
 interface Team {
-  seed: number | null
-  players: Person[]
+  seed: number | null;
+  players: Person[];
 }
 
 interface MatchDto {
-  court: number
-  time: string
-  event: string
-  round: string
-  group?: string
-  status: string
-  winner: number
-  teams: [Team, Team]
-  games: [number, number][]
-  durationMin: number
-  serve: number
-  note: string | null
-  code?: string
+  court: number;
+  time: string;
+  event: string;
+  round: string;
+  group?: string;
+  status: string;
+  winner: number;
+  teams: [Team, Team];
+  games: [number, number][];
+  durationMin: number;
+  serve: number;
+  note: string | null;
+  code?: string;
 }
 
 interface MatchRow {
-  id: number
-  edition: string
-  day: string
-  code: string | null
-  event: string
-  round: string
-  grp: string | null
-  time: string
-  court: number
-  status: string
-  winner: number
-  note: string | null
-  duration: number
-  games: string
-  seed1: number | null
-  seed2: number | null
+  id: number;
+  edition: string;
+  day: string;
+  code: string | null;
+  event: string;
+  round: string;
+  grp: string | null;
+  time: string;
+  court: number;
+  status: string;
+  winner: number;
+  note: string | null;
+  duration: number;
+  games: string;
+  seed1: number | null;
+  seed2: number | null;
 }
 
 interface EditionRow {
-  code: string
-  tmt_id: number
-  series_id: string
-  series_name: string
-  season: number
-  slug: string
-  level: string
-  title: string
-  subtitle: string | null
-  city: string
-  country: string
-  venue: string | null
-  official_venue: string | null
-  start: string
-  end: string
-  prize: number
-  logo_version: string
-  header_version: string
-  cancelled: number
-  archived: number
-  etihad: number
-  match_count: number
+  code: string;
+  tmt_id: number;
+  series_id: string;
+  series_name: string;
+  season: number;
+  slug: string;
+  level: string;
+  title: string;
+  subtitle: string | null;
+  city: string;
+  country: string;
+  venue: string | null;
+  official_venue: string | null;
+  start: string;
+  end: string;
+  prize: number;
+  logo_version: string;
+  header_version: string;
+  cancelled: number;
+  archived: number;
+  etihad: number;
+  match_count: number;
 }
 
 interface PlayerRow {
-  id: string
-  name: string
-  cc: string
-  photo: string | null
-  hero: string | null
-  slug: string | null
-  bio: string | null
+  id: string;
+  name: string;
+  cc: string;
+  photo: string | null;
+  hero: string | null;
+  slug: string | null;
+  bio: string | null;
 }
 
 interface CurrentRank {
-  ev: string
-  r: number | null
-  pr: number | null
-  w: string
-  wid?: string
-  hi: number | null
-  hw: string
-  hwid?: string
+  ev: string;
+  r: number | null;
+  pr: number | null;
+  w: string;
+  wid?: string;
+  hi: number | null;
+  hw: string;
+  hwid?: string;
 }
 
 interface RankingPlayerRow {
-  id: string
-  name: string
-  cc: string
-  photo: string | null
+  id: string;
+  name: string;
+  cc: string;
+  photo: string | null;
 }
 
 interface RankingRowDto {
-  rank: number
-  prev: number | null
-  points: number
-  tournaments: number | null
-  players: (RankingPlayerRow & { known: boolean })[]
+  rank: number;
+  prev: number | null;
+  points: number;
+  tournaments: number | null;
+  players: (RankingPlayerRow & { known: boolean })[];
 }
 
 const RANKING_TABLES = [
   { kind: 'world', id: WORLD, categories: WORLD_CATEGORIES, name: 'BWF World Rankings' },
   { kind: 'race', id: RACE, categories: RACE_CATEGORIES, name: 'HSBC Race to Finals' },
-] as const
+] as const;
 
 interface Overrides {
   players?: Record<
     string,
     {
-      name?: string
-      photo?: string
-      hero?: string
-      heroFocus?: { x: number; y: number }
-      photoCrop?: { x: number; y: number; zoom: number }
-      bio?: Record<string, string | number>
+      name?: string;
+      photo?: string;
+      hero?: string;
+      heroFocus?: { x: number; y: number };
+      photoCrop?: { x: number; y: number; zoom: number };
+      bio?: Record<string, string | number>;
     }
-  >
+  >;
 }
 
 const readOverrides = (file: string): Overrides =>
-  fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, 'utf8')) as Overrides) : {}
+  fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, 'utf8')) as Overrides) : {};
 
-const EVENT_ORDER = ['MS', 'WS', 'MD', 'WD', 'XD']
-const FINAL = 'F'
+const EVENT_ORDER = ['MS', 'WS', 'MD', 'WD', 'XD'];
+const FINAL = 'F';
 
 const titleCase = (s: string) =>
-  s.toLowerCase().replace(/(^|[\s\-(./])(\p{L})/gu, (_, sep: string, c: string) => sep + c.toUpperCase())
+  s.toLowerCase().replace(/(^|[\s\-(./])(\p{L})/gu, (_, sep: string, c: string) => sep + c.toUpperCase());
 
 const venueOf = (e: EditionRow) => {
-  const v = e.official_venue ?? e.venue
-  return v && v === v.toUpperCase() ? titleCase(v) : v
-}
+  const v = e.official_venue ?? e.venue;
+  return v && v === v.toUpperCase() ? titleCase(v) : v;
+};
 
-const isCancelled = (e: EditionRow) => !!e.cancelled || (!!e.archived && e.match_count === 0)
+const isCancelled = (e: EditionRow) => !!e.cancelled || (!!e.archived && e.match_count === 0);
 
 const withHeight = ({ height, ...rest }: Record<string, unknown>) => {
-  const cm = parseHeightCm(height)
-  return cm ? { ...rest, height: cm } : rest
-}
+  const cm = parseHeightCm(height);
+  return cm ? { ...rest, height: cm } : rest;
+};
 
-const flip = (games: [number, number][]) => games.map(([a, b]): [number, number] => [b, a])
+const flip = (games: [number, number][]) => games.map(([a, b]): [number, number] => [b, a]);
 
 export const exportData = async (
   db: Db,
@@ -176,64 +176,64 @@ export const exportData = async (
   overridesFile: string,
   reportFile: string,
 ) => {
-  const out = path.join(publicDir, 'data')
+  const out = path.join(publicDir, 'data');
   const write = (rel: string, data: unknown) => {
-    const file = path.join(out, rel)
-    fs.mkdirSync(path.dirname(file), { recursive: true })
-    fs.writeFileSync(file, JSON.stringify(data))
-  }
-  fs.rmSync(out, { recursive: true, force: true })
+    const file = path.join(out, rel);
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, JSON.stringify(data));
+  };
+  fs.rmSync(out, { recursive: true, force: true });
 
   const editions = all<EditionRow>(
     db,
     `SELECT e.*, s.name AS series_name, (SELECT COUNT(*) FROM matches m WHERE m.edition = e.code) AS match_count
      FROM editions e JOIN series s ON s.id = e.series_id ORDER BY e.start, e.code`,
-  )
-  const editionOf = new Map(editions.map((e) => [e.code, e]))
+  );
+  const editionOf = new Map(editions.map((e) => [e.code, e]));
 
-  const overrides = readOverrides(overridesFile).players ?? {}
-  const nameOverride = (id: string) => overrides[id]?.name?.trim() || undefined
-  const missingAssets: string[] = []
+  const overrides = readOverrides(overridesFile).players ?? {};
+  const nameOverride = (id: string) => overrides[id]?.name?.trim() || undefined;
+  const missingAssets: string[] = [];
   const overrideAssets = new Map(
     Object.entries(overrides).flatMap(([id, o]) =>
       ImageKind.options.flatMap((kind) => {
-        if (!o[kind]) return []
-        const asset = imageAssetPath(id, kind)
-        if (fs.existsSync(path.join(publicDir, asset))) return [[`${id}:${kind}`, asset] as const]
-        missingAssets.push(asset)
-        return []
+        if (!o[kind]) return [];
+        const asset = imageAssetPath(id, kind);
+        if (fs.existsSync(path.join(publicDir, asset))) return [[`${id}:${kind}`, asset] as const];
+        missingAssets.push(asset);
+        return [];
       }),
     ),
-  )
-  const overrideImage = (id: string, kind: ImageKind) => overrideAssets.get(`${id}:${kind}`)
+  );
+  const overrideImage = (id: string, kind: ImageKind) => overrideAssets.get(`${id}:${kind}`);
   const players = all<PlayerRow>(db, 'SELECT id, name, cc, photo, hero, slug, bio FROM players').map((p) => ({
     ...p,
     name: nameOverride(p.id) ?? p.name,
     bwfName: p.name,
     photo: overrideImage(p.id, 'photo') ?? p.photo ?? null,
     hero: overrideImage(p.id, 'hero') ?? p.hero ?? null,
-  }))
-  const playerOf = new Map(players.map((p) => [p.id, p]))
+  }));
+  const playerOf = new Map(players.map((p) => [p.id, p]));
   const bioOf = (p: PlayerRow) =>
-    withHeight({ ...(p.bio ? (JSON.parse(p.bio) as Record<string, unknown>) : {}), ...overrides[p.id]?.bio })
+    withHeight({ ...(p.bio ? (JSON.parse(p.bio) as Record<string, unknown>) : {}), ...overrides[p.id]?.bio });
   const nameOf = (id: number | string | null | undefined, fallback: string | null = '') => {
-    const key = id ? String(id) : ''
-    return (key && (nameOverride(key) ?? playerOf.get(key)?.name)) || fallback || ''
-  }
+    const key = id ? String(id) : '';
+    return (key && (nameOverride(key) ?? playerOf.get(key)?.name)) || fallback || '';
+  };
 
-  const teamsOf = new Map<number, [Person[], Person[]]>()
+  const teamsOf = new Map<number, [Person[], Person[]]>();
   for (const r of all<{ match_id: number; team: number; player_id: string; name: string; cc: string }>(
     db,
     'SELECT match_id, team, player_id, name, cc FROM match_players ORDER BY match_id, team, pos',
   )) {
-    let teams = teamsOf.get(r.match_id)
-    if (!teams) teamsOf.set(r.match_id, (teams = [[], []]))
-    teams[r.team]?.push({ id: r.player_id, name: nameOf(r.player_id, r.name), cc: r.cc })
+    let teams = teamsOf.get(r.match_id);
+    if (!teams) teamsOf.set(r.match_id, (teams = [[], []]));
+    teams[r.team]?.push({ id: r.player_id, name: nameOf(r.player_id, r.name), cc: r.cc });
   }
 
-  const rows = all<MatchRow>(db, 'SELECT * FROM matches ORDER BY day, time, court, id')
+  const rows = all<MatchRow>(db, 'SELECT * FROM matches ORDER BY day, time, court, id');
   const toDto = (m: MatchRow): MatchDto => {
-    const [a = [], b = []] = teamsOf.get(m.id) ?? []
+    const [a = [], b = []] = teamsOf.get(m.id) ?? [];
     return {
       court: m.court,
       time: m.time,
@@ -251,20 +251,20 @@ export const exportData = async (
       serve: 0,
       note: m.note,
       ...(m.code ? { code: m.code } : {}),
-    }
-  }
+    };
+  };
 
-  const byEdition = new Map<string, { row: MatchRow; dto: MatchDto }[]>()
-  const byPlayer = new Map<string, { tournament: string; day: string; dto: MatchDto }[]>()
+  const byEdition = new Map<string, { row: MatchRow; dto: MatchDto }[]>();
+  const byPlayer = new Map<string, { tournament: string; day: string; dto: MatchDto }[]>();
   for (const row of rows) {
-    const dto = toDto(row)
-    const list = byEdition.get(row.edition) ?? []
-    list.push({ row, dto })
-    byEdition.set(row.edition, list)
+    const dto = toDto(row);
+    const list = byEdition.get(row.edition) ?? [];
+    list.push({ row, dto });
+    byEdition.set(row.edition, list);
     for (const p of dto.teams.flatMap((t) => t.players)) {
-      const career = byPlayer.get(p.id) ?? []
-      career.push({ tournament: row.edition, day: row.day, dto })
-      byPlayer.set(p.id, career)
+      const career = byPlayer.get(p.id) ?? [];
+      career.push({ tournament: row.edition, day: row.day, dto });
+      byPlayer.set(p.id, career);
     }
   }
 
@@ -273,20 +273,20 @@ export const exportData = async (
       .filter(({ dto }) => dto.round === FINAL && dto.winner > 0)
       .sort((a, b) => EVENT_ORDER.indexOf(a.dto.event) - EVENT_ORDER.indexOf(b.dto.event))
       .map(({ dto }) => {
-        const w = dto.winner - 1
+        const w = dto.winner - 1;
         return {
           event: dto.event,
           winners: dto.teams[w]?.players ?? [],
           losers: dto.teams[1 - w]?.players ?? [],
           games: w ? flip(dto.games) : dto.games,
           note: dto.note,
-        }
-      })
+        };
+      });
 
-  const seasons = new Map<number, EditionRow[]>()
-  for (const e of editions) seasons.set(e.season, [...(seasons.get(e.season) ?? []), e])
+  const seasons = new Map<number, EditionRow[]>();
+  for (const e of editions) seasons.set(e.season, [...(seasons.get(e.season) ?? []), e]);
 
-  const placer = createMapPlacer()
+  const placer = createMapPlacer();
   for (const [year, list] of seasons)
     write(`calendar-${year}.json`, {
       year,
@@ -314,8 +314,8 @@ export const exportData = async (
         etihad: !!e.etihad,
         winners: finalsOf(e.code).map((f) => ({ event: f.event, players: f.winners })),
       })),
-    })
-  placer.warn()
+    });
+  placer.warn();
 
   write('seasons.json', {
     current: currentYear,
@@ -326,22 +326,22 @@ export const exportData = async (
         events: list.filter((e) => !isCancelled(e)).length,
         completed: list.filter((e) => e.archived && !isCancelled(e)).length,
       })),
-  })
+  });
 
   for (const [code, list] of byEdition) {
-    const e = editionOf.get(code)
-    const days: Record<string, MatchDto[]> = {}
-    for (const { row, dto } of list) (days[row.day] ??= []).push(dto)
+    const e = editionOf.get(code);
+    const days: Record<string, MatchDto[]> = {};
+    for (const { row, dto } of list) (days[row.day] ??= []).push(dto);
     write(`tournaments/${code}.json`, {
       code,
       asOf: e?.archived ? 'final results' : dayjs.utc().format('YYYY-MM-DD HH:mm'),
       days,
       plannedDays: {},
-    })
+    });
   }
 
-  const seriesEditions = new Map<string, EditionRow[]>()
-  for (const e of editions) seriesEditions.set(e.series_id, [...(seriesEditions.get(e.series_id) ?? []), e])
+  const seriesEditions = new Map<string, EditionRow[]>();
+  for (const e of editions) seriesEditions.set(e.series_id, [...(seriesEditions.get(e.series_id) ?? []), e]);
   for (const [id, list] of seriesEditions)
     write(`series/${id}.json`, {
       id,
@@ -362,41 +362,41 @@ export const exportData = async (
           cancelled: isCancelled(e),
           finals: finalsOf(e.code),
         })),
-    })
+    });
 
   const pubs = new Map(
     all<{ ranking: number; id: number; date: string; week: string; name: string | null }>(
       db,
       'SELECT * FROM publications',
     ).map((p) => [p.ranking, p]),
-  )
-  const worldPub = pubs.get(WORLD)
+  );
+  const worldPub = pubs.get(WORLD);
 
-  const ranksOf = new Map<string, CurrentRank[]>()
+  const ranksOf = new Map<string, CurrentRank[]>();
   if (worldPub) {
     const ranked = all<{ id: string }>(
       db,
       `SELECT DISTINCT p.id FROM players p JOIN rankings r ON r.ranking = ? AND (r.player1 = p.id OR r.player2 = p.id)`,
       WORLD,
-    )
+    );
     for (const { id } of ranked) {
-      const res = await client.get<ApiHistory>(historyPath(id, worldPub.id), FOREVER)
-      const history = res?.data.data ?? []
-      if (!history.length) continue
-      const partnerOf = (h: ApiHistoryRow) => (String(h.player1_id) === id ? h.player2_id : h.player1_id)
-      const partnerId = (h: ApiHistoryRow) => String(partnerOf(h) || '')
+      const res = await client.get<ApiHistory>(historyPath(id, worldPub.id), FOREVER);
+      const history = res?.data.data ?? [];
+      if (!history.length) continue;
+      const partnerOf = (h: ApiHistoryRow) => (String(h.player1_id) === id ? h.player2_id : h.player1_id);
+      const partnerId = (h: ApiHistoryRow) => String(partnerOf(h) || '');
       const partnerName = (h: ApiHistoryRow) =>
-        nameOf(partnerOf(h), String(h.player1_id) === id ? h.player_2_name : h.player_1_name)
-      const ranks: CurrentRank[] = []
+        nameOf(partnerOf(h), String(h.player1_id) === id ? h.player_2_name : h.player_1_name);
+      const ranks: CurrentRank[] = [];
       for (const [cat, ev] of Object.entries(WORLD_CATEGORIES)) {
-        const rowsOf = history.filter((h) => h.ranking_category_id === Number(cat))
-        if (!rowsOf.length) continue
+        const rowsOf = history.filter((h) => h.ranking_category_id === Number(cat));
+        if (!rowsOf.length) continue;
         const best = rowsOf.reduce<ApiHistoryRow | null>(
           (b, h) => (h.highest_rank && (!b?.highest_rank || h.highest_rank < b.highest_rank) ? h : b),
           null,
-        )
-        const now = rowsOf.filter((h) => h.ranking_publication_id === worldPub.id).sort((a, b) => a.rank - b.rank)
-        const top = now[0]
+        );
+        const now = rowsOf.filter((h) => h.ranking_publication_id === worldPub.id).sort((a, b) => a.rank - b.rank);
+        const top = now[0];
         ranks.push({
           ev,
           r: top?.rank ?? null,
@@ -406,9 +406,9 @@ export const exportData = async (
           hi: best?.highest_rank ?? null,
           hw: best ? partnerName(best) : '',
           ...(best && partnerId(best) && { hwid: partnerId(best) }),
-        })
+        });
       }
-      ranksOf.set(id, ranks)
+      ranksOf.set(id, ranks);
       write(`rankings/${id}.json`, {
         id,
         name: nameOf(id),
@@ -435,97 +435,97 @@ export const exportData = async (
             counted: b.ranking_calc === 1,
           })),
         })),
-      })
+      });
     }
   }
 
-  const race: Record<string, { ev: string; r: number; pr: number | null; n: string; w: string; pts: number }[]> = {}
+  const race: Record<string, { ev: string; r: number; pr: number | null; n: string; w: string; pts: number }[]> = {};
   for (const r of all<{
-    category: number
-    player1: string
-    player2: string
-    rank: number
-    rank_previous: number | null
-    points: number
+    category: number;
+    player1: string;
+    player2: string;
+    rank: number;
+    rank_previous: number | null;
+    points: number;
   }>(
     db,
     'SELECT category, player1, player2, rank, rank_previous, points FROM rankings WHERE ranking = ? ORDER BY rank',
     RACE,
   )) {
-    const ev = RACE_CATEGORIES[r.category]
-    if (!ev) continue
+    const ev = RACE_CATEGORIES[r.category];
+    if (!ev) continue;
     for (const [self, partner] of [
       [r.player1, r.player2],
       [r.player2, r.player1],
     ] as const) {
-      if (!self || !playerOf.has(self)) continue
-      ;(race[self] ??= []).push({
+      if (!self || !playerOf.has(self)) continue;
+      (race[self] ??= []).push({
         ev,
         r: r.rank,
         pr: r.rank_previous,
         n: nameOf(self),
         w: nameOf(partner),
         pts: r.points,
-      })
+      });
     }
   }
-  write('race-rankings.json', { week: pubs.get(RACE)?.date ?? '', players: race })
+  write('race-rankings.json', { week: pubs.get(RACE)?.date ?? '', players: race });
 
   const rankingPlayerOf = new Map(
     all<RankingPlayerRow>(db, 'SELECT id, name, cc, photo FROM ranking_players').map((p) => [p.id, p]),
-  )
+  );
   const rankedPerson = (id: string) => {
-    const p = playerOf.get(id)
-    const r = rankingPlayerOf.get(id)
+    const p = playerOf.get(id);
+    const r = rankingPlayerOf.get(id);
     return {
       id,
       name: nameOf(id, r?.name),
       cc: p?.cc || r?.cc || '',
       photo: overrideImage(id, 'photo') ?? p?.photo ?? r?.photo ?? null,
       known: !!p,
-    }
-  }
-  const finalsCity = editions.find((e) => e.season === currentYear && e.level === 'Finals' && e.city !== 'TBC')?.city
-  const raceName = finalsCity ? `HSBC Race to ${finalsCity}` : null
+    };
+  };
+  const finalsCity = editions.find((e) => e.season === currentYear && e.level === 'Finals' && e.city !== 'TBC')?.city;
+  const raceName = finalsCity ? `HSBC Race to ${finalsCity}` : null;
   const tableName = (t: (typeof RANKING_TABLES)[number], published: string | null) =>
-    (t.id === RACE ? raceName : published) ?? t.name
+    (t.id === RACE ? raceName : published) ?? t.name;
 
   for (const t of RANKING_TABLES) {
-    const pub = pubs.get(t.id)
-    if (!pub) continue
+    const pub = pubs.get(t.id);
+    if (!pub) continue;
     const categories = Object.fromEntries(EVENTS.map((ev) => [ev, [] as RankingRowDto[]])) as Record<
       EventCode,
       RankingRowDto[]
-    >
+    >;
     for (const r of all<{
-      category: number
-      player1: string
-      player2: string
-      rank: number
-      rank_previous: number | null
-      points: number
-      tournaments: number | null
+      category: number;
+      player1: string;
+      player2: string;
+      rank: number;
+      rank_previous: number | null;
+      points: number;
+      tournaments: number | null;
     }>(
       db,
       'SELECT category, player1, player2, rank, rank_previous, points, tournaments FROM rankings WHERE ranking = ? ORDER BY rank, points DESC, player1',
       t.id,
     )) {
-      const ev = t.categories[r.category]
-      if (!ev) continue
+      const ev = t.categories[r.category];
+      if (!ev) continue;
       categories[ev].push({
         rank: r.rank,
         prev: r.rank_previous || null,
         points: r.points,
         tournaments: r.tournaments,
         players: [r.player1, r.player2].filter(Boolean).map(rankedPerson),
-      })
+      });
     }
     write(`ranking-tables/${t.kind}.json`, {
       kind: t.kind,
       name: tableName(t, pub.name),
       publication: { id: pub.id, date: pub.date, week: pub.week },
       categories,
-    })
+    });
   }
 
   write('players.json', {
@@ -543,12 +543,12 @@ export const exportData = async (
         },
       ]),
     ),
-  })
+  });
 
   for (const p of players) {
     const career = (byPlayer.get(p.id) ?? []).toSorted(
       (a, b) => b.day.localeCompare(a.day) || b.dto.time.localeCompare(a.dto.time),
-    )
+    );
     write(`players/${p.id}.json`, {
       id: p.id,
       name: p.name,
@@ -559,7 +559,7 @@ export const exportData = async (
       slug: p.slug,
       bio: bioOf(p),
       matches: career.map((c) => ({ tournament: c.tournament, day: c.day, ...c.dto })),
-    })
+    });
   }
 
   const bestRank = new Map(
@@ -572,30 +572,30 @@ export const exportData = async (
       WORLD,
       WORLD,
     ).map((r) => [r.id, r.best]),
-  )
+  );
   const lastPlayed = new Map(
     all<{ id: string; last_played: string }>(db, 'SELECT id, last_played FROM players').map((r) => [
       r.id,
       r.last_played,
     ]),
-  )
+  );
   const missing = players
     .filter((p) => !p.photo || !p.hero)
     .map((p) => ({ ...p, best: bestRank.get(p.id) ?? null, last: lastPlayed.get(p.id) ?? '' }))
-    .sort((a, b) => (a.best ?? Infinity) - (b.best ?? Infinity) || b.last.localeCompare(a.last))
-  const csv = (v: string) => (/[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v)
-  fs.mkdirSync(path.dirname(reportFile), { recursive: true })
+    .sort((a, b) => (a.best ?? Infinity) - (b.best ?? Infinity) || b.last.localeCompare(a.last));
+  const csv = (v: string) => (/[",]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v);
+  fs.mkdirSync(path.dirname(reportFile), { recursive: true });
   fs.writeFileSync(
     reportFile,
     [
       'name,country,has_avatar,has_hero,id',
       ...missing.map((p) => [p.name, p.cc, String(!!p.photo), String(!!p.hero), p.id].map(csv).join(',')),
     ].join('\n'),
-  )
+  );
 
   if (missingAssets.length)
-    console.warn(`  ! ${missingAssets.length} override images not built, BWF image used: ${missingAssets.join(', ')}`)
+    console.warn(`  ! ${missingAssets.length} override images not built, BWF image used: ${missingAssets.join(', ')}`);
   console.log(
     `export: ${seasons.size} seasons · ${editions.length} editions · ${byEdition.size} tournament files · ${players.length} players · ${ranksOf.size} ranked · ${seriesEditions.size} series · ${missing.filter((p) => !p.photo).length} without photo · ${missing.filter((p) => !p.hero).length} without hero`,
-  )
-}
+  );
+};

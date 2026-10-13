@@ -1,18 +1,18 @@
-import { Button, Skeleton } from '@mantine/core'
-import { memo, useCallback } from 'react'
+import { Button, Skeleton } from '@mantine/core';
+import { memo, useCallback } from 'react';
 
-import { Eyebrow } from '~/components/ui'
+import { Eyebrow } from '~/components/ui';
 
-import { SKELETON_COUNT } from '../constants'
-import type { NavItem } from '../types'
+import { SKELETON_COUNT } from '../constants';
+import type { NavItem } from '../types';
 
-import classes from './MonthRail.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './MonthRail.module.css';
+import utils from '~/styles/utils.module.css';
 
-const SLOTS = Array.from({ length: SKELETON_COUNT.rail }, (_, i) => i)
+const SLOTS = Array.from({ length: SKELETON_COUNT.rail }, (_, i) => i);
 
 const RailItem = memo<{ item: NavItem; active: boolean; onJump: (id: string) => void }>(({ item, active, onJump }) => {
-  const onClick = useCallback(() => onJump(item.id), [onJump, item.id])
+  const onClick = useCallback(() => onJump(item.id), [onJump, item.id]);
   return (
     <li>
       <button
@@ -26,14 +26,14 @@ const RailItem = memo<{ item: NavItem; active: boolean; onJump: (id: string) => 
         <span className={utils.num}>{item.count}</span>
       </button>
     </li>
-  )
-})
+  );
+});
 
 export const MonthRail = memo<{
-  items: NavItem[] | undefined
-  active: string | null
-  onJump: (id: string) => void
-  onMore?: () => void
+  items: NavItem[] | undefined;
+  active: string | null;
+  onJump: (id: string) => void;
+  onMore?: () => void;
 }>(({ items, active, onJump, onMore }) => {
   return (
     <nav className={classes.rail} aria-label="Months">
@@ -53,5 +53,5 @@ export const MonthRail = memo<{
         </Button>
       )}
     </nav>
-  )
-})
+  );
+});

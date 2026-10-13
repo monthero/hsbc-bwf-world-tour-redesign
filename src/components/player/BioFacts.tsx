@@ -1,10 +1,10 @@
-import { memo, type ReactNode } from 'react'
+import { memo, type ReactNode } from 'react';
 
-import type { StatItem } from '~/types'
+import type { StatItem } from '~/types';
 
-import classes from './BioFacts.module.css'
+import classes from './BioFacts.module.css';
 
-const BORN_PREFIX = /^Born /
+const BORN_PREFIX = /^Born /;
 
 export const BioStat = memo<{ item: StatItem; size?: 'sm' | 'md' }>(({ item: s, size = 'md' }) => {
   return (
@@ -17,19 +17,19 @@ export const BioStat = memo<{ item: StatItem; size?: 'sm' | 'md' }>(({ item: s, 
       </span>
       {s.sub && <span className={classes.sub}>{size === 'sm' ? s.sub.replace(BORN_PREFIX, '') : s.sub}</span>}
     </div>
-  )
-})
+  );
+});
 
 export const FactTile = memo<{
-  label: string
-  value: ReactNode
-  size?: 'sm' | 'md'
-  tone?: 'plain' | 'tile'
+  label: string;
+  value: ReactNode;
+  size?: 'sm' | 'md';
+  tone?: 'plain' | 'tile';
 }>(({ label, value, size = 'md', tone = 'tile' }) => {
   return (
     <div className={classes.tile} data-size={size} data-tone={tone}>
       <span className={classes.label}>{label}</span>
       <span className={classes.value}>{value}</span>
     </div>
-  )
-})
+  );
+});

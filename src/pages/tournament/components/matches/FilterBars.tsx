@@ -1,19 +1,19 @@
-import { clsx } from 'clsx'
-import { memo, useCallback, useState } from 'react'
+import { clsx } from 'clsx';
+import { memo, useCallback, useState } from 'react';
 
-import { BottomSheet, FloatingPill, IconFilters } from '~/components/ui'
-import type { TournamentDay } from '~/types'
+import { BottomSheet, FloatingPill, IconFilters } from '~/components/ui';
+import type { TournamentDay } from '~/types';
 
-import { ClearButton, CourtChips, DaySegment, Divider, EventChips, FilterSearch, FollowToggle } from './FilterControls'
-import type { MatchFilters } from './useMatchFilters'
-import type { MatchesView } from './utils'
+import { ClearButton, CourtChips, DaySegment, Divider, EventChips, FilterSearch, FollowToggle } from './FilterControls';
+import type { MatchFilters } from './useMatchFilters';
+import type { MatchesView } from './utils';
 
-import classes from './FilterBars.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './FilterBars.module.css';
+import utils from '~/styles/utils.module.css';
 
 interface BarProps {
-  filters: MatchFilters
-  view: MatchesView
+  filters: MatchFilters;
+  view: MatchesView;
 }
 
 export const InlineFilters = memo<BarProps & { ref: (el: HTMLDivElement | null) => void }>(
@@ -38,9 +38,9 @@ export const InlineFilters = memo<BarProps & { ref: (el: HTMLDivElement | null) 
           <FollowToggle variant="inline" active={f.following} onToggle={f.toggleFollowing} />
         </div>
       </div>
-    )
+    );
   },
-)
+);
 
 export const CondensedFilters = memo<BarProps & { days: TournamentDay[]; visible: boolean }>(
   ({ filters: f, view, days, visible }) => {
@@ -63,16 +63,16 @@ export const CondensedFilters = memo<BarProps & { days: TournamentDay[]; visible
           </div>
         </div>
       </div>
-    )
+    );
   },
-)
+);
 
 export const MobileFilters = memo<BarProps & { days: TournamentDay[]; visible: boolean }>(
   ({ filters: f, view, days, visible }) => {
-    const [open, setOpen] = useState(false)
-    const show = useCallback(() => setOpen(true), [])
-    const close = useCallback(() => setOpen(false), [])
-    const d = days[f.day]
+    const [open, setOpen] = useState(false);
+    const show = useCallback(() => setOpen(true), []);
+    const close = useCallback(() => setOpen(false), []);
+    const d = days[f.day];
     return (
       <>
         <FloatingPill visible={visible && !open} onClick={show} mobileOnly>
@@ -110,6 +110,6 @@ export const MobileFilters = memo<BarProps & { days: TournamentDay[]; visible: b
           </button>
         </BottomSheet>
       </>
-    )
+    );
   },
-)
+);

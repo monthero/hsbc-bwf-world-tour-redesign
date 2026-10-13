@@ -1,5 +1,5 @@
-import { clsx } from 'clsx'
-import { memo, useCallback, type FC } from 'react'
+import { clsx } from 'clsx';
+import { memo, useCallback, type FC } from 'react';
 
 import {
   bwfValue,
@@ -10,47 +10,47 @@ import {
   type FieldDef,
   type FieldDraft,
   type FieldInput,
-} from '../fields'
-import { isImageField, type AdminPlayer, type ImageResult, type Provenance } from '../schema'
-import { ImageThumb, ProvenanceInputs } from './FieldInputs'
-import { FIELD_INPUTS } from './inputMap'
+} from '../fields';
+import { isImageField, type AdminPlayer, type ImageResult, type Provenance } from '../schema';
+import { ImageThumb, ProvenanceInputs } from './FieldInputs';
+import { FIELD_INPUTS } from './inputMap';
 
-import classes from './FieldRow.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './FieldRow.module.css';
+import utils from '~/styles/utils.module.css';
 
-const EMPTY = '—'
+const EMPTY = '—';
 
-const BLOCK_INPUTS: ReadonlySet<FieldInput> = new Set<FieldInput>(['image', 'long'])
+const BLOCK_INPUTS: ReadonlySet<FieldInput> = new Set<FieldInput>(['image', 'long']);
 
 const BwfValue: FC<{ field: FieldDef; playerId: string; value: string }> = ({ field, playerId, value }) => {
-  if (!value) return <span className={classes.empty}>{EMPTY}</span>
-  if (isImageField(field.key)) return <ImageThumb kind={field.key} playerId={playerId} value={value} />
-  return <span className={classes.bwfValue}>{formatField(field, value)}</span>
-}
+  if (!value) return <span className={classes.empty}>{EMPTY}</span>;
+  if (isImageField(field.key)) return <ImageThumb kind={field.key} playerId={playerId} value={value} />;
+  return <span className={classes.bwfValue}>{formatField(field, value)}</span>;
+};
 
 export const FieldRow = memo<{
-  field: FieldDef
-  player: AdminPlayer
-  draft: FieldDraft | undefined
-  onChange: FieldChange
+  field: FieldDef;
+  player: AdminPlayer;
+  draft: FieldDraft | undefined;
+  onChange: FieldChange;
 }>(({ field, player, draft, onChange }) => {
-  const { key } = field
-  const bwf = bwfValue(player, key)
-  const bwfShown = formatField(field, bwf)
-  const image = isImageField(key)
-  const Input = FIELD_INPUTS[field.input]
-  const inline = !BLOCK_INPUTS.has(field.input)
+  const { key } = field;
+  const bwf = bwfValue(player, key);
+  const bwfShown = formatField(field, bwf);
+  const image = isImageField(key);
+  const Input = FIELD_INPUTS[field.input];
+  const inline = !BLOCK_INPUTS.has(field.input);
 
-  const onValue = useCallback((value: string) => onChange(key, withValue(draft, value)), [key, draft, onChange])
+  const onValue = useCallback((value: string) => onChange(key, withValue(draft, value)), [key, draft, onChange]);
   const onImage = useCallback(
     (img: ImageResult) => onChange(key, freshDraft(img.source, img.source), img),
     [key, onChange],
-  )
-  const onRevert = useCallback(() => onChange(key, undefined), [key, onChange])
+  );
+  const onRevert = useCallback(() => onChange(key, undefined), [key, onChange]);
   const onProvenance = useCallback(
     (p: Provenance) => draft && onChange(key, { ...draft, ...p }),
     [key, draft, onChange],
-  )
+  );
 
   return (
     <div
@@ -88,5 +88,5 @@ export const FieldRow = memo<{
       />
       {draft && <ProvenanceInputs value={draft} onChange={onProvenance} />}
     </div>
-  )
-})
+  );
+});

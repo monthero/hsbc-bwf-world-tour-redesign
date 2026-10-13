@@ -1,39 +1,39 @@
-import { getRouteApi } from '@tanstack/react-router'
-import { clsx } from 'clsx'
-import { memo, useCallback, useMemo, type FC } from 'react'
+import { getRouteApi } from '@tanstack/react-router';
+import { clsx } from 'clsx';
+import { memo, useCallback, useMemo, type FC } from 'react';
 
-import { EmptyState, FilterChip, SearchField, Segmented, type SegmentedOption } from '~/components/ui'
-import { EVENT_NAMES, EVENT_OPTIONS } from '~/constants'
-import { useIsMobile } from '~/hooks/useIsMobile'
-import { usePlayerDirectory } from '~/hooks/usePlayers'
-import type { EventCode } from '~/types'
+import { EmptyState, FilterChip, SearchField, Segmented, type SegmentedOption } from '~/components/ui';
+import { EVENT_NAMES, EVENT_OPTIONS } from '~/constants';
+import { useIsMobile } from '~/hooks/useIsMobile';
+import { usePlayerDirectory } from '~/hooks/usePlayers';
+import type { EventCode } from '~/types';
 
-import { useOpenMatch } from '../hooks'
-import type { PlayersView, TabProps } from '../types'
-import { ContinentSection } from './players/ContinentSection'
-import { DisciplineSection } from './players/DisciplineSection'
-import { disciplineId, groupEntries, latestEntries, rankEntries, sectionEntries, type Entry } from './players/entries'
+import { useOpenMatch } from '../hooks';
+import type { PlayersView, TabProps } from '../types';
+import { ContinentSection } from './players/ContinentSection';
+import { DisciplineSection } from './players/DisciplineSection';
+import { disciplineId, groupEntries, latestEntries, rankEntries, sectionEntries, type Entry } from './players/entries';
 
-import page from '../TournamentPage.module.css'
-import classes from './players/Players.module.css'
-import utils from '~/styles/utils.module.css'
+import page from '../TournamentPage.module.css';
+import classes from './players/Players.module.css';
+import utils from '~/styles/utils.module.css';
 
-const route = getRouteApi('/world-tour/$year/$slug')
+const route = getRouteApi('/world-tour/$year/$slug');
 
 const VIEW_OPTIONS: readonly SegmentedOption<PlayersView>[] = [
   { value: 'country', label: 'By country' },
   { value: 'discipline', label: 'By discipline' },
-]
+];
 
 const emptyNote = (q: string, filtered: boolean) =>
-  q.trim() ? `No players match “${q}”${filtered ? ' with these filters.' : '.'}` : 'No entries match these filters.'
+  q.trim() ? `No players match “${q}”${filtered ? ' with these filters.' : '.'}` : 'No entries match these filters.';
 
 const ByCountry: FC<{ entries: Entry[]; q: string; top10: boolean }> = ({ entries, q, top10 }) => {
-  const ev = route.useSearch({ select: (s) => s.pev })
-  const onOpen = useOpenMatch()
-  const mobile = useIsMobile()
-  const continents = useMemo(() => groupEntries(entries, { ev, q, top10 }), [entries, ev, q, top10])
-  const searching = q.trim() !== ''
+  const ev = route.useSearch({ select: (s) => s.pev });
+  const onOpen = useOpenMatch();
+  const mobile = useIsMobile();
+  const continents = useMemo(() => groupEntries(entries, { ev, q, top10 }), [entries, ev, q, top10]);
+  const searching = q.trim() !== '';
   return (
     <>
       {continents.map((c) => (
@@ -41,11 +41,11 @@ const ByCountry: FC<{ entries: Entry[]; q: string; top10: boolean }> = ({ entrie
       ))}
       {continents.length === 0 && <EmptyState>{emptyNote(q, top10 || !!ev)}</EmptyState>}
     </>
-  )
-}
+  );
+};
 
 const jumpTo = (event: EventCode) =>
-  document.getElementById(disciplineId(event))?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  document.getElementById(disciplineId(event))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
 const JumpChip = memo<{ event: EventCode; count: number }>(({ event, count }) => {
   return (
@@ -53,12 +53,12 @@ const JumpChip = memo<{ event: EventCode; count: number }>(({ event, count }) =>
       {event}
       <span className={classes.jumpCount}>{count}</span>
     </FilterChip>
-  )
-})
+  );
+});
 
 const ByDiscipline: FC<{ entries: Entry[]; q: string; top10: boolean }> = ({ entries, q, top10 }) => {
-  const sections = useMemo(() => sectionEntries(entries, { q, top10 }), [entries, q, top10])
-  if (!sections.length) return <EmptyState>{emptyNote(q, top10)}</EmptyState>
+  const sections = useMemo(() => sectionEntries(entries, { q, top10 }), [entries, q, top10]);
+  if (!sections.length) return <EmptyState>{emptyNote(q, top10)}</EmptyState>;
   return (
     <>
       {sections.length > 1 && (
@@ -74,19 +74,19 @@ const ByDiscipline: FC<{ entries: Entry[]; q: string; top10: boolean }> = ({ ent
         ))}
       </div>
     </>
-  )
-}
+  );
+};
 
 export const PlayersTab: FC<TabProps> = ({ schedule, draw, entries }) => {
-  const view = route.useSearch({ select: (s) => s.pby ?? 'country' })
-  const ev = route.useSearch({ select: (s) => s.pev })
-  const top10 = route.useSearch({ select: (s) => s.top10 ?? false })
-  const q = route.useSearch({ select: (s) => s.q ?? '' })
-  const navigate = route.useNavigate()
-  const { data: directory } = usePlayerDirectory()
+  const view = route.useSearch({ select: (s) => s.pby ?? 'country' });
+  const ev = route.useSearch({ select: (s) => s.pev });
+  const top10 = route.useSearch({ select: (s) => s.top10 ?? false });
+  const q = route.useSearch({ select: (s) => s.q ?? '' });
+  const navigate = route.useNavigate();
+  const { data: directory } = usePlayerDirectory();
 
-  const latest = useMemo(() => latestEntries(schedule.matches, draw, entries), [schedule.matches, draw, entries])
-  const ranked = useMemo(() => rankEntries(latest, directory), [latest, directory])
+  const latest = useMemo(() => latestEntries(schedule.matches, draw, entries), [schedule.matches, draw, entries]);
+  const ranked = useMemo(() => rankEntries(latest, directory), [latest, directory]);
 
   const onView = useCallback(
     (v: PlayersView | null) =>
@@ -97,22 +97,22 @@ export const PlayersTab: FC<TabProps> = ({ schedule, draw, entries }) => {
         resetScroll: false,
       }),
     [navigate],
-  )
+  );
   const onEvent = useCallback(
     (v: EventCode | null) =>
       navigate({ search: (s) => ({ ...s, pev: v ?? undefined }), replace: true, resetScroll: false }),
     [navigate],
-  )
+  );
   const onTop10 = useCallback(
     () => navigate({ search: (s) => ({ ...s, top10: s.top10 ? undefined : true }), replace: true, resetScroll: false }),
     [navigate],
-  )
+  );
   const onQuery = useCallback(
     (v: string) => navigate({ search: (s) => ({ ...s, q: v || undefined }), replace: true, resetScroll: false }),
     [navigate],
-  )
+  );
 
-  const byCountry = view === 'country'
+  const byCountry = view === 'country';
 
   return (
     <section className={clsx(utils.container, page.tabSection, classes.section)}>
@@ -139,5 +139,5 @@ export const PlayersTab: FC<TabProps> = ({ schedule, draw, entries }) => {
         <ByDiscipline entries={ranked} q={q} top10={top10} />
       )}
     </section>
-  )
-}
+  );
+};

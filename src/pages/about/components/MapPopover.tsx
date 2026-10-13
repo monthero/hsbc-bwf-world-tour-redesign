@@ -1,18 +1,18 @@
-import { memo, useMemo } from 'react'
+import { memo, useMemo } from 'react';
 
-import type { PinSpot, SeasonFocus } from '../types'
-import { anchorVars, flipPopover } from '../utils'
-import { MapEventRow } from './MapEventRow'
+import type { PinSpot, SeasonFocus } from '../types';
+import { anchorVars, flipPopover } from '../utils';
+import { MapEventRow } from './MapEventRow';
 
-import classes from './MapPopover.module.css'
+import classes from './MapPopover.module.css';
 
 export const MapPopover = memo<{
-  spot: PinSpot
-  focus: SeasonFocus
-  onEnter: () => void
-  onLeave: () => void
+  spot: PinSpot;
+  focus: SeasonFocus;
+  onEnter: () => void;
+  onLeave: () => void;
 }>(({ spot, focus, onEnter, onLeave }) => {
-  const style = useMemo(() => anchorVars(spot), [spot])
+  const style = useMemo(() => anchorVars(spot), [spot]);
   return (
     <div
       className={classes.popover}
@@ -23,5 +23,5 @@ export const MapPopover = memo<{
     >
       <MapEventRow tournament={spot.t} focus={focus} />
     </div>
-  )
-})
+  );
+});

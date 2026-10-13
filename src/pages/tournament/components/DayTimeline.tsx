@@ -1,13 +1,13 @@
-import { memo, useMemo, type FC } from 'react'
+import { memo, useMemo, type FC } from 'react';
 
-import { IconCheck, IconTimer, LiveDot } from '~/components/ui'
-import type { Tournament, TournamentSchedule } from '~/types'
-import { countdownLabel } from '~/utils/tournaments'
+import { IconCheck, IconTimer, LiveDot } from '~/components/ui';
+import type { Tournament, TournamentSchedule } from '~/types';
+import { countdownLabel } from '~/utils/tournaments';
 
-import { buildTimeline, type TimelineDay } from '../utils'
-import { RestBreak } from './RestBreak'
+import { buildTimeline, type TimelineDay } from '../utils';
+import { RestBreak } from './RestBreak';
 
-import classes from './DayTimeline.module.css'
+import classes from './DayTimeline.module.css';
 
 const StatusLabel: FC<{ tournament: Tournament; today: TimelineDay | undefined }> = ({ tournament: t, today }) => {
   if (t.status === 'done')
@@ -16,14 +16,14 @@ const StatusLabel: FC<{ tournament: Tournament; today: TimelineDay | undefined }
         <IconCheck size={14} />
         Completed
       </>
-    )
+    );
   if (t.status === 'up')
     return (
       <>
         <IconTimer size={14} />
         {countdownLabel(t, 'in')}
       </>
-    )
+    );
   return (
     <>
       <LiveDot pulse size={7} />
@@ -32,8 +32,8 @@ const StatusLabel: FC<{ tournament: Tournament; today: TimelineDay | undefined }
         {today?.long && <span className={classes.phone}> · {today.long}</span>}
       </span>
     </>
-  )
-}
+  );
+};
 
 const DayItem = memo<{ d: TimelineDay }>(({ d }) =>
   d.rest ? (
@@ -54,12 +54,12 @@ const DayItem = memo<{ d: TimelineDay }>(({ d }) =>
       </b>
     </li>
   ),
-)
+);
 
 export const DayTimeline = memo<{ tournament: Tournament; schedule: TournamentSchedule }>(
   ({ tournament: t, schedule }) => {
-    const days = useMemo(() => buildTimeline(t.status, schedule), [t.status, schedule])
-    const today = days.find((d) => d.state === 'now')
+    const days = useMemo(() => buildTimeline(t.status, schedule), [t.status, schedule]);
+    const today = days.find((d) => d.state === 'now');
     return (
       <div className={classes.timeline}>
         <div className={classes.head} data-status={t.status}>
@@ -71,6 +71,6 @@ export const DayTimeline = memo<{ tournament: Tournament; schedule: TournamentSc
           ))}
         </ol>
       </div>
-    )
+    );
   },
-)
+);

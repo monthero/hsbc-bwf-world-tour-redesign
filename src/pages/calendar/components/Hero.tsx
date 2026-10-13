@@ -1,23 +1,23 @@
-import { Menu, Tooltip } from '@mantine/core'
-import { clsx } from 'clsx'
-import { memo, useCallback, type FC } from 'react'
+import { Menu, Tooltip } from '@mantine/core';
+import { clsx } from 'clsx';
+import { memo, useCallback, type FC } from 'react';
 
-import { IconCheck, IconExpand, LiveDot } from '~/components/ui'
-import { useSeasons } from '~/hooks/useTournaments'
-import type { SeasonSummary, Tournament } from '~/types'
+import { IconCheck, IconExpand, LiveDot } from '~/components/ui';
+import { useSeasons } from '~/hooks/useTournaments';
+import type { SeasonSummary, Tournament } from '~/types';
 
-import { PROVISIONAL_TIP } from '../constants'
-import { heroSubtitle } from '../utils'
-import { SeasonBar } from './SeasonBar'
-import { SeasonHeading } from './SeasonHeading'
+import { PROVISIONAL_TIP } from '../constants';
+import { heroSubtitle } from '../utils';
+import { SeasonBar } from './SeasonBar';
+import { SeasonHeading } from './SeasonHeading';
 
-import classes from './Hero.module.css'
-import utils from '~/styles/utils.module.css'
+import classes from './Hero.module.css';
+import utils from '~/styles/utils.module.css';
 
-const MENU_CLASSES = { dropdown: clsx(utils.popover, classes.yearMenu), item: classes.yearItem }
+const MENU_CLASSES = { dropdown: clsx(utils.popover, classes.yearMenu), item: classes.yearItem };
 
 const YearItem = memo<{ year: number; active: boolean; onYear: (year: number) => void }>(({ year, active, onYear }) => {
-  const onClick = useCallback(() => onYear(year), [onYear, year])
+  const onClick = useCallback(() => onYear(year), [onYear, year]);
   return (
     <Menu.Item
       data-active={active || undefined}
@@ -26,11 +26,11 @@ const YearItem = memo<{ year: number; active: boolean; onYear: (year: number) =>
     >
       {year}
     </Menu.Item>
-  )
-})
+  );
+});
 
 const YearMenu: FC<{ year: number; onYear: (year: number) => void }> = ({ year, onYear }) => {
-  const { data } = useSeasons()
+  const { data } = useSeasons();
   return (
     <Menu position="bottom-start" offset={6} classNames={MENU_CLASSES}>
       <Menu.Target>
@@ -45,8 +45,8 @@ const YearMenu: FC<{ year: number; onYear: (year: number) => void }> = ({ year, 
         ))}
       </Menu.Dropdown>
     </Menu>
-  )
-}
+  );
+};
 
 const HeroStats: FC<{ season: SeasonSummary; isMobile: boolean }> = ({ season, isMobile }) => {
   if (season.phase === 'future')
@@ -54,7 +54,7 @@ const HeroStats: FC<{ season: SeasonSummary; isMobile: boolean }> = ({ season, i
       <span>
         <span className={classes.count}>{season.total}</span> stops planned
       </span>
-    )
+    );
   return (
     <>
       <span>
@@ -68,16 +68,16 @@ const HeroStats: FC<{ season: SeasonSummary; isMobile: boolean }> = ({ season, i
       )}
       {season.cancelled > 0 && <span>{season.cancelled} cancelled</span>}
     </>
-  )
-}
+  );
+};
 
 export const Hero = memo<{
-  tournaments: Tournament[]
-  season: SeasonSummary
-  isMobile: boolean
-  onYear: (year: number) => void
+  tournaments: Tournament[];
+  season: SeasonSummary;
+  isMobile: boolean;
+  onYear: (year: number) => void;
 }>(({ tournaments, season, isMobile, onYear }) => {
-  const finals = season.finals
+  const finals = season.finals;
   return (
     <section className={clsx(utils.container, classes.hero)}>
       <div>
@@ -102,5 +102,5 @@ export const Hero = memo<{
         <SeasonBar tournaments={tournaments} size="md" isMobile={isMobile} />
       </div>
     </section>
-  )
-})
+  );
+});

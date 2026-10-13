@@ -1,26 +1,26 @@
-import { Button, Skeleton } from '@mantine/core'
-import { memo, useCallback } from 'react'
+import { Button, Skeleton } from '@mantine/core';
+import { memo, useCallback } from 'react';
 
-import { NewsGrid } from '~/components/news'
-import { EmptyState } from '~/components/ui'
+import { NewsGrid } from '~/components/news';
+import { EmptyState } from '~/components/ui';
 
-import { SKELETON_COUNT } from '../constants'
-import type { MonthGroup, RegisterSection } from '../types'
+import { SKELETON_COUNT } from '../constants';
+import type { MonthGroup, RegisterSection } from '../types';
 
-import classes from './MonthSection.module.css'
+import classes from './MonthSection.module.css';
 
-const storiesLabel = (n: number) => (n === 1 ? '1 story' : `${n} stories`)
+const storiesLabel = (n: number) => (n === 1 ? '1 story' : `${n} stories`);
 
 export const MonthSection = memo<{
-  group: MonthGroup
-  current: boolean
-  isMobile: boolean
-  register: RegisterSection
-  onRetry: () => void
+  group: MonthGroup;
+  current: boolean;
+  isMobile: boolean;
+  register: RegisterSection;
+  onRetry: () => void;
 }>(({ group, current, isMobile, register, onRetry }) => {
-  const ref = useCallback((el: HTMLElement | null) => register(group.id, el), [register, group.id])
-  const variant = isMobile ? 'row' : 'card'
-  const { stories, failed } = group
+  const ref = useCallback((el: HTMLElement | null) => register(group.id, el), [register, group.id]);
+  const variant = isMobile ? 'row' : 'card';
+  const { stories, failed } = group;
   return (
     <section ref={ref} className={classes.section} aria-busy={(!stories && !failed) || undefined}>
       <div className={classes.head}>
@@ -48,5 +48,5 @@ export const MonthSection = memo<{
         />
       )}
     </section>
-  )
-})
+  );
+});

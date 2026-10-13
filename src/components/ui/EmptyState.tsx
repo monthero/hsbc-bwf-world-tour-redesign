@@ -1,7 +1,7 @@
-import { clsx } from 'clsx'
-import type { FC, ReactNode } from 'react'
+import { clsx } from 'clsx';
+import type { FC, ReactNode } from 'react';
 
-import classes from './EmptyState.module.css'
+import classes from './EmptyState.module.css';
 
 export const EmptyState: FC<{ children: ReactNode; variant?: 'box' | 'note'; className?: string }> = ({
   children,
@@ -12,5 +12,5 @@ export const EmptyState: FC<{ children: ReactNode; variant?: 'box' | 'note'; cla
     <div className={clsx(classes.empty, className)} data-variant={variant}>
       {children}
     </div>
-  )
-}
+  );
+};
