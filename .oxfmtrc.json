@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 120,
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "sortImports": {},
+  "ignorePatterns": [".claude/**", "data/**", "public/data/**", "src/routeTree.gen.ts", "pnpm-lock.yaml"]
+}
