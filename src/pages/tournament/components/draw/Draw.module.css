@@ -42,6 +42,7 @@
 }
 
 .headDay {
+  min-height: 1lh;
   font-size: 11px;
   font-weight: 500;
   color: var(--bwf-faint);
@@ -90,7 +91,15 @@
   left: 0;
   right: 0;
   display: flex;
-  align-items: center;
+}
+
+.slot .box {
+  height: 100%;
+}
+
+.slot .side {
+  flex: 1;
+  min-height: 0;
 }
 
 .box {

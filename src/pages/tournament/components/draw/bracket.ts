@@ -15,6 +15,9 @@ type DrawRound = (typeof DRAW_ROUNDS)[number];
 export const GAP = 52;
 const GG = 18;
 const FX = 8;
+const LINE = 16;
+const ROW_PAD = 10;
+const MATCH_GAP = 5;
 
 export interface BracketBox {
   key: string;
@@ -170,10 +173,11 @@ export const buildBracket = (
   const matches = slots ? slots.map((s) => s.match) : schedule.matches.filter((m) => m.event === ev);
   const rounds = drawRounds(matches);
   const n = rounds[0]?.size ?? 1;
-  const doubles = isDoubles(ev);
-  const sh = doubles ? 84 : 60;
-  const off = doubles ? 21 : 14;
-  const ys: number[][] = [Array.from({ length: n }, (_, j) => j * sh + Math.floor(j / 2) * GG + sh / 2)];
+  const row = (isDoubles(ev) ? 2 : 1) * LINE + ROW_PAD;
+  const bh = 2 * row + 3;
+  const pitch = bh + MATCH_GAP;
+  const off = (row + 1) / 2;
+  const ys: number[][] = [Array.from({ length: n }, (_, j) => j * pitch + Math.floor(j / 2) * GG + bh / 2)];
   for (let i = 1; i < rounds.length; i++) {
     const p = ys[i - 1] ?? [];
     ys.push(Array.from({ length: p.length / 2 }, (_, j) => ((p[2 * j] ?? 0) + (p[2 * j + 1] ?? 0)) / 2));
@@ -194,5 +198,5 @@ export const buildBracket = (
       paths: next ? connectorPaths(bs, cy, next, off) : [],
     };
   });
-  return { columns, height: n * sh + Math.max(0, n / 2 - 1) * GG, boxHeight: sh };
+  return { columns, height: (n - 1) * pitch + Math.max(0, n / 2 - 1) * GG + bh, boxHeight: bh };
 };
