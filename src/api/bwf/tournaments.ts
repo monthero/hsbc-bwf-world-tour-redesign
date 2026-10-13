@@ -1,3 +1,5 @@
+import { dominantOffset, utcOffsetOf, wallClock } from '~/utils/utc-offset';
+
 import { EventCode } from '../schemas';
 import { bwfGet } from './http';
 import { toDrawMatches, toEntryDto, toLiveServers, toMatchDto, toMatchStats, type NameOf } from './normalize';
@@ -12,7 +14,10 @@ export const fetchDayMatches = async (code: string, day: string, names: NameOf, 
     BwfDayMatches,
     signal,
   );
-  return raw.flatMap((m) => toMatchDto(m, names) ?? []);
+  return {
+    matches: raw.flatMap((m) => toMatchDto(m, names) ?? []),
+    utcOffset: dominantOffset(raw.map((m) => utcOffsetOf(day, wallClock(m.matchTime), m.matchTimeUtc))),
+  };
 };
 
 export const fetchMatchStats = async (tmtId: number, matchCode: string, signal?: AbortSignal) =>

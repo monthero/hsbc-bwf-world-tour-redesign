@@ -75,6 +75,7 @@ export const CalendarEventDto = z.object({
   cancelled: z.boolean(),
   archived: z.boolean(),
   map: MapPoint.nullable(),
+  timeZone: NullableString.default(null),
   etihad: z.boolean(),
   winners: z.array(z.object({ event: EventCode, players: z.array(Person) })),
 });
@@ -114,6 +115,7 @@ export const TournamentMatches = z.object({
   asOf: z.string(),
   days: z.record(z.string(), z.array(MatchDto)),
   plannedDays: z.record(z.string(), z.object({ rounds: z.array(z.string()), count: z.number() })),
+  utcOffsets: z.record(z.string(), z.number()).optional(),
   stale: z.boolean().optional(),
 });
 export type TournamentMatches = z.infer<typeof TournamentMatches>;

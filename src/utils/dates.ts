@@ -1,9 +1,9 @@
 import dayjs, { type Dayjs } from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 
-import type { Match } from '~/types';
-
 dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export { dayjs, type Dayjs };
 
@@ -41,12 +41,6 @@ export const monthOf = (key: string) => date(`${key}-01`);
 
 export const formatMonth = (key: string) => monthOf(key).format('MMMM YYYY');
 
-export const formatLocalDayTime = (iso: string) => dayjs(iso).format('ddd D MMM, HH:mm');
-
 export const hoursSince = (iso: string) => dayjs.utc().diff(date(iso), 'hour', true);
 
 export const ageOn = (born: string, at: Dayjs = today()) => at.diff(date(born), 'year');
-
-export const matchMoment = (m: Pick<Match, 'date' | 'time'>) => dayjs.utc(`${m.date}T${m.time || '00:00'}`);
-
-export const hourOf = (m: Pick<Match, 'date' | 'time'>) => matchMoment(m).format('HH:00');

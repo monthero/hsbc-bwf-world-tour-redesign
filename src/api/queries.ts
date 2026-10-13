@@ -125,8 +125,14 @@ const fetchLiveMatches = async (t: TournamentRef, client: QueryClient): Promise<
   return {
     code: t.code,
     asOf: dayjs().format('HH:mm'),
-    days: Object.fromEntries(days.map((day, i) => [day, results[i] ?? []])),
+    days: Object.fromEntries(days.map((day, i) => [day, results[i]?.matches ?? []])),
     plannedDays: {},
+    utcOffsets: Object.fromEntries(
+      days.flatMap((day, i) => {
+        const offset = results[i]?.utcOffset ?? null;
+        return offset === null ? [] : [[day, offset]];
+      }),
+    ),
   };
 };
 

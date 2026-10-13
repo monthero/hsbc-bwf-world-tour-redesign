@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS matches (
   round TEXT NOT NULL,
   grp TEXT,
   time TEXT NOT NULL,
+  time_utc TEXT,
   court INTEGER NOT NULL,
   status TEXT NOT NULL,
   winner INTEGER NOT NULL,
@@ -151,6 +152,7 @@ const COLUMNS: [table: string, column: string, type: string][] = [
   ['editions', 'etihad', 'INTEGER NOT NULL DEFAULT 0'],
   ['rankings', 'tournaments', 'INTEGER'],
   ['publications', 'name', 'TEXT'],
+  ['matches', 'time_utc', 'TEXT'],
 ];
 
 const migrate = (db: DatabaseSync) => {

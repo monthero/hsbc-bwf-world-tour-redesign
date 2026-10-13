@@ -2,7 +2,7 @@ import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type FC, type ReactNode } from 'react';
 
-import { TeamLabel } from '~/components/match';
+import { MatchTime, TeamLabel } from '~/components/match';
 import { LevelBadge, TournamentPlace } from '~/components/tournament';
 import { CardHit, EmptyState, IconCalendar, IconMapPin, IconStarFilled, SectionTitle } from '~/components/ui';
 import { DRAW_SIZE, EVENT_NAMES, QUALIFY_SPOTS } from '~/constants';
@@ -74,7 +74,7 @@ const FollowRow = memo<{ match: Match; onOpen: (id: string) => void }>(({ match:
     <div className={classes.follow}>
       <CardHit label={`Match details: ${matchTitle(m)}`} onClick={() => onOpen(m.id)} />
       <span className={classes.followTime} data-live={live || undefined}>
-        {m.time}
+        <MatchTime match={m} stacked />
       </span>
       <span className={classes.followBody}>
         <span className={utils.ellipsis}>

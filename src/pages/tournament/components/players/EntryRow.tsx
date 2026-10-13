@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
 import { TeamFollow } from '~/components/follow';
-import { EventTag, TeamPlayers } from '~/components/match';
+import { EventTag, TeamPlayers, TimedStatus } from '~/components/match';
 import { CardHit } from '~/components/ui';
 import { formatRank } from '~/utils/format';
 import { isScheduled, teamLabel } from '~/utils/matches';
@@ -34,7 +34,7 @@ export const EntryStatus: FC<{ entry: LatestEntry; withStage?: boolean; classNam
           <span className={clsx(utils.raise, classes.qualifier)}>Q</span>
         </Tooltip>
       )}
-      {(entry.match || withStage) && status.label}
+      {(entry.match || withStage) && <TimedStatus match={entry.match} tone={status.tone} label={status.label} />}
     </span>
   );
 };

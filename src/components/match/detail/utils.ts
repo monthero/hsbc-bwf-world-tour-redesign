@@ -47,14 +47,14 @@ const flipGames = (games: readonly Game[]) => games.map(([x, y]) => [y, x] as co
 
 export const percent = (a: number, t: number, empty = '0%') => (t ? `${Math.round((a / t) * 100)}%` : empty);
 
-export const metaLine = (m: Match) =>
-  [date(m.date).format('ddd'), m.court ? `Court ${m.court}` : '', m.time, roundName(m.round)]
-    .filter(Boolean)
-    .join(' · ');
+export const metaLead = (m: Match) =>
+  [m.date ? date(m.date).format('ddd') : '', m.court ? `Court ${m.court}` : ''].filter(Boolean).join(' · ');
+
+const SCHEDULED = 'Scheduled';
 
 export const statusLine = (m: Match) => {
   if (m.status === 'P') return ['Live', formatDuration(m.durationMin)].filter(Boolean).join(' · ');
-  if (m.status === 'N') return `Scheduled · not before ${m.time}`;
+  if (m.status === 'N') return m.time ? `${SCHEDULED} · not before` : SCHEDULED;
   return ['Finished', noteLabel(m.note, 'long'), formatDuration(m.durationMin)].filter(Boolean).join(' · ');
 };
 

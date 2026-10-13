@@ -1,7 +1,7 @@
 import { EventCode } from '~/api/schemas';
 import type { useFavoritesMatcher } from '~/stores/favorites';
 import type { Match } from '~/types';
-import { hourOf } from '~/utils/dates';
+import { dayMark, type ClockTime } from '~/utils/match-time';
 import { matchesQuery, roundsLabel, teamLabel, teamPlayers } from '~/utils/matches';
 
 export interface MatchGroup {
@@ -52,10 +52,20 @@ export const parseEvents = (s: string) => (s ? (s.split(',') as EventCode[]) : [
 
 export const parseCourts = (s: string) => (s ? s.split(',').map(Number) : []);
 
-const slotsOf = (list: Match[]) => {
+const NO_TIME = 'Time to be announced';
+
+const isUpcoming = (m: Match) => m.status === 'N';
+
+const isSettled = (m: Match) => m.status === 'F';
+
+export type MatchClock = (m: Match) => ClockTime | null;
+
+const hourLabel = (c: ClockTime | null) => (c ? `${c.hour}${c.shift ? ` ${dayMark(c.shift)}` : ''}` : '');
+
+const slotsOf = (list: Match[], clock: MatchClock) => {
   const slots: { key: string; items: Match[] }[] = [];
   for (const m of list) {
-    const key = hourOf(m);
+    const key = hourLabel(clock(m));
     const last = slots.at(-1);
     if (last?.key === key) last.items.push(m);
     else slots.push({ key, items: [m] });
@@ -65,18 +75,17 @@ const slotsOf = (list: Match[]) => {
 
 const roundsOf = (items: readonly Match[]) => roundsLabel(items.map((m) => m.round));
 
-const toSection = (list: Match[]): MatchSection => {
+const toSection = (list: Match[], clock: MatchClock): MatchSection => {
   const rounds = roundsOf(list);
-  const slots = slotsOf(list).map((s) => ({ ...s, rounds: roundsOf(s.items) }));
+  const slots = slotsOf(list, clock).map((s) => ({ ...s, rounds: roundsOf(s.items) }));
   const mixed = slots.some((s) => s.rounds !== rounds);
   return {
     count: list.length,
     rounds: mixed ? '' : rounds,
-    groups: slots.map(({ key, items, rounds: r }) => ({
-      key,
-      items,
-      label: mixed ? `From ${key} · ${r}` : `From ${key}`,
-    })),
+    groups: slots.map(({ key, items, rounds: r }) => {
+      const from = key ? `From ${key}` : NO_TIME;
+      return { key, items, label: mixed ? `${from} · ${r}` : from };
+    }),
   };
 };
 
@@ -89,7 +98,13 @@ const nextPerCourt = (matches: Match[]) => {
 export const filterBase = (matches: Match[], q: string, following: boolean, matcher: PlayersMatcher) =>
   matches.filter((m) => matchesQuery(m, q) && (!following || matcher(teamPlayers(m))));
 
-export const buildView = (dayMatches: Match[], base: Match[], events: EventCode[], courts: number[]): MatchesView => {
+export const buildView = (
+  dayMatches: Match[],
+  base: Match[],
+  events: EventCode[],
+  courts: number[],
+  clock: MatchClock,
+): MatchesView => {
   const courtsAll = [...new Set(dayMatches.map((m) => m.court))].sort((a, b) => a - b);
   const evOn = events.length > 0 && events.length < EventCode.options.length;
   const ctOn = courts.length > 0 && courts.length < courtsAll.length;
@@ -108,8 +123,8 @@ export const buildView = (dayMatches: Match[], base: Match[], events: EventCode[
         })
       : [];
   const list = base.filter((m) => evOk(m) && ctOk(m));
-  const upcoming = toSection(list.filter((m) => m.status === 'N'));
-  const results = toSection(list.filter((m) => m.status === 'F'));
+  const upcoming = toSection(list.filter(isUpcoming), clock);
+  const results = toSection(list.filter(isSettled), clock);
   return {
     evChips,
     courtChips,

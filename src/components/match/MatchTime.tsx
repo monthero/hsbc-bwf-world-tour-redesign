@@ -1,0 +1,49 @@
+import { Tooltip } from '@mantine/core';
+import { clsx } from 'clsx';
+import { memo } from 'react';
+
+import { TIP_DELAY, useLazyTip } from '~/components/ui';
+import { useMatchTime } from '~/hooks/useMatchClock';
+import type { Match, SideResult } from '~/types';
+import { dayMark } from '~/utils/match-time';
+
+import classes from './MatchTime.module.css';
+
+export const MatchTime = memo<{
+  match: Match;
+  zone?: boolean;
+  stacked?: boolean;
+  fallback?: string;
+  className?: string;
+}>(({ match, zone = true, stacked = false, fallback = '', className }) => {
+  const t = useMatchTime(match);
+  const lazy = useLazyTip<HTMLSpanElement>(!!t?.alt);
+  if (!t) return fallback ? <span className={className}>{fallback}</span> : null;
+  return (
+    <>
+      <span
+        className={clsx(classes.time, className)}
+        data-tip={t.alt ? true : undefined}
+        data-stacked={stacked || undefined}
+        onPointerEnter={lazy.arm}
+      >
+        {t.text}
+        {t.shift !== 0 && <span className={classes.shift}>{dayMark(t.shift)}</span>}
+        {zone && t.zone && <span className={classes.zone}>{t.zone}</span>}
+      </span>
+      {lazy.target && <Tooltip target={lazy.target} label={t.alt} openDelay={TIP_DELAY.open} />}
+    </>
+  );
+});
+
+export const TimedStatus = memo<{ match: Match | null | undefined; tone: SideResult; label: string }>(
+  ({ match, tone, label }) =>
+    tone === 'up' && match ? (
+      <>
+        <MatchTime match={match} fallback="TBD" />
+        {label && ` · ${label}`}
+      </>
+    ) : (
+      label
+    ),
+);

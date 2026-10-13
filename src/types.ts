@@ -90,6 +90,8 @@ export interface Match {
   dayIndex: number;
   court: number;
   time: string;
+  timeZone: string | null;
+  utcOffset: number | null;
   event: EventCode;
   round: string;
   group: string | null;

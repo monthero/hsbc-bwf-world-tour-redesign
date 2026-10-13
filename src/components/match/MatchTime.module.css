@@ -1,0 +1,32 @@
+.time {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.time[data-tip] {
+  position: relative;
+  z-index: 1;
+  cursor: help;
+}
+
+.shift {
+  margin-left: 1px;
+  font-size: 0.68em;
+  font-weight: 600;
+  line-height: 0;
+  vertical-align: super;
+  color: var(--bwf-gold);
+}
+
+.zone {
+  margin-left: 4px;
+  font-size: 0.78em;
+  font-weight: 500;
+  color: var(--bwf-faint);
+}
+
+.time[data-stacked] .zone {
+  display: block;
+  margin-left: 0;
+  line-height: 1.3;
+}

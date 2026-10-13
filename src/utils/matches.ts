@@ -28,6 +28,7 @@ import type {
 
 import { countryName } from './countries';
 import { date, isoRange } from './dates';
+import { NO_VENUE, venueTimeOn, type VenueTime } from './match-time';
 import { compareText, foldText, toPlayer } from './names';
 
 export const roundName = (r: string) => ROUND_NAMES[r] ?? r;
@@ -64,7 +65,7 @@ export const toTeam = (t: MatchDto['teams'][number]): Team => {
   return { seed: t.seed, players, key: teamKey(players) };
 };
 
-export const toMatch = (m: MatchDto, day: string, dayIndex: number, i: number): Match => {
+export const toMatch = (m: MatchDto, day: string, dayIndex: number, i: number, venue: VenueTime = NO_VENUE): Match => {
   const live = m.status === 'P';
   const games = m.games.map((g) => [g[0], g[1]] as const);
   return {
@@ -73,6 +74,8 @@ export const toMatch = (m: MatchDto, day: string, dayIndex: number, i: number): 
     dayIndex,
     court: m.court,
     time: m.time,
+    timeZone: venue.timeZone,
+    utcOffset: venue.utcOffset,
     event: m.event,
     round: m.round,
     group: m.group ?? null,
@@ -113,11 +116,13 @@ const focusIndexOf = (days: readonly TournamentDay[], todayIndex: number) => {
   return next < 0 ? todayIndex : next;
 };
 
-const dayMatches = (data: TournamentMatches, day: string, index: number, settled: boolean) =>
-  (data.days[day] ?? [])
-    .map((m, i) => toMatch(m, day, index, i))
+const dayMatches = (t: Tournament, data: TournamentMatches, day: string, index: number, settled: boolean) => {
+  const venue = venueTimeOn(t.timeZone, day, data.utcOffsets?.[day] ?? null);
+  return (data.days[day] ?? [])
+    .map((m, i) => toMatch(m, day, index, i, venue))
     .filter((m) => !settled || m.status !== 'N')
     .sort(byMatchTime);
+};
 
 export const finalDayOver = (end: string, data: TournamentMatches | undefined) => {
   const last = data?.days[end] ?? [];
@@ -127,7 +132,7 @@ export const finalDayOver = (end: string, data: TournamentMatches | undefined) =
 export const buildSchedule = (t: Tournament, data: TournamentMatches, todayIso: string): TournamentSchedule => {
   const settled = t.status === 'done';
   const raw = isoRange(t.start, t.end).map((day, index) => {
-    const matches = dayMatches(data, day, index, settled);
+    const matches = dayMatches(t, data, day, index, settled);
     const planned = data.plannedDays[day];
     const rounds = [...new Set(matches.length ? matches.map((m) => m.round) : (planned?.rounds ?? []))];
     return { day, index, matches, rounds, count: matches.length || planned?.count || 0 };
@@ -187,16 +192,15 @@ export const advanceLabel = (round: string) =>
 
 export const sideStatus = (m: Match, side: Side, { court = false } = {}): { tone: SideResult; label: string } => {
   const tone = sideResult(m, side);
-  const at = court ? ` · Court ${m.court}` : '';
   switch (tone) {
     case 'won':
       return { tone, label: m.group ? `Won · ${groupName(m.group)}` : advanceLabel(m.round) };
     case 'lost':
       return { tone, label: m.group ? `Lost · ${groupName(m.group)}` : `Out · ${m.round}` };
     case 'live':
-      return { tone, label: `Live${at}` };
+      return { tone, label: court ? `Live · Court ${m.court}` : 'Live' };
     default:
-      return { tone, label: `${m.time}${at}` };
+      return { tone, label: court ? `Court ${m.court}` : '' };
   }
 };
 
@@ -207,11 +211,18 @@ export const gameWon = (g: Game, side: Side) => g[side] > g[opposite(side)];
 export const formatGames = (games: readonly Game[], side: Side = 0) =>
   games.map((g) => `${g[side]}–${g[opposite(side)]}`).join(', ');
 
-export const noteLabel = (note: string | null, form: 'short' | 'long') =>
+export const noteLabel = (note: string | null, form: 'short' | 'long' | 'verb') =>
   note && note in NOTE_LABELS ? NOTE_LABELS[note as keyof typeof NOTE_LABELS][form] : '';
 
 export const teamLabel = (t: Team, sep: ' / ' | ' & ' = ' / ') =>
   t.players.length === 1 ? (t.players[0]?.name ?? 'TBD') : t.players.map((p) => p.surname).join(sep) || 'TBD';
+
+export const noteTip = (m: Match) => {
+  const long = noteLabel(m.note, 'long');
+  const winner = winnerSide(m);
+  if (!long || winner === null) return long;
+  return `${long} · ${teamLabel(m.teams[winner === 0 ? 1 : 0], ' & ')} ${noteLabel(m.note, 'verb')}`;
+};
 
 export const teamPlayers = (m: Match) => m.teams.flatMap((t) => t.players);
 

@@ -1,4 +1,5 @@
 import { gameDone } from '~/utils/live';
+import { wallClock } from '~/utils/utc-offset';
 
 import { EventCode, type EntryStage, type MatchDto } from '../schemas';
 import { BWF_ROUNDS, BWF_STATUSES } from './codes';
@@ -41,7 +42,7 @@ export const toMatchDto = (m: BwfMatch, names: NameOf): MatchDto | null => {
   const status = BWF_STATUSES[m.matchStatus] ?? 'N';
   return {
     court: Number(m.courtCode) || (m.courtIndex ?? 0) + 1,
-    time: m.matchTime?.slice(11, 16) ?? '',
+    time: wallClock(m.matchTime),
     event: event.data,
     round: BWF_ROUNDS[m.roundName] ?? m.roundName,
     status,

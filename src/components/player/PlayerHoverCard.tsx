@@ -4,14 +4,13 @@ import { useMemo, type FC, type ReactNode } from 'react';
 
 import { CountryLabel } from '~/components/country';
 import { PlayerFollow } from '~/components/follow';
-import { OutcomeBadge, ScoreChips, TeamLabel } from '~/components/match';
+import { OutcomeBadge, OutcomeLabel, ScoreChips, TeamLabel } from '~/components/match';
 import { Eyebrow, IconButton, IconProfile } from '~/components/ui';
 import { PlayerHoverContext } from '~/contexts';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerProfile } from '~/hooks/useSeason';
 import type { PlayerMatch } from '~/types';
 import { byMatchTime, opposite, roundName } from '~/utils/matches';
-import { outcomeLabel } from '~/utils/season';
 
 import { BioStat, FactTile } from './BioFacts';
 import { PlayerAvatar } from './PlayerAvatar';
@@ -141,7 +140,7 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
           <Eyebrow>This week</Eyebrow>
           {runs.map((pm) => (
             <div key={pm.key} className={clsx(utils.inset, classes.run)}>
-              <OutcomeBadge outcome={pm.outcome} label={outcomeLabel(pm)} />
+              <OutcomeBadge outcome={pm.outcome} label={<OutcomeLabel pm={pm} />} />
               <span className={classes.runText}>
                 <span className={clsx(utils.ellipsis, classes.runOpp)}>
                   vs <TeamLabel players={pm.match.teams[opposite(pm.side)].players} />

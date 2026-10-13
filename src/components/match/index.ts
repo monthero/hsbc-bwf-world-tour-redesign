@@ -1,5 +1,6 @@
-export { EventTag } from './EventTag';
+export { EventTag, NoteTag, type NoteTone } from './EventTag';
 export { MatchDetailModal, type MatchDetailModalProps } from './MatchDetailModal';
-export { FormStrip, OutcomeBadge, type FormItem, type OutcomeVariant } from './Outcome';
+export { MatchTime, TimedStatus } from './MatchTime';
+export { FormStrip, OutcomeBadge, OutcomeLabel, type FormItem, type OutcomeVariant } from './Outcome';
 export { ScoreChips, SideScores } from './ScoreChips';
 export { TeamLabel, TeamPlayers } from './TeamPlayers';

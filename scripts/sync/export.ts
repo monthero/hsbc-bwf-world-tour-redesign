@@ -4,6 +4,7 @@ import path from 'node:path';
 import { MonthKey, type EditionRef, type Retirement } from '../../src/api/schemas.ts';
 import { imageAssetPath, ImageKind } from '../../src/pages/admin/schema.ts';
 import { parseHeightCm } from '../../src/utils/format.ts';
+import { dominantOffset, utcOffsetOf } from '../../src/utils/utc-offset.ts';
 import {
   EVENTS,
   historyPath,
@@ -57,6 +58,7 @@ interface MatchRow {
   round: string;
   grp: string | null;
   time: string;
+  time_utc: string | null;
   court: number;
   status: string;
   winner: number;
@@ -167,6 +169,21 @@ const isCancelled = (e: EditionRow) => !!e.cancelled || (!!e.archived && e.match
 const withHeight = ({ height, ...rest }: Record<string, unknown>) => {
   const cm = parseHeightCm(height);
   return cm ? { ...rest, height: cm } : rest;
+};
+
+const dayOffsets = (rows: readonly MatchRow[]) => {
+  const byDay = new Map<string, (number | null)[]>();
+  for (const r of rows) {
+    const list = byDay.get(r.day) ?? [];
+    list.push(utcOffsetOf(r.day, r.time, r.time_utc));
+    byDay.set(r.day, list);
+  }
+  return Object.fromEntries(
+    [...byDay].flatMap(([day, list]) => {
+      const offset = dominantOffset(list);
+      return offset === null ? [] : [[day, offset] as const];
+    }),
+  );
 };
 
 const flip = (games: [number, number][]) => games.map(([a, b]): [number, number] => [b, a]);
@@ -285,6 +302,7 @@ export const exportData = async (
   for (const e of editions) seasons.set(e.season, [...(seasons.get(e.season) ?? []), e]);
 
   const placer = createMapPlacer();
+  const zoneOf = (e: EditionRow) => placer.zoneOf(e.city, e.country);
   for (const [year, list] of seasons)
     write(`calendar-${year}.json`, {
       year,
@@ -309,6 +327,7 @@ export const exportData = async (
         cancelled: isCancelled(e),
         archived: !!e.archived || isCancelled(e),
         map: placer.pointOf(e.city, e.country),
+        timeZone: zoneOf(e),
         etihad: !!e.etihad,
         winners: finalsOf(e.code).map((f) => ({ event: f.event, players: f.winners })),
       })),
@@ -330,11 +349,13 @@ export const exportData = async (
     const e = editionOf.get(code);
     const days: Record<string, MatchDto[]> = {};
     for (const { row, dto } of list) (days[row.day] ??= []).push(dto);
+    const utcOffsets = e && !zoneOf(e) ? dayOffsets(list.map(({ row }) => row)) : {};
     write(`tournaments/${code}.json`, {
       code,
       asOf: e?.archived ? 'final results' : dayjs.utc().format('YYYY-MM-DD HH:mm'),
       days,
       plannedDays: {},
+      ...(Object.keys(utcOffsets).length ? { utcOffsets } : {}),
     });
   }
 

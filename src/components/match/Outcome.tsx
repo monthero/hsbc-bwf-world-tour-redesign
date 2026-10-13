@@ -2,7 +2,9 @@ import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, type ReactNode } from 'react';
 
-import type { MatchOutcome } from '~/types';
+import type { MatchOutcome, PlayerMatch } from '~/types';
+
+import { MatchTime } from './MatchTime';
 
 import classes from './Outcome.module.css';
 
@@ -51,3 +53,7 @@ export const FormStrip = memo<{
     </span>
   );
 });
+
+export const OutcomeLabel = memo<{ pm: PlayerMatch; zone?: boolean }>(({ pm, zone = false }) =>
+  pm.outcome === 'up' ? <MatchTime match={pm.match} zone={zone} fallback="TBD" /> : pm.outcome,
+);

@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
-import { EventTag, OutcomeBadge, ScoreChips, TeamPlayers } from '~/components/match';
+import { EventTag, OutcomeBadge, OutcomeLabel, ScoreChips, TeamPlayers } from '~/components/match';
 import { Partner } from '~/components/player';
 import { LogoTile } from '~/components/tournament';
 import { CardHit, EmptyState, Segmented, SectionTitle, type SegmentedOption } from '~/components/ui';
@@ -11,7 +11,7 @@ import type { EventCode, PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
 import { roundName } from '~/utils/matches';
 import { medalOfResult } from '~/utils/medals';
-import { opponentsOf, outcomeLabel } from '~/utils/season';
+import { opponentsOf } from '~/utils/season';
 import { tournamentParams } from '~/utils/tournaments';
 
 import type { EventRun, SeasonView, TournamentRuns } from '../types';
@@ -175,7 +175,7 @@ const MatchRow = memo<{ pm: PlayerMatch; self: string | undefined; onOpen: (pm: 
           <span className={clsx(utils.num, classes.date)}>{formatDayMonth(match.date)}</span>
         </div>
         <div className={classes.body}>
-          <OutcomeBadge outcome={pm.outcome} label={outcomeLabel(pm)} />
+          <OutcomeBadge outcome={pm.outcome} label={<OutcomeLabel pm={pm} />} />
           <TeamPlayers players={opponentsOf(pm)} flag="xs" className={classes.opps} nameClassName={classes.oppName} />
           <ScoreChips match={match} side={pm.side} />
         </div>

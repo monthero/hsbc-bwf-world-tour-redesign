@@ -5,6 +5,7 @@ interface City {
   country: string;
   lat: number;
   lng: number;
+  tz?: string;
 }
 
 interface MapFrame {
@@ -47,13 +48,19 @@ export const createMapPlacer = () => {
   const frame = readJson('map.json') as MapFrame;
   const missing = new Set<string>();
 
-  const pointOf = (city: string, country: string): MapPoint | null => {
+  const cityOf = (city: string, country: string) => {
     if (!city || city === TBC) return null;
     const c = cities[city];
-    if (!c || (country && c.country !== country)) {
-      missing.add(country ? `${city}, ${country}` : city);
-      return null;
-    }
+    if (c && (!country || c.country === country)) return c;
+    missing.add(country ? `${city}, ${country}` : city);
+    return null;
+  };
+
+  const zoneOf = (city: string, country: string) => cityOf(city, country)?.tz ?? null;
+
+  const pointOf = (city: string, country: string): MapPoint | null => {
+    const c = cityOf(city, country);
+    if (!c) return null;
     const [x, y] = equalEarth(c.lat, c.lng);
     return { x: round1(frame.tx + frame.scale * x), y: round1(frame.ty - frame.scale * y) };
   };
@@ -62,5 +69,5 @@ export const createMapPlacer = () => {
     if (missing.size) console.warn(`  ! cities not in data/cities.json: ${[...missing].join(' · ')}`);
   };
 
-  return { pointOf, warn };
+  return { pointOf, zoneOf, warn };
 };

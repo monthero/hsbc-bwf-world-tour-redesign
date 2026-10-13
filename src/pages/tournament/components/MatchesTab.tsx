@@ -2,6 +2,7 @@ import { clsx } from 'clsx';
 import { useDeferredValue, useMemo, type FC } from 'react';
 
 import { EmptyState } from '~/components/ui';
+import { useMatchClock } from '~/hooks/useMatchClock';
 import { useScrolledPast } from '~/hooks/useScrolledPast';
 import { FOLLOW_KINDS, useFavoriteCount, useFavoritesMatcher } from '~/stores/favorites';
 import type { Match, TournamentDay } from '~/types';
@@ -50,6 +51,7 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
   const matcher = useFavoritesMatcher();
   const followCount = useFavoriteCount(FOLLOW_KINDS);
   const [filtersRef, filtersOut] = useScrolledPast<HTMLDivElement>();
+  const clock = useMatchClock();
 
   const dayData = days[f.day];
   const dayMatches = dayData?.matches ?? NO_MATCHES;
@@ -59,7 +61,10 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
     [days, todayIndex],
   );
   const base = useMemo(() => filterBase(dayMatches, q, f.following, matcher), [dayMatches, q, f.following, matcher]);
-  const view = useMemo(() => buildView(dayMatches, base, f.events, f.courts), [dayMatches, base, f.events, f.courts]);
+  const view = useMemo(
+    () => buildView(dayMatches, base, f.events, f.courts, clock),
+    [dayMatches, base, f.events, f.courts, clock],
+  );
   const dayOver = useMemo(() => dayMatches.every(isSettled), [dayMatches]);
   const empty = emptyMessage(dayData, f.day > todayIndex, view, f.following, followCount);
 

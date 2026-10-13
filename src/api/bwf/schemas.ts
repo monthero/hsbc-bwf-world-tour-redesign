@@ -30,6 +30,7 @@ export const BwfMatch = z.object({
   team1seed: Idish.nullish(),
   team2seed: Idish.nullish(),
   matchTime: z.string().nullish(),
+  matchTimeUtc: z.string().nullish(),
   eventName: z.string(),
   roundName: z.string(),
   courtCode: z.string().nullish(),

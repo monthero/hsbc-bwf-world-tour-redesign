@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
 import { Flag } from '~/components/country';
-import { TeamPlayers } from '~/components/match';
+import { TeamPlayers, TimedStatus } from '~/components/match';
 import { AvatarGroup, SeedTag } from '~/components/player';
 import { Medal } from '~/components/tournament';
 import { SectionTitle } from '~/components/ui';
@@ -132,7 +132,7 @@ const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
           <TeamPlayers players={s.team.players} truncate className={classes.seedPlayers} />
           <Tooltip label={s.tip} disabled={!s.tip}>
             <span className={classes.status} data-tip={s.tip ? true : undefined}>
-              {s.status}
+              <TimedStatus match={s.match} tone={s.tone} label={s.status} />
             </span>
           </Tooltip>
         </>

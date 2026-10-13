@@ -116,8 +116,6 @@ export const playerById = (
   return rec ? toPlayer(rec.name, rec.cc, id) : toPlayer(name, '', '');
 };
 
-export const outcomeLabel = (pm: PlayerMatch) => (pm.outcome === 'up' ? pm.match.time || 'TBD' : pm.outcome);
-
 const gameResult = (me: number, opp: number): PerspectiveGame['state'] => (me > opp ? 'win' : 'loss');
 
 export const perspectiveGames = (m: Match, side: Side): PerspectiveGame[] => {

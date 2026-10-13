@@ -47,6 +47,7 @@ export interface ApiMatch {
   roundName: string | null;
   drawName: string | null;
   matchTime: string | null;
+  matchTimeUtc: string | null;
   matchStatus: string;
   courtCode: string | null;
   courtIndex: number | null;

@@ -1,4 +1,5 @@
 import { BWF_ROUNDS, BWF_STATUSES } from '../../src/api/bwf/codes.ts';
+import { wallClock } from '../../src/utils/utc-offset.ts';
 import { EVENTS, type ApiMatch, type ApiPlayer, type EventCode } from './bwf.ts';
 
 const WALKOVER = 1;
@@ -18,6 +19,7 @@ export interface NormMatch {
   round: string;
   group: string | null;
   time: string;
+  timeUtc: string | null;
   court: number;
   status: string;
   winner: number;
@@ -72,7 +74,8 @@ export const normalizeMatch = (m: ApiMatch): NormMatch | null => {
     event,
     round: BWF_ROUNDS[m.roundName ?? ''] ?? m.roundName ?? '',
     group: m.drawName?.match(/Group\s+(\w+)/i)?.[1] ?? null,
-    time: m.matchTime?.slice(11, 16) ?? '',
+    time: wallClock(m.matchTime),
+    timeUtc: m.matchTimeUtc ?? null,
     court: Number(m.courtCode) || (m.courtIndex ?? 0) + 1,
     status: m.winner ? 'F' : status,
     winner: m.winner ?? 0,

@@ -60,8 +60,8 @@ export const syncMatches = async ({ db, client, today, years }: Context) => {
 
   const delMatches = db.prepare('DELETE FROM matches WHERE edition = ?');
   const insMatch = db.prepare(`
-    INSERT OR REPLACE INTO matches (id, edition, day, code, event, round, grp, time, court, status, winner, note, duration, games, seed1, seed2, location)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
+    INSERT OR REPLACE INTO matches (id, edition, day, code, event, round, grp, time, time_utc, court, status, winner, note, duration, games, seed1, seed2, location)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`);
   const insPlayer = db.prepare(
     'INSERT OR REPLACE INTO match_players (match_id, team, pos, player_id, name, cc) VALUES (?, ?, ?, ?, ?, ?)',
   );
@@ -107,6 +107,7 @@ export const syncMatches = async ({ db, client, today, years }: Context) => {
             m.round,
             m.group,
             m.time,
+            m.timeUtc,
             m.court,
             m.status,
             m.winner,

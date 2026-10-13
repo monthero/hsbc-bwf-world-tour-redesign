@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { playerQuery } from '~/api/queries';
 import type { PlayerProfileDto, SeasonIndex, SeasonMatch, Tournament } from '~/types';
 import { date } from '~/utils/dates';
+import { venueTimeOn } from '~/utils/match-time';
 import { toMatch } from '~/utils/matches';
 import { seasonIndexOf } from '~/utils/season';
 
@@ -23,7 +24,8 @@ const careerMatches = (
     f.matches.forEach((m, i) => {
       const tournament = byCode.get(m.tournament);
       if (!tournament || skip.has(m.tournament)) return;
-      const match = toMatch(m, m.day, date(m.day).diff(tournament.start, 'day'), i);
+      const venue = venueTimeOn(tournament.timeZone, m.day, null);
+      const match = toMatch(m, m.day, date(m.day).diff(tournament.start, 'day'), i, venue);
       const key = `${tournament.code}:${match.id}`;
       if (seen.has(key)) return;
       seen.add(key);
