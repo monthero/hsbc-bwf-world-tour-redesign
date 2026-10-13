@@ -42,4 +42,4 @@ export const PARTNER_LIMIT = 6
 export const PARTNER_MIN_MATCHES = 3
 
 export const EQUIPMENT_NOTE =
-  'Players change equipment often, by preference or for sponsorship reasons, so this information may be out of date'
+  '[NOTE] Players change equipment often, by preference or for sponsorship reasons, so this information may be outdated.'
