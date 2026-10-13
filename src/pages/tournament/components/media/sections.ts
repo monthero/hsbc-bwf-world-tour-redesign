@@ -45,9 +45,15 @@ const byRound = (items: readonly MediaItem[], matchOf: ReadonlyMap<string, Match
     (a, b) => roundRank(b) - roundRank(a),
   );
 
+const NO_COURT = 99;
+
+const byCourt = (a: MediaItem, b: MediaItem) => (a.court ?? NO_COURT) - (b.court ?? NO_COURT);
+
+const bySchedule = (a: MediaItem, b: MediaItem) => (a.scheduledAt ?? '').localeCompare(b.scheduledAt ?? '');
+
 const byDay = (items: readonly MediaItem[], t: Tournament) =>
   groupBy(
-    items.toSorted((a, b) => (a.court ?? 0) - (b.court ?? 0)),
+    items.toSorted(byCourt),
     (i) => String(i.day ?? 0),
     (k) =>
       `Day ${k} · ${date(t.start)
@@ -70,11 +76,13 @@ export const buildMediaSections = (
   matchOf: ReadonlyMap<string, Match>,
   t: Tournament,
 ): MediaSection[] => {
-  const live = items.filter((i) => i.live !== 'none');
+  const live = items.filter((i) => i.live === 'live').toSorted(byCourt);
+  const upcoming = items.filter((i) => i.live === 'upcoming').toSorted(bySchedule);
   const rest = items.filter((i) => i.live === 'none');
   const of = (kind: MediaKind) => rest.filter((i) => i.kind === kind);
   return [
-    section('live', 'Live on YouTube', single(live)),
+    section('live', 'Live now', single(live)),
+    section('upcoming', 'Upcoming streams', single(upcoming)),
     section('highlights', 'Highlights', byRound(of('highlights'), matchOf, 'More highlights')),
     section('full', 'Full matches', byRound(of('full_match'), matchOf, 'More matches')),
     section('top', 'Top plays', single(rest.filter((i) => TOP_PLAYS.has(i.kind)))),

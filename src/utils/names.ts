@@ -1,6 +1,8 @@
 import type { Player } from '~/types';
 
-import { cleanName, isSurnameWord } from './surname';
+import { cleanName, isSurnameWord, surnameOf } from './surname';
+
+export { foldText } from './fold';
 
 export const titleCase = (s: string) =>
   s
@@ -9,25 +11,6 @@ export const titleCase = (s: string) =>
     .join(' ');
 
 export const compareText = (a: string, b: string) => a.localeCompare(b);
-
-const LETTER_FOLDS: Record<string, string> = {
-  ø: 'o',
-  æ: 'ae',
-  œ: 'oe',
-  ß: 'ss',
-  đ: 'd',
-  ð: 'd',
-  ł: 'l',
-  þ: 'th',
-  ı: 'i',
-};
-
-export const foldText = (s: string) =>
-  s
-    .normalize('NFD')
-    .replace(/\p{M}/gu, '')
-    .toLowerCase()
-    .replace(/[øæœßđðłþı]/g, (c) => LETTER_FOLDS[c] ?? c);
 
 const shouty = (s: string) => s === s.toUpperCase() && /[A-Z]/.test(s);
 
@@ -73,7 +56,6 @@ export const toPlayer = (rawName: string, cc: string, id: string): Player => {
   const surnameFirst = ws.length > 1 && isSurnameWord(ws[0] ?? '');
   let cut = surnameFirst ? ws.findIndex((w) => !isSurnameWord(w)) : ws.findIndex(isSurnameWord);
   if (cut <= 0) cut = ws.length;
-  const upper = ws.filter(isSurnameWord);
   return {
     id,
     raw,
@@ -81,7 +63,7 @@ export const toPlayer = (rawName: string, cc: string, id: string): Player => {
     first: titleCase(ws.slice(0, cut).join(' ')),
     last: titleCase(ws.slice(cut).join(' ')),
     surnameFirst,
-    surname: titleCase(upper.length ? upper.join(' ') : (ws.at(-1) ?? raw)),
+    surname: titleCase(surnameOf(raw)),
     cc,
   };
 };

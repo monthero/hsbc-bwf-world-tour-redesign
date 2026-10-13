@@ -1,3 +1,4 @@
+import type { MediaKind } from '~/api/schemas';
 import type { TabItem } from '~/components/ui';
 import type { MedalKind } from '~/types';
 
@@ -8,6 +9,7 @@ export const PLAYER_TAB_ITEMS: readonly TabItem<PlayerTab>[] = [
   { value: 'matches', label: 'Matches' },
   { value: 'results', label: 'Results' },
   { value: 'rankings', label: 'Rankings' },
+  { value: 'media', label: 'Media' },
 ];
 
 export const RESULT_LABELS: Record<number, string> = {
@@ -43,3 +45,11 @@ export const PARTNER_MIN_MATCHES = 3;
 
 export const EQUIPMENT_NOTE =
   '[NOTE] Players change equipment often, by preference or for sponsorship reasons, so this information may be outdated.';
+
+export const VIDEO_STEP = 6;
+
+export const NEWS_STEP = 12;
+
+export const NEWS_GROUP_MIN = 10;
+
+export const VIDEO_LABELS: Partial<Record<MediaKind, string>> = { highlights: 'Highlights', full_match: 'Full match' };

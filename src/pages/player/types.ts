@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { EventCode } from '~/api/schemas';
 import type { MedalKind, Player, PlayerMatch, Tournament } from '~/types';
 
-export const PlayerTab = z.enum(['overview', 'matches', 'results', 'rankings']);
+export const PlayerTab = z.enum(['overview', 'matches', 'results', 'rankings', 'media']);
 export type PlayerTab = z.infer<typeof PlayerTab>;
 
 export const PlayerSearch = z.object({

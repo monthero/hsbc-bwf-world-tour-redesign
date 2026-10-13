@@ -52,10 +52,37 @@
 
 .live {
   left: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .live[data-state='live'] {
+  --live-dot: var(--mantine-color-white);
   background: var(--bwf-red);
+  color: var(--mantine-color-white);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.card[data-disabled] {
+  cursor: not-allowed;
+}
+
+.card[data-disabled] .thumb img {
+  opacity: 0.4;
+  filter: grayscale(1);
+  transform: none;
+}
+
+.card[data-disabled]:hover .thumb {
+  border-color: var(--bwf-border);
+}
+
+.blocked {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--bwf-text-3);
 }
 
 .body {

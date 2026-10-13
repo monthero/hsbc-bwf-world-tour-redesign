@@ -16,6 +16,7 @@ import LinkLinear from '~icons/solar/link-linear';
 import MagniferLinear from '~icons/solar/magnifer-linear';
 import MapPoint from '~icons/solar/map-point-linear';
 import MedalStar from '~icons/solar/medal-star-bold-duotone';
+import PlayStream from '~icons/solar/play-stream-linear';
 import ShareLinear from '~icons/solar/share-linear';
 import StarBold from '~icons/solar/star-bold';
 import StarLinear from '~icons/solar/star-linear';
@@ -55,6 +56,7 @@ export const IconMenu = icon(HamburgerMenu);
 export const IconNewsletter = icon(Letter);
 export const IconShare = icon(ShareLinear);
 export const IconLink = icon(LinkLinear);
+export const IconStream = icon(PlayStream);
 
 const brand =
   (d: string): FC<SVGProps<SVGSVGElement>> =>

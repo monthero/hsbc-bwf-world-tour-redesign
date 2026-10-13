@@ -1,0 +1,6 @@
+.count {
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--bwf-muted);
+}

@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
 import { VideoCard } from '~/components/media';
-import { EmptyState, SectionTitle, Segmented, type SegmentedOption } from '~/components/ui';
+import { EmptyState, LiveDot, SectionTitle, Segmented, type SegmentedOption } from '~/components/ui';
 import { useTournamentMedia } from '~/hooks/useTournamentMedia';
 import type { Match } from '~/types';
 import { roundName } from '~/utils/matches';
@@ -17,24 +17,30 @@ import classes from './MediaTab.module.css';
 import utils from '~/styles/utils.module.css';
 
 const ALL = 'all';
+const LIVE_SECTION = 'live';
+const LIVE_ICON = <LiveDot pulse size={8} />;
 
-const SectionBlock = memo<{ section: MediaSection; matchOf: ReadonlyMap<string, Match> }>(({ section, matchOf }) => {
-  return (
-    <section className={classes.section}>
-      <SectionTitle count={section.count}>{section.title}</SectionTitle>
-      {section.groups.map((g) => (
-        <div key={g.key} className={classes.group}>
-          {g.label && <h3 className={classes.groupLabel}>{g.label}</h3>}
-          <div className={classes.grid}>
-            {g.items.map((item) => (
-              <VideoCard key={item.id} item={item} match={matchOf.get(item.id)} />
-            ))}
+const SectionBlock = memo<{ section: MediaSection; matchOf: ReadonlyMap<string, Match>; eventName: string }>(
+  ({ section, matchOf, eventName }) => {
+    return (
+      <section className={classes.section}>
+        <SectionTitle count={section.count} icon={section.key === LIVE_SECTION ? LIVE_ICON : undefined}>
+          {section.title}
+        </SectionTitle>
+        {section.groups.map((g) => (
+          <div key={g.key} className={classes.group}>
+            {g.label && <h3 className={classes.groupLabel}>{g.label}</h3>}
+            <div className={classes.grid}>
+              {g.items.map((item) => (
+                <VideoCard key={item.id} item={item} match={matchOf.get(item.id)} eventName={eventName} />
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
-    </section>
-  );
-});
+        ))}
+      </section>
+    );
+  },
+);
 
 const tabMessage = (enabled: boolean, isError: boolean) => {
   if (!enabled) return 'Videos appear on BWF TV once the tournament starts.';
@@ -80,7 +86,7 @@ export const MediaTab: FC<TabProps> = ({ tournament }) => {
       )}
       {items.length > 0 && !sections.length && <EmptyState>No videos match these filters.</EmptyState>}
       {sections.map((s) => (
-        <SectionBlock key={s.key} section={s} matchOf={matchOf} />
+        <SectionBlock key={s.key} section={s} matchOf={matchOf} eventName={tournament.name} />
       ))}
     </div>
   );

@@ -7,7 +7,7 @@ import { sendJson } from './http.ts';
 export interface Endpoint {
   name: string;
   prefix: string;
-  serve: (url: URL, res: ServerResponse) => Promise<void>;
+  serve: (url: URL, res: ServerResponse, req: IncomingMessage) => Promise<void>;
 }
 
 const LOCAL = 'http://local';
@@ -24,7 +24,7 @@ const rejectMethod = (req: IncomingMessage, res: ServerResponse) => {
 export const vitePlugin = ({ name, prefix, serve }: Endpoint): Plugin => {
   const handler: Connect.NextHandleFunction = (req, res, next) => {
     if (rejectMethod(req, res)) return;
-    serve(new URL(req.url ?? '/', LOCAL), res).catch(next);
+    serve(new URL(req.url ?? '/', LOCAL), res, req).catch(next);
   };
   return {
     name,
@@ -42,7 +42,7 @@ export const vercelFunction =
   async (req: IncomingMessage, res: ServerResponse) => {
     if (rejectMethod(req, res)) return;
     try {
-      await serve(relativeUrl(prefix, req.url), res);
+      await serve(relativeUrl(prefix, req.url), res, req);
     } catch (e) {
       console.error(e);
       if (!res.headersSent) sendJson(res, 502, { error: 'Upstream request failed' });

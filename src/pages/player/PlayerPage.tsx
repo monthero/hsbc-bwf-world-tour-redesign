@@ -3,6 +3,7 @@ import { getRouteApi, useCanGoBack, useRouter } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
+import { NotFound, type NotFoundAction } from '~/components/layout';
 import { MatchDetailModal } from '~/components/match';
 import { BackPill } from '~/components/ui';
 import { NOT_FOUND, SEASON_YEAR } from '~/constants';
@@ -14,11 +15,12 @@ import { tournamentParams } from '~/utils/tournaments';
 
 import { Hero } from './components/Hero';
 import { MatchesTab } from './components/MatchesTab';
+import { MediaTab } from './components/MediaTab';
 import { OverviewTab } from './components/OverviewTab';
 import { RankingsTab } from './components/RankingsTab';
 import { ResultsTab } from './components/ResultsTab';
 import { SubNav } from './components/SubNav';
-import { usePlayerHistory } from './hooks';
+import { usePlayerHistory, usePlayerMediaCount } from './hooks';
 import type { PlayerTab } from './types';
 import { careerHighs, careerOf, eventsOf, partnerHistory } from './utils';
 
@@ -28,6 +30,10 @@ import utils from '~/styles/utils.module.css';
 const route = getRouteApi('/players/$id');
 
 const STAY = { replace: true, resetScroll: false } as const;
+
+const MISSING_TITLE = 'We couldn’t find that player';
+const MISSING_DESCRIPTION = 'They may not have played on the World Tour yet, or the link is out of date.';
+const MISSING_ACTION: NotFoundAction = { label: 'Back to rankings', link: { to: '/rankings' } };
 
 export const PlayerPage: FC = () => {
   const { id } = route.useParams();
@@ -57,6 +63,7 @@ const PlayerProfile: FC<{ id: string }> = ({ id }) => {
   const { player, matches, ready, index, rankingId, bio, ranks } = profile;
   useDocumentTitle(!player && profile.status === 'missing' ? NOT_FOUND : [player?.name, 'Players'], 'bwf');
   const history = usePlayerHistory(rankingId, index);
+  const mediaCount = usePlayerMediaCount(id).data;
   const career = useMemo(() => careerOf(matches), [matches]);
   const current = useMemo(() => career.seasons.find((s) => s.year === SEASON_YEAR), [career]);
   const events = useMemo(() => eventsOf(matches), [matches]);
@@ -87,13 +94,13 @@ const PlayerProfile: FC<{ id: string }> = ({ id }) => {
   );
   const openResults = useCallback(() => setTab('results'), [setTab]);
 
+  if (!player && profile.status === 'missing')
+    return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={MISSING_ACTION} />;
+
   return (
     <section className={clsx(utils.container, classes.page)}>
       <Back from={from} />
-      {!player && profile.status === 'missing' && (
-        <span className={classes.message}>We couldn’t find this player.</span>
-      )}
-      {!player && profile.status !== 'missing' && <Skeleton height={340} radius={20} />}
+      {!player && <Skeleton height={340} radius={20} />}
       {player && (
         <>
           <Hero
@@ -104,8 +111,9 @@ const PlayerProfile: FC<{ id: string }> = ({ id }) => {
             prize={bio.prize}
             ranks={ranks}
             highs={highs}
+            retired={profile.retired}
           />
-          <SubNav tab={tab} onTab={setTab} player={player} />
+          <SubNav tab={tab} onTab={setTab} player={player} mediaCount={mediaCount} />
           {tab === 'overview' && (
             <OverviewTab
               playerId={id}
@@ -139,6 +147,7 @@ const PlayerProfile: FC<{ id: string }> = ({ id }) => {
           )}
           {tab === 'results' && <ResultsTab history={history.view} loading={history.loading} />}
           {tab === 'rankings' && <RankingsTab ranks={ranks} history={history.view} loading={history.loading} />}
+          {tab === 'media' && <MediaTab playerId={id} matches={matches} />}
         </>
       )}
       {selected && <MatchDetailModal match={selected.match} tournament={selected.tournament} onClose={closeMatch} />}

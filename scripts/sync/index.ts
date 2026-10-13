@@ -9,6 +9,7 @@ import { exportData } from './export.ts';
 import { createClient, httpStats } from './http.ts';
 import { exportNews } from './news-export.ts';
 import { createOutput } from './output.ts';
+import { exportPlayerMedia } from './player-media-export.ts';
 import { syncCalendar } from './steps/calendar.ts';
 import { syncDetails } from './steps/details.ts';
 import { syncImages } from './steps/images.ts';
@@ -73,6 +74,7 @@ if (only.has('export')) {
     output,
   );
   exportNews(db, output);
+  exportPlayerMedia(db, output, path.join(ROOT, 'public/data'), path.join(ROOT, 'data/media'));
   const pruned = output.prune();
   if (pruned) console.log(`export: removed ${pruned} stale files`);
 }

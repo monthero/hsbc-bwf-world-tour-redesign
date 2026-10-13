@@ -5,6 +5,12 @@ export const isSurnameWord = (w: string) => isUpper(w) && letters(w).length > 1;
 
 export const cleanName = (name: string) => name.replace(/\s+/g, ' ').trim();
 
+export const surnameOf = (name: string) => {
+  const ws = cleanName(name).split(' ');
+  const upper = ws.filter(isSurnameWord);
+  return upper.length ? upper.join(' ') : (ws.at(-1) ?? name);
+};
+
 export const nameIssue = (name: string): string | null => {
   const words = cleanName(name).split(' ').filter(Boolean);
   if (!words.length) return 'Enter a name';
