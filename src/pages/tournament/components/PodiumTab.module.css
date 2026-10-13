@@ -193,6 +193,8 @@
 
 .line:has(.lineAvatars) > .medal {
   grid-area: 1 / 1;
+  justify-self: start;
+  align-self: start;
   z-index: 1;
   margin: 19px 0 0 -5px;
   padding: 1px;
