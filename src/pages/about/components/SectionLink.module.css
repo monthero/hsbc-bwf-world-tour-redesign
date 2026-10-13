@@ -1,0 +1,15 @@
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 32px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bwf-dim);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.more:hover {
+  color: var(--bwf-text);
+}

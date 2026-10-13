@@ -1,0 +1,108 @@
+.wrap {
+  position: relative;
+  margin-inline: calc(-1 * var(--bwf-gutter));
+  border-top: 1px solid var(--bwf-border);
+}
+
+.wrap::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  margin-left: -6px;
+  border: 6px solid transparent;
+  border-bottom-color: var(--bwf-text);
+  pointer-events: none;
+}
+
+.wheel {
+  display: flex;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 24px calc(50% - 22px) 10px;
+}
+
+.wheel::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  position: relative;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 44px;
+  height: 56px;
+  padding: 0 0 2px;
+  border: 0;
+  background: none;
+  color: var(--bwf-faint);
+  font: inherit;
+  font-size: 12px;
+  scroll-snap-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.item i {
+  width: 28px;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--lv);
+  transition:
+    height 0.15s var(--bwf-ease),
+    width 0.15s var(--bwf-ease);
+}
+
+.item[data-status='done'] i {
+  background: color-mix(in srgb, var(--lv) 42%, var(--bwf-bg-sunken));
+}
+
+.item[data-status='cancelled'] i {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--bwf-ghost);
+}
+
+.item[data-spot] i {
+  box-shadow:
+    0 0 0 2px var(--bwf-bg-sunken),
+    0 0 0 3.5px var(--bwf-red);
+}
+
+.item[aria-pressed='true'] {
+  color: var(--bwf-text);
+  font-weight: 700;
+}
+
+.item[aria-pressed='true'] i {
+  width: 32px;
+  height: 16px;
+}
+
+.item[data-today]::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 4px;
+  bottom: 0;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--bwf-red);
+}
+
+.month {
+  position: absolute;
+  top: -18px;
+  left: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bwf-muted);
+  white-space: nowrap;
+}

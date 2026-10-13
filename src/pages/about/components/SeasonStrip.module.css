@@ -1,0 +1,116 @@
+.strip {
+  position: relative;
+  height: 44px;
+  margin: 18px 0 22px;
+}
+
+.strip::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 21px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--bwf-border);
+}
+
+.tick {
+  position: absolute;
+  top: 0;
+  bottom: -20px;
+  border-left: 1px solid var(--bwf-line);
+  pointer-events: none;
+}
+
+.tick span {
+  position: absolute;
+  bottom: 0;
+  left: 6px;
+  font-size: 11px;
+  color: var(--bwf-faint);
+}
+
+.tick[data-now] span {
+  color: var(--bwf-text-3);
+  font-weight: 600;
+}
+
+.mark {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 1px;
+  border-radius: 4px;
+}
+
+.mark i {
+  display: block;
+  width: 100%;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--lv);
+  transition:
+    height 0.15s var(--bwf-ease),
+    opacity 0.15s;
+}
+
+.mark[data-status='done'] i {
+  background: color-mix(in srgb, var(--lv) 42%, var(--bwf-bg-sunken));
+}
+
+.mark[data-status='cancelled'] i {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--bwf-ghost);
+}
+
+.mark[data-spot] i {
+  box-shadow:
+    0 0 0 2px var(--bwf-bg-sunken),
+    0 0 0 3.5px var(--bwf-red);
+}
+
+.mark[data-finals] i {
+  height: 14px;
+}
+
+.mark:focus-visible {
+  outline: 2px solid var(--bwf-text);
+  outline-offset: 0;
+}
+
+.strip[data-active] .mark:not([data-active]) i {
+  opacity: 0.35;
+}
+
+.mark[data-active] i {
+  height: 22px;
+}
+
+.today {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  z-index: 2;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: var(--bwf-red);
+  pointer-events: none;
+}
+
+.today span {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bwf-red-text);
+  white-space: nowrap;
+}

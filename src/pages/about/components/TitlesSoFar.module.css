@@ -1,0 +1,71 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  padding: 18px 20px;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: 18px 40px minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.cc {
+  font-weight: 600;
+  color: var(--bwf-text-3);
+}
+
+.track {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--bwf-surface-3);
+}
+
+.track::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--w);
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--bwf-red), var(--bwf-red-text));
+}
+
+.n {
+  text-align: right;
+  font-weight: 600;
+}
+
+.leader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: auto 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--bwf-border);
+  font-size: 13px;
+  color: var(--bwf-muted);
+}
+
+.leadText {
+  flex: 1;
+  min-width: 0;
+}
+
+.leadName {
+  font-weight: 600;
+  color: var(--bwf-text);
+}

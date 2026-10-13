@@ -1,0 +1,134 @@
+.pin {
+  position: absolute;
+  z-index: 1;
+  left: calc(var(--fx) * 100%);
+  top: calc(var(--fy) * 100%);
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--bwf-bg);
+  font: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.pin:focus-visible {
+  outline: 2px solid var(--bwf-text);
+}
+
+.dot {
+  --s: 12px;
+  display: grid;
+  place-items: center;
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: var(--lv);
+  box-shadow: 0 0 0 2px var(--bwf-bg-sunken);
+  transition: transform 0.18s var(--bwf-ease);
+}
+
+.pin[data-status='done'] .dot {
+  background: color-mix(in srgb, var(--lv) 42%, var(--bwf-bg-sunken));
+}
+
+.pin[data-status='cancelled'] .dot {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--bwf-ghost);
+}
+
+.pin[data-spot] .dot {
+  box-shadow:
+    0 0 0 2px var(--bwf-bg-sunken),
+    0 0 0 4px var(--bwf-red);
+}
+
+.pin[data-spot]::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: 50%;
+  border: 2px solid var(--bwf-red);
+  opacity: 0;
+  animation: ring 2.4s var(--bwf-ease) infinite;
+  pointer-events: none;
+}
+
+.pin[data-finals] .dot {
+  --s: 20px;
+  background: var(--bwf-gold);
+  color: var(--bwf-bg);
+  box-shadow:
+    0 0 0 3px var(--bwf-bg-sunken),
+    0 0 18px alpha(var(--bwf-gold), 0.45);
+}
+
+.pin[data-active] {
+  z-index: 3;
+}
+
+.pin[data-active] .dot {
+  transform: scale(1.5);
+}
+
+.pin[data-active][data-finals] .dot {
+  transform: scale(1.25);
+}
+
+.pin[data-compact] {
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+}
+
+.pin[data-compact] .dot {
+  --s: 7px;
+  box-shadow: 0 0 0 1.5px var(--bwf-bg-sunken);
+}
+
+.pin[data-compact][data-finals] .dot {
+  --s: 11px;
+}
+
+.pin[data-compact][data-finals] svg {
+  display: none;
+}
+
+.pin[data-compact][data-spot] .dot {
+  box-shadow:
+    0 0 0 1.5px var(--bwf-bg-sunken),
+    0 0 0 3px var(--bwf-red);
+}
+
+.pin[data-compact][data-active] {
+  z-index: 4;
+}
+
+.pin[data-compact][data-active] .dot {
+  transform: scale(1.9);
+}
+
+@keyframes ring {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.6);
+  }
+
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pin[data-spot]::before {
+    animation: none;
+  }
+}
