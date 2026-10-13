@@ -1,6 +1,14 @@
 .media {
   position: relative;
-  background: var(--bwf-surface-2);
+  background: linear-gradient(
+    130deg,
+    color-mix(in srgb, var(--lv, var(--bwf-brand-deep)) 55%, var(--bwf-bg-sunken)),
+    var(--bwf-bg-sunken) 85%
+  );
+}
+
+.media[data-muted] {
+  background: linear-gradient(130deg, var(--bwf-surface-2), var(--bwf-bg-sunken) 85%);
 }
 
 .media::after {
@@ -13,6 +21,12 @@
 
 .img {
   border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.img[data-loaded] {
+  opacity: 1;
 }
 
 .media[data-fade='bottom']::after {
@@ -28,6 +42,15 @@
 }
 
 .media[data-muted] .img {
-  opacity: 0.45;
   filter: grayscale(1);
+}
+
+.media[data-muted] .img[data-loaded] {
+  opacity: 0.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img {
+    transition: none;
+  }
 }

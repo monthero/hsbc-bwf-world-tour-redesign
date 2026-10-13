@@ -25,7 +25,6 @@
   height: clamp(88px, 10vw, 128px);
   border-radius: clamp(14px, 1.6vw, 18px);
   overflow: hidden;
-  background: var(--bwf-surface-2);
 }
 
 .cancelled {

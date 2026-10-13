@@ -1,7 +1,8 @@
 import { clsx } from 'clsx';
-import { memo, useCallback, useState, type ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 
 import type { NewsImage as NewsImageData } from '~/api/schemas';
+import { useImageState } from '~/hooks/useImageState';
 import { newsImageSrcSet, newsImageUrl, type NewsRatio } from '~/utils/news';
 
 import classes from './NewsImage.module.css';
@@ -15,20 +16,15 @@ export const NewsImage = memo<{
   className?: string;
   children?: ReactNode;
 }>(({ image, ratio, widths, sizes, eager, className, children }) => {
-  const [loaded, setLoaded] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const onLoad = useCallback(() => setLoaded(true), []);
-  const onError = useCallback(() => setFailed(true), []);
+  const src = image ? newsImageUrl(image, widths[0] ?? 480, ratio) : '';
+  const { ref, onLoad, onError, loaded, failed } = useImageState(src);
   const shown = failed ? null : image;
-  const ref = useCallback((el: HTMLImageElement | null) => {
-    if (el?.complete && el.naturalWidth) setLoaded(true);
-  }, []);
   return (
     <span className={clsx(classes.frame, className)} data-ratio={ratio} data-fallback={shown ? undefined : true}>
       {shown && (
         <img
           className={classes.img}
-          src={newsImageUrl(shown, widths[0] ?? 480, ratio)}
+          src={src}
           srcSet={newsImageSrcSet(shown, widths, ratio)}
           sizes={sizes}
           alt={shown.caption ?? ''}

@@ -1,8 +1,7 @@
 .tile {
   flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   width: var(--size);
   height: var(--size);
   padding: calc(var(--size) * 0.12);
@@ -16,6 +15,7 @@
 }
 
 .mono {
+  grid-area: 1 / 1;
   font-size: calc(var(--size) * 0.34);
   font-weight: 700;
   line-height: 1;
@@ -26,7 +26,14 @@
 }
 
 .tile img {
+  grid-area: 1 / 1;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.tile img[data-loaded] {
+  opacity: 1;
 }

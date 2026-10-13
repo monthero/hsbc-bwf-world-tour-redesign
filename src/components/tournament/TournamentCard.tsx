@@ -3,6 +3,7 @@ import { clsx } from 'clsx';
 import { memo, type FC, type ReactNode } from 'react';
 
 import { IconNext, MediaCover } from '~/components/ui';
+import { LEVEL_VARS } from '~/constants';
 import type { Tournament } from '~/types';
 import { countdownLabel, tournamentParams } from '~/utils/tournaments';
 
@@ -44,7 +45,7 @@ export const TournamentCard = memo<{
       <MediaCover src={t.header} muted={done} className={classes.media}>
         <LevelBadge level={t.level} variant="glass" dot className={classes.level} />
         {done && <TournamentStatusBadge tournament={t} variant="overlay" className={classes.status} />}
-        <LogoTile className={classes.logo} src={t.logo} name={t.name} size={52} />
+        <LogoTile className={classes.logo} src={t.logo} name={t.name} size={52} eager />
       </MediaCover>
       <div className={classes.body}>
         {kicker && <span className={classes.kicker}>{kicker}</span>}
@@ -60,6 +61,7 @@ export const TournamentCard = memo<{
   );
   const props = {
     className: clsx(t.status === 'live' ? utils.live : utils.card, classes.card, className),
+    style: LEVEL_VARS[t.level],
     'data-status': t.status,
     'data-next': isNext || undefined,
   };
