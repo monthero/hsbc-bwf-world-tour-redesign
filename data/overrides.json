@@ -1774,7 +1774,7 @@
       "asOf": "2026-10-12"
     },
     "81844": {
-      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMmSDTtE_dhtGeYV9G3N8o__Vu1dry2jXxMLJpwwgeHHf5T4QmPw5mFBx0&s=10",
+      "photo": "data/uploads/81844.jpg",
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1616/v1731298369/wordpress_assets_test/Guo-Xin-Wa-Chen-Fang-Hui_KM24/Guo-Xin-Wa-Chen-Fang-Hui_KM24.jpg",
       "heroFocus": {
         "x": 74,
@@ -1811,7 +1811,7 @@
         },
         "photo": {
           "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMmSDTtE_dhtGeYV9G3N8o__Vu1dry2jXxMLJpwwgeHHf5T4QmPw5mFBx0&s=10",
-          "asOf": "2026-10-12"
+          "asOf": "2026-10-13"
         }
       }
     },
@@ -2470,11 +2470,11 @@
       "asOf": "2026-10-12"
     },
     "91090": {
-      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSEI0lJcnfl_5SAMXBgoyuPzxySoZzsr2NPJgtX4CYFQvfnkQw2KoydXQ&s=10",
-      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp8Nko4jWAEi6FnKHq67AvLTWvVW-lkM1dbNYXufeTt5fzVQo_i5odN6w_&s=10",
+      "photo": "data/uploads/91090.jpg",
+      "hero": "https://www.yonex.co.uk/cdn/shop/files/TSB02083.jpg",
       "heroFocus": {
-        "x": 7,
-        "y": 56
+        "x": 50,
+        "y": 22
       },
       "bio": {
         "racket": "Yonex Nanoflare 1000Z"
@@ -2487,16 +2487,16 @@
           "asOf": "2026-10-12"
         },
         "hero": {
-          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp8Nko4jWAEi6FnKHq67AvLTWvVW-lkM1dbNYXufeTt5fzVQo_i5odN6w_&s=10",
-          "asOf": "2026-10-12"
+          "source": "https://www.yonex.co.uk/cdn/shop/files/TSB02083.jpg",
+          "asOf": "2026-10-13"
         },
         "heroFocus": {
           "source": "user",
-          "asOf": "2026-10-12"
+          "asOf": "2026-10-13"
         },
         "photo": {
           "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSEI0lJcnfl_5SAMXBgoyuPzxySoZzsr2NPJgtX4CYFQvfnkQw2KoydXQ&s=10",
-          "asOf": "2026-10-12"
+          "asOf": "2026-10-13"
         }
       }
     },
@@ -2857,10 +2857,10 @@
       "asOf": "2026-10-12"
     },
     "99521": {
-      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKRLZpXosANo9jIeBLC1oR7fSIxLatJ96Zb6lf2lUQ6NHTcm3QpmylOUI&s=10",
+      "hero": "https://res.cloudinary.com/badminton/image/upload/v1768666332/wordpress_assets_test/20260117_1913_IndiaOpen2026_BPJS9232.jpg",
       "heroFocus": {
-        "x": 34,
-        "y": 47
+        "x": 51,
+        "y": 30
       },
       "bio": {
         "racket": "Hundred Nitrix 70 Venom",
@@ -2871,8 +2871,8 @@
       "asOf": "2026-10-12",
       "meta": {
         "hero": {
-          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKRLZpXosANo9jIeBLC1oR7fSIxLatJ96Zb6lf2lUQ6NHTcm3QpmylOUI&s=10",
-          "asOf": "2026-10-12"
+          "source": "https://res.cloudinary.com/badminton/image/upload/v1768666332/wordpress_assets_test/20260117_1913_IndiaOpen2026_BPJS9232.jpg",
+          "asOf": "2026-10-13"
         }
       }
     },
