@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState, type CSSProperties, type FC } from 'react';
 
-import { FollowButton } from '~/components/follow';
+import { TeamFollow } from '~/components/follow';
 import { AvatarGroup } from '~/components/player/PlayerAvatar';
 import { Eyebrow, IconTimer, SectionTitle, Segmented, type SegmentedOption } from '~/components/ui';
 import { FIRST_SEASON } from '~/constants';
@@ -35,10 +35,10 @@ const SideHeader: FC<{ team: Team; side: Side }> = ({ team, side }) => (
         players={team.players}
         seed={team.seed}
         align={side === 'b' ? 'end' : 'start'}
+        end={<TeamFollow players={team.players} variant="outline" box="sm" />}
         className={classes.hhTeam}
         nameClassName={classes.hhName}
       />
-      <FollowButton players={team.players} variant="outline" box="sm" />
     </div>
   </div>
 );

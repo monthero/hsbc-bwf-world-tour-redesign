@@ -17,7 +17,7 @@ export type FollowTarget =
   | { kind: 'continent'; id: Continent }
   | { kind: 'tournament'; id: string; meta: { name: string; slug: string; year: number } };
 
-interface FollowLook {
+export interface FollowLook {
   name?: string;
   withLabel?: boolean;
   variant?: StarVariant;
@@ -107,4 +107,9 @@ export const FollowButton = memo<FollowButtonProps>((props) => {
       className={className}
     />
   );
+});
+
+export const PlayerFollow = memo<FollowLook & { player: FavoritePlayerRef }>(({ player, ...look }) => {
+  const players = useMemo(() => [player], [player]);
+  return <PlayersFollow players={players} {...look} />;
 });

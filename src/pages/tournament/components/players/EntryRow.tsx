@@ -2,7 +2,7 @@ import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
-import { FollowButton } from '~/components/follow';
+import { TeamFollow } from '~/components/follow';
 import { EventTag, TeamPlayers } from '~/components/match';
 import { CardHit } from '~/components/ui';
 import { formatRank } from '~/utils/format';
@@ -52,10 +52,15 @@ export const EntryRow = memo<{ entry: Entry; onOpen: (id: string) => void }>(({ 
         <EntryRank rank={rank} />
       </span>
       <div className={classes.entryBody}>
-        <TeamPlayers players={team.players} seed={team.seed} flag={false} nameClassName={classes.entryName} />
+        <TeamPlayers
+          players={team.players}
+          seed={team.seed}
+          flag={false}
+          end={<TeamFollow players={team.players} iconSize={15} />}
+          nameClassName={classes.entryName}
+        />
         <EntryStatus entry={entry} />
       </div>
-      <FollowButton players={team.players} iconSize={15} />
     </div>
   );
 });

@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { FollowButton } from '~/components/follow';
+import { TeamFollow } from '~/components/follow';
 import { EventTag, TeamPlayers } from '~/components/match';
 import { plural } from '~/utils/format';
 
@@ -16,11 +16,15 @@ const DisciplineRow = memo<{ entry: Entry }>(({ entry }) => {
   return (
     <div className={classes.row} data-out={stage === 'reserve' || stage === 'withdrawn' || undefined}>
       <span className={classes.rowMain}>
-        <TeamPlayers players={team.players} seed={team.seed} nameClassName={classes.rowName} />
+        <TeamPlayers
+          players={team.players}
+          seed={team.seed}
+          aside={<EntryRank rank={rank} className={classes.rowRank} />}
+          end={<TeamFollow players={team.players} iconSize={15} />}
+          nameClassName={classes.rowName}
+        />
         <EntryStatus entry={entry} withStage={false} />
       </span>
-      <EntryRank rank={rank} className={classes.rowRank} />
-      <FollowButton players={team.players} iconSize={15} />
     </div>
   );
 });

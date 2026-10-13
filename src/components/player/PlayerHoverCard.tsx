@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { useMemo, type FC, type ReactNode } from 'react';
 
 import { CountryLabel } from '~/components/country';
-import { FollowButton } from '~/components/follow';
+import { PlayerFollow } from '~/components/follow';
 import { OutcomeBadge, ScoreChips, TeamLabel } from '~/components/match';
 import { Eyebrow, IconButton, IconProfile } from '~/components/ui';
 import { PlayerHoverContext } from '~/contexts';
@@ -78,7 +78,7 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
     <>
       <div className={classes.header}>
         <div className={classes.actions}>
-          <FollowButton players={[player]} name={player.name} variant="outline" box="md" />
+          <PlayerFollow player={player} name={player.name} variant="outline" box="md" />
           <IconButton
             label="See full profile"
             tip="See full profile"

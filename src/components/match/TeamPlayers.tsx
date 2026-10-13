@@ -22,6 +22,8 @@ export const TeamPlayers = memo<{
   wrap?: boolean;
   empty?: ReactNode;
   after?: (p: Player, i: number) => ReactNode;
+  aside?: ReactNode;
+  end?: ReactNode;
   className?: string;
   nameClassName?: string;
 }>(
@@ -36,6 +38,8 @@ export const TeamPlayers = memo<{
     wrap,
     empty = 'TBD',
     after,
+    aside,
+    end,
     className,
     nameClassName,
   }) => {
@@ -48,6 +52,8 @@ export const TeamPlayers = memo<{
         data-truncate={truncate || undefined}
         data-wrap={wrap || undefined}
         data-pair-seed={pairSeed || undefined}
+        data-pair={players.length > 1 || undefined}
+        data-slots={!!(aside || end) || undefined}
       >
         {players.length
           ? players.map((p, i) => (
@@ -73,6 +79,8 @@ export const TeamPlayers = memo<{
             ))
           : empty && <span className={classes.player}>{empty}</span>}
         {pairSeed && <SeedTag seed={seed} className={classes.pairSeed} />}
+        {aside && <span className={classes.aside}>{aside}</span>}
+        {end && <span className={classes.end}>{end}</span>}
       </span>
     );
   },

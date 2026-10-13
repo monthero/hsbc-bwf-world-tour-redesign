@@ -25,6 +25,10 @@
     opacity 0.15s;
 }
 
+.star[data-box='xs'] {
+  --box: 24px;
+}
+
 .star[data-box='sm'] {
   --box: 28px;
 }
