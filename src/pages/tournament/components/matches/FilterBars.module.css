@@ -1,0 +1,130 @@
+.inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+}
+
+.searchWrap {
+  display: flex;
+  gap: 8px;
+  flex: 1 1 300px;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.anchor {
+  position: sticky;
+  top: calc(var(--bwf-header-h) + var(--bwf-tabbar-h));
+  z-index: 19;
+  height: 0;
+}
+
+.condensed {
+  position: absolute;
+  inset: 0 0 auto;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.24s var(--bwf-ease),
+    opacity 0.18s;
+}
+
+.condensed[data-visible] {
+  max-height: 52px;
+  opacity: 1;
+}
+
+.condensedRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding-block: 9px;
+}
+
+.pillSep {
+  width: 1px;
+  height: 14px;
+  background: var(--bwf-ghost);
+}
+
+.pillCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--bwf-red);
+  color: var(--mantine-color-white);
+  font-size: 11px;
+}
+
+.sheetBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sheetHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 30px;
+}
+
+.sheetTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--bwf-dim);
+}
+
+.searchRow {
+  display: flex;
+  gap: 8px;
+}
+
+.done {
+  height: 48px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--bwf-text);
+  color: var(--bwf-bg);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .inlineChips {
+    width: 100%;
+  }
+
+  .inlineChips > button {
+    flex: 1 1 0;
+  }
+
+  .desktopOnly,
+  .anchor {
+    display: none;
+  }
+
+  .searchWrap {
+    flex-basis: 100%;
+  }
+}

@@ -1,0 +1,34 @@
+.root {
+  flex: none;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 12px;
+  color: var(--bwf-ghost);
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    min-height: 4px;
+    border-left: 1px dashed currentColor;
+  }
+}
+
+.root[data-active] {
+  color: var(--bwf-red-text);
+}
+
+.text {
+  writing-mode: vertical-rl;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}

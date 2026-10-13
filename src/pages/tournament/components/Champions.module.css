@@ -1,0 +1,129 @@
+.section {
+  padding-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.trophy {
+  color: var(--bwf-gold);
+}
+
+.strip[data-past] {
+  gap: 8px;
+}
+
+.card {
+  scroll-snap-align: center;
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 5 / 4;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bwf-surface);
+  border: 1px solid alpha(var(--bwf-gold), 0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.card[data-past] {
+  background: var(--bwf-bg-sunken);
+  border-color: var(--bwf-border);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    alpha(var(--mantine-color-black), 0.55) 0%,
+    transparent 26%,
+    transparent 48%,
+    alpha(var(--mantine-color-black), 0.75) 72%,
+    alpha(var(--mantine-color-black), 0.95) 100%
+  );
+  pointer-events: none;
+}
+
+.photos {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.photo {
+  flex: 1;
+  min-width: 0;
+}
+
+.divider {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 3%;
+  bottom: 3%;
+  width: 2px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    alpha(var(--bwf-red-text), 0.85) 12%,
+    alpha(var(--bwf-red-text), 0.75) 80%,
+    transparent 97%
+  );
+  filter: drop-shadow(0 0 5px alpha(var(--bwf-red), 0.85));
+  pointer-events: none;
+}
+
+.event {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 10px;
+  display: flex;
+}
+
+.names {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 12px 8px;
+}
+
+.name {
+  font-size: 13px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: var(--mantine-color-white);
+  text-shadow: 0 1px 6px alpha(var(--mantine-color-black), 0.6);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+.score {
+  margin-top: 2px;
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--mantine-color-gold-4);
+  font-variant-numeric: tabular-nums;
+  text-wrap: pretty;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .strip.strip {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc(100% - 56px);
+    scroll-padding: 0 28px;
+    padding-inline: 28px;
+    padding-bottom: 2px;
+  }
+
+  .strip[data-past] {
+    margin-inline: -21px;
+  }
+}

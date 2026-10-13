@@ -1,0 +1,40 @@
+.anchor {
+  height: clamp(14px, 1.8vw, 20px);
+}
+
+.mini {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.28s var(--bwf-ease),
+    opacity 0.2s;
+}
+
+.bar[data-mini] .mini {
+  max-height: 48px;
+  opacity: 1;
+}
+
+.miniRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding-top: 10px;
+}
+
+.miniBack {
+  margin-left: -6px;
+}
+
+.miniTitle {
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.miniStatus {
+  margin-left: auto;
+}

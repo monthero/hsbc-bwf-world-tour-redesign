@@ -1,0 +1,163 @@
+.timeline {
+  display: grid;
+  grid-template-columns: var(--logo) minmax(0, 1fr);
+  align-items: start;
+  gap: 10px var(--gx);
+  margin-top: 20px;
+  padding-left: var(--pl);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 16px;
+    padding-left: 0;
+  }
+}
+
+.head {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  font-variant-numeric: tabular-nums;
+  color: var(--bwf-muted);
+}
+
+.head[data-status='live'] {
+  color: var(--bwf-red-text);
+}
+
+.head[data-status='done'] {
+  color: var(--bwf-text-3);
+
+  svg {
+    color: var(--lv);
+  }
+}
+
+.days {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 3px;
+  }
+}
+
+.day {
+  container-type: inline-size;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.bar {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--bwf-border-strong);
+}
+
+.date {
+  overflow: hidden;
+  font-size: 10.5px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--bwf-faint);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.round {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--bwf-faint);
+  -webkit-user-select: none;
+  user-select: none;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 12px;
+  }
+}
+
+.dot {
+  flex: none;
+}
+
+.day[data-state='done'] {
+  .bar {
+    background: color-mix(in srgb, var(--lv) 72%, transparent);
+  }
+
+  .round {
+    color: var(--bwf-muted);
+  }
+}
+
+.day[data-state='now'] {
+  .bar {
+    background: var(--bwf-red);
+  }
+
+  .date,
+  .round {
+    color: var(--bwf-red-text);
+  }
+
+  .round {
+    font-weight: 600;
+  }
+}
+
+.rest {
+  display: flex;
+}
+
+.short,
+.dateNum,
+.phone {
+  display: none;
+}
+
+@container (width < 88px) {
+  .long {
+    display: none;
+  }
+
+  .short {
+    display: inline;
+  }
+}
+
+@container (width < 40px) {
+  .dateFull,
+  .dot {
+    display: none;
+  }
+
+  .dateNum {
+    display: inline;
+  }
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .phone {
+    display: inline;
+  }
+}

@@ -1,0 +1,19 @@
+.root {
+  position: relative;
+}
+
+.live {
+  padding-top: 24px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .section {
+    padding-bottom: 96px;
+  }
+}

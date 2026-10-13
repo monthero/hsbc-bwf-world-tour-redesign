@@ -1,0 +1,41 @@
+.title {
+  margin-top: 10px;
+}
+
+.count {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--bwf-faint);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.groupHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.groupLabel {
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--bwf-text-3);
+}
+
+.rule {
+  flex: 1;
+  height: 1px;
+  background: var(--bwf-border);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
+  gap: 10px;
+}

@@ -1,0 +1,97 @@
+.chips {
+  flex: none;
+  display: flex;
+  gap: 6px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.chips[data-variant='compact'] {
+  gap: 4px;
+}
+
+.chips[data-variant='sheet'] {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  overflow: visible;
+}
+
+.dayLane {
+  position: relative;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.dayLane[data-variant='compact'] {
+  flex: 0 1 auto;
+}
+
+.dayLane .days {
+  width: max-content;
+  min-width: 100%;
+  grid-template-columns: repeat(var(--n), minmax(54px, 1fr));
+}
+
+.clear {
+  flex: none;
+  height: 34px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--bwf-muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.clear:hover {
+  color: var(--bwf-text);
+}
+
+.clear[data-variant='compact'] {
+  height: 28px;
+  padding: 0 2px;
+  font-size: 12px;
+}
+
+.clear[data-variant='sheet'] {
+  height: 30px;
+}
+
+.searchInline {
+  flex: 1 1 220px;
+  max-width: 340px;
+}
+
+.searchCompact {
+  flex: 0 1 220px;
+  min-width: 120px;
+  margin-left: auto;
+}
+
+.searchSheet {
+  flex: 1;
+}
+
+.divider {
+  flex: none;
+  align-self: center;
+  width: 1px;
+  height: 20px;
+  background: var(--bwf-border-strong);
+}
+
+.divider[data-fade] {
+  height: 22px;
+  background: linear-gradient(180deg, transparent, alpha(var(--mantine-color-white), 0.14), transparent);
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .searchInline {
+    max-width: none;
+  }
+}

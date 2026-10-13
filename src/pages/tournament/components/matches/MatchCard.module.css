@@ -1,0 +1,132 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 12px clamp(12px, 1.6vw, 16px) 14px;
+  border-radius: 14px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+
+.when {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.time {
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--bwf-muted);
+}
+
+.time[data-up] {
+  color: var(--bwf-text);
+}
+
+.court {
+  font-size: 12px;
+  color: var(--bwf-muted);
+  white-space: nowrap;
+}
+
+.tags {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.next {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--bwf-gold);
+}
+
+.meta {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--bwf-faint);
+}
+
+.teams {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: -5px -8px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  color: var(--bwf-text);
+  font-weight: 500;
+}
+
+.team[data-result='won'] {
+  background: var(--bwf-win-bg);
+  font-weight: 600;
+}
+
+.team[data-result='lost'] {
+  color: var(--bwf-dim);
+}
+
+.who {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.players {
+  min-width: 0;
+  font-size: 14px;
+}
+
+.card[data-doubles] .players {
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.name {
+  min-width: 0;
+}
+
+.badge {
+  flex: none;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: var(--bwf-red);
+  color: var(--mantine-color-white);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.check {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  color: transparent;
+}
+
+.team[data-result='won'] .check {
+  color: var(--bwf-green);
+}
