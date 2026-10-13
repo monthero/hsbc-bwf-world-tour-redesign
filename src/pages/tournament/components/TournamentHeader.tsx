@@ -67,7 +67,7 @@ export const TournamentHeader = memo<{
         <div className={classes.meta}>
           <span className={classes.dates}>{t.dates}</span>
           <TournamentPlace tournament={t} />
-          {t.venue && <span>{t.venue}</span>}
+          {t.venue && <span className={classes.venue}>{t.venue}</span>}
           <span className={classes.chip}>
             <b className={classes.level}>
               {LEVEL_META[t.level].long}

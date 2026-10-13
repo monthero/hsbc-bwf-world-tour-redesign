@@ -1,5 +1,5 @@
 import { EventCode, type NewsItem } from '~/api/schemas';
-import { EVENT_NAMES, REST_DAY } from '~/constants';
+import { DRAW_SIZE, EVENT_NAMES, GROUP_ROUND_NAMES, REST_DAY } from '~/constants';
 import type {
   DrawSlot,
   EntryListing,
@@ -33,7 +33,16 @@ import { toPlayer } from '~/utils/names';
 import { formatPrize } from '~/utils/tournaments';
 
 import { isBracketMatch } from './components/draw/bracket';
-import { DAY_ROUNDS, DRAW_SEEDS, PODIUM_PLACES, PODIUM_PRIZES, PRIZE_BASE } from './constants';
+import {
+  DAY_ROUNDS,
+  DRAW_SEEDS,
+  GROUP_STAGE_ROUNDS,
+  KNOCKOUT_ROUNDS,
+  PODIUM_PLACES,
+  PODIUM_PRIZES,
+  PRIZE_BASE,
+  QUALIFYING_ROUND,
+} from './constants';
 import type { TabAvailability, TournamentTab } from './types';
 
 const DEFAULT_TAB: Record<TournamentStatus, TournamentTab> = {
@@ -113,6 +122,12 @@ export interface TimelineDay {
   state: DayState;
   long: string;
   short: string;
+  expected: boolean;
+}
+
+interface RoundLabel {
+  long: string;
+  short: string;
 }
 
 const dayState = (i: number, todayIndex: number, status: TournamentStatus): DayState => {
@@ -120,24 +135,57 @@ const dayState = (i: number, todayIndex: number, status: TournamentStatus): DayS
   return i === todayIndex && status === 'live' ? 'now' : 'up';
 };
 
-const REST_ROUNDS = { long: REST_DAY, short: REST_DAY };
+const REST_ROUNDS: RoundLabel = { long: REST_DAY, short: REST_DAY };
 
-const dayRounds = (day: TournamentDay) => {
+const NO_GUESSES = new Map<string, RoundLabel>();
+
+const dayRounds = (day: TournamentDay): RoundLabel => {
   if (day.isRest) return REST_ROUNDS;
   const labels = [...new Set(day.rounds.filter(Boolean).map((r) => DAY_ROUNDS[r] ?? { long: r, short: r }))];
   const short = labels.map((l) => l.short).join(' · ');
   return { long: labels.length === 1 ? (labels[0]?.long ?? '') : short, short };
 };
 
-export const buildTimeline = (status: TournamentStatus, schedule: TournamentSchedule): TimelineDay[] =>
-  daySlots(schedule.days).map(({ key, day, rest, live }) => ({
-    key,
-    label: day.shortLabel,
-    num: day.dayNum,
-    rest,
-    state: dayState(live ? schedule.todayIndex : day.index, schedule.todayIndex, status),
-    ...dayRounds(day),
-  }));
+const roundLadder = (level: Tournament['level'], rounds: readonly string[]) => {
+  if (level === 'Finals' || rounds.some((r) => r in GROUP_ROUND_NAMES)) return GROUP_STAGE_ROUNDS;
+  return KNOCKOUT_ROUNDS.slice(KNOCKOUT_ROUNDS.indexOf(rounds.includes('R64') ? 'R64' : `R${DRAW_SIZE}`));
+};
+
+const ladderRank = (ladder: readonly string[], round: string) =>
+  round in GROUP_ROUND_NAMES ? 0 : ladder.indexOf(round);
+
+const expectedRounds = (level: Tournament['level'], slots: readonly DaySlot[]) => {
+  const play = slots.filter((s) => !s.rest);
+  const seen = play.flatMap((s) => s.day.rounds);
+  const ladder = roundLadder(level, seen);
+  const floor = Math.max(0, ...seen.map((r) => ladderRank(ladder, r)));
+  const quals = seen.some((round) => !isMainDraw({ round }));
+  const guesses = new Map<string, RoundLabel>();
+  play.forEach(({ key, day }, i) => {
+    if (day.rounds.length) return;
+    const round = i === 0 && quals ? QUALIFYING_ROUND : ladder[Math.max(floor, ladder.length - play.length + i)];
+    const label = round && DAY_ROUNDS[round];
+    if (label) guesses.set(key, label);
+  });
+  return guesses;
+};
+
+export const buildTimeline = (t: Tournament, schedule: TournamentSchedule): TimelineDay[] => {
+  const slots = daySlots(schedule.days);
+  const guesses = t.status === 'up' || t.status === 'live' ? expectedRounds(t.level, slots) : NO_GUESSES;
+  return slots.map(({ key, day, rest, live }) => {
+    const guess = guesses.get(key);
+    return {
+      key,
+      label: day.shortLabel,
+      num: day.dayNum,
+      rest,
+      state: dayState(live ? schedule.todayIndex : day.index, schedule.todayIndex, t.status),
+      expected: !!guess,
+      ...(guess ?? dayRounds(day)),
+    };
+  });
+};
 
 export interface ChampionItem {
   event: EventCode;
@@ -196,6 +244,7 @@ export interface SeedEntry {
   key: string;
   seed: number;
   team: Team | null;
+  match: Match | null;
   tone: SideResult;
   status: string;
   tip: string;
@@ -248,6 +297,7 @@ export const buildPodium = (t: Tournament, schedule: TournamentSchedule): Podium
           key: `${match.id}-${side}`,
           seed: team.seed ?? 0,
           team,
+          match,
           tone: st.tone,
           status: st.label,
           tip: st.tone === 'won' || st.tone === 'lost' ? seedTip(match) : '',
@@ -257,7 +307,15 @@ export const buildPodium = (t: Tournament, schedule: TournamentSchedule): Podium
     const missing = found.length
       ? Array.from({ length: DRAW_SEEDS }, (_, i) => i + 1)
           .filter((n) => !seen.has(n))
-          .map((n): SeedEntry => ({ key: `missing-${n}`, seed: n, team: null, tone: 'lost', status: '', tip: '' }))
+          .map((n): SeedEntry => ({
+            key: `missing-${n}`,
+            seed: n,
+            team: null,
+            match: null,
+            tone: 'lost',
+            status: '',
+            tip: '',
+          }))
       : [];
     const seeds = [...found, ...missing].sort((a, b) => a.seed - b.seed);
     return {

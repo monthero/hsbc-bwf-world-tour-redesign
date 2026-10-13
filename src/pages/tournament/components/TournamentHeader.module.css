@@ -43,10 +43,6 @@
   align-items: start;
   gap: 8px var(--gx);
   padding-left: var(--pl);
-
-  @mixin smaller-than $mantine-breakpoint-sm {
-    row-gap: 6px;
-  }
 }
 
 .logo {
@@ -127,8 +123,68 @@
   }
 }
 
-.prizeWord {
-  @mixin smaller-than $mantine-breakpoint-sm {
+@mixin smaller-than $mantine-breakpoint-sm {
+  .header {
+    --logo: 48px;
+    --lift: calc(var(--logo) + 28px);
+  }
+
+  .banner {
+    height: clamp(176px, 50vw, 240px);
+    margin-inline: calc(-1 * var(--bwf-gutter));
+    border-radius: 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        transparent 40%,
+        alpha(var(--bwf-bg), 0.5) 70%,
+        alpha(var(--bwf-bg), 0.9) 90%,
+        var(--bwf-bg)
+      );
+    }
+  }
+
+  .cancelled {
+    right: var(--bwf-gutter);
+  }
+
+  .body {
+    position: relative;
+    z-index: 1;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'logo'
+      'title'
+      'meta';
+    margin-top: calc(-1 * var(--lift));
+    padding-left: 0;
+  }
+
+  .logo {
+    margin-top: 0;
+  }
+
+  .title {
+    padding-top: 0;
+    font-size: 26px;
+    line-height: 1.12;
+  }
+
+  .meta {
+    row-gap: 6px;
+  }
+
+  .venue {
+    flex-basis: 100%;
+  }
+
+  .prizeWord {
     display: none;
   }
 }

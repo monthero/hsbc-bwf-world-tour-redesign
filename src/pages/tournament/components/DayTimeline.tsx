@@ -4,6 +4,7 @@ import { IconCheck, IconTimer, LiveDot } from '~/components/ui';
 import type { Tournament, TournamentSchedule } from '~/types';
 import { countdownLabel } from '~/utils/tournaments';
 
+import { EXPECTED_ROUND_TIP } from '../constants';
 import { buildTimeline, type TimelineDay } from '../utils';
 import { RestBreak } from './RestBreak';
 
@@ -28,27 +29,44 @@ const StatusLabel: FC<{ tournament: Tournament; today: TimelineDay | undefined }
     <>
       <LiveDot pulse size={7} />
       <span>
-        Day {t.dayNumber} of {t.totalDays}
+        <span className={classes.strong}>
+          Day {t.dayNumber} of {t.totalDays}
+        </span>
         {today?.long && <span className={classes.phone}> · {today.long}</span>}
       </span>
     </>
   );
 };
 
-const DayItem = memo<{ d: TimelineDay }>(({ d }) =>
+const repeatedKeys = (days: TimelineDay[]) => {
+  const keys = new Set<string>();
+  let prev = '';
+  for (const d of days) {
+    if (d.rest) continue;
+    if (d.long && d.long === prev) keys.add(d.key);
+    prev = d.long;
+  }
+  return keys;
+};
+
+const DayItem = memo<{ d: TimelineDay; repeat: boolean }>(({ d, repeat }) =>
   d.rest ? (
     <li className={classes.rest}>
       <RestBreak label={d.rest} active={d.state === 'now'} />
     </li>
   ) : (
-    <li className={classes.day} data-state={d.state}>
+    <li
+      className={classes.day}
+      data-state={d.state}
+      data-repeat={repeat || undefined}
+      data-expected={d.expected || undefined}
+    >
       <i className={classes.bar} />
       <small className={classes.date}>
         <span className={classes.dateFull}>{d.label}</span>
         <span className={classes.dateNum}>{d.num}</span>
       </small>
-      <b className={classes.round}>
-        {d.state === 'now' && <LiveDot pulse size={6} className={classes.dot} />}
+      <b className={classes.round} title={d.expected ? EXPECTED_ROUND_TIP : undefined}>
         <span className={classes.long}>{d.long}</span>
         <span className={classes.short}>{d.short}</span>
       </b>
@@ -58,7 +76,8 @@ const DayItem = memo<{ d: TimelineDay }>(({ d }) =>
 
 export const DayTimeline = memo<{ tournament: Tournament; schedule: TournamentSchedule }>(
   ({ tournament: t, schedule }) => {
-    const days = useMemo(() => buildTimeline(t.status, schedule), [t.status, schedule]);
+    const days = useMemo(() => buildTimeline(t, schedule), [t, schedule]);
+    const repeats = useMemo(() => repeatedKeys(days), [days]);
     const today = days.find((d) => d.state === 'now');
     return (
       <div className={classes.timeline}>
@@ -67,7 +86,7 @@ export const DayTimeline = memo<{ tournament: Tournament; schedule: TournamentSc
         </div>
         <ol className={classes.days}>
           {days.map((d) => (
-            <DayItem key={d.key} d={d} />
+            <DayItem key={d.key} d={d} repeat={repeats.has(d.key)} />
           ))}
         </ol>
       </div>

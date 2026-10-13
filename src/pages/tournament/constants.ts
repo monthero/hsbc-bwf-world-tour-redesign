@@ -43,6 +43,14 @@ export const DAY_ROUNDS: Record<string, { long: string; short: string }> = {
   F: { long: 'Finals', short: 'F' },
 };
 
+export const KNOCKOUT_ROUNDS = ['R64', 'R32', 'R16', 'QF', 'SF', 'F'];
+
+export const GROUP_STAGE_ROUNDS = ['R1', 'SF', 'F'];
+
+export const QUALIFYING_ROUND = 'Q-R32';
+
+export const EXPECTED_ROUND_TIP = 'Expected round · order of play not out yet';
+
 export const PRIZE_BASE = 500000;
 
 export const DRAW_SEEDS = 8;
