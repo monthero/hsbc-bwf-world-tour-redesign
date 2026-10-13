@@ -1,8 +1,9 @@
 import { Button, NumberInput, Select, Textarea, TextInput } from '@mantine/core';
-import { DateInput } from '@mantine/dates';
+import { DateInput, MonthPickerInput } from '@mantine/dates';
 import { useCallback, useMemo, useState, type ChangeEvent, type FC } from 'react';
 
 import { PlayerName } from '~/components/player';
+import { ISO_DAY, monthKeyOf, monthOf } from '~/utils/dates';
 import { HEIGHT_UNIT } from '~/utils/format';
 import { toPlayer } from '~/utils/names';
 import { nameIssue } from '~/utils/surname';
@@ -19,7 +20,7 @@ import {
 } from '../fields';
 import type { ImageKind, ImageResult, Provenance } from '../schema';
 import { CatalogCascader } from './CatalogCascader';
-import { DATE_FORMAT, FLOATING_PROPS, INPUT_CLASSES } from './inputs';
+import { DATE_FORMAT, FLOATING_PROPS, INPUT_CLASSES, MONTH_FORMAT } from './inputs';
 
 import classes from './FieldInputs.module.css';
 
@@ -118,6 +119,19 @@ export const DateField: FC<FieldInputProps> = ({ field, value, placeholder, onVa
     onChange={(v) => onValue(v ?? '')}
     valueFormat={DATE_FORMAT}
     defaultLevel="decade"
+    clearable
+    popoverProps={FLOATING_PROPS}
+    classNames={INPUT_CLASSES}
+  />
+);
+
+export const MonthField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
+  <MonthPickerInput
+    aria-label={`${field.label} override`}
+    value={value ? monthOf(value).format(ISO_DAY) : null}
+    placeholder={placeholder}
+    onChange={(v) => onValue(v ? monthKeyOf(v) : '')}
+    valueFormat={MONTH_FORMAT}
     clearable
     popoverProps={FLOATING_PROPS}
     classNames={INPUT_CLASSES}

@@ -64,6 +64,7 @@ export const usePlayerProfile = (id: string) => {
     bio,
     ranks,
     seed,
+    retired: record?.retired ?? file.data?.retired,
     week: directory?.week ?? '',
   };
 };

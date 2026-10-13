@@ -5,5 +5,6 @@ export { PlayerHoverCard } from './PlayerHoverCard';
 export { PlayerName } from './PlayerName';
 export { QualifyLine } from './QualifyLine';
 export { RankedNames } from './RankedNames';
+export { RetiredBadge } from './RetiredBadge';
 export { QualifyMark, RaceQualifier, RankCard, RankChange, RankValue } from './Rank';
 export { SEED_TIP, SeedTag } from './SeedTag';

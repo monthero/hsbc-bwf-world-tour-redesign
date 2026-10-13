@@ -1,4 +1,5 @@
 import { Checkbox } from '@mantine/core';
+import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useMemo, type Ref } from 'react';
 
@@ -8,6 +9,7 @@ import { PlayerAvatar } from '~/components/player';
 import { useWindowList } from '~/hooks/useWindowList';
 import { formatDayMonthYear } from '~/utils/dates';
 import { formatRank } from '~/utils/format';
+import { retirementParts } from '~/utils/retirement';
 
 import { BADGE_FIELDS, effectiveImage } from '../fields';
 import type { AdminRow } from '../filters';
@@ -17,6 +19,34 @@ import classes from './PlayerTable.module.css';
 import utils from '~/styles/utils.module.css';
 
 const ROW_ESTIMATE = 53;
+const NEWS_SHOWN = 3;
+
+const RetirementLine = memo<{ row: AdminRow }>(({ row: { player: p } }) => {
+  const facts = retirementParts({
+    since: p.override?.retired,
+    lastPlayed: p.lastPlayed,
+    lastTournament: p.lastTournament,
+  });
+  const more = p.retirementNews.length - NEWS_SHOWN;
+  return (
+    <span className={classes.retire}>
+      <span>{facts.join(' · ')}</span>
+      {p.retirementNews.slice(0, NEWS_SHOWN).map((n) => (
+        <Link
+          key={n.id}
+          to="/news/$id"
+          params={{ id: n.id }}
+          target="_blank"
+          className={classes.article}
+          data-title={n.inTitle || undefined}
+        >
+          <span className={utils.num}>{formatDayMonthYear(n.date)}</span> {n.title}
+        </Link>
+      ))}
+      {more > 0 && <span>+{more} more</span>}
+    </span>
+  );
+});
 
 const PlayerRow = memo<{
   row: AdminRow;
@@ -60,6 +90,7 @@ const PlayerRow = memo<{
         {row.overridden && <span className={classes.overridden}>Override</span>}
         {row.hasNotes && <span className={classes.note}>Note</span>}
       </span>
+      {(row.candidate || p.override?.retired) && <RetirementLine row={row} />}
     </div>
   );
 });

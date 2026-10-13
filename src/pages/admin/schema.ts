@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { EventCode, Focus, PhotoCrop } from '../../api/schemas.ts';
+import { EditionRef, EventCode, Focus, IsoDay, MonthKey, PhotoCrop } from '../../api/schemas.ts';
 import { parseHeightCm } from '../../utils/format.ts';
 import { cleanName, nameIssue } from '../../utils/surname.ts';
 
@@ -80,16 +80,17 @@ export const FRAMING_OF = {
 } as const satisfies Record<ImageKind, { focus: FramingKey; flip: FramingKey }>;
 
 export const NAME_KEY = 'name';
-const NAME_KEYS = [NAME_KEY] as const;
+export const RETIRED_KEY = 'retired';
+const TOP_KEYS = [NAME_KEY, RETIRED_KEY] as const;
+export type TopKey = (typeof TOP_KEYS)[number];
 
-export const FieldKey = z.union([z.literal(NAME_KEY), ImageKind, FramingKey, BioFieldKey]);
+export const FieldKey = z.union([z.enum(TOP_KEYS), ImageKind, FramingKey, BioFieldKey]);
 export type FieldKey = z.infer<typeof FieldKey>;
 
 export const DEFAULT_SOURCE = 'user';
 
 const PlayerId = z.string().regex(/^\d+$/);
 const Text = z.string().trim().min(1);
-const IsoDay = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 const DisplayName = z
   .string()
   .transform(cleanName)
@@ -103,6 +104,7 @@ export type Provenance = z.infer<typeof Provenance>;
 
 export const PlayerOverride = z.looseObject({
   name: DisplayName.optional(),
+  retired: MonthKey.optional(),
   photo: ImageSource.optional(),
   hero: ImageSource.optional(),
   heroFocus: Focus.optional(),
@@ -123,6 +125,9 @@ export type PlayerOverride = z.infer<typeof PlayerOverride>;
 export const OverridesFile = z.looseObject({ players: z.record(z.string(), PlayerOverride).default({}) });
 export type OverridesFile = z.infer<typeof OverridesFile>;
 
+export const RetirementNews = z.object({ id: z.string(), title: z.string(), date: IsoDay, inTitle: z.boolean() });
+export type RetirementNews = z.infer<typeof RetirementNews>;
+
 export const AdminPlayer = z.object({
   id: z.string(),
   name: z.string(),
@@ -130,6 +135,8 @@ export const AdminPlayer = z.object({
   photo: z.string().nullable(),
   hero: z.string().nullable(),
   lastPlayed: z.string(),
+  lastTournament: EditionRef.nullable(),
+  retirementNews: z.array(RetirementNews),
   rank: z.number().nullable(),
   rankEvent: EventCode.nullable(),
   events: z.array(EventCode),
@@ -218,7 +225,7 @@ export type EquipmentAdded = z.infer<typeof EquipmentAdded>;
 const IMAGE_KEYS = ImageKind.options;
 const FRAMING_KEYS = FramingKey.options;
 const ENTRY_KEYS = new Set<string>([
-  NAME_KEY,
+  ...TOP_KEYS,
   ...IMAGE_KEYS,
   ...FRAMING_KEYS,
   'bio',
@@ -232,6 +239,8 @@ const FLIP_ON = 'true';
 const byText = (a: string, b: string) => a.localeCompare(b);
 
 export const isNameField = (key: FieldKey): key is typeof NAME_KEY => key === NAME_KEY;
+
+export const isTopField = (key: FieldKey): key is TopKey => (TOP_KEYS as readonly string[]).includes(key);
 
 export const isImageField = (key: FieldKey): key is ImageKind => key === 'photo' || key === 'hero';
 
@@ -285,8 +294,7 @@ export const sameProvenance = (a: Provenance, b: Provenance) =>
   a.source.trim() === b.source.trim() && (a.asOf || undefined) === (b.asOf || undefined);
 
 export const overrideValue = (e: PlayerOverride | null | undefined, key: FieldKey) => {
-  if (isNameField(key)) return e?.name ?? '';
-  if (isImageField(key)) return e?.[key] ?? '';
+  if (isTopField(key) || isImageField(key)) return e?.[key] ?? '';
   if (isFramingField(key)) return encodeFraming(e, key);
   return encodeBio(e?.bio?.[bioKeyOf(key)]);
 };
@@ -300,7 +308,7 @@ export const sameOverride = (a: PlayerOverride | null, b: PlayerOverride | null)
 export const overriddenKeys = (e: PlayerOverride | null | undefined): FieldKey[] =>
   e
     ? [
-        ...(e.name ? NAME_KEYS : []),
+        ...TOP_KEYS.filter((k) => e[k]),
         ...IMAGE_KEYS.filter((k) => e[k]),
         ...FRAMING_KEYS.filter((k) => overrideValue(e, k)),
         ...BIO_KEYS.filter((k) => e.bio?.[k]).map((k) => `bio.${k}` as const),
@@ -321,6 +329,7 @@ export const canonicalOverride = (e: PlayerOverride | null | undefined): PlayerO
     .sort(byText);
   return {
     ...(e.name && { name: e.name }),
+    ...(e.retired && { retired: e.retired }),
     ...(e.photo && { photo: e.photo }),
     ...(e.hero && { hero: e.hero }),
     ...Object.fromEntries(
@@ -348,8 +357,7 @@ export const withField = (
   const bio = { ...e?.bio };
   const meta = { ...e?.meta };
   delete meta[key];
-  if (isNameField(key)) next.name = value ?? undefined;
-  else if (isImageField(key)) next[key] = value ?? undefined;
+  if (isTopField(key) || isImageField(key)) next[key] = value ?? undefined;
   else if (isFramingField(key)) Object.assign(next, { [key]: decodeFraming(key, value) });
   else {
     const decoded = value === null ? undefined : decodeBio(bioKeyOf(key), value);

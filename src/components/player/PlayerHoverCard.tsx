@@ -17,6 +17,7 @@ import { BioStat, FactTile } from './BioFacts';
 import { PlayerAvatar } from './PlayerAvatar';
 import { PlayerName } from './PlayerName';
 import { RankCard } from './Rank';
+import { RetiredBadge } from './RetiredBadge';
 import { SeedTag } from './SeedTag';
 
 import classes from './PlayerHoverCard.module.css';
@@ -63,7 +64,7 @@ export const PlayerHoverCard: FC<{ id: string; children: ReactNode }> = ({ id, c
 };
 
 const PlayerCard: FC<{ id: string }> = ({ id }) => {
-  const { status, player, record, bio, ranks, seed, matches, week } = usePlayerProfile(id);
+  const { status, player, record, bio, ranks, seed, matches, week, retired } = usePlayerProfile(id);
   const runs = useMemo(() => matches.filter((pm) => pm.tournament.status === 'live').sort(byTime), [matches]);
   if (!player)
     return status === 'missing' ? (
@@ -94,6 +95,7 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
           <span className={classes.meta}>
             {player.cc && <CountryLabel cc={player.cc} flagSize="sm" />}
             <SeedTag seed={seed} variant="pill" />
+            <RetiredBadge retired={retired} />
           </span>
         </div>
       </div>

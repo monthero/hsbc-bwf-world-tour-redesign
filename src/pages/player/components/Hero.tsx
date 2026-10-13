@@ -1,10 +1,10 @@
 import { memo } from 'react';
 
 import { CountryLabel } from '~/components/country';
-import { Partner, PlayerAvatar, PlayerName, RankChange, SeedTag } from '~/components/player';
+import { Partner, PlayerAvatar, PlayerName, RankChange, RetiredBadge, SeedTag } from '~/components/player';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerPhoto } from '~/hooks/usePlayers';
-import type { EventCode, Focus, Player, RankView } from '~/types';
+import type { EventCode, Focus, Player, RankView, Retirement } from '~/types';
 import { formatRank, plural } from '~/utils/format';
 import { heroVars, playerHeroUrl } from '~/utils/images';
 
@@ -20,11 +20,12 @@ interface HeroProps {
   ranks: RankView[];
   highs: ReadonlyMap<EventCode, CareerHigh>;
   focus?: Focus | null;
+  retired?: Retirement;
 }
 
 const AVATAR_CROP = 240;
 
-export const Hero = memo<HeroProps>(({ player, hero, seed, prize, ranks, highs, focus }) => {
+export const Hero = memo<HeroProps>(({ player, hero, seed, prize, ranks, highs, focus, retired }) => {
   const isMobile = useIsMobile();
   const hasPhoto = !!usePlayerPhoto(player.id).src;
   const heroStyle = hero ? heroVars(playerHeroUrl(player.id, hero, isMobile, !!focus), focus) : undefined;
@@ -36,6 +37,7 @@ export const Hero = memo<HeroProps>(({ player, hero, seed, prize, ranks, highs, 
           <span className={classes.meta}>
             {player.cc && <CountryLabel cc={player.cc} flagSize="lg" />}
             <SeedTag seed={seed} variant="pill" />
+            <RetiredBadge retired={retired} size="md" />
             {prize && (
               <span className={classes.prize}>
                 <b>{prize}</b> career prize money

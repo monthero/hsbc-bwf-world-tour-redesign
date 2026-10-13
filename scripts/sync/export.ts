@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import { MonthKey, type EditionRef, type Retirement } from '../../src/api/schemas.ts';
 import { imageAssetPath, ImageKind } from '../../src/pages/admin/schema.ts';
 import { parseHeightCm } from '../../src/utils/format.ts';
 import {
@@ -137,6 +138,7 @@ interface Overrides {
     string,
     {
       name?: string;
+      retired?: string;
       photo?: string;
       hero?: string;
       heroFocus?: { x: number; y: number };
@@ -524,6 +526,25 @@ export const exportData = async (
     });
   }
 
+  const careerOf = (id: string) =>
+    (byPlayer.get(id) ?? []).toSorted((a, b) => b.day.localeCompare(a.day) || b.dto.time.localeCompare(a.dto.time));
+  const editionRef = (code: string): EditionRef | undefined => {
+    const e = editionOf.get(code);
+    return e && { code, slug: e.slug, name: e.series_name, year: e.season };
+  };
+  const retirementOf = (id: string): Retirement | undefined => {
+    const since = MonthKey.safeParse(overrides[id]?.retired).data;
+    if (!since) return undefined;
+    const last = careerOf(id)[0];
+    return { since, ...(last && { lastPlayed: last.day, lastTournament: editionRef(last.tournament) }) };
+  };
+  const retired = new Map(
+    Object.keys(overrides).flatMap((id) => {
+      const r = retirementOf(id);
+      return r ? [[id, r] as const] : [];
+    }),
+  );
+
   write('players.json', {
     rankingsWeek: worldPub?.week ?? '',
     players: Object.fromEntries(
@@ -536,15 +557,14 @@ export const exportData = async (
           ...(p.photo ? { photo: p.photo } : {}),
           ...(p.photo && overrides[p.id]?.photoCrop ? { photoCrop: overrides[p.id]?.photoCrop } : {}),
           ...(ranksOf.get(p.id)?.length ? { ranks: ranksOf.get(p.id) } : {}),
+          retired: retired.get(p.id),
         },
       ]),
     ),
   });
 
   for (const p of players) {
-    const career = (byPlayer.get(p.id) ?? []).toSorted(
-      (a, b) => b.day.localeCompare(a.day) || b.dto.time.localeCompare(a.dto.time),
-    );
+    const career = careerOf(p.id);
     write(`players/${p.id}.json`, {
       id: p.id,
       name: p.name,
@@ -554,6 +574,7 @@ export const exportData = async (
       heroFocus: overrides[p.id]?.heroFocus ?? null,
       slug: p.slug,
       bio: bioOf(p),
+      retired: retired.get(p.id),
       matches: career.map((c) => ({ tournament: c.tournament, day: c.day, ...c.dto })),
     });
   }

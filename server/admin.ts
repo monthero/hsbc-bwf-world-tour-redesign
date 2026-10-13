@@ -23,6 +23,7 @@ import {
 import { createEquipment } from './equipment.ts';
 import { HttpError, parseWith, readBody, readText, sendJson, writeAtomic } from './http.ts';
 import { createImageStore } from './images.ts';
+import { retirementNews } from './retirement.ts';
 
 const WORLD = 2;
 const FIRST_WORLD_CATEGORY = 6;
@@ -41,12 +42,14 @@ best AS (
   SELECT id, min(rank) AS rank, category, group_concat(DISTINCT category) AS cats FROM ranks GROUP BY id
 ),
 played AS (
-  SELECT mp.player_id AS id, group_concat(DISTINCT m.event) AS events
+  SELECT mp.player_id AS id, group_concat(DISTINCT m.event) AS events, m.edition, max(m.day || m.time) AS at
   FROM match_players mp JOIN matches m ON m.id = mp.match_id
   GROUP BY mp.player_id
 )
-SELECT p.id, p.name, p.cc, p.photo, p.hero, p.last_played, p.bio, b.rank, b.category, b.cats, pl.events
+SELECT p.id, p.name, p.cc, p.photo, p.hero, p.last_played, p.bio, b.rank, b.category, b.cats, pl.events,
+  e.code AS last_code, e.slug AS last_slug, s.name AS last_name, e.season AS last_year
 FROM players p LEFT JOIN best b ON b.id = p.id LEFT JOIN played pl ON pl.id = p.id
+LEFT JOIN editions e ON e.code = pl.edition LEFT JOIN series s ON s.id = e.series_id
 `;
 
 interface PlayerRow {
@@ -61,7 +64,18 @@ interface PlayerRow {
   category: number | null;
   cats: string | null;
   events: string | null;
+  last_code: string | null;
+  last_slug: string | null;
+  last_name: string | null;
+  last_year: number | null;
 }
+
+const lastTournamentOf = (r: PlayerRow): AdminPlayer['lastTournament'] =>
+  r.last_code && r.last_slug && r.last_name && r.last_year
+    ? { code: r.last_code, slug: r.last_slug, name: r.last_name, year: r.last_year }
+    : null;
+
+const NO_NEWS: AdminPlayer['retirementNews'] = [];
 
 const eventOfCategory = (category: number) => EventCode.options[category - FIRST_WORLD_CATEGORY] ?? null;
 
@@ -139,6 +153,7 @@ const createAdmin = (root: string) => {
     const db = new DatabaseSync(dbFile, { readOnly: true });
     try {
       const rows = db.prepare(PLAYERS_SQL).all() as unknown as PlayerRow[];
+      const news = retirementNews(db);
       const players = rows.map((r): AdminPlayer => ({
         id: r.id,
         name: r.name,
@@ -146,6 +161,8 @@ const createAdmin = (root: string) => {
         photo: r.photo,
         hero: r.hero,
         lastPlayed: r.last_played,
+        lastTournament: lastTournamentOf(r),
+        retirementNews: news.get(r.id) ?? NO_NEWS,
         rank: r.rank,
         rankEvent: r.category === null ? null : eventOfCategory(r.category),
         events: eventsOf(r),

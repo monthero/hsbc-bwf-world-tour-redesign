@@ -19,8 +19,10 @@ import {
   isFramingField,
   isImageField,
   isNameField,
+  isTopField,
   NAME_KEY,
   overriddenKeys,
+  RETIRED_KEY,
   sameProvenance,
   type AdminPlayer,
   type BioFieldKey,
@@ -32,9 +34,10 @@ import {
   type ImageResult,
   type PlayerOverride,
   type Provenance,
+  type TopKey,
 } from './schema';
 
-export type FieldInput = 'name' | 'text' | 'long' | 'date' | 'height' | 'plays' | 'image' | 'catalog';
+export type FieldInput = 'name' | 'text' | 'long' | 'date' | 'month' | 'height' | 'plays' | 'image' | 'catalog';
 export type FieldState = 'bwf' | 'override' | 'none';
 
 export interface FieldDef {
@@ -66,6 +69,7 @@ export const IMAGES = 'Images';
 
 export const FIELDS: readonly FieldDef[] = [
   { key: NAME_KEY, label: 'Display name', group: 'Identity', input: 'name' },
+  { key: RETIRED_KEY, label: 'Retired since', group: 'Identity', input: 'month' },
   { key: 'photo', label: 'Photo', group: IMAGES, input: 'image', missing: true, badge: true },
   { key: 'hero', label: 'Hero', group: IMAGES, input: 'image', missing: true, badge: true },
   bio('born', 'Born', 'Personal', 'date'),
@@ -122,7 +126,7 @@ export const PLAYS_OPTIONS = ['Right-handed', 'Left-handed'];
 export const bwfValue = (p: AdminPlayer, key: FieldKey) => {
   if (isNameField(key)) return p.name;
   if (isImageField(key)) return p[key] ?? '';
-  if (isFramingField(key)) return '';
+  if (isTopField(key) || isFramingField(key)) return '';
   const bioKey = bioKeyOf(key);
   return encodeBio(decodeBio(bioKey, p.bio[bioKey]));
 };
@@ -205,13 +209,13 @@ export const fromDraft = (draft: Draft, base: PlayerOverride | null): PlayerOver
     return d?.value.trim() ? [{ key, d }] : [];
   });
   const top = topProvenance(base, filled[0]?.d);
-  let name: string | undefined;
+  const tops: Partial<Record<TopKey, string>> = {};
   const images: Partial<Record<ImageKind, string>> = {};
   const framing: Partial<Record<FramingKey, string>> = {};
   const bioValues: BioValues = {};
   const meta: Partial<Record<FieldKey, Provenance>> = {};
   for (const { key, d } of filled) {
-    if (isNameField(key)) name = d.value.trim();
+    if (isTopField(key)) tops[key] = d.value.trim();
     else if (isImageField(key)) images[key] = d.value.trim();
     else if (isFramingField(key)) framing[key] = d.value.trim();
     else bioValues[bioKeyOf(key)] = decodeBio(bioKeyOf(key), d.value);
@@ -220,7 +224,8 @@ export const fromDraft = (draft: Draft, base: PlayerOverride | null): PlayerOver
   }
   return canonicalOverride({
     ...base,
-    name,
+    name: tops.name,
+    retired: tops.retired,
     photo: images.photo,
     hero: images.hero,
     ...Object.fromEntries(FramingKey.options.map((k) => [k, decodeFraming(k, framing[k])])),

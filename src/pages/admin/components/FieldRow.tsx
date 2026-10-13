@@ -22,6 +22,11 @@ const EMPTY = '—';
 
 const BLOCK_INPUTS: ReadonlySet<FieldInput> = new Set<FieldInput>(['image', 'long']);
 
+const revertLabel = (image: boolean, bwf: string) => {
+  if (image) return 'Remove override';
+  return bwf ? 'Revert to BWF' : 'Clear';
+};
+
 const BwfValue: FC<{ field: FieldDef; playerId: string; value: string }> = ({ field, playerId, value }) => {
   if (!value) return <span className={classes.empty}>{EMPTY}</span>;
   if (isImageField(field.key)) return <ImageThumb kind={field.key} playerId={playerId} value={value} />;
@@ -67,7 +72,7 @@ export const FieldRow = memo<{
         )}
         {draft && (
           <button type="button" className={classes.revert} onClick={onRevert}>
-            {image ? 'Remove override' : 'Revert to BWF'}
+            {revertLabel(image, bwf)}
           </button>
         )}
       </div>

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { playerQuery, playersQuery, raceRankingsQuery, rankingHistoryQuery } from '~/api/queries';
-import type { DirectoryRecord, Player, PlayerDirectory, PlayerRecord, PlayersData } from '~/types';
+import type { DirectoryRecord, Player, PlayerDirectory, PlayerRecord, PlayersData, Retirement } from '~/types';
 import { toPlayer } from '~/utils/names';
 import { playerPhoto, type PhotoOptions } from '~/utils/players';
 import { playerStanding, searchKey, type PlayerStanding } from '~/utils/search';
@@ -31,6 +31,7 @@ export interface PlayerSearchEntry {
   player: Player;
   keys: readonly string[];
   standing: PlayerStanding;
+  retired?: Retirement;
 }
 
 const searchEntry = (id: string, rec: PlayerRecord): PlayerSearchEntry => {
@@ -40,6 +41,7 @@ const searchEntry = (id: string, rec: PlayerRecord): PlayerSearchEntry => {
     player,
     keys: [searchKey(rec.name), searchKey(player.surname), searchKey(given), ...(rec.aka ? [searchKey(rec.aka)] : [])],
     standing: playerStanding(rec.ranks),
+    retired: rec.retired,
   };
 };
 

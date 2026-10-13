@@ -25,6 +25,7 @@ export interface AdminRow {
   states: Partial<Record<FieldKey, FieldState>>;
   overridden: boolean;
   hasNotes: boolean;
+  candidate: boolean;
   brands: readonly string[];
 }
 
@@ -78,6 +79,8 @@ export const TOGGLES: readonly Toggle[] = [
     label: `No ${f.label.toLowerCase()}`,
     test: f.trustBwf === false ? (r) => r.states[f.key] !== 'override' : (r) => r.states[f.key] === 'none',
   })),
+  { key: 'possibly-retired', label: 'Possibly retired', test: (r) => r.candidate },
+  { key: 'retired', label: 'Retired', test: (r) => !!r.player.override?.retired },
   { key: 'overridden', label: 'Overridden', test: (r) => r.overridden },
   { key: 'notes', label: 'Has notes', test: (r) => r.hasNotes },
 ];
@@ -127,13 +130,17 @@ const brandIndex = (players: readonly AdminPlayer[], known: readonly BrandMatche
   return { labels, catalogLabels, brandsOf };
 };
 
-const toRow = (player: AdminPlayer, brands: readonly string[]): AdminRow => ({
+const isCandidate = (p: AdminPlayer, staleBefore: string) =>
+  !p.override?.retired && p.lastPlayed < staleBefore && p.retirementNews.length > 0;
+
+const toRow = (player: AdminPlayer, brands: readonly string[], staleBefore: string): AdminRow => ({
   player,
   name: displayName(player),
   text: foldText(`${player.override?.name ?? ''} ${player.name} ${player.id} ${player.cc} ${countryName(player.cc)}`),
   states: Object.fromEntries(STATUS_FIELDS.map((f) => [f.key, fieldState(player, f.key)])),
   overridden: !!player.override,
   hasNotes: !!player.override?.notes?.trim(),
+  candidate: isCandidate(player, staleBefore),
   brands,
 });
 
@@ -145,7 +152,8 @@ const countBy = (rows: readonly AdminRow[], keysOf: (r: AdminRow) => readonly st
 
 const computeRows = (players: readonly AdminPlayer[], knownBrands: readonly BrandMatcher[]) => {
   const { labels, catalogLabels, brandsOf } = brandIndex(players, knownBrands);
-  const rows = players.map((p) => toRow(p, brandsOf.get(p.id) ?? []));
+  const staleBefore = ACTIVE_SINCE.year();
+  const rows = players.map((p) => toRow(p, brandsOf.get(p.id) ?? [], staleBefore));
   const countries: CountOption[] = [...countBy(rows, (r) => [r.player.cc])]
     .map(([value, count]) => ({ value, label: countryName(value), count }))
     .sort((a, b) => compareText(a.label, b.label));
