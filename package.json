@@ -16,7 +16,10 @@
     "sync:export": "node --disable-warning=ExperimentalWarning scripts/sync/index.ts --only news,images,export --offline",
     "sync:news": "node --disable-warning=ExperimentalWarning scripts/sync/index.ts --only news,export",
     "countries": "node scripts/build-countries.mjs",
-    "assets:map": "node --disable-warning=ExperimentalWarning scripts/assets/world-map.ts"
+    "assets:map": "node --disable-warning=ExperimentalWarning scripts/assets/world-map.ts",
+    "relay:dev": "wrangler dev --config workers/bwf-relay/wrangler.toml",
+    "relay:deploy": "wrangler deploy --config workers/bwf-relay/wrangler.toml",
+    "relay:secret": "wrangler secret put RELAY_KEY --config workers/bwf-relay/wrangler.toml"
   },
   "dependencies": {
     "@mantine/core": "^9.7.1",
@@ -33,6 +36,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "5.20261006.1",
     "@iconify-json/solar": "^1.2.13",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
@@ -61,7 +65,8 @@
     "unplugin-icons": "^24.0.0",
     "vite": "^8.3.0",
     "world-atlas": "2.0.2",
-    "world-countries": "^5.1.0"
+    "world-countries": "^5.1.0",
+    "wrangler": "4.148.0"
   },
   "packageManager": "pnpm@10.22.0"
 }

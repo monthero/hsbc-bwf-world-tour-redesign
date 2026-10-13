@@ -1,18 +1,10 @@
 import { z } from 'zod';
 
 import { addDays, todayIso } from '../scripts/sync/dates.ts';
+import { BWF_API, BWF_HEADERS, type BwfPath, isBwfPath, RELAY_KEY_HEADER } from './bwf-upstream.ts';
 import type { Endpoint } from './endpoints.ts';
 import { cdnCache, sendJson } from './http.ts';
 
-const BWF_API = 'https://extranet-lv.bwfbadminton.com/api';
-const BWF_SITE = 'https://bwfworldtour.bwfbadminton.com';
-const BWF_HEADERS = {
-  'user-agent': 'Mozilla/5.0 (compatible; bwf-tracker-dev/0.1)',
-  accept: 'application/json, text/plain, */*',
-  'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
-  origin: BWF_SITE,
-  referer: `${BWF_SITE}/`,
-};
 const TIMEOUT_MS = 10_000;
 const SETTLE_DAYS = 3;
 
@@ -46,7 +38,7 @@ const route = <S extends z.ZodType<Record<string, string>>>(
   },
 });
 
-const ROUTES: Record<string, Route> = {
+const ROUTES: Record<BwfPath, Route> = {
   '/tournaments/day-matches': route(
     z.strictObject({ tournamentCode: TournamentCode, date: IsoDay, order: Id, court: Id }),
     (q) => dayCache(q.date),
@@ -64,19 +56,32 @@ const ROUTES: Record<string, Route> = {
   ),
 };
 
-export const bwfProxy: Endpoint = {
-  name: 'bwf-api',
-  prefix: '/bwf-api',
-  serve: async (url, res) => {
-    const target = Object.hasOwn(ROUTES, url.pathname) ? ROUTES[url.pathname]?.parse(url.searchParams) : null;
-    if (!target) return sendJson(res, 404, { error: 'Unknown BWF route' }, ERROR_CACHE);
-    const upstream = await fetch(`${BWF_API}${url.pathname}?${target.search}`, {
-      headers: BWF_HEADERS,
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    }).catch(() => null);
-    if (!upstream) return sendJson(res, 504, { error: 'upstream unavailable' }, ERROR_CACHE);
-    const body: unknown = await upstream.json().catch(() => undefined);
-    if (body === undefined) return sendJson(res, 502, { error: 'upstream blocked' }, ERROR_CACHE);
-    sendJson(res, upstream.status, body, upstream.ok ? target.cache : ERROR_CACHE);
-  },
+interface BwfProxyConfig {
+  relayUrl?: string;
+  relayKey?: string;
+}
+
+const upstreamOf = ({ relayUrl, relayKey }: BwfProxyConfig) =>
+  relayUrl && relayKey
+    ? { base: relayUrl.replace(/\/+$/, ''), headers: { [RELAY_KEY_HEADER]: relayKey } }
+    : { base: BWF_API, headers: BWF_HEADERS };
+
+export const bwfProxy = (config: BwfProxyConfig): Endpoint => {
+  const { base, headers } = upstreamOf(config);
+  return {
+    name: 'bwf-api',
+    prefix: '/bwf-api',
+    serve: async (url, res) => {
+      const target = isBwfPath(url.pathname) ? ROUTES[url.pathname].parse(url.searchParams) : null;
+      if (!target) return sendJson(res, 404, { error: 'Unknown BWF route' }, ERROR_CACHE);
+      const upstream = await fetch(`${base}${url.pathname}?${target.search}`, {
+        headers,
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+      }).catch(() => null);
+      if (!upstream) return sendJson(res, 504, { error: 'upstream unavailable' }, ERROR_CACHE);
+      const body: unknown = await upstream.json().catch(() => undefined);
+      if (body === undefined) return sendJson(res, 502, { error: 'upstream blocked' }, ERROR_CACHE);
+      sendJson(res, upstream.status, body, upstream.ok ? target.cache : ERROR_CACHE);
+    },
+  };
 };

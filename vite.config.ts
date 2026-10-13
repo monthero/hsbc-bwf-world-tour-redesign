@@ -11,15 +11,18 @@ import { youtubeEndpoint } from './server/youtube-api.ts';
 
 const root = import.meta.dirname;
 
-export default defineConfig(({ mode }) => ({
-  plugins: [
-    tanstackRouter({ target: 'react', autoCodeSplitting: true }),
-    react(),
-    Icons({ compiler: 'jsx', jsx: 'react', scale: 1 }),
-    vitePlugin(bwfProxy),
-    vitePlugin(youtubeEndpoint({ key: loadEnv(mode, root, '').YOUTUBE_API_KEY, root, persist: true })),
-    vitePlugin(newsEndpoint(root)),
-    adminApi(root),
-  ],
-  resolve: { tsconfigPaths: true },
-}));
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, root, '');
+  return {
+    plugins: [
+      tanstackRouter({ target: 'react', autoCodeSplitting: true }),
+      react(),
+      Icons({ compiler: 'jsx', jsx: 'react', scale: 1 }),
+      vitePlugin(bwfProxy({ relayUrl: env.BWF_RELAY_URL, relayKey: env.BWF_RELAY_KEY })),
+      vitePlugin(youtubeEndpoint({ key: env.YOUTUBE_API_KEY, root, persist: true })),
+      vitePlugin(newsEndpoint(root)),
+      adminApi(root),
+    ],
+    resolve: { tsconfigPaths: true },
+  };
+});
