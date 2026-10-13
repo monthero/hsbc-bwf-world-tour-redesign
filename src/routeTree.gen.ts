@@ -17,6 +17,7 @@ import { Route as NewsRouteImport } from './routes/news'
 import { Route as RankingsRouteImport } from './routes/rankings'
 import { Route as NewsIdRouteImport } from './routes/news_.$id'
 import { Route as PlayersIdRouteImport } from './routes/players.$id'
+import { Route as StudyCasesIndexRouteImport } from './routes/study-cases.index'
 import { Route as WorldTourYearSlugRouteImport } from './routes/world-tour.$year.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -59,6 +60,11 @@ const PlayersIdRoute = PlayersIdRouteImport.update({
   path: '/players/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudyCasesIndexRoute = StudyCasesIndexRouteImport.update({
+  id: '/study-cases/',
+  path: '/study-cases/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WorldTourYearSlugRoute = WorldTourYearSlugRouteImport.update({
   id: '/world-tour/$year/$slug',
   path: '/world-tour/$year/$slug',
@@ -74,6 +80,7 @@ export interface FileRoutesByFullPath {
   '/rankings': typeof RankingsRoute
   '/news/$id': typeof NewsIdRoute
   '/players/$id': typeof PlayersIdRoute
+  '/study-cases/': typeof StudyCasesIndexRoute
   '/world-tour/$year/$slug': typeof WorldTourYearSlugRoute
 }
 export interface FileRoutesByTo {
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/rankings': typeof RankingsRoute
   '/news/$id': typeof NewsIdRoute
   '/players/$id': typeof PlayersIdRoute
+  '/study-cases': typeof StudyCasesIndexRoute
   '/world-tour/$year/$slug': typeof WorldTourYearSlugRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/rankings': typeof RankingsRoute
   '/news_/$id': typeof NewsIdRoute
   '/players/$id': typeof PlayersIdRoute
+  '/study-cases/': typeof StudyCasesIndexRoute
   '/world-tour/$year/$slug': typeof WorldTourYearSlugRoute
 }
 export interface FileRouteTypes {
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/rankings'
     | '/news/$id'
     | '/players/$id'
+    | '/study-cases/'
     | '/world-tour/$year/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/rankings'
     | '/news/$id'
     | '/players/$id'
+    | '/study-cases'
     | '/world-tour/$year/$slug'
   id:
     | '__root__'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/rankings'
     | '/news_/$id'
     | '/players/$id'
+    | '/study-cases/'
     | '/world-tour/$year/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -144,6 +156,7 @@ export interface RootRouteChildren {
   RankingsRoute: typeof RankingsRoute
   NewsIdRoute: typeof NewsIdRoute
   PlayersIdRoute: typeof PlayersIdRoute
+  StudyCasesIndexRoute: typeof StudyCasesIndexRoute
   WorldTourYearSlugRoute: typeof WorldTourYearSlugRoute
 }
 
@@ -205,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayersIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/study-cases/': {
+      id: '/study-cases/'
+      path: '/study-cases'
+      fullPath: '/study-cases/'
+      preLoaderRoute: typeof StudyCasesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/world-tour/$year/$slug': {
       id: '/world-tour/$year/$slug'
       path: '/world-tour/$year/$slug'
@@ -224,6 +244,7 @@ const rootRouteChildren: RootRouteChildren = {
   RankingsRoute: RankingsRoute,
   NewsIdRoute: NewsIdRoute,
   PlayersIdRoute: PlayersIdRoute,
+  StudyCasesIndexRoute: StudyCasesIndexRoute,
   WorldTourYearSlugRoute: WorldTourYearSlugRoute,
 }
 export const routeTree = rootRouteImport
