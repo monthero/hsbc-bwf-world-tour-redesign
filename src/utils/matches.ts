@@ -159,6 +159,7 @@ export const buildSchedule = (t: Tournament, data: TournamentMatches, todayIso: 
   const todayIndex = todayIndexOf(t, days)
   return {
     asOf: data.asOf,
+    stale: !!data.stale,
     days,
     todayIndex,
     focusIndex: focusIndexOf(days, todayIndex),

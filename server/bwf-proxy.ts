@@ -5,7 +5,14 @@ import type { Endpoint } from './endpoints.ts'
 import { cdnCache, sendJson } from './http.ts'
 
 const BWF_API = 'https://extranet-lv.bwfbadminton.com/api'
-const BWF_UA = 'Mozilla/5.0 (compatible; bwf-tracker-dev/0.1)'
+const BWF_SITE = 'https://bwfworldtour.bwfbadminton.com'
+const BWF_HEADERS = {
+  'user-agent': 'Mozilla/5.0 (compatible; bwf-tracker-dev/0.1)',
+  accept: 'application/json, text/plain, */*',
+  'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+  origin: BWF_SITE,
+  referer: `${BWF_SITE}/`,
+}
 const TIMEOUT_MS = 10_000
 const SETTLE_DAYS = 3
 
@@ -64,12 +71,12 @@ export const bwfProxy: Endpoint = {
     const target = Object.hasOwn(ROUTES, url.pathname) ? ROUTES[url.pathname]?.parse(url.searchParams) : null
     if (!target) return sendJson(res, 404, { error: 'Unknown BWF route' }, ERROR_CACHE)
     const upstream = await fetch(`${BWF_API}${url.pathname}?${target.search}`, {
-      headers: { 'user-agent': BWF_UA, accept: 'application/json' },
+      headers: BWF_HEADERS,
       signal: AbortSignal.timeout(TIMEOUT_MS),
-    })
-    res.statusCode = upstream.status
-    res.setHeader('content-type', upstream.headers.get('content-type') ?? 'application/json')
-    res.setHeader('cache-control', upstream.ok ? target.cache : ERROR_CACHE)
-    res.end(Buffer.from(await upstream.arrayBuffer()))
+    }).catch(() => null)
+    if (!upstream) return sendJson(res, 504, { error: 'upstream unavailable' }, ERROR_CACHE)
+    const body: unknown = await upstream.json().catch(() => undefined)
+    if (body === undefined) return sendJson(res, 502, { error: 'upstream blocked' }, ERROR_CACHE)
+    sendJson(res, upstream.status, body, upstream.ok ? target.cache : ERROR_CACHE)
   },
 }

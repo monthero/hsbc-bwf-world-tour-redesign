@@ -21,6 +21,8 @@ import utils from '~/styles/utils.module.css'
 
 const NO_MATCHES: Match[] = []
 
+const STALE_NOTE = 'Live scores are unavailable right now. Showing results that may be up to an hour old.'
+
 const byCourt = (a: Match, b: Match) => a.court - b.court
 
 const emptyMessage = (
@@ -61,6 +63,11 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
   return (
     <div className={classes.root}>
       <CondensedFilters filters={f} view={view} days={days} visible={filtersOut} />
+      {schedule.stale && tournament.status === 'live' && (
+        <div className={clsx(utils.container, classes.live)}>
+          <EmptyState variant="note">{STALE_NOTE}</EmptyState>
+        </div>
+      )}
       {live.length > 0 && (
         <div className={clsx(utils.container, classes.live)}>
           <LiveSection matches={live} tmtId={tournament.tmtId} onOpen={openMatch} />

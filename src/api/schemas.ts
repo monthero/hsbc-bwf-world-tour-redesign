@@ -94,6 +94,7 @@ export const TournamentMatches = z.object({
   asOf: z.string(),
   days: z.record(z.string(), z.array(MatchDto)),
   plannedDays: z.record(z.string(), z.object({ rounds: z.array(z.string()), count: z.number() })),
+  stale: z.boolean().optional(),
 })
 export type TournamentMatches = z.infer<typeof TournamentMatches>
 

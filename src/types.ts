@@ -138,6 +138,7 @@ export interface TournamentDay {
 
 export interface TournamentSchedule {
   asOf: string
+  stale: boolean
   days: TournamentDay[]
   todayIndex: number
   focusIndex: number

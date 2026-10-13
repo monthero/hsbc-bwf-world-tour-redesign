@@ -5,6 +5,7 @@ import { dayjs, ISO_DAY, isoRange, today, todayIso } from '~/utils/dates'
 import { trackLiveStats, type LiveStats } from '~/utils/live'
 import { finalDayOver } from '~/utils/matches'
 
+import { LIVE_COOLDOWN_MS, livePollMs, liveRetry } from './bwf/http'
 import type { NameOf } from './bwf/normalize'
 import { fetchDayMatches, fetchDraw, fetchEntries, fetchMatchStats } from './bwf/tournaments'
 import { fetchJson, getJson, retryUnless } from './client'
@@ -70,6 +71,7 @@ const hasMatchOnCourt = (d: TournamentMatches | undefined) =>
   Object.values(d?.days ?? {}).some((ms) => ms.some((m) => m.status === 'P'))
 
 const livePoll = (t: TournamentRef) => (q: Query<TournamentMatches>) => {
+  if (q.state.data?.stale) return LIVE_COOLDOWN_MS
   if (hasMatchOnCourt(q.state.data)) return POLL_ON_COURT_MS
   return finalDayOver(t.end, q.state.data) ? false : POLL_IDLE_MS
 }
@@ -84,6 +86,7 @@ export const dayMatchesQuery = (code: string, day: string) =>
   queryOptions({
     queryKey: ['bwf', 'day-matches', code, day],
     queryFn: async ({ client, signal }) => fetchDayMatches(code, day, await directoryNames(client), signal),
+    retry: liveRetry,
     ...(isSettledDay(day) ? STATIC : { staleTime: FRESH_MS }),
   })
 
@@ -98,7 +101,8 @@ export const liveMatchStatsQuery = (tmtId: number, matchCode: string) =>
     },
     staleTime: 5_000,
     gcTime: 60_000,
-    refetchInterval: STATS_POLL_MS,
+    retry: liveRetry,
+    refetchInterval: () => livePollMs(STATS_POLL_MS),
   })
 
 const fetchLiveMatches = async (t: TournamentRef, client: QueryClient): Promise<TournamentMatches> => {
@@ -113,13 +117,22 @@ const fetchLiveMatches = async (t: TournamentRef, client: QueryClient): Promise<
   }
 }
 
+const fetchSnapshot = (code: string, signal: AbortSignal) =>
+  fetchJson(`tournaments/${code}.json`, TournamentMatches, signal)
+
+const fetchFallback = (code: string, signal: AbortSignal): Promise<TournamentMatches> =>
+  fetchSnapshot(code, signal).then(
+    (d) => ({ ...d, stale: true }),
+    () => ({ code, asOf: '', days: {}, plannedDays: {}, stale: true }),
+  )
+
 export const tournamentMatchesQuery = (t: TournamentRef) =>
   queryOptions({
     queryKey: ['tournament', t.code, 'matches'],
     queryFn: ({ client, signal }) =>
       isSnapshotEvent(t)
-        ? fetchJson(`tournaments/${t.code}.json`, TournamentMatches, signal)
-        : fetchLiveMatches(t, client),
+        ? fetchSnapshot(t.code, signal)
+        : fetchLiveMatches(t, client).catch(() => fetchFallback(t.code, signal)),
     ...matchesPolicy(t),
   })
 
@@ -127,7 +140,7 @@ export type LiveTournamentRef = TournamentRef & Pick<CalendarEventDto, 'tmtId' |
 
 const extrasPolicy = (t: LiveTournamentRef) => {
   if (isSnapshotEvent(t) || t.cancelled || !t.tmtId) return { enabled: false }
-  return isSettledDay(t.end) ? STATIC : { staleTime: UPCOMING_MS }
+  return { retry: liveRetry, ...(isSettledDay(t.end) ? STATIC : { staleTime: UPCOMING_MS }) }
 }
 
 export const tournamentDrawQuery = (t: LiveTournamentRef) =>
