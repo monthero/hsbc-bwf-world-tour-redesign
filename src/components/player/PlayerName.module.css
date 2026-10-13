@@ -25,3 +25,20 @@ a.playerName:hover {
   background: var(--bwf-red-tint);
   box-shadow: 0 0 0 3px var(--bwf-red-tint);
 }
+
+.playerName[data-fit] {
+  display: inline-block;
+}
+
+.sizer {
+  display: grid;
+  grid-template-columns: minmax(0, max-content);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.measure {
+  justify-self: start;
+  white-space: nowrap;
+}

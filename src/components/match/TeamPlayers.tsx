@@ -70,6 +70,7 @@ export const TeamPlayers = memo<{
                   <PlayerName
                     player={p}
                     link={typeof link === 'function' ? link(p) : link}
+                    fit={!wrap}
                     className={clsx(classes.name, nameClassName)}
                   />
                   {i === 0 && !pairSeed && <SeedTag seed={seed} />}

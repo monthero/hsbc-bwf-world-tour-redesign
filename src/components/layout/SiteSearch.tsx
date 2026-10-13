@@ -15,7 +15,7 @@ import {
 } from 'react';
 
 import { Flag } from '~/components/country';
-import { PlayerAvatar } from '~/components/player';
+import { PlayerAvatar, PlayerName } from '~/components/player';
 import { LevelBadge, LogoTile, TournamentStatusBadge } from '~/components/tournament';
 import { IconClose, IconSearch } from '~/components/ui';
 import type { PlayerSearchEntry } from '~/hooks/usePlayers';
@@ -42,7 +42,7 @@ const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, stan
     <Combobox.Option value={`p${SEP}${player.id}`} className={classes.option}>
       <PlayerAvatar player={player} size={34} />
       <span className={classes.main}>
-        <span className={clsx(utils.ellipsis, classes.name)}>{player.name}</span>
+        <PlayerName player={player} link={false} fit className={clsx(utils.ellipsis, classes.name)} />
         <span className={classes.meta}>
           <Flag cc={player.cc} tip={false} />
           {player.cc}
