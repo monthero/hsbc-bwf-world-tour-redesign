@@ -1,0 +1,142 @@
+.row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  min-height: 66px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+
+.row:active {
+  background: var(--bwf-surface-3);
+}
+
+.row[data-status='done'] .logo,
+.row[data-status='cancelled'] .logo {
+  opacity: 0.45;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.dates {
+  font-size: 11px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--bwf-muted);
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-wrap: pretty;
+}
+
+.row[data-status='done'] .dates,
+.row[data-status='cancelled'] .dates,
+.row[data-status='cancelled'] .title {
+  color: var(--bwf-faint);
+}
+
+.row[data-status='done'] .title {
+  color: var(--bwf-text-3);
+}
+
+.place {
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--bwf-dim);
+}
+
+.side {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.go {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--bwf-faint);
+}
+
+.countdown {
+  font-weight: 500;
+  color: var(--bwf-dim);
+}
+
+.countdown[data-next] {
+  color: var(--bwf-red-text);
+}
+
+.live {
+  display: block;
+  padding: 16px 14px;
+  overflow: hidden;
+  border-radius: 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.liveMedia {
+  height: 120px;
+  margin: -16px -14px 30px;
+}
+
+.liveLogo {
+  position: relative;
+  margin: -74px 0 14px;
+}
+
+.liveHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.liveDates {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--bwf-muted);
+}
+
+.liveTitle {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.liveMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--bwf-muted);
+}
+
+.liveLevel {
+  color: var(--lv);
+  font-weight: 500;
+}

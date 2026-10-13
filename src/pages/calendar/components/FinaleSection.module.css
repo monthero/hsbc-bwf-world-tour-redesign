@@ -1,0 +1,52 @@
+.section {
+  padding-bottom: 8px;
+}
+
+.line {
+  height: var(--node-y);
+}
+
+.section[data-reached] .line {
+  background: var(--bwf-red);
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bwf-gold);
+  color: var(--mantine-color-gold-9);
+  box-shadow: 0 0 0 6px alpha(var(--bwf-gold), 0.14);
+}
+
+.head {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--bwf-gold);
+}
+
+.sub {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--bwf-faint);
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .node {
+    width: 24px;
+    height: 24px;
+    box-shadow: 0 0 0 5px alpha(var(--bwf-gold), 0.14);
+  }
+
+  .head {
+    display: block;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+}

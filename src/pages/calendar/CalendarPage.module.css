@@ -1,0 +1,25 @@
+.page {
+  overflow-anchor: none;
+}
+
+.main {
+  padding-top: 8px;
+  padding-bottom: 140px;
+}
+
+.note {
+  margin: 0;
+  padding-top: 20px;
+  font-size: 12px;
+  color: var(--bwf-faint);
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .main {
+    padding: 0 12px 140px;
+  }
+
+  .note {
+    padding-left: 24px;
+  }
+}

@@ -1,0 +1,135 @@
+.section {
+  --node: 12px;
+}
+
+.section[data-tone='current'] {
+  --node: 16px;
+}
+
+.line {
+  bottom: 0;
+}
+
+.section[data-first] .line {
+  top: var(--node-y);
+}
+
+.section[data-tone='past'] .line {
+  background: var(--bwf-red);
+}
+
+.section[data-tone='current'] .line {
+  background:
+    linear-gradient(180deg, var(--bwf-red) 0%, var(--bwf-red) var(--p), transparent var(--p2)),
+    repeating-linear-gradient(180deg, var(--bwf-border-hover) 0 6px, transparent 6px 12px);
+}
+
+.node {
+  width: var(--node);
+  height: var(--node);
+  border-radius: 50%;
+  background: var(--bwf-bg);
+  box-shadow:
+    inset 0 0 0 2px var(--bwf-ghost),
+    0 0 0 4px var(--bwf-bg);
+}
+
+.section[data-tone='past'] .node {
+  background: var(--bwf-red);
+  box-shadow: 0 0 0 4px var(--bwf-bg);
+}
+
+.section[data-tone='current'] .node {
+  background: var(--bwf-red);
+  box-shadow:
+    0 0 0 5px alpha(var(--bwf-red), 0.22),
+    0 0 18px alpha(var(--bwf-red), 0.5);
+}
+
+.head {
+  align-items: flex-start;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.name[data-muted] {
+  color: var(--bwf-dim);
+}
+
+.count {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--bwf-faint);
+}
+
+.badge {
+  margin-top: 12px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: alpha(var(--bwf-red), 0.14);
+  color: var(--bwf-red-text);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+.empty {
+  padding: 22px 20px;
+  border-radius: 16px;
+  font-size: 14px;
+  text-align: left;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .section {
+    --node: 10px;
+  }
+
+  .section[data-tone='current'] {
+    --node: 14px;
+  }
+
+  .head {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .name {
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+
+  .count {
+    order: 1;
+    margin: 0 0 0 auto;
+    font-size: 12px;
+  }
+
+  .badge {
+    margin: 0;
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .empty {
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-size: 13px;
+  }
+}
