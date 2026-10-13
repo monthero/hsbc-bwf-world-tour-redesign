@@ -9,7 +9,7 @@ import type { MediaItem } from '~/api/schemas';
 import { TeamPlayers } from '~/components/match';
 import { WatchLive } from '~/components/media';
 import { AvatarGroup } from '~/components/player';
-import { CardHit, IconFire, IconTimer, StatusChip, type StatusTone } from '~/components/ui';
+import { CardHit, Duration, IconFire, StatusChip, type StatusTone } from '~/components/ui';
 import type { Game, Match, Player, Side } from '~/types';
 import {
   CHALLENGE_LABELS,
@@ -144,12 +144,7 @@ export const LiveCard = memo<{
         </span>
         <span className={classes.headEnd}>
           {v.status && <StatusChip tone={v.status.tone}>{v.status.label}</StatusChip>}
-          {v.duration && (
-            <span className={classes.duration}>
-              <IconTimer size={13} />
-              {v.duration}
-            </span>
-          )}
+          <Duration min={v.durationMin} />
         </span>
       </div>
       <div className={classes.board} style={cols}>

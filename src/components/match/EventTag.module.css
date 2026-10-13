@@ -1,15 +1,28 @@
-.eventTag {
+.tag {
   flex: none;
   padding: 1px 6px;
   border-radius: 5px;
-  background: alpha(var(--bwf-red), 0.22);
-  color: var(--bwf-red-pale);
   font-size: 11px;
   font-weight: 600;
 }
 
-.eventTag[data-tip] {
+.eventTag {
+  background: alpha(var(--bwf-red), 0.22);
+  color: var(--bwf-red-pale);
+}
+
+.tag[data-tip] {
   position: relative;
   z-index: 1;
   cursor: help;
+}
+
+.note[data-tone='violet'] {
+  background: alpha(var(--mantine-color-violet-5), 0.22);
+  color: var(--mantine-color-violet-2);
+}
+
+.note[data-tone='sky'] {
+  background: alpha(var(--mantine-color-sky-5), 0.2);
+  color: var(--mantine-color-sky-2);
 }

@@ -35,8 +35,9 @@
 }
 
 .court {
-  font-size: 12px;
-  color: var(--bwf-muted);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--bwf-text-2);
   white-space: nowrap;
 }
 
@@ -109,21 +110,10 @@
   min-width: 0;
 }
 
-.badge {
-  flex: none;
-  padding: 2px 6px;
-  border-radius: 5px;
-  background: var(--bwf-red);
-  color: var(--mantine-color-white);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
 .check {
   flex: none;
-  width: 13px;
-  height: 13px;
+  width: 16px;
+  height: 16px;
   color: transparent;
 }
 

@@ -2,22 +2,22 @@ import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
 import { FollowedMark } from '~/components/follow';
-import { EventTag, SideScores, TeamPlayers } from '~/components/match';
-import { CardHit, IconCheck } from '~/components/ui';
+import { EventTag, MatchTime, NoteTag, SideScores, TeamPlayers, type NoteTone } from '~/components/match';
+import { CardHit, Duration, IconCheck } from '~/components/ui';
 import type { Match, Player, Side } from '~/types';
-import { formatDuration } from '~/utils/format';
-import { isDoubles, noteLabel, sideResult } from '~/utils/matches';
+import { isDoubles, noteLabel, noteTip, sideResult } from '~/utils/matches';
 
 import { matchTitle } from './utils';
 
 import classes from './MatchCard.module.css';
 import utils from '~/styles/utils.module.css';
 
+const NOTE_TONES: Partial<Record<string, NoteTone>> = { Walkover: 'sky', Retired: 'violet' };
+
 const followedMark = (p: Player) => <FollowedMark id={p.id} />;
 
-export const TeamRow: FC<{ match: Match; side: Side; doubles: boolean }> = ({ match: m, side, doubles }) => {
+const TeamRow: FC<{ match: Match; side: Side; doubles: boolean }> = ({ match: m, side, doubles }) => {
   const result = sideResult(m, side);
-  const note = result === 'lost' ? noteLabel(m.note, 'short') : '';
   return (
     <div className={classes.team} data-result={result}>
       <div className={classes.who}>
@@ -30,14 +30,9 @@ export const TeamRow: FC<{ match: Match; side: Side; doubles: boolean }> = ({ ma
           className={classes.players}
           nameClassName={classes.name}
         />
-        {note && (
-          <span className={classes.badge} title={noteLabel(m.note, 'long')}>
-            {note}
-          </span>
-        )}
       </div>
       <IconCheck className={classes.check} />
-      <SideScores match={m} side={side} slots={3} />
+      <SideScores match={m} side={side} />
     </div>
   );
 };
@@ -48,21 +43,22 @@ export const MatchCard = memo<{
   onOpen: (id: string) => void;
 }>(({ match: m, isNext, onOpen }) => {
   const doubles = isDoubles(m.event);
-  const meta =
-    m.status === 'F' ? [noteLabel(m.note, 'long'), formatDuration(m.durationMin)].filter(Boolean).join(' · ') : '';
+  const done = m.status === 'F';
+  const note = done ? noteLabel(m.note, 'short') : '';
   return (
     <div className={clsx(utils.card, classes.card)} data-interactive data-doubles={doubles || undefined}>
       <CardHit label={`Match details: ${matchTitle(m)}`} onClick={() => onOpen(m.id)} />
       <div className={classes.head}>
         <span className={classes.when}>
           <span className={classes.time} data-up={m.status === 'N' || undefined}>
-            {m.time}
+            <MatchTime match={m} />
           </span>
           <span className={classes.court}>Court {m.court}</span>
         </span>
         <span className={classes.tags}>
           {isNext && <span className={classes.next}>Next</span>}
-          {meta && <span className={classes.meta}>{meta}</span>}
+          {done && <Duration min={m.durationMin} size={12} className={classes.meta} />}
+          {note && <NoteTag label={note} tip={noteTip(m)} tone={NOTE_TONES[m.note ?? ''] ?? 'sky'} />}
           <EventTag event={m.event} />
         </span>
       </div>

@@ -2,7 +2,6 @@ import type { LiveServer, SideStats } from '~/api/bwf/normalize';
 import type { StatusTone } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import type { Game, Match, Side, Team } from '~/types';
-import { formatDuration } from '~/utils/format';
 import {
   livePhase,
   pointCall,
@@ -39,7 +38,7 @@ export interface SideView {
 export interface LiveView {
   court: number;
   where: string;
-  duration: string;
+  durationMin: number;
   games: readonly Game[];
   gameNo: number;
   status: LiveChip | null;
@@ -98,7 +97,7 @@ export const toLiveView = (
   return {
     court: m.court,
     where: `${EVENT_NAMES[m.event]} · ${matchRoundName(m)}`,
-    duration: formatDuration(m.durationMin),
+    durationMin: m.durationMin,
     games: m.games,
     gameNo,
     status: statusOf(m, phase, deciding),

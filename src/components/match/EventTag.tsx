@@ -8,14 +8,26 @@ import type { EventCode } from '~/types';
 
 import classes from './EventTag.module.css';
 
-export const EventTag = memo<{ event: EventCode; className?: string }>(({ event, className }) => {
-  const lazy = useLazyTip<HTMLSpanElement>(true);
-  return (
-    <>
-      <span className={clsx(classes.eventTag, className)} data-tip onPointerEnter={lazy.arm}>
-        {event}
-      </span>
-      {lazy.target && <Tooltip target={lazy.target} label={EVENT_NAMES[event]} openDelay={TIP_DELAY.open} />}
-    </>
-  );
-});
+export type NoteTone = 'violet' | 'sky';
+
+const Tag = memo<{ label: string; tip: string; tone?: NoteTone; className?: string }>(
+  ({ label, tip, tone, className }) => {
+    const lazy = useLazyTip<HTMLSpanElement>(true);
+    return (
+      <>
+        <span className={clsx(classes.tag, className)} data-tone={tone} data-tip onPointerEnter={lazy.arm}>
+          {label}
+        </span>
+        {lazy.target && <Tooltip target={lazy.target} label={tip} openDelay={TIP_DELAY.open} />}
+      </>
+    );
+  },
+);
+
+export const EventTag = memo<{ event: EventCode; className?: string }>(({ event, className }) => (
+  <Tag label={event} tip={EVENT_NAMES[event]} className={clsx(classes.eventTag, className)} />
+));
+
+export const NoteTag = memo<{ label: string; tip: string; tone: NoteTone }>(({ label, tip, tone }) => (
+  <Tag label={label} tip={tip} tone={tone} className={classes.note} />
+));

@@ -66,8 +66,8 @@ export const ROUND_ORDER: Record<string, number> = {
 export const REST_DAY = 'Rest day';
 
 export const NOTE_LABELS = {
-  Walkover: { short: 'W/O', long: 'Walkover' },
-  Retired: { short: 'RET', long: 'Retired' },
+  Walkover: { short: 'WO', long: 'Walkover', verb: 'withdrew before the match' },
+  Retired: { short: 'RET', long: 'Retired', verb: 'retired during the match' },
 } as const;
 
 export const LEVEL_META: Record<Level, { label: string; long: string; color: string }> = {
