@@ -122,10 +122,10 @@
   }
 
   :has(> .photos.photos):is(:hover, :has(:focus-visible)) {
-    border-color: alpha(var(--bwf-gold), 0.8);
+    border-color: alpha(var(--bwf-red), 0.8);
     box-shadow:
-      0 0 0 1px alpha(var(--bwf-gold), 0.3),
-      0 0 24px -8px alpha(var(--bwf-gold), 0.45),
+      0 0 0 1px alpha(var(--bwf-red), 0.3),
+      0 0 24px -8px alpha(var(--bwf-red), 0.45),
       0 12px 28px -14px alpha(var(--mantine-color-black), 0.7);
     transition:
       transform 0.6s var(--bwf-ease-out),
