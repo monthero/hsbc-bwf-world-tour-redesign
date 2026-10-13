@@ -3,8 +3,7 @@ import { getRouteApi, Link } from '@tanstack/react-router'
 import { clsx } from 'clsx'
 import { useCallback, useMemo, type FC } from 'react'
 
-import { ApiError } from '~/api/client'
-import { useNewsArticle, useNewsIndex, useRelatedNews } from '~/api/news'
+import { isNotFound, useNewsArticle, useNewsIndex, useRelatedNews } from '~/api/news'
 import type { NewsArticle, NewsItem } from '~/api/schemas'
 import { PopularNews, SubscribeCard } from '~/components/news'
 import { BackPill, EmptyState, IconExternal } from '~/components/ui'
@@ -30,8 +29,6 @@ const route = getRouteApi('/news_/$id')
 const BACK = { to: '/news' } as const
 const TITLE_SITE = {}
 const BODY_SKELETON = ['100%', '94%', '97%', '62%', '100%', '91%', '78%'] as const
-
-const isNotFound = (error: unknown) => error instanceof ApiError && error.status === 404
 
 const storiesOf = (items: readonly NewsItem[], lookup: TournamentLookup | undefined) =>
   items.map((i) => toStory(i, lookup))

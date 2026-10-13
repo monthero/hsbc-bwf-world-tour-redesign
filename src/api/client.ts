@@ -9,6 +9,16 @@ export class ApiError extends Error {
   }
 }
 
+const MAX_RETRIES = 3
+
+export const hasStatus = (error: unknown, ...statuses: number[]) =>
+  error instanceof ApiError && statuses.includes(error.status)
+
+export const retryUnless =
+  (...statuses: number[]) =>
+  (count: number, error: unknown) =>
+    !hasStatus(error, ...statuses) && count < MAX_RETRIES
+
 export async function getJson<S extends z.ZodType>(url: string, schema: S, signal?: AbortSignal): Promise<z.infer<S>> {
   const res = await fetch(url, { signal })
   if (!res.ok) throw new ApiError(res.status, url)

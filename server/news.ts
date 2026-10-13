@@ -13,6 +13,7 @@ import type {
   NewsSite,
   NewsTournament,
 } from '../src/api/schemas.ts'
+import { readJson } from './http.ts'
 import { createArticleBuilder } from './news-blocks.ts'
 import type { PlayerName } from './news-players.ts'
 
@@ -233,14 +234,6 @@ const LIVE_TTL_MS = 10 * MINUTE_MS
 const POPULAR_TTL_MS = 6 * HOUR_MS
 const LINKER_TTL_MS = HOUR_MS
 const MONTH = /^\d{4}-\d{2}$/
-
-const readJson = async <T>(file: string): Promise<T | null> => {
-  try {
-    return JSON.parse(await fs.readFile(file, 'utf8')) as T
-  } catch {
-    return null
-  }
-}
 
 const memo = <T>(ttl: number, load: () => Promise<T>) => {
   let hit: { at: number; value: Promise<T> } | null = null

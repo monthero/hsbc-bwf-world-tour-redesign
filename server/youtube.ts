@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 
 import { dayjs, nowIso } from '../scripts/sync/dates.ts'
+import { readJson } from './http.ts'
 
 const API = 'https://www.googleapis.com/youtube/v3'
 const CHANNEL_ID = 'UChh-akEbUM8_6ghGVnJd6cQ'
@@ -253,29 +254,31 @@ const emptyMedia = (code: string): TournamentMedia => ({
   items: [],
 })
 
-const readJson = async <T>(file: string): Promise<T | null> => {
-  try {
-    return JSON.parse(await fs.readFile(file, 'utf8')) as T
-  } catch {
-    return null
-  }
+export interface MediaServiceOptions {
+  key: string
+  root: string
+  persist: boolean
 }
 
-export const createMediaService = ({ key, root }: { key: string; root: string }) => {
+export const createMediaService = ({ key, root, persist }: MediaServiceOptions) => {
   const settledDir = path.join(root, 'data/media')
-  const calendarFile = path.join(root, 'public/data/calendar-2026.json')
+  const calendarFile = () => path.join(root, `public/data/calendar-${dayjs.utc().year()}.json`)
   const liveCache = new Map<string, { at: number; media: TournamentMedia }>()
+  const settledCache = new Map<string, TournamentMedia>()
 
   const eventOf = async (code: string) =>
-    (await readJson<{ events: MediaEvent[] }>(calendarFile))?.events.find((e) => e.code === code) ?? null
+    (await readJson<{ events: MediaEvent[] }>(calendarFile()))?.events.find((e) => e.code === code) ?? null
 
   const settled = async (e: MediaEvent) => {
     const file = path.join(settledDir, `${e.code}.json`)
-    const cached = await readJson<TournamentMedia>(file)
+    const cached = settledCache.get(e.code) ?? (await readJson<TournamentMedia>(file))
     if (cached) return cached
     const media = await fetchTournamentMedia(key, e)
-    await fs.mkdir(settledDir, { recursive: true })
-    await fs.writeFile(file, JSON.stringify(media))
+    settledCache.set(e.code, media)
+    if (persist) {
+      await fs.mkdir(settledDir, { recursive: true })
+      await fs.writeFile(file, JSON.stringify(media))
+    }
     return media
   }
 

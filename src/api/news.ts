@@ -1,10 +1,10 @@
 import { infiniteQueryOptions, queryOptions, useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { useCallback, useMemo } from 'react'
 
-import { LIVE_DATA } from '~/constants'
+import { LIVE_NEWS } from '~/constants'
 import { dayjs } from '~/utils/dates'
 
-import { ApiError, fetchJson, getJson } from './client'
+import { ApiError, fetchJson, getJson, hasStatus, retryUnless } from './client'
 import {
   type CalendarEventDto,
   NewsArticle,
@@ -25,26 +25,25 @@ const NO_PAGES: NewsMonth[] = []
 const isRecentMonth = (month: string) => month >= dayjs.utc().subtract(FREEZE_DAYS, 'day').format('YYYY-MM')
 
 const fetchIndex = (signal: AbortSignal) =>
-  LIVE_DATA ? getJson('/news-api/index', NewsIndex, signal) : fetchJson('news/index.json', NewsIndex, signal)
+  LIVE_NEWS ? getJson('/news-api/index', NewsIndex, signal) : fetchJson('news/index.json', NewsIndex, signal)
 
 const isRecentEvent = (end: string) => dayjs.utc(end).add(FREEZE_DAYS, 'day').isAfter(dayjs.utc())
 
 const fetchTournament = (code: string, signal: AbortSignal) =>
-  LIVE_DATA
+  LIVE_NEWS
     ? getJson(`/news-api/tournament/${code}`, NewsTournament, signal)
     : fetchJson(`news/tournaments/${code}.json`, NewsTournament, signal)
 
 const fetchMonth = (month: string, signal: AbortSignal) =>
-  LIVE_DATA
+  LIVE_NEWS
     ? getJson(`/news-api/month/${month}`, NewsMonth, signal)
     : fetchJson(`news/${month}.json`, NewsMonth, signal)
 
 const ARTICLE_ID = /^\d+$/
 const NOT_FOUND = 404
-const MAX_RETRIES = 3
 
 const fetchArticle = async (id: string, signal: AbortSignal) => {
-  const url = LIVE_DATA ? `/news-api/article/${id}` : `${import.meta.env.BASE_URL}data/news/articles/${id}.json`
+  const url = LIVE_NEWS ? `/news-api/article/${id}` : `${import.meta.env.BASE_URL}data/news/articles/${id}.json`
   if (!ARTICLE_ID.test(id)) throw new ApiError(NOT_FOUND, url)
   const res = await fetch(url, { signal })
   const json = res.headers.get('content-type')?.includes('json') ?? false
@@ -53,21 +52,19 @@ const fetchArticle = async (id: string, signal: AbortSignal) => {
   return NewsArticle.parse(await res.json())
 }
 
-export const isNotFound = (error: unknown) => error instanceof ApiError && error.status === NOT_FOUND
-
-const retryUnlessMissing = (count: number, error: unknown) => !isNotFound(error) && count < MAX_RETRIES
+export const isNotFound = (error: unknown) => hasStatus(error, NOT_FOUND)
 
 const isFrozenArticle = (a: NewsArticle) => dayjs.utc(a.publishedAt).add(FREEZE_DAYS, 'day').isBefore(dayjs.utc())
 
 const selectItems = (d: NewsTournament) => d.items
 
-const freshness = (recent: boolean) => (LIVE_DATA && recent ? { staleTime: RECENT_MS } : STATIC)
+const freshness = (recent: boolean) => (LIVE_NEWS && recent ? { staleTime: RECENT_MS } : STATIC)
 
 export const newsIndexQuery = () =>
   queryOptions({
     queryKey: ['news', 'index'],
     queryFn: ({ signal }) => fetchIndex(signal),
-    ...(LIVE_DATA ? { staleTime: RECENT_MS, refetchInterval: RECENT_MS } : STATIC),
+    ...(LIVE_NEWS ? { staleTime: RECENT_MS, refetchInterval: RECENT_MS } : STATIC),
   })
 
 export const newsMonthQuery = (month: string) =>
@@ -102,8 +99,8 @@ export const newsArticleQuery = (id: string) =>
   queryOptions({
     queryKey: ['news', 'article', id],
     queryFn: ({ signal }) => fetchArticle(id, signal),
-    retry: retryUnlessMissing,
-    ...(LIVE_DATA
+    retry: retryUnless(NOT_FOUND),
+    ...(LIVE_NEWS
       ? {
           staleTime: (q: { state: { data?: NewsArticle } }) =>
             q.state.data && isFrozenArticle(q.state.data) ? Infinity : RECENT_MS,

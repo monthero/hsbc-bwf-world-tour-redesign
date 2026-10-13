@@ -14,6 +14,11 @@ export class HttpError extends Error {
   }
 }
 
+export const cdnCache = (sMaxAge: number, staleWhileRevalidate: number, maxAge = 0) =>
+  `public, max-age=${maxAge}, s-maxage=${sMaxAge}, stale-while-revalidate=${staleWhileRevalidate}`
+
+export const IMMUTABLE_CACHE = 'public, max-age=31536000, s-maxage=31536000, immutable'
+
 export const sendJson = (res: ServerResponse, status: number, body: unknown, cache = 'no-store') => {
   res.statusCode = status
   res.setHeader('content-type', 'application/json')
@@ -47,6 +52,14 @@ export const readText = (file: string, missing: () => string) =>
     if (e.code === 'ENOENT') return missing()
     throw e
   })
+
+export const readJson = async <T>(file: string): Promise<T | null> => {
+  try {
+    return JSON.parse(await fs.readFile(file, 'utf8')) as T
+  } catch {
+    return null
+  }
+}
 
 export const writeAtomic = async (file: string, content: string | Uint8Array) => {
   const tmp = `${file}.${process.pid}.${Date.now()}.tmp`

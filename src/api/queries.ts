@@ -7,7 +7,7 @@ import { finalDayOver } from '~/utils/matches'
 
 import type { NameOf } from './bwf/normalize'
 import { fetchDayMatches, fetchDraw, fetchEntries, fetchMatchStats } from './bwf/tournaments'
-import { fetchJson, getJson } from './client'
+import { fetchJson, getJson, retryUnless } from './client'
 import {
   Calendar,
   type CalendarEventDto,
@@ -157,6 +157,7 @@ export const tournamentMediaQuery = (t: TournamentRef) =>
   queryOptions({
     queryKey: ['media', t.code],
     queryFn: ({ signal }) => getJson(`/yt-api/media/${t.code}`, TournamentMedia, signal),
+    retry: retryUnless(404, 503),
     ...mediaPolicy(t),
   })
 
