@@ -10,7 +10,7 @@ import { PlayerHoverCard } from '~/components/player';
 import { NOT_FOUND } from '~/constants';
 import { PlayerHoverContext, type RenderPlayerHover } from '~/contexts';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
-import { useTabSync } from '~/hooks/useTabSync';
+import { useStoreSync } from '~/hooks/useStoreSync';
 
 const renderPlayerHover: RenderPlayerHover = (id, anchor) => <PlayerHoverCard id={id}>{anchor}</PlayerHoverCard>;
 
@@ -20,7 +20,7 @@ const NotFound: FC = () => {
 };
 
 const RootLayout: FC = () => {
-  useTabSync();
+  useStoreSync();
   return (
     <>
       <SiteHeader />
