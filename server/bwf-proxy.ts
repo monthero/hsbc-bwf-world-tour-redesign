@@ -61,18 +61,22 @@ interface BwfProxyConfig {
   relayKey?: string;
 }
 
-const upstreamOf = ({ relayUrl, relayKey }: BwfProxyConfig) =>
-  relayUrl && relayKey
-    ? { base: relayUrl.replace(/\/+$/, ''), headers: { [RELAY_KEY_HEADER]: relayKey } }
-    : { base: BWF_API, headers: BWF_HEADERS };
+const upstreamOf = (config: BwfProxyConfig) => {
+  const relayUrl = config.relayUrl?.trim();
+  const relayKey = config.relayKey?.trim();
+  return relayUrl && relayKey
+    ? { via: 'relay', base: relayUrl.replace(/\/+$/, ''), headers: { [RELAY_KEY_HEADER]: relayKey } }
+    : { via: 'direct', base: BWF_API, headers: BWF_HEADERS };
+};
 
 export const bwfProxy = (config: BwfProxyConfig): Endpoint => {
-  const { base, headers } = upstreamOf(config);
+  const { via, base, headers } = upstreamOf(config);
   return {
     name: 'bwf-api',
     prefix: '/bwf-api',
     serve: async (url, res) => {
       const target = isBwfPath(url.pathname) ? ROUTES[url.pathname].parse(url.searchParams) : null;
+      res.setHeader('x-bwf-upstream', via);
       if (!target) return sendJson(res, 404, { error: 'Unknown BWF route' }, ERROR_CACHE);
       const upstream = await fetch(`${base}${url.pathname}?${target.search}`, {
         headers,
@@ -80,6 +84,8 @@ export const bwfProxy = (config: BwfProxyConfig): Endpoint => {
       }).catch(() => null);
       if (!upstream) return sendJson(res, 504, { error: 'upstream unavailable' }, ERROR_CACHE);
       const body: unknown = await upstream.json().catch(() => undefined);
+      if (via === 'relay' && upstream.status === 401)
+        return sendJson(res, 502, { error: 'relay rejected key' }, ERROR_CACHE);
       if (body === undefined) return sendJson(res, 502, { error: 'upstream blocked' }, ERROR_CACHE);
       sendJson(res, upstream.status, body, upstream.ok ? target.cache : ERROR_CACHE);
     },
