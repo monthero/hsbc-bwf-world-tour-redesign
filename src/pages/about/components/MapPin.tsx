@@ -7,6 +7,7 @@ import { tournamentParams } from '~/utils/tournaments';
 
 import type { OnActive, PinSpot, SeasonFocus } from '../types';
 import { anchorVars } from '../utils';
+import { SpotHalo } from './SpotHalo';
 
 import classes from './MapPin.module.css';
 
@@ -25,12 +26,16 @@ export const MapPin = memo<{
     className: classes.pin,
     style,
     'data-status': t.status,
-    'data-spot': t === focus.spot || undefined,
     'data-finals': t === focus.finals || undefined,
     'data-active': active || undefined,
     'data-compact': !interactive || undefined,
   };
-  const dot = <span className={classes.dot}>{t === focus.finals && <IconTrophy size={11} />}</span>;
+  const dot = (
+    <span className={classes.dot}>
+      {t === focus.spot && <SpotHalo live={t.status === 'live'} />}
+      {t === focus.finals && <IconTrophy size={11} />}
+    </span>
+  );
   if (!interactive) return <span {...attrs}>{dot}</span>;
   return (
     <Link

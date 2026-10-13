@@ -1,13 +1,13 @@
 import type { CSSProperties } from 'react';
 
 import { LEVEL_META } from '~/constants';
-import type { Tournament } from '~/types';
+import type { Level, Tournament } from '~/types';
 import { date, today } from '~/utils/dates';
 import { formatNumber, plural } from '~/utils/format';
 import { countdownLabel, finalsOf, isHeld, liveAndNext, liveDayLabel } from '~/utils/tournaments';
 
 import { FLIP_AT, KICKERS, MAP_SIZE, RELAX } from './constants';
-import type { MapPoint, PinSpot, SeasonFocus, SeasonStat } from './types';
+import type { MapPoint, PinSpot, SeasonFocus, SeasonStat, SeasonStatus } from './types';
 
 export const posOf = (t: Tournament): MapPoint | null => t.map;
 
@@ -20,6 +20,41 @@ export const seasonFocus = (list: readonly Tournament[]): SeasonFocus => {
   const { live, next } = liveAndNext(held);
   const finals = finalsOf(held);
   return { live, next, finals, spot: live ?? next, focus: live ?? next ?? finals ?? held.at(-1) };
+};
+
+export const isShown = <T>(shown: readonly T[] | undefined, item: T) => !shown?.length || shown.includes(item);
+
+export const seasonStatusOf = (t: Tournament, f: SeasonFocus): SeasonStatus => {
+  if (t.status === 'live' || t === f.spot) return 'next';
+  return t.status === 'done' || (t.status === 'cancelled' && t.daysUntil <= 0) ? 'done' : 'up';
+};
+
+export const filterSeason = (
+  list: Tournament[],
+  f: SeasonFocus,
+  levels: readonly Level[] | undefined,
+  status: readonly SeasonStatus[] | undefined,
+) => {
+  if (!levels?.length && !status?.length) return list;
+  return list.filter((t) => isShown(levels, t.level) && isShown(status, seasonStatusOf(t, f)));
+};
+
+export const toggleShown = <T>(options: readonly T[], shown: readonly T[] | undefined, item: T) => {
+  const next = options.filter((o) => !!shown?.includes(o) !== (o === item));
+  return next.length && next.length < options.length ? next : undefined;
+};
+
+export const nearestShown = (
+  all: readonly Tournament[],
+  shown: readonly Tournament[],
+  target: Tournament | undefined,
+) => {
+  if (!target || shown.includes(target)) return target;
+  const at = all.indexOf(target);
+  return shown.reduce<Tournament | undefined>(
+    (best, t) => (!best || Math.abs(all.indexOf(t) - at) < Math.abs(all.indexOf(best) - at) ? t : best),
+    undefined,
+  );
 };
 
 interface Node {

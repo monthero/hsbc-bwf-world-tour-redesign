@@ -1,4 +1,6 @@
-import type { MapPoint } from '~/api/schemas';
+import { z } from 'zod';
+
+import { LevelsParam, listParam, type MapPoint } from '~/api/schemas';
 import type { Level, Player, Tournament } from '~/types';
 
 export type { MapPoint };
@@ -25,6 +27,12 @@ export interface SeasonStat {
   label: string;
   gold?: boolean;
 }
+
+export const SeasonStatus = z.enum(['done', 'up', 'next']);
+export type SeasonStatus = z.infer<typeof SeasonStatus>;
+
+export const AboutSearch = z.object({ levels: LevelsParam, status: listParam(SeasonStatus) });
+export type AboutSearch = z.infer<typeof AboutSearch>;
 
 export type OnActive = (code: string | null) => void;
 

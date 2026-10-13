@@ -237,6 +237,7 @@ export const cssVariablesResolver: CSSVariablesResolver = () => ({
     '--bwf-red-pale': c('red', 1),
     '--bwf-red-tint': tint(c('red', 6), 16),
     '--bwf-red-edge': tint(c('red', 4), 70),
+    '--bwf-spot-glow': `0 0 10px 1px ${tint(c('red', 6), 55)}`,
     '--bwf-gold': c('gold', 5),
     '--bwf-gold-text': c('gold', 4),
     '--bwf-gold-tint': tint(c('gold', 5), 12),

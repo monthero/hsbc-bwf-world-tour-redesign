@@ -8,6 +8,7 @@ import { tournamentParams } from '~/utils/tournaments';
 
 import type { OnActive, SeasonFocus } from '../types';
 import { monthTicks, stripBox, todayOffset, yearSpan } from '../utils';
+import { SpotHalo } from './SpotHalo';
 
 import classes from './SeasonStrip.module.css';
 
@@ -48,6 +49,7 @@ const StripMark = memo<{
       onKeyDown={onKeyDown}
     >
       <i />
+      {isSpot && <SpotHalo live={t.status === 'live'} solid className={classes.spot} />}
     </Link>
   );
 });

@@ -1,7 +1,7 @@
 import type { RefCallback } from 'react';
 import { z } from 'zod';
 
-import { Level } from '~/api/schemas';
+import { LevelsParam } from '~/api/schemas';
 import { FIRST_SEASON, SEASON_YEAR } from '~/constants';
 import type { Tournament } from '~/types';
 
@@ -13,7 +13,7 @@ export const CalendarSearch = z.object({
     .max(SEASON_YEAR + 1)
     .optional()
     .catch(undefined),
-  levels: z.array(Level).optional().catch(undefined),
+  levels: LevelsParam,
   status: z.enum(['done', 'up']).optional().catch(undefined),
 });
 

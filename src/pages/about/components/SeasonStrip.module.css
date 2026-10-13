@@ -68,9 +68,16 @@
 }
 
 .mark[data-spot] i {
-  box-shadow:
-    0 0 0 2px var(--bwf-bg-sunken),
-    0 0 0 3.5px var(--bwf-red);
+  height: 14px;
+  box-shadow: var(--bwf-spot-glow);
+}
+
+.spot {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: 4px;
+  margin-left: -3.5px;
 }
 
 .mark[data-finals] i {

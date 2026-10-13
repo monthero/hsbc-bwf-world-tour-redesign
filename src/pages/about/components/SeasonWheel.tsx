@@ -5,6 +5,7 @@ import type { Tournament } from '~/types';
 import { date } from '~/utils/dates';
 
 import type { OnActive, SeasonFocus } from '../types';
+import { SpotHalo } from './SpotHalo';
 
 import classes from './SeasonWheel.module.css';
 import utils from '~/styles/utils.module.css';
@@ -32,6 +33,7 @@ const WheelItem = memo<{
     onClick={onPick}
   >
     {month && <span className={classes.month}>{month}</span>}
+    {isSpot && <SpotHalo live={t.status === 'live'} solid className={classes.spot} />}
     <i />
     <span className={utils.num}>{date(t.start).date()}</span>
   </button>
@@ -64,9 +66,10 @@ export const SeasonWheel = memo<{
 
   useLayoutEffect(() => {
     const wheel = ref.current;
-    const el = wheel?.querySelector<HTMLElement>(`[data-code="${current.current}"]`);
-    if (wheel && el) wheel.scrollLeft = centerOf(wheel, el);
-  }, []);
+    if (!wheel || !items.length) return;
+    const el = wheel.querySelector<HTMLElement>(`[data-code="${current.current}"]`);
+    if (el) wheel.scrollLeft = centerOf(wheel, el);
+  }, [items]);
 
   useEffect(() => {
     const wheel = ref.current;

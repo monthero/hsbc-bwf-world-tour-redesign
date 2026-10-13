@@ -9,6 +9,10 @@ export type EntryStage = z.infer<typeof EntryStage>;
 export const Level = z.enum(['1000', '750', '500', '300', 'Finals']);
 export type Level = z.infer<typeof Level>;
 
+export const listParam = <T extends z.ZodType>(item: T) => z.array(item).optional().catch(undefined);
+
+export const LevelsParam = listParam(Level);
+
 export const Continent = z.enum(['Europe', 'Asia', 'Americas', 'Oceania', 'Africa', 'Other']);
 export type Continent = z.infer<typeof Continent>;
 

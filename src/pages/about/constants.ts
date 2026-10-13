@@ -1,4 +1,7 @@
+import type { Level } from '~/types';
 import { localAsset } from '~/utils/images';
+
+import type { SeasonStatus } from './types';
 
 export const ABOUT_KICKER = 'About the Tour';
 export const ABOUT_TITLE = 'HSBC BWF World Tour';
@@ -31,13 +34,13 @@ export const KICKERS = {
 
 export const CLOSE_DELAY = 160;
 
-export const LEGEND_LEVELS = ['1000', '750', '500', '300', 'Finals'] as const;
+export const LEGEND_LEVELS = ['1000', '750', '500', '300', 'Finals'] as const satisfies readonly Level[];
 
-export const LEGEND_STATUS = [
-  { id: 'done', label: 'Completed' },
-  { id: 'up', label: 'Upcoming' },
-  { id: 'next', label: 'Live / next' },
-] as const;
+export const STATUS_META: Record<SeasonStatus, { label: string; color: string }> = {
+  done: { label: 'Completed', color: 'var(--bwf-text-3)' },
+  up: { label: 'Upcoming', color: 'var(--bwf-text)' },
+  next: { label: 'Live / next', color: 'var(--bwf-red-text)' },
+};
 
 export const TIER_LEVELS = ['Finals', '1000', '750', '500', '300'] as const;
 
