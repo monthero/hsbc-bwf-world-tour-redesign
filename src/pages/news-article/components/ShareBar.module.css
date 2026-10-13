@@ -1,0 +1,18 @@
+.bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+}
+
+.icon {
+  flex: none;
+  position: relative;
+}
+
+.icon::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+}

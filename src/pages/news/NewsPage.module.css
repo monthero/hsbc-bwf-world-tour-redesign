@@ -1,0 +1,52 @@
+.feed {
+  display: grid;
+  grid-template-columns: 188px minmax(0, 1fr);
+  gap: 32px;
+  padding-bottom: 96px;
+}
+
+.months {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.subscribe {
+  margin-top: 22px;
+}
+
+.more {
+  align-self: center;
+  margin-top: 40px;
+}
+
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 96px;
+}
+
+.error p {
+  margin: 0;
+}
+
+.errorActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .feed {
+    display: block;
+    padding-bottom: 64px;
+  }
+
+  .more {
+    width: 100%;
+    margin-top: 28px;
+  }
+}

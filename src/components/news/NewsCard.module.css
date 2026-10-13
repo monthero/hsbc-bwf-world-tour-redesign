@@ -1,0 +1,98 @@
+.card {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.card[data-variant='card'] {
+  flex-direction: column;
+}
+
+.card .tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card[data-variant='card'] .body {
+  padding: 14px 16px 18px;
+}
+
+.title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 16px;
+  line-height: 1.32;
+}
+
+.title {
+  transition: color 0.3s ease-out;
+}
+
+.card:hover .title {
+  color: var(--bwf-red-pale);
+}
+
+.card[data-variant='row'],
+.card[data-variant='list'] {
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+}
+
+.card[data-variant='row'] .media,
+.card[data-variant='list'] .media {
+  order: 1;
+  flex: none;
+  width: 112px;
+  border-radius: 12px;
+}
+
+.card[data-variant='row'] .body,
+.card[data-variant='list'] .body {
+  gap: 6px;
+}
+
+.card[data-variant='row'] .title {
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.card[data-variant='list'] {
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.card[data-variant='list']:hover {
+  background: var(--bwf-surface-3);
+}
+
+.card[data-variant='list'] .media {
+  width: 120px;
+  border-radius: 10px;
+}
+
+.card[data-variant='list'] .body {
+  gap: 8px;
+}
+
+.card[data-variant='list'] .title {
+  -webkit-line-clamp: 2;
+  font-size: 15px;
+  line-height: 1.35;
+}

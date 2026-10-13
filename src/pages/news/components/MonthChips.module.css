@@ -1,0 +1,25 @@
+.bar {
+  border-top: 1px solid var(--bwf-border);
+}
+
+.row {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 7px var(--bwf-gutter);
+}
+
+.chip {
+  height: 36px;
+  padding: 0 14px;
+}
+
+.count {
+  color: var(--bwf-faint);
+  font-size: 12px;
+}
+
+.chip[data-active] .count {
+  color: var(--bwf-red-soft);
+}

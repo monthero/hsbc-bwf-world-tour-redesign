@@ -1,0 +1,96 @@
+.frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--bwf-surface-3);
+}
+
+.frame[data-ratio='wide'] {
+  aspect-ratio: 16 / 9;
+}
+
+.frame[data-ratio='card'] {
+  aspect-ratio: 4 / 3;
+}
+
+.frame[data-fallback] {
+  background: linear-gradient(130deg, var(--bwf-brand-deep), var(--bwf-bg-sunken) 80%);
+}
+
+.frame[data-fallback]::before {
+  content: '';
+  position: absolute;
+  right: -18%;
+  bottom: -38%;
+  width: 70%;
+  aspect-ratio: 1;
+  background: var(--bwf-on-brand);
+  mask: url('/assets/brand/emblem.svg') center / contain no-repeat;
+  opacity: 0.12;
+}
+
+.img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: translate3d(var(--drift-x, 0), var(--drift-y, 0), 0) scale(var(--drift-zoom, 1.02)) rotate(0.02deg);
+  backface-visibility: hidden;
+  will-change: transform;
+  transition:
+    transform var(--drift-time, 0.9s) var(--drift-curve, var(--bwf-ease-out)),
+    opacity 0.5s ease-out;
+}
+
+:where([data-news-hover]) .frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--mantine-color-black);
+  opacity: 0.08;
+  pointer-events: none;
+  transition: opacity 0.6s ease-out;
+}
+
+:where([data-news-hover]:hover) .frame::after {
+  opacity: 0;
+}
+
+:where([data-news-hover='drift']:hover) .img {
+  --drift-x: -1.6%;
+  --drift-y: -0.8%;
+  --drift-zoom: 1.08;
+  --drift-time: 6s;
+  --drift-curve: cubic-bezier(0.33, 0, 0.4, 1);
+}
+
+:where([data-news-hover='drift']:nth-child(even):hover) .img {
+  --drift-x: 1.6%;
+}
+
+.img[data-loaded] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img {
+    transition: none;
+  }
+
+  :where([data-news-hover='drift']:hover) .img {
+    --drift-x: 0;
+    --drift-y: 0;
+    --drift-zoom: 1.02;
+  }
+}
+
+.frame[data-ratio='natural'] .img {
+  position: static;
+  height: auto;
+}
+
+.frame > :not(.img) {
+  z-index: 1;
+}

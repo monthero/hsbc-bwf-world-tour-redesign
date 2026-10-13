@@ -1,0 +1,125 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 48px;
+}
+
+.fire {
+  color: var(--bwf-red-text);
+  font-size: 17px;
+}
+
+.strip {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-block: 1px solid var(--bwf-line);
+}
+
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 18px 20px 20px;
+}
+
+.item:first-child {
+  padding-left: 0;
+}
+
+.item:last-child {
+  padding-right: 0;
+}
+
+.item + .item {
+  border-left: 1px solid var(--bwf-line);
+}
+
+.thumb {
+  width: 72px;
+  border-radius: 8px;
+}
+
+.text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 14px;
+  line-height: 1.32;
+}
+
+.item:hover .title {
+  color: var(--bwf-red-pale);
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .section {
+    gap: 12px;
+    padding: 26px 0 8px;
+  }
+
+  .strip {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--bwf-gutter);
+    margin-inline: calc(-1 * var(--bwf-gutter));
+    padding-inline: var(--bwf-gutter);
+    border: 0;
+  }
+
+  .item,
+  .item:first-child,
+  .item:last-child {
+    flex: none;
+    width: 76%;
+    padding: 14px 16px 14px 14px;
+    border-radius: 16px;
+    border: 1px solid var(--bwf-border);
+    background: var(--bwf-surface);
+    scroll-snap-align: start;
+  }
+
+  .title {
+    -webkit-line-clamp: 3;
+  }
+}
+
+.section[data-layout='list'] {
+  padding: 0;
+}
+
+.section[data-layout='list'] .strip {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+}
+
+.section[data-layout='list'] .item {
+  width: auto;
+  padding: 14px 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.section[data-layout='list'] .item + .item {
+  border-top: 1px solid var(--bwf-line);
+}

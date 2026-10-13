@@ -1,0 +1,27 @@
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--bwf-dim);
+  white-space: nowrap;
+}
+
+.fresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--bwf-red-text);
+  font-weight: 600;
+}
+
+.fresh::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bwf-red);
+  box-shadow: 0 0 0 3px alpha(var(--bwf-red), 0.25);
+}

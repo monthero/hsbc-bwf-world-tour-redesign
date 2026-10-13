@@ -1,0 +1,72 @@
+.section {
+  padding-top: 32px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-bottom: 18px;
+}
+
+.name {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.name span {
+  color: var(--bwf-faint);
+  font-weight: 500;
+}
+
+.badge {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: alpha(var(--bwf-red), 0.14);
+  color: var(--bwf-red-text);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.count {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--bwf-faint);
+}
+
+.failed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px;
+  text-align: left;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .section {
+    padding-top: 26px;
+  }
+
+  .head {
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .name {
+    font-size: 19px;
+    letter-spacing: -0.015em;
+  }
+
+  .badge {
+    padding: 2px 8px;
+    font-size: 11px;
+  }
+
+  .count {
+    font-size: 12px;
+  }
+}

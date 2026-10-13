@@ -1,0 +1,42 @@
+.chip {
+  position: relative;
+  z-index: 2;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  color: var(--bwf-text-3);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+
+.chip::before {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--lv);
+}
+
+.chip[data-variant='outline'] {
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid var(--bwf-border-strong);
+}
+
+.chip[data-variant='glass'] {
+  color: var(--bwf-text);
+}
+
+.chip:hover {
+  color: var(--bwf-text);
+  border-color: var(--bwf-border-focus);
+}

@@ -1,0 +1,43 @@
+.lines {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card {
+  overflow: hidden;
+}
+
+.cover {
+  aspect-ratio: 16 / 9;
+}
+
+.body {
+  padding: 14px 16px 18px;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+}
+
+.row[data-variant='list'] {
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 12px;
+}
+
+.thumb {
+  flex: none;
+  width: 112px;
+  aspect-ratio: 4 / 3;
+}
+
+.row[data-variant='list'] .thumb {
+  width: 120px;
+}

@@ -1,0 +1,85 @@
+.card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+  border-radius: var(--bwf-card-radius);
+  border: 1px solid var(--bwf-border);
+  color: var(--bwf-text);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -40px;
+  bottom: -70px;
+  width: 220px;
+  aspect-ratio: 1;
+  background: var(--bwf-brand);
+  mask: url('/assets/brand/emblem.svg') center / contain no-repeat;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.card:hover {
+  border-color: var(--bwf-border-hover);
+}
+
+.icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--bwf-red-tint);
+  color: var(--bwf-red-text);
+  font-size: 22px;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.body {
+  font-size: 13px;
+  color: var(--bwf-dim);
+  text-wrap: pretty;
+}
+
+.button {
+  flex: none;
+}
+
+.card[data-compact] {
+  gap: 14px;
+  padding: 16px;
+}
+
+.card[data-compact] .icon {
+  display: none;
+}
+
+.card[data-compact] .title {
+  font-size: 15px;
+}
+
+.card[data-compact] .body {
+  font-size: 12px;
+}

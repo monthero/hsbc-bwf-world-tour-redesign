@@ -1,0 +1,183 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 24px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  min-width: 0;
+}
+
+.kind {
+  color: var(--bwf-red-text);
+}
+
+.measure {
+  max-width: 920px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(34px, 3.6vw, 52px);
+  line-height: 1.06;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  margin: 0;
+  font-size: 14px;
+  color: var(--bwf-muted);
+}
+
+.meta > * + *::before {
+  content: '·';
+  margin: 0 8px;
+  color: var(--bwf-faint);
+}
+
+.byline {
+  color: var(--bwf-text);
+  font-weight: 600;
+}
+
+.players {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow-x: auto;
+}
+
+.players[data-expanded] {
+  flex-wrap: wrap;
+  row-gap: 10px;
+  overflow: visible;
+}
+
+.more {
+  flex: none;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--bwf-border-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--bwf-text-3);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.more:hover {
+  border-color: var(--bwf-border-focus);
+  color: var(--bwf-text);
+}
+
+.player {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hero {
+  margin: 0;
+}
+
+.heroImage {
+  width: 100%;
+  max-height: 680px;
+  border-radius: var(--bwf-card-radius);
+  aspect-ratio: 16 / 9;
+}
+
+.hero figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--bwf-dim);
+}
+
+.credit {
+  color: var(--bwf-faint);
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .header {
+    gap: 20px;
+    padding-top: 16px;
+  }
+
+  .intro {
+    gap: 10px;
+  }
+
+  .details {
+    gap: 8px;
+  }
+
+  .title {
+    font-size: 30px;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
+
+  .meta {
+    font-size: 13px;
+  }
+
+  .players {
+    margin-inline: calc(-1 * var(--bwf-gutter));
+    padding-inline: var(--bwf-gutter);
+  }
+
+  .hero {
+    margin-inline: calc(-1 * var(--bwf-gutter));
+  }
+
+  .heroImage {
+    border-radius: 0;
+  }
+
+  .hero figcaption {
+    padding-inline: var(--bwf-gutter);
+  }
+}
