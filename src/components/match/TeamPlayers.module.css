@@ -19,13 +19,18 @@
 
 .team[data-pair-seed] {
   display: grid;
-  grid-template-columns: minmax(0, max-content) auto;
+  --name-min: min-content;
+  grid-template-columns: minmax(var(--name-min), max-content) auto;
   justify-content: start;
   gap: 2px 6px;
 }
 
+.team[data-pair-seed][data-truncate] {
+  --name-min: 0;
+}
+
 .team[data-pair-seed][data-align='end'] {
-  grid-template-columns: auto minmax(0, max-content);
+  grid-template-columns: auto minmax(var(--name-min), max-content);
   justify-content: end;
 }
 

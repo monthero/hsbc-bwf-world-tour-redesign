@@ -12,6 +12,7 @@
 
 .card {
   position: relative;
+  container: live-card / inline-size;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -71,36 +72,56 @@
 
 .board {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: start;
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 12px;
 }
 
 .team {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
+  display: contents;
 }
 
-.team[data-side='1'] {
-  align-items: flex-end;
-  text-align: right;
+.team > * {
+  grid-column: 1 / 3;
+  justify-self: start;
+}
+
+.team[data-side='1'] > * {
+  grid-column: 3 / 5;
+  justify-self: end;
+}
+
+.avatars {
+  grid-row: 1;
+}
+
+.team[data-side='0'] > .avatars {
+  grid-column: 1;
+}
+
+.team[data-side='1'] > .avatars {
+  grid-column: 4;
 }
 
 .players {
+  grid-row: 2;
+  align-self: start;
   max-width: 100%;
+  margin-top: 8px;
   font-size: 15px;
   font-weight: 500;
-  overflow-wrap: anywhere;
   text-wrap: pretty;
 }
 
 .tags {
+  grid-row: 3;
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+}
+
+.tags:not(:empty) {
+  margin-top: 8px;
 }
 
 .team[data-side='1'] .tags {
@@ -141,10 +162,12 @@
 }
 
 .score {
+  grid-row: 1;
+  grid-column: 2 / 4;
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 6px;
-  padding-top: 10px;
 }
 
 .points {
@@ -237,6 +260,14 @@
   width: calc(var(--share) * 100%);
   background: var(--bwf-text);
   transition: width 0.6s var(--bwf-ease);
+}
+
+@container live-card (width < 360px) {
+  .score {
+    grid-row: 4;
+    grid-column: 1 / -1;
+    margin-top: 12px;
+  }
 }
 
 @keyframes flash {

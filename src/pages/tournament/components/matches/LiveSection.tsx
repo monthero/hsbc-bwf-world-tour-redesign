@@ -72,7 +72,7 @@ const LiveTeam: FC<{ match: Match; side: Side; stats: LiveStats | null; challeng
   const streak = stats?.streak?.side === side && stats.streak.count >= STREAK_MIN ? stats.streak.count : 0
   return (
     <div className={classes.team} data-side={side}>
-      <AvatarGroup players={team.players} size={AVATAR_SIZE} />
+      <AvatarGroup players={team.players} size={AVATAR_SIZE} className={classes.avatars} />
       <TeamPlayers
         players={team.players}
         seed={team.seed}
