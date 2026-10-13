@@ -2,11 +2,11 @@ import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import type { NewsStory } from '~/utils/news';
+import type { BriefStory } from '~/utils/news';
 
 import classes from './NewsTitle.module.css';
 
-export const NewsTitle = memo<{ story: NewsStory; as?: 'h2' | 'h3'; className?: string }>(
+export const NewsTitle = memo<{ story: BriefStory; as?: 'h2' | 'h3'; className?: string }>(
   ({ story, as: Tag = 'h3', className }) => {
     return (
       <>

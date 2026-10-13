@@ -1,5 +1,24 @@
-.section {
+.row[data-kind='head'] {
   padding-top: 32px;
+}
+
+.row[data-kind='stories'][data-variant='card'] {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: 16px;
+  padding-bottom: 20px;
+}
+
+.row[data-kind='stories'][data-variant='card'][data-last] {
+  padding-bottom: 0;
+}
+
+.row[data-kind='stories'][data-variant='compact']:not([data-first]) {
+  border-top: 1px solid var(--bwf-line);
+}
+
+.row[data-kind='subscribe'] {
+  padding-top: 22px;
 }
 
 .head {
@@ -47,7 +66,7 @@
 }
 
 @mixin smaller-than $mantine-breakpoint-sm {
-  .section {
+  .row[data-kind='head'] {
     padding-top: 26px;
   }
 

@@ -1,0 +1,17 @@
+.trigger {
+  height: 36px;
+  padding: 0 12px;
+  gap: 4px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px var(--bwf-gutter) calc(20px + env(safe-area-inset-bottom));
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+}

@@ -26,7 +26,7 @@ export const StorySkeleton = memo<{ variant: NewsCardVariant }>(({ variant }) =>
   return (
     <div className={classes.row} data-variant={variant} aria-hidden>
       <SkeletonLines short="70%" />
-      <Skeleton className={classes.thumb} radius={variant === 'list' ? 10 : 12} />
+      <Skeleton className={classes.thumb} radius={variant === 'row' ? 12 : 10} />
     </div>
   );
 });

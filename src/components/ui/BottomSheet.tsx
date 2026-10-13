@@ -12,11 +12,13 @@ export const BottomSheet: FC<{
   maxHeight?: string;
   handle?: boolean;
   bodyClassName?: string;
-}> = ({ opened, onClose, children, maxHeight = '88dvh', handle, bodyClassName }) => {
+  onExited?: () => void;
+}> = ({ opened, onClose, children, maxHeight = '88dvh', handle, bodyClassName, onExited }) => {
   return (
     <Drawer
       opened={opened}
       onClose={onClose}
+      onExitTransitionEnd={onExited}
       position="bottom"
       withCloseButton={false}
       padding={0}

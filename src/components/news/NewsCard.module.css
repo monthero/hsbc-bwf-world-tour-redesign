@@ -96,3 +96,23 @@
   font-size: 15px;
   line-height: 1.35;
 }
+.card[data-variant='compact'] {
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.card[data-variant='compact'] .media {
+  flex: none;
+  width: 76px;
+  border-radius: 10px;
+}
+
+.card[data-variant='compact'] .body {
+  gap: 4px;
+}
+
+.card[data-variant='compact'] .title {
+  font-size: 14px;
+  line-height: 1.3;
+}

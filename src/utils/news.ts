@@ -1,4 +1,4 @@
-import type { NewsImage, NewsItem } from '~/api/schemas';
+import type { NewsBrief, NewsImage, NewsItem } from '~/api/schemas';
 import type { Tournament } from '~/types';
 
 import { date, formatDayMonth, hoursSince } from './dates';
@@ -35,8 +35,8 @@ export type TournamentLookup = {
   byYear: ReadonlyMap<number, readonly Tournament[]>;
 };
 
-export interface NewsStory {
-  item: NewsItem;
+export interface NewsStory<T extends NewsBrief = NewsItem> {
+  item: T;
   title: string;
   kind: string | null;
   tournament: Tournament | null;
@@ -57,7 +57,9 @@ const timeLabel = (iso: string, hours: number) => {
   return formatDayMonth(iso);
 };
 
-export const toStory = (item: NewsItem, lookup: TournamentLookup | undefined): NewsStory => {
+export type BriefStory = NewsStory<NewsBrief>;
+
+export const toStory = <T extends NewsBrief>(item: T, lookup: TournamentLookup | undefined): NewsStory<T> => {
   const year = date(item.publishedAt).year();
   const split = splitPrefix(item.title);
   const kind = split && KIND_PREFIXES.has(fold(split.prefix)) ? split.prefix : null;

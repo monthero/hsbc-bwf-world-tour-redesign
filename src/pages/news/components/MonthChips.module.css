@@ -1,13 +1,23 @@
 .bar {
+  display: flex;
+  align-items: center;
   border-top: 1px solid var(--bwf-border);
+}
+
+.picker {
+  flex: none;
+  padding: 7px 8px 7px var(--bwf-gutter);
+  border-right: 1px solid var(--bwf-border);
 }
 
 .row {
   position: relative;
+  flex: 1;
+  min-width: 0;
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding: 7px var(--bwf-gutter);
+  padding: 7px var(--bwf-gutter) 7px 8px;
 }
 
 .chip {

@@ -11,15 +11,6 @@
   flex-direction: column;
 }
 
-.subscribe {
-  margin-top: 22px;
-}
-
-.more {
-  align-self: center;
-  margin-top: 40px;
-}
-
 .error {
   display: flex;
   flex-direction: column;
@@ -43,10 +34,5 @@
   .feed {
     display: block;
     padding-bottom: 64px;
-  }
-
-  .more {
-    width: 100%;
-    margin-top: 28px;
   }
 }

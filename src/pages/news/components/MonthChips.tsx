@@ -4,7 +4,8 @@ import { memo, useCallback, useEffect, useRef, type Ref } from 'react';
 import { FilterChip, StickyBar } from '~/components/ui';
 
 import { SECTION } from '../constants';
-import type { NavItem } from '../types';
+import type { ArchiveYear, NavItem, PickMonth } from '../types';
+import { MonthSheet } from './MonthSheet';
 
 import classes from './MonthChips.module.css';
 import utils from '~/styles/utils.module.css';
@@ -24,8 +25,10 @@ export const MonthChips = memo<{
   items: NavItem[];
   active: string | null;
   onJump: (id: string) => void;
-  onMore?: () => void;
-}>(({ ref, items, active, onJump, onMore }) => {
+  years: ArchiveYear[] | undefined;
+  month: string | null;
+  onPick: PickMonth;
+}>(({ ref, items, active, onJump, years, month, onPick }) => {
   const row = useRef<HTMLDivElement>(null);
   const current = active ?? SECTION.latest;
 
@@ -38,15 +41,13 @@ export const MonthChips = memo<{
 
   return (
     <StickyBar ref={ref} glass className={classes.bar}>
+      <div className={classes.picker}>
+        <MonthSheet years={years} current={month} onPick={onPick} />
+      </div>
       <div ref={row} className={clsx(utils.noScrollbar, classes.row)}>
         {items.map((it) => (
           <MonthChip key={it.id} item={it} active={it.id === current} onJump={onJump} />
         ))}
-        {onMore && (
-          <FilterChip onClick={onMore} className={classes.chip}>
-            Older
-          </FilterChip>
-        )}
       </div>
     </StickyBar>
   );

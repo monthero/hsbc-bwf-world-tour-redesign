@@ -41,3 +41,13 @@
 .row[data-variant='list'] .thumb {
   width: 120px;
 }
+
+.row[data-variant='compact'] {
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.row[data-variant='compact'] .thumb {
+  order: -1;
+  width: 76px;
+}

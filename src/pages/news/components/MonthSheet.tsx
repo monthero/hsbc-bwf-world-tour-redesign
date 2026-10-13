@@ -1,0 +1,46 @@
+import { memo, useCallback, useRef, useState } from 'react';
+
+import { BottomSheet, FilterChip, IconCalendar, IconExpand } from '~/components/ui';
+
+import type { ArchiveYear, PickMonth } from '../types';
+import { MonthIndex } from './MonthIndex';
+
+import classes from './MonthSheet.module.css';
+
+export const MonthSheet = memo<{
+  years: ArchiveYear[] | undefined;
+  current: string | null;
+  onPick: PickMonth;
+}>(({ years, current, onPick }) => {
+  const [open, setOpen] = useState(false);
+  const picked = useRef<string | null>(null);
+  const show = useCallback(() => setOpen(true), []);
+  const close = useCallback(() => setOpen(false), []);
+  const pick = useCallback((key: string) => {
+    picked.current = key;
+    setOpen(false);
+  }, []);
+  const onExited = useCallback(() => {
+    const key = picked.current;
+    picked.current = null;
+    if (key) onPick(key);
+  }, [onPick]);
+  return (
+    <>
+      <FilterChip
+        className={classes.trigger}
+        disabled={!years}
+        aria-label="Jump to month"
+        aria-haspopup="dialog"
+        onClick={show}
+      >
+        <IconCalendar size={16} />
+        <IconExpand size={12} />
+      </FilterChip>
+      <BottomSheet opened={open} onClose={close} onExited={onExited} handle bodyClassName={classes.body}>
+        <span className={classes.title}>Jump to month</span>
+        <MonthIndex years={years} current={current} onPick={pick} variant="sheet" />
+      </BottomSheet>
+    </>
+  );
+});

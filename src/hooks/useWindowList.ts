@@ -1,9 +1,19 @@
-import { useWindowVirtualizer } from '@tanstack/react-virtual';
+import { useWindowVirtualizer, type VirtualItem } from '@tanstack/react-virtual';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 const OVERSCAN = 10;
 
-export const useWindowList = <T extends HTMLElement>(count: number, estimate: number) => {
+export interface WindowListOptions {
+  getItemKey?: (index: number) => string | number;
+  initialMeasurementsCache?: VirtualItem[];
+  scrollPaddingStart?: number;
+}
+
+export const useWindowList = <T extends HTMLElement>(
+  count: number,
+  estimate: number | ((index: number) => number),
+  options?: WindowListOptions,
+) => {
   const ref = useRef<T>(null);
   const [margin, setMargin] = useState(0);
 
@@ -19,10 +29,11 @@ export const useWindowList = <T extends HTMLElement>(count: number, estimate: nu
 
   const virtualizer = useWindowVirtualizer({
     count,
-    estimateSize: () => estimate,
+    estimateSize: typeof estimate === 'number' ? () => estimate : estimate,
     overscan: OVERSCAN,
     scrollMargin: margin,
     useFlushSync: false,
+    ...options,
   });
   const items = virtualizer.getVirtualItems();
   const first = items[0];
@@ -30,6 +41,7 @@ export const useWindowList = <T extends HTMLElement>(count: number, estimate: nu
   return {
     ref,
     items,
+    virtualizer,
     measure: virtualizer.measureElement,
     before: first ? first.start - margin : 0,
     after: last ? virtualizer.getTotalSize() - (last.end - margin) : 0,

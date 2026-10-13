@@ -1,5 +1,5 @@
-import { infiniteQueryOptions, queryOptions, useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { useCallback, useMemo } from 'react';
+import { queryOptions, useQueries, useQuery, type UseQueryResult } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 import { LIVE_NEWS } from '~/constants';
 import { dayjs } from '~/utils/dates';
@@ -18,9 +18,7 @@ import {
 const STATIC = { staleTime: Infinity, gcTime: Infinity };
 const RECENT_MS = 10 * 60_000;
 const FREEZE_DAYS = 30;
-const NO_MONTHS: NewsMonthCount[] = [];
 const NO_ITEMS: NewsItem[] = [];
-const NO_PAGES: NewsMonth[] = [];
 
 const isRecentMonth = (month: string) => month >= dayjs.utc().subtract(FREEZE_DAYS, 'day').format('YYYY-MM');
 
@@ -74,17 +72,6 @@ export const newsMonthQuery = (month: string) =>
     ...freshness(isRecentMonth(month)),
   });
 
-export const newsFeedQuery = (months: readonly NewsMonthCount[]) =>
-  infiniteQueryOptions({
-    queryKey: ['news', 'feed', months[0]?.month ?? '', months.length],
-    initialPageParam: 0,
-    queryFn: ({ pageParam, signal }) => fetchMonth(months[pageParam]?.month ?? '', signal),
-    getNextPageParam: (_last: NewsMonth, pages: NewsMonth[]) =>
-      pages.length < months.length ? pages.length : undefined,
-    enabled: months.length > 0,
-    ...freshness(true),
-  });
-
 type NewsEvent = Pick<CalendarEventDto, 'code' | 'end'>;
 
 export const tournamentNewsQuery = (t: NewsEvent) =>
@@ -117,35 +104,28 @@ export const useNewsMonth = (month: string | undefined) =>
 
 export const useTournamentNews = (t: NewsEvent) => useQuery(tournamentNewsQuery(t));
 
-export interface NewsFeed {
-  items: NewsItem[];
-  pages: NewsMonth[];
-  months: NewsMonthCount[];
-  hasNextPage: boolean;
-  fetchNextPage: () => void;
-  isFetchingNextPage: boolean;
-  isLoading: boolean;
-  isError: boolean;
+export interface NewsMonthState {
+  page: NewsMonth | undefined;
+  failed: boolean;
+  settled: boolean;
 }
 
-export const useNewsFeed = (): NewsFeed => {
-  const index = useNewsIndex();
-  const months = index.data?.months ?? NO_MONTHS;
-  const feed = useInfiniteQuery(newsFeedQuery(months));
-  const pages = feed.data?.pages;
-  const items = useMemo(() => pages?.flatMap((p) => p.items) ?? NO_ITEMS, [pages]);
-  const { fetchNextPage } = feed;
-  const loadMore = useCallback(() => void fetchNextPage(), [fetchNextPage]);
-  return {
-    items,
-    pages: pages ?? NO_PAGES,
-    months,
-    hasNextPage: feed.hasNextPage,
-    fetchNextPage: loadMore,
-    isFetchingNextPage: feed.isFetchingNextPage,
-    isLoading: index.isLoading || feed.isLoading,
-    isError: index.isError || feed.isError,
-  };
+const toMonthStates = (results: UseQueryResult<NewsMonth>[]): NewsMonthState[] =>
+  results.map((r) => ({ page: r.data, failed: r.isError && !r.data, settled: !!r.data || r.isError }));
+
+const IGNORE = () => null;
+
+export const useNewsMonths = (months: readonly NewsMonthCount[], depth: number) => {
+  const queries = useMemo(
+    () => months.slice(0, depth).map((m) => ({ ...newsMonthQuery(m.month), enabled: false })),
+    [months, depth],
+  );
+  return useQueries({ queries, combine: toMonthStates });
+};
+
+export const useFetchNewsMonths = (keys: readonly string[]) => {
+  const queries = useMemo(() => keys.map((k) => newsMonthQuery(k)), [keys]);
+  useQueries({ queries, combine: IGNORE });
 };
 
 const RELATED_COUNT = 4;

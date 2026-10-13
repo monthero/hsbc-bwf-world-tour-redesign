@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import type { NewsStory } from '~/utils/news';
+import type { BriefStory } from '~/utils/news';
 
 import { NewsCard } from './NewsCard';
 import { StorySkeleton } from './StorySkeleton';
@@ -8,7 +8,7 @@ import { StorySkeleton } from './StorySkeleton';
 import classes from './NewsGrid.module.css';
 
 export const NewsGrid = memo<{
-  stories: readonly NewsStory[] | undefined;
+  stories: readonly BriefStory[] | undefined;
   variant: 'card' | 'row';
   skeletons?: number;
 }>(({ stories, variant, skeletons = 0 }) => (
