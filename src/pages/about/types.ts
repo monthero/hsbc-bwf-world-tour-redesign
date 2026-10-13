@@ -16,6 +16,7 @@ export interface SeasonFocus {
   live: Tournament | undefined;
   next: Tournament | undefined;
   finals: Tournament | undefined;
+  lastRegular: Tournament | undefined;
   spot: Tournament | undefined;
   focus: Tournament | undefined;
 }

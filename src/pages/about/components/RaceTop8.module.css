@@ -21,7 +21,7 @@
   text-decoration: none;
 }
 
-.colHead:hover {
+a.colHead:hover {
   color: var(--bwf-red-text);
 }
 
@@ -80,6 +80,28 @@
   height: 440px;
 }
 
+.champions {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.champion {
+  --avatar-ring: var(--bwf-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+}
+
+.champion .colHead {
+  margin-bottom: 0;
+}
+
 .caption {
   margin: 0;
   font-size: 12px;
@@ -87,7 +109,8 @@
 }
 
 @mixin smaller-than $mantine-breakpoint-lg {
-  .grid {
+  .grid,
+  .champions {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
@@ -117,5 +140,34 @@
 
   .skeleton {
     height: 600px;
+  }
+
+  .champions {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .champion {
+    display: grid;
+    grid-template-columns: 91px minmax(0, 1fr);
+    grid-template-areas:
+      'avatars head'
+      'avatars names';
+    align-items: center;
+    gap: 2px 14px;
+    padding: 12px 14px;
+  }
+
+  .champion .colHead {
+    grid-area: head;
+  }
+
+  .champion .names {
+    grid-area: names;
+    font-size: 14px;
+  }
+
+  .avatars {
+    grid-area: avatars;
   }
 }

@@ -51,7 +51,7 @@ export const useTournaments = (year?: number) => {
   return { ...q, data };
 };
 
-const useSeasonEdge = (year: number, enabled: boolean) => {
+export const useSeasonEdge = (year: number, enabled: boolean) => {
   const { data: seasons } = useSeasons();
   const listed = !!seasons?.seasons.some((s) => s.year === year);
   return useQuery({ ...calendarQuery(year), select: selectHeld, enabled: enabled && listed }).data;

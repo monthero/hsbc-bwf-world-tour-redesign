@@ -48,6 +48,16 @@ export const TITLES_TOP_N = 5;
 
 export const UP_NEXT = 'Up next';
 
+export const NEXT_SEASON = 'Next season';
+
+export const TITLES_HEADING = { running: 'Titles so far', complete: 'Season titles' } as const;
+
 export const PATHWAY_NOTE = 'The pathway into the Tour. Ranking points, but not part of the World Tour.';
 
 export const RACE_LINE = 'Qualification line';
+
+export const QUALIFIED_FOR = 'Qualified for';
+
+export const FINALS_CHAMPIONS = 'Finals champions';
+
+export const FINALS_RESULTS = 'Finals results';

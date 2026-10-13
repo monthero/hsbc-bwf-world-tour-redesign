@@ -4,7 +4,7 @@ import { LEVEL_META } from '~/constants';
 import type { Level, Tournament } from '~/types';
 import { date, today } from '~/utils/dates';
 import { formatNumber, plural } from '~/utils/format';
-import { countdownLabel, finalsOf, isHeld, liveAndNext, liveDayLabel } from '~/utils/tournaments';
+import { countdownLabel, finalsOf, hasWinners, isDone, isHeld, liveAndNext, liveDayLabel } from '~/utils/tournaments';
 
 import { FLIP_AT, KICKERS, MAP_SIZE, RELAX } from './constants';
 import type { MapPoint, PinSpot, SeasonFocus, SeasonStat, SeasonStatus } from './types';
@@ -19,7 +19,21 @@ export const seasonFocus = (list: readonly Tournament[]): SeasonFocus => {
   const held = list.filter(isHeld);
   const { live, next } = liveAndNext(held);
   const finals = finalsOf(held);
-  return { live, next, finals, spot: live ?? next, focus: live ?? next ?? finals ?? held.at(-1) };
+  return {
+    live,
+    next,
+    finals,
+    lastRegular: held.findLast((t) => t.level !== 'Finals'),
+    spot: live ?? next,
+    focus: live ?? next ?? finals ?? held.at(-1),
+  };
+};
+
+export const crownedFinals = (f: SeasonFocus) => (f.finals && hasWinners(f.finals) ? f.finals : undefined);
+
+export const raceSettled = (f: SeasonFocus, published: string) => {
+  const last = f.lastRegular;
+  return !!last && isDone(last) && !date(published).isBefore(date(last.end));
 };
 
 export const isShown = <T>(shown: readonly T[] | undefined, item: T) => !shown?.length || shown.includes(item);

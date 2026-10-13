@@ -39,10 +39,10 @@ const Leader: FC<{ leaders: Player[]; most: number }> = ({ leaders, most }) => {
   );
 };
 
-export const TitlesSoFar = memo<{ summary: TitlesSummary }>(({ summary: s }) => (
+export const TitlesSoFar = memo<{ summary: TitlesSummary; heading: string }>(({ summary: s, heading }) => (
   <div className={clsx(utils.card, classes.card)}>
     <SectionTitle as="h3" count={`${plural(s.events, 'event')} · ${plural(s.titles, 'title')}`}>
-      Titles so far
+      {heading}
     </SectionTitle>
     <ol className={classes.bars}>
       {s.nations.map((n) => (

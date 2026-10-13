@@ -14,7 +14,7 @@ import { SeasonCard } from './components/SeasonCard';
 import { SeasonStats } from './components/SeasonStats';
 import { Spotlight } from './components/Spotlight';
 import { ABOUT_KICKER, ABOUT_META, ABOUT_TITLE, ROAD_TO } from './constants';
-import { seasonFocus, seasonLede, seasonStats } from './utils';
+import { crownedFinals, seasonFocus, seasonLede, seasonStats } from './utils';
 
 import classes from './AboutPage.module.css';
 import utils from '~/styles/utils.module.css';
@@ -37,7 +37,7 @@ export const AboutPage: FC = () => {
   const focus = useMemo(() => (data ? seasonFocus(data) : undefined), [data]);
   const stats = useMemo(() => (data && focus ? seasonStats(data, focus) : undefined), [data, focus]);
   const lede = useMemo(() => (data ? seasonLede(data) : ABOUT_META), [data]);
-  const city = knownFinalsCity(focus?.finals);
+  const city = focus && !crownedFinals(focus) ? knownFinalsCity(focus.finals) : null;
   const title = city ? (
     <>
       {ROAD_TO} <span className={classes.city}>{city}</span>
@@ -58,7 +58,7 @@ export const AboutPage: FC = () => {
         {data && focus ? <SeasonCard tournaments={data} year={SEASON_YEAR} focus={focus} /> : SEASON_SKELETON}
         <Spotlight />
         <HowItWorks className={classes.section} />
-        <RaceTop8 className={classes.section} />
+        <RaceTop8 focus={focus} className={classes.section} />
       </main>
     </div>
   );
