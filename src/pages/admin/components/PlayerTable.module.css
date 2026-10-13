@@ -1,0 +1,155 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--bwf-card-radius);
+  border: 1px solid var(--bwf-border);
+  background: var(--bwf-surface);
+  overflow: hidden;
+}
+
+.head,
+.row {
+  display: grid;
+  grid-template-columns: 20px 36px minmax(160px, 2fr) 88px 112px 112px 132px 132px;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 16px;
+}
+
+.head {
+  padding-block: 10px;
+  border-bottom: 1px solid var(--bwf-border);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bwf-dim);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.row {
+  position: relative;
+  border-bottom: 1px solid var(--bwf-line);
+  color: var(--bwf-text);
+  font-size: 13px;
+  transition: background 0.15s;
+}
+
+.row:hover {
+  background: var(--bwf-surface-3);
+}
+
+.row[data-checked] {
+  background: var(--bwf-red-tint);
+}
+
+.check {
+  display: flex;
+}
+
+.row > *:not(button, .check) {
+  pointer-events: none;
+}
+
+.name {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  font-weight: 600;
+}
+
+.id {
+  flex: none;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--bwf-faint);
+}
+
+.country,
+.rank,
+.badges,
+.local {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.country {
+  color: var(--bwf-text-3);
+}
+
+.played {
+  color: var(--bwf-muted);
+}
+
+.overridden,
+.note {
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.overridden {
+  background: var(--bwf-red-tint);
+  color: var(--bwf-red-pale);
+}
+
+.note {
+  background: var(--bwf-raised);
+  color: var(--bwf-text-3);
+}
+
+@mixin smaller-than $mantine-breakpoint-md {
+  .head {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: 20px 36px auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'check avatar name name local'
+      'check avatar country rank badges';
+    gap: 4px 10px;
+    padding: 10px 12px;
+  }
+
+  .check {
+    grid-area: check;
+  }
+
+  .avatar {
+    grid-area: avatar;
+  }
+
+  .name {
+    grid-area: name;
+  }
+
+  .local {
+    grid-area: local;
+    justify-content: flex-end;
+  }
+
+  .badges {
+    grid-area: badges;
+    justify-content: flex-end;
+  }
+
+  .country {
+    grid-area: country;
+  }
+
+  .rank {
+    grid-area: rank;
+  }
+
+  .played {
+    display: none;
+  }
+}

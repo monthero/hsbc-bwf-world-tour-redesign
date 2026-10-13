@@ -1,0 +1,100 @@
+.framing {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.pad {
+  position: relative;
+  display: block;
+  flex: 0 1 380px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bwf-bg-sunken);
+  cursor: crosshair;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.pad:focus-visible {
+  outline: 2px solid var(--bwf-border-focus);
+  outline-offset: 2px;
+}
+
+.thumb {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.cross {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 50%;
+  border: 2px solid var(--mantine-color-white);
+  box-shadow:
+    0 0 0 1px alpha(var(--mantine-color-black), 0.6),
+    inset 0 0 0 1px alpha(var(--mantine-color-black), 0.6);
+  pointer-events: none;
+}
+
+.cross::before,
+.cross::after {
+  content: '';
+  position: absolute;
+  background: var(--mantine-color-white);
+  box-shadow: 0 0 0 1px alpha(var(--mantine-color-black), 0.5);
+}
+
+.cross::before {
+  left: 50%;
+  top: -9px;
+  bottom: -9px;
+  width: 2px;
+  margin-left: -1px;
+}
+
+.cross::after {
+  top: 50%;
+  left: -9px;
+  right: -9px;
+  height: 2px;
+  margin-top: -1px;
+}
+
+.mobile {
+  flex: none;
+  width: 120px;
+  aspect-ratio: 39 / 42;
+  border-radius: 12px;
+  border: 1px solid var(--bwf-border);
+  background-color: var(--bwf-bg-sunken);
+  background-image: var(--hero);
+  background-size: cover;
+  background-position: var(--hero-pos, center 15%);
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .pad {
+    flex-basis: 100%;
+  }
+
+  .mobile {
+    width: 100px;
+  }
+}

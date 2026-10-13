@@ -1,0 +1,37 @@
+.bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  min-height: 30px;
+  font-size: 13px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.count {
+  color: var(--bwf-muted);
+}
+
+.bar[data-active] .count {
+  color: var(--bwf-text);
+  font-weight: 600;
+}
+
+.link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--bwf-red-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.bulk {
+  margin-left: auto;
+}

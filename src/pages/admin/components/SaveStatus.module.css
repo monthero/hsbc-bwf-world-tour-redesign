@@ -1,0 +1,23 @@
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--bwf-muted);
+  white-space: pre-wrap;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.error {
+  max-height: 120px;
+  overflow-y: auto;
+  color: var(--bwf-red-text);
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.ok {
+  color: var(--bwf-green);
+}

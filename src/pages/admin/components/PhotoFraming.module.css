@@ -1,0 +1,62 @@
+.framing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.stage {
+  position: relative;
+  flex: 0 0 240px;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--bwf-bg-sunken);
+  cursor: grab;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.stage:active {
+  cursor: grabbing;
+}
+
+.stage:focus-visible {
+  outline: 2px solid var(--bwf-border-focus);
+  outline-offset: 2px;
+}
+
+.mask {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 100vmax alpha(var(--mantine-color-black), 0.55),
+    inset 0 0 0 2px alpha(var(--mantine-color-white), 0.85);
+  pointer-events: none;
+}
+
+.zoom {
+  align-self: stretch;
+  max-width: 320px;
+  padding-block: 6px;
+}
+
+.previews {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+@mixin smaller-than $mantine-breakpoint-sm {
+  .stage {
+    flex-basis: 100%;
+    max-width: 320px;
+  }
+}

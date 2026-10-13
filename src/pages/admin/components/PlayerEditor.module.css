@@ -1,0 +1,50 @@
+.who {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--bwf-muted);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 14px;
+}
+
+.groupTitle {
+  margin: 0 0 4px;
+  padding-inline: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bwf-dim);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 2px 8px;
+}
+
+.notes {
+  padding-inline: 14px;
+}

@@ -1,0 +1,537 @@
+[
+  {
+    "kind": "bag",
+    "brand": "hundred",
+    "model": "Aeris Black"
+  },
+  {
+    "kind": "bag",
+    "brand": "hundred",
+    "model": "Aeris Pink"
+  },
+  {
+    "kind": "racket",
+    "brand": "flypower",
+    "model": "Enigma 900 V3"
+  },
+  {
+    "kind": "racket",
+    "brand": "flypower",
+    "model": "Hrusangkali"
+  },
+  {
+    "kind": "racket",
+    "brand": "flypower",
+    "model": "Samiya"
+  },
+  {
+    "kind": "racket",
+    "brand": "hundred",
+    "model": "Flareon 700"
+  },
+  {
+    "kind": "racket",
+    "brand": "hundred",
+    "model": "Hyfonic 7"
+  },
+  {
+    "kind": "racket",
+    "brand": "hundred",
+    "model": "Nitrix 70 Venom"
+  },
+  {
+    "kind": "racket",
+    "brand": "hundred",
+    "model": "Nitrix 70 Volta"
+  },
+  {
+    "kind": "racket",
+    "brand": "hundred",
+    "model": "Nitrix 80 Bullet"
+  },
+  {
+    "kind": "racket",
+    "brand": "hundred",
+    "model": "Nitrix Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "Aeronaut 9000"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "Aeronaut 9000I"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "AXForce 80"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "AXForce 80 II"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "AXForce 80 Lite"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "AXForce 90"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "AXForce 90 MAX Dragon"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "AXForce 100"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "AXForce 100 II"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "BladeX 700"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "BladeX 800"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "BladeX 800 Power"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "BladeX 800 Shida"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "BladeX 900"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "Halbertec 8000"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "Halbertec 9000"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "Halbertec 9000 Power"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Auraspeed 90K Metallic R"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Auraspeed 99 Antonsen"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Auraspeed 100X"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Auraspeed 100X Ultra G"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Auraspeed Fantôme F AC"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Auraspeed Fantôme HYQ M"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Auraspeed Fantôme J"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Auraspeed HS Plus C"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "DriveX 10 Metallic B"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "DriveX 12 O"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "DriveX 12 ZSW J"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Thruster F Claw Ultra"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Thruster Ryuga II Pro B"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Thruster Ryuga III CQ"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Thruster Ryuga Metallic"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Thruster TTY Ultima"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Arcsaber 7 Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Arcsaber 11 Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Astrox 77 Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Astrox 88D Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Astrox 88S Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Astrox 99 Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Astrox 100 ZZ"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Astrox 100 ZZ Kurenai"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Astrox 100 ZZ Navy"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Astrox 100 ZZ VA"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Duora Z-Strike"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Nanoflare 700 Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Nanoflare 800 Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Nanoflare 1000Z"
+  },
+  {
+    "kind": "shoes",
+    "brand": "hundred",
+    "model": "Phenom"
+  },
+  {
+    "kind": "shoes",
+    "brand": "li-ning",
+    "model": "Blade 2 Pro"
+  },
+  {
+    "kind": "shoes",
+    "brand": "li-ning",
+    "model": "Thunder II Pro"
+  },
+  {
+    "kind": "shoes",
+    "brand": "victor",
+    "model": "A970ACE"
+  },
+  {
+    "kind": "shoes",
+    "brand": "victor",
+    "model": "P9200III"
+  },
+  {
+    "kind": "shoes",
+    "brand": "yonex",
+    "model": "Power Cushion 65 Z3"
+  },
+  {
+    "kind": "shoes",
+    "brand": "yonex",
+    "model": "Power Cushion Aerus Z2"
+  },
+  {
+    "kind": "shoes",
+    "brand": "yonex",
+    "model": "Power Cushion Comfort Z3"
+  },
+  {
+    "kind": "shoes",
+    "brand": "yonex",
+    "model": "Power Cushion Eclipsion Z3"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "Hybrid"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "Hybrid Warrior"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "JP58 Magnite"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "JP63 Hunter"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "JP63 Magnite"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "JP65 Magnite"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "JP66"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "JP66 Hunter"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "JP70 Hunter"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "JP70 Magnite"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "JP70 Power"
+  },
+  {
+    "kind": "string",
+    "brand": "hundred",
+    "model": "Warrior 61"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "L67"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "LT66"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "LT70"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "N58"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "N61"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "N63"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "N65"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "N68"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "N69"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "N70"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "No.1"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "No.1 Boost"
+  },
+  {
+    "kind": "string",
+    "brand": "li-ning",
+    "model": "No.5"
+  },
+  {
+    "kind": "string",
+    "brand": "victor",
+    "model": "VBS-63"
+  },
+  {
+    "kind": "string",
+    "brand": "victor",
+    "model": "VBS-66 Nano"
+  },
+  {
+    "kind": "string",
+    "brand": "victor",
+    "model": "VBS-68 Power"
+  },
+  {
+    "kind": "string",
+    "brand": "victor",
+    "model": "VBS-69 Nano"
+  },
+  {
+    "kind": "string",
+    "brand": "victor",
+    "model": "VBS-70"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "Aerobite"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "Aerobite Boost"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "BG65"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "BG65 Titanium"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "BG66 Ultimax"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "BG80"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "BG80 Power"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "Exbolt 63"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "Exbolt 65"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "Exbolt 68"
+  }
+]

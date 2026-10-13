@@ -1,0 +1,70 @@
+[
+  {
+    "id": "apacs",
+    "name": "Apacs",
+    "aliases": []
+  },
+  {
+    "id": "babolat",
+    "name": "Babolat",
+    "aliases": []
+  },
+  {
+    "id": "felet",
+    "name": "Felet",
+    "aliases": []
+  },
+  {
+    "id": "flypower",
+    "name": "Flypower",
+    "aliases": [
+      "FlyPower",
+      "Fly Power"
+    ]
+  },
+  {
+    "id": "fz-forza",
+    "name": "FZ Forza",
+    "aliases": [
+      "FZ",
+      "Forza",
+      "FZFORZA"
+    ]
+  },
+  {
+    "id": "hundred",
+    "name": "Hundred",
+    "aliases": [
+      "HUNDRED",
+      "HNDRD"
+    ]
+  },
+  {
+    "id": "kawasaki",
+    "name": "Kawasaki",
+    "aliases": []
+  },
+  {
+    "id": "li-ning",
+    "name": "Li-Ning",
+    "aliases": [
+      "LINING",
+      "Li Ning"
+    ]
+  },
+  {
+    "id": "mizuno",
+    "name": "Mizuno",
+    "aliases": []
+  },
+  {
+    "id": "victor",
+    "name": "Victor",
+    "aliases": []
+  },
+  {
+    "id": "yonex",
+    "name": "Yonex",
+    "aliases": []
+  }
+]

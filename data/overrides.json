@@ -1,0 +1,2900 @@
+{
+  "players": {
+    "34810": {
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "35642": {
+      "bio": {
+        "racket": "Yonex Nanoflare 800 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "44414": {
+      "bio": {
+        "racket": "Li-Ning AXForce 100 II"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "48528": {
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "50469": {
+      "hero": "https://www.yonex.co.uk/cdn/shop/files/TSB01199.jpg",
+      "bio": {
+        "height": 173,
+        "plays": "Right-handed",
+        "birthplace": "Zhuzhou",
+        "racket": "Yonex Nanoflare 700 Pro",
+        "achievements": "World Championships 2025 – bronze (Mixed doubles)"
+      },
+      "source": "https://www.yonex.co.uk/pages/athlete/chen-fang-hui",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Chen_Fanghui",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q115191912",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q115191912",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q115191912",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "55414": {
+      "bio": {
+        "racket": "Yonex Nanoflare 800 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "55417": {
+      "bio": {
+        "birthplace": "Saitama Prefecture",
+        "coach": "Norio Imai",
+        "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Asian Championships 2025 – silver (Mixed doubles); Asia Mixed Team Championships 2025 – bronze (Mixed team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q62647178",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Natsu_Saito",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Natsu_Saito",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "55481": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/d/db/Febi_Setianingrum.jpg",
+      "heroFocus": {
+        "x": 59,
+        "y": 14
+      },
+      "bio": {
+        "height": 162,
+        "plays": "Right-handed",
+        "birthplace": "Tangerang",
+        "achievements": "Uber Cup 2026 – bronze (women's team); Asia Team Championships 2026 – bronze (women's team); SEA Games 2025 – silver (women's team); SEA Games 2025 – bronze (WD)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:Febi_Setianingrum.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Febi_Setianingrum",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q114073690",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q114073690",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q114073690",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "55669": {
+      "hero": "https://pbsi.id/wp-content/uploads/2026/03/RaymondJoaquin5_QF_OrleansMasters2026_PBSI_20260320-scaled.jpg",
+      "bio": {
+        "height": 170,
+        "plays": "Right-handed",
+        "nickname": "Joaquin, Jokim",
+        "birthplace": "Jakarta",
+        "coach": "Chafidz Yusuf",
+        "racket": "Hundred Nitrix 70 Venom",
+        "achievements": "Asian Games 2026 – gold (Men's team); Asia Team Championships 2026 – bronze (Men's team)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Nikolaus_Joaquin",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q134532992",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Nikolaus_Joaquin",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q134532992",
+          "asOf": "2026-10-12"
+        },
+        "bio.nickname": {
+          "source": "https://en.wikipedia.org/wiki/Nikolaus_Joaquin",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q134532992",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://pbsi.id/2026/03/21/orleans-masters-2026-raymond-joaquin-dan-amri-nita-dijegal-denmark/",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "56203": {
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "56706": {
+      "bio": {
+        "racket": "Victor DriveX 12 O"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "57246": {
+      "hero": "https://www.yonex.co.uk/cdn/shop/files/20260109_1207_MalaysiaOpen2026_BPYL9670.jpg",
+      "heroFocus": {
+        "x": 67,
+        "y": 30
+      },
+      "bio": {
+        "birthplace": "Changsha",
+        "racket": "Yonex Nanoflare 700 Pro",
+        "achievements": "World Championships 2025 – silver (Mixed doubles); World Championships 2023 – bronze (Mixed doubles); World Championships 2026 – bronze (Mixed doubles); Sudirman Cup 2025 – gold (Mixed team); Asian Games 2026 – gold (Mixed doubles); Asian Games 2026 – gold (Women's team); Asian Championships 2023 – gold (Mixed doubles); Asian Championships 2024 – bronze (Mixed doubles); Asian Championships 2025 – bronze (Mixed doubles); Asia Mixed Team Championships 2023 – gold (Mixed team)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Wei_Yaxin",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q62641073",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://www.yonex.co.uk/pages/athlete/wei-ya-xin",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "57372": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1659/v1744290093/wordpress_assets_test/Dhruv-Kapila-Tanisha-Crasto_BAC25/Dhruv-Kapila-Tanisha-Crasto_BAC25.jpg",
+      "bio": {
+        "birthplace": "Ludhiana",
+        "achievements": "Thomas Cup 2022 – gold (men's team); Thomas Cup 2026 – bronze (men's team); Asian Games 2022 – silver (men's team); Asian Games 2026 – bronze (men's team); Asia Mixed Team Championships 2023 – bronze (mixed team); Asia Team Championships 2020 – bronze (men's team); South Asian Games 2019 – gold (Mixed doubles}}); South Asian Games 2019 – gold (men's team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2025/04/10/asian-championships-fikri-marthin-take-down-in-form-koreans/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Dhruv_Kapila",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q27907561",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "57397": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1772642956/wordpress_assets_test/Aaron-Tai-Kang-Khai-Xing_AE2026/Aaron-Tai-Kang-Khai-Xing_AE2026.jpg",
+      "bio": {
+        "height": 163,
+        "plays": "Right-handed"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/03/04/all-england-explosive-start-for-young-malaysians/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q123234736",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q123234736",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "57945": {
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "58089": {
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "58240": {
+      "bio": {
+        "racket": "Li-Ning Aeronaut 9000I",
+        "string": "Li-Ning No.1"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "58931": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Cheng_Xing_-_Indonesia_Open_2026.jpg",
+      "heroFocus": {
+        "x": 52,
+        "y": 6
+      },
+      "bio": {
+        "height": 184,
+        "plays": "Right-handed",
+        "birthplace": "Jiujiang Town"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:Cheng_Xing_-_Indonesia_Open_2026.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q115193907",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q115193907",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q115193907",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "59014": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1780077831/wordpress_assets_test/cr_20260529_1811_SingaporeOpen2026_BPYL2728/cr_20260529_1811_SingaporeOpen2026_BPYL2728.jpg",
+      "bio": {
+        "height": 163,
+        "plays": "Left-handed",
+        "birthplace": "Miyagi Prefecture",
+        "achievements": "Sudirman Cup 2025 – bronze (mixed team); Asian Games 2026 – silver (women's team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/05/30/singapore-open-flat-and-furious/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Sayaka_Hobara",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q27880611",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q27880611",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q27880611",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "59331": {
+      "bio": {
+        "racket": "Hundred Flareon 700"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "59621": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/0/09/Toh_Ee_Wei.jpg",
+      "heroFocus": {
+        "x": 45,
+        "y": 40
+      },
+      "bio": {
+        "birthplace": "Malacca",
+        "coach": "Nova Widianto",
+        "achievements": "World Championships 2025 – gold (Mixed doubles); Sudirman Cup 2023 – bronze (Mixed team); SEA Games 2025 – bronze (Women's team); SEA Games 2025 – bronze (Mixed doubles)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:Toh_Ee_Wei.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Toh_Ee_Wei",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q27787820",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Toh_Ee_Wei",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "59687": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1803/v1760311494/wordpress_assets_test/Unnati-Hooda2_WJC25/Unnati-Hooda2_WJC25.jpg",
+      "bio": {
+        "height": 167,
+        "plays": "Right-handed",
+        "birthplace": "Rohtak",
+        "racket": "Yonex Nanoflare 1000Z"
+      },
+      "source": "https://bwfbadminton.com/news-single/2025/10/13/world-juniors-stage-set-for-individual-talent-to-flourish/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q113699241",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q113699241",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q113699241",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "59880": {
+      "bio": {
+        "racket": "Yonex Nanoflare 700 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "59966": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1790426698/wordpress_assets_test/20260822_1752_WorldChampionships2026_BPJS4247/20260822_1752_WorldChampionships2026_BPJS4247.jpg",
+      "bio": {
+        "birthplace": "Hyderabad",
+        "achievements": "World Championships 2026 – bronze (WD); Commonwealth Games 2022 – silver (mixed team); Commonwealth Games 2022 – bronze (WD); Asia Mixed Team Championships 2023 – bronze (mixed team); Asia Team Championships 2024 – gold (women's team); South Asian Games 2019 – gold (women's team); South Asian Games 2019 – silver (WS)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/09/26/asian-games-li-shi-feng-bites-the-dust/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Gayatri_Gopichand",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q55765559",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "60321": {
+      "hero": "https://djarumbadminton.com/assets/_processed_/0/b/csm_2026_02_13-ubed_52079ac8a5.jpg",
+      "heroFocus": {
+        "x": 59,
+        "y": 33
+      },
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://djarumbadminton.com/assets/_processed_/0/b/csm_2026_02_13-ubed_52079ac8a5.jpg",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "60335": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1666/v1740287379/wordpress_assets_test/Yuta-Watanabe-Maya-Taguchi_IO25/Yuta-Watanabe-Maya-Taguchi_IO25.jpg",
+      "heroFocus": {
+        "x": 76,
+        "y": 14
+      },
+      "heroFlip": true,
+      "bio": {
+        "height": 165,
+        "plays": "Left-handed",
+        "birthplace": "Hyūga-shi",
+        "coach": "Hajime Komiyama",
+        "achievements": "Asian Games 2026 – silver (Women's team); Asian Championships 2026 – bronze (Mixed doubles)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2025/02/23/new-combinations-light-up-circuit/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Maya_Taguchi",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q126119505",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Maya_Taguchi",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q126119505",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q126119505",
+          "asOf": "2026-10-12"
+        },
+        "heroFlip": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "60507": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1245/v1779688011/wordpress_assets_test/20260524_1727_MalaysiaMasters2026_BPTE3469-1/20260524_1727_MalaysiaMasters2026_BPTE3469-1.jpg",
+      "heroFlip": true,
+      "bio": {
+        "height": 187,
+        "racket": "Flypower Samiya",
+        "achievements": "Thomas Cup 2026 – bronze (men's team); European Championships 2025 – bronze (MD); European Championships 2025 – bronze (XD); European Championships 2026 – bronze (MD); European Mixed Team Championships 2025 – gold (mixed team); European Team Championships 2024 – gold (men's team); European Team Championships 2026 – silver (men's team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/05/25/malaysia-masters-on-the-ascent-danes-savour-high-point/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Mads_Vestergaard",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q63959033",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user"
+        },
+        "heroFlip": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "60838": {
+      "hero": "https://pbsi.id/wp-content/uploads/2026/07/AmriNita8_R32_JapanOpen2026_PBSI_20260715-scaled.jpg",
+      "bio": {
+        "height": 170,
+        "plays": "Right-handed",
+        "birthplace": "Majalengka",
+        "achievements": "World Championships 2026 – bronze (Mixed doubles); Asian Games 2026 – silver (Mixed doubles); Asian Games 2026 – bronze (Women's team); Asia Team Championships 2022 – gold (Women's team); SEA Games 2025 – silver (Women's team)"
+      },
+      "source": "https://pbsi.id/2026/07/15/japan-open-2026-amri-nita-langsung-tersisih/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Nita_Violina_Marwah",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q58680017",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q58680017",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q58680017",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "61435": {
+      "bio": {
+        "racket": "Li-Ning Halbertec 9000",
+        "shoes": "Li-Ning Blade 2 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "61444": {
+      "hero": "https://cdn.shopify.com/s/files/1/1037/9241/0965/files/news260115_830_02.webp",
+      "bio": {
+        "racket": "Yonex Nanoflare 700 Pro",
+        "achievements": "Olympic Games 2024 – silver (Mixed doubles); World Championships 2025 – gold (Men's doubles); World Championships 2026 – bronze (Men's doubles); Sudirman Cup 2017 – gold (Mixed team); Sudirman Cup 2023 – silver (Mixed team); Sudirman Cup 2025 – silver (Mixed team); Sudirman Cup 2021 – bronze (Mixed team); Asian Games 2022 – silver (Men's doubles); Asian Games 2022 – bronze (Men's team); Asian Games 2026 – bronze (Men's doubles); Asia Championships 2026 – gold (Men's doubles); Asia Championships 2019 – bronze (Men's doubles); Asia Mixed Team Championships 2023 – silver (Mixed team); Asia Team Championships 2018 – bronze (Men's team); Asia Team Championships 2024 – bronze (Men's team); Asia Team Championships 2026 – bronze (Men's team)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Kim_Won-ho",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://www.yonex.co.uk/blogs/badminton/team-yonex-sweeps-all-five-titles-at-malaysia-open-2026",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "61628": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1784996302/wordpress_assets_test/cr_20260725_1833_ChinaOpen2026_BPGE1640/cr_20260725_1833_ChinaOpen2026_BPGE1640.jpg",
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://bwfbadminton.com/news-single/2026/07/25/china-open-against-the-drift-into-history/",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "61731": {
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "61854": {
+      "bio": {
+        "racket": "Yonex Astrox 77 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "62639": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1746969515/wordpress_assets_test/cr_20250511_1416_TaipeiOpen2025_BPHY5986/cr_20250511_1416_TaipeiOpen2025_BPHY5986.jpg",
+      "heroFocus": {
+        "x": 71,
+        "y": 18
+      },
+      "heroFlip": true,
+      "bio": {
+        "height": 175,
+        "plays": "Left-handed",
+        "birthplace": "Taiwan"
+      },
+      "source": "https://bwfbadminton.com/news-single/2025/05/11/taipei-open-home-glory-after-17-years-loh-returns-to-podium-top/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q39112527",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q39112527",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q39112527",
+          "asOf": "2026-10-12"
+        },
+        "heroFlip": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "62713": {
+      "bio": {
+        "height": 163,
+        "plays": "Right-handed",
+        "birthplace": "Manila",
+        "achievements": "Asian Games 2026 – bronze (Mixed doubles)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q123191935",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Nicole_Gonzales_Chan",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "62855": {
+      "bio": {
+        "racket": "Hundred Nitrix 70 Venom"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "63029": {
+      "bio": {
+        "birthplace": "Guilin",
+        "racket": "Yonex Astrox 88D Pro",
+        "achievements": "World Championships 2025 – silver (XD); World Championships 2023 – bronze (XD); World Championships 2026 – bronze (XD); Sudirman Cup 2025 – gold (mixed team); Asian Games 2026 – gold (XD); Asian Games 2026 – silver (men's team); Asia Championships 2023 – gold (XD); Asia Championships 2024 – bronze (XD); Asia Championships 2025 – bronze (XD); Asia Mixed Team Championships 2023 – gold (mixed team)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Jiang_Zhenbang",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q78577931",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "63437": {
+      "heroFocus": {
+        "x": 66,
+        "y": 53
+      },
+      "bio": {
+        "racket": "Hundred Nitrix 70 Volta"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "63530": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1770562494/wordpress_assets_test/20251111_1836_KumamotoMastersJapan2025_BPTE3810-1/20251111_1836_KumamotoMastersJapan2025_BPTE3810-1.jpg",
+      "bio": {
+        "height": 170,
+        "plays": "Right-handed",
+        "birthplace": "Kyoto Prefecture",
+        "achievements": "Asia Team Championships 2026 – gold (men's team); Asia Mixed Team Championships 2025 – bronze (mixed team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/02/08/badminton-asia-team-maiden-titles-for-korea-japan/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Hiroki_Nishi",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q123234695",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q123234695",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q123234695",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "63739": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1784212577/wordpress_assets_test/20260716_1941_JapanOpen2026_BPJS9598/20260716_1941_JapanOpen2026_BPJS9598.jpg",
+      "bio": {
+        "height": 182,
+        "birthplace": "Albany",
+        "achievements": "Pan American Championships 2024 – gold (MD); Pan American Championships 2024 – gold (XD); Pan American Championships 2025 – gold (MD); Pan American Championships 2026 – gold (MD); Pan American Championships 2026 – gold (XD); Pan American Championships 2023 – bronze (MD); Pan American Championships 2025 – bronze (XD); Pan American Championships team 2025 – silver (mixed team); Pan American Championships and Female team 2026 – silver (men's team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/07/16/japan-open-sensational-day-for-usa-as-lam-lee-author-upset/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Presley_Smith",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q119700466",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q119700466",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "64032": {
+      "photo": "https://imageio.forbes.com/specials-images/imageserve/6a036d0ffdd72f488531cd45/0x0.jpg?format=jpg&crop=380,380,x26,y0,safe&height=416&width=416&fit=bounds",
+      "hero": "https://imgcdn.acebadmintoncommunity.com/imago1066577719.jpg.jpeg",
+      "heroFocus": {
+        "x": 47,
+        "y": 47
+      },
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://imgcdn.acebadmintoncommunity.com/imago1066577719.jpg.jpeg",
+          "asOf": "2026-10-12"
+        },
+        "photo": {
+          "source": "https://imageio.forbes.com/specials-images/imageserve/6a036d0ffdd72f488531cd45/0x0.jpg?format=jpg&crop=380,380,x26,y0,safe&height=416&width=416&fit=bounds",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "65144": {
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "65267": {
+      "bio": {
+        "racket": "Yonex Astrox 77 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "65349": {
+      "bio": {
+        "height": 178,
+        "plays": "Right-handed",
+        "achievements": "Asia Team Championships 2026 – bronze (women's team); World University Games 2025 – silver (mixed team); World University Games 2025 – silver (WD)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q114275280",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Sung_Yu-hsuan",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "65674": {
+      "bio": {
+        "height": 179,
+        "plays": "Left-handed",
+        "nickname": "Omo",
+        "birthplace": "Bangkok",
+        "achievements": "Asian Games 2026 – bronze (Men's team); Asia Mixed Team Championships 2023 – bronze (Mixed team); Asia Mixed Team Championships 2025 – bronze (Mixed team); World University Games 2021 – bronze (Mixed team); World University Games 2025 – bronze (Men's doubles); SEA Games 2021 – gold (Men's team); SEA Games 2023 – silver (Men's doubles); SEA Games 2023 – bronze (Mixed doubles); SEA Games 2023 – bronze (Men's team); SEA Games 2025 – bronze (Men's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q124480162",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Pakkapon_Teeraratsakul",
+          "asOf": "2026-10-12"
+        },
+        "bio.nickname": {
+          "source": "https://en.wikipedia.org/wiki/Pakkapon_Teeraratsakul",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "65708": {
+      "bio": {
+        "birthplace": "Fremont",
+        "achievements": "Pan American Championships 2024 – gold (Women's doubles); Pan American Championships 2024 – gold (Mixed doubles); Pan American Championships 2025 – gold (Women's doubles); Pan American Championships 2026 – gold (Women's doubles); Pan American Championships 2021 – silver (Women's doubles); Pan American Championships 2023 – silver (Women's doubles); Pan American Championships 2022 – bronze (Women's doubles); Pan Am Mixed Team Championships 2025 – silver (Mixed team); Pan Am Female Cup 2022 – gold (Women's team); Pan Am Female Cup 2020 – silver (Women's team); Pan Am Female Cup 2024 – silver (Women's team); Pan Am Female Cup 2026 – silver (Women's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q106702469",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Allison_Lee_(badminton)",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "65854": {
+      "hero": "https://pbsi.id/wp-content/uploads/2026/01/JafarFelisha4_R32_DaihatsuIndonesiaMasters2026_PBSI_20260121-scaled.jpg",
+      "bio": {
+        "height": 170,
+        "plays": "Left-handed",
+        "birthplace": "Tangerang",
+        "achievements": "Asian Championships 2025 – bronze (Mixed doubles); SEA Games 2025 – gold (Men's team); SEA Games 2025 – bronze (Mixed doubles)"
+      },
+      "source": "https://pbsi.id/2026/01/21/daihatsu-indonesia-masters-2026-lolos-ke-babak-kedua-jafar-felisha-sudah-ditunggu-dejan-bernadine/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Jafar_Hidayatullah",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q114274850",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q114274850",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q114274850",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "66513": {
+      "bio": {
+        "racket": "Yonex Nanoflare 700 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "67761": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Amalia_Cahaya_Pratiwi.jpg",
+      "bio": {
+        "height": 170,
+        "plays": "Right-handed",
+        "birthplace": "Sukoharjo",
+        "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Uber Cup 2026 – bronze (Women's team); Asian Championships 2026 – bronze (Women's doubles); Asia Team Championships 2022 – gold (Women's team); Asia Team Championships 2024 – bronze (Women's team); Asia Team Championships 2026 – bronze (Women's team); SEA Games 2023 – gold (Women's doubles); SEA Games 2023 – silver (Women's team)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:Amalia_Cahaya_Pratiwi.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Amallia_Cahaya_Pratiwi",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q114024979",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q114024979",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q114024979",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "67903": {
+      "heroFocus": {
+        "x": 58,
+        "y": 59
+      },
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "67949": {
+      "bio": {
+        "height": 162,
+        "plays": "Left-handed",
+        "birthplace": "Kemaman District",
+        "coach": "Herry Iman Pierngadi",
+        "achievements": "SEA Games 2021 – silver (Men's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q109775845",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Junaidi_Arif",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Junaidi_Arif",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "68015": {
+      "hero": "https://hkbadmintonassn.org.hk/wp-content/uploads/2026/09/20260927_Asian-Games_WD_Yeung-Nga-Ting_Yeung-Pui-Lam_3.jpg",
+      "source": "https://hkbadmintonassn.org.hk/",
+      "asOf": "2026-10-12"
+    },
+    "68134": {
+      "hero": "https://badminton.dk/wp-content/uploads/2026/05/20260524_1734_MalaysiaMasters2026_BPTE3746-scaled.jpg",
+      "heroFocus": {
+        "x": 35,
+        "y": 24
+      },
+      "bio": {
+        "height": 183,
+        "plays": "Right-handed",
+        "birthplace": "Hillerød",
+        "racket": "Flypower Enigma 900 V3",
+        "achievements": "Thomas Cup 2026 – bronze (Men's team); European Championships 2025 – bronze (Men's doubles); European Championships 2026 – bronze (Men's doubles); European Mixed Team Championships 2025 – gold (Mixed team); European Men's Team Championships 2024 – gold (Men's team); European Men's Team Championships 2026 – silver (Men's team)"
+      },
+      "source": "https://badminton.dk/2026/05/24/vestergaard-lundgaard-vinder-malaysia-masters-2026/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Daniel_Lundgaard",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q27893285",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q27893285",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "68282": {
+      "bio": {
+        "racket": "Li-Ning BladeX 800 Shida"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racket": {
+          "source": "user"
+        }
+      }
+    },
+    "68322": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1706/v1775919809/wordpress_assets_test/Ayush-ShettySF2_BAC26/Ayush-ShettySF2_BAC26.jpg",
+      "bio": {
+        "height": 195,
+        "plays": "Right-handed",
+        "birthplace": "Karnataka",
+        "coach": "Vimal Kumar Sagar Chopda",
+        "racket": "Yonex Astrox 100 ZZ",
+        "achievements": "Thomas Cup 2026 – bronze (Men's team); Asian Games 2026 – bronze (Men's team); Asian Championships 2026 – silver (Men's singles)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Ayush_Shetty",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q123480035",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Ayush_Shetty",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q123480035",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q123480035",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://bwfbadminton.com/news-single/2026/04/11/asian-championships-shettys-sensational-run-continues/",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "68544": {
+      "photo": "data/uploads/68544.webp",
+      "hero": "data/uploads/68544-hero.webp",
+      "bio": {
+        "racket": "Victor Thruster F Claw Ultra"
+      },
+      "source": "https://gbaike-image.cdn.bcebos.com/500fd9f9d72a6059252d140c5f6d239b033b5bb50c29/500fd9f9d72a6059252d140c5f6d239b033b5bb50c29_16_9?x-bce-process=image/format,f_auto",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://media.letelegramme.fr/api/v1/images/view/6a943b39123829bc12056aba/web_golden_xl/6a943b39123829bc12056aba.1",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "68628": {
+      "bio": {
+        "racket": "Yonex Nanoflare 700 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "68633": {
+      "photo": "https://static.promediateknologi.id/crop/0x0:0x0/1200x0/webp/photo/p1/43/2024/05/05/Leo-Rolly-Carnando-1676558671.jpg",
+      "hero": "https://cdn1-production-images-kly.akamaized.net/EK_o2Phj9F2vJO__5GW9iwUhe0Q=/800x400/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/9361499/original/067689800_1790735365-AP26272336422090.jpg",
+      "heroFocus": {
+        "x": 68,
+        "y": 73
+      },
+      "bio": {
+        "racket": "Li-Ning BladeX 800 Power",
+        "string": "Li-Ning No.1 Boost",
+        "shoes": "Li-Ning Thunder II Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://cdn1-production-images-kly.akamaized.net/EK_o2Phj9F2vJO__5GW9iwUhe0Q=/800x400/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/9361499/original/067689800_1790735365-AP26272336422090.jpg",
+          "asOf": "2026-10-12"
+        },
+        "photo": {
+          "source": "https://static.promediateknologi.id/crop/0x0:0x0/1200x0/webp/photo/p1/43/2024/05/05/Leo-Rolly-Carnando-1676558671.jpg",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "68870": {
+      "bio": {
+        "racket": "Yonex Nanoflare 1000Z"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "69009": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/9/90/Women%27s_double_finalist_of_YONEX_Bendigo_International_2024_%282%29.jpg",
+      "heroFocus": {
+        "x": 44,
+        "y": 9
+      },
+      "bio": {
+        "height": 160,
+        "birthplace": "Pingtung City",
+        "achievements": "Asia Team Championships 2026 – bronze (Women's team)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:Women%27s_double_finalist_of_YONEX_Bendigo_International_2024_(2).jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Lin_Jhih-yun",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q39228671",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q39228671",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "69091": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1755431233/wordpress_assets_test/Lauren-Lam-Allison-Lee2_SO25/Lauren-Lam-Allison-Lee2_SO25.jpg",
+      "bio": {
+        "racket": "Yonex Nanoflare 1000Z",
+        "achievements": "Pan American Championships 2026 – gold (WD); Pan American Championships 2025 – gold (WD); Pan American Championships 2024 – bronze (WS); Pan American Championships 2023 – bronze (WS); Pan American Championships team 2025 – silver (mixed team); Pan American Championships 2022 – gold (women's team); Pan American Championships 2026 – silver (women's team); Pan American Championships 2018 – silver (women's team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2025/08/17/new-path-signals-fresh-possibilities/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Lauren_Lam",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "69193": {
+      "hero": "https://pbsi.id/wp-content/uploads/2026/01/JafarFelisha_SF_DaihatsuIndonesiaMasters2026_PBSI_20260124-scaled.jpg",
+      "bio": {
+        "height": 160,
+        "plays": "Right-handed",
+        "birthplace": "Jakarta",
+        "racket": "Yonex Astrox 88S Pro",
+        "achievements": "Asia Championships 2025 – bronze (XD); SEA Games 2025 – silver (women's team); SEA Games 2025 – bronze (XD)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Felisha_Pasaribu",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q130217822",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q130217822",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q130217822",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://pbsi.id/2026/01/25/daihatsu-indonesia-masters-2026-langkah-jafar-felisha-terhenti-di-semifinal/",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "69463": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/v1769505741/wordpress_assets_test/cr_20260123_1407_IndonesiaMasters2026_BPRS5415/cr_20260123_1407_IndonesiaMasters2026_BPRS5415.jpg",
+      "bio": {
+        "height": 172,
+        "plays": "Right-handed",
+        "nickname": "Pink",
+        "birthplace": "Chiang Mai",
+        "racket": "Li-Ning BladeX 900",
+        "string": "Li-Ning No.1",
+        "achievements": "Uber Cup 2022 – bronze (women's team); SEA Games 2021 – gold (women's team); SEA Games 2023 – gold (women's team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/01/27/the-week-in-quotes-122/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Pitchamon_Opatniputh",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q113484693",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q113484693",
+          "asOf": "2026-10-12"
+        },
+        "bio.nickname": {
+          "source": "https://www.wikidata.org/wiki/Q113484693",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q113484693",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "70500": {
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "70762": {
+      "hero": "data/uploads/70762-hero.webp",
+      "bio": {
+        "racket": "Victor DriveX 12 O"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://media.letelegramme.fr/api/v1/images/view/69ac1f55c34762b761014f13/web_golden_l/69ac1f55c34762b761014f13.1",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "70930": {
+      "bio": {
+        "nickname": "Kim Ga-eun",
+        "racket": "Li-Ning AXForce 80 Lite"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "71023": {
+      "bio": {
+        "racket": "Yonex Nanoflare 800 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "71223": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_2100/v1790174422/wordpress_assets_test/ainagoc_ag_ph19_260923_05021-opq3031174835/ainagoc_ag_ph19_260923_05021-opq3031174835.jpg",
+      "bio": {
+        "height": 182,
+        "plays": "Right-handed",
+        "birthplace": "Anhui",
+        "coach": "Chen Qiqiu",
+        "achievements": "World Championships 2025 – silver (Men's doubles); Thomas Cup 2026 – gold (Men's team); Sudirman Cup 2025 – gold (Mixed team); Asian Games 2026 – silver (Men's team); Asian Championships 2025 – silver (Men's doubles); Asia Team Championships 2024 – gold (Men's team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/09/23/asian-games-indonesia-earn-title-shot/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Liu_Yi_(badminton)",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q115106868",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Liu_Yi_(badminton)",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q115106868",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q115106868",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "71391": {
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "71612": {
+      "bio": {
+        "birthplace": "Cherupuzha, Kannur",
+        "coach": "Pullela Gopichand Arun Vishnu",
+        "achievements": "World Championships 2026 – bronze (Women's doubles); Commonwealth Games 2022 – silver (Mixed team); Commonwealth Games 2022 – bronze (Women's doubles); Asian Mixed Team Championships 2023 – bronze (Mixed team); Asian Team Championships 2024 – gold (Women's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q65966081",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Treesa_Jolly",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Treesa_Jolly",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "72435": {
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "72478": {
+      "photo": "https://images.ctfassets.net/v8zaoys2pgzt/4NX1SBGBM50kAaqBnvlb3w/859dcf2f5ea72a2beef03515b1ea844f/Sean_Vendy.jpg",
+      "hero": "https://www.romfordrecorder.co.uk/resources/images/20605612.jpg?type=og-image",
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ Kurenai"
+      },
+      "source": "https://images.ctfassets.net/v8zaoys2pgzt/4NX1SBGBM50kAaqBnvlb3w/859dcf2f5ea72a2beef03515b1ea844f/Sean_Vendy.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://www.romfordrecorder.co.uk/resources/images/20605612.jpg?type=og-image",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "72885": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1676/v1784522747/wordpress_assets_test/20260719_1439_JapanOpen2026_BPJS7657-1/20260719_1439_JapanOpen2026_BPJS7657-1.jpg",
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://bwfbadminton.com/news-single/2026/07/20/japan-open-another-peak-for-popov/",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "73173": {
+      "photo": "https://img.olympics.com/images/image/private/t_1-1_300/f_auto/primary/ravhqy073xqoc25izxle",
+      "hero": "https://media.telanganatoday.com/wp-content/uploads/2026/07/Pusarla-V-Sindhu-.jpg",
+      "bio": {
+        "racket": "Yonex Astrox 99 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://media.telanganatoday.com/wp-content/uploads/2026/07/Pusarla-V-Sindhu-.jpg",
+          "asOf": "2026-10-12"
+        },
+        "photo": {
+          "source": "https://img.olympics.com/images/image/private/t_1-1_300/f_auto/primary/ravhqy073xqoc25izxle",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "73442": {
+      "bio": {
+        "racket": "Victor Thruster Ryuga III CQ"
+      },
+      "source": "user",
+      "asOf": "2026-10-11"
+    },
+    "74331": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1772643214/wordpress_assets_test/20260304_1257_AllEngland2026_BPLL8182/20260304_1257_AllEngland2026_BPLL8182.jpg",
+      "bio": {
+        "height": 175,
+        "birthplace": "Kelantan"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/03/04/all-england-explosive-start-for-young-malaysians/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q125257328",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q125257328",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "74561": {
+      "bio": {
+        "achievements": "Asia Team Championships 2026 – bronze (Women's team); East Asian Games 2009 – silver (Women's team); Summer Universiade 2017 – gold (Women's doubles); Summer Universiade 2017 – gold (Mixed team); Summer Universiade 2017 – bronze (Mixed doubles)"
+      },
+      "source": "https://en.wikipedia.org/wiki/Hsu_Ya-ching",
+      "asOf": "2026-10-12"
+    },
+    "74980": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1706/v1786354262/wordpress_assets_test/20260515_1912_ThailandOpen2026_BPYL9442/20260515_1912_ThailandOpen2026_BPYL9442.jpg",
+      "bio": {
+        "nickname": "Fame",
+        "birthplace": "Nakhon Pathom",
+        "racket": "Yonex Arcsaber 11 Pro",
+        "achievements": "Uber Cup 2020 – bronze (Women's team); Asian Games 2022 – bronze (Women's team); Asian Championships 2026 – silver (Mixed doubles); SEA Games 2025 – gold (Women's team); SEA Games 2025 – silver (Mixed doubles)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Supissara_Paewsampran",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q50810189",
+          "asOf": "2026-10-12"
+        },
+        "bio.nickname": {
+          "source": "https://en.wikipedia.org/wiki/Supissara_Paewsampran",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://bwfbadminton.com/news-single/2026/08/10/mixed-doubles-top-five-pairs-to-watch/",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "75864": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1616/v1722199717/wordpress_assets_test/2Paris_Yeung-Nga-TIng-Pui-Lam/2Paris_Yeung-Nga-TIng-Pui-Lam.jpg",
+      "bio": {
+        "birthplace": "Hong Kong",
+        "residence": "Hong Kong"
+      },
+      "source": "https://bwfbadminton.com/news-single/2024/07/29/defending-champs-lee-wang-pull-ahead/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q111045668",
+          "asOf": "2026-10-12"
+        },
+        "bio.residence": {
+          "source": "https://www.wikidata.org/wiki/Q111045668",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "76115": {
+      "bio": {
+        "racket": "Li-Ning AXForce 90 MAX Dragon"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "76275": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1717242564/wordpress_assets_test/cr_20240531_1621_SingaporeOpen2024_BPYN3906/cr_20240531_1621_SingaporeOpen2024_BPYN3906.jpg",
+      "bio": {
+        "birthplace": "Tainan",
+        "achievements": "World Championships 2026 – bronze (MD); Thomas Cup 2024 – bronze (men's team); Asia Championships 2024 – bronze (MD); Universiade 2017 – gold (mixed team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2024/06/01/singapore-open-stability-drives-surprise-package/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Yang_Po-hsuan",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q27847764",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "76278": {
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "76281": {
+      "hero": "https://pbsi.id/wp-content/uploads/2026/09/AmriNita9_QF_AsianGames2026_PBSI_20260928-scaled.jpg",
+      "bio": {
+        "height": 174,
+        "plays": "Right-handed",
+        "birthplace": "Jakarta",
+        "achievements": "World Championships 2026 – bronze (XD); Asian Games 2026 – gold (men's team); Asian Games 2026 – silver (XD); SEA Games 2025 – gold (men's team)"
+      },
+      "source": "https://pbsi.id/2026/09/28/asian-games-2026-amri-nita-ke-semifinal/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Amri_Syahnawi",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q51941882",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q51941882",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q51941882",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "76890": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1765336005/wordpress_assets_test/20250919_1427_ChinaMasters2025_BPMC1597/20250919_1427_ChinaMasters2025_BPMC1597.jpg",
+      "heroFocus": {
+        "x": 61,
+        "y": 54
+      },
+      "bio": {
+        "height": 172,
+        "plays": "Right-handed",
+        "birthplace": "Tangerang",
+        "achievements": "World Championships 2025 – bronze (WS); Sudirman Cup 2025 – bronze (mixed team); Uber Cup 2026 – bronze (women's team); Asia Mixed Team Championships 2025 – gold (mixed team); Asia Team Championships 2022 – gold (women's team); Asia Team Championships 2024 – bronze (women's team); SEA Games 2021 – silver (women's team); SEA Games 2025 – silver (women's team); SEA Games 2021 – bronze (WS); SEA Games 2025 – bronze (WS)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2025/12/10/wardanis-loudest-roar-yet/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Putri_Kusuma_Wardani",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q58683239",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q58683239",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q58683239",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "77262": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/f/f5/%E5%A7%9C%E7%8F%89%E8%B5%AB2025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 21,
+        "y": 16
+      },
+      "bio": {
+        "racket": "Victor DriveX 12 O"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://commons.wikimedia.org/wiki/File:%E5%A7%9C%E7%8F%89%E8%B5%AB2025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "77689": {
+      "bio": {
+        "racket": "Li-Ning Halbertec 9000",
+        "shoes": "Li-Ning Blade 2 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "78409": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1639/v1765175861/wordpress_assets_test/20250528_2021_SingaporeOpen2025_BPYN4950/20250528_2021_SingaporeOpen2025_BPYN4950.jpg",
+      "heroFlip": true,
+      "bio": {
+        "height": 182,
+        "plays": "Right-handed",
+        "birthplace": "Malacca",
+        "racket": "Yonex Astrox 77 Pro",
+        "achievements": "Sudirman Cup 2021 – bronze (mixed team); Asia Team Championships 2022 – gold (men's team); SEA Games 2021 – silver (men's team); SEA Games 2025 – silver (men's team); SEA Games 2025 – bronze (MD)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2025/12/08/meet-the-mens-doubles-contenders-2/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Man_Wei_Chong",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q27768428",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q27768428",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q27768428",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "heroFlip": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "78778": {
+      "bio": {
+        "racket": "Yonex Astrox 77 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "79501": {
+      "bio": {
+        "height": 167,
+        "plays": "Right-handed",
+        "birthplace": "Kumamoto Prefecture",
+        "coach": "Lee Wan Wah Harmono Yuwono (Hitachi)",
+        "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Asia Team Championships 2026 – gold (Men's team); Asia Mixed Team Championships 2025 – bronze (Mixed team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q127162733",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Yuichi_Shimogami",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Yuichi_Shimogami",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "79664": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Febriana_Dwipuji_Kusuma.jpg",
+      "bio": {
+        "height": 163,
+        "plays": "Right-handed",
+        "birthplace": "Jember",
+        "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Uber Cup 2026 – bronze (Women's team); Asian Games 2026 – bronze (Women's team); Asia Team Championships 2022 – gold (Women's team); Asia Team Championships 2024 – bronze (Women's team); Asia Team Championships 2026 – bronze (Women's team); SEA Games 2023 – gold (Women's doubles); SEA Games 2023 – silver (Women's team); SEA Games 2025 – silver (Women's doubles); SEA Games 2025 – silver (Women's team)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:Febriana_Dwipuji_Kusuma.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Febriana_Dwipuji_Kusuma",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q56686377",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q56686377",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q56686377",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "79906": {
+      "bio": {
+        "height": 172,
+        "plays": "Left-handed",
+        "birthplace": "Ōsaki-shi",
+        "coach": "Lee Wan Wah Hiroyuki Endo",
+        "achievements": "Asia Team Championships 2026 – gold (Men's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q63997602",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Kakeru_Kumagai",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Kakeru_Kumagai",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "80862": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/3/3e/%E9%82%B1%E5%93%81%E8%92%A8-2024%E5%8F%B0%E5%8C%97%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "bio": {
+        "height": 164,
+        "achievements": "Asia Team Championships 2026 – bronze (Women's team)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:%E9%82%B1%E5%93%81%E8%92%A8-2024%E5%8F%B0%E5%8C%97%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Chiu_Pin-chian",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q64852791",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "81108": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/5/5a/%E8%91%89%E5%AE%8F%E8%94%9A-2025%E5%85%A8%E5%9C%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8E%92%E5%90%8D%E8%B3%BD.jpg",
+      "bio": {
+        "birthplace": "Taichung",
+        "achievements": "Thomas Cup 2024 – bronze (men's team); Asian Games 2026 – bronze (XD); World University Games 2021 – gold (XD); World University Games 2021 – gold (mixed team)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:%E8%91%89%E5%AE%8F%E8%94%9A-2025%E5%85%A8%E5%9C%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8E%92%E5%90%8D%E8%B3%BD.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Ye_Hong-wei",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q39112560",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "81561": {
+      "bio": {
+        "racket": "Victor Thruster Ryuga Metallic"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "81599": {
+      "bio": {
+        "racket": "Yonex Nanoflare 700 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "81609": {
+      "bio": {
+        "racket": "Yonex Arcsaber 7 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "81657": {
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "81844": {
+      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMmSDTtE_dhtGeYV9G3N8o__Vu1dry2jXxMLJpwwgeHHf5T4QmPw5mFBx0&s=10",
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1616/v1731298369/wordpress_assets_test/Guo-Xin-Wa-Chen-Fang-Hui_KM24/Guo-Xin-Wa-Chen-Fang-Hui_KM24.jpg",
+      "heroFocus": {
+        "x": 74,
+        "y": 53
+      },
+      "bio": {
+        "plays": "Left-handed",
+        "birthplace": "Jinzhou",
+        "racket": "Yonex Astrox 88D Pro",
+        "achievements": "World Championships 2025 – bronze (XD); Sudirman Cup 2025 – gold (mixed team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2024/11/11/korea-masters-vitidsarn-wardani-break-title-drought/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Guo_Xinwa",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q51879937",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q51879937",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "photo": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMmSDTtE_dhtGeYV9G3N8o__Vu1dry2jXxMLJpwwgeHHf5T4QmPw5mFBx0&s=10",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "82070": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1567/v1741980771/wordpress_assets_test/Tomoka-Miyazaki2_4AE25/Tomoka-Miyazaki2_4AE25.jpg",
+      "bio": {
+        "height": 164,
+        "plays": "Right-handed",
+        "birthplace": "Osaka",
+        "club": "Japan national badminton team",
+        "racket": "Yonex Nanoflare 1000Z",
+        "achievements": "Sudirman Cup 2025 – bronze (mixed team); Uber Cup 2024 – bronze (women's team); Uber Cup 2026 – bronze (women's team); Asian Games 2026 – silver (women's team); Asia Mixed Team Championships 2025 – bronze (mixed team); Asia Team Championships 2024 – bronze (women's team)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Tomoka_Miyazaki",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q115252949",
+          "asOf": "2026-10-12"
+        },
+        "bio.club": {
+          "source": "https://www.wikidata.org/wiki/Q115252949",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q115252949",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q115252949",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://bwfbadminton.com/news-single/2025/03/15/all-england-yamaguchi-keeps-the-reins/",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "82364": {
+      "hero": "https://pbsi.id/wp-content/uploads/2026/06/AnaTrias4_Final_AustralianOpen2026_PBSI_20260614-scaled.jpg",
+      "heroFocus": {
+        "x": 27,
+        "y": 39
+      },
+      "source": "https://pbsi.id/2026/06/14/australian-open-2026-ana-trias-kembali-jadi-runner-up-di-sydney/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "82494": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/5/5c/%E5%A5%87%E6%9D%B1%E6%9F%B12025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "bio": {
+        "height": 174,
+        "plays": "Right-handed",
+        "racket": "Victor Auraspeed Fantôme F AC",
+        "achievements": "Sudirman Cup 2025 – silver (Mixed team); Asian Championships 2026 – silver (Men's doubles); Asia Team Championships 2024 – bronze (Men's team); Asia Team Championships 2026 – bronze (Men's team)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:%E5%A5%87%E6%9D%B1%E6%9F%B12025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Ki_Dong-ju",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q78577978",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q78577978",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "83074": {
+      "hero": "https://www.yonex.co.uk/cdn/shop/files/20260303_1630_AllEngland2026_BPYN8140.jpg",
+      "bio": {
+        "birthplace": "Lowell",
+        "coach": "Naoko Fukuman Tony Gunawan",
+        "achievements": "Pan American Games 2023 – silver (Women's singles); Pan American Games 2023 – silver (Mixed doubles); Pan American Championships 2026 – gold (Mixed doubles); Pan American Championships 2024 – silver (Mixed doubles); Pan American Championships 2026 – silver (Women's doubles); Pan American Championships 2018 – bronze (Women's doubles); Pan American Championships 2019 – bronze (Women's singles); Pan American Championships 2025 – bronze (Mixed doubles); Pan Am Mixed Team Championships 2019 – silver (Mixed team); Pan Am Mixed Team Championships 2023 – silver (Mixed team); Pan Am Mixed Team Championships 2025 – silver (Mixed team); Pan Am Mixed Team Championships 2017 – bronze (Mixed team); Pan Am Female Cup 2022 – gold (Women's team); Pan Am Female Cup 2026 – silver (Women's team); Youth Olympic Games 2018 – gold (Mixed team)"
+      },
+      "source": "https://www.yonex.co.uk/pages/athlete/jennie-gai",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Jennie_Gai",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q63352364",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Jennie_Gai",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "83419": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1627/v1740287370/wordpress_assets_test/Kim-Hye-Jeong-Kong-Hee-Yong_IO25/Kim-Hye-Jeong-Kong-Hee-Yong_IO25.jpg",
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro"
+      },
+      "source": "https://bwfbadminton.com/news-single/2025/02/23/new-combinations-light-up-circuit/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "84062": {
+      "bio": {
+        "racket": "Li-Ning AXForce 80"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "84064": {
+      "bio": {
+        "racket": "Li-Ning Aeronaut 9000"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "84159": {
+      "bio": {
+        "height": 167,
+        "plays": "Right-handed",
+        "birthplace": "Takaoka",
+        "achievements": "Asia Team Championships 2022 – bronze (Women's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q78577952",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Rui_Hirokami",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "84523": {
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "84786": {
+      "photo": "https://awsimages.detik.net.id/community/media/visual/2025/06/26/2199397750-1750948407916_169.jpeg?w=600&q=90",
+      "hero": "https://rri-portal-app-assets.obs.ap-southeast-4.myhuaweicloud.com/upload/berita/image/english-news/1790576122311674_5ef8e12a3a_berita_english-news.webp",
+      "heroFocus": {
+        "x": 41,
+        "y": 0
+      },
+      "source": "https://rri-portal-app-assets.obs.ap-southeast-4.myhuaweicloud.com/upload/berita/image/english-news/1790576122311674_5ef8e12a3a_berita_english-news.webp",
+      "asOf": "2026-10-12",
+      "meta": {
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "photo": {
+          "source": "https://awsimages.detik.net.id/community/media/visual/2025/06/26/2199397750-1750948407916_169.jpeg?w=600&q=90",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "85129": {
+      "hero": "https://www.yonex.co.uk/cdn/shop/files/TSB06079.jpg",
+      "heroFocus": {
+        "x": 71,
+        "y": 20
+      },
+      "bio": {
+        "height": 173,
+        "plays": "Right-handed",
+        "nickname": "Kai Wun",
+        "birthplace": "Malacca",
+        "coach": "Herry Iman Pierngadi",
+        "achievements": "Sudirman Cup 2021 – bronze (Mixed team); Asia Team Championships 2022 – gold (Men's team); SEA Games 2021 – silver (Men's team); SEA Games 2025 – silver (Men's team); SEA Games 2025 – bronze (Men's doubles)"
+      },
+      "source": "https://www.yonex.co.uk/pages/athlete/kai-wun-tee",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Tee_Kai_Wun",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q108511328",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Tee_Kai_Wun",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q108511328",
+          "asOf": "2026-10-12"
+        },
+        "bio.nickname": {
+          "source": "https://en.wikipedia.org/wiki/Tee_Kai_Wun",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q108511328",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "85302": {
+      "hero": "https://badmintoneurope.com/documents/20117/134771/20250910_1118_HongKongOpen2025_BPMC9027.jpg/014309c8-c292-7a50-79a5-1cf571bedb7b?version=1.0",
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro",
+        "shoes": "Yonex Power Cushion Eclipsion Z3"
+      },
+      "source": "https://badmintoneurope.com/w/hong-kong-d2",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "85540": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1417/v1773541795/wordpress_assets_test/Li-Yi-Jing-Wang-Yi-Duo_SO26/Li-Yi-Jing-Wang-Yi-Duo_SO26.jpg",
+      "heroFocus": {
+        "x": 83,
+        "y": 24
+      },
+      "heroFlip": true,
+      "bio": {
+        "height": 165,
+        "plays": "Right-handed",
+        "birthplace": "Guangdong",
+        "achievements": "World Championships 2026 – bronze (Women's doubles); Uber Cup 2026 – silver (Women's team); Asian Championships 2026 – gold (Women's doubles); Asia Mixed Team Championships 2023 – gold (Mixed team)"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/03/15/swiss-open-stirring-comeback-by-li-wang/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Li_Yijing",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q56651331",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q56651331",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q56651331",
+          "asOf": "2026-10-12"
+        },
+        "heroFlip": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "85551": {
+      "bio": {
+        "racket": "Yonex Arcsaber 7 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "85845": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/8/88/%E5%B8%95%E5%B0%BC%E6%9F%A5%E8%93%AC%C2%B7%E6%8F%90%E6%8B%89%E8%96%A9%E5%BA%AB%E7%88%BE%E6%A6%AE%E7%8D%B22023%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E7%94%B7%E5%96%AE%E4%BA%9E%E8%BB%8D.jpg",
+      "bio": {
+        "height": 178,
+        "plays": "Left-handed",
+        "nickname": "EQ",
+        "achievements": "Asia Mixed Team Championships 2023 – bronze (mixed team); Asia Mixed Team Championships 2025 – bronze (mixed team); SEA Games 2021 – gold (men's team); SEA Games 2023 – bronze (men's team); SEA Games 2025 – bronze (men's team); World University Games 2021 – silver (MS); World University Games 2021 – bronze (mixed team)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:%E5%B8%95%E5%B0%BC%E6%9F%A5%E8%93%AC%C2%B7%E6%8F%90%E6%8B%89%E8%96%A9%E5%BA%AB%E7%88%BE%E6%A6%AE%E7%8D%B22023%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E7%94%B7%E5%96%AE%E4%BA%9E%E8%BB%8D.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Panitchaphon_Teeraratsakul",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q125624028",
+          "asOf": "2026-10-12"
+        },
+        "bio.nickname": {
+          "source": "https://www.wikidata.org/wiki/Q125624028",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q125624028",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "85914": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1651/v1786444758/wordpress_assets_test/20260613_1710_AustralianOpen2026_BPPF4623/20260613_1710_AustralianOpen2026_BPPF4623.jpg",
+      "heroFocus": {
+        "x": 59,
+        "y": 55
+      },
+      "bio": {
+        "birthplace": "Luzhou",
+        "racket": "Yonex Nanoflare 700 Pro",
+        "achievements": "World Championships 2023 – bronze (WD); Sudirman Cup 2023 – gold (mixed team); Uber Cup 2024 – gold (women's team); Uber Cup 2022 – silver (women's team); Uber Cup 2026 – silver (women's team); Asian Games 2022 – silver (women's team); Asia Championships 2024 – silver (WD); Asia Championships 2025 – bronze (WD); Asia Team Championships 2026 – silver (women's team)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Zhang_Shuxian",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q62083472",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://bwfbadminton.com/news-single/2026/08/11/womens-doubles-top-five-pairs-to-watch/",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "86114": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1763722492/wordpress_assets_test/20251121_1709_AustralianOpen2025_BPPF5161/20251121_1709_AustralianOpen2025_BPPF5161.jpg",
+      "heroFocus": {
+        "x": 60,
+        "y": 12
+      },
+      "bio": {
+        "birthplace": "Fangliao Township",
+        "residence": "Fangliao Township",
+        "racket": "Yonex Astrox 88D Pro",
+        "achievements": "Thomas Cup 2024 – bronze (men's team); World University Games 2021 – gold (mixed team)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Lin_Chun-yi_(badminton)",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q39330972",
+          "asOf": "2026-10-12"
+        },
+        "bio.residence": {
+          "source": "https://www.wikidata.org/wiki/Q39330972",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://bwfbadminton.com/news-single/2025/11/21/australian-open-milestone-for-corbett-gai/",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "86136": {
+      "hero": "https://pbsi.id/wp-content/uploads/2026/07/SabarReza10_R32_JapanOpen2026_PBSI_20260715-scaled.jpg",
+      "heroFocus": {
+        "x": 51,
+        "y": 11
+      },
+      "bio": {
+        "height": 175,
+        "plays": "Right-handed",
+        "birthplace": "Blitar",
+        "racket": "Victor Auraspeed HS Plus C",
+        "achievements": "SEA Games 2025 – gold (Men's doubles); SEA Games 2025 – gold (Men's team)"
+      },
+      "source": "https://pbsi.id/2026/07/15/japan-open-2026-sabar-reza-menang-dengan-kondisi-cedera/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Muhammad_Reza_Pahlevi_Isfahani",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q27906484",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q27906484",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q27906484",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "86532": {
+      "photo": "data/uploads/86532.jpg",
+      "source": "https://www.badmintoncn.com/cbo_star/upstar/4754_1728708968.jpg"
+    },
+    "86672": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_2414/v1784291073/wordpress_assets_test/20260717_1416_JapanOpen2026_BPJS9922/20260717_1416_JapanOpen2026_BPJS9922.jpg",
+      "bio": {
+        "height": 170,
+        "plays": "Right-handed",
+        "birthplace": "Kikuchi",
+        "club": "Japan national badminton team",
+        "racket": "Yonex Astrox 99 Pro",
+        "achievements": "Asia Team Championships 2026 – gold (men's team); Asia Mixed Team Championships 2025 – bronze (mixed team)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Yushi_Tanaka",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q106485922",
+          "asOf": "2026-10-12"
+        },
+        "bio.club": {
+          "source": "https://www.wikidata.org/wiki/Q106485922",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q106485922",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q106485922",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://bwfbadminton.com/news-single/2026/07/17/japan-open-yamaguchi-leads-home-surge/",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "87176": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/8/8e/%E8%83%A1%E7%B6%BE%E8%8A%B32024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 43,
+        "y": 20
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:%E8%83%A1%E7%B6%BE%E8%8A%B32024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "87432": {
+      "hero": "https://pbsi.id/wp-content/uploads/2026/06/SabarReza_SF_AustralianOpen2026_PBSI_20260613-scaled.jpg",
+      "heroFocus": {
+        "x": 53,
+        "y": 14
+      },
+      "bio": {
+        "height": 171,
+        "plays": "Right-handed",
+        "birthplace": "Sumedang",
+        "achievements": "Asia Mixed Team Championships 2019 – bronze (mixed team); SEA Games 2025 – gold (MD); SEA Games 2025 – gold (men's team)"
+      },
+      "source": "https://pbsi.id/2026/06/13/australian-open-2026-sabar-reza-ke-final-pertama-tahun-ini/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Sabar_Karyaman_Gutama",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q27817583",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q27817583",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q27817583",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "87442": {
+      "bio": {
+        "racket": "Yonex Astrox 77 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "88097": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Siti_Fadia_Silva_Ramadhanti%E5%8F%B0%E5%8C%97%E5%85%AC%E9%96%8B%E8%B3%BD2025.jpg",
+      "bio": {
+        "birthplace": "Jonggol",
+        "racket": "Victor DriveX 12 O",
+        "achievements": "World Championships 2023 – silver (WD); Sudirman Cup 2025 – bronze (mixed team); Uber Cup 2024 – silver (women's team); Uber Cup 2026 – bronze (women's team); Asia Championships 2026 – bronze (WD); Asia Mixed Team Championships 2025 – gold (mixed team); Asia Team Championships 2026 – bronze (women's team); SEA Games 2021 – gold (WD); SEA Games 2019 – silver (women's team); SEA Games 2021 – silver (women's team)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:Siti_Fadia_Silva_Ramadhanti%E5%8F%B0%E5%8C%97%E5%85%AC%E9%96%8B%E8%B3%BD2025.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Siti_Fadia_Silva_Ramadhanti",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q42302278",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "88322": {
+      "bio": {
+        "height": 180,
+        "plays": "Right-handed",
+        "birthplace": "Johor",
+        "achievements": "SEA Games 2023 – silver (XD); SEA Games 2023 – silver (men's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q113289743",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Yap_Roy_King",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "88405": {
+      "bio": {
+        "birthplace": "Fukuoka Prefecture",
+        "achievements": "Sudirman Cup 2021 – silver (mixed team); Sudirman Cup 2023 – bronze (mixed team); Thomas Cup 2020 – bronze (men's team); Thomas Cup 2022 – bronze (men's team); Asian Games 2022 – bronze (men's team); Asia Team Championships 2020 – bronze (men's team); Asia Team Championships 2024 – bronze (men's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q418765",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Akira_Koga",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "88450": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Zhang_Chi_-_Indonesia_Open_2026.jpg",
+      "heroFocus": {
+        "x": 0,
+        "y": 16
+      },
+      "bio": {
+        "height": 170,
+        "plays": "Right-handed",
+        "birthplace": "Hunan"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:Zhang_Chi_-_Indonesia_Open_2026.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q117230585",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q117230585",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q117230585",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "88779": {
+      "hero": "https://akamai-aptoma-production.bmcdn.dk/users/berlingske/images/152527260.webp?t[strip]=true&t[resize][width]=1440&t[quality]=70&accessToken=3a98aa98e61763e4c643ad88c30f6c0edb8b4f6531b1541fd4745d250c0cf882",
+      "heroFocus": {
+        "x": 62,
+        "y": 43
+      },
+      "bio": {
+        "racket": "Hundred Nitrix 70 Volta",
+        "shoes": "Hundred Phenom",
+        "bag": "Hundred Aeris Pink"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://akamai-aptoma-production.bmcdn.dk/users/berlingske/images/152527260.webp?t[strip]=true&t[resize][width]=1440&t[quality]=70&accessToken=3a98aa98e61763e4c643ad88c30f6c0edb8b4f6531b1541fd4745d250c0cf882",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "88876": {
+      "bio": {
+        "racket": "Victor Auraspeed 100X (original, not the Ultra)"
+      },
+      "source": "user",
+      "asOf": "2026-10-11"
+    },
+    "89426": {
+      "bio": {
+        "racket": "Yonex Nanoflare 700 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "90531": {
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ Navy"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "91090": {
+      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSEI0lJcnfl_5SAMXBgoyuPzxySoZzsr2NPJgtX4CYFQvfnkQw2KoydXQ&s=10",
+      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp8Nko4jWAEi6FnKHq67AvLTWvVW-lkM1dbNYXufeTt5fzVQo_i5odN6w_&s=10",
+      "heroFocus": {
+        "x": 7,
+        "y": 56
+      },
+      "bio": {
+        "racket": "Yonex Nanoflare 1000Z"
+      },
+      "source": "https://bwfbadminton.com/news-single/2026/01/26/indonesia-masters-malaysias-three-farhans-glee/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp8Nko4jWAEi6FnKHq67AvLTWvVW-lkM1dbNYXufeTt5fzVQo_i5odN6w_&s=10",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "photo": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSEI0lJcnfl_5SAMXBgoyuPzxySoZzsr2NPJgtX4CYFQvfnkQw2KoydXQ&s=10",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "91224": {
+      "bio": {
+        "racket": "Flypower Hrusangkali"
+      },
+      "source": "user"
+    },
+    "91292": {
+      "bio": {
+        "racket": "Victor DriveX 12 O"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "91440": {
+      "hero": "https://www.yonex.co.uk/cdn/shop/files/TSC01084.jpg",
+      "bio": {
+        "birthplace": "Bandung",
+        "racket": "Yonex Arcsaber 11 Pro",
+        "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Thomas Cup 2022 – silver (Men's team); Thomas Cup 2024 – silver (Men's team); Asian Games 2026 – gold (Men's team); Asian Games 2026 – bronze (Men's doubles); Asian Championships 2026 – bronze (Men's doubles); Asia Mixed Team Championships 2025 – gold (Mixed team); Asia Team Championships 2022 – silver (Men's team); Southeast Asian Games 2023 – gold (Men's team); Southeast Asian Games 2023 – bronze (Men's doubles)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Muhammad_Shohibul_Fikri",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q63018181",
+          "asOf": "2026-10-12"
+        },
+        "hero": {
+          "source": "https://www.yonex.co.uk/pages/athlete/muhammad-shohibul-fikri",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "91554": {
+      "bio": {
+        "racket": "Victor Auraspeed 99 Antonsen"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "92913": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/a/a4/%E9%82%B1%E7%9B%B8%E6%A6%A4-2025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 44,
+        "y": 9
+      },
+      "bio": {
+        "height": 189,
+        "plays": "Left-handed",
+        "birthplace": "Hsinchu City",
+        "coach": "Chen Hung-ling"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:%E9%82%B1%E7%9B%B8%E6%A6%A4-2025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q116190437",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Chiu_Hsiang-chieh",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q116190437",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q116190437",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "92967": {
+      "bio": {
+        "racket": "Yonex Astrox 77 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "92980": {
+      "bio": {
+        "racket": "Li-Ning Halbertec 9000"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "93130": {
+      "bio": {
+        "height": 191,
+        "plays": "Right-handed",
+        "birthplace": "Jiangxi",
+        "achievements": "World Championships 2025 – silver (MD); Thomas Cup 2026 – gold (men's team); Sudirman Cup 2025 – gold (mixed team); Asia Championships 2025 – silver (MD); Asia Team Championships 2024 – gold (men's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q115107559",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Chen_Boyang",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "94151": {
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "94165": {
+      "bio": {
+        "birthplace": "Dubai",
+        "coach": "Pullela Gopichand Arun Vishnu Tan Kim Her Manu Attri",
+        "achievements": "Asia Mixed Team Championships 2023 – bronze (Mixed team); Asia Team Championships 2024 – gold (Women's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q27650889",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Tanisha_Crasto",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Tanisha_Crasto",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "94567": {
+      "hero": "https://pbsi.id/wp-content/uploads/2026/04/RachelFebi6_D5_TUC2026_PBSI_20260428-scaled.jpg",
+      "bio": {
+        "height": 165,
+        "plays": "Right-handed",
+        "birthplace": "Bogor",
+        "racket": "Yonex Arcsaber 7 Pro",
+        "achievements": "Uber Cup 2024 – silver (Women's team); Uber Cup 2026 – bronze (Women's team); Asian Games 2026 – bronze (Women's team); Asia Mixed Team Championships 2025 – gold (Mixed team); Asia Team Championships 2024 – bronze (Women's team); Asia Team Championships 2026 – bronze (Women's team); SEA Games 2023 – silver (Women's doubles); SEA Games 2023 – silver (Women's team); SEA Games 2025 – silver (Women's team); SEA Games 2025 – bronze (Women's doubles)"
+      },
+      "source": "https://pbsi.id/2026/04/30/piala-thomas-uber-2026-menang-tipis-atas-chinese-taipei-tim-uber-juara-grup-c/",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Rachel_Allessya_Rose",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q114050947",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q114050947",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q114050947",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "94580": {
+      "bio": {
+        "racket": "Yonex Astrox 99 Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "95062": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Badminton_at_2023_National_Games_of_Taiwan_-_12.jpg",
+      "heroFocus": {
+        "x": 2,
+        "y": 18
+      },
+      "bio": {
+        "height": 169,
+        "plays": "Right-handed",
+        "birthplace": "Pingtung City"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:Badminton_at_2023_National_Games_of_Taiwan_-_12.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q27783218",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q27783218",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q27783218",
+          "asOf": "2026-10-12"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "95476": {
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "95661": {
+      "bio": {
+        "racket": "Victor DriveX 12 O"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "96312": {
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ Kurenai"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "96725": {
+      "bio": {
+        "height": 169,
+        "plays": "Right-handed",
+        "achievements": "Asia Team Championships 2026 – bronze (Women's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q50822044",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Lin_Hsiang-ti",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "96973": {
+      "hero": "https://www.german-open-badminton.de/wp-content/uploads/2026/02/ygo26-SVH-R3-0263-scaled.jpg",
+      "bio": {
+        "height": 167,
+        "birthplace": "Kaohsiung",
+        "achievements": "Asia Team Championships 2026 – bronze (women's team); World University Games 2025 – silver (mixed team); World University Games 2025 – silver (XD)"
+      },
+      "source": "https://www.german-open-badminton.de/?attachment_id=11866",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Hsu_Yin-hui",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q113244822",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q113244822",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "97115": {
+      "name": "YOO Tae-bin",
+      "hero": "https://img.olympics.com/images/image/private/t_s_16_9_g_auto/t_s_w1460/f_auto/primary/svhhow4k4izdwht8v73b",
+      "bio": {
+        "height": 186,
+        "plays": "Right-handed",
+        "nickname": "Yoo Tae-bin",
+        "birthplace": "Seoul, South Korea",
+        "languages": "Korean, English",
+        "racket": "Li-Ning AXForce 80 II",
+        "instagram": "https://www.instagram.com/yootaebin"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://img.olympics.com/images/image/private/t_s_16_9_g_auto/t_s_w1460/f_auto/primary/svhhow4k4izdwht8v73b",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "97174": {
+      "bio": {
+        "birthplace": "Koshigaya",
+        "coach": "Sho Sasaki",
+        "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Asian Games 2022 – bronze (Men's team); Asia Team Championships 2026 – gold (Men's team); Asia Team Championships 2020 – bronze (Men's team); Asia Team Championships 2024 – bronze (Men's team)"
+      },
+      "source": "https://www.wikidata.org/wiki/Q27893468",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Koki_Watanabe",
+          "asOf": "2026-10-12"
+        },
+        "bio.coach": {
+          "source": "https://en.wikipedia.org/wiki/Koki_Watanabe",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "99069": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/7/75/Sim_Yu_Jin.jpg",
+      "bio": {
+        "plays": "Right-handed",
+        "birthplace": "Chungju",
+        "racket": "Victor Auraspeed Fantôme J",
+        "string": "Victor VBS-66N",
+        "achievements": "Sudirman Cup 2025 – silver (mixed team); Uber Cup 2022 – gold (women's team); Uber Cup 2026 – gold (women's team); Uber Cup 2020 – bronze (women's team); Uber Cup 2024 – bronze (women's team); Asia Championships 2025 – bronze (WS); Asia Championships 2026 – bronze (WS); Asia Mixed Team Championships 2023 – silver (mixed team); Asia Team Championships 2020 – silver (women's team); Asia Team Championships 2022 – silver (women's team)"
+      },
+      "source": "https://commons.wikimedia.org/wiki/File:Sim_Yu_Jin.jpg",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Sim_Yu-jin",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q58008039",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q58008039",
+          "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "99102": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/c/c4/%E7%94%B7%E5%AD%90%E9%9B%99%E6%89%93%E9%A0%92%E7%8D%8E.jpg",
+      "source": "https://commons.wikimedia.org/wiki/File:%E7%94%B7%E5%AD%90%E9%9B%99%E6%89%93%E9%A0%92%E7%8D%8E.jpg",
+      "asOf": "2026-10-12"
+    },
+    "99389": {
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-12"
+    },
+    "99521": {
+      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKRLZpXosANo9jIeBLC1oR7fSIxLatJ96Zb6lf2lUQ6NHTcm3QpmylOUI&s=10",
+      "heroFocus": {
+        "x": 34,
+        "y": 47
+      },
+      "bio": {
+        "racket": "Hundred Nitrix 70 Venom",
+        "shoes": "Hundred Phenom",
+        "bag": "Hundred Aeris Black"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "hero": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKRLZpXosANo9jIeBLC1oR7fSIxLatJ96Zb6lf2lUQ6NHTcm3QpmylOUI&s=10",
+          "asOf": "2026-10-12"
+        }
+      }
+    },
+    "99781": {
+      "bio": {
+        "height": 172,
+        "plays": "Right-handed",
+        "nickname": "Mon",
+        "birthplace": "Bandung",
+        "racket": "Hundred Nitrix 70 Volta",
+        "achievements": "Asia Team Championships 2026 – bronze (men's team)"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.achievements": {
+          "source": "https://en.wikipedia.org/wiki/Raymond_Indra",
+          "asOf": "2026-10-12"
+        },
+        "bio.birthplace": {
+          "source": "https://www.wikidata.org/wiki/Q114275186",
+          "asOf": "2026-10-12"
+        },
+        "bio.height": {
+          "source": "https://www.wikidata.org/wiki/Q114275186",
+          "asOf": "2026-10-12"
+        },
+        "bio.nickname": {
+          "source": "https://www.wikidata.org/wiki/Q114275186",
+          "asOf": "2026-10-12"
+        },
+        "bio.plays": {
+          "source": "https://www.wikidata.org/wiki/Q114275186",
+          "asOf": "2026-10-12"
+        }
+      }
+    }
+  }
+}
