@@ -12,14 +12,20 @@ import {
   NEWS_FREEZE_MS,
   newsMonthOf,
   publishedMs,
+  type NewsRequest,
   type NewsSeries,
   type RawNews,
+  type RawNewsPage,
 } from '../../../server/news.ts'
 import { WORLD } from '../bwf.ts'
 import type { Context } from '../context.ts'
-import { all, tx, type Db } from '../db.ts'
+import { all, readState, tx, writeState, type Db } from '../db.ts'
 
-const PER_PAGE = 50
+const PER_PAGE = 20
+const MAX_PAGES = 40
+const BUDGET_MS = 10 * 60_000
+const CURSOR = 'news.archive'
+const SYNC_REQUEST: NewsRequest = { timeoutMs: 90_000, retries: 2 }
 
 interface Stored {
   id: number
@@ -27,55 +33,10 @@ interface Stored {
   fetched_at: number
 }
 
-const isFrozen = (s: Stored) => s.fetched_at - s.published > NEWS_FREEZE_MS
-
-const fetchArchive = async (db: Db) => {
-  const stored = new Map(all<Stored>(db, 'SELECT id, published, fetched_at FROM news_raw').map((s) => [s.id, s]))
-  const upsert = db.prepare(
-    `INSERT INTO news_raw (id, published, fetched_at, body) VALUES (?, ?, ?, ?)
-     ON CONFLICT(id) DO UPDATE SET published = excluded.published, fetched_at = excluded.fetched_at, body = excluded.body`,
-  )
-  let written = 0
-  let pages = 0
-  for (let page = 1; ; page++) {
-    const res = await fetchNewsPage(page, PER_PAGE)
-    pages++
-    const now = Date.now()
-    const fresh = res.data.filter((r) => {
-      const s = stored.get(r.id)
-      return !s || !isFrozen(s)
-    })
-    tx(db, () => {
-      for (const r of fresh) {
-        const published = publishedMs(r)
-        upsert.run(r.id, published, now, gzipSync(JSON.stringify(r)))
-        stored.set(r.id, { id: r.id, published, fetched_at: now })
-      }
-    })
-    written += fresh.length
-    const backfilling = stored.size < res.results.total_posts
-    if (page >= res.results.total_pages || (!fresh.length && !backfilling)) break
-  }
-  return { written, pages, total: stored.size }
-}
-
-const fetchPopular = async (db: Db, raws: Map<string, RawNews>) => {
-  const slugs = await fetchPopularSlugs()
-  if (!slugs.length) return 0
-  const missing = slugs.filter((s) => !raws.has(s))
-  const upsert = db.prepare(
-    'INSERT INTO news_raw (id, published, fetched_at, body) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO NOTHING',
-  )
-  for (const slug of missing) {
-    const r = await fetchNewsBySlug(slug).catch(() => null)
-    if (r) upsert.run(r.id, publishedMs(r), Date.now(), gzipSync(JSON.stringify(r)))
-  }
-  const insert = db.prepare('INSERT INTO news_popular (rank, slug, fetched_at) VALUES (?, ?, ?)')
-  tx(db, () => {
-    db.exec('DELETE FROM news_popular')
-    slugs.forEach((slug, i) => insert.run(i + 1, slug, Date.now()))
-  })
-  return slugs.length
+interface Cursor {
+  offset: number
+  total: number
+  done: boolean
 }
 
 const readRaw = (db: Db) =>
@@ -84,6 +45,116 @@ const readRaw = (db: Db) =>
   )
 
 const slugOf = (r: RawNews) => decodeURIComponent(r.link.split('/').filter(Boolean).at(-1) ?? '')
+
+const isFrozen = (s: Stored) => s.fetched_at - s.published > NEWS_FREEZE_MS
+
+const fetchSpan = async (page: number) => {
+  try {
+    return await fetchNewsPage(page, PER_PAGE, SYNC_REQUEST)
+  } catch (e) {
+    console.warn(`  ! news page ${page}: ${(e as Error).message}; retrying as two half pages`)
+    const half = PER_PAGE / 2
+    const a = await fetchNewsPage(page * 2 - 1, half, SYNC_REQUEST)
+    const b = await fetchNewsPage(page * 2, half, SYNC_REQUEST)
+    return { results: a.results, data: [...a.data, ...b.data] }
+  }
+}
+
+const stopReason = (pages: number, maxPages: number, started: number) => {
+  if (pages >= maxPages) return `page cap (${maxPages}) reached`
+  if (Date.now() - started > BUDGET_MS) return `time budget (${BUDGET_MS / 60_000} min) used`
+  return null
+}
+
+const advance = (cursor: Cursor | null, page: number, total: number, stored: number) => {
+  const base = cursor ?? { offset: 0, total, done: stored >= total }
+  const covered = Math.max(0, base.offset + total - base.total)
+  const reached = Math.min(page * PER_PAGE, total)
+  const done = base.done || reached >= total
+  const next: Cursor = reached >= covered ? { offset: reached, total, done } : { ...base, done }
+  return { covered, next }
+}
+
+const fetchArchive = async (db: Db, maxPages: number) => {
+  const stored = new Map(all<Stored>(db, 'SELECT id, published, fetched_at FROM news_raw').map((s) => [s.id, s]))
+  const upsert = db.prepare(
+    `INSERT INTO news_raw (id, published, fetched_at, body) VALUES (?, ?, ?, ?)
+     ON CONFLICT(id) DO UPDATE SET published = excluded.published, fetched_at = excluded.fetched_at, body = excluded.body`,
+  )
+  let cursor = readState<Cursor | null>(db, CURSOR, null)
+  const started = Date.now()
+  let written = 0
+  let pages = 0
+  let stop: string | null = null
+  for (let page = 1; ;) {
+    stop = stopReason(pages, maxPages, started)
+    if (stop) break
+    let res: RawNewsPage
+    try {
+      res = await fetchSpan(page)
+    } catch (e) {
+      stop = `page ${page} failed: ${(e as Error).message}`
+      break
+    }
+    pages++
+    const now = Date.now()
+    const total = res.results.total_posts
+    const fresh = res.data.filter((r) => {
+      const s = stored.get(r.id)
+      return !s || !isFrozen(s)
+    })
+    for (const r of fresh) stored.set(r.id, { id: r.id, published: publishedMs(r), fetched_at: now })
+    const { covered, next } = advance(cursor, page, total, stored.size)
+    tx(db, () => {
+      for (const r of fresh) upsert.run(r.id, publishedMs(r), now, gzipSync(JSON.stringify(r)))
+      writeState(db, CURSOR, next)
+    })
+    cursor = next
+    written += fresh.length
+    if (page * PER_PAGE >= total || (!fresh.length && cursor.done)) break
+    page = fresh.length ? page + 1 : Math.max(page + 1, Math.floor(covered / PER_PAGE) + 1)
+  }
+  return { written, pages, total: stored.size, cursor, stop }
+}
+
+const lastPopular = (db: Db) =>
+  all<{ slug: string }>(db, 'SELECT slug FROM news_popular ORDER BY rank').map((r) => r.slug)
+
+const scrapePopular = async (db: Db) => {
+  try {
+    const slugs = await fetchPopularSlugs(SYNC_REQUEST)
+    const insert = db.prepare('INSERT INTO news_popular (rank, slug, fetched_at) VALUES (?, ?, ?)')
+    tx(db, () => {
+      db.exec('DELETE FROM news_popular')
+      slugs.forEach((slug, i) => insert.run(i + 1, slug, Date.now()))
+    })
+    return { slugs, note: `${slugs.length} popular` }
+  } catch (e) {
+    const slugs = lastPopular(db)
+    console.warn(`  ! news popular: scrape failed, keeping the last known ${slugs.length}: ${(e as Error).message}`)
+    return { slugs, note: `${slugs.length} popular (kept)` }
+  }
+}
+
+const fetchPopular = async (db: Db) => {
+  const { slugs, note } = await scrapePopular(db)
+  const known = new Set(readRaw(db).map(slugOf))
+  const missing = slugs.filter((s) => !known.has(s))
+  const upsert = db.prepare(
+    'INSERT INTO news_raw (id, published, fetched_at, body) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO NOTHING',
+  )
+  let failed = 0
+  for (const slug of missing) {
+    try {
+      const r = await fetchNewsBySlug(slug, SYNC_REQUEST)
+      if (r) upsert.run(r.id, publishedMs(r), Date.now(), gzipSync(JSON.stringify(r)))
+    } catch (e) {
+      failed++
+      console.warn(`  ! news popular article ${slug}: ${(e as Error).message}`)
+    }
+  }
+  return failed ? `${note}, ${failed} missing` : note
+}
 
 const RANKED_TOP = 200
 
@@ -161,24 +232,21 @@ const derive = (db: Db, catalogFile: string) => {
   return items
 }
 
+const cursorNote = (c: Cursor | null) => {
+  if (!c) return 'archive not started'
+  return c.done ? 'archive complete' : `backfill ${Math.min(c.offset, c.total)}/${c.total}`
+}
+
 export const syncNews = async (
   { db }: Context,
-  { offline, catalogFile }: { offline: boolean; catalogFile: string },
+  { offline, catalogFile, maxPages = MAX_PAGES }: { offline: boolean; catalogFile: string; maxPages?: number },
 ) => {
   let note = 'offline'
   if (!offline) {
-    try {
-      const a = await fetchArchive(db)
-      const raws = new Map(readRaw(db).map((r) => [slugOf(r), r]))
-      const popular = await fetchPopular(db, raws).catch((e: Error) => {
-        console.warn(`  ! news popular: ${e.message}`)
-        return 0
-      })
-      note = `${a.pages} pages · ${a.written} refreshed · ${a.total} stored · ${popular} popular`
-    } catch (e) {
-      console.warn(`  ! news: ${(e as Error).message}`)
-      note = 'fetch failed, kept cache'
-    }
+    const a = await fetchArchive(db, maxPages)
+    if (a.stop) console.warn(`  ! news: ${a.stop}; kept ${a.total} stored, the next run resumes`)
+    const popular = await fetchPopular(db)
+    note = `${a.pages} pages · ${a.written} refreshed · ${a.total} stored · ${cursorNote(a.cursor)} · ${popular}`
   }
   const items = derive(db, catalogFile)
   console.log(

@@ -1055,7 +1055,7 @@
       "asOf": "2026-10-12"
     },
     "68633": {
-      "photo": "https://static.promediateknologi.id/crop/0x0:0x0/1200x0/webp/photo/p1/43/2024/05/05/Leo-Rolly-Carnando-1676558671.jpg",
+      "photo": "data/uploads/68633.webp",
       "hero": "https://cdn1-production-images-kly.akamaized.net/EK_o2Phj9F2vJO__5GW9iwUhe0Q=/800x400/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/9361499/original/067689800_1790735365-AP26272336422090.jpg",
       "heroFocus": {
         "x": 68,
@@ -2027,7 +2027,7 @@
       }
     },
     "85302": {
-      "hero": "https://badmintoneurope.com/documents/20117/134771/20250910_1118_HongKongOpen2025_BPMC9027.jpg/014309c8-c292-7a50-79a5-1cf571bedb7b?version=1.0",
+      "hero": "data/uploads/85302-hero.jpg",
       "bio": {
         "racket": "Yonex Arcsaber 11 Pro",
         "shoes": "Yonex Power Cushion Eclipsion Z3"

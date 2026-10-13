@@ -135,6 +135,11 @@ CREATE TABLE IF NOT EXISTS news_articles (
   id INTEGER PRIMARY KEY REFERENCES news(id) ON DELETE CASCADE,
   article TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS sync_state (
+  key TEXT PRIMARY KEY,
+  value TEXT NOT NULL,
+  updated_at INTEGER NOT NULL
+);
 `
 
 export type Db = DatabaseSync
@@ -155,12 +160,12 @@ const migrate = (db: DatabaseSync) => {
   }
 }
 
-export const openDb = (file: string): Db => {
+export const openDb = (file: string, dataDir = path.dirname(file)): Db => {
   const db = new DatabaseSync(file)
   db.exec('PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL; PRAGMA foreign_keys = ON;')
   db.exec(SCHEMA)
   migrate(db)
-  seedCatalog(db, readCatalog(path.dirname(file)))
+  seedCatalog(db, readCatalog(dataDir))
   return db
 }
 
@@ -179,3 +184,15 @@ export const tx = <T>(db: Db, fn: () => T): T => {
 export const all = <T>(db: Db, sql: string, ...params: SQLInputValue[]) => db.prepare(sql).all(...params) as T[]
 
 export const exists = (db: Db, sql: string, ...params: SQLInputValue[]) => db.prepare(sql).get(...params) !== undefined
+
+export const readState = <T>(db: Db, key: string, fallback: T): T => {
+  const row = db.prepare('SELECT value FROM sync_state WHERE key = ?').get(key) as { value: string } | undefined
+  return row ? (JSON.parse(row.value) as T) : fallback
+}
+
+export const writeState = (db: Db, key: string, value: unknown) =>
+  db
+    .prepare(
+      'INSERT INTO sync_state (key, value, updated_at) VALUES (?, ?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at',
+    )
+    .run(key, JSON.stringify(value), Date.now())

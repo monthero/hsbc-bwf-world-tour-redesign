@@ -25,6 +25,8 @@ const { values } = parseArgs({
     only: { type: 'string' },
     from: { type: 'string' },
     offline: { type: 'boolean', default: false },
+    db: { type: 'string' },
+    'news-pages': { type: 'string' },
   },
 })
 
@@ -35,7 +37,7 @@ const only = new Set(values.only?.split(',') ?? STEPS)
 
 const OVERRIDES = path.join(ROOT, 'data/overrides.json')
 
-const db = openDb(path.join(ROOT, 'data/bwf.sqlite'))
+const db = openDb(values.db ? path.resolve(values.db) : path.join(ROOT, 'data/bwf.sqlite'), path.join(ROOT, 'data'))
 const ctx: Context = {
   db,
   client: createClient(db, { offline: values.offline }),
@@ -52,7 +54,11 @@ if (only.has('matches')) await syncMatches(ctx)
 if (only.has('players')) await syncPlayers(ctx)
 if (only.has('rankings')) await syncRankings(ctx)
 if (only.has('news'))
-  await syncNews(ctx, { offline: values.offline ?? false, catalogFile: path.join(ROOT, 'data/catalog.json') })
+  await syncNews(ctx, {
+    offline: values.offline ?? false,
+    catalogFile: path.join(ROOT, 'data/catalog.json'),
+    maxPages: values['news-pages'] ? Number(values['news-pages']) : undefined,
+  })
 if (only.has('images')) await syncImages(ROOT, OVERRIDES, values.offline ?? false)
 if (only.has('export')) {
   await exportData(

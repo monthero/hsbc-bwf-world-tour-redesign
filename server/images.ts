@@ -23,6 +23,8 @@ const MAX_WAIT_MS = 20_000
 const BASE_DELAY_MS = 1_000
 const MAX_REDIRECTS = 5
 const BOT_UA = 'bwf-tracker-dev/0.1 (personal project)'
+const WIKIMEDIA_UA = 'hsbc-bwf-world-tour-redesign/1.0 (+https://github.com/monthero/hsbc-bwf-world-tour-redesign)'
+const WIKIMEDIA_GAP_MS = 1_500
 const BROWSER_UA =
   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
 const ACCEPT = 'image/avif,image/webp,image/png,image/jpeg,image/*;q=0.8,*/*;q=0.5'
@@ -44,10 +46,12 @@ interface HostRule {
   profiles: readonly Profile[]
   referer?: string
   ipv4?: boolean
+  ua?: string
+  gapMs?: number
 }
 
 const HOST_RULES: readonly HostRule[] = [
-  { test: /(^|\.)wikimedia\.org$/, profiles: ['bot'], ipv4: true },
+  { test: /(^|\.)wikimedia\.org$/, profiles: ['bot'], ipv4: true, ua: WIKIMEDIA_UA, gapMs: WIKIMEDIA_GAP_MS },
   { test: /(^|\.)badmintoneurope\.com$/, profiles: ['bot', 'browser'] },
   { test: /(^|\.)bwfbadminton\.com$/, profiles: ['bot', 'referer'], referer: 'https://bwfbadminton.com/' },
 ]
@@ -84,7 +88,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 const ruleFor = (host: string) => HOST_RULES.find((r) => r.test.test(host)) ?? DEFAULT_RULE
 
 const headersFor = (profile: Profile, url: URL, rule: HostRule): Record<string, string> => ({
-  'user-agent': profile === 'bot' ? BOT_UA : BROWSER_UA,
+  'user-agent': profile === 'bot' ? (rule.ua ?? BOT_UA) : BROWSER_UA,
   accept: ACCEPT,
   ...(profile === 'referer' && { referer: rule.referer ?? `${url.origin}/` }),
 })
@@ -158,8 +162,18 @@ const readLimited = async (res: Fetched) => {
   return Buffer.concat(chunks)
 }
 
+const lastRequest = new Map<string, number>()
+const blockedUntil = new Map<string, number>()
+
+const pace = async (host: string, gapMs = 0) => {
+  const wait = (lastRequest.get(host) ?? 0) + gapMs - Date.now()
+  if (wait > 0) await sleep(wait)
+  lastRequest.set(host, Date.now())
+}
+
 const attempt = async (url: URL, rule: HostRule, profile: Profile): Promise<Attempt> => {
   const transport = rule.ipv4 ? viaIpv4 : viaFetch
+  await pace(url.hostname, rule.gapMs)
   let res: Fetched
   try {
     res = await transport(url, headersFor(profile, url, rule), AbortSignal.timeout(TIMEOUT_MS))
@@ -207,6 +221,8 @@ const rateLimited = (host: string, wait: number | null) =>
 export const download = async (raw: string) => {
   const url = new URL(raw)
   const rule = ruleFor(url.hostname)
+  const blocked = (blockedUntil.get(url.hostname) ?? 0) - Date.now()
+  if (blocked > 0) throw rateLimited(url.hostname, blocked)
   const refused: string[] = []
   for (const profile of rule.profiles) {
     for (let n = 1; ; n++) {
@@ -218,6 +234,7 @@ export const download = async (raw: string) => {
       }
       const wait = result.wait ?? backoff(n)
       if (n >= MAX_ATTEMPTS || wait > MAX_WAIT_MS) {
+        if (wait > MAX_WAIT_MS) blockedUntil.set(url.hostname, Date.now() + wait)
         if (result.status === 429) throw rateLimited(url.hostname, result.wait)
         throw new HttpError(504, `${url.hostname}: ${result.reason} after ${n} ${n === 1 ? 'try' : 'tries'}`)
       }

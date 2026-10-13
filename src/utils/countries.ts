@@ -4,12 +4,11 @@ import data from './countries.json'
 
 const COUNTRIES: Record<string, { iso: string; name: string; region: string }> = data
 
-const TPE_FLAG = '/assets/flag-tpe.png'
+const LOCAL_FLAGS: Record<string, string> = { TPE: '/assets/flag-tpe.png', AIN: '/assets/flag-neutral.svg' }
 
 const NAME_TO_IOC = Object.fromEntries(Object.entries(COUNTRIES).map(([ioc, c]) => [c.name, ioc]))
 
-export const flagUrl = (ioc: string) =>
-  ioc === 'TPE' ? TPE_FLAG : `https://flagcdn.com/w40/${COUNTRIES[ioc]?.iso ?? 'un'}.png`
+export const flagUrl = (ioc: string) => LOCAL_FLAGS[ioc] ?? `https://flagcdn.com/w40/${COUNTRIES[ioc]?.iso ?? 'un'}.png`
 
 export const countryCode = (name: string) => NAME_TO_IOC[name] ?? ''
 

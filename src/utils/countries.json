@@ -4,6 +4,11 @@
     "name": "Afghanistan",
     "region": "Asia"
   },
+  "AIN": {
+    "iso": "",
+    "name": "Individual Neutral Athlete",
+    "region": "Other"
+  },
   "ALB": {
     "iso": "al",
     "name": "Albania",
@@ -329,6 +334,11 @@
     "name": "France",
     "region": "Europe"
   },
+  "FRO": {
+    "iso": "fo",
+    "name": "Faroe Islands",
+    "region": "Europe"
+  },
   "FSM": {
     "iso": "fm",
     "name": "Micronesia",
@@ -379,6 +389,11 @@
     "name": "Greece",
     "region": "Europe"
   },
+  "GRL": {
+    "iso": "gl",
+    "name": "Greenland",
+    "region": "Americas"
+  },
   "GRN": {
     "iso": "gd",
     "name": "Grenada",
@@ -387,6 +402,11 @@
   "GUA": {
     "iso": "gt",
     "name": "Guatemala",
+    "region": "Americas"
+  },
+  "GUF": {
+    "iso": "gf",
+    "name": "French Guiana",
     "region": "Americas"
   },
   "GUI": {
@@ -649,6 +669,11 @@
     "name": "Montenegro",
     "region": "Europe"
   },
+  "MNP": {
+    "iso": "mp",
+    "name": "Northern Mariana Islands",
+    "region": "Oceania"
+  },
   "MON": {
     "iso": "mc",
     "name": "Monaco",
@@ -674,6 +699,11 @@
     "name": "Myanmar",
     "region": "Asia"
   },
+  "MYT": {
+    "iso": "yt",
+    "name": "Mayotte",
+    "region": "Africa"
+  },
   "NAM": {
     "iso": "na",
     "name": "Namibia",
@@ -683,6 +713,11 @@
     "iso": "ni",
     "name": "Nicaragua",
     "region": "Americas"
+  },
+  "NCL": {
+    "iso": "nc",
+    "name": "New Caledonia",
+    "region": "Oceania"
   },
   "NED": {
     "iso": "nl",
@@ -784,10 +819,20 @@
     "name": "Puerto Rico",
     "region": "Americas"
   },
+  "PYF": {
+    "iso": "pf",
+    "name": "French Polynesia",
+    "region": "Oceania"
+  },
   "QAT": {
     "iso": "qa",
     "name": "Qatar",
     "region": "Asia"
+  },
+  "REU": {
+    "iso": "re",
+    "name": "Réunion",
+    "region": "Africa"
   },
   "ROU": {
     "iso": "ro",

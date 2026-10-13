@@ -68,48 +68,78 @@ export interface NewsSeries {
   match: string
 }
 
-const request = async (url: string, accept: string) => {
+export interface NewsRequest {
+  timeoutMs?: number
+  retries?: number
+}
+
+const CHALLENGE = /challenge-platform|cf-chl|Just a moment/
+
+const failure = (res: Response, body: string) => {
+  const blocked = res.headers.has('cf-mitigated') || CHALLENGE.test(body)
+  return `HTTP ${res.status}${blocked ? ' (Cloudflare challenge, this IP is blocked)' : ''}`
+}
+
+const reasonOf = (e: unknown, timeoutMs: number) =>
+  e instanceof Error && e.name === 'TimeoutError' ? `timed out after ${timeoutMs / 1000} s` : String(e)
+
+const request = async (
+  url: string,
+  accept: string,
+  { timeoutMs = TIMEOUT_MS, retries = RETRIES }: NewsRequest = {},
+) => {
   for (let attempt = 0; ; attempt++) {
+    let reason: string
+    let retryable = true
     try {
       const res = await fetch(url, {
         headers: { 'User-Agent': USER_AGENT, Accept: accept },
-        signal: AbortSignal.timeout(TIMEOUT_MS),
+        signal: AbortSignal.timeout(timeoutMs),
       })
-      if (res.ok) return await res.text()
-      if (res.status < 500 && res.status !== 403 && res.status !== 429) throw new Error(`${res.status} ${url}`)
-      if (attempt >= RETRIES) throw new Error(`${res.status} ${url}`)
+      const text = await res.text()
+      if (res.ok) return text
+      reason = failure(res, text)
+      retryable = res.status >= 500 || res.status === 403 || res.status === 429
     } catch (e) {
-      if (attempt >= RETRIES) throw e
+      reason = reasonOf(e, timeoutMs)
     }
-    await sleep(1000 * 2 ** attempt)
+    if (!retryable || attempt >= retries)
+      throw new Error(`${url}: ${reason} after ${attempt + 1} ${attempt ? 'tries' : 'try'}`)
+    await sleep(1000 * 2 ** attempt + Math.random() * 500)
   }
 }
 
-export const fetchNewsPage = async (page: number, perPage: number) =>
-  JSON.parse(await request(`${LIST}?per_page=${perPage}&page=${page}`, 'application/json')) as RawNewsPage
+export const fetchNewsPage = async (page: number, perPage: number, opts?: NewsRequest) =>
+  JSON.parse(await request(`${LIST}?per_page=${perPage}&page=${page}`, 'application/json', opts)) as RawNewsPage
 
-export const fetchNewsBySlug = async (slug: string) => {
+export const fetchNewsBySlug = async (slug: string, opts?: NewsRequest) => {
   const hits = JSON.parse(
-    await request(`${CMS}/wp/v2/posts?slug=${encodeURIComponent(slug)}&_fields=id`, 'application/json'),
+    await request(`${CMS}/wp/v2/posts?slug=${encodeURIComponent(slug)}&_fields=id`, 'application/json', opts),
   ) as { id: number }[]
   const id = hits[0]?.id
-  return id ? fetchNewsPost(id) : null
+  return id ? fetchNewsPost(id, opts) : null
 }
 
-export const fetchNewsPost = async (id: number) => {
-  const posts = JSON.parse(await request(`${CMS}/newsapi/v1/post/${id}`, 'application/json')) as RawNews[]
+export const fetchNewsPost = async (id: number, opts?: NewsRequest) => {
+  const posts = JSON.parse(await request(`${CMS}/newsapi/v1/post/${id}`, 'application/json', opts)) as RawNews[]
   return posts[0] ?? null
 }
 
 const SIDEBAR = /widget__latest-news([\s\S]*?)<\/aside>/
 const SINGLE = /news-single\/\d{4}\/\d{2}\/\d{2}\/([^/"]+)/g
 
-export const fetchPopularSlugs = async () => {
-  const html = await request(`${WT}/news/`, 'text/html')
-  const side = html.match(SIDEBAR)?.[1] ?? ''
-  return [...new Set([...side.matchAll(SINGLE)].map((m) => decodeURIComponent(m[1] ?? '')))]
+export const fetchPopularSlugs = async (opts?: NewsRequest) => {
+  const html = await request(`${WT}/news/`, 'text/html', opts)
+  const side = html.match(SIDEBAR)?.[1]
+  if (side === undefined)
+    throw new Error(
+      `${WT}/news/ has no popular sidebar (${html.length} bytes${CHALLENGE.test(html) ? ', a Cloudflare challenge page' : ''})`,
+    )
+  const slugs = [...new Set([...side.matchAll(SINGLE)].map((m) => decodeURIComponent(m[1] ?? '')))]
     .filter(Boolean)
     .slice(0, NEWS_POPULAR)
+  if (!slugs.length) throw new Error(`${WT}/news/ popular sidebar has no article links`)
+  return slugs
 }
 
 const ENTITIES: Record<string, string> = { amp: '&', quot: '"', apos: "'", lt: '<', gt: '>', nbsp: ' ' }

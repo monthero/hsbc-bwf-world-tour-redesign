@@ -21,7 +21,10 @@ const EXTRA = {
   SCO: { iso: 'gb-sct', name: 'Scotland', region: 'Europe' },
   WAL: { iso: 'gb-wls', name: 'Wales', region: 'Europe' },
   MAC: { iso: 'mo', name: 'Macau China', region: 'Asia' },
+  AIN: { iso: '', name: 'Individual Neutral Athlete', region: 'Other' },
 }
+
+const TERRITORIES = new Set(['FRO', 'GRL', 'GUF', 'MNP', 'MYT', 'NCL', 'PYF', 'REU'])
 
 const BADMINTON_EUROPE = new Set(['TUR', 'ISR', 'AZE', 'CYP', 'ARM', 'GEO'])
 
@@ -32,10 +35,11 @@ const regionOf = (c) => {
 
 const byIoc = {}
 for (const c of countries) {
-  if (!c.cioc) continue
-  byIoc[c.cioc] = {
+  const code = c.cioc || (TERRITORIES.has(c.cca3) ? c.cca3 : '')
+  if (!code) continue
+  byIoc[code] = {
     iso: c.cca2.toLowerCase(),
-    name: NAME_OVERRIDES[c.cioc] ?? c.name.common,
+    name: NAME_OVERRIDES[code] ?? c.name.common,
     region: regionOf(c),
   }
 }

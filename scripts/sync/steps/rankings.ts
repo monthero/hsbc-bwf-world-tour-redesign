@@ -38,6 +38,10 @@ const ALIASES: Record<string, string> = {
   'North Korea': 'PRK',
   'Brunei Darussalam': 'BRU',
   'National Olympic Commitee KENYA': 'KEN',
+  'French Polynesia (Tahiti)': 'PYF',
+  'Northern Marianas': 'MNP',
+  'Athlete Independent Neutral': 'AIN',
+  'MOROCCO Independent': 'AIN',
 }
 
 const CODE_OF = new Map([
