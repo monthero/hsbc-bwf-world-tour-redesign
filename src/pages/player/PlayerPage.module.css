@@ -1,0 +1,12 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 22px;
+  padding-bottom: 72px;
+}
+
+.message {
+  font-size: 14px;
+  color: var(--bwf-dim);
+}

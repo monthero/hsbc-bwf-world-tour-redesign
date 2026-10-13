@@ -1,0 +1,5 @@
+.picker {
+  flex: none;
+  width: calc(var(--count) * 52px);
+  max-width: 100%;
+}

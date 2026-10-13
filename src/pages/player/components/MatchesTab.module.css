@@ -1,0 +1,149 @@
+.row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.row:hover {
+  border-color: var(--bwf-border-hover);
+  background: var(--bwf-surface-4);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+}
+
+.seasons {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.seasons .seasonSeg {
+  width: calc(var(--n) * 64px);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.group + .group {
+  margin-top: 10px;
+}
+
+.groupHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  padding: 0 2px;
+}
+
+.groupTitle {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.tour {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bwf-text);
+  text-decoration: none;
+  text-wrap: pretty;
+}
+
+.tour:hover {
+  color: var(--bwf-red-soft);
+}
+
+.round {
+  flex: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--bwf-text-2);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.stage {
+  font-size: 12px;
+  color: var(--bwf-dim);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  margin-top: 4px;
+}
+
+.runHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+  padding: 6px 2px 0 44px;
+}
+
+.runHead .meta {
+  margin-top: 0;
+}
+
+.rowPartner {
+  flex: 1;
+}
+
+.date {
+  flex: none;
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--bwf-faint);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--mantine-color-slate-4);
+}
+
+.opps {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--bwf-text-2);
+}
+
+.oppName {
+  min-width: 0;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}

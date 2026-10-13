@@ -1,0 +1,23 @@
+.record {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--bwf-muted);
+  white-space: nowrap;
+}
+
+.record b {
+  font-weight: 600;
+  color: var(--bwf-text-2);
+}
+
+.record > * + *::before {
+  content: '·';
+  margin-right: 6px;
+  color: var(--bwf-faint);
+}
+
+.titles {
+  color: var(--bwf-gold-text);
+}
