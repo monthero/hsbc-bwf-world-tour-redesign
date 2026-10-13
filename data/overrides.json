@@ -1,5 +1,93 @@
 {
   "players": {
+    "14587": {
+      "retired": "2024-06",
+      "source": "https://observerid.com/fresh-color-lights-up-gideon-badminton-academy/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://observerid.com/fresh-color-lights-up-gideon-badminton-academy/",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "14727": {
+      "retired": "2019-01",
+      "source": "https://badmintonasia.org/2019/01/28/emotional-farewell-for-indonesia-s-retiring-liliyana-natsir/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://badmintonasia.org/2019/01/28/emotional-farewell-for-indonesia-s-retiring-liliyana-natsir/",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "14729": {
+      "retired": "2022-06",
+      "source": "https://bwfbadminton.com/news-single/2022/06/12/polii-bids-emotional-farewell/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfbadminton.com/news-single/2022/06/12/polii-bids-emotional-farewell/",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "16981": {
+      "retired": "2020-08",
+      "source": "https://olympics.bwfbadminton.com/news-single/2020/08/19/ayaka-takahashi-calls-it-a-day",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://olympics.bwfbadminton.com/news-single/2020/08/19/ayaka-takahashi-calls-it-a-day",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "18228": {
+      "retired": "2026-03",
+      "source": "https://badmintoneurope.com/w/end-of-an-era-carolina-mar%C3%ADn-announces-retirement",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://badmintoneurope.com/w/end-of-an-era-carolina-mar%C3%ADn-announces-retirement",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "24686": {
+      "retired": "2024-08",
+      "source": "https://www.siamsport.co.th/other-sports/badminton/70824/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.siamsport.co.th/other-sports/badminton/70824/",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "26238": {
+      "retired": "2021-01",
+      "source": "https://www.badspi.jp/202101282300/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badspi.jp/202101282300/",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "26394": {
+      "retired": "2024-03",
+      "source": "https://bwfbadminton.com/news-single/2024/03/21/relentless-star-bids-goodbye",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfbadminton.com/news-single/2024/03/21/relentless-star-bids-goodbye",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "34810": {
       "bio": {
         "racket": "Yonex Astrox 100 ZZ"
@@ -7,12 +95,45 @@
       "source": "user",
       "asOf": "2026-10-12"
     },
+    "34890": {
+      "retired": "2023-03",
+      "source": "https://www.biprogy.com/badminton/news/230401_announce.html",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.biprogy.com/badminton/news/230401_announce.html",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "35357": {
+      "retired": "2023-05",
+      "source": "https://www.badmintonplanet.com/?p=21395",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badmintonplanet.com/?p=21395",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "35642": {
       "bio": {
         "racket": "Yonex Nanoflare 800 Pro"
       },
       "source": "user",
       "asOf": "2026-10-12"
+    },
+    "42776": {
+      "retired": "2024-03",
+      "source": "https://thebridge.in/badminton/b-sai-praneeth-announces-retirement-international-badminton-46313",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://thebridge.in/badminton/b-sai-praneeth-announces-retirement-international-badminton-46313",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "44414": {
       "bio": {
@@ -27,6 +148,17 @@
       },
       "source": "user",
       "asOf": "2026-10-12"
+    },
+    "50152": {
+      "retired": "2019-06",
+      "source": "https://www.nst.com.my/amp/sports/badminton/2019/06/495978/lee-chong-wei-hangs-his-racquet",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.nst.com.my/amp/sports/badminton/2019/06/495978/lee-chong-wei-hangs-his-racquet",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "50469": {
       "hero": "https://www.yonex.co.uk/cdn/shop/files/TSB01199.jpg",
@@ -62,19 +194,165 @@
         }
       }
     },
+    "50906": {
+      "retired": "2020-07",
+      "source": "https://www.eurosport.com/badminton/badminton-china-s-lin-dan-announces-retirement_sto7794614/story.shtml",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.eurosport.com/badminton/badminton-china-s-lin-dan-announces-retirement_sto7794614/story.shtml",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "51074": {
+      "retired": "2025-01",
       "bio": {
         "racket": "Victor Auraspeed HS Plus C"
       },
       "source": "user",
-      "asOf": "2026-10-13"
+      "asOf": "2026-10-13",
+      "meta": {
+        "retired": {
+          "source": "https://bwfworldtour.bwfbadminton.com/news-single/2025/01/20/indonesia-masters-daddies-last-dance",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "51436": {
+      "retired": "2018-07",
+      "source": "https://www.badzine.net/2018/07/all-england-champion-retires-expecting-a-baby",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badzine.net/2018/07/all-england-champion-retires-expecting-a-baby",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "51624": {
+      "retired": "2021-05",
+      "source": "https://en.wikipedia.org/wiki/Chris_Langridge",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://en.wikipedia.org/wiki/Chris_Langridge",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "52748": {
+      "retired": "2026-01",
+      "source": "https://gulfnews.com/sport/indias-badminton-star-saina-nehwal-confirms-retirement-i-cant-push-it-anymore-1.500413933",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://gulfnews.com/sport/indias-badminton-star-saina-nehwal-confirms-retirement-i-cant-push-it-anymore-1.500413933",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "52749": {
+      "retired": "2025-01",
       "bio": {
         "racket": "Victor Auraspeed 100X"
       },
       "source": "user",
-      "asOf": "2026-10-13"
+      "asOf": "2026-10-13",
+      "meta": {
+        "retired": {
+          "source": "https://asianews.network/mohammad-ahsan-announces-retirement-farewell-at-indonesia-masters-2025/",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "52774": {
+      "retired": "2022-04",
+      "source": "https://www.koreatimes.co.kr/www/sports/2024/12/600_387588.html",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.koreatimes.co.kr/www/sports/2024/12/600_387588.html",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "53142": {
+      "retired": "2024-05",
+      "source": "https://www.malaymail.com/news/sports/2024/05/22/peng-soon-yee-see-bid-farewell-to-competitive-badminton/135912",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.malaymail.com/news/sports/2024/05/22/peng-soon-yee-see-bid-farewell-to-competitive-badminton/135912",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "53159": {
+      "retired": "2023-01",
+      "source": "https://www.nst.com.my/amp/sports/badminton/2022/11/846026/shuttler-liu-ying-retire-after-malaysia-open",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.nst.com.my/amp/sports/badminton/2022/11/846026/shuttler-liu-ying-retire-after-malaysia-open",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "53759": {
+      "retired": "2019-03",
+      "source": "https://www.badmintonplanet.com/?p=13909",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badmintonplanet.com/?p=13909",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "54026": {
+      "retired": "2022-03",
+      "source": "https://www.badmintonplanet.com/?p=18222",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badmintonplanet.com/?p=18222",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "54267": {
+      "retired": "2020-05",
+      "source": "https://olympics.bwfbadminton.com/news-single/2020/05/18/tontowi-ahmad-a-skilful-player-who-left-his-mark",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://olympics.bwfbadminton.com/news-single/2020/05/18/tontowi-ahmad-a-skilful-player-who-left-his-mark",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "54346": {
+      "retired": "2024-11",
+      "source": "https://kpinews.kr/newsView/1065596861071351",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://kpinews.kr/newsView/1065596861071351",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "54431": {
+      "retired": "2020-10",
+      "source": "https://bwfworldtourfinals.bwfbadminton.com/news-single/2020/10/15/denmark-open-jorgensen-to-bid-adieu-after-home-event",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfworldtourfinals.bwfbadminton.com/news-single/2020/10/15/denmark-open-jorgensen-to-bid-adieu-after-home-event",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "55414": {
       "bio": {
@@ -263,6 +541,17 @@
         }
       }
     },
+    "57823": {
+      "retired": "2024-08",
+      "source": "https://www.badspi.jp/202408221603/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badspi.jp/202408221603/",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "57945": {
       "bio": {
         "racket": "Yonex Astrox 100 ZZ"
@@ -277,6 +566,17 @@
       "source": "user",
       "asOf": "2026-10-12"
     },
+    "58180": {
+      "retired": "2025-03",
+      "source": "https://badmintoneurope.com/w/greg-and-jenny-mairs-announce-retirement-from-international-tournaments",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://badmintoneurope.com/w/greg-and-jenny-mairs-announce-retirement-from-international-tournaments",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "58240": {
       "bio": {
         "racket": "Li-Ning Aeronaut 9000I",
@@ -284,6 +584,17 @@
       },
       "source": "user",
       "asOf": "2026-10-12"
+    },
+    "58241": {
+      "retired": "2024-08",
+      "source": "https://www.badmintonplanet.com/?p=23395",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badmintonplanet.com/?p=23395",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "58931": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Cheng_Xing_-_Indonesia_Open_2026.jpg",
@@ -562,6 +873,17 @@
         }
       }
     },
+    "61427": {
+      "retired": "2025-11",
+      "source": "https://www.malaymail.com/news/sports/2025/11/08/olympic-silver-medallist-tai-tzu-ying-retires-ends-career-as-taiwans-greatest-shuttler/197602",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.malaymail.com/news/sports/2025/11/08/olympic-silver-medallist-tai-tzu-ying-retires-ends-career-as-taiwans-greatest-shuttler/197602",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "61435": {
       "bio": {
         "racket": "Li-Ning Halbertec 9000",
@@ -670,6 +992,17 @@
         }
       }
     },
+    "62844": {
+      "retired": "2021-05",
+      "source": "https://bwfbadminton.com/news-single/2021/05/28/adcocks-call-time-on-international-career",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfbadminton.com/news-single/2021/05/28/adcocks-call-time-on-international-career",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "62855": {
       "bio": {
         "racket": "Hundred Nitrix 70 Venom"
@@ -693,6 +1026,17 @@
         "bio.birthplace": {
           "source": "https://www.wikidata.org/wiki/Q78577931",
           "asOf": "2026-10-12"
+        }
+      }
+    },
+    "63168": {
+      "retired": "2025-01",
+      "source": "https://oca.asia/news/5804-chinas-olympic-badminton-champion-huang-retires-from-national-team.html",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://oca.asia/news/5804-chinas-olympic-badminton-champion-huang-retires-from-national-team.html",
+          "asOf": "2026-10-14"
         }
       }
     },
@@ -876,12 +1220,45 @@
         }
       }
     },
+    "65984": {
+      "retired": "2023-06",
+      "source": "https://bwfbadminton.com/news-single/2023/06/01/wang-yi-lyu-du-yue-wave-goodbye",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfbadminton.com/news-single/2023/06/01/wang-yi-lyu-du-yue-wave-goodbye",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "66513": {
       "bio": {
         "racket": "Yonex Nanoflare 700 Pro"
       },
       "source": "user",
       "asOf": "2026-10-12"
+    },
+    "67176": {
+      "retired": "2024-07",
+      "source": "https://www.nhnieuws.nl/nieuws/338930/badmintonster-selena-piek-kondigt-vlak-na-uitschakeling-op-spelen-haar-afscheid-aan",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.nhnieuws.nl/nieuws/338930/badmintonster-selena-piek-kondigt-vlak-na-uitschakeling-op-spelen-haar-afscheid-aan",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
+    "67654": {
+      "retired": "2025-03",
+      "source": "https://www.nst.com.my/amp/sports/badminton/2025/02/1176371/end-kian-meng-pei-jing-show-after-all-england",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.nst.com.my/amp/sports/badminton/2025/02/1176371/end-kian-meng-pei-jing-show-after-all-england",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "67761": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Amalia_Cahaya_Pratiwi.jpg",
@@ -1185,6 +1562,17 @@
         }
       }
     },
+    "69448": {
+      "retired": "2024-12",
+      "source": "https://www.badmintonplanet.com/?p=23794",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badmintonplanet.com/?p=23794",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "69463": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/v1769505741/wordpress_assets_test/cr_20260123_1407_IndonesiaMasters2026_BPRS5415/cr_20260123_1407_IndonesiaMasters2026_BPRS5415.jpg",
       "bio": {
@@ -1229,6 +1617,17 @@
         }
       }
     },
+    "70333": {
+      "retired": "2021-05",
+      "source": "https://bwfbadminton.com/news-single/2021/05/28/adcocks-call-time-on-international-career",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfbadminton.com/news-single/2021/05/28/adcocks-call-time-on-international-career",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "70500": {
       "bio": {
         "racket": "Yonex Arcsaber 11 Pro"
@@ -1257,6 +1656,17 @@
       },
       "source": "user",
       "asOf": "2026-10-12"
+    },
+    "70969": {
+      "retired": "2022-02",
+      "source": "https://www.badmintonplanet.com/?p=18222",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badmintonplanet.com/?p=18222",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "71023": {
       "bio": {
@@ -1296,6 +1706,17 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q115106868",
           "asOf": "2026-10-12"
+        }
+      }
+    },
+    "71349": {
+      "retired": "2024-11",
+      "source": "https://bwfbadminton.com/news-single/2024/12/24/season-of-change-for-expectant-parents-ellis-and-smith/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfbadminton.com/news-single/2024/12/24/season-of-change-for-expectant-parents-ellis-and-smith/",
+          "asOf": "2026-10-14"
         }
       }
     },
@@ -1446,6 +1867,17 @@
         }
       }
     },
+    "75787": {
+      "retired": "2023-05",
+      "source": "https://macaubusiness.com/olympic-champion-chen-long-retires-from-international-badminton/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://macaubusiness.com/olympic-champion-chen-long-retires-from-international-badminton/",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "75864": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1616/v1722199717/wordpress_assets_test/2Paris_Yeung-Nga-TIng-Pui-Lam/2Paris_Yeung-Nga-TIng-Pui-Lam.jpg",
       "bio": {
@@ -1590,6 +2022,17 @@
       "source": "user",
       "asOf": "2026-10-12"
     },
+    "77832": {
+      "retired": "2025-03",
+      "source": "https://www.hokkaido-np.co.jp/article/1188294/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.hokkaido-np.co.jp/article/1188294/",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "78409": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1639/v1765175861/wordpress_assets_test/20250528_2021_SingaporeOpen2025_BPYN4950/20250528_2021_SingaporeOpen2025_BPYN4950.jpg",
       "heroFlip": true,
@@ -1635,6 +2078,17 @@
       },
       "source": "user",
       "asOf": "2026-10-12"
+    },
+    "79059": {
+      "retired": "2021-11",
+      "source": "https://www.badmintonplanet.com/?p=18602",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badmintonplanet.com/?p=18602",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "79501": {
       "bio": {
@@ -1707,6 +2161,17 @@
         }
       }
     },
+    "80057": {
+      "retired": "2024-05",
+      "source": "https://www.badmintonplanet.com/badminton-news/minions-era-comes-to-a-close-as-kevin-sanjaya-retires-from-badminton.html",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badmintonplanet.com/badminton-news/minions-era-comes-to-a-close-as-kevin-sanjaya-retires-from-badminton.html",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "80862": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/3/3e/%E9%82%B1%E5%93%81%E8%92%A8-2024%E5%8F%B0%E5%8C%97%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
       "bio": {
@@ -1723,6 +2188,17 @@
         "bio.height": {
           "source": "https://www.wikidata.org/wiki/Q64852791",
           "asOf": "2026-10-12"
+        }
+      }
+    },
+    "80918": {
+      "retired": "2024-11",
+      "source": "https://bwfbadminton.com/news-single/2024/12/24/season-of-change-for-expectant-parents-ellis-and-smith/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfbadminton.com/news-single/2024/12/24/season-of-change-for-expectant-parents-ellis-and-smith/",
+          "asOf": "2026-10-14"
         }
       }
     },
@@ -1854,6 +2330,17 @@
         }
       }
     },
+    "82249": {
+      "retired": "2022-01",
+      "source": "https://www.badmintonplanet.com/?p=19172",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badmintonplanet.com/?p=19172",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "82364": {
       "hero": "https://pbsi.id/wp-content/uploads/2026/06/AnaTrias4_Final_AustralianOpen2026_PBSI_20260614-scaled.jpg",
       "heroFocus": {
@@ -1895,6 +2382,17 @@
         "bio.racket": {
           "source": "user",
           "asOf": "2026-10-12"
+        }
+      }
+    },
+    "83046": {
+      "retired": "2024-12",
+      "source": "https://scmp.com/sport/other-sport/article/3288615/chinese-olympic-gold-medallist-zheng-retirement-shock-says-titles-hold-little-appeal",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://scmp.com/sport/other-sport/article/3288615/chinese-olympic-gold-medallist-zheng-retirement-shock-says-titles-hold-little-appeal",
+          "asOf": "2026-10-14"
         }
       }
     },
@@ -1972,6 +2470,17 @@
       },
       "source": "user",
       "asOf": "2026-10-12"
+    },
+    "84669": {
+      "retired": "2024-08",
+      "source": "https://www.siamsport.co.th/other-sports/badminton/71659/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.siamsport.co.th/other-sports/badminton/71659/",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "84786": {
       "photo": "https://awsimages.detik.net.id/community/media/visual/2025/06/26/2199397750-1750948407916_169.jpeg?w=600&q=90",
@@ -2335,12 +2844,34 @@
         }
       }
     },
+    "87434": {
+      "retired": "2024-08",
+      "source": "https://bwfbadminton.com/news-single/2024/08/13/he-bing-jiao-bids-goodbye/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfbadminton.com/news-single/2024/08/13/he-bing-jiao-bids-goodbye/",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "87442": {
       "bio": {
         "racket": "Yonex Astrox 77 Pro"
       },
       "source": "user",
       "asOf": "2026-10-12"
+    },
+    "88094": {
+      "retired": "2025-01",
+      "source": "https://www.starnewskorea.com/sports/2026/07/02/2026070210440411964",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.starnewskorea.com/sports/2026/07/02/2026070210440411964",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "88097": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Siti_Fadia_Silva_Ramadhanti%E5%8F%B0%E5%8C%97%E5%85%AC%E9%96%8B%E8%B3%BD2025.jpg",
@@ -2455,6 +2986,17 @@
       "source": "user",
       "asOf": "2026-10-11"
     },
+    "89068": {
+      "retired": "2025-03",
+      "source": "https://badmintoneurope.com/w/greg-and-jenny-mairs-announce-retirement-from-international-tournaments",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://badmintoneurope.com/w/greg-and-jenny-mairs-announce-retirement-from-international-tournaments",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "89426": {
       "bio": {
         "racket": "Yonex Nanoflare 700 Pro"
@@ -2462,12 +3004,34 @@
       "source": "user",
       "asOf": "2026-10-12"
     },
+    "89785": {
+      "retired": "2024-05",
+      "source": "https://scmp.com/sport/other-sport/article/3259434/four-years-after-car-crash-japans-former-world-no-1-kento-momota-retires-international-badminton-age",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://scmp.com/sport/other-sport/article/3259434/four-years-after-car-crash-japans-former-world-no-1-kento-momota-retires-international-badminton-age",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "90531": {
       "bio": {
         "racket": "Yonex Astrox 100 ZZ Navy"
       },
       "source": "user",
       "asOf": "2026-10-12"
+    },
+    "90623": {
+      "retired": "2022-02",
+      "source": "https://the-ans.jp/news/216661/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://the-ans.jp/news/216661/",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "91090": {
       "photo": "data/uploads/91090.jpg",
@@ -2611,6 +3175,17 @@
         }
       }
     },
+    "93367": {
+      "retired": "2024-08",
+      "source": "https://bwfbadminton.com/news-single/2024/08/20/former-world-champ-liu-calls-it-a-day",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfbadminton.com/news-single/2024/08/20/former-world-champ-liu-calls-it-a-day",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "94151": {
       "bio": {
         "racket": "Yonex Astrox 100 ZZ"
@@ -2710,6 +3285,17 @@
         }
       }
     },
+    "95189": {
+      "retired": "2024-12",
+      "source": "https://www.badmintonplanet.com/?p=23651",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badmintonplanet.com/?p=23651",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "95476": {
       "bio": {
         "racket": "Yonex Astrox 100 ZZ"
@@ -2743,6 +3329,17 @@
         "bio.achievements": {
           "source": "https://en.wikipedia.org/wiki/Lin_Hsiang-ti",
           "asOf": "2026-10-12"
+        }
+      }
+    },
+    "96927": {
+      "retired": "2021-01",
+      "source": "https://www.badspi.jp/202101282300/",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://www.badspi.jp/202101282300/",
+          "asOf": "2026-10-14"
         }
       }
     },
@@ -2855,6 +3452,17 @@
       },
       "source": "user",
       "asOf": "2026-10-12"
+    },
+    "99452": {
+      "retired": "2023-06",
+      "source": "https://bwfbadminton.com/news-single/2023/06/01/wang-yi-lyu-du-yue-wave-goodbye",
+      "asOf": "2026-10-14",
+      "meta": {
+        "retired": {
+          "source": "https://bwfbadminton.com/news-single/2023/06/01/wang-yi-lyu-du-yue-wave-goodbye",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "99521": {
       "hero": "https://res.cloudinary.com/badminton/image/upload/v1768666332/wordpress_assets_test/20260117_1913_IndiaOpen2026_BPJS9232.jpg",
