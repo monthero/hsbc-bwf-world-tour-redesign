@@ -27,6 +27,8 @@ import utils from '~/styles/utils.module.css';
 
 const route = getRouteApi('/players/$id');
 
+const STAY = { replace: true, resetScroll: false } as const;
+
 export const PlayerPage: FC = () => {
   const { id } = route.useParams();
   return <PlayerProfile key={id} id={id} />;
@@ -68,20 +70,19 @@ const PlayerProfile: FC<{ id: string }> = ({ id }) => {
   const [selected, setSelected] = useState<PlayerMatch | null>(null);
   const closeMatch = useCallback(() => setSelected(null), []);
   const setTab = useCallback(
-    (t: PlayerTab) =>
-      void navigate({ search: (s) => ({ ...s, tab: t === 'overview' ? undefined : t }), replace: true }),
+    (t: PlayerTab) => void navigate({ search: (s) => ({ ...s, tab: t === 'overview' ? undefined : t }), ...STAY }),
     [navigate],
   );
   const setSeason = useCallback(
-    (y: number) => void navigate({ search: (s) => ({ ...s, season: y }), replace: true }),
+    (y: number) => void navigate({ search: (s) => ({ ...s, season: y }), ...STAY }),
     [navigate],
   );
   const setEvent = useCallback(
-    (ev: EventCode | undefined) => void navigate({ search: (s) => ({ ...s, event: ev }), replace: true }),
+    (ev: EventCode | undefined) => void navigate({ search: (s) => ({ ...s, event: ev }), ...STAY }),
     [navigate],
   );
   const openSeason = useCallback(
-    (y: number) => void navigate({ search: (s) => ({ ...s, tab: 'matches', season: y }) }),
+    (y: number) => void navigate({ search: (s) => ({ ...s, tab: 'matches', season: y }), resetScroll: false }),
     [navigate],
   );
   const openResults = useCallback(() => setTab('results'), [setTab]);
