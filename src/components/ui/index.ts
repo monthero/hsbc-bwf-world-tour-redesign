@@ -1,6 +1,7 @@
 export { BackPill } from './BackPill';
 export { BottomSheet } from './BottomSheet';
 export { CardHit } from './CardHit';
+export { Duration } from './Duration';
 export { EmptyState } from './EmptyState';
 export { Eyebrow } from './Eyebrow';
 export { FilterChip } from './FilterChip';

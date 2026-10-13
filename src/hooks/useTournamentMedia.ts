@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef } from 'react';
 
 import { refreshTournamentMedia, tournamentMediaQuery, viewerGeoQuery } from '~/api/queries';
 import type { MediaItem } from '~/api/schemas';
+import { useShowBlocked } from '~/stores/settings';
 import type { Match, MatchStatus, Tournament, TournamentDay } from '~/types';
 import {
   courtStreams,
@@ -12,6 +13,7 @@ import {
   linkMedia,
   matchStream,
   offAir,
+  visibleIn,
   type LinkedMedia,
 } from '~/utils/media';
 import { hasStarted } from '~/utils/tournaments';
@@ -41,7 +43,7 @@ const linksOf = (items: readonly MediaItem[], matches: readonly Match[]) => {
 
 const playRemaining = (day: TournamentDay | undefined) => !!day?.matches.some((m) => m.status !== 'F');
 
-export const useTournamentMedia = (t: Tournament) => {
+const useMediaFeed = (t: Tournament) => {
   const media = useQuery(tournamentMediaQuery(t));
   const { data: schedule } = useSchedule(t);
   const raw = media.data?.items ?? NO_ITEMS;
@@ -49,16 +51,25 @@ export const useTournamentMedia = (t: Tournament) => {
   const today = schedule?.days[schedule.todayIndex];
   const onAir = t.status === 'live' && playRemaining(today);
   const items = useMemo(() => (onAir ? raw : offAir(raw)), [raw, onAir]);
+  return { items, matches, today, onAir, isLoading: media.isLoading, isError: media.isError };
+};
+
+export const useViewerCountry = () => useQuery(viewerGeoQuery()).data?.country ?? null;
+
+export const useMediaAvailable = (item: MediaItem) => isAvailableIn(item, useViewerCountry());
+
+export const useVisibleMedia = <T extends MediaItem>(items: readonly T[]) => {
+  const showBlocked = useShowBlocked();
+  const country = useViewerCountry();
+  const hideFor = showBlocked ? null : country;
+  return useMemo(() => visibleIn(items, hideFor), [items, hideFor]);
+};
+
+export const useTournamentMedia = (t: Tournament) => {
+  const { items: all, matches, ...feed } = useMediaFeed(t);
+  const items = useVisibleMedia(all);
   const linked = useMemo(() => linksOf(items, matches), [items, matches]);
-  return {
-    ...linked,
-    items,
-    today,
-    onAir,
-    isLoading: media.isLoading,
-    isError: media.isError,
-    enabled: hasStarted(t),
-  };
+  return { ...linked, ...feed, items, hidden: all.length - items.length, enabled: hasStarted(t) };
 };
 
 export const useMatchStream = (t: Tournament, match: Match) => {
@@ -68,7 +79,8 @@ export const useMatchStream = (t: Tournament, match: Match) => {
 
 export const useLiveStreamSync = (t: Tournament) => {
   const client = useQueryClient();
-  const { items, byMatch, courts, today, onAir } = useTournamentMedia(t);
+  const { items, matches, today, onAir } = useMediaFeed(t);
+  const { byMatch, courts } = useMemo(() => linksOf(items, matches), [items, matches]);
   const asked = useRef(new Set<string>());
   const statuses = useRef(new Map<string, MatchStatus>());
   const timers = useRef(new Set<number>());
@@ -101,7 +113,3 @@ export const useLiveStreamSync = (t: Tournament) => {
     }
   }, [client, t, onAir, today, items, byMatch, courts]);
 };
-
-export const useViewerCountry = () => useQuery(viewerGeoQuery()).data?.country ?? null;
-
-export const useMediaAvailable = (item: MediaItem) => isAvailableIn(item, useViewerCountry());

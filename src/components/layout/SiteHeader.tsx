@@ -8,6 +8,7 @@ import { MobileMenu } from './MobileMenu';
 import { PlatformBar } from './PlatformBar';
 import { SiteLink } from './SiteLink';
 import { SiteSearch } from './SiteSearch';
+import { SiteSettings } from './SiteSettings';
 import { TourTicker } from './TourTicker';
 import { Wordmark } from './Wordmark';
 
@@ -43,6 +44,7 @@ export const SiteHeader = memo(() => {
             ))}
           </nav>
           <div className={classes.actions}>
+            <SiteSettings className={classes.settings} />
             <SiteSearch />
             <MobileMenu />
           </div>

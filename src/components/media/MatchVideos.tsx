@@ -17,7 +17,9 @@ export const MatchVideos: FC<{ match: Match; tournament: Tournament }> = ({ matc
     <section className={classes.root}>
       <h3 className={classes.title}>Watch on YouTube</h3>
       <div className={classes.grid}>
-        {stream && <VideoCard item={stream} label="Live stream" eventName={tournament.name} />}
+        {stream && (
+          <VideoCard item={stream} label="Live stream" eventName={tournament.name} timeZone={tournament.timeZone} />
+        )}
         {media?.highlights && <VideoCard item={media.highlights} label="Highlights" eventName={tournament.name} />}
         {media?.full && <VideoCard item={media.full} label="Full match" eventName={tournament.name} />}
       </div>

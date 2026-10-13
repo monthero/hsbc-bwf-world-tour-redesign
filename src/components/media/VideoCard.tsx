@@ -3,9 +3,11 @@ import { memo, useMemo, type ReactNode } from 'react';
 import type { MediaItem } from '~/api/schemas';
 import { EventTag } from '~/components/match/EventTag';
 import { LiveDot } from '~/components/ui';
+import { useInstantTime } from '~/hooks/useMatchClock';
 import { useMediaAvailable } from '~/hooks/useTournamentMedia';
 import type { Match } from '~/types';
-import { formatDayMonth, formatLocalDayTime } from '~/utils/dates';
+import { formatDayMonth } from '~/utils/dates';
+import { formatStamp, type ClockTime } from '~/utils/match-time';
 import { matchRoundName } from '~/utils/matches';
 import { compactTitle, durationLabel, thumbUrl, watchUrl } from '~/utils/media';
 
@@ -15,53 +17,57 @@ const LIVE_LABELS = { live: 'Live', upcoming: 'Upcoming' } as const;
 const LIVE_DOT = <LiveDot pulse size={6} />;
 export const REGION_NOTE = 'Not available in your region';
 
-const metaOf = (item: MediaItem, match: Match | undefined): ReactNode => {
-  if (item.live === 'upcoming' && item.scheduledAt) return `Starts ${formatLocalDayTime(item.scheduledAt)}`;
+const startOf = (item: MediaItem) => (item.live === 'upcoming' ? item.scheduledAt : null);
+
+const metaOf = (item: MediaItem, match: Match | undefined, start: ClockTime | null): ReactNode => {
+  if (start) return `Starts ${formatStamp(start)}`;
   if (match) return matchRoundName(match);
   return formatDayMonth(item.publishedAt.slice(0, 10));
 };
 
-export const VideoCard = memo<{ item: MediaItem; match?: Match; label?: string; eventName?: string }>(
-  ({ item, match, label, eventName }) => {
-    const available = useMediaAvailable(item);
-    const title = useMemo(
-      () => (eventName ? compactTitle(item.title, eventName) : item.title),
-      [item.title, eventName],
-    );
-    const duration = durationLabel(item.durationSec);
-    const body = (
-      <>
-        <span className={classes.thumb}>
-          <img src={thumbUrl(item.id)} alt="" loading="lazy" />
-          {item.live !== 'none' && (
-            <span className={classes.live} data-state={item.live}>
-              {item.live === 'live' && LIVE_DOT}
-              {LIVE_LABELS[item.live]}
-            </span>
-          )}
-          {duration && <span className={classes.duration}>{duration}</span>}
-        </span>
-        <span className={classes.body}>
-          {label && <span className={classes.label}>{label}</span>}
-          <span className={classes.title}>{title}</span>
-          <span className={classes.meta}>
-            {match && <EventTag event={match.event} />}
-            {metaOf(item, match)}
+export const VideoCard = memo<{
+  item: MediaItem;
+  match?: Match;
+  label?: string;
+  eventName?: string;
+  timeZone?: string | null;
+}>(({ item, match, label, eventName, timeZone = null }) => {
+  const available = useMediaAvailable(item);
+  const start = useInstantTime(startOf(item), timeZone);
+  const title = useMemo(() => (eventName ? compactTitle(item.title, eventName) : item.title), [item.title, eventName]);
+  const duration = durationLabel(item.durationSec);
+  const body = (
+    <>
+      <span className={classes.thumb}>
+        <img src={thumbUrl(item.id)} alt="" loading="lazy" />
+        {item.live !== 'none' && (
+          <span className={classes.live} data-state={item.live}>
+            {item.live === 'live' && LIVE_DOT}
+            {LIVE_LABELS[item.live]}
           </span>
-          {!available && <span className={classes.blocked}>{REGION_NOTE}</span>}
+        )}
+        {duration && <span className={classes.duration}>{duration}</span>}
+      </span>
+      <span className={classes.body}>
+        {label && <span className={classes.label}>{label}</span>}
+        <span className={classes.title}>{title}</span>
+        <span className={classes.meta}>
+          {match && <EventTag event={match.event} />}
+          {metaOf(item, match, start)}
         </span>
-      </>
-    );
-    if (!available)
-      return (
-        <div className={classes.card} title={item.title} data-disabled>
-          {body}
-        </div>
-      );
+        {!available && <span className={classes.blocked}>{REGION_NOTE}</span>}
+      </span>
+    </>
+  );
+  if (!available)
     return (
-      <a href={watchUrl(item.id)} target="_blank" rel="noreferrer" className={classes.card} title={item.title}>
+      <div className={classes.card} title={item.title} data-disabled>
         {body}
-      </a>
+      </div>
     );
-  },
-);
+  return (
+    <a href={watchUrl(item.id)} target="_blank" rel="noreferrer" className={classes.card} title={item.title}>
+      {body}
+    </a>
+  );
+});

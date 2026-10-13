@@ -2,14 +2,14 @@ import { Skeleton, Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react';
 
-import { FormStrip, TeamPlayers } from '~/components/match';
+import { FormStrip, OutcomeLabel, TeamPlayers } from '~/components/match';
 import { BioStat, FactTile, Partner } from '~/components/player';
 import { CardHit, EmptyState, Eyebrow, Footnote, IconExternal, SectionTitle } from '~/components/ui';
 import { EVENT_NAMES, SEASON_YEAR } from '~/constants';
 import type { BioView, EventCode, PlayerMatch } from '~/types';
 import { formatNumber } from '~/utils/format';
 import { roundName } from '~/utils/matches';
-import { opponentsOf, outcomeLabel, recentForm } from '~/utils/season';
+import { opponentsOf, recentForm } from '~/utils/season';
 
 import { EQUIPMENT_NOTE, RECENT_LIMIT, RESULT_TAGS } from '../constants';
 import type { CareerView, HistoryView, PartnerRow, SeasonView } from '../types';
@@ -135,7 +135,7 @@ const UpNext = memo<{ pm: PlayerMatch; self: string; multi: boolean; onOpen: (pm
         </span>
         <span className={classes.upNextMeta}>
           {roundName(pm.match.round)}
-          {multi && ` · ${EVENT_NAMES[pm.match.event]}`} · {outcomeLabel(pm)}
+          {multi && ` · ${EVENT_NAMES[pm.match.event]}`} · <OutcomeLabel pm={pm} zone />
           {partner && <Partner player={partner} />}
         </span>
       </div>

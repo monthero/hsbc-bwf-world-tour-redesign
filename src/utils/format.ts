@@ -27,6 +27,8 @@ export const formatBytes = (bytes: number) => {
 };
 
 export const HEIGHT_UNIT = 'cm';
+export const HEIGHT_UNITS = ['cm', 'ftin'] as const;
+type HeightUnit = (typeof HEIGHT_UNITS)[number];
 const CM_PER_INCH = 2.54;
 const INCHES_PER_FOOT = 12;
 const HEIGHT_RANGE = { min: 100, max: 250 };
@@ -50,9 +52,13 @@ export const parseHeightCm = (value: unknown): number | null => {
   return metric?.[1] ? plausibleCm(metricCm(Number.parseFloat(metric[1].replace(',', '.')), metric[2])) : null;
 };
 
-export const formatHeight = (cm: number) => `${cm} ${HEIGHT_UNIT}`;
-
 export const formatFeetInches = (cm: number) => {
   const inches = Math.round(cm / CM_PER_INCH);
   return `${Math.floor(inches / INCHES_PER_FOOT)}′${inches % INCHES_PER_FOOT}″`;
 };
+
+export const formatHeight = (cm: number, unit: HeightUnit = 'cm') =>
+  unit === 'ftin' ? formatFeetInches(cm) : `${cm} ${HEIGHT_UNIT}`;
+
+export const heightParts = (cm: number, unit: HeightUnit) =>
+  unit === 'ftin' ? { value: formatFeetInches(cm) } : { value: String(cm), unit: HEIGHT_UNIT };

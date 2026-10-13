@@ -1,6 +1,7 @@
 import type { MediaItem } from '~/api/schemas';
 import type { Match } from '~/types';
 
+import { plural } from './format';
 import { roundName } from './matches';
 import type { MatchMedia } from './media-link';
 import { foldText } from './names';
@@ -56,6 +57,23 @@ export const isAvailableIn = (item: MediaItem, country: string | null) => {
   if (region.allowed) return region.allowed.includes(country);
   return !region.blocked?.includes(country);
 };
+
+const visibleCache = new WeakMap<readonly MediaItem[], Map<string, readonly MediaItem[]>>();
+
+export const visibleIn = <T extends MediaItem>(items: readonly T[], hideFor: string | null): readonly T[] => {
+  if (!hideFor) return items;
+  const byCountry = visibleCache.get(items) ?? new Map<string, readonly MediaItem[]>();
+  visibleCache.set(items, byCountry);
+  const hit = byCountry.get(hideFor) as readonly T[] | undefined;
+  if (hit) return hit;
+  const kept = items.filter((i) => isAvailableIn(i, hideFor));
+  const out = kept.length === items.length ? items : kept;
+  byCountry.set(hideFor, out);
+  return out;
+};
+
+export const regionHiddenNote = (n: number) =>
+  `${plural(n, 'video')} not available in your region ${n === 1 ? 'is' : 'are'} hidden. You can show them in Settings.`;
 
 const YEAR = /\b(?:19|20)\d{2}\b/;
 const DAY_SEGMENT = /^day \d+$/i;

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { useHeightUnit } from '~/stores/settings';
 import type { CurrentRank, PlayerMatch, SeasonIndex } from '~/types';
 import { toPlayer } from '~/utils/names';
 import { buildBio } from '~/utils/players';
@@ -41,7 +42,8 @@ export const usePlayerProfile = (id: string) => {
     [indexed, rawName, rawCc, id],
   );
   const rawBio = file.data?.bio;
-  const bio = useMemo(() => buildBio(rawBio), [rawBio]);
+  const heightUnit = useHeightUnit();
+  const bio = useMemo(() => buildBio(rawBio, heightUnit), [rawBio, heightUnit]);
   const qualifiers = useMemo(() => (race && index ? raceQualifiers(race, index) : undefined), [race, index]);
   const current = record?.ranks ?? NO_RANKS;
   const rankingId = current.length ? id : undefined;

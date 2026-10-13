@@ -61,6 +61,16 @@
   margin-left: auto;
 }
 
+.settings {
+  display: flex;
+  transition: opacity 0.2s;
+}
+
+.row:has([data-open]) .settings {
+  opacity: 0;
+  visibility: hidden;
+}
+
 @mixin smaller-than $mantine-breakpoint-md {
   .row {
     height: 52px;
@@ -79,5 +89,11 @@
   .row:has([data-open]) .wordmark {
     opacity: 0;
     visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings {
+    transition: none;
   }
 }

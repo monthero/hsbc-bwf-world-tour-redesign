@@ -7,6 +7,7 @@ import { EmptyState, LiveDot, SectionTitle, Segmented, type SegmentedOption } fr
 import { useTournamentMedia } from '~/hooks/useTournamentMedia';
 import type { Match } from '~/types';
 import { roundName } from '~/utils/matches';
+import { regionHiddenNote } from '~/utils/media';
 
 import type { TabProps } from '../types';
 import { FilterSearch } from './matches/FilterControls';
@@ -20,35 +21,45 @@ const ALL = 'all';
 const LIVE_SECTION = 'live';
 const LIVE_ICON = <LiveDot pulse size={8} />;
 
-const SectionBlock = memo<{ section: MediaSection; matchOf: ReadonlyMap<string, Match>; eventName: string }>(
-  ({ section, matchOf, eventName }) => {
-    return (
-      <section className={classes.section}>
-        <SectionTitle count={section.count} icon={section.key === LIVE_SECTION ? LIVE_ICON : undefined}>
-          {section.title}
-        </SectionTitle>
-        {section.groups.map((g) => (
-          <div key={g.key} className={classes.group}>
-            {g.label && <h3 className={classes.groupLabel}>{g.label}</h3>}
-            <div className={classes.grid}>
-              {g.items.map((item) => (
-                <VideoCard key={item.id} item={item} match={matchOf.get(item.id)} eventName={eventName} />
-              ))}
-            </div>
+const SectionBlock = memo<{
+  section: MediaSection;
+  matchOf: ReadonlyMap<string, Match>;
+  eventName: string;
+  timeZone: string | null;
+}>(({ section, matchOf, eventName, timeZone }) => {
+  return (
+    <section className={classes.section}>
+      <SectionTitle count={section.count} icon={section.key === LIVE_SECTION ? LIVE_ICON : undefined}>
+        {section.title}
+      </SectionTitle>
+      {section.groups.map((g) => (
+        <div key={g.key} className={classes.group}>
+          {g.label && <h3 className={classes.groupLabel}>{g.label}</h3>}
+          <div className={classes.grid}>
+            {g.items.map((item) => (
+              <VideoCard
+                key={item.id}
+                item={item}
+                match={matchOf.get(item.id)}
+                eventName={eventName}
+                timeZone={timeZone}
+              />
+            ))}
           </div>
-        ))}
-      </section>
-    );
-  },
-);
+        </div>
+      ))}
+    </section>
+  );
+});
 
-const tabMessage = (enabled: boolean, isError: boolean) => {
+const tabMessage = (enabled: boolean, isError: boolean, hidden: number) => {
+  if (hidden) return regionHiddenNote(hidden);
   if (!enabled) return 'Videos appear on BWF TV once the tournament starts.';
   return isError ? 'Couldn’t load videos from YouTube right now.' : 'No videos on BWF TV for this tournament yet.';
 };
 
 export const MediaTab: FC<TabProps> = ({ tournament }) => {
-  const { items, matchOf, isLoading, isError, enabled } = useTournamentMedia(tournament);
+  const { items, matchOf, isLoading, isError, enabled, hidden } = useTournamentMedia(tournament);
   const [q, setQ] = useState('');
   const [stage, setStage] = useState(ALL);
   const rounds = useMemo(() => mediaRounds(items, matchOf), [items, matchOf]);
@@ -71,7 +82,7 @@ export const MediaTab: FC<TabProps> = ({ tournament }) => {
           <Loader size="sm" />
         </div>
       )}
-      {!isLoading && !items.length && <EmptyState>{tabMessage(enabled, isError)}</EmptyState>}
+      {!isLoading && !items.length && <EmptyState>{tabMessage(enabled, isError, hidden)}</EmptyState>}
       {items.length > 0 && (
         <div className={classes.filters}>
           {rounds.length > 0 && (
@@ -86,7 +97,13 @@ export const MediaTab: FC<TabProps> = ({ tournament }) => {
       )}
       {items.length > 0 && !sections.length && <EmptyState>No videos match these filters.</EmptyState>}
       {sections.map((s) => (
-        <SectionBlock key={s.key} section={s} matchOf={matchOf} eventName={tournament.name} />
+        <SectionBlock
+          key={s.key}
+          section={s}
+          matchOf={matchOf}
+          eventName={tournament.name}
+          timeZone={tournament.timeZone}
+        />
       ))}
     </div>
   );

@@ -8,9 +8,10 @@ import { VideoCard } from '~/components/media';
 import { NewsGrid } from '~/components/news';
 import { EmptyState, Eyebrow, SectionTitle } from '~/components/ui';
 import { useTournamentLookup } from '~/hooks/useNews';
-import { useTournamentMedia } from '~/hooks/useTournamentMedia';
+import { useTournamentMedia, useVisibleMedia } from '~/hooks/useTournamentMedia';
 import { useTournamentsByCode } from '~/hooks/useTournaments';
 import type { PlayerMatch, Tournament } from '~/types';
+import { regionHiddenNote } from '~/utils/media';
 import type { BriefStory } from '~/utils/news';
 import { tournamentParams } from '~/utils/tournaments';
 
@@ -38,6 +39,11 @@ const NO_NEWS: NewsBrief[] = [];
 const SKELETON_ROWS = 4;
 const EMPTY = 'No BWF TV videos or news stories mention this player yet.';
 const FAILED = 'Couldn’t load videos and news right now.';
+
+const emptyMessage = (failed: boolean, hidden: number) => {
+  if (failed) return FAILED;
+  return hidden ? regionHiddenNote(hidden) : EMPTY;
+};
 
 interface MediaTabProps {
   playerId: string;
@@ -82,6 +88,7 @@ const VideoGroupBlock = memo<{ group: VideoGroup }>(({ group }) => (
           match={e.match}
           label={VIDEO_LABELS[e.item.kind]}
           eventName={e.tournament?.name}
+          timeZone={e.tournament?.timeZone}
         />
       ))}
     </div>
@@ -132,7 +139,8 @@ const MediaContent = memo<MediaTabProps & { live: readonly VideoEntry[] }>(({ pl
   const byCode = useTournamentsByCode();
   const lookup = useTournamentLookup();
   const index = useMemo(() => indexPlayerMatches(matches), [matches]);
-  const archived = file.data?.videos ?? NO_VIDEOS;
+  const allArchived = file.data?.videos ?? NO_VIDEOS;
+  const archived = useVisibleMedia(allArchived);
   const videos = useMemo(
     () => mergeVideos(archivedVideos(archived, index, byCode), live),
     [archived, index, byCode, live],
@@ -144,7 +152,9 @@ const MediaContent = memo<MediaTabProps & { live: readonly VideoEntry[] }>(({ pl
   return (
     <div className={shared.stack}>
       {pending && <LoadingPanel />}
-      {!pending && !videos.length && !stories.length && <EmptyState>{failed ? FAILED : EMPTY}</EmptyState>}
+      {!pending && !videos.length && !stories.length && (
+        <EmptyState>{emptyMessage(failed, allArchived.length - archived.length)}</EmptyState>
+      )}
       {videos.length > 0 && <VideosPanel videos={videos} />}
       {stories.length > 0 && <NewsPanel stories={stories} />}
     </div>

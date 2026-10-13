@@ -1,7 +1,8 @@
+import type { HeightUnit } from '~/stores/settings';
 import type { BioView, FactItem, PhotoCrop, PlayerBio, PlayerDirectory, StatItem } from '~/types';
 
 import { ageOn, formatDayMonthYear } from './dates';
-import { formatFeetInches, HEIGHT_UNIT } from './format';
+import { heightParts } from './format';
 import { playerSquareUrl, playerThumbUrl } from './images';
 import { unshout } from './names';
 
@@ -20,20 +21,13 @@ const socialUrl = (value: string | undefined, host: string) => {
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
 };
 
-export const buildBio = (bio: PlayerBio | undefined): BioView => {
+export const buildBio = (bio: PlayerBio | undefined, heightUnit: HeightUnit): BioView => {
   const b = bio ?? {};
   const stats: StatItem[] = [];
   if (b.born)
     stats.push({ key: 'age', label: 'Age', value: String(ageOn(b.born)), sub: `Born ${formatDayMonthYear(b.born)}` });
   else if (b.age) stats.push({ key: 'age', label: 'Age', value: String(b.age) });
-  if (b.height)
-    stats.push({
-      key: 'height',
-      label: 'Height',
-      value: String(b.height),
-      unit: HEIGHT_UNIT,
-      inline: formatFeetInches(b.height),
-    });
+  if (b.height) stats.push({ key: 'height', label: 'Height', ...heightParts(b.height, heightUnit) });
   if (b.plays) {
     const hand = b.plays.replace(/-handed$/i, '').split('-')[0] ?? '';
     stats.push({ key: 'hand', label: 'Playing hand', value: unshout(hand) });
