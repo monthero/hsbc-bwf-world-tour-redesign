@@ -1,10 +1,11 @@
 import { Button, Skeleton } from '@mantine/core';
-import { getRouteApi, Link } from '@tanstack/react-router';
+import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { useCallback, useMemo, type FC } from 'react';
 
 import { isNotFound, useNewsArticle, useNewsIndex, useRelatedNews } from '~/api/news';
 import type { NewsArticle, NewsItem } from '~/api/schemas';
+import { NotFound, type NotFoundAction } from '~/components/layout';
 import { PopularNews, SubscribeCard } from '~/components/news';
 import { BackPill, EmptyState, IconExternal } from '~/components/ui';
 import { NOT_FOUND } from '~/constants';
@@ -27,6 +28,9 @@ import utils from '~/styles/utils.module.css';
 const route = getRouteApi('/news_/$id');
 
 const BACK = { to: '/news' } as const;
+const MISSING_TITLE = 'We couldn’t find that story';
+const MISSING_DESCRIPTION = 'It may have been taken down from the BWF newsroom, or the link is out of date.';
+const MISSING_ACTION: NotFoundAction = { label: 'Back to news', link: BACK };
 const TITLE_SITE = {};
 const BODY_SKELETON = ['100%', '94%', '97%', '62%', '100%', '91%', '78%'] as const;
 
@@ -40,21 +44,17 @@ export const ArticlePage: FC = () => {
   useDocumentTitle(missing ? NOT_FOUND : [article?.title, 'News'], TITLE_SITE);
   const retry = useCallback(() => void refetch(), [refetch]);
 
+  if (missing) return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={MISSING_ACTION} />;
+
   if (isError && !article)
     return (
       <div className={clsx(utils.container, classes.state)}>
         <BackPill link={BACK}>News</BackPill>
         <EmptyState className={classes.empty}>
-          <p>{missing ? 'We couldn’t find this story.' : 'Couldn’t load this story.'}</p>
-          {missing ? (
-            <Button component={Link} to="/news" variant="default" radius="xl">
-              Browse all news
-            </Button>
-          ) : (
-            <Button variant="default" radius="xl" onClick={retry}>
-              Try again
-            </Button>
-          )}
+          <p>Couldn’t load this story.</p>
+          <Button variant="default" radius="xl" onClick={retry}>
+            Try again
+          </Button>
         </EmptyState>
       </div>
     );

@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  margin-top: 48px;
+  margin-top: var(--bwf-footer-gap);
   border-top: 3px solid var(--bwf-brand);
   background: linear-gradient(180deg, alpha(var(--bwf-brand), 0.14), transparent 260px), var(--bwf-bg-sunken);
   color: var(--bwf-dim);

@@ -15,11 +15,12 @@ import {
 } from 'react';
 
 import { Flag } from '~/components/country';
-import { PlayerAvatar, PlayerName } from '~/components/player';
+import { PlayerAvatar, PlayerName, RetiredBadge } from '~/components/player';
 import { LevelBadge, LogoTile, TournamentStatusBadge } from '~/components/tournament';
 import { IconClose, IconSearch } from '~/components/ui';
 import type { PlayerSearchEntry } from '~/hooks/usePlayers';
 import { useSiteSearch, type SiteSearchResults } from '~/hooks/useSiteSearch';
+import { useSearchStore } from '~/stores/search';
 import type { Tournament } from '~/types';
 import { standingHint } from '~/utils/search';
 
@@ -36,7 +37,7 @@ const DROPDOWN_TRANSITION = { transition: 'pop-top-right', duration: 160 } as co
 
 const hasHits = (r: SiteSearchResults) => r.players.length > 0 || r.tournaments.length > 0;
 
-const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, standing } }) => {
+const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, standing, retired } }) => {
   const hint = standingHint(standing);
   return (
     <Combobox.Option value={`p${SEP}${player.id}`} className={classes.option}>
@@ -46,6 +47,7 @@ const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, stan
         <span className={classes.meta}>
           <Flag cc={player.cc} tip={false} />
           {player.cc}
+          <RetiredBadge retired={retired} size="xs" />
         </span>
       </span>
       {hint && (
@@ -72,7 +74,8 @@ const TournamentOption = memo<{ tournament: Tournament }>(({ tournament: t }) =>
 ));
 
 export const SiteSearch = memo(() => {
-  const [open, setOpen] = useState(false);
+  const open = useSearchStore((s) => s.open);
+  const setOpen = useSearchStore((s) => s.setOpen);
   const [query, setQuery] = useState('');
   const deferred = useDeferredValue(query);
   const { results, ready, searching } = useSiteSearch(deferred, open);
@@ -94,13 +97,16 @@ export const SiteSearch = memo(() => {
   const expand = useCallback(() => {
     setOpen(true);
     inputRef.current?.focus();
-  }, []);
+  }, [setOpen]);
 
-  const collapse = useCallback((restoreFocus: boolean) => {
-    setOpen(false);
-    setQuery('');
-    if (restoreFocus) triggerRef.current?.focus();
-  }, []);
+  const collapse = useCallback(
+    (restoreFocus: boolean) => {
+      setOpen(false);
+      setQuery('');
+      if (restoreFocus) triggerRef.current?.focus();
+    },
+    [setOpen],
+  );
 
   useHotkeys([['mod+K', expand]]);
 

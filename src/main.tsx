@@ -7,6 +7,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
+import { PageNotFound } from './components/layout';
 import { routeTree } from './routeTree.gen';
 import { cssVariablesResolver, theme } from './theme';
 
@@ -18,6 +19,7 @@ const router = createRouter({
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0,
   scrollRestoration: true,
+  defaultNotFoundComponent: PageNotFound,
 });
 
 declare module '@tanstack/react-router' {
