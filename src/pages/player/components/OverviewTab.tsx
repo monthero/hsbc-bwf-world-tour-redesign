@@ -4,14 +4,14 @@ import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react'
 
 import { FormStrip, TeamPlayers } from '~/components/match'
 import { BioStat, FactTile, Partner } from '~/components/player'
-import { CardHit, EmptyState, Eyebrow, IconExternal, SectionTitle } from '~/components/ui'
+import { CardHit, EmptyState, Eyebrow, Footnote, IconExternal, SectionTitle } from '~/components/ui'
 import { EVENT_NAMES, SEASON_YEAR } from '~/constants'
 import type { BioView, EventCode, PlayerMatch } from '~/types'
 import { formatNumber } from '~/utils/format'
 import { roundName } from '~/utils/matches'
 import { opponentsOf, outcomeLabel, recentForm } from '~/utils/season'
 
-import { RECENT_LIMIT, RESULT_TAGS } from '../constants'
+import { EQUIPMENT_NOTE, RECENT_LIMIT, RESULT_TAGS } from '../constants'
 import type { CareerView, HistoryView, PartnerRow, SeasonView } from '../types'
 import { resultLabel, resultTier, teammateOf } from '../utils'
 import { CareerCard } from './CareerCard'
@@ -82,7 +82,12 @@ export const OverviewTab: FC<OverviewTabProps> = ({
             <div className={shared.stack}>
               {bio.equipment.length > 0 && (
                 <div className={clsx(utils.card, shared.panel)}>
-                  <SectionTitle>Equipment</SectionTitle>
+                  <SectionTitle>
+                    <span>
+                      Equipment
+                      <Footnote note={EQUIPMENT_NOTE} />
+                    </span>
+                  </SectionTitle>
                   <div className={classes.grid}>
                     {bio.equipment.map((q) => (
                       <FactTile key={q.key} label={q.label} value={q.value} tone="tile" />

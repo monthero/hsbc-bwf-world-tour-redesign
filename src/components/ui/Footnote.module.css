@@ -1,0 +1,23 @@
+.mark {
+  position: relative;
+  margin-left: 2px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--bwf-dim);
+  font: inherit;
+  line-height: 1;
+  cursor: help;
+  transition: color 0.15s;
+}
+
+.mark::after {
+  content: '';
+  position: absolute;
+  inset: -10px -8px;
+}
+
+.mark:hover,
+.mark:focus-visible {
+  color: var(--bwf-text);
+}
