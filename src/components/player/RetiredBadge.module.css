@@ -4,3 +4,48 @@
   flex: none;
   cursor: help;
 }
+
+.tip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-block: 2px;
+  text-align: left;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.since {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.rows {
+  display: grid;
+  gap: 3px;
+  margin: 6px 0 0;
+  padding-top: 6px;
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+
+  dt {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 12px;
+  }
+}

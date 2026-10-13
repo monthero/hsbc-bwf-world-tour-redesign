@@ -8,13 +8,27 @@ export interface RetirementFacts {
   lastTournament?: EditionRef | null;
 }
 
+export interface RetirementRow {
+  label: string;
+  value: string;
+}
+
+export const RETIRED_FROM = 'Retired from international badminton';
+
 export const editionLabel = (e: EditionRef) => `${e.name} ${e.year}`;
 
-export const retirementParts = ({ since, lastPlayed, lastTournament }: RetirementFacts) =>
+export const retirementSince = ({ since }: RetirementFacts) => (since ? `Since ${formatMonth(since)}` : '');
+
+export const retirementRows = ({ lastPlayed, lastTournament }: RetirementFacts): RetirementRow[] =>
   [
-    since && `Retired since ${formatMonth(since)}`,
-    lastTournament && `Last tournament: ${editionLabel(lastTournament)}`,
-    lastPlayed && `Last played ${formatDayMonthYear(lastPlayed)}`,
+    lastTournament && { label: 'Last tour event', value: editionLabel(lastTournament) },
+    lastPlayed && { label: 'Last tour match', value: formatDayMonthYear(lastPlayed) },
+  ].filter((r): r is RetirementRow => !!r);
+
+export const retirementParts = (facts: RetirementFacts) =>
+  [
+    facts.since && `${RETIRED_FROM} since ${formatMonth(facts.since)}`,
+    ...retirementRows(facts).map((r) => `${r.label}: ${r.value}`),
   ].filter((s): s is string => !!s);
 
 export const retirementNote = (facts: RetirementFacts) => retirementParts(facts).join(' · ');
