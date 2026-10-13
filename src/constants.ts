@@ -4,7 +4,7 @@ import { EventCode, Level } from '~/api/schemas';
 import type { SegmentedOption } from '~/components/ui';
 import { today } from '~/utils/dates';
 
-export const LIVE_DATA = import.meta.env.VITE_DATA_SOURCE === 'live';
+export const LIVE_DATA = import.meta.env.VITE_DATA_SOURCE !== 'snapshot';
 export const LIVE_NEWS = LIVE_DATA && import.meta.env.DEV;
 export const SEASON_YEAR = today().year();
 export const FIRST_SEASON = 2018;
