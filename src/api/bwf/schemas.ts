@@ -40,7 +40,12 @@ export const BwfMatch = z.object({
 });
 export type BwfMatch = z.infer<typeof BwfMatch>;
 
-export const BwfDayMatches = z.array(BwfMatch);
+export const BwfDayMatches = z.array(z.unknown()).transform((items) =>
+  items.flatMap((item) => {
+    const parsed = BwfMatch.safeParse(item);
+    return parsed.success ? [parsed.data] : [];
+  }),
+);
 export type BwfDayMatches = z.infer<typeof BwfDayMatches>;
 
 const BwfOption = z.object({ value: Idish.transform(String), text: z.string() });
