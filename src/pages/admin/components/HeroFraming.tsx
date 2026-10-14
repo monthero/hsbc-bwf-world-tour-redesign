@@ -4,9 +4,8 @@ import { Hero } from '~/pages/player/components/Hero';
 import type { CareerHigh } from '~/pages/player/types';
 import { careerOf } from '~/pages/player/utils';
 import type { EventCode, Focus, Player, RankView } from '~/types';
-import { HEIGHT_UNIT } from '~/utils/format';
 import { heroVars } from '~/utils/images';
-import { buildBio } from '~/utils/players';
+import { buildBio, DEFAULT_BIO_UNITS } from '~/utils/players';
 
 import { arrowNudge, clampPercent, useDrag, useFramingEditor, type FramingEditorProps } from './framing';
 import { FramingControls } from './FramingControls';
@@ -16,7 +15,7 @@ import classes from './HeroFraming.module.css';
 const NO_RANKS: RankView[] = [];
 const NO_HIGHS: ReadonlyMap<EventCode, CareerHigh> = new Map();
 const CENTER: Focus = { x: 50, y: 50 };
-const EMPTY_BIO = buildBio(undefined, HEIGHT_UNIT);
+const EMPTY_BIO = buildBio(undefined, DEFAULT_BIO_UNITS);
 const NO_CAREER = careerOf([]);
 
 const pointAt = (e: PointerEvent<HTMLElement>): Focus => {

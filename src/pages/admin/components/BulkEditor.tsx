@@ -43,7 +43,7 @@ interface FieldPlan {
   changes: BulkChange[];
 }
 
-const PREFERRED_FIELDS: readonly BioFieldKey[] = ['bio.racket', 'bio.shoes', 'bio.string', 'bio.bag'];
+const PREFERRED_FIELDS: readonly BioFieldKey[] = ['bio.racket', 'bio.tension', 'bio.string', 'bio.shoes'];
 const PREVIEW_LIMIT = 30;
 const EMPTY = '—';
 

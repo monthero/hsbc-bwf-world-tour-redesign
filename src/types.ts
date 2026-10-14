@@ -195,6 +195,8 @@ export interface FactItem {
   key: string;
   label: string;
   value: string;
+  unit?: string;
+  sub?: string;
 }
 
 export interface BioView {

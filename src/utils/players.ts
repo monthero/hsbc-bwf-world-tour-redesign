@@ -1,8 +1,8 @@
-import type { HeightUnit } from '~/stores/settings';
+import type { HeightUnit, TensionUnit } from '~/stores/settings';
 import type { BioView, FactItem, PhotoCrop, PlayerBio, PlayerDirectory, StatItem } from '~/types';
 
 import { ageOn, formatDayMonthYear } from './dates';
-import { heightParts } from './format';
+import { HEIGHT_UNIT, heightParts, parseTension, TENSION_UNIT, tensionParts } from './format';
 import { playerSquareUrl, playerThumbUrl } from './images';
 import { unshout } from './names';
 
@@ -21,13 +21,26 @@ const socialUrl = (value: string | undefined, host: string) => {
   return /^https?:\/\//i.test(value) ? value : `https://${value}`;
 };
 
-export const buildBio = (bio: PlayerBio | undefined, heightUnit: HeightUnit): BioView => {
+export interface BioUnits {
+  height: HeightUnit;
+  tension: TensionUnit;
+}
+
+export const DEFAULT_BIO_UNITS: BioUnits = { height: HEIGHT_UNIT, tension: TENSION_UNIT };
+
+const tensionFact = (b: PlayerBio, unit: TensionUnit): FactItem[] => {
+  const lbs = parseTension(b.tension);
+  const sub = b.tensionNote?.trim();
+  return lbs ? [{ key: 'tension', label: 'Tension', ...tensionParts(lbs, unit), ...(sub && { sub }) }] : [];
+};
+
+export const buildBio = (bio: PlayerBio | undefined, units: BioUnits): BioView => {
   const b = bio ?? {};
   const stats: StatItem[] = [];
   if (b.born)
     stats.push({ key: 'age', label: 'Age', value: String(ageOn(b.born)), sub: `Born ${formatDayMonthYear(b.born)}` });
   else if (b.age) stats.push({ key: 'age', label: 'Age', value: String(b.age) });
-  if (b.height) stats.push({ key: 'height', label: 'Height', ...heightParts(b.height, heightUnit) });
+  if (b.height) stats.push({ key: 'height', label: 'Height', ...heightParts(b.height, units.height) });
   if (b.plays) {
     const hand = b.plays.replace(/-handed$/i, '').split('-')[0] ?? '';
     stats.push({ key: 'hand', label: 'Playing hand', value: unshout(hand) });
@@ -50,15 +63,17 @@ export const buildBio = (bio: PlayerBio | undefined, heightUnit: HeightUnit): Bi
     ],
     unshout,
   );
-  const equipment = facts(
-    [
-      { key: 'racket', label: 'Racket', value: b.racket },
-      { key: 'string', label: 'String', value: b.string },
-      { key: 'shoes', label: 'Shoes', value: b.shoes },
-      { key: 'bag', label: 'Bag', value: b.bag },
-    ],
-    keep,
-  );
+  const equipment = [
+    ...facts([{ key: 'racket', label: 'Racket', value: b.racket }], keep),
+    ...tensionFact(b, units.tension),
+    ...facts(
+      [
+        { key: 'string', label: 'String', value: b.string },
+        { key: 'shoes', label: 'Shoes', value: b.shoes },
+      ],
+      keep,
+    ),
+  ];
   const notes = facts(
     [
       { key: 'achievements', label: 'Memorable achievements', value: b.achievements },

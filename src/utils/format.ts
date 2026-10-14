@@ -64,3 +64,30 @@ export const formatHeight = (cm: number, unit: HeightUnit = 'cm') =>
 
 export const heightParts = (cm: number, unit: HeightUnit) =>
   unit === 'ftin' ? { value: formatFeetInches(cm) } : { value: String(cm), unit: HEIGHT_UNIT };
+
+export const TENSION_UNIT = 'lbs';
+export const TENSION_UNITS = [TENSION_UNIT, 'kg'] as const;
+type TensionUnit = (typeof TENSION_UNITS)[number];
+const KG_PER_LB = 0.45359237;
+const TENSION_RANGE = { min: 15, max: 40 };
+const TENSION = /^(\d+(?:\.\d+)?)(?:\/(\d+(?:\.\d+)?))?$/;
+
+const plausibleLbs = (n: number) => n >= TENSION_RANGE.min && n <= TENSION_RANGE.max;
+
+export const parseTension = (value: unknown): string | null => {
+  if (typeof value !== 'string' && typeof value !== 'number') return null;
+  const text = String(value)
+    .toLowerCase()
+    .replace(/lbs?|\s/g, '')
+    .replaceAll(',', '.')
+    .replaceAll('x', '/');
+  const m = TENSION.exec(text);
+  if (!m) return null;
+  const parts = [m[1], m[2]].filter((p): p is string => !!p).map(Number);
+  return parts.every(plausibleLbs) ? parts.join('/') : null;
+};
+
+const kg = (lbs: number) => String(Math.round(lbs * KG_PER_LB * 10) / 10);
+
+export const tensionParts = (lbs: string, unit: TensionUnit) =>
+  unit === 'kg' ? { value: lbs.split('/').map(Number).map(kg).join('/'), unit } : { value: lbs, unit };

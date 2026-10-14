@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState, type ChangeEvent, type FC } from 'react
 
 import { PlayerName } from '~/components/player';
 import { ISO_DAY, monthKeyOf, monthOf } from '~/utils/dates';
-import { HEIGHT_UNIT } from '~/utils/format';
+import { HEIGHT_UNIT, parseTension, TENSION_UNIT } from '~/utils/format';
 import { toPlayer } from '~/utils/names';
 import { nameIssue } from '~/utils/surname';
 
@@ -99,6 +99,20 @@ export const HeightField: FC<FieldInputProps> = ({ field, value, placeholder, bw
     />
   );
 };
+
+const TENSION_ERROR = `Use a number or two, like 31 or 31/33 (${TENSION_UNIT})`;
+
+export const TensionField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
+  <TextInput
+    aria-label={overrideLabel(field)}
+    value={value}
+    placeholder={placeholder}
+    onChange={textValue(onValue)}
+    rightSection={TENSION_UNIT}
+    error={value && !parseTension(value) ? TENSION_ERROR : null}
+    classNames={INPUT_CLASSES}
+  />
+);
 
 export const LongField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <Textarea

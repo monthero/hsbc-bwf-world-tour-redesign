@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { HEIGHT_UNITS } from '~/utils/format';
+import { HEIGHT_UNITS, TENSION_UNITS } from '~/utils/format';
 
 import { mergeParsed, safeJSONStorage } from './persistence';
 
@@ -18,10 +18,14 @@ export type ClockMode = z.infer<typeof ClockMode>;
 export const HeightUnit = z.enum(HEIGHT_UNITS);
 export type HeightUnit = z.infer<typeof HeightUnit>;
 
+export const TensionUnit = z.enum(TENSION_UNITS);
+export type TensionUnit = z.infer<typeof TensionUnit>;
+
 const SettingsData = z.object({
   timeZone: TimeZoneMode.catch('mine'),
   clock: ClockMode.catch('24h'),
   height: HeightUnit.catch('cm'),
+  tension: TensionUnit.catch('lbs'),
   showBlocked: z.boolean().catch(true),
 });
 export type SettingsData = z.infer<typeof SettingsData>;
@@ -44,10 +48,11 @@ export const useSettings = create<SettingsState>()(
       name: STORAGE_KEY,
       version: STORE_VERSION,
       storage: safeJSONStorage<SettingsData>(),
-      partialize: ({ timeZone, clock, height, showBlocked }): SettingsData => ({
+      partialize: ({ timeZone, clock, height, tension, showBlocked }): SettingsData => ({
         timeZone,
         clock,
         height,
+        tension,
         showBlocked,
       }),
       migrate: () => DEFAULTS,
@@ -59,6 +64,8 @@ export const useSettings = create<SettingsState>()(
 const SETTING_KEYS = Object.keys(DEFAULTS) as (keyof SettingsData)[];
 
 export const useHeightUnit = () => useSettings((s) => s.height);
+
+export const useTensionUnit = () => useSettings((s) => s.tension);
 
 export const useShowBlocked = () => useSettings((s) => s.showBlocked);
 

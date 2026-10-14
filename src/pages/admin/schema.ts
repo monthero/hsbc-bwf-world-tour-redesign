@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { EditionRef, EventCode, Focus, IsoDay, MonthKey, PhotoCrop } from '../../api/schemas.ts';
-import { parseHeightCm } from '../../utils/format.ts';
+import { parseHeightCm, parseTension } from '../../utils/format.ts';
 import { cleanName, nameIssue } from '../../utils/surname.ts';
 
 const BIO_KEYS = [
@@ -18,9 +18,10 @@ const BIO_KEYS = [
   'coach',
   'club',
   'racket',
+  'tension',
+  'tensionNote',
   'string',
   'shoes',
-  'bag',
   'prize',
   'achievements',
   'ambition',
@@ -35,7 +36,10 @@ export type BioKey = z.infer<typeof BioKey>;
 export type BioValue = string | number;
 export type BioValues = Partial<Record<BioKey, BioValue>>;
 
-const BIO_PARSERS: Partial<Record<BioKey, (value: unknown) => number | null>> = { height: parseHeightCm };
+const BIO_PARSERS: Partial<Record<BioKey, (value: unknown) => BioValue | null>> = {
+  height: parseHeightCm,
+  tension: parseTension,
+};
 
 export const decodeBio = (key: BioKey, value: unknown): BioValue | undefined => {
   const parse = BIO_PARSERS[key];
@@ -192,7 +196,7 @@ export type ImageResult = z.infer<typeof ImageResult>;
 
 export const ApiFailure = z.object({ error: z.string() });
 
-export const EquipmentKind = z.enum(['racket', 'string', 'shoes', 'bag']);
+export const EquipmentKind = z.enum(['racket', 'string', 'shoes']);
 export type EquipmentKind = z.infer<typeof EquipmentKind>;
 
 export const Brand = z.object({ id: z.string(), name: z.string(), aliases: z.array(z.string()) });

@@ -1,9 +1,9 @@
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
-import BagIcon from '~icons/bwf/racket-bag-linear';
 import RacketIcon from '~icons/bwf/racket-linear';
 import ShoesIcon from '~icons/bwf/shoe-linear';
 import StringIcon from '~icons/bwf/strings-linear';
+import TensionIcon from '~icons/bwf/tension-linear';
 
 import { Footnote, icon, type IconProps } from '~/components/ui';
 import type { FactItem } from '~/types';
@@ -16,9 +16,9 @@ import utils from '~/styles/utils.module.css';
 
 const KIT_ICONS: Record<string, FC<IconProps>> = {
   racket: icon(RacketIcon),
+  tension: icon(TensionIcon),
   string: icon(StringIcon),
   shoes: icon(ShoesIcon),
-  bag: icon(BagIcon),
 };
 
 export const Kit = memo<{ items: readonly FactItem[] }>(({ items }) => (
@@ -41,7 +41,7 @@ const splitBrand = (value: string) => {
 
 const KitItem = memo<{ item: FactItem }>(({ item }) => {
   const Icon = KIT_ICONS[item.key];
-  const { brand, model } = splitBrand(item.value);
+  const { brand, model } = item.unit ? { brand: '', model: item.value } : splitBrand(item.value);
   return (
     <div className={classes.item}>
       {Icon && (
@@ -54,7 +54,9 @@ const KitItem = memo<{ item: FactItem }>(({ item }) => {
         <span className={classes.value}>
           {brand && <span className={classes.brand}>{brand}</span>}
           {model}
+          {item.unit && <span className={classes.unit}>{item.unit}</span>}
         </span>
+        {item.sub && <span className={classes.sub}>{item.sub}</span>}
       </span>
     </div>
   );

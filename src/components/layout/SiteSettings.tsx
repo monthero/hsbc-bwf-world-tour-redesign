@@ -19,6 +19,7 @@ import {
   type ClockMode,
   type HeightUnit,
   type SettingsData,
+  type TensionUnit,
   type TimeZoneMode,
 } from '~/stores/settings';
 import { dayjs } from '~/utils/dates';
@@ -53,12 +54,17 @@ const HEIGHT_OPTIONS: SegmentedOption<HeightUnit>[] = [
   { value: 'cm', label: 'cm' },
   { value: 'ftin', label: 'ft & in' },
 ];
+const TENSION_OPTIONS: SegmentedOption<TensionUnit>[] = [
+  { value: 'lbs', label: 'lbs' },
+  { value: 'kg', label: 'kg' },
+];
 
 const patch = (p: Partial<SettingsData>) => useSettings.getState().set(p);
 const reset = () => useSettings.getState().reset();
 const onTimeZone = (v: TimeZoneMode | null) => v && patch({ timeZone: v });
 const onClock = (v: ClockMode | null) => v && patch({ clock: v });
 const onHeight = (v: HeightUnit | null) => v && patch({ height: v });
+const onTension = (v: TensionUnit | null) => v && patch({ tension: v });
 const onShowBlocked = (e: ChangeEvent<HTMLInputElement>) => patch({ showBlocked: e.currentTarget.checked });
 
 const Field: FC<{ label: string; hint?: string; children: ReactNode }> = ({ label, hint, children }) => (
@@ -77,8 +83,14 @@ const Section: FC<{ title: string; children: ReactNode }> = ({ title, children }
 );
 
 const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ variant, onClose }) => {
-  const { timeZone, clock, height, showBlocked } = useSettings(
-    useShallow((s) => ({ timeZone: s.timeZone, clock: s.clock, height: s.height, showBlocked: s.showBlocked })),
+  const { timeZone, clock, height, tension, showBlocked } = useSettings(
+    useShallow((s) => ({
+      timeZone: s.timeZone,
+      clock: s.clock,
+      height: s.height,
+      tension: s.tension,
+      showBlocked: s.showBlocked,
+    })),
   );
   const changed = useSettingsChanged();
   const h = SEGMENT_HEIGHT[variant];
@@ -103,6 +115,9 @@ const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ v
       <Section title="Units">
         <Field label="Player height">
           <Segmented options={HEIGHT_OPTIONS} value={height} onChange={onHeight} height={h} />
+        </Field>
+        <Field label="String tension">
+          <Segmented options={TENSION_OPTIONS} value={tension} onChange={onTension} height={h} />
         </Field>
       </Section>
       <Section title="Videos">

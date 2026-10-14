@@ -1,25 +1,5 @@
 [
   {
-    "kind": "bag",
-    "brand": "hundred",
-    "model": "Aeris Black"
-  },
-  {
-    "kind": "bag",
-    "brand": "hundred",
-    "model": "Aeris Pink"
-  },
-  {
-    "kind": "bag",
-    "brand": "hundred",
-    "model": "Aeris White"
-  },
-  {
-    "kind": "bag",
-    "brand": "yonex",
-    "model": "Pro Tournament"
-  },
-  {
     "kind": "racket",
     "brand": "flypower",
     "model": "Enigma 900 V3"

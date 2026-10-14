@@ -445,7 +445,6 @@
         "coach": "Chafidz Yusuf",
         "racket": "Hundred Nitrix 70 Venom",
         "shoes": "Hundred Phenom",
-        "bag": "Hundred Aeris White",
         "achievements": "Asian Games 2026 – gold (Men's team); Asia Team Championships 2026 – bronze (Men's team)"
       },
       "source": "user",
@@ -454,10 +453,6 @@
         "bio.achievements": {
           "source": "https://en.wikipedia.org/wiki/Nikolaus_Joaquin",
           "asOf": "2026-10-12"
-        },
-        "bio.bag": {
-          "source": "user",
-          "asOf": "2026-10-14"
         },
         "bio.birthplace": {
           "source": "https://www.wikidata.org/wiki/Q134532992",
@@ -1218,17 +1213,12 @@
         "racket": "Yonex Astrox 88D Pro",
         "string": "Yonex BG80",
         "shoes": "Yonex Subaxia GT",
-        "bag": "Yonex Pro Tournament",
         "instagram": "https://www.instagram.com/kunlavut.v",
         "facebook": "https://www.facebook.com/ViewKunlavut/"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
-        "bio.bag": {
-          "source": "user",
-          "asOf": "2026-10-14"
-        },
         "bio.facebook": {
           "source": "user",
           "asOf": "2026-10-14"
@@ -3266,8 +3256,7 @@
       },
       "bio": {
         "racket": "Hundred Nitrix 70 Volta",
-        "shoes": "Hundred Phenom",
-        "bag": "Hundred Aeris Pink"
+        "shoes": "Hundred Phenom"
       },
       "source": "user",
       "asOf": "2026-10-12",
@@ -3778,8 +3767,7 @@
       },
       "bio": {
         "racket": "Hundred Nitrix 70 Venom",
-        "shoes": "Hundred Phenom",
-        "bag": "Hundred Aeris Black"
+        "shoes": "Hundred Phenom"
       },
       "source": "user",
       "asOf": "2026-10-12",
@@ -3803,7 +3791,6 @@
         "birthplace": "Bandung",
         "racket": "Hundred Nitrix 70 Volta",
         "shoes": "Hundred Phenom",
-        "bag": "Hundred Aeris Black",
         "achievements": "Asia Team Championships 2026 – bronze (men's team)"
       },
       "source": "user",
@@ -3812,10 +3799,6 @@
         "bio.achievements": {
           "source": "https://en.wikipedia.org/wiki/Raymond_Indra",
           "asOf": "2026-10-12"
-        },
-        "bio.bag": {
-          "source": "user",
-          "asOf": "2026-10-14"
         },
         "bio.birthplace": {
           "source": "https://www.wikidata.org/wiki/Q114275186",

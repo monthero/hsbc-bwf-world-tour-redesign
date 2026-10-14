@@ -99,3 +99,15 @@
   font-weight: 400;
   color: var(--bwf-muted);
 }
+
+.unit {
+  margin-left: 4px;
+  font-weight: 400;
+  color: var(--bwf-muted);
+}
+
+.sub {
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--bwf-dim);
+}

@@ -1,5 +1,5 @@
 import { dayjs, ISO_DAY } from '~/utils/dates';
-import { formatBytes, formatHeight } from '~/utils/format';
+import { formatBytes, formatHeight, TENSION_UNIT } from '~/utils/format';
 import { localAsset, playerHeroUrl, playerThumbUrl } from '~/utils/images';
 import { titleCase } from '~/utils/names';
 import { nameIssue } from '~/utils/surname';
@@ -37,7 +37,17 @@ import {
   type TopKey,
 } from './schema';
 
-export type FieldInput = 'name' | 'text' | 'long' | 'date' | 'month' | 'height' | 'plays' | 'image' | 'catalog';
+export type FieldInput =
+  | 'name'
+  | 'text'
+  | 'long'
+  | 'date'
+  | 'month'
+  | 'height'
+  | 'tension'
+  | 'plays'
+  | 'image'
+  | 'catalog';
 export type FieldState = 'bwf' | 'override' | 'none';
 
 export interface FieldDef {
@@ -86,9 +96,10 @@ const FIELDS: readonly FieldDef[] = [
   bio('club', 'Club', 'Career'),
   bio('prize', 'Prize money', 'Career'),
   bio('racket', 'Racket', EQUIPMENT, 'catalog', { missing: true, catalog: 'racket', trustBwf: false }),
+  bio('tension', 'Tension', EQUIPMENT, 'tension', { trustBwf: false, format: (v) => `${v} ${TENSION_UNIT}` }),
+  bio('tensionNote', 'Tension note', EQUIPMENT, 'text', { trustBwf: false }),
   bio('string', 'String', EQUIPMENT, 'catalog', { catalog: 'string', trustBwf: false }),
   bio('shoes', 'Shoes', EQUIPMENT, 'catalog', { catalog: 'shoes', trustBwf: false }),
-  bio('bag', 'Bag', EQUIPMENT, 'catalog', { catalog: 'bag', trustBwf: false }),
   bio('achievements', 'Memorable achievements', 'Story', 'long'),
   bio('ambition', 'Ambition', 'Story', 'long'),
   bio('idol', 'Sporting hero', 'Story'),

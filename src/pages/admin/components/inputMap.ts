@@ -10,6 +10,7 @@ import {
   MonthField,
   NameField,
   PlaysField,
+  TensionField,
   TextField,
   type FieldInputProps,
 } from './FieldInputs';
@@ -21,6 +22,7 @@ export const FIELD_INPUTS: Record<FieldInput, FC<FieldInputProps>> = {
   date: DateField,
   month: MonthField,
   height: HeightField,
+  tension: TensionField,
   plays: PlaysField,
   image: ImageField,
   catalog: CatalogField,
