@@ -992,6 +992,42 @@
         }
       }
     },
+    "62804": {
+      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Qe5Eu51Z2AHY0cDUfvkpWvPZs8eAR_bp94jwMtUfDz_7aswZVqyw-wrg&s=10",
+      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9ZeF_s_XvQNwgwt6R1z3Kt4xO0oVZ0V6vhbZnLnBm24Vp7la7BDlWgOQ&s=10",
+      "heroFocus": {
+        "x": 30,
+        "y": 40
+      },
+      "photoCrop": {
+        "x": 62.5,
+        "y": 10.5,
+        "zoom": 1.6
+      },
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro"
+      },
+      "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Qe5Eu51Z2AHY0cDUfvkpWvPZs8eAR_bp94jwMtUfDz_7aswZVqyw-wrg&s=10",
+      "asOf": "2026-10-14",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-14"
+        },
+        "hero": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9ZeF_s_XvQNwgwt6R1z3Kt4xO0oVZ0V6vhbZnLnBm24Vp7la7BDlWgOQ&s=10",
+          "asOf": "2026-10-14"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-14"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "62844": {
       "retired": "2021-05",
       "source": "https://bwfbadminton.com/news-single/2021/05/28/adcocks-call-time-on-international-career",
