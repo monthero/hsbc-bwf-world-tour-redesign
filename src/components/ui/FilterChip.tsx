@@ -1,5 +1,6 @@
+import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
-import type { ComponentPropsWithoutRef, CSSProperties, FC } from 'react';
+import type { ComponentPropsWithoutRef, CSSProperties, FC, ReactNode } from 'react';
 
 import classes from './FilterChip.module.css';
 
@@ -9,9 +10,10 @@ export const FilterChip: FC<
     size?: 'sm' | 'md' | 'lg';
     tone?: { color: string };
     dot?: boolean;
+    tip?: ReactNode;
   }
-> = ({ active, size, tone, dot, className, style, ...rest }) => {
-  return (
+> = ({ active, size, tone, dot, tip, className, style, ...rest }) => {
+  const el = (
     <button
       type="button"
       className={clsx(classes.chip, className)}
@@ -24,4 +26,5 @@ export const FilterChip: FC<
       {...rest}
     />
   );
+  return tip ? <Tooltip label={tip}>{el}</Tooltip> : el;
 };

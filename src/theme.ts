@@ -3,6 +3,7 @@ import {
   Badge,
   Button,
   createTheme,
+  Tooltip,
   defaultVariantColorsResolver,
   parseThemeColor,
   type CSSVariablesResolver,
@@ -11,6 +12,7 @@ import {
   type MantineColorsTuple,
 } from '@mantine/core';
 
+import tooltip from '~/components/ui/Tooltip.module.css';
 import variants from '~/components/ui/variants.module.css';
 
 const red: MantineColorsTuple = [
@@ -202,7 +204,10 @@ export const theme = createTheme({
     Button: Button.extend({ classNames: { root: variants.root } }),
     Drawer: { defaultProps: { overlayProps: OVERLAY } },
     Modal: { defaultProps: { overlayProps: OVERLAY } },
-    Tooltip: { defaultProps: { color: 'dark.0', c: 'dark.7', fz: 12, fw: 500, multiline: true, maw: 240 } },
+    Tooltip: Tooltip.extend({
+      classNames: { tooltip: tooltip.tooltip, arrow: tooltip.arrow },
+      defaultProps: { fz: 12, fw: 500, multiline: true, maw: 240 },
+    }),
   },
 });
 

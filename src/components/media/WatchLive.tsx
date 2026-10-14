@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core';
+import { Button, Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
@@ -27,17 +27,18 @@ export const WatchLive = memo<{ item: MediaItem; className?: string }>(({ item, 
       </TapTip>
     );
   return (
-    <Button
-      {...BUTTON_PROPS}
-      component="a"
-      href={watchUrl(item.id)}
-      target="_blank"
-      rel="noreferrer"
-      className={cls}
-      title={item.title}
-      aria-label={`Watch on YouTube: ${item.title}`}
-    >
-      {LABEL}
-    </Button>
+    <Tooltip label={item.title}>
+      <Button
+        {...BUTTON_PROPS}
+        component="a"
+        href={watchUrl(item.id)}
+        target="_blank"
+        rel="noreferrer"
+        className={cls}
+        aria-label={`Watch on YouTube: ${item.title}`}
+      >
+        {LABEL}
+      </Button>
+    </Tooltip>
   );
 });

@@ -33,12 +33,7 @@ const ResultSection = memo<{ group: ResultGroup }>(({ group }) => {
   const counts = useMemo(() => medalCounts(group.items), [group]);
   return (
     <Section
-      label={
-        <>
-          {EVENT_NAMES[group.ev]}
-          <Footnote note={RESULTS_TIP} />
-        </>
-      }
+      label={<Footnote note={RESULTS_TIP}>{EVENT_NAMES[group.ev]}</Footnote>}
       aside={
         <span className={shared.sub}>
           <b>{formatNumber(points)}</b> pts · {plural(counts.gold, 'title')} · {counts.silver} runner-up ·{' '}

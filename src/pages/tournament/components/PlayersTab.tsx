@@ -49,7 +49,7 @@ const jumpTo = (event: EventCode) =>
 
 const JumpChip = memo<{ event: EventCode; count: number }>(({ event, count }) => {
   return (
-    <FilterChip title={`Jump to ${EVENT_NAMES[event]}`} onClick={() => jumpTo(event)}>
+    <FilterChip tip={`Jump to ${EVENT_NAMES[event]}`} onClick={() => jumpTo(event)}>
       {event}
       <span className={classes.jumpCount}>{count}</span>
     </FilterChip>
@@ -109,7 +109,7 @@ export const PlayersTab: FC<TabProps> = ({ schedule, draw, entries }) => {
           <FilterChip
             active={top10}
             className={classes.top10}
-            title="Only entries ranked in the world top 10 of their discipline"
+            tip="Only entries ranked in the world top 10 of their discipline"
             onClick={onTop10}
           >
             World top 10

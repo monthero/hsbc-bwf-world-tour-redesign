@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 
 import { RankChange } from '~/components/player';
+import { TipSpan } from '~/components/ui';
 
 import classes from './Movement.module.css';
 
@@ -11,14 +12,14 @@ export const Movement: FC<{ change: number; isNew: boolean; variant?: 'text' | '
 }) => {
   if (isNew)
     return (
-      <span className={classes.new} title="New entry">
+      <TipSpan className={classes.new} tip="New entry">
         New
-      </span>
+      </TipSpan>
     );
   if (change) return <RankChange value={change} variant={variant} />;
   return (
-    <span className={classes.same} title="No change">
+    <TipSpan className={classes.same} tip="No change">
       –
-    </span>
+    </TipSpan>
   );
 };

@@ -99,6 +99,7 @@
 
 .day[data-expected] .round {
   color: alpha(var(--bwf-gold-text), 0.56);
+  cursor: help;
 }
 
 .day[data-repeat] .round {

@@ -1,4 +1,4 @@
-import { VisuallyHidden } from '@mantine/core';
+import { Tooltip, VisuallyHidden } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, type FC, type Ref } from 'react';
 
@@ -95,9 +95,11 @@ export const RankingList = memo<{
             {doubles ? 'Pair' : 'Player'}
           </th>
           {played && (
-            <th scope="col" className={classes.played} title="Tournaments played">
-              Tournaments
-            </th>
+            <Tooltip label="Tournaments played">
+              <th scope="col" className={classes.played}>
+                Tournaments
+              </th>
+            </Tooltip>
           )}
           <th scope="col" className={classes.points}>
             Points

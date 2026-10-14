@@ -23,7 +23,7 @@ const MonthCell = memo<{ month: ArchiveMonth | null; slot: number; active: boole
         disabled={!month}
         aria-current={active || undefined}
         aria-label={month ? `${month.label}, ${storiesLabel(month.count)}` : undefined}
-        title={month ? `${month.label} · ${storiesLabel(month.count)}` : undefined}
+        tip={month ? `${month.label} · ${storiesLabel(month.count)}` : undefined}
         className={classes.month}
         onClick={onClick}
       >

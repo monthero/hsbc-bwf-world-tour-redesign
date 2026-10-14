@@ -24,4 +24,5 @@ export { StatusChip, type StatusTone } from './StatusChip';
 export { StickyBar } from './StickyBar';
 export { TabBar, type TabItem } from './TabBar';
 export { TapTip } from './TapTip';
+export { TipSpan } from './TipSpan';
 export { TIP_DELAY, useLazyTip } from './useLazyTip';

@@ -1,6 +1,6 @@
 import { memo, useMemo, type FC } from 'react';
 
-import { IconCheck, IconTimer, LiveDot } from '~/components/ui';
+import { IconCheck, IconTimer, LiveDot, TapTip } from '~/components/ui';
 import type { Tournament, TournamentSchedule } from '~/types';
 import { countdownLabel } from '~/utils/tournaments';
 
@@ -49,6 +49,16 @@ const repeatedKeys = (days: TimelineDay[]) => {
   return keys;
 };
 
+const DayRound = memo<{ d: TimelineDay }>(({ d }) => {
+  const el = (
+    <b className={classes.round}>
+      <span className={classes.long}>{d.long}</span>
+      <span className={classes.short}>{d.short}</span>
+    </b>
+  );
+  return d.expected ? <TapTip label={EXPECTED_ROUND_TIP}>{el}</TapTip> : el;
+});
+
 const DayItem = memo<{ d: TimelineDay; repeat: boolean }>(({ d, repeat }) =>
   d.rest ? (
     <li className={classes.rest}>
@@ -66,10 +76,7 @@ const DayItem = memo<{ d: TimelineDay; repeat: boolean }>(({ d, repeat }) =>
         <span className={classes.dateFull}>{d.label}</span>
         <span className={classes.dateNum}>{d.num}</span>
       </small>
-      <b className={classes.round} title={d.expected ? EXPECTED_ROUND_TIP : undefined}>
-        <span className={classes.long}>{d.long}</span>
-        <span className={classes.short}>{d.short}</span>
-      </b>
+      <DayRound d={d} />
     </li>
   ),
 );

@@ -1,7 +1,7 @@
 import { memo, type ComponentProps } from 'react';
 
 import { TeamPlayers } from '~/components/match';
-import { IconExternal } from '~/components/ui';
+import { IconExternal, LazyTip, useLazyTip } from '~/components/ui';
 import type { Player } from '~/types';
 import { isKnown } from '~/utils/rankings';
 
@@ -9,18 +9,26 @@ import classes from './RankedNames.module.css';
 
 const BWF_PLAYER_URL = 'https://bwfbadminton.com/player/';
 
-const BwfLink = memo<{ id: string }>(({ id }) => (
-  <a
-    href={`${BWF_PLAYER_URL}${id}/`}
-    target="_blank"
-    rel="noreferrer"
-    className={classes.ext}
-    aria-label="Profile on bwfbadminton.com"
-    title="Profile on bwfbadminton.com"
-  >
-    <IconExternal size={12} />
-  </a>
-));
+const BWF_PROFILE = 'Profile on bwfbadminton.com';
+
+const BwfLink = memo<{ id: string }>(({ id }) => {
+  const lazy = useLazyTip<HTMLAnchorElement>(true);
+  return (
+    <>
+      <a
+        href={`${BWF_PLAYER_URL}${id}/`}
+        target="_blank"
+        rel="noreferrer"
+        className={classes.ext}
+        aria-label={BWF_PROFILE}
+        onPointerEnter={lazy.arm}
+      >
+        <IconExternal size={12} />
+      </a>
+      <LazyTip target={lazy.target} label={BWF_PROFILE} />
+    </>
+  );
+});
 
 const externalAfter = (p: Player) => (isKnown(p) ? null : <BwfLink id={p.id} />);
 

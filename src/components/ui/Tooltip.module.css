@@ -1,0 +1,16 @@
+.tooltip {
+  --tooltip-bg: var(--bwf-raised);
+  --tooltip-color: var(--bwf-text);
+
+  padding: 6px 10px;
+  border: 1px solid var(--bwf-border-strong);
+  border-radius: 8px;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-color);
+  box-shadow: var(--mantine-shadow-md);
+  line-height: 1.4;
+}
+
+.arrow {
+  border: 1px solid var(--bwf-border-strong);
+}

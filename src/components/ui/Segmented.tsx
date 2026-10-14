@@ -1,3 +1,4 @@
+import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import type { CSSProperties, ReactNode } from 'react';
 
@@ -48,19 +49,19 @@ export const Segmented = <T extends string>({
       {options.map((o) => {
         const on = o.value === value;
         return (
-          <button
-            key={o.value}
-            type="button"
-            className={classes.option}
-            data-muted={o.muted || undefined}
-            disabled={o.disabled && !on}
-            title={o.tip}
-            aria-pressed={on}
-            onClick={() => onChange(on && deselectable ? null : o.value)}
-          >
-            {o.label}
-            {o.badge}
-          </button>
+          <Tooltip key={o.value} label={o.tip} disabled={!o.tip}>
+            <button
+              type="button"
+              className={classes.option}
+              data-muted={o.muted || undefined}
+              disabled={o.disabled && !on}
+              aria-pressed={on}
+              onClick={() => onChange(on && deselectable ? null : o.value)}
+            >
+              {o.label}
+              {o.badge}
+            </button>
+          </Tooltip>
         );
       })}
     </div>

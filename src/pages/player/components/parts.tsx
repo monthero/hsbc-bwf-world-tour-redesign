@@ -2,6 +2,7 @@ import { clsx } from 'clsx';
 import { memo, type FC, type ReactNode } from 'react';
 
 import { OutcomeLabel } from '~/components/match';
+import { TipSpan } from '~/components/ui';
 import { LEVEL_META, LEVEL_VARS } from '~/constants';
 import type { Level, PlayerMatch } from '~/types';
 
@@ -25,7 +26,7 @@ export const Section: FC<{ label: ReactNode; aside?: ReactNode; className?: stri
 );
 
 export const LevelDot = memo<{ level: Level }>(({ level }) => (
-  <span className={shared.dot} style={LEVEL_VARS[level]} title={LEVEL_META[level].label} />
+  <TipSpan className={shared.dot} style={LEVEL_VARS[level]} tip={LEVEL_META[level].label} />
 ));
 
 export const ResultText = memo<{ result: number | null }>(({ result }) => (

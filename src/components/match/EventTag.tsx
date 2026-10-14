@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { LazyTip, useLazyTip } from '~/components/ui';
+import { TipSpan } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import type { EventCode } from '~/types';
 
@@ -10,17 +10,11 @@ import classes from './EventTag.module.css';
 export type NoteTone = 'violet' | 'sky';
 
 const Tag = memo<{ label: string; tip: string; tone?: NoteTone; className?: string }>(
-  ({ label, tip, tone, className }) => {
-    const lazy = useLazyTip<HTMLSpanElement>(true);
-    return (
-      <>
-        <span className={clsx(classes.tag, className)} data-tone={tone} data-tip onPointerEnter={lazy.arm}>
-          {label}
-        </span>
-        <LazyTip target={lazy.target} label={tip} />
-      </>
-    );
-  },
+  ({ label, tip, tone, className }) => (
+    <TipSpan tip={tip} className={clsx(classes.tag, className)} data-tone={tone}>
+      {label}
+    </TipSpan>
+  ),
 );
 
 export const EventTag = memo<{ event: EventCode; className?: string }>(({ event, className }) => (
