@@ -12,6 +12,12 @@ My wife and I follow most of the World Tour, mostly on BWF's YouTube channel, an
 
 As a software engineer, I always felt the official site made that harder than it needed to be, especially on a phone. So I built the version I wished existed. It's meant as a friendly proposal, not a criticism: no ads, no tracking, nothing for sale, and I'd happily give all of it to BWF for free.
 
+## Free to use
+
+Both the designs and the code are meant as a gift and a proposal to BWF, and to anyone else who finds them useful. Take any of it, change it or ignore it. No payment, contract or credit is wanted. The code is released under the [0BSD license](LICENSE), which allows any use without conditions.
+
+The license only covers my own work. Tournament data, results, logos and player photos belong to BWF, the players and the photographers. Third-party assets keep their own licenses, listed in [CREDITS.md](CREDITS.md).
+
 ## Highlights
 
 Most of this information is already on the official site. The focus here is on how easy it is to find and follow.
@@ -25,12 +31,6 @@ Most of this information is already on the official site. The focus here is on h
 - **News linked up:** articles open on the site and link to the players and tournaments they mention.
 - **About the Tour:** a map of the season's stops linked to a timeline, how each level works and the race to the Finals.
 - **Phone-first:** sticky filters, swipeable rows and long names that shorten to fit.
-
-## Free to use
-
-Both the designs and the code are meant as a gift and a proposal to BWF, and to anyone else who finds them useful. Take any of it, change it or ignore it. No payment, contract or credit is wanted. The code is released under the [0BSD license](LICENSE), which allows any use without conditions.
-
-The license only covers my own work. Tournament data, results, logos and player photos belong to BWF, the players and the photographers. Third-party assets keep their own licenses, listed in [CREDITS.md](CREDITS.md).
 
 ## Running it locally
 
