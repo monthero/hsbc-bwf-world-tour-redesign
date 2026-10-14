@@ -24,7 +24,7 @@ import { ResultsTab } from './components/ResultsTab';
 import { Disciplines, SubNav } from './components/SubNav';
 import { usePlayerHistory, usePlayerMediaCount } from './hooks';
 import type { PlayerSearch, PlayerTab } from './types';
-import { careerHighs, careerOf, eventsOf, partnerHistory, scopeHistory } from './utils';
+import { careerHighs, careerOf, eventsOf, partnerHistory, rankedEventsOf, scopeHistory } from './utils';
 
 import classes from './PlayerPage.module.css';
 import utils from '~/styles/utils.module.css';
@@ -65,7 +65,9 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
   useDocumentTitle(!player && profile.status === 'missing' ? NOT_FOUND : [player?.name, 'Players'], 'bwf');
   const history = usePlayerHistory(rankingId, index);
   const mediaCount = usePlayerMediaCount(id).data;
-  const events = useMemo(() => eventsOf(matches), [matches]);
+  const matchEvents = useMemo(() => eventsOf(matches), [matches]);
+  const rankEvents = useMemo(() => rankedEventsOf(history.view), [history.view]);
+  const events = tab === 'rankings' ? rankEvents : matchEvents;
   const event = picked && events.includes(picked) ? picked : undefined;
   const scoped = useMemo(() => (event ? matches.filter((pm) => pm.match.event === event) : matches), [event, matches]);
   const career = useMemo(() => careerOf(matches), [matches]);

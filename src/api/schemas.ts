@@ -214,8 +214,14 @@ const RankingEntry = z.object({
   highestRank: z.number(),
   totalWeeks: NullableNumber,
   date: NullableString,
+  first: NullableString.optional(),
   points: z.number(),
   breakdown: z.array(RankingBreakdown),
+});
+
+const WeeklyRanks = z.object({
+  ev: EventCode,
+  w: z.array(z.tuple([z.string(), z.number(), z.number(), NullableNumber])),
 });
 
 export const RankingHistory = z.object({
@@ -223,6 +229,7 @@ export const RankingHistory = z.object({
   name: z.string(),
   publicationId: z.number(),
   history: z.array(RankingEntry),
+  weekly: z.array(WeeklyRanks).optional(),
 });
 export type RankingHistory = z.infer<typeof RankingHistory>;
 

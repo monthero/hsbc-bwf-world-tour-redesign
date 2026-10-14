@@ -13,12 +13,14 @@ import {
   WORLD_CATEGORIES,
   type ApiHistory,
   type ApiHistoryRow,
+  type ApiWeeklyRow,
 } from './bwf.ts';
 import { dayjs } from './dates.ts';
 import { all, type Db } from './db.ts';
 import { createMapPlacer } from './geo.ts';
 import { FOREVER, type Client } from './http.ts';
 import type { Output } from './output.ts';
+import { weeklyHistory } from './steps/rankings.ts';
 import { groupBy, push, readOverrides } from './util.ts';
 
 interface Person {
@@ -164,6 +166,43 @@ const dayOffsets = (rows: readonly MatchRow[]) => {
 };
 
 const flip = (games: [number, number][]) => games.map(([a, b]): [number, number] => [b, a]);
+
+type WeeklyPoint = [string, number, number, number | null];
+
+const pairKey = (category: number, a: number | null, b: number | null) =>
+  `${category}|${[a ?? 0, b ?? 0].toSorted((x, y) => x - y).join('/')}`;
+
+const pairFirsts = (rows: readonly ApiWeeklyRow[]) => {
+  const out = new Map<string, string>();
+  for (const r of rows) {
+    const date = r.publication_date?.slice(0, 10);
+    const key = pairKey(r.ranking_category_id, r.player1_id, r.player2_id);
+    const cur = out.get(key);
+    if (date && (!cur || date < cur)) out.set(key, date);
+  }
+  return out;
+};
+
+const weeklySeries = (rows: readonly ApiWeeklyRow[], self: string, until: string) => {
+  const best = new Map<string, { ev: EventCode; date: string; row: ApiWeeklyRow }>();
+  for (const r of rows) {
+    const ev = WORLD_CATEGORIES[r.ranking_category_id];
+    const date = r.publication_date?.slice(0, 10);
+    if (!ev || !date || date > until || !r.rank) continue;
+    const key = `${ev}|${date}`;
+    const cur = best.get(key);
+    if (!cur || r.rank < cur.row.rank) best.set(key, { ev, date, row: r });
+  }
+  return [...groupBy([...best.values()], (x) => x.ev)].map(([ev, xs]) => ({
+    ev,
+    w: xs
+      .toSorted((a, b) => a.date.localeCompare(b.date))
+      .map(({ date, row: r }): WeeklyPoint => {
+        const partner = String(r.player1_id) === self ? r.player2_id : r.player1_id;
+        return [date, r.rank, Math.round(Number.parseFloat(r.points) || 0), partner || null];
+      }),
+  }));
+};
 
 export const exportData = async (
   db: Db,
@@ -398,10 +437,13 @@ export const exportData = async (
         });
       }
       ranksOf.set(id, ranks);
+      const weeks = await weeklyHistory(client, id, history, currentYear, worldPub.id);
+      const firsts = pairFirsts(weeks);
       write(`rankings/${id}.json`, {
         id,
         name: nameOf(id),
         publicationId: worldPub.id,
+        weekly: weeklySeries(weeks, id, worldPub.date),
         history: history.map((h) => ({
           event: WORLD_CATEGORIES[h.ranking_category_id] ?? null,
           publicationId: h.ranking_publication_id,
@@ -414,6 +456,7 @@ export const exportData = async (
           highestRank: h.highest_rank ?? h.rank,
           totalWeeks: h.total_weeks,
           date: h.date?.slice(0, 10) ?? null,
+          first: firsts.get(pairKey(h.ranking_category_id, h.player1_id, h.player2_id)) ?? null,
           points: Number.parseFloat(h.points) || 0,
           breakdown: h.rankingBreakdowns.map((b) => ({
             tournament: b.tournament?.name ?? '',

@@ -35,6 +35,8 @@ export const formatDayMonth = (iso: string) => date(iso).format('D MMM');
 
 export const formatDayMonthYear = (iso: string) => date(iso).format('D MMM YYYY');
 
+export const formatMonthYear = (iso: string) => date(iso).format('MMM YYYY');
+
 export const monthKeyOf = (iso: string) => date(iso).format('YYYY-MM');
 
 export const monthOf = (key: string) => date(`${key}-01`);

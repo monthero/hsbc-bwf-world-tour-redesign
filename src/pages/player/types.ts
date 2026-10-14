@@ -36,14 +36,46 @@ export interface HistoryRow {
   partner: Player | null;
   rank: number;
   best: number;
+  points: number;
   date: string;
+  last: string | null;
+  first: string | null;
   weeks: number | null;
   current: boolean;
+}
+
+export interface RankPoint {
+  key: string;
+  date: string;
+  time: number;
+  rank: number;
+  points: number;
+  partner: Player | null;
 }
 
 export interface HistoryGroup {
   ev: EventCode;
   rows: HistoryRow[];
+  series: RankPoint[];
+}
+
+export interface DisciplineHigh {
+  rank: number;
+  date: string | null;
+  weeks: number | null;
+  partner: Player | null;
+}
+
+export interface DisciplineView {
+  ev: EventCode;
+  active: boolean;
+  lead: HistoryRow | undefined;
+  high: DisciplineHigh | null;
+  first: string | null;
+  last: string | null;
+  weeksRanked: number;
+  series: RankPoint[];
+  partners: HistoryRow[];
 }
 
 export interface HistoryView {

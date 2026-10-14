@@ -16,8 +16,8 @@ export const playerThumbUrl = (photo: string | undefined | null) => {
   if (!photo || /profile_(fe)?male/.test(photo)) return '';
   if (photo.startsWith('http')) return photo;
   if (photo.startsWith('/')) return localAsset(photo);
-  const [ver, file] = photo.split('/');
-  return `${IMG}${ver}/assets/players/thumbnail/${file}`;
+  const [ver, file = ''] = photo.split('/');
+  return `${IMG}${ver}/assets/players/thumbnail/${file.replace(/\.tiff?$/i, '.jpg')}`;
 };
 
 export const playerSquareUrl = (thumbUrl: string, size = 420) =>

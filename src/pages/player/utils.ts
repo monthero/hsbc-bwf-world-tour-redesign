@@ -1,8 +1,9 @@
 import type { CSSProperties } from 'react';
 
 import { EventCode, Level } from '~/api/schemas';
+import { DOUBLES_EVENTS } from '~/constants';
 import type { BioView, Player, PlayerDirectory, PlayerMatch, RankingHistory, RankView, SeasonIndex } from '~/types';
-import { formatDayMonthYear } from '~/utils/dates';
+import { date, formatDayMonthYear } from '~/utils/dates';
 import { formatRank } from '~/utils/format';
 import { medalOfResult } from '~/utils/medals';
 import { compareText } from '~/utils/names';
@@ -13,12 +14,14 @@ import type {
   BreakdownItem,
   CareerHigh,
   CareerView,
+  DisciplineView,
   EventRun,
   HistoryGroup,
   HistoryRow,
   HistoryView,
   MedalCounts,
   PartnerRow,
+  RankPoint,
   ResultGroup,
   SeasonView,
   TournamentRuns,
@@ -43,13 +46,31 @@ export const medalCounts = (items: readonly BreakdownItem[]): MedalCounts => {
   return counts;
 };
 
+const partnerIdOf = (r: HistoryEntry, self: string) =>
+  r.player2Id ? ((String(r.player1Id) === self ? r.player2Id : r.player1Id) ?? null) : null;
+
 const partnerOf = (r: HistoryEntry, self: string, index: SeasonIndex | undefined, dir: PlayerDirectory | undefined) => {
   if (!r.player2Id) return null;
-  const mine = String(r.player1Id) === self;
-  const name = (mine ? r.player2Name : r.player1Name) ?? '';
+  const name = (String(r.player1Id) === self ? r.player2Name : r.player1Name) ?? '';
   if (!name) return null;
-  return playerById(String((mine ? r.player2Id : r.player1Id) ?? ''), name, index, dir);
+  return playerById(String(partnerIdOf(r, self) ?? ''), name, index, dir);
 };
+
+const seriesOf = (
+  h: RankingHistory,
+  ev: EventCode,
+  people: ReadonlyMap<number, Player>,
+  index: SeasonIndex | undefined,
+  dir: PlayerDirectory | undefined,
+): RankPoint[] =>
+  (h.weekly?.find((w) => w.ev === ev)?.w ?? []).map(([day, rank, points, pid]) => ({
+    key: day,
+    date: day,
+    time: date(day).valueOf(),
+    rank,
+    points,
+    partner: pid ? (people.get(pid) ?? playerById(String(pid), '', index, dir)) : null,
+  }));
 
 export const buildHistory = (
   h: RankingHistory,
@@ -63,7 +84,10 @@ export const buildHistory = (
       partner: partnerOf(r, h.id, index, dir),
       rank: r.rank,
       best: r.highestRank || r.rank,
+      points: r.points,
       date: r.date ? formatDayMonthYear(r.date) : '',
+      last: r.date,
+      first: r.first ?? null,
       weeks: r.totalWeeks,
       current: false,
     };
@@ -75,6 +99,11 @@ export const buildHistory = (
     if (x.live && (!cur || x.r.rank < cur.r.rank)) bestLive.set(x.ev, x);
   }
   for (const x of bestLive.values()) x.row.current = true;
+  const people = new Map<number, Player>();
+  for (const x of rows) {
+    const pid = partnerIdOf(x.r, h.id);
+    if (pid && x.row.partner) people.set(pid, x.row.partner);
+  }
 
   const results: ResultGroup[] = rows
     .filter((x) => x.live)
@@ -98,7 +127,7 @@ export const buildHistory = (
       xs.sort((a, b) => (b.r.date ?? '').localeCompare(a.r.date ?? '') || a.r.rank - b.r.rank);
       const live = xs.filter((y) => y.live).map((y) => y.r.rank);
       return {
-        group: { ev, rows: xs.map((y) => y.row) } satisfies HistoryGroup,
+        group: { ev, rows: xs.map((y) => y.row), series: seriesOf(h, ev, people, index, dir) } satisfies HistoryGroup,
         cur: live.length ? Math.min(...live) : Infinity,
         best: Math.min(...xs.map((y) => y.r.rank || Infinity)),
         last: xs[0]?.r.date ?? '',
@@ -222,12 +251,17 @@ export const partnerHistory = (matches: readonly PlayerMatch[], self: string): P
   return [...rows.values()].sort((a, b) => b.last - a.last || b.matches - a.matches);
 };
 
-const highOf = (k: RankView, view: HistoryView | undefined): CareerHigh | null => {
+const bestRow = (rows: readonly HistoryRow[]) => {
   let best: HistoryRow | undefined;
-  for (const row of view?.groups.find((g) => g.ev === k.ev)?.rows ?? []) {
+  for (const row of rows) {
     if (row.best && (!best || row.best < best.best || (row.best === best.best && (row.weeks ?? 0) > (best.weeks ?? 0))))
       best = row;
   }
+  return best;
+};
+
+const highOf = (k: RankView, view: HistoryView | undefined): CareerHigh | null => {
+  const best = bestRow(view?.groups.find((g) => g.ev === k.ev)?.rows ?? []);
   if (best) return { rank: best.best, weeks: best.weeks, partner: best.partner };
   return k.highest ? { rank: k.highest, weeks: null, partner: k.highestPartner } : null;
 };
@@ -319,6 +353,34 @@ export const seasonBreakdown = (season: SeasonView): SeasonBreakdown => {
 
 export const hasProfile = (bio: BioView) =>
   bio.details.length > 0 || bio.links.length > 0 || bio.notes.length > 0 || !!bio.ambition;
+
+export const rankedEventsOf = (view: HistoryView | undefined) =>
+  EventCode.options.filter((ev) => view?.groups.some((g) => g.ev === ev));
+
+export const disciplineOf = (g: HistoryGroup): DisciplineView => {
+  const lead = g.rows.find((r) => r.current) ?? g.rows[0];
+  const active = !!lead?.current;
+  const best = bestRow(g.rows);
+  const firsts = g.rows.flatMap((r) => (r.first ? [r.first] : [])).toSorted((a, b) => a.localeCompare(b));
+  return {
+    ev: g.ev,
+    active,
+    lead,
+    high: best
+      ? {
+          rank: best.best,
+          date: g.series.find((p) => p.rank === best.best)?.date ?? null,
+          weeks: best.weeks,
+          partner: best.partner,
+        }
+      : null,
+    first: g.series[0]?.date ?? firsts[0] ?? null,
+    last: active ? null : (lead?.last ?? null),
+    weeksRanked: g.series.length,
+    series: g.series,
+    partners: DOUBLES_EVENTS.has(g.ev) ? g.rows.filter((r) => r !== lead && r.partner) : [],
+  };
+};
 
 export const scopeHistory = (view: HistoryView | undefined, event: EventCode | undefined): HistoryView | undefined =>
   view && event

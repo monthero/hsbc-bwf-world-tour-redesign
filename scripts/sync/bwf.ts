@@ -140,6 +140,14 @@ export interface ApiHistory {
   data: ApiHistoryRow[];
 }
 
+export interface ApiWeeklyRow extends ApiRankingRow {
+  publication_date: string | null;
+}
+
+export interface ApiWeekly {
+  data: ApiWeeklyRow[];
+}
+
 export interface ApiTournamentDetail {
   results: { tournament_series_id: number | null; venue_name: string | null } | null;
 }
@@ -194,6 +202,12 @@ export const rankingsListPath = (id: string) => query('player/rankings', { playe
 export const historyPrefix = (id: string) => query('player/rankings/history', { playerId: id, rankingId: WORLD });
 
 export const historyPath = (id: string, publication: number) => `${historyPrefix(id)}&year=&_pub=${publication}`;
+
+export const weeklyPrefix = (id: string, year: number) =>
+  query('player/rankings/history', { rankingId: WORLD, playerId: id, year });
+
+export const weeklyPath = (id: string, year: number, publication?: number) =>
+  publication ? `${weeklyPrefix(id, year)}&_pub=${publication}` : weeklyPrefix(id, year);
 
 export const detailPath = (tmtId: number) => query('vue-tournament-detail', { tmtId, _src: SRC });
 

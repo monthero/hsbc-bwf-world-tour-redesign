@@ -11,7 +11,7 @@
   border-radius: 50%;
   background: var(--bwf-raised);
   color: var(--bwf-faint);
-  font-size: calc(var(--size) * 0.3);
+  font-size: max(9px, calc(var(--size) * 0.3));
   font-weight: 600;
   text-decoration: none;
   isolation: isolate;

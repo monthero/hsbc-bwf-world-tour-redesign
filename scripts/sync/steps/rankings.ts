@@ -9,18 +9,23 @@ import {
   rankingsListPath,
   rankingsListPrefix,
   rankingTablePath,
+  weeklyPath,
+  weeklyPrefix,
   WORLD,
   WORLD_CATEGORIES,
   type ApiHistory,
+  type ApiHistoryRow,
   type ApiPublication,
   type ApiRankingInfo,
   type ApiRankingRow,
   type ApiRankingTable,
+  type ApiWeekly,
+  type ApiWeeklyRow,
 } from '../bwf.ts';
 import type { Context } from '../context.ts';
 import { DAY_MS, HOUR_MS } from '../dates.ts';
 import { all, tx } from '../db.ts';
-import { FOREVER, pool, within, type Cached } from '../http.ts';
+import { FOREVER, pool, within, type Cached, type Client } from '../http.ts';
 import { photoOf } from '../normalize.ts';
 import { collapseSpaces, readJsonFile } from '../util.ts';
 
@@ -29,6 +34,8 @@ const LIST_REFRESH = within(7 * DAY_MS);
 const DOUBLES = new Set(['MD', 'WD', 'XD']);
 const PAGE_SIZES = [1000, 100, 10, 1];
 const SPLIT_RETRIES = 1;
+const WEEKLY_FLOOR = 2008;
+const WEEKLY_GAP = 2;
 
 const COUNTRIES = readJsonFile<Record<string, { name: string }>>(
   resolve(import.meta.dirname, '../../../src/utils/countries.json'),
@@ -139,6 +146,27 @@ const syncTable = async ({ db, client }: Context, ranking: number, categories: R
   return pub.id;
 };
 
+export const weeklyHistory = async (
+  client: Client,
+  id: string,
+  history: readonly ApiHistoryRow[],
+  currentYear: number,
+  publication: number,
+) => {
+  const known = Math.min(...history.map((h) => Number(h.date?.slice(0, 4)) || currentYear));
+  const rows: ApiWeeklyRow[] = [];
+  let empty = 0;
+  for (let year = currentYear; year >= WEEKLY_FLOOR && (year >= known || empty < WEEKLY_GAP); year--) {
+    const path = weeklyPath(id, year, year === currentYear ? publication : undefined);
+    const res = await client.get<ApiWeekly>(path, FOREVER);
+    if (res) client.prune(weeklyPrefix(id, year), path);
+    const data = res?.data.data ?? [];
+    empty = data.length ? 0 : empty + 1;
+    rows.push(...data);
+  }
+  return rows;
+};
+
 const syncNames = async ({ db, client }: Context) => {
   const lead = all<{ player1: string }>(db, 'SELECT player1 FROM rankings ORDER BY ranking, rank LIMIT 1')[0];
   if (!lead) return;
@@ -169,8 +197,9 @@ export const syncRankings = async (ctx: Context) => {
   let done = 0;
   await pool(ids, async (id) => {
     const path = historyPath(id, world);
-    await client.get<ApiHistory>(path, FOREVER);
+    const res = await client.get<ApiHistory>(path, FOREVER);
     client.prune(historyPrefix(id), path);
+    if (res?.data.data.length) await weeklyHistory(client, id, res.data.data, ctx.currentYear, world);
     if (++done % 500 === 0) console.log(`  ranking history ${done}/${ids.length}`);
   });
   console.log(`ranking history: ${ids.length} ranked players`);

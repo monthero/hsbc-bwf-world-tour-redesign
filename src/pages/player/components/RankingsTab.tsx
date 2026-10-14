@@ -1,67 +1,236 @@
-import { Skeleton } from '@mantine/core';
+import { Collapse, Skeleton } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
-import { memo } from 'react';
+import { memo, useMemo, type FC } from 'react';
 
-import { Partner } from '~/components/player';
-import { EmptyState } from '~/components/ui';
+import { Partner, PlayerAvatar, PlayerName, RaceQualifier, RankChange } from '~/components/player';
+import { EmptyState, IconExpand } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
-import type { RankView } from '~/types';
-import { formatNumber, formatRank, plural } from '~/utils/format';
+import { useFinalsCity } from '~/hooks/useTournaments';
+import type { Player, RankView } from '~/types';
+import { date, formatMonthYear } from '~/utils/dates';
+import { formatNumber, formatRank, joinDots } from '~/utils/format';
 
-import type { HistoryGroup, HistoryRow, HistoryView } from '../types';
-import { Section } from './parts';
+import { PARTNER_LIMIT } from '../constants';
+import type { DisciplineView, HistoryRow, HistoryView } from '../types';
+import { disciplineOf, yearRange } from '../utils';
+import { RankChart } from './RankChart';
 
 import classes from './RankingsTab.module.css';
 import shared from './shared.module.css';
 import utils from '~/styles/utils.module.css';
 
+interface StatCell {
+  key: string;
+  label: string;
+  value: string;
+  sub?: string;
+}
+
+const personKey = (p: Player | null | undefined) => (p ? p.id || p.name : '');
+
+const yearOf = (iso: string) => date(iso).year();
+
+const statsOf = (d: DisciplineView): StatCell[] => {
+  const list: StatCell[] = [];
+  if (d.active && d.lead) list.push({ key: 'points', label: 'Points', value: formatNumber(d.lead.points) });
+  if (d.high) {
+    const other = d.high.partner && personKey(d.high.partner) !== personKey(d.lead?.partner);
+    list.push({
+      key: 'high',
+      label: 'Career high',
+      value: formatRank(d.high.rank),
+      sub: joinDots([d.high.date && formatMonthYear(d.high.date), other && `with ${d.high.partner?.surname}`]),
+    });
+    if (d.high.weeks)
+      list.push({ key: 'weeks', label: `Weeks at ${formatRank(d.high.rank)}`, value: formatNumber(d.high.weeks) });
+  }
+  if (d.weeksRanked)
+    list.push({
+      key: 'ranked',
+      label: 'Weeks ranked',
+      value: formatNumber(d.weeksRanked),
+      sub: d.first ? `since ${formatMonthYear(d.first)}` : undefined,
+    });
+  return list;
+};
+
+const periodOf = (r: HistoryRow) => {
+  if (r.current)
+    return joinDots([r.first ? `since ${formatMonthYear(r.first)}` : 'current', `now ${formatRank(r.rank)}`]);
+  if (r.first && r.last) return yearRange(yearOf(r.first), yearOf(r.last));
+  return r.last ? `until ${formatMonthYear(r.last)}` : '';
+};
+
 export const RankingsTab = memo<{ ranks: RankView[]; history: HistoryView | undefined; loading: boolean }>(
   ({ ranks, history, loading }) => {
-    const groups = history?.groups ?? [];
+    const list = useMemo(() => (history?.groups ?? []).map(disciplineOf), [history]);
+    const active = useMemo(() => list.filter((d) => d.active), [list]);
+    const past = useMemo(() => list.filter((d) => !d.active), [list]);
     if (loading) return <Skeleton height={360} radius={18} />;
-    if (!groups.length) return <EmptyState>No ranking history on record.</EmptyState>;
+    if (!list.length) return <EmptyState>No ranking history on record.</EmptyState>;
     return (
-      <div className={clsx(utils.card, shared.panel)}>
-        {groups.map((g) => (
-          <EventSection key={g.ev} group={g} rank={ranks.find((k) => k.ev === g.ev)} />
+      <div className={classes.tab}>
+        {active.map((d) => (
+          <DisciplineCard key={d.ev} view={d} rank={ranks.find((k) => k.ev === d.ev)} />
         ))}
+        {past.length > 0 && <PastList items={past} open={!active.length} />}
       </div>
     );
   },
 );
 
-const EventSection = memo<{ group: HistoryGroup; rank: RankView | undefined }>(({ group: g, rank }) => (
-  <Section
-    label={EVENT_NAMES[g.ev]}
-    aside={
-      rank?.race && (
-        <span className={shared.sub}>
-          Race to Finals · <b>{formatNumber(rank.race.points)}</b> pts
+const Figure: FC<{ value: number | null | undefined; className?: string }> = ({ value, className }) => (
+  <span className={clsx(utils.figure, className)}>
+    {value ? (
+      <>
+        <span className={classes.hash}>#</span>
+        {value}
+      </>
+    ) : (
+      '—'
+    )}
+  </span>
+);
+
+const DisciplineCard = memo<{ view: DisciplineView; rank: RankView | undefined }>(({ view: d, rank }) => (
+  <section className={clsx(utils.card, classes.card)}>
+    <header className={classes.head}>
+      <h2 className={classes.title}>{EVENT_NAMES[d.ev]}</h2>
+      {d.lead?.partner && <Partner player={d.lead.partner} className={classes.partner} />}
+    </header>
+    <div className={classes.summary}>
+      <div className={classes.now}>
+        <span className={shared.label}>World rank</span>
+        <span className={classes.line}>
+          <Figure value={d.lead?.rank} className={classes.big} />
+          <RankChange value={rank?.change ?? 0} />
         </span>
-      )
-    }
-  >
-    <div className={shared.columns}>
-      {g.rows.map((x) => (
-        <HistoryItem key={x.key} row={x} />
-      ))}
+      </div>
+      <Stats view={d} />
+      {rank?.race && <Race rank={rank} />}
     </div>
-  </Section>
+    <Body view={d} />
+  </section>
 ));
 
-const HistoryItem = memo<{ row: HistoryRow }>(({ row: x }) => (
-  <div className={shared.row} data-lead>
-    <span className={classes.mark} data-current={x.current || undefined} />
-    <span className={shared.rowMain}>
-      {x.partner ? <Partner player={x.partner} label={false} /> : <span className={shared.rowTitle}>Singles</span>}
-      <span className={shared.rowMeta}>
-        {x.current ? 'Current' : x.date && `Last ranked ${x.date}`}
-        {x.weeks != null && ` · ${plural(x.weeks, 'week')} at best`}
+const Race = memo<{ rank: RankView }>(({ rank: k }) => {
+  const city = useFinalsCity();
+  if (!k.race) return null;
+  const { rank, change, points, qualified, blocked } = k.race;
+  return (
+    <div className={classes.race}>
+      <span className={shared.label}>{city ? `Race to ${city}` : 'Race to the Finals'}</span>
+      <span className={classes.line}>
+        <Figure value={rank} className={classes.raceNum} />
+        <RankChange value={change} />
+        <RaceQualifier rank={k} />
       </span>
-    </span>
-    <span className={shared.rowSide}>
-      <b>{formatRank(x.rank)}</b>
-      <span>best {formatRank(x.best)}</span>
+      <span className={shared.sub}>
+        <b>{formatNumber(points)}</b> pts
+        {qualified && ' · qualifying spot'}
+        {blocked && ' · country quota full'}
+      </span>
+    </div>
+  );
+});
+
+const Stats = memo<{ view: DisciplineView }>(({ view }) => {
+  const cells = useMemo(() => statsOf(view), [view]);
+  if (!cells.length) return null;
+  return (
+    <dl className={classes.stats}>
+      {cells.map((c) => (
+        <div key={c.key} className={classes.stat}>
+          <dt className={shared.label}>{c.label}</dt>
+          <dd className={classes.statValue}>{c.value}</dd>
+          {c.sub && <dd className={classes.statSub}>{c.sub}</dd>}
+        </div>
+      ))}
+    </dl>
+  );
+});
+
+const Body = memo<{ view: DisciplineView }>(({ view: d }) => (
+  <>
+    {d.series.length > 1 && <RankChart points={d.series} live={d.active} />}
+    {d.partners.length > 0 && (
+      <Partners rows={d.partners} label={d.active ? 'Other partnerships' : 'Earlier partnerships'} />
+    )}
+  </>
+));
+
+const Partners = memo<{ rows: HistoryRow[]; label: string }>(({ rows, label }) => {
+  const [all, { toggle }] = useDisclosure(false);
+  const shown = all ? rows : rows.slice(0, PARTNER_LIMIT);
+  return (
+    <div className={classes.partners}>
+      <span className={shared.label}>{label}</span>
+      <div className={classes.list}>
+        {shown.map((r) => (
+          <PartnerItem key={r.key} row={r} />
+        ))}
+      </div>
+      {rows.length > PARTNER_LIMIT && (
+        <button type="button" className={clsx(shared.link, classes.more)} onClick={toggle}>
+          {all ? 'Show fewer' : `Show all ${rows.length}`}
+        </button>
+      )}
+    </div>
+  );
+});
+
+const PartnerItem = memo<{ row: HistoryRow }>(({ row: r }) => (
+  <div className={classes.item} data-current={r.current || undefined}>
+    {r.partner && <Partner player={r.partner} label={false} className={classes.who} />}
+    <span className={classes.period}>{periodOf(r)}</span>
+    <span className={classes.best}>
+      best <b>{formatRank(r.best)}</b>
     </span>
   </div>
 ));
+
+const PastList = memo<{ items: DisciplineView[]; open: boolean }>(({ items, open }) => (
+  <section className={clsx(utils.card, classes.past)}>
+    <h2 className={clsx(shared.label, classes.pastLabel)}>Previously ranked</h2>
+    {items.map((d, i) => (
+      <PastItem key={d.ev} view={d} initial={open && i === 0} />
+    ))}
+  </section>
+));
+
+const PastItem = memo<{ view: DisciplineView; initial: boolean }>(({ view: d, initial }) => {
+  const [open, { toggle }] = useDisclosure(initial);
+  const partner = d.lead?.partner;
+  return (
+    <div className={classes.pastItem}>
+      <button type="button" className={classes.toggle} aria-expanded={open} onClick={toggle}>
+        <span className={classes.toggleMain}>
+          <span className={classes.toggleTitle}>{EVENT_NAMES[d.ev]}</span>
+          <span className={classes.toggleMeta}>
+            {d.last && <span>Last ranked {formatMonthYear(d.last)}</span>}
+            {partner && <PastPartner player={partner} />}
+          </span>
+        </span>
+        <span className={classes.best}>
+          best <b>{formatRank(d.high?.rank)}</b>
+        </span>
+        <IconExpand size={16} className={classes.chevron} data-open={open || undefined} />
+      </button>
+      <Collapse expanded={open}>
+        <div className={classes.pastBody}>
+          <Stats view={d} />
+          <Body view={d} />
+        </div>
+      </Collapse>
+    </div>
+  );
+});
+
+const PastPartner: FC<{ player: Player }> = ({ player }) => (
+  <span className={classes.pastPartner}>
+    with
+    <PlayerAvatar player={player} size={18} />
+    <PlayerName player={player} link={false} className={classes.pastName} />
+  </span>
+);
