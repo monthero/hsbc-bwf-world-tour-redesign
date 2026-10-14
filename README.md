@@ -10,7 +10,7 @@ My take on what the [HSBC BWF World Tour](https://bwfworldtour.bwfbadminton.com)
 
 My wife and I follow most of the World Tour, mostly on BWF's YouTube channel, and we watch as much of it live as we can. When a tournament is on, we check draws, results and who's playing next almost every day.
 
-As a software engineer, I always felt the official site made that harder than it needed to be, especially on a phone. So I built the version I wished existed. It's meant as a friendly proposal, not a criticism: no ads, no tracking, nothing for sale, and I'd happily give all of it to BWF for free.
+As a software engineer, I kept imagining what the site could feel like with a more modern, phone-first design: quicker to get around, easier to follow live, and closer to the sports apps fans already use every day. So I built the version I wished existed. The official site already holds a wealth of information; this is simply an attempt at a fresh way to present it. It's meant as a friendly proposal, not a criticism: no ads, no tracking, nothing for sale, and I'd happily give all of it to BWF for free.
 
 ## Free to use
 
