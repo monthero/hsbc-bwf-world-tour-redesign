@@ -26,17 +26,30 @@ Most of this information is already on the official site. The focus here is on h
 - **About the Tour:** a map of the season's stops linked to a timeline, how each level works and the race to the Finals.
 - **Phone-first:** sticky filters, swipeable rows and long names that shorten to fit.
 
+## Free to use
+
+Both the designs and the code are meant as a gift and a proposal to BWF, and to anyone else who finds them useful. Take any of it, change it or ignore it. No payment, contract or credit is wanted. The code is released under the [0BSD license](LICENSE), which allows any use without conditions.
+
+The license only covers my own work. Tournament data, results, logos and player photos belong to BWF, the players and the photographers. Third-party assets keep their own licenses, listed in [CREDITS.md](CREDITS.md).
+
 ## Running it locally
 
-Needs Node 22+ and pnpm.
+The hosted version may not stay online forever. Everything also runs on your own machine, with no accounts or cloud services needed.
+
+You need [Node 22+](https://nodejs.org) and pnpm (`corepack enable` sets up the version pinned in `package.json`).
 
 ```sh
+git clone https://github.com/monthero/hsbc-bwf-world-tour-redesign.git
+cd hsbc-bwf-world-tour-redesign
 pnpm install
-pnpm sync    # fetches BWF data (slow the first time) and builds public/data
-pnpm start   # http://localhost:5173
+pnpm sync --from 2026   # fetches BWF data into public/data
+pnpm start              # http://localhost:5173
 ```
 
-Put `YOUTUBE_API_KEY` in `.env.local` to enable the YouTube links. It's only used on the server. `/admin` (dev only) edits the curated data.
+- **First sync:** `--from 2026` only fetches the current season, so it's much quicker. Plain `pnpm sync` fetches every season since 2018, which can take hours the first time. Later syncs reuse the local cache and are much faster.
+- **Live matches:** these work locally out of the box, because the dev server proxies BWF's live API itself. The Cloudflare Worker is only needed for a hosted deployment.
+- **YouTube:** optional. Put a `YOUTUBE_API_KEY` in `.env.local` to enable the video links and live streams. It's only used on the server. Without it, the rest of the site works normally.
+- **Admin:** `/admin` (dev only) edits the curated data.
 
 ## How it works
 

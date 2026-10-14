@@ -2,6 +2,7 @@
   "name": "bwf",
   "version": "0.0.0",
   "private": true,
+  "license": "0BSD",
   "type": "module",
   "scripts": {
     "start": "vite",
