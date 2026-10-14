@@ -2,10 +2,12 @@ import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import https from 'node:https';
 import path from 'node:path';
+import { setTimeout as sleep } from 'node:timers/promises';
 
 import sharp from 'sharp';
 
 import { dayjs, nowIso } from '../scripts/sync/dates.ts';
+import { prettyJson } from '../scripts/sync/util.ts';
 import {
   imageAssetPath,
   imageSlot,
@@ -14,7 +16,7 @@ import {
   type ImageResult,
 } from '../src/pages/admin/schema.ts';
 import { formatBytes } from '../src/utils/format.ts';
-import { HttpError, readText, writeAtomic } from './http.ts';
+import { errorMessage, HttpError, readText, writeAtomic } from './http.ts';
 
 const MAX_BYTES = 40 * 1024 * 1024;
 const TIMEOUT_MS = 45_000;
@@ -83,8 +85,6 @@ interface OriginalMeta {
   encoded?: string;
 }
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const ruleFor = (host: string) => HOST_RULES.find((r) => r.test.test(host)) ?? DEFAULT_RULE;
 
 const headersFor = (profile: Profile, url: URL, rule: HostRule): Record<string, string> => ({
@@ -140,7 +140,7 @@ const networkReason = (e: unknown) => {
   if (e instanceof Error && (e.name === 'TimeoutError' || e.name === 'AbortError'))
     return `timed out after ${TIMEOUT_MS / 1000} s`;
   const cause = e instanceof Error ? (e.cause as { code?: string } | undefined) : undefined;
-  return cause?.code ?? (e instanceof Error ? e.message : String(e));
+  return cause?.code ?? errorMessage(e);
 };
 
 const readLimited = async (res: Fetched) => {
@@ -218,7 +218,7 @@ const rateLimited = (host: string, wait: number | null) =>
     `${host} is rate-limiting downloads (HTTP 429${wait ? `, retry after ${Math.ceil(wait / 1000)} s` : ''}). Try again later.`,
   );
 
-export const download = async (raw: string) => {
+const download = async (raw: string) => {
   const url = new URL(raw);
   const rule = ruleFor(url.hostname);
   const blocked = (blockedUntil.get(url.hostname) ?? 0) - Date.now();
@@ -308,7 +308,7 @@ export const createImageStore = (root: string) => {
     await fs.mkdir(originalsDir, { recursive: true });
     const meta: OriginalMeta = { url: original.url, bytes: original.data.length, at: nowIso(), encoded };
     if (!original.cached) await writeAtomic(originalFile(id, kind), original.data);
-    await writeAtomic(metaFile(id, kind), `${JSON.stringify(meta, null, 2)}\n`);
+    await writeAtomic(metaFile(id, kind), prettyJson(meta));
   };
 
   const removeStale = (id: string, kind: ImageKind) =>
@@ -370,5 +370,3 @@ export const createImageStore = (root: string) => {
 
   return { store, ensure };
 };
-
-export type ImageStore = ReturnType<typeof createImageStore>;

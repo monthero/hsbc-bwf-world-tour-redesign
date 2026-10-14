@@ -1,6 +1,7 @@
 import type { DatabaseSync } from 'node:sqlite';
 
 import { ISO_DAY, utcDay } from '../scripts/sync/dates.ts';
+import { push } from '../scripts/sync/util.ts';
 import type { NewsArticle, NewsBlock, NewsRun } from '../src/api/schemas.ts';
 import type { RetirementNews } from '../src/pages/admin/schema.ts';
 
@@ -55,7 +56,7 @@ export const retirementNews = (db: DatabaseSync) => {
   const byPlayer = new Map<string, RetirementNews[]>();
   for (const { player, id } of db.prepare(LINKS_SQL).all() as unknown as LinkRow[]) {
     const hit = articles.get(id);
-    if (hit) byPlayer.set(player, [...(byPlayer.get(player) ?? []), hit]);
+    if (hit) push(byPlayer, player, hit);
   }
   for (const list of byPlayer.values()) list.sort(byRelevance);
   return byPlayer;

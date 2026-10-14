@@ -9,6 +9,7 @@ import type { GeometryCollection, Topology } from 'topojson-specification';
 
 import { writeAtomic } from '../../server/http.ts';
 import { formatBytes } from '../../src/utils/format.ts';
+import { prettyJson } from '../sync/util.ts';
 
 type Ring = [number, number][];
 
@@ -61,5 +62,5 @@ const [ox, oy] = projection.translate();
 const map = { width: WIDTH, height, scale: projection.scale(), tx: ox, ty: oy };
 
 await writeAtomic(SVG_OUT, svg);
-await writeAtomic(MAP_OUT, `${JSON.stringify(map, null, 2)}\n`);
+await writeAtomic(MAP_OUT, prettyJson(map));
 console.log(`world-dots.svg ${formatBytes(Buffer.byteLength(svg))}, viewBox 0 0 ${WIDTH} ${height}`);

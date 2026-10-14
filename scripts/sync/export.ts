@@ -1,12 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { MonthKey, type EditionRef, type Retirement } from '../../src/api/schemas.ts';
+import { EventCode, MonthKey, type EditionRef, type Retirement } from '../../src/api/schemas.ts';
 import { imageAssetPath, ImageKind } from '../../src/pages/admin/schema.ts';
 import { parseHeightCm } from '../../src/utils/format.ts';
 import { dominantOffset, utcOffsetOf } from '../../src/utils/utc-offset.ts';
 import {
-  EVENTS,
   historyPath,
   RACE,
   RACE_CATEGORIES,
@@ -14,13 +13,13 @@ import {
   WORLD_CATEGORIES,
   type ApiHistory,
   type ApiHistoryRow,
-  type EventCode,
 } from './bwf.ts';
 import { dayjs } from './dates.ts';
 import { all, type Db } from './db.ts';
 import { createMapPlacer } from './geo.ts';
 import { FOREVER, type Client } from './http.ts';
 import type { Output } from './output.ts';
+import { groupBy, push, readOverrides } from './util.ts';
 
 interface Person {
   id: string;
@@ -135,25 +134,7 @@ const RANKING_TABLES = [
   { kind: 'race', id: RACE, categories: RACE_CATEGORIES, name: 'HSBC Race to Finals' },
 ] as const;
 
-interface Overrides {
-  players?: Record<
-    string,
-    {
-      name?: string;
-      retired?: string;
-      photo?: string;
-      hero?: string;
-      heroFocus?: { x: number; y: number };
-      photoCrop?: { x: number; y: number; zoom: number };
-      bio?: Record<string, string | number>;
-    }
-  >;
-}
-
-const readOverrides = (file: string): Overrides =>
-  fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, 'utf8')) as Overrides) : {};
-
-const EVENT_ORDER = ['MS', 'WS', 'MD', 'WD', 'XD'];
+const EVENT_ORDER: readonly string[] = EventCode.options;
 const FINAL = 'F';
 
 const titleCase = (s: string) =>
@@ -173,11 +154,7 @@ const withHeight = ({ height, ...rest }: Record<string, unknown>) => {
 
 const dayOffsets = (rows: readonly MatchRow[]) => {
   const byDay = new Map<string, (number | null)[]>();
-  for (const r of rows) {
-    const list = byDay.get(r.day) ?? [];
-    list.push(utcOffsetOf(r.day, r.time, r.time_utc));
-    byDay.set(r.day, list);
-  }
+  for (const r of rows) push(byDay, r.day, utcOffsetOf(r.day, r.time, r.time_utc));
   return Object.fromEntries(
     [...byDay].flatMap(([day, list]) => {
       const offset = dominantOffset(list);
@@ -206,7 +183,7 @@ export const exportData = async (
   );
   const editionOf = new Map(editions.map((e) => [e.code, e]));
 
-  const overrides = readOverrides(overridesFile).players ?? {};
+  const overrides = readOverrides(overridesFile);
   const nameOverride = (id: string) => overrides[id]?.name?.trim() || undefined;
   const missingAssets: string[] = [];
   const overrideAssets = new Map(
@@ -273,14 +250,9 @@ export const exportData = async (
   const byPlayer = new Map<string, { tournament: string; day: string; dto: MatchDto }[]>();
   for (const row of rows) {
     const dto = toDto(row);
-    const list = byEdition.get(row.edition) ?? [];
-    list.push({ row, dto });
-    byEdition.set(row.edition, list);
-    for (const p of dto.teams.flatMap((t) => t.players)) {
-      const career = byPlayer.get(p.id) ?? [];
-      career.push({ tournament: row.edition, day: row.day, dto });
-      byPlayer.set(p.id, career);
-    }
+    push(byEdition, row.edition, { row, dto });
+    for (const p of dto.teams.flatMap((t) => t.players))
+      push(byPlayer, p.id, { tournament: row.edition, day: row.day, dto });
   }
 
   const finalsOf = (code: string) =>
@@ -298,8 +270,7 @@ export const exportData = async (
         };
       });
 
-  const seasons = new Map<number, EditionRow[]>();
-  for (const e of editions) seasons.set(e.season, [...(seasons.get(e.season) ?? []), e]);
+  const seasons = groupBy(editions, (e) => e.season);
 
   const placer = createMapPlacer();
   const zoneOf = (e: EditionRow) => placer.zoneOf(e.city, e.country);
@@ -359,8 +330,7 @@ export const exportData = async (
     });
   }
 
-  const seriesEditions = new Map<string, EditionRow[]>();
-  for (const e of editions) seriesEditions.set(e.series_id, [...(seriesEditions.get(e.series_id) ?? []), e]);
+  const seriesEditions = groupBy(editions, (e) => e.series_id);
   for (const [id, list] of seriesEditions)
     write(`series/${id}.json`, {
       id,
@@ -512,7 +482,7 @@ export const exportData = async (
   for (const t of RANKING_TABLES) {
     const pub = pubs.get(t.id);
     if (!pub) continue;
-    const categories = Object.fromEntries(EVENTS.map((ev) => [ev, [] as RankingRowDto[]])) as Record<
+    const categories = Object.fromEntries(EventCode.options.map((ev) => [ev, [] as RankingRowDto[]])) as Record<
       EventCode,
       RankingRowDto[]
     >;

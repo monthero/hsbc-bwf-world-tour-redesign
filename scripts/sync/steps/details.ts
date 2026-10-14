@@ -1,7 +1,8 @@
 import { detailPath, type ApiTournamentDetail } from '../bwf.ts';
 import type { Context } from '../context.ts';
+import { DAY_MS } from '../dates.ts';
 import { all, tx } from '../db.ts';
-import { DAY_MS, FOREVER, pool, within } from '../http.ts';
+import { FOREVER, pool, within } from '../http.ts';
 
 const DAILY = within(DAY_MS);
 const PLACEHOLDER_SERIES = 1;

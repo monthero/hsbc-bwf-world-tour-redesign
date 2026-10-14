@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
-import { DatabaseSync } from 'node:sqlite';
 
+import { withDb, type Db } from '../scripts/sync/db.ts';
 import {
   BRANDS_FILE,
   brandId,
@@ -44,18 +44,9 @@ export const createEquipment = (ctx: EquipmentContext) => {
     brands: catalog.brands,
   });
 
-  const withDb = <T>(readOnly: boolean, run: (db: DatabaseSync) => T) => {
-    const db = new DatabaseSync(ctx.dbFile, { readOnly });
-    try {
-      return run(db);
-    } finally {
-      db.close();
-    }
-  };
-
   let seededAt = '';
 
-  const reseed = (db: DatabaseSync, catalog = readCatalog(ctx.dataDir)) => {
+  const reseed = (db: Db, catalog = readCatalog(ctx.dataDir)) => {
     seedCatalog(db, catalog);
     seededAt = mtime();
   };
@@ -63,8 +54,8 @@ export const createEquipment = (ctx: EquipmentContext) => {
   const list = (kind: EquipmentKind): EquipmentList => {
     if (!fs.existsSync(ctx.dbFile)) return fromJson(kind);
     try {
-      if (mtime() !== seededAt) withDb(false, (db) => reseed(db));
-      const found = withDb(true, (db) => queryCatalog(db, kind)) as EquipmentList;
+      if (mtime() !== seededAt) withDb(ctx.dbFile, false, (db) => reseed(db));
+      const found = withDb(ctx.dbFile, true, (db) => queryCatalog(db, kind)) as EquipmentList;
       return found.rows.length ? found : fromJson(kind);
     } catch {
       return fromJson(kind);
@@ -76,7 +67,7 @@ export const createEquipment = (ctx: EquipmentContext) => {
     await writeAtomic(brandsFile, serializeBrands(next.brands));
     await writeAtomic(itemsFile, serializeItems(next.items));
     if (!fs.existsSync(ctx.dbFile)) return fromJson(kind, next);
-    return withDb(false, (db) => {
+    return withDb(ctx.dbFile, false, (db) => {
       reseed(db, next);
       return queryCatalog(db, kind) as EquipmentList;
     });

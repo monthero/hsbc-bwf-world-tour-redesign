@@ -1,6 +1,7 @@
-import fs from 'node:fs';
 import path from 'node:path';
 import type { DatabaseSync } from 'node:sqlite';
+
+import { collapseSpaces, fold, prettyJson, readJsonFile } from './util.ts';
 
 export interface BrandItem {
   id: string;
@@ -47,12 +48,12 @@ CREATE TABLE IF NOT EXISTS equipment (
 );
 `;
 
-const fold = (s: string) => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/\s+/g, ' ').trim();
+const foldKey = (s: string) => collapseSpaces(fold(s));
 
-export const compactKey = (s: string) => fold(s).replace(/[^a-z0-9]/g, '');
+export const compactKey = (s: string) => foldKey(s).replace(/[^a-z0-9]/g, '');
 
 export const brandId = (name: string) =>
-  fold(name)
+  foldKey(name)
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 
@@ -63,7 +64,7 @@ const byText = (a: string, b: string) => a.localeCompare(b, 'en', { numeric: tru
 const compareItems = (a: EquipmentItem, b: EquipmentItem) =>
   byText(a.kind, b.kind) || byText(a.brand, b.brand) || byText(a.model, b.model);
 
-export const itemKey = (e: EquipmentItem) => [e.kind, e.brand, e.model].map(fold).join('\u0000');
+export const itemKey = (e: EquipmentItem) => [e.kind, e.brand, e.model].map(foldKey).join('\u0000');
 
 const exactKey = (e: EquipmentItem) => [e.kind, e.brand, e.model].join('\u0000');
 
@@ -71,20 +72,16 @@ const pickItem = ({ kind, brand, model }: EquipmentItem): EquipmentItem => ({ ki
 
 const pickBrand = ({ id, name, aliases }: BrandItem): BrandItem => ({ id, name, aliases: aliases ?? [] });
 
-const readJson = <T>(file: string): T[] =>
-  fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, 'utf8')) as T[]) : [];
-
 export const readCatalog = (dir: string): Catalog => ({
-  brands: readJson<BrandItem>(path.join(dir, BRANDS_FILE)).map(pickBrand),
-  items: readJson<EquipmentItem>(path.join(dir, EQUIPMENT_FILE)).map(pickItem),
+  brands: readJsonFile<BrandItem[]>(path.join(dir, BRANDS_FILE), []).map(pickBrand),
+  items: readJsonFile<EquipmentItem[]>(path.join(dir, EQUIPMENT_FILE), []).map(pickItem),
 });
 
-const json = (value: unknown) => `${JSON.stringify(value, null, 2)}\n`;
-
 export const serializeBrands = (brands: readonly BrandItem[]) =>
-  json([...brands].map(pickBrand).sort((a, b) => byText(a.name, b.name)));
+  prettyJson([...brands].map(pickBrand).sort((a, b) => byText(a.name, b.name)));
 
-export const serializeItems = (items: readonly EquipmentItem[]) => json([...items].map(pickItem).sort(compareItems));
+export const serializeItems = (items: readonly EquipmentItem[]) =>
+  prettyJson([...items].map(pickItem).sort(compareItems));
 
 const nameOf = (brand: string, e: EquipmentItem) => `${brand} ${e.model}`;
 

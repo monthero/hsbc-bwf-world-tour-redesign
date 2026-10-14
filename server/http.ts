@@ -14,6 +14,8 @@ export class HttpError extends Error {
   }
 }
 
+export const errorMessage = (e: unknown) => (e instanceof Error ? e.message : String(e));
+
 export const sendJson = (res: ServerResponse, status: number, body: unknown, cache = 'no-store') => {
   res.statusCode = status;
   res.setHeader('content-type', 'application/json');

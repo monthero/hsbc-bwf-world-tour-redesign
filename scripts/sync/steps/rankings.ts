@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import { resolve } from 'node:path';
 
 import {
@@ -19,19 +18,21 @@ import {
   type ApiRankingTable,
 } from '../bwf.ts';
 import type { Context } from '../context.ts';
+import { DAY_MS, HOUR_MS } from '../dates.ts';
 import { all, tx } from '../db.ts';
-import { DAY_MS, FOREVER, pool, within, type Cached } from '../http.ts';
+import { FOREVER, pool, within, type Cached } from '../http.ts';
 import { photoOf } from '../normalize.ts';
+import { collapseSpaces, readJsonFile } from '../util.ts';
 
-const PUBLICATION_REFRESH = within(6 * 3_600_000);
+const PUBLICATION_REFRESH = within(6 * HOUR_MS);
 const LIST_REFRESH = within(7 * DAY_MS);
 const DOUBLES = new Set(['MD', 'WD', 'XD']);
 const PAGE_SIZES = [1000, 100, 10, 1];
 const SPLIT_RETRIES = 1;
 
-const COUNTRIES = JSON.parse(
-  fs.readFileSync(resolve(import.meta.dirname, '../../../src/utils/countries.json'), 'utf8'),
-) as Record<string, { name: string }>;
+const COUNTRIES = readJsonFile<Record<string, { name: string }>>(
+  resolve(import.meta.dirname, '../../../src/utils/countries.json'),
+);
 
 const ALIASES: Record<string, string> = {
   Turkiye: 'TUR',
@@ -49,11 +50,7 @@ const CODE_OF = new Map([
   ...Object.entries(ALIASES),
 ]);
 
-const plainName = (html: string | null | undefined) =>
-  (html ?? '')
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+const plainName = (html: string | null | undefined) => collapseSpaces((html ?? '').replace(/<[^>]*>/g, ' '));
 
 const unmapped = new Map<string, number>();
 

@@ -1,7 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-import { dayjs, nowIso } from '../scripts/sync/dates.ts';
+import { dayjs, HOUR_MS, nowIso } from '../scripts/sync/dates.ts';
+import { fold } from '../scripts/sync/util.ts';
+import type { MediaItem, MediaKind, TournamentMedia } from '../src/api/schemas.ts';
 import { readJson } from './http.ts';
 
 const API = 'https://www.googleapis.com/youtube/v3';
@@ -11,51 +13,11 @@ const PAGE_SIZE = 50;
 const MAX_PLAYLIST_PAGES = 4;
 const MAX_UPLOAD_PAGES = 3;
 const UPLOADS_LOOKBACK_DAYS = 2;
-const HOUR_MS = 3_600_000;
 const REFRESH_MIN_AGE_MS = 60_000;
 const SETTLE_DAYS = 2;
 const FULL_MATCH_MIN_SEC = 25 * 60;
 const SHORT_MAX_SEC = 180;
 const ROUNDS = new Set(['R64', 'R32', 'R16', 'QF', 'SF', 'F']);
-
-export type MediaKind =
-  | 'full_match'
-  | 'highlights'
-  | 'court_stream'
-  | 'play_of_the_day'
-  | 'top_shots'
-  | 'short'
-  | 'promo'
-  | 'other';
-
-export type MediaLive = 'none' | 'upcoming' | 'live';
-
-export interface RegionRestriction {
-  allowed?: string[];
-  blocked?: string[];
-}
-
-export interface MediaItem {
-  id: string;
-  title: string;
-  kind: MediaKind;
-  publishedAt: string;
-  durationSec: number | null;
-  live: MediaLive;
-  sides: [string[], string[]] | null;
-  round: string | null;
-  day: number | null;
-  court: number | null;
-  scheduledAt: string | null;
-  region: RegionRestriction | null;
-}
-
-export interface TournamentMedia {
-  code: string;
-  playlistId: string | null;
-  fetchedAt: string;
-  items: MediaItem[];
-}
 
 export interface MediaEvent {
   code: string;
@@ -87,15 +49,14 @@ interface UploadItem {
 interface Video {
   id: string;
   snippet: { title: string; publishedAt: string; tags?: string[]; liveBroadcastContent?: string };
-  contentDetails?: { duration?: string; regionRestriction?: RegionRestriction };
+  contentDetails?: { duration?: string; regionRestriction?: NonNullable<MediaItem['region']> };
   liveStreamingDetails?: { scheduledStartTime?: string };
 }
 
-const fold = (s: string) =>
-  s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().replace(/ø/g, 'o').replace(/æ/g, 'ae').replace(/ß/g, 'ss');
+const foldLetters = (s: string) => fold(s).replace(/ø/g, 'o').replace(/æ/g, 'ae').replace(/ß/g, 'ss');
 
 const tokens = (s: string) =>
-  fold(s)
+  foldLetters(s)
     .split(/[^a-z0-9]+/)
     .filter(Boolean);
 
@@ -203,7 +164,7 @@ const classify = (v: Video, sec: number | null): MediaKind => {
   return 'other';
 };
 
-const liveOf = (v: Video): MediaLive => {
+const liveOf = (v: Video): MediaItem['live'] => {
   const s = v.snippet.liveBroadcastContent;
   return s === 'live' || s === 'upcoming' ? s : 'none';
 };
@@ -243,7 +204,7 @@ const videosOf = async (key: string, ids: string[]) => {
   return out;
 };
 
-export const fetchTournamentMedia = async (key: string, e: MediaEvent): Promise<TournamentMedia> => {
+const fetchTournamentMedia = async (key: string, e: MediaEvent): Promise<TournamentMedia> => {
   const playlistId = await findPlaylist(key, e);
   const entries = playlistId
     ? await allPages<PlaylistItem>(key, 'playlistItems', { part: 'contentDetails', playlistId })
@@ -262,7 +223,7 @@ export const fetchTournamentMedia = async (key: string, e: MediaEvent): Promise<
 
 const isEventTitle = (e: MediaEvent, title: string) => playlistScore(e, title) > 0;
 
-export const fetchTournamentStreams = async (key: string, e: MediaEvent, catalog: TournamentMedia) => {
+const fetchTournamentStreams = async (key: string, e: MediaEvent, catalog: TournamentMedia) => {
   const since = (catalog.playlistId ? dayjs.utc() : dayjs.utc(e.start))
     .subtract(UPLOADS_LOOKBACK_DAYS, 'day')
     .toISOString();

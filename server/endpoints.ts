@@ -26,15 +26,10 @@ export const vitePlugin = ({ name, prefix, serve }: Endpoint): Plugin => {
     if (rejectMethod(req, res)) return;
     serve(new URL(req.url ?? '/', LOCAL), res, req).catch(next);
   };
-  return {
-    name,
-    configureServer: (server) => {
-      server.middlewares.use(prefix, handler);
-    },
-    configurePreviewServer: (server) => {
-      server.middlewares.use(prefix, handler);
-    },
+  const mount = (server: { middlewares: Connect.Server }) => {
+    server.middlewares.use(prefix, handler);
   };
+  return { name, configureServer: mount, configurePreviewServer: mount };
 };
 
 export const vercelFunction =

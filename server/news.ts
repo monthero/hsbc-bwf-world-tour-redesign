@@ -2,7 +2,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
 
-import { dayjs, nowIso } from '../scripts/sync/dates.ts';
+import { DAY_MS, dayjs, HOUR_MS, MINUTE_MS, nowIso } from '../scripts/sync/dates.ts';
+import { fold, groupBy } from '../scripts/sync/util.ts';
 import type {
   NewsArticle,
   NewsImage,
@@ -13,25 +14,21 @@ import type {
   NewsSite,
   NewsTournament,
 } from '../src/api/schemas.ts';
+import { BWF_SITE, BWF_USER_AGENT } from './bwf-upstream.ts';
 import { readJson } from './http.ts';
-import { createArticleBuilder } from './news-blocks.ts';
-import type { PlayerName } from './news-players.ts';
+import { createArticleBuilder, decodeCommon } from './news-blocks.ts';
+import { NEWS_RANKED_TOP, withRanked, type PlayerName } from './news-players.ts';
 
 const CMS = 'https://cms.bwfbadminton.com/wp-json';
 const LIST = `${CMS}/newsapi/v1/category/world-tour`;
-const WT = 'https://bwfworldtour.bwfbadminton.com';
-const USER_AGENT = 'Mozilla/5.0 (compatible; bwf-tracker-dev/0.1)';
 const RETRIES = 3;
 const TIMEOUT_MS = 30_000;
-const MINUTE_MS = 60_000;
-const HOUR_MS = 60 * MINUTE_MS;
-const DAY_MS = 24 * HOUR_MS;
 const EXCERPT_MAX = 220;
 const EXCERPT_MIN = 40;
 
 export const NEWS_FREEZE_MS = 30 * DAY_MS;
 export const NEWS_LATEST = 12;
-export const NEWS_POPULAR = 5;
+const NEWS_POPULAR = 5;
 
 const SITES: Record<string, NewsSite> = { 'World Tour': 'world-tour', 'World Tour Finals': 'world-tour-finals' };
 
@@ -93,7 +90,7 @@ const request = async (
     let retryable = true;
     try {
       const res = await fetch(url, {
-        headers: { 'User-Agent': USER_AGENT, Accept: accept },
+        headers: { 'User-Agent': BWF_USER_AGENT, Accept: accept },
         signal: AbortSignal.timeout(timeoutMs),
       });
       const text = await res.text();
@@ -112,6 +109,11 @@ const request = async (
 export const fetchNewsPage = async (page: number, perPage: number, opts?: NewsRequest) =>
   JSON.parse(await request(`${LIST}?per_page=${perPage}&page=${page}`, 'application/json', opts)) as RawNewsPage;
 
+const fetchNewsPost = async (id: number, opts?: NewsRequest) => {
+  const posts = JSON.parse(await request(`${CMS}/newsapi/v1/post/${id}`, 'application/json', opts)) as RawNews[];
+  return posts[0] ?? null;
+};
+
 export const fetchNewsBySlug = async (slug: string, opts?: NewsRequest) => {
   const hits = JSON.parse(
     await request(`${CMS}/wp/v2/posts?slug=${encodeURIComponent(slug)}&_fields=id`, 'application/json', opts),
@@ -120,45 +122,24 @@ export const fetchNewsBySlug = async (slug: string, opts?: NewsRequest) => {
   return id ? fetchNewsPost(id, opts) : null;
 };
 
-export const fetchNewsPost = async (id: number, opts?: NewsRequest) => {
-  const posts = JSON.parse(await request(`${CMS}/newsapi/v1/post/${id}`, 'application/json', opts)) as RawNews[];
-  return posts[0] ?? null;
-};
-
 const SIDEBAR = /widget__latest-news([\s\S]*?)<\/aside>/;
 const SINGLE = /news-single\/\d{4}\/\d{2}\/\d{2}\/([^/"]+)/g;
 
 export const fetchPopularSlugs = async (opts?: NewsRequest) => {
-  const html = await request(`${WT}/news/`, 'text/html', opts);
+  const html = await request(`${BWF_SITE}/news/`, 'text/html', opts);
   const side = html.match(SIDEBAR)?.[1];
   if (side === undefined)
     throw new Error(
-      `${WT}/news/ has no popular sidebar (${html.length} bytes${CHALLENGE.test(html) ? ', a Cloudflare challenge page' : ''})`,
+      `${BWF_SITE}/news/ has no popular sidebar (${html.length} bytes${CHALLENGE.test(html) ? ', a Cloudflare challenge page' : ''})`,
     );
   const slugs = [...new Set([...side.matchAll(SINGLE)].map((m) => decodeURIComponent(m[1] ?? '')))]
     .filter(Boolean)
     .slice(0, NEWS_POPULAR);
-  if (!slugs.length) throw new Error(`${WT}/news/ popular sidebar has no article links`);
+  if (!slugs.length) throw new Error(`${BWF_SITE}/news/ popular sidebar has no article links`);
   return slugs;
 };
 
-const ENTITIES: Record<string, string> = { amp: '&', quot: '"', apos: "'", lt: '<', gt: '>', nbsp: ' ' };
-
-const decode = (s: string) =>
-  s
-    .replace(/&#(\d+);/g, (_, n: string) => String.fromCodePoint(Number(n)))
-    .replace(/&#x([0-9a-f]+);/gi, (_, n: string) => String.fromCodePoint(Number.parseInt(n, 16)))
-    .replace(/&(amp|quot|apos|lt|gt|nbsp);/g, (_, n: string) => ENTITIES[n] ?? '');
-
-const fold = (s: string) => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
-
 const uniq = <T>(xs: T[]) => [...new Set(xs)];
-
-const groupBy = <T>(xs: T[], key: (x: T) => string) => {
-  const out = new Map<string, T[]>();
-  for (const x of xs) out.set(key(x), [...(out.get(key(x)) ?? []), x]);
-  return out;
-};
 
 const utcOf = (s: string) => dayjs.utc(s);
 
@@ -166,19 +147,19 @@ export const publishedMs = (raw: RawNews) => utcOf(raw.dateutc).valueOf();
 
 export const newsMonthOf = (item: Pick<NewsItem, 'publishedAt'>) => item.publishedAt.slice(0, 7);
 
-const slugOf = (link: string) => decodeURIComponent(link.split('/').filter(Boolean).at(-1) ?? '');
+export const newsSlugOf = (link: string) => decodeURIComponent(link.split('/').filter(Boolean).at(-1) ?? '');
 
 const CLOUDINARY = /\/v(\d+)\/(.+)\/[^/]+?\.(\w+)$/;
 
 const imageOf = (raw: RawNews): NewsImage | null => {
   const m = raw.image?.full?.match(CLOUDINARY);
   if (!m?.[1] || !m[2] || !m[3]) return null;
-  const caption = raw.image?.caption ? decode(raw.image.caption).trim() : '';
+  const caption = raw.image?.caption ? decodeCommon(raw.image.caption).trim() : '';
   return { id: m[2], v: Number(m[1]), ext: m[3], caption: caption || null };
 };
 
 const excerptOf = (content: string) => {
-  const text = decode(
+  const text = decodeCommon(
     content
       .replace(/\[caption[\s\S]*?\[\/caption\]/g, '')
       .replace(/<script[\s\S]*?<\/script>/g, '')
@@ -212,7 +193,7 @@ export const createNewsLinker = (events: NewsEvent[], series: NewsSeries[]) => {
   return (raw: RawNews): NewsItem | null => {
     const site = SITES[raw.destination];
     if (!site || !raw.link) return null;
-    const title = decode(raw.title).trim();
+    const title = decodeCommon(raw.title).trim();
     const publishedAt = utcOf(raw.dateutc).toISOString();
     const linked = uniq([...raw.content.matchAll(TOURNAMENT_LINK)].map((m) => byTmt.get(Number(m[1]))))
       .filter((e) => e !== undefined)
@@ -222,13 +203,13 @@ export const createNewsLinker = (events: NewsEvent[], series: NewsSeries[]) => {
     const fallback = !linked.length && sameYear.length === 1 ? sameYear : [];
     const tournaments = linked.length ? linked : fallback;
     const linkedSeries = uniq(tournaments.map((t) => t.series));
-    const slug = slugOf(raw.link);
+    const slug = newsSlugOf(raw.link);
     return {
       id: String(raw.id),
       slug,
       title,
       publishedAt,
-      url: `${WT}/news-single/${raw.date.slice(0, 10).replaceAll('-', '/')}/${encodeURIComponent(slug)}/`,
+      url: `${BWF_SITE}/news-single/${raw.date.slice(0, 10).replaceAll('-', '/')}/${encodeURIComponent(slug)}/`,
       site,
       feature: raw.category?.some((c) => c.slug === 'feature-stories') ?? false,
       image: imageOf(raw),
@@ -249,7 +230,6 @@ export const monthCounts = (items: NewsItem[]): NewsMonthCount[] =>
     .sort((a, b) => b.month.localeCompare(a.month));
 
 const LIVE_PAGE = 30;
-const RANKED_TOP = 200;
 
 interface DirectoryPlayer {
   name: string;
@@ -286,11 +266,7 @@ export const isNewsMonth = (m: string) => MONTH.test(m);
 export const isSettledNewsMonth = (month: string) =>
   month < dayjs.utc().subtract(NEWS_FREEZE_MS, 'millisecond').format('YYYY-MM');
 
-export const isSettledNewsTournament = (end: string) =>
-  dayjs.utc(end).add(NEWS_FREEZE_MS, 'millisecond').isBefore(dayjs.utc());
-
-export const isSettledNewsArticle = (publishedAt: string) =>
-  dayjs.utc(publishedAt).add(NEWS_FREEZE_MS, 'millisecond').isBefore(dayjs.utc());
+const isSettledNews = (at: string) => dayjs.utc(at).add(NEWS_FREEZE_MS, 'millisecond').isBefore(dayjs.utc());
 
 export const newsOfTournament = (items: NewsItem[], code: string) => items.filter((i) => i.tournaments.includes(code));
 
@@ -360,7 +336,7 @@ export const createNewsService = (root: string) => {
     const event = (await events()).find((e) => e.code === code);
     if (!event) return null;
     const snap = (await readJson<NewsTournament>(path.join(newsDir, 'tournaments', `${code}.json`)))?.items ?? [];
-    const settled = isSettledNewsTournament(event.end);
+    const settled = isSettledNews(event.end);
     const items = settled ? snap : merge(snap, newsOfTournament(await head(), code));
     return { news: { code, items }, settled };
   };
@@ -383,7 +359,7 @@ export const createNewsService = (root: string) => {
     const entries = Object.entries(file?.players ?? {});
     const namesOf = new Map(entries.map(([id, p]) => [id, [p.name, p.aka ?? ''].filter(Boolean)]));
     const ranked = entries
-      .filter(([, p]) => p.ranks?.some((r) => r.r !== null && r.r <= RANKED_TOP))
+      .filter(([, p]) => p.ranks?.some((r) => r.r !== null && r.r <= NEWS_RANKED_TOP))
       .map(([id]): PlayerName => ({ id, names: namesOf.get(id) ?? [] }));
     return { namesOf, ranked };
   });
@@ -398,18 +374,17 @@ export const createNewsService = (root: string) => {
       for (const m of Object.values(f?.days ?? {}).flat())
         for (const p of m.teams.flatMap((t) => t.players))
           entrants.set(p.id, (entrants.get(p.id) ?? new Set(namesOf.get(p.id))).add(p.name));
-    if (!entrants.size) return ranked;
-    return [
-      ...[...entrants].map(([id, names]) => ({ id, names: [...names] })),
-      ...ranked.filter((p) => !entrants.has(p.id)),
-    ];
+    return withRanked(
+      [...entrants].map(([id, names]) => ({ id, names: [...names] })),
+      ranked,
+    );
   };
 
   const liveArticles = new Map<string, { at: number; article: NewsArticle }>();
 
   const article = async (id: string): Promise<{ article: NewsArticle; settled: boolean } | null> => {
     const snap = await readJson<NewsArticle>(path.join(newsDir, 'articles', `${id}.json`));
-    if (snap && isSettledNewsArticle(snap.publishedAt)) return { article: snap, settled: true };
+    if (snap && isSettledNews(snap.publishedAt)) return { article: snap, settled: true };
     const hit = liveArticles.get(id);
     if (hit && Date.now() - hit.at < LIVE_TTL_MS) return { article: hit.article, settled: false };
     const raw = await fetchNewsPost(Number(id)).catch(() => null);
@@ -418,7 +393,7 @@ export const createNewsService = (root: string) => {
     if (!raw || !item) return snap ? { article: snap, settled: false } : null;
     const fresh = build(raw, item, await candidatesFor(item.tournaments));
     liveArticles.set(id, { at: Date.now(), article: fresh });
-    return { article: fresh, settled: isSettledNewsArticle(fresh.publishedAt) };
+    return { article: fresh, settled: isSettledNews(fresh.publishedAt) };
   };
 
   return { index, month, tournament, article };

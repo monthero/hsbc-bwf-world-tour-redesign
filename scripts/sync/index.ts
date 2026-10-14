@@ -38,12 +38,15 @@ const from = Number(values.from ?? FIRST_SEASON);
 const only = new Set(values.only?.split(',') ?? STEPS);
 
 const OVERRIDES = path.join(ROOT, 'data/overrides.json');
+const CATALOG = path.join(ROOT, 'data/catalog.json');
+const OUT = path.join(ROOT, 'public/data');
+const offline = values.offline;
 
 const db = openDb(values.db ? path.resolve(values.db) : path.join(ROOT, 'data/bwf.sqlite'), path.join(ROOT, 'data'));
 const ctx: Context = {
   db,
-  client: createClient(db, { offline: values.offline }),
-  catalog: loadCatalog(path.join(ROOT, 'data/catalog.json')),
+  client: createClient(db, { offline }),
+  catalog: loadCatalog(CATALOG),
   years: Array.from({ length: currentYear - from + 2 }, (_, i) => from + i),
   currentYear,
   today,
@@ -57,13 +60,14 @@ if (only.has('players')) await syncPlayers(ctx);
 if (only.has('rankings')) await syncRankings(ctx);
 if (only.has('news'))
   await syncNews(ctx, {
-    offline: values.offline ?? false,
-    catalogFile: path.join(ROOT, 'data/catalog.json'),
+    offline,
+    catalogFile: CATALOG,
+    overridesFile: OVERRIDES,
     maxPages: values['news-pages'] ? Number(values['news-pages']) : undefined,
   });
-if (only.has('images')) await syncImages(ROOT, OVERRIDES, values.offline ?? false);
+if (only.has('images')) await syncImages(ROOT, OVERRIDES, offline);
 if (only.has('export')) {
-  const output = createOutput(path.join(ROOT, 'public/data'));
+  const output = createOutput(OUT);
   await exportData(
     db,
     ctx.client,
@@ -74,7 +78,7 @@ if (only.has('export')) {
     output,
   );
   exportNews(db, output);
-  exportPlayerMedia(db, output, path.join(ROOT, 'public/data'), path.join(ROOT, 'data/media'));
+  exportPlayerMedia(db, output, OUT, path.join(ROOT, 'data/media'));
   const pruned = output.prune();
   if (pruned) console.log(`export: removed ${pruned} stale files`);
 }

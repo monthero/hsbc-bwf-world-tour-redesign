@@ -1,6 +1,5 @@
-import fs from 'node:fs';
-
 import type { ApiTournament } from './bwf.ts';
+import { collapseSpaces, fold, readJsonFile } from './util.ts';
 
 interface SeriesDef {
   id: string;
@@ -46,21 +45,17 @@ const STATUS_NOTE = /\s*\((?:cancell?ed|new dates|postponed|formerly [^)]*)\)\s*
 const YEAR = /\b(?:19|20)\d{2}\b/g;
 const TAIL = /\s+((?:powered|presented)\s+by\s+.+|by\s+[A-Z]{3,}.*)$/;
 
-export const fold = (s: string) => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
-
-export const slugify = (s: string) =>
+const slugify = (s: string) =>
   fold(s)
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
-
-const clean = (s: string) => s.replace(/\s+/g, ' ').trim();
 
 const versionOf = (url: string | null) => url?.match(/\/v(\d+)\//)?.[1] ?? '';
 
 const day = (s: string) => s.slice(0, 10);
 
 export const loadCatalog = (file: string) => {
-  const raw = JSON.parse(fs.readFileSync(file, 'utf8')) as CatalogFile;
+  const raw = readJsonFile<CatalogFile>(file);
   const series = raw.series.map((s) => ({ ...s, re: new RegExp(s.match, 'i') }));
   const unknown = new Set<string>();
 
@@ -85,9 +80,9 @@ export const loadCatalog = (file: string) => {
   const edition = (t: ApiTournament, calendarYear: number): Edition | null => {
     const level = LEVELS.find(([re]) => re.test(t.category))?.[1];
     if (!level) return null;
-    const named = clean(t.name.replace(STATUS_NOTE, ' '));
+    const named = collapseSpaces(t.name.replace(STATUS_NOTE, ' '));
     const nameYear = Number(named.match(YEAR)?.[0]);
-    const title = clean(named.replace(YEAR, ' '));
+    const title = collapseSpaces(named.replace(YEAR, ' '));
     const tail = title.match(TAIL);
     const core = tail ? title.slice(0, tail.index) : title;
     const s = seriesOf(core);

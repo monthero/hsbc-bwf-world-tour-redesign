@@ -17,6 +17,7 @@ import { linkMedia, type LinkMatch } from '../../src/utils/media-link.ts';
 import { surnameOf } from '../../src/utils/surname.ts';
 import { all, type Db } from './db.ts';
 import type { Output } from './output.ts';
+import { push, readJsonFile } from './util.ts';
 
 const LINKS_SQL = `
 SELECT player_id AS player, news_id AS id FROM news_players
@@ -28,14 +29,12 @@ interface DtoMatch extends LinkMatch {
   dto: MatchDto;
 }
 
-const readFile = (file: string): unknown => (fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null);
-
 const toTeam = (t: MatchDto['teams'][number]) => ({
   players: t.players.map((p) => ({ name: p.name, surname: surnameOf(p.name) })),
 });
 
 const matchesOf = (file: string): DtoMatch[] => {
-  const parsed = TournamentMatches.safeParse(readFile(file));
+  const parsed = TournamentMatches.safeParse(readJsonFile<unknown>(file, null));
   if (!parsed.success) return [];
   return Object.entries(parsed.data.days).flatMap(([day, list]) =>
     list.map((dto, i) => ({
@@ -45,12 +44,6 @@ const matchesOf = (file: string): DtoMatch[] => {
       dto,
     })),
   );
-};
-
-const push = <T>(map: Map<string, T[]>, key: string, value: T) => {
-  const list = map.get(key);
-  if (list) list.push(value);
-  else map.set(key, [value]);
 };
 
 const refsOf = (item: MediaItem, m: MatchDto, code: string) => {
@@ -74,7 +67,7 @@ const refsOf = (item: MediaItem, m: MatchDto, code: string) => {
 };
 
 const tournamentRefs = (file: string, dataDir: string) => {
-  const media = TournamentMedia.safeParse(readFile(file));
+  const media = TournamentMedia.safeParse(readJsonFile<unknown>(file, null));
   if (!media.success) return [];
   const { code, items } = media.data;
   const { matchOf } = linkMedia(items, matchesOf(path.join(dataDir, `tournaments/${code}.json`)));

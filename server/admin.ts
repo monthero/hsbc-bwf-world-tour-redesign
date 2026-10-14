@@ -1,10 +1,12 @@
 import { spawn } from 'node:child_process';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import path from 'node:path';
-import { DatabaseSync } from 'node:sqlite';
 
 import type { Connect, Plugin } from 'vite';
 
+import { WORLD, WORLD_CATEGORIES } from '../scripts/sync/bwf.ts';
+import { withDb } from '../scripts/sync/db.ts';
+import { prettyJson } from '../scripts/sync/util.ts';
 import { EventCode } from '../src/api/schemas.ts';
 import {
   BulkRequest,
@@ -21,12 +23,10 @@ import {
   type SaveResult,
 } from '../src/pages/admin/schema.ts';
 import { createEquipment } from './equipment.ts';
-import { HttpError, parseWith, readBody, readText, sendJson, writeAtomic } from './http.ts';
+import { errorMessage, HttpError, parseWith, readBody, readText, sendJson, writeAtomic } from './http.ts';
 import { createImageStore } from './images.ts';
 import { retirementNews } from './retirement.ts';
 
-const WORLD = 2;
-const FIRST_WORLD_CATEGORY = 6;
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
 const EXPORT_ARGS = ['--disable-warning=ExperimentalWarning', 'scripts/sync/index.ts', '--only', 'export', '--offline'];
 const PLAYERS_ROUTE = '/overrides/players';
@@ -77,7 +77,7 @@ const lastTournamentOf = (r: PlayerRow): AdminPlayer['lastTournament'] =>
 
 const NO_NEWS: AdminPlayer['retirementNews'] = [];
 
-const eventOfCategory = (category: number) => EventCode.options[category - FIRST_WORLD_CATEGORY] ?? null;
+const eventOfCategory = (category: number) => WORLD_CATEGORIES[category] ?? null;
 
 const eventsOf = (row: PlayerRow) => {
   const played = new Set(row.events?.split(',') ?? []);
@@ -109,7 +109,7 @@ const serialize = (file: OverridesFile) => {
         return entry ? [[id, entry]] : [];
       }),
   );
-  return `${JSON.stringify({ ...file, players }, null, 2)}\n`;
+  return prettyJson({ ...file, players });
 };
 
 const tail = (text: string, lines = 12) => text.trim().split('\n').slice(-lines).join('\n');
@@ -150,8 +150,7 @@ const createAdmin = (root: string) => {
 
   const listPlayers = async () => {
     const overrides = (await readOverrides()).players;
-    const db = new DatabaseSync(dbFile, { readOnly: true });
-    try {
+    return withDb(dbFile, true, (db) => {
       const rows = db.prepare(PLAYERS_SQL).all() as unknown as PlayerRow[];
       const news = retirementNews(db);
       const players = rows.map((r): AdminPlayer => ({
@@ -170,9 +169,7 @@ const createAdmin = (root: string) => {
         override: overrides[r.id] ?? null,
       }));
       return { players };
-    } finally {
-      db.close();
-    }
+    });
   };
 
   const savePlayer = (id: string, body: unknown) => {
@@ -232,7 +229,7 @@ const createAdmin = (root: string) => {
   const handler: Connect.NextHandleFunction = (req, res) => {
     route(req, res).catch((e: unknown) => {
       const status = e instanceof HttpError ? e.status : 500;
-      sendJson(res, status, { error: e instanceof Error ? e.message : String(e) });
+      sendJson(res, status, { error: errorMessage(e) });
     });
   };
   return handler;

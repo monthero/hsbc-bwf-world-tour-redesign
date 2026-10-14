@@ -1,12 +1,10 @@
+import type { EventCode } from '../../src/api/schemas.ts';
 import { query } from './http.ts';
 
-export const CATEGORIES = [22, 23, 24, 25, 26] as const;
+const CATEGORIES = [22, 23, 24, 25, 26] as const;
 
 export const WORLD = 2;
 export const RACE = 9;
-
-export const EVENTS = ['MS', 'WS', 'MD', 'WD', 'XD'] as const;
-export type EventCode = (typeof EVENTS)[number];
 
 export const WORLD_CATEGORIES: Record<number, EventCode> = { 6: 'MS', 7: 'WS', 8: 'MD', 9: 'WD', 10: 'XD' };
 export const RACE_CATEGORIES: Record<number, EventCode> = { 57: 'MS', 58: 'WS', 59: 'MD', 60: 'WD', 61: 'XD' };
@@ -93,7 +91,7 @@ export interface ApiPublication {
   date: string;
 }
 
-export interface ApiRankingPlayer {
+interface ApiRankingPlayer {
   name_display_bold: string | null;
   avatar: { url_cloudinary: string | null } | null;
 }

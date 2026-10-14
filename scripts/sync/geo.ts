@@ -1,5 +1,6 @@
-import fs from 'node:fs';
 import path from 'node:path';
+
+import { readJsonFile } from './util.ts';
 
 interface City {
   country: string;
@@ -30,8 +31,6 @@ const A3 = 0.000893;
 const A4 = 0.003796;
 const M = Math.sqrt(3) / 2;
 
-const readJson = (file: string): unknown => JSON.parse(fs.readFileSync(path.join(DATA, file), 'utf8'));
-
 const round1 = (n: number) => Math.round(n * 10) / 10;
 
 const equalEarth = (lat: number, lng: number): [number, number] => {
@@ -44,8 +43,8 @@ const equalEarth = (lat: number, lng: number): [number, number] => {
 };
 
 export const createMapPlacer = () => {
-  const cities = readJson('cities.json') as Record<string, City>;
-  const frame = readJson('map.json') as MapFrame;
+  const cities = readJsonFile<Record<string, City>>(path.join(DATA, 'cities.json'));
+  const frame = readJsonFile<MapFrame>(path.join(DATA, 'map.json'));
   const missing = new Set<string>();
 
   const cityOf = (city: string, country: string) => {

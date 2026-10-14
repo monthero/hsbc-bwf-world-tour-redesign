@@ -1,10 +1,9 @@
 import { setTimeout as sleep } from 'node:timers/promises';
-import { gunzipSync, gzipSync } from 'node:zlib';
+import { gzipSync } from 'node:zlib';
 
-import { exists, type Db } from './db.ts';
+import { BWF_API, BWF_USER_AGENT } from '../../server/bwf-upstream.ts';
+import { unzipJson, type Db } from './db.ts';
 
-const BASE = 'https://extranet-lv.bwfbadminton.com/api/';
-const USER_AGENT = 'Mozilla/5.0 (compatible; bwf-tracker-dev/0.1)';
 const CONCURRENCY = 3;
 const GAP_MS = 250;
 const RETRIES = 8;
@@ -14,13 +13,10 @@ const TIMEOUT_MS = 30_000;
 export type Fresh = (fetchedAt: number) => boolean;
 
 export const FOREVER: Fresh = () => true;
-export const NEVER: Fresh = () => false;
 export const within =
   (ms: number): Fresh =>
   (at) =>
     Date.now() - at < ms;
-
-export const DAY_MS = 86_400_000;
 
 const stats = { network: 0, cached: 0, failed: 0 };
 export const httpStats = () => ({ ...stats });
@@ -57,8 +53,8 @@ const download = async (path: string, retries: number): Promise<string | null> =
     try {
       const wait = pausedUntil - Date.now();
       if (wait > 0) await sleep(wait);
-      const res = await fetch(BASE + path, {
-        headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' },
+      const res = await fetch(`${BWF_API}/${path}`, {
+        headers: { 'User-Agent': BWF_USER_AGENT, Accept: 'application/json' },
         signal: AbortSignal.timeout(TIMEOUT_MS),
       });
       const text = await res.text();
@@ -89,11 +85,16 @@ export const createClient = (db: Db, { offline = false } = {}) => {
 
   const cachedRow = (path: string) => read.get(path) as { fetched_at: number; body: Uint8Array } | undefined;
 
+  const fromRow = <T>(row: { fetched_at: number; body: Uint8Array }): Cached<T> => ({
+    data: unzipJson(row.body) as T,
+    fetchedAt: row.fetched_at,
+  });
+
   const get = async <T>(path: string, fresh: Fresh, retries = RETRIES): Promise<Cached<T> | null> => {
     const row = cachedRow(path);
     if (row && (offline || fresh(row.fetched_at))) {
       stats.cached++;
-      return { data: JSON.parse(gunzipSync(row.body).toString('utf8')) as T, fetchedAt: row.fetched_at };
+      return fromRow<T>(row);
     }
     if (offline) return null;
     try {
@@ -105,18 +106,16 @@ export const createClient = (db: Db, { offline = false } = {}) => {
       return { data: JSON.parse(text) as T, fetchedAt };
     } catch (e) {
       stats.failed++;
-      if (row) return { data: JSON.parse(gunzipSync(row.body).toString('utf8')) as T, fetchedAt: row.fetched_at };
+      if (row) return fromRow<T>(row);
       console.warn(`  ! ${(e as Error).message}`);
       return null;
     }
   };
 
-  const has = (path: string) => exists(db, 'SELECT 1 FROM responses WHERE path = ?', path);
-
   const prune = (prefix: string, keep: string) =>
     db.prepare('DELETE FROM responses WHERE path LIKE ? AND path != ?').run(`${prefix}%`, keep);
 
-  return { get, has, prune };
+  return { get, prune };
 };
 
 export type Client = ReturnType<typeof createClient>;

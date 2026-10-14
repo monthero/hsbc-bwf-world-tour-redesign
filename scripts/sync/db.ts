@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { DatabaseSync, type SQLInputValue } from 'node:sqlite';
+import { gunzipSync, gzipSync } from 'node:zlib';
 
 import { readCatalog, seedCatalog } from './equipment.ts';
 
@@ -144,7 +145,6 @@ CREATE TABLE IF NOT EXISTS sync_state (
 `;
 
 export type Db = DatabaseSync;
-export type Row = Record<string, SQLInputValue>;
 
 const COLUMNS: [table: string, column: string, type: string][] = [
   ['editions', 'bwf_series', 'INTEGER'],
@@ -185,7 +185,18 @@ export const tx = <T>(db: Db, fn: () => T): T => {
 
 export const all = <T>(db: Db, sql: string, ...params: SQLInputValue[]) => db.prepare(sql).all(...params) as T[];
 
-export const exists = (db: Db, sql: string, ...params: SQLInputValue[]) => db.prepare(sql).get(...params) !== undefined;
+export const withDb = <T>(file: string, readOnly: boolean, run: (db: Db) => T) => {
+  const db = new DatabaseSync(file, { readOnly });
+  try {
+    return run(db);
+  } finally {
+    db.close();
+  }
+};
+
+export const zipJson = (value: unknown) => gzipSync(JSON.stringify(value));
+
+export const unzipJson = (body: Uint8Array): unknown => JSON.parse(gunzipSync(body).toString('utf8'));
 
 export const readState = <T>(db: Db, key: string, fallback: T): T => {
   const row = db.prepare('SELECT value FROM sync_state WHERE key = ?').get(key) as { value: string } | undefined;

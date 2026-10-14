@@ -1,17 +1,10 @@
-import fs from 'node:fs';
-
+import { errorMessage } from '../../../server/http.ts';
 import { createImageStore } from '../../../server/images.ts';
 import { FRAMING_OF, ImageKind, ImageSource } from '../../../src/pages/admin/schema.ts';
-
-type ImageOverride = Partial<Record<ImageKind, string> & Record<'heroFlip' | 'photoFlip', boolean>>;
-
-const reasonOf = (e: unknown) => (e instanceof Error ? e.message : String(e));
+import { readOverrides } from '../util.ts';
 
 export const syncImages = async (root: string, overridesFile: string, offline: boolean) => {
-  const overrides = fs.existsSync(overridesFile)
-    ? ((JSON.parse(fs.readFileSync(overridesFile, 'utf8')) as { players?: Record<string, ImageOverride> }).players ??
-      {})
-    : {};
+  const overrides = readOverrides(overridesFile);
   const store = createImageStore(root);
   const failed: string[] = [];
   let built = 0;
@@ -29,7 +22,7 @@ export const syncImages = async (root: string, overridesFile: string, offline: b
         if (await store.ensure(id, kind, source.data, !!entry[FRAMING_OF[kind].flip], offline)) built++;
         else fresh++;
       } catch (e) {
-        failed.push(`${id} ${kind}: ${reasonOf(e)}`);
+        failed.push(`${id} ${kind}: ${errorMessage(e)}`);
       }
     }
   }

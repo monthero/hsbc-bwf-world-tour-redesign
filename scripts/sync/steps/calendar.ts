@@ -1,10 +1,11 @@
 import { calendarPath, type ApiCalendar } from '../bwf.ts';
 import type { Edition } from '../catalog.ts';
 import type { Context } from '../context.ts';
+import { HOUR_MS } from '../dates.ts';
 import { all, tx } from '../db.ts';
 import { within } from '../http.ts';
 
-const SIX_HOURS = 6 * 3_600_000;
+const SIX_HOURS = 6 * HOUR_MS;
 
 const calendarFresh = (year: number, currentYear: number) => (at: number) =>
   (year < currentYear && at > Date.UTC(year + 1, 1, 1)) || within(SIX_HOURS)(at);

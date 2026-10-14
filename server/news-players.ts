@@ -1,9 +1,12 @@
+import { fold } from '../scripts/sync/util.ts';
 import type { NewsBlock, NewsRun } from '../src/api/schemas.ts';
 
 export interface PlayerName {
   id: string;
   names: string[];
 }
+
+export const NEWS_RANKED_TOP = 200;
 
 const COMMON = new Set([
   'a',
@@ -60,7 +63,7 @@ const COMMON = new Set([
 const MIN_TOKENS = 2;
 const SPLIT = /[\s.\-‐–]+/;
 
-const foldChar = (c: string) => c.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase().charAt(0) || c;
+const foldChar = (c: string) => fold(c).charAt(0) || c;
 
 const foldText = (s: string) => {
   let out = '';
@@ -89,7 +92,7 @@ interface Variant {
   id: string;
 }
 
-export interface PlayerMatcher {
+interface PlayerMatcher {
   find: (text: string) => { start: number; end: number; id: string }[];
 }
 
@@ -133,6 +136,12 @@ const build = (candidates: PlayerName[]): PlayerMatcher => {
       return out;
     },
   };
+};
+
+export const withRanked = (entrants: PlayerName[], ranked: PlayerName[]) => {
+  if (!entrants.length) return ranked;
+  const known = new Set(entrants.map((p) => p.id));
+  return [...entrants, ...ranked.filter((p) => !known.has(p.id))];
 };
 
 const cache = new WeakMap<PlayerName[], PlayerMatcher>();

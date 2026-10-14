@@ -1,3 +1,4 @@
+import { collapseSpaces } from '../scripts/sync/util.ts';
 import type { NewsArticle, NewsBlock, NewsImage, NewsItem, NewsLink, NewsRun } from '../src/api/schemas.ts';
 import { linkMatchedPlayers, playerMatcher, type PlayerName } from './news-players.ts';
 import type { RawNews } from './news.ts';
@@ -68,11 +69,16 @@ const ENTITIES: Record<string, string> = {
   ldquo: '“',
 };
 
-const decode = (s: string) =>
+const decodeNumeric = (s: string) =>
   s
     .replace(/&#(\d+);/g, (_, n: string) => String.fromCodePoint(Number(n)))
-    .replace(/&#x([0-9a-f]+);/gi, (_, n: string) => String.fromCodePoint(Number.parseInt(n, 16)))
-    .replace(/&([a-z]+);/gi, (m, n: string) => ENTITIES[n.toLowerCase()] ?? m);
+    .replace(/&#x([0-9a-f]+);/gi, (_, n: string) => String.fromCodePoint(Number.parseInt(n, 16)));
+
+const decode = (s: string) =>
+  decodeNumeric(s).replace(/&([a-z]+);/gi, (m, n: string) => ENTITIES[n.toLowerCase()] ?? m);
+
+export const decodeCommon = (s: string) =>
+  decodeNumeric(s).replace(/&(amp|quot|apos|lt|gt|nbsp);/g, (_, n: string) => ENTITIES[n] ?? '');
 
 const ATTR = /([\w:-]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>]+)))?/g;
 const TOKEN = /<!--[\s\S]*?-->|<(\/?)([a-zA-Z][\w-]*)((?:[^>"']|"[^"]*"|'[^']*')*)>/g;
@@ -173,7 +179,7 @@ const toQuote = (runs: NewsRun[]): NewsBlock => {
 
 const isQuote = (runs: NewsRun[]) => OPEN_QUOTE.test(plain(runs)) && QUOTE_END.test(plain(runs).slice(1));
 
-export const createBlockConverter = (ctx: BlockContext) => {
+const createBlockConverter = (ctx: BlockContext) => {
   let featured: string | null = null;
   const linkOf = (href: string | undefined): NewsLink | undefined => {
     if (!href) return undefined;
@@ -335,9 +341,9 @@ export const createBlockConverter = (ctx: BlockContext) => {
         return items.length ? [{ type: 'list', ordered: false, items }] : [];
       }
       case 'figure': {
-        const caption = textOf({ ...n, children: n.children.filter((c) => typeof c === 'string' || c.name !== 'img') })
-          .replace(/\s+/g, ' ')
-          .trim();
+        const caption = collapseSpaces(
+          textOf({ ...n, children: n.children.filter((c) => typeof c === 'string' || c.name !== 'img') }),
+        );
         return imageBlocks(n, caption || null);
       }
       case 'img':
@@ -365,7 +371,7 @@ export const createBlockConverter = (ctx: BlockContext) => {
 const BYLINE = /^\s*(?:text\s+(?:and\s+photos?\s+)?by|by)\s+/i;
 const GENERIC_TAGS = new Set(['player news']);
 
-const tagName = (s: string) => (s.includes(' ') ? s : s.replaceAll('-', ' ')).replace(/\s+/g, ' ').trim();
+const tagName = (s: string) => collapseSpaces(s.includes(' ') ? s : s.replaceAll('-', ' '));
 
 export const createArticleBuilder = (ctx: BlockContext) => {
   const convert = createBlockConverter(ctx);

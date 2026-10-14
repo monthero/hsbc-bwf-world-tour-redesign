@@ -1,10 +1,11 @@
 import { parseHeightCm } from '../../../src/utils/format.ts';
 import { bioPath, summaryPath, type ApiBio, type ApiSummary } from '../bwf.ts';
 import type { Context } from '../context.ts';
-import { addDays } from '../dates.ts';
+import { addDays, DAY_MS } from '../dates.ts';
 import { all, tx } from '../db.ts';
-import { DAY_MS, pool, within } from '../http.ts';
+import { pool, within } from '../http.ts';
 import { photoOf } from '../normalize.ts';
+import { collapseSpaces } from '../util.ts';
 
 const ACTIVE_REFRESH = within(30 * DAY_MS);
 const IDLE_REFRESH = within(180 * DAY_MS);
@@ -12,7 +13,7 @@ const JUNK = /^(?:-+|n\/?a|none|null|nil|\.|0)$/i;
 
 const text = (...values: (string | null | undefined)[]) => {
   for (const v of values) {
-    const s = v?.replace(/\s+/g, ' ').trim();
+    const s = v && collapseSpaces(v);
     if (s && !JUNK.test(s)) return s;
   }
   return undefined;
@@ -26,7 +27,7 @@ const heightOf = (...values: (string | null | undefined)[]) =>
 const compact = (o: Record<string, unknown>) =>
   Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined && v !== null && v !== ''));
 
-export const buildBio = (summary: ApiSummary['results'], bio: ApiBio | null) => {
+const buildBio = (summary: ApiSummary['results'], bio: ApiBio | null) => {
   const m = summary?.bio_model ?? {};
   const qa = bio?.qa ?? {};
   const prize = text(bio?.prize_money);
@@ -77,7 +78,7 @@ export const syncPlayers = async ({ db, client, today }: Context) => {
   tx(db, () => {
     for (const { id, summary, bio } of results)
       update.run(
-        summary?.name_display?.replace(/\s+/g, ' ').trim() || null,
+        collapseSpaces(summary?.name_display ?? '') || null,
         summary?.nationality || null,
         photoOf(summary?.avatar?.url_cloudinary),
         heroOf(summary?.hero_image?.url_cloudinary_large),

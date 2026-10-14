@@ -1,11 +1,15 @@
-import dayjs, { type Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 
 dayjs.extend(utc);
 
-export { dayjs, type Dayjs };
+export { dayjs };
 
 export const ISO_DAY = 'YYYY-MM-DD';
+
+export const MINUTE_MS = 60_000;
+export const HOUR_MS = 60 * MINUTE_MS;
+export const DAY_MS = 24 * HOUR_MS;
 
 export const utcDay = (iso: string) => dayjs.utc(iso);
 

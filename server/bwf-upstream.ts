@@ -3,11 +3,12 @@ import { z } from 'zod';
 import { addDays, todayIso } from '../scripts/sync/dates.ts';
 import { cdnCache } from './cache-control.ts';
 
-const BWF_API = 'https://extranet-lv.bwfbadminton.com/api';
-const BWF_SITE = 'https://bwfworldtour.bwfbadminton.com';
+export const BWF_API = 'https://extranet-lv.bwfbadminton.com/api';
+export const BWF_SITE = 'https://bwfworldtour.bwfbadminton.com';
+export const BWF_USER_AGENT = 'Mozilla/5.0 (compatible; bwf-tracker-dev/0.1)';
 
 const BWF_HEADERS = {
-  'user-agent': 'Mozilla/5.0 (compatible; bwf-tracker-dev/0.1)',
+  'user-agent': BWF_USER_AGENT,
   accept: 'application/json, text/plain, */*',
   'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
   origin: BWF_SITE,
@@ -33,7 +34,7 @@ const dayCache = (day: string) => {
   return day > addDays(today, 1) ? SCHEDULE_CACHE : LIVE_CACHE;
 };
 
-export interface BwfTarget {
+interface BwfTarget {
   path: string;
   search: string;
   cache: string;

@@ -1,6 +1,8 @@
 import { BWF_ROUNDS, BWF_STATUSES } from '../../src/api/bwf/codes.ts';
+import { EventCode } from '../../src/api/schemas.ts';
 import { wallClock } from '../../src/utils/utc-offset.ts';
-import { EVENTS, type ApiMatch, type ApiPlayer, type EventCode } from './bwf.ts';
+import type { ApiMatch, ApiPlayer } from './bwf.ts';
+import { collapseSpaces } from './util.ts';
 
 const WALKOVER = 1;
 
@@ -32,7 +34,7 @@ export interface NormMatch {
   draw: string;
 }
 
-const isEvent = (s: string): s is EventCode => (EVENTS as readonly string[]).includes(s);
+const isEvent = (s: string): s is EventCode => (EventCode.options as readonly string[]).includes(s);
 
 const PLACEHOLDER_LOCATION = /^(?:main\s+)?location(?:\s*\d+)?$/i;
 
@@ -50,7 +52,7 @@ export const photoOf = (url: string | null | undefined) => {
 
 const toPlayer = (p: ApiPlayer): NormPlayer => ({
   id: String(p.id),
-  name: p.nameDisplay.replace(/\s+/g, ' ').trim(),
+  name: collapseSpaces(p.nameDisplay),
   cc: p.countryCode ?? '',
   slug: p.slug ?? null,
   photo: photoOf(p.avatar?.thumbnailUrl),

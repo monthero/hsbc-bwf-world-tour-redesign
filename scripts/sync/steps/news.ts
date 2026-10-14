@@ -1,9 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { gunzipSync, gzipSync } from 'node:zlib';
-
 import { createArticleBuilder } from '../../../server/news-blocks.ts';
-import type { PlayerName } from '../../../server/news-players.ts';
+import { NEWS_RANKED_TOP, withRanked, type PlayerName } from '../../../server/news-players.ts';
 import {
   createNewsLinker,
   fetchNewsBySlug,
@@ -11,6 +7,7 @@ import {
   fetchPopularSlugs,
   NEWS_FREEZE_MS,
   newsMonthOf,
+  newsSlugOf,
   publishedMs,
   type NewsRequest,
   type NewsSeries,
@@ -19,7 +16,8 @@ import {
 } from '../../../server/news.ts';
 import { WORLD } from '../bwf.ts';
 import type { Context } from '../context.ts';
-import { all, readState, tx, writeState, type Db } from '../db.ts';
+import { all, readState, tx, unzipJson, writeState, zipJson, type Db } from '../db.ts';
+import { push, readJsonFile, readOverrides } from '../util.ts';
 
 const PER_PAGE = 20;
 const MAX_PAGES = 40;
@@ -40,11 +38,7 @@ interface Cursor {
 }
 
 const readRaw = (db: Db) =>
-  all<{ body: Uint8Array }>(db, 'SELECT body FROM news_raw').map(
-    (r) => JSON.parse(gunzipSync(r.body).toString('utf8')) as RawNews,
-  );
-
-const slugOf = (r: RawNews) => decodeURIComponent(r.link.split('/').filter(Boolean).at(-1) ?? '');
+  all<{ body: Uint8Array }>(db, 'SELECT body FROM news_raw').map((r) => unzipJson(r.body) as RawNews);
 
 const isFrozen = (s: Stored) => s.fetched_at - s.published > NEWS_FREEZE_MS;
 
@@ -106,7 +100,7 @@ const fetchArchive = async (db: Db, maxPages: number) => {
     for (const r of fresh) stored.set(r.id, { id: r.id, published: publishedMs(r), fetched_at: now });
     const { covered, next } = advance(cursor, page, total, stored.size);
     tx(db, () => {
-      for (const r of fresh) upsert.run(r.id, publishedMs(r), now, gzipSync(JSON.stringify(r)));
+      for (const r of fresh) upsert.run(r.id, publishedMs(r), now, zipJson(r));
       writeState(db, CURSOR, next);
     });
     cursor = next;
@@ -138,7 +132,7 @@ const scrapePopular = async (db: Db) => {
 
 const fetchPopular = async (db: Db) => {
   const { slugs, note } = await scrapePopular(db);
-  const known = new Set(readRaw(db).map(slugOf));
+  const known = new Set(readRaw(db).map((r) => newsSlugOf(r.link)));
   const missing = slugs.filter((s) => !known.has(s));
   const upsert = db.prepare(
     'INSERT INTO news_raw (id, published, fetched_at, body) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO NOTHING',
@@ -147,7 +141,7 @@ const fetchPopular = async (db: Db) => {
   for (const slug of missing) {
     try {
       const r = await fetchNewsBySlug(slug, SYNC_REQUEST);
-      if (r) upsert.run(r.id, publishedMs(r), Date.now(), gzipSync(JSON.stringify(r)));
+      if (r) upsert.run(r.id, publishedMs(r), Date.now(), zipJson(r));
     } catch (e) {
       failed++;
       console.warn(`  ! news popular article ${slug}: ${(e as Error).message}`);
@@ -156,13 +150,8 @@ const fetchPopular = async (db: Db) => {
   return failed ? `${note}, ${failed} missing` : note;
 };
 
-const RANKED_TOP = 200;
-
 const candidatesFrom = (db: Db, overridesFile: string) => {
-  const overrides = fs.existsSync(overridesFile)
-    ? ((JSON.parse(fs.readFileSync(overridesFile, 'utf8')) as { players?: Record<string, { name?: string }> })
-        .players ?? {})
-    : {};
+  const overrides = readOverrides(overridesFile);
   const names = new Map<string, Set<string>>();
   const add = (id: string, name: string | undefined) => {
     const n = name?.trim();
@@ -178,30 +167,28 @@ const candidatesFrom = (db: Db, overridesFile: string) => {
     `SELECT player1 AS id FROM rankings WHERE ranking = ? AND rank <= ?
      UNION SELECT player2 FROM rankings WHERE ranking = ? AND rank <= ? AND player2 != ''`,
     WORLD,
-    RANKED_TOP,
+    NEWS_RANKED_TOP,
     WORLD,
-    RANKED_TOP,
+    NEWS_RANKED_TOP,
   ).map((r) => toName(r.id));
   const entrants = new Map<string, string[]>();
   for (const r of all<{ code: string; id: string }>(
     db,
     'SELECT DISTINCT m.edition AS code, mp.player_id AS id FROM match_players mp JOIN matches m ON m.id = mp.match_id',
   ))
-    entrants.set(r.code, [...(entrants.get(r.code) ?? []), r.id]);
+    push(entrants, r.code, r.id);
   const cache = new Map<string, PlayerName[]>();
   return (codes: string[]) => {
-    const ids = [...new Set(codes.flatMap((c) => entrants.get(c) ?? []))];
-    if (!ids.length) return ranked;
     const key = [...codes].sort((a, b) => a.localeCompare(b)).join(',');
-    const known = new Set(ids);
-    const hit = cache.get(key) ?? [...ids.map(toName), ...ranked.filter((p) => !known.has(p.id))];
+    const hit =
+      cache.get(key) ?? withRanked([...new Set(codes.flatMap((c) => entrants.get(c) ?? []))].map(toName), ranked);
     cache.set(key, hit);
     return hit;
   };
 };
 
-const derive = (db: Db, catalogFile: string) => {
-  const series = (JSON.parse(fs.readFileSync(catalogFile, 'utf8')) as { series: NewsSeries[] }).series;
+const derive = (db: Db, catalogFile: string, overridesFile: string) => {
+  const series = readJsonFile<{ series: NewsSeries[] }>(catalogFile).series;
   const events = all<{ code: string; tmt_id: number; series_id: string; start: string }>(
     db,
     'SELECT code, tmt_id, series_id, start FROM editions',
@@ -214,7 +201,7 @@ const derive = (db: Db, catalogFile: string) => {
   const codeOf = new Map(events.map((e) => [e.tmtId, e.code]));
   const idOf = new Map(items.map((i) => [i.slug, i.id]));
   const build = createArticleBuilder({ tournamentOf: (tmt) => codeOf.get(tmt), newsOf: (slug) => idOf.get(slug) });
-  const candidates = candidatesFrom(db, path.join(path.dirname(catalogFile), 'overrides.json'));
+  const candidates = candidatesFrom(db, overridesFile);
   const insertArticle = db.prepare('INSERT INTO news_articles (id, article) VALUES (?, ?)');
   const insert = db.prepare('INSERT INTO news (id, month, published_at, item) VALUES (?, ?, ?, ?)');
   const insertTournament = db.prepare('INSERT INTO news_tournaments (news_id, code) VALUES (?, ?)');
@@ -239,7 +226,12 @@ const cursorNote = (c: Cursor | null) => {
 
 export const syncNews = async (
   { db }: Context,
-  { offline, catalogFile, maxPages = MAX_PAGES }: { offline: boolean; catalogFile: string; maxPages?: number },
+  {
+    offline,
+    catalogFile,
+    overridesFile,
+    maxPages = MAX_PAGES,
+  }: { offline: boolean; catalogFile: string; overridesFile: string; maxPages?: number },
 ) => {
   let note = 'offline';
   if (!offline) {
@@ -248,7 +240,7 @@ export const syncNews = async (
     const popular = await fetchPopular(db);
     note = `${a.pages} pages · ${a.written} refreshed · ${a.total} stored · ${cursorNote(a.cursor)} · ${popular}`;
   }
-  const items = derive(db, catalogFile);
+  const items = derive(db, catalogFile, overridesFile);
   console.log(
     `news: ${items.length} articles · ${items.filter((i) => i.tournaments.length).length} linked to tournaments · ${note}`,
   );
