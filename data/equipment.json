@@ -10,6 +10,16 @@
     "model": "Aeris Pink"
   },
   {
+    "kind": "bag",
+    "brand": "hundred",
+    "model": "Aeris White"
+  },
+  {
+    "kind": "bag",
+    "brand": "yonex",
+    "model": "Pro Tournament"
+  },
+  {
     "kind": "racket",
     "brand": "flypower",
     "model": "Enigma 900 V3"
@@ -312,12 +322,27 @@
   {
     "kind": "shoes",
     "brand": "victor",
+    "model": "P9200cHP"
+  },
+  {
+    "kind": "shoes",
+    "brand": "victor",
     "model": "P9200III"
   },
   {
     "kind": "shoes",
     "brand": "yonex",
     "model": "Power Cushion 65 Z3"
+  },
+  {
+    "kind": "shoes",
+    "brand": "yonex",
+    "model": "Power Cushion 65 Z3 Black"
+  },
+  {
+    "kind": "shoes",
+    "brand": "yonex",
+    "model": "Power Cushion 65 Z4"
   },
   {
     "kind": "shoes",
@@ -333,6 +358,11 @@
     "kind": "shoes",
     "brand": "yonex",
     "model": "Power Cushion Eclipsion Z3"
+  },
+  {
+    "kind": "shoes",
+    "brand": "yonex",
+    "model": "Subaxia GT"
   },
   {
     "kind": "string",
