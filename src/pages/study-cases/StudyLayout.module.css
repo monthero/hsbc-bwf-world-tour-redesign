@@ -1,4 +1,5 @@
 .page {
+  --study-header: var(--bwf-header-h);
   padding-bottom: 120px;
 }
 
@@ -29,6 +30,22 @@
   display: flex;
   gap: 6px;
   overflow-x: auto;
+}
+
+.secondary {
+  padding-top: 8px;
+}
+
+.hint {
+  margin-left: 6px;
+  font-weight: 400;
+  color: var(--bwf-faint);
+}
+
+.bleed {
+  --bwf-header-h: calc(var(--study-header) + var(--study-bar, 0px));
+  margin-top: 32px;
+  border-top: 1px dashed var(--bwf-border);
 }
 
 .variants {
@@ -107,6 +124,11 @@
   background: var(--bwf-bg);
 }
 
+.screen[data-flush] {
+  padding: 0;
+  overflow: hidden;
+}
+
 @mixin smaller-than $mantine-breakpoint-md {
   .variant {
     grid-template-columns: minmax(0, 1fr);
@@ -132,5 +154,9 @@
     padding: 16px 0;
     border: 0;
     border-radius: 0;
+  }
+
+  .screen[data-flush] {
+    padding: 0;
   }
 }

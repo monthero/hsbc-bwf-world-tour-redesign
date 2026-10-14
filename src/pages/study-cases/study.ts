@@ -16,4 +16,5 @@ export const MOBILE_WIDTH = 390;
 export interface StudyOption {
   key: string;
   label: string;
+  hint?: string;
 }
