@@ -1,10 +1,11 @@
 import { queryOptions, useQueries, useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import type { z } from 'zod';
 
 import { LIVE_NEWS } from '~/constants';
 import { dayjs } from '~/utils/dates';
 
-import { ApiError, fetchJson, getJson, hasStatus, retryUnless } from './client';
+import { ApiError, fetchJson, getJson, hasStatus, retryUnless, STATIC } from './client';
 import {
   type CalendarEventDto,
   NewsArticle,
@@ -15,27 +16,16 @@ import {
   NewsTournament,
 } from './schemas';
 
-const STATIC = { staleTime: Infinity, gcTime: Infinity };
 const RECENT_MS = 10 * 60_000;
 const FREEZE_DAYS = 30;
 const NO_ITEMS: NewsItem[] = [];
 
 const isRecentMonth = (month: string) => month >= dayjs.utc().subtract(FREEZE_DAYS, 'day').format('YYYY-MM');
 
-const fetchIndex = (signal: AbortSignal) =>
-  LIVE_NEWS ? getJson('/news-api/index', NewsIndex, signal) : fetchJson('news/index.json', NewsIndex, signal);
+const fetchNews = <S extends z.ZodType>(live: string, file: string, schema: S, signal: AbortSignal) =>
+  LIVE_NEWS ? getJson(`/news-api/${live}`, schema, signal) : fetchJson(`news/${file}.json`, schema, signal);
 
-const isRecentEvent = (end: string) => dayjs.utc(end).add(FREEZE_DAYS, 'day').isAfter(dayjs.utc());
-
-const fetchTournament = (code: string, signal: AbortSignal) =>
-  LIVE_NEWS
-    ? getJson(`/news-api/tournament/${code}`, NewsTournament, signal)
-    : fetchJson(`news/tournaments/${code}.json`, NewsTournament, signal);
-
-const fetchMonth = (month: string, signal: AbortSignal) =>
-  LIVE_NEWS
-    ? getJson(`/news-api/month/${month}`, NewsMonth, signal)
-    : fetchJson(`news/${month}.json`, NewsMonth, signal);
+const withinFreeze = (iso: string) => dayjs.utc(iso).add(FREEZE_DAYS, 'day').isAfter(dayjs.utc());
 
 const ARTICLE_ID = /^\d+$/;
 const NOT_FOUND = 404;
@@ -52,37 +42,37 @@ const fetchArticle = async (id: string, signal: AbortSignal) => {
 
 export const isNotFound = (error: unknown) => hasStatus(error, NOT_FOUND);
 
-const isFrozenArticle = (a: NewsArticle) => dayjs.utc(a.publishedAt).add(FREEZE_DAYS, 'day').isBefore(dayjs.utc());
+const isFrozenArticle = (a: NewsArticle) => !withinFreeze(a.publishedAt);
 
 const selectItems = (d: NewsTournament) => d.items;
 
 const freshness = (recent: boolean) => (LIVE_NEWS && recent ? { staleTime: RECENT_MS } : STATIC);
 
-export const newsIndexQuery = () =>
+const newsIndexQuery = () =>
   queryOptions({
     queryKey: ['news', 'index'],
-    queryFn: ({ signal }) => fetchIndex(signal),
+    queryFn: ({ signal }) => fetchNews('index', 'index', NewsIndex, signal),
     ...(LIVE_NEWS ? { staleTime: RECENT_MS, refetchInterval: RECENT_MS } : STATIC),
   });
 
 export const newsMonthQuery = (month: string) =>
   queryOptions({
     queryKey: ['news', 'month', month],
-    queryFn: ({ signal }) => fetchMonth(month, signal),
+    queryFn: ({ signal }) => fetchNews(`month/${month}`, month, NewsMonth, signal),
     ...freshness(isRecentMonth(month)),
   });
 
 type NewsEvent = Pick<CalendarEventDto, 'code' | 'end'>;
 
-export const tournamentNewsQuery = (t: NewsEvent) =>
+const tournamentNewsQuery = (t: NewsEvent) =>
   queryOptions({
     queryKey: ['news', 'tournament', t.code],
-    queryFn: ({ signal }) => fetchTournament(t.code, signal),
+    queryFn: ({ signal }) => fetchNews(`tournament/${t.code}`, `tournaments/${t.code}`, NewsTournament, signal),
     select: selectItems,
-    ...freshness(isRecentEvent(t.end)),
+    ...freshness(withinFreeze(t.end)),
   });
 
-export const newsArticleQuery = (id: string) =>
+const newsArticleQuery = (id: string) =>
   queryOptions({
     queryKey: ['news', 'article', id],
     queryFn: ({ signal }) => fetchArticle(id, signal),
@@ -99,12 +89,9 @@ export const useNewsIndex = () => useQuery(newsIndexQuery());
 
 export const useNewsArticle = (id: string) => useQuery(newsArticleQuery(id));
 
-export const useNewsMonth = (month: string | undefined) =>
-  useQuery({ ...newsMonthQuery(month ?? ''), enabled: !!month });
-
 export const useTournamentNews = (t: NewsEvent) => useQuery(tournamentNewsQuery(t));
 
-export interface NewsMonthState {
+interface NewsMonthState {
   page: NewsMonth | undefined;
   failed: boolean;
   settled: boolean;

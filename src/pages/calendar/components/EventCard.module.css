@@ -6,11 +6,11 @@
   transition:
     transform 0.35s var(--bwf-ease),
     box-shadow 0.35s var(--bwf-ease);
-}
 
-.wrap:hover {
-  transform: translateY(-3px) translateZ(0);
-  box-shadow: 0 16px 36px alpha(var(--mantine-color-black), 0.4);
+  &:hover {
+    transform: translateY(-3px) translateZ(0);
+    box-shadow: 0 16px 36px alpha(var(--mantine-color-black), 0.4);
+  }
 }
 
 .star {
@@ -19,16 +19,14 @@
   right: 10px;
   opacity: 0;
   transition: opacity 0.15s;
-}
 
-.wrap:hover .star,
-.star:focus-visible,
-.star[data-active] {
-  opacity: 1;
-}
+  .wrap:hover &,
+  &:focus-visible,
+  &[data-active] {
+    opacity: 1;
+  }
 
-@media (hover: none) {
-  .star {
+  @media (hover: none) {
     opacity: 1;
   }
 }

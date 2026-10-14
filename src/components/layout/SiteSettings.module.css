@@ -16,11 +16,11 @@
   flex-direction: column;
   gap: 16px;
   padding: 14px 16px 10px;
-}
 
-.panel[data-variant='sheet'] {
-  gap: 20px;
-  padding: 8px 20px calc(16px + env(safe-area-inset-bottom));
+  &[data-variant='sheet'] {
+    gap: 20px;
+    padding: 8px 20px calc(16px + env(safe-area-inset-bottom));
+  }
 }
 
 .head {
@@ -35,25 +35,25 @@
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.01em;
-}
 
-.panel[data-variant='sheet'] .title {
-  font-size: 17px;
+  .panel[data-variant='sheet'] & {
+    font-size: 17px;
+  }
 }
 
 .section {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
 
-.section + .section {
-  padding-top: 16px;
-  border-top: 1px solid var(--bwf-line);
-}
+  & + & {
+    padding-top: 16px;
+    border-top: 1px solid var(--bwf-line);
 
-.panel[data-variant='sheet'] .section + .section {
-  padding-top: 20px;
+    .panel[data-variant='sheet'] & {
+      padding-top: 20px;
+    }
+  }
 }
 
 .field {
@@ -106,8 +106,8 @@
   justify-content: flex-end;
   padding-top: 10px;
   border-top: 1px solid var(--bwf-line);
-}
 
-.panel[data-variant='sheet'] .foot {
-  justify-content: center;
+  .panel[data-variant='sheet'] & {
+    justify-content: center;
+  }
 }

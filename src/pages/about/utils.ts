@@ -9,8 +9,6 @@ import { countdownLabel, finalsOf, hasWinners, isDone, isHeld, liveAndNext, live
 import { FLIP_AT, KICKERS, MAP_SIZE, RELAX } from './constants';
 import type { MapPoint, PinSpot, SeasonFocus, SeasonStat, SeasonStatus } from './types';
 
-export const posOf = (t: Tournament): MapPoint | null => t.map;
-
 export const anchorVars = (p: MapPoint) => ({ '--fx': p.x / MAP_SIZE.w, '--fy': p.y / MAP_SIZE.h }) as CSSProperties;
 
 export const flipPopover = (p: MapPoint) => p.x / MAP_SIZE.w > FLIP_AT;
@@ -36,9 +34,9 @@ export const raceSettled = (f: SeasonFocus, published: string) => {
   return !!last && isDone(last) && !date(published).isBefore(date(last.end));
 };
 
-export const isShown = <T>(shown: readonly T[] | undefined, item: T) => !shown?.length || shown.includes(item);
+const isShown = <T>(shown: readonly T[] | undefined, item: T) => !shown?.length || shown.includes(item);
 
-export const seasonStatusOf = (t: Tournament, f: SeasonFocus): SeasonStatus => {
+const seasonStatusOf = (t: Tournament, f: SeasonFocus): SeasonStatus => {
   if (t.status === 'live' || t === f.spot) return 'next';
   return t.status === 'done' || (t.status === 'cancelled' && t.daysUntil <= 0) ? 'done' : 'up';
 };
@@ -95,7 +93,7 @@ const pushApart = (a: Node, b: Node, gap: number, seed: number) => {
 
 export const relaxPins = (list: readonly Tournament[], gap: number): PinSpot[] => {
   const nodes: Node[] = list.flatMap((t) => {
-    const p = posOf(t);
+    const p = t.map;
     return p ? [{ t, ax: p.x, ay: p.y, x: p.x, y: p.y }] : [];
   });
   for (let it = 0; it < RELAX.iterations; it++) {
@@ -119,7 +117,7 @@ export const relaxPins = (list: readonly Tournament[], gap: number): PinSpot[] =
 
 export const routePaths = (list: readonly Tournament[]) => {
   const points = list.filter(isHeld).flatMap((t) => {
-    const p = posOf(t);
+    const p = t.map;
     return p ? [{ p, done: t.status === 'done' }] : [];
   });
   return points.flatMap(({ p: b, done }, i) => {

@@ -4,11 +4,14 @@ import { clsx } from 'clsx';
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState, type FC } from 'react';
 
 import { EmptyState } from '~/components/ui';
-import { DOUBLES_EVENTS, EVENT_NAMES } from '~/constants';
+import { EVENT_NAMES } from '~/constants';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useRankingTable } from '~/hooks/useRankings';
-import type { EventCode, RankingKind, RankingTable } from '~/types';
+import type { EventCode, RankingKind, RankingTable, RankRow } from '~/types';
+import { countryOptions, searchTokens } from '~/utils/filter';
+import { isDoubles } from '~/utils/matches';
+import { STAY } from '~/utils/navigation';
 import { buildRankRows } from '~/utils/rankings';
 
 import { FilterBar } from './components/FilterBar';
@@ -16,7 +19,7 @@ import { Header } from './components/Header';
 import { Podium } from './components/Podium';
 import { RankingList } from './components/RankingList';
 import { DEFAULT_KIND, SEARCH_DEBOUNCE_MS } from './constants';
-import { countryOptions, filterRows, searchTokens } from './utils';
+import { filterRows } from './utils';
 
 import classes from './RankingsPage.module.css';
 import utils from '~/styles/utils.module.css';
@@ -25,9 +28,9 @@ const route = getRouteApi('/rankings');
 
 const DEFAULT_EV: EventCode = 'MS';
 
-const NAV = { replace: true, resetScroll: false } as const;
-
 const DEBOUNCE = { delay: SEARCH_DEBOUNCE_MS, flushOnUnmount: true };
+
+const countriesOf = (r: RankRow) => r.countries;
 
 export const RankingsPage: FC = () => {
   const { kind = DEFAULT_KIND, ev = DEFAULT_EV } = route.useSearch();
@@ -37,12 +40,12 @@ export const RankingsPage: FC = () => {
 
   const onKind = useCallback(
     (v: RankingKind | null) =>
-      v && void navigate({ search: (s) => ({ ...s, kind: v === DEFAULT_KIND ? undefined : v }), ...NAV }),
+      v && void navigate({ search: (s) => ({ ...s, kind: v === DEFAULT_KIND ? undefined : v }), ...STAY }),
     [navigate],
   );
   const onEv = useCallback(
     (v: EventCode | null) =>
-      v && void navigate({ search: (s) => ({ ...s, ev: v === DEFAULT_EV ? undefined : v }), ...NAV }),
+      v && void navigate({ search: (s) => ({ ...s, ev: v === DEFAULT_EV ? undefined : v }), ...STAY }),
     [navigate],
   );
 
@@ -62,10 +65,10 @@ const Category: FC<{ table: RankingTable; ev: EventCode }> = ({ table, ev }) => 
   const pushed = useRef(q);
   const deferred = useDeferredValue(query);
   const race = table.kind === 'race';
-  const doubles = DOUBLES_EVENTS.has(ev);
+  const doubles = isDoubles(ev);
 
   const rows = useMemo(() => buildRankRows(table.categories[ev] ?? [], race), [table, ev, race]);
-  const countries = useMemo(() => countryOptions(rows), [rows]);
+  const countries = useMemo(() => countryOptions(rows, countriesOf), [rows]);
   const played = useMemo(() => rows.some((r) => r.tournaments !== null), [rows]);
   const tokens = useMemo(() => searchTokens(deferred), [deferred]);
   const filtered = useMemo(() => filterRows(rows, tokens, cc), [rows, tokens, cc]);
@@ -73,7 +76,7 @@ const Category: FC<{ table: RankingTable; ev: EventCode }> = ({ table, ev }) => 
 
   const pushQuery = useDebouncedCallback((v: string) => {
     pushed.current = v.trim();
-    void navigate({ search: (s) => ({ ...s, q: pushed.current || undefined }), ...NAV });
+    void navigate({ search: (s) => ({ ...s, q: pushed.current || undefined }), ...STAY });
   }, DEBOUNCE);
 
   useEffect(() => {
@@ -90,14 +93,14 @@ const Category: FC<{ table: RankingTable; ev: EventCode }> = ({ table, ev }) => 
     [pushQuery],
   );
   const onCountry = useCallback(
-    (v: string | null) => void navigate({ search: (s) => ({ ...s, cc: v ?? undefined }), ...NAV }),
+    (v: string | undefined) => void navigate({ search: (s) => ({ ...s, cc: v }), ...STAY }),
     [navigate],
   );
   const onClear = useCallback(() => {
     setQuery('');
     pushQuery.cancel();
     pushed.current = '';
-    void navigate({ search: (s) => ({ ...s, q: undefined, cc: undefined }), ...NAV });
+    void navigate({ search: (s) => ({ ...s, q: undefined, cc: undefined }), ...STAY });
   }, [navigate, pushQuery]);
 
   if (!rows.length)

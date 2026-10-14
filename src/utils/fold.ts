@@ -16,3 +16,8 @@ export const foldText = (s: string) =>
     .replace(/\p{M}/gu, '')
     .toLowerCase()
     .replace(/[øæœßđðłþı]/g, (c) => LETTER_FOLDS[c] ?? c);
+
+export const foldWords = (s: string) =>
+  foldText(s)
+    .split(/[^a-z]+/)
+    .filter(Boolean);

@@ -3,6 +3,10 @@
   flex-direction: column;
   overflow: hidden;
   border-radius: 20px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    border-radius: 0;
+  }
 }
 
 .body {
@@ -22,6 +26,10 @@
   padding: 14px 16px 14px 20px;
   border-bottom: 1px solid var(--bwf-border);
   background: var(--bwf-surface-2);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding: 12px;
+  }
 }
 
 .title {
@@ -44,18 +52,8 @@
   overscroll-behavior: contain;
   padding: 8px 12px 24px;
   outline: none;
-}
 
-@mixin smaller-than $mantine-breakpoint-sm {
-  .content {
-    border-radius: 0;
-  }
-
-  .header {
-    padding: 12px;
-  }
-
-  .scroll {
+  @mixin smaller-than $mantine-breakpoint-sm {
     padding-inline: 4px;
   }
 }

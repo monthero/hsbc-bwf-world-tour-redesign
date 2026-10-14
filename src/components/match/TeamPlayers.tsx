@@ -8,8 +8,8 @@ import type { Player } from '~/types';
 
 import classes from './TeamPlayers.module.css';
 
-const Wrap: FC<{ when?: boolean; children: ReactNode }> = ({ when, children }) =>
-  when ? <span className={classes.nameLine}>{children}</span> : children;
+const Wrap: FC<{ when?: boolean; className?: string; children: ReactNode }> = ({ when, className, children }) =>
+  when ? <span className={className}>{children}</span> : children;
 
 export const TeamPlayers = memo<{
   players: readonly Player[];
@@ -58,15 +58,12 @@ export const TeamPlayers = memo<{
         {players.length
           ? players.map((p, i) => (
               <span key={p.id || p.name} className={classes.player}>
-                {flag &&
-                  (wrap ? (
-                    <span className={classes.flagLine}>
-                      <Flag cc={p.cc} size={flag} />
-                    </span>
-                  ) : (
+                {flag && (
+                  <Wrap when={wrap} className={classes.flagLine}>
                     <Flag cc={p.cc} size={flag} />
-                  ))}
-                <Wrap when={wrap}>
+                  </Wrap>
+                )}
+                <Wrap when={wrap} className={classes.nameLine}>
                   <PlayerName
                     player={p}
                     link={typeof link === 'function' ? link(p) : link}

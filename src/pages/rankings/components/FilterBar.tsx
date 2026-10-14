@@ -1,25 +1,12 @@
-import { Select, type ComboboxItem, type SelectProps } from '@mantine/core';
 import { clsx } from 'clsx';
-import { memo, useCallback, useMemo } from 'react';
+import { memo } from 'react';
 
-import { Flag } from '~/components/country';
+import { CountSelect } from '~/components/filters';
 import { SearchField, StickyBar } from '~/components/ui';
-import { formatNumber, plural } from '~/utils/format';
-
-import type { CountryOption } from '../types';
+import { shownLabel, type CountOption } from '~/utils/filter';
 
 import classes from './FilterBar.module.css';
 import utils from '~/styles/utils.module.css';
-
-const SELECT_CLASSES = {
-  root: classes.country,
-  input: classes.countryInput,
-  section: classes.countrySection,
-  dropdown: clsx(utils.popover, classes.dropdown),
-  option: classes.option,
-};
-
-const COMBOBOX_PROPS = { offset: 6, width: 260, position: 'bottom-end' } as const;
 
 const unitOf = (doubles: boolean) => (doubles ? 'pair' : 'player');
 
@@ -27,24 +14,12 @@ export const FilterBar = memo<{
   query: string;
   onQuery: (q: string) => void;
   cc: string | undefined;
-  onCountry: (cc: string | null) => void;
-  countries: CountryOption[];
+  onCountry: (cc: string | undefined) => void;
+  countries: CountOption[];
   shown: number;
   total: number;
   doubles: boolean;
 }>(({ query, onQuery, cc, onCountry, countries, shown, total, doubles }) => {
-  const counts = useMemo(() => new Map(countries.map((c) => [c.value, c.count])), [countries]);
-  const renderOption = useCallback<NonNullable<SelectProps['renderOption']>>(
-    ({ option }: { option: ComboboxItem }) => (
-      <>
-        <Flag cc={option.value} size="sm" tip={false} />
-        <span className={utils.ellipsis}>{option.label}</span>
-        <span className={clsx(utils.num, classes.optionCount)}>{counts.get(option.value)}</span>
-      </>
-    ),
-    [counts],
-  );
-  const filtered = shown !== total;
   return (
     <StickyBar glass zIndex={5}>
       <div className={clsx(utils.container, classes.inner)}>
@@ -55,24 +30,19 @@ export const FilterBar = memo<{
           aria-label="Search players"
           className={classes.search}
         />
-        <Select
+        <CountSelect
           data={countries}
-          value={cc ?? null}
+          value={cc}
           onChange={onCountry}
-          renderOption={renderOption}
-          leftSection={cc ? <Flag cc={cc} size="sm" tip={false} /> : null}
           placeholder="All countries"
-          aria-label="Filter by country"
-          searchable
-          clearable
-          nothingFoundMessage="No country"
-          maxDropdownHeight={320}
-          comboboxProps={COMBOBOX_PROPS}
-          classNames={SELECT_CLASSES}
+          label="Filter by country"
+          nothingFound="No country"
+          width={220}
+          align="end"
+          flags
         />
         <span className={clsx(utils.num, classes.count)} aria-live="polite">
-          {filtered && `${formatNumber(shown)} of `}
-          {plural(total, unitOf(doubles))}
+          {shownLabel(shown, total, unitOf(doubles))}
         </span>
       </div>
     </StickyBar>

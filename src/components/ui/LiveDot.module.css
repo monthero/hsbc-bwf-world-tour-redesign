@@ -8,10 +8,8 @@
 
 .pulse {
   animation: pulse 1.8s infinite;
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .pulse {
+  @media (prefers-reduced-motion: reduce) {
     animation: none;
   }
 }

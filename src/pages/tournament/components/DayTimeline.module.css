@@ -22,23 +22,23 @@
   line-height: 1.35;
   font-variant-numeric: tabular-nums;
   color: var(--bwf-text-3);
-}
 
-.head[data-status='live'] {
-  color: var(--bwf-muted);
+  &[data-status='live'] {
+    color: var(--bwf-muted);
+  }
+
+  &[data-status='done'] {
+    font-weight: 600;
+
+    svg {
+      color: var(--lv);
+    }
+  }
 }
 
 .strong {
   color: var(--bwf-text);
   font-weight: 600;
-}
-
-.head[data-status='done'] {
-  font-weight: 600;
-
-  svg {
-    color: var(--lv);
-  }
 }
 
 .days {

@@ -16,10 +16,10 @@
   font: inherit;
   cursor: pointer;
   transition: opacity 0.15s;
-}
 
-.pin:focus-visible {
-  outline: 2px solid var(--bwf-text);
+  &:focus-visible {
+    outline: 2px solid var(--bwf-text);
+  }
 }
 
 .dot {
@@ -55,10 +55,10 @@
 
 .pin[data-active] {
   z-index: 3;
-}
 
-.pin[data-active] .dot {
-  transform: scale(1.5);
+  .dot {
+    transform: scale(1.5);
+  }
 }
 
 .pin[data-active][data-finals] .dot {
@@ -69,25 +69,27 @@
   width: 16px;
   height: 16px;
   margin: -8px 0 0 -8px;
+
+  .dot {
+    --s: 7px;
+    box-shadow: 0 0 0 1.5px var(--bwf-bg-sunken);
+  }
 }
 
-.pin[data-compact] .dot {
-  --s: 7px;
-  box-shadow: 0 0 0 1.5px var(--bwf-bg-sunken);
-}
+.pin[data-compact][data-finals] {
+  .dot {
+    --s: 11px;
+  }
 
-.pin[data-compact][data-finals] .dot {
-  --s: 11px;
-}
-
-.pin[data-compact][data-finals] svg {
-  display: none;
+  svg {
+    display: none;
+  }
 }
 
 .pin[data-compact][data-active] {
   z-index: 4;
-}
 
-.pin[data-compact][data-active] .dot {
-  transform: scale(1.9);
+  .dot {
+    transform: scale(1.9);
+  }
 }

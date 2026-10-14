@@ -1,7 +1,8 @@
 import { Skeleton } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { memo, useCallback, useState, type CSSProperties } from 'react';
+import { memo, useCallback, type CSSProperties } from 'react';
 
 import { EventTag } from '~/components/match';
 import { FactTile, Partner } from '~/components/player';
@@ -13,7 +14,7 @@ import { tournamentParams } from '~/utils/tournaments';
 
 import { MEDAL_TILES, TITLE_LIMIT } from '../constants';
 import type { CareerView, SeasonView } from '../types';
-import { teammateOf, winRate, winShare } from '../utils';
+import { teammateOf, winRate, winShare, yearRange } from '../utils';
 import { EventPicker } from './EventPicker';
 import { ResultPill } from './ResultPill';
 import { SeasonRecord } from './SeasonRecord';
@@ -45,7 +46,7 @@ export const CareerCard = memo<CareerCardProps>(({ playerId, career, events, eve
       <SectionTitle
         aside={
           <span className={classes.sub}>
-            {first === latest ? latest : `${first}–${latest}`} · {plural(seasons.length, 'season')}
+            {yearRange(first, latest)} · {plural(seasons.length, 'season')}
           </span>
         }
       >
@@ -92,8 +93,7 @@ const SeasonRow = memo<{ season: SeasonView; onSeason: (year: number) => void }>
 });
 
 const Titles = memo<{ titles: PlayerMatch[]; self: string }>(({ titles, self }) => {
-  const [all, setAll] = useState(false);
-  const showAll = useCallback(() => setAll(true), []);
+  const [all, { open: showAll }] = useDisclosure(false);
   const hidden = all ? 0 : Math.max(0, titles.length - TITLE_LIMIT);
   return (
     <div className={classes.titles}>

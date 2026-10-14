@@ -1,4 +1,5 @@
-import { queryOptions, type Query, type QueryClient } from '@tanstack/react-query';
+import { queryOptions, type Query, type QueryClient, type QueryKey } from '@tanstack/react-query';
+import type { z } from 'zod';
 
 import { LIVE_DATA, SEASON_YEAR } from '~/constants';
 import { dayjs, ISO_DAY, isoRange, today, todayIso } from '~/utils/dates';
@@ -8,7 +9,7 @@ import { finalDayOver } from '~/utils/matches';
 import { isRejected, LIVE_COOLDOWN_MS, livePollMs, liveRetry } from './bwf/http';
 import type { NameOf } from './bwf/normalize';
 import { fetchDayMatches, fetchDraw, fetchEntries, fetchLiveServers, fetchMatchStats } from './bwf/tournaments';
-import { fetchJson, getJson, retryUnless } from './client';
+import { fetchJson, getJson, retryUnless, STATIC } from './client';
 import {
   Calendar,
   type CalendarEventDto,
@@ -27,33 +28,19 @@ import {
   ViewerGeo,
 } from './schemas';
 
-const STATIC = { staleTime: Infinity, gcTime: Infinity };
+const staticQuery = <K extends QueryKey, S extends z.ZodType>(queryKey: K, path: string, schema: S) =>
+  queryOptions({ queryKey, queryFn: ({ signal }) => fetchJson(path, schema, signal), ...STATIC });
 
-export const playersQuery = () =>
-  queryOptions({
-    queryKey: ['players'],
-    queryFn: ({ signal }) => fetchJson('players.json', PlayersData, signal),
-    ...STATIC,
-  });
+export const playersQuery = () => staticQuery(['players'], 'players.json', PlayersData);
 
 const directoryNames = async (client: QueryClient): Promise<NameOf> => {
   const { players } = await client.ensureQueryData(playersQuery());
   return (id) => players[id]?.name;
 };
 
-export const seasonsQuery = () =>
-  queryOptions({
-    queryKey: ['seasons'],
-    queryFn: ({ signal }) => fetchJson('seasons.json', Seasons, signal),
-    ...STATIC,
-  });
+export const seasonsQuery = () => staticQuery(['seasons'], 'seasons.json', Seasons);
 
-export const calendarQuery = (year = SEASON_YEAR) =>
-  queryOptions({
-    queryKey: ['calendar', year],
-    queryFn: ({ signal }) => fetchJson(`calendar-${year}.json`, Calendar, signal),
-    ...STATIC,
-  });
+export const calendarQuery = (year = SEASON_YEAR) => staticQuery(['calendar', year], `calendar-${year}.json`, Calendar);
 
 export type TournamentRef = Pick<CalendarEventDto, 'code' | 'start' | 'end' | 'archived'>;
 
@@ -85,7 +72,7 @@ const matchesPolicy = (t: TournamentRef) => {
   return { staleTime: UPCOMING_MS };
 };
 
-export const dayMatchesQuery = (code: string, day: string) =>
+const dayMatchesQuery = (code: string, day: string) =>
   queryOptions({
     queryKey: ['bwf', 'day-matches', code, day],
     queryFn: async ({ client, signal }) => fetchDayMatches(code, day, await directoryNames(client), signal),
@@ -211,53 +198,24 @@ export const viewerGeoQuery = () =>
     retry: false,
   });
 
-export const rankingHistoryQuery = (playerId: string) =>
-  queryOptions({
-    queryKey: ['rankings', playerId],
-    queryFn: ({ signal }) => fetchJson(`rankings/${playerId}.json`, RankingHistory, signal),
-    ...STATIC,
-    retry: false,
-  });
+export const rankingHistoryQuery = (playerId: string) => ({
+  ...staticQuery(['rankings', playerId], `rankings/${playerId}.json`, RankingHistory),
+  retry: false,
+});
 
-export const raceRankingsQuery = () =>
-  queryOptions({
-    queryKey: ['race-rankings'],
-    queryFn: ({ signal }) => fetchJson('race-rankings.json', RaceRankings, signal),
-    ...STATIC,
-  });
+export const raceRankingsQuery = () => staticQuery(['race-rankings'], 'race-rankings.json', RaceRankings);
 
 export const rankingTableQuery = (kind: RankingKind) =>
-  queryOptions({
-    queryKey: ['ranking-table', kind],
-    queryFn: ({ signal }) => fetchJson(`ranking-tables/${kind}.json`, RankingTable, signal),
-    ...STATIC,
-  });
+  staticQuery(['ranking-table', kind], `ranking-tables/${kind}.json`, RankingTable);
 
-export const seriesQuery = (id: string) =>
-  queryOptions({
-    queryKey: ['series', id],
-    queryFn: ({ signal }) => fetchJson(`series/${id}.json`, Series, signal),
-    ...STATIC,
-  });
+export const seriesQuery = (id: string) => staticQuery(['series', id], `series/${id}.json`, Series);
 
-export const playerQuery = (id: string) =>
-  queryOptions({
-    queryKey: ['player', id],
-    queryFn: ({ signal }) => fetchJson(`players/${id}.json`, PlayerProfileDto, signal),
-    ...STATIC,
-    retry: false,
-  });
+export const playerQuery = (id: string) => ({
+  ...staticQuery(['player', id], `players/${id}.json`, PlayerProfileDto),
+  retry: false,
+});
 
-export const playerMediaIndexQuery = () =>
-  queryOptions({
-    queryKey: ['player-media'],
-    queryFn: ({ signal }) => fetchJson('player-media/index.json', PlayerMediaIndex, signal),
-    ...STATIC,
-  });
+export const playerMediaIndexQuery = () => staticQuery(['player-media'], 'player-media/index.json', PlayerMediaIndex);
 
 export const playerMediaQuery = (id: string) =>
-  queryOptions({
-    queryKey: ['player-media', id],
-    queryFn: ({ signal }) => fetchJson(`player-media/${id}.json`, PlayerMedia, signal),
-    ...STATIC,
-  });
+  staticQuery(['player-media', id], `player-media/${id}.json`, PlayerMedia);

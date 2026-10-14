@@ -4,7 +4,7 @@ import { toPlayer } from '~/utils/names';
 
 import { WORDS_PER_MINUTE } from './constants';
 
-export const runsText = (runs: readonly NewsRun[]) => runs.map((r) => r.text).join('');
+const runsText = (runs: readonly NewsRun[]) => runs.map((r) => r.text).join('');
 
 const blockText = (b: NewsBlock) => {
   if (b.type === 'paragraph' || b.type === 'heading' || b.type === 'quote') return runsText(b.runs);

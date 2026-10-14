@@ -1,11 +1,11 @@
-import { Button, Skeleton } from '@mantine/core';
+import { Skeleton } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type FC } from 'react';
 
 import { useTournamentNews } from '~/api/news';
 import type { NewsItem } from '~/api/schemas';
 import { NewsGrid } from '~/components/news';
-import { EmptyState, SectionTitle } from '~/components/ui';
+import { EmptyState, RetryState, SectionTitle } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import type { Tournament } from '~/types';
 import { date } from '~/utils/dates';
@@ -76,12 +76,7 @@ export const NewsTab: FC<TabProps> = ({ tournament }) => {
     <div className={clsx(utils.container, page.tabSection, classes.tab)}>
       {isLoading && <LoadingSection variant={variant} />}
       {isError && !items && (
-        <EmptyState className={classes.failed}>
-          Couldn’t load the news for this tournament.
-          <Button variant="default" radius="xl" size="xs" onClick={retry}>
-            Try again
-          </Button>
-        </EmptyState>
+        <RetryState message="Couldn’t load the news for this tournament." onRetry={retry} compact />
       )}
       {items && !items.length && <EmptyState>No stories about this tournament yet.</EmptyState>}
       {phases.map((p) => (

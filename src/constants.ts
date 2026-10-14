@@ -103,5 +103,3 @@ export const TOUR_CYCLES: readonly { from: number; to: number; super100: 'pathwa
 ];
 export const NOT_QUALIFY_TIP =
   'In the top 8, but two players from the same country rank higher — not qualifying (max. 2 per country)';
-
-export const MOTION_EASE = 'cubic-bezier(.2,.8,.2,1)';

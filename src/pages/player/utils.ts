@@ -110,7 +110,7 @@ const matchResult = (pm: PlayerMatch) => {
   return pm.outcome === 'L' ? LOSS_RESULT[pm.match.round] : undefined;
 };
 
-export const bestResult = (list: readonly PlayerMatch[]) => {
+const bestResult = (list: readonly PlayerMatch[]) => {
   let best: number | null = null;
   for (const pm of list) {
     const r = matchResult(pm);
@@ -232,6 +232,8 @@ export const careerHighs = (ranks: readonly RankView[], view: HistoryView | unde
       return high ? [[k.ev, high] as const] : [];
     }),
   );
+
+export const yearRange = (first: number, last: number) => (first === last ? String(first) : `${first}–${last}`);
 
 export const winShare = (wins: number, losses: number) => (wins + losses ? wins / (wins + losses) : null);
 

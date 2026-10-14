@@ -1,8 +1,7 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { TIP_DELAY, useLazyTip } from '~/components/ui';
+import { LazyTip, useLazyTip } from '~/components/ui';
 import { useMatchTime } from '~/hooks/useMatchClock';
 import type { Match, SideResult } from '~/types';
 import { dayMark } from '~/utils/match-time';
@@ -31,7 +30,7 @@ export const MatchTime = memo<{
         {t.shift !== 0 && <span className={classes.shift}>{dayMark(t.shift)}</span>}
         {zone && t.zone && <span className={classes.zone}>{t.zone}</span>}
       </span>
-      {lazy.target && <Tooltip target={lazy.target} label={t.alt} openDelay={TIP_DELAY.open} />}
+      <LazyTip target={lazy.target} label={t.alt} />
     </>
   );
 });

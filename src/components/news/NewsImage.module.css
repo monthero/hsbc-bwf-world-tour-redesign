@@ -3,30 +3,30 @@
   display: block;
   overflow: hidden;
   background: var(--bwf-surface-3);
-}
 
-.frame[data-ratio='wide'] {
-  aspect-ratio: 16 / 9;
-}
+  &[data-ratio='wide'] {
+    aspect-ratio: 16 / 9;
+  }
 
-.frame[data-ratio='card'] {
-  aspect-ratio: 4 / 3;
-}
+  &[data-ratio='card'] {
+    aspect-ratio: 4 / 3;
+  }
 
-.frame[data-fallback] {
-  background: linear-gradient(130deg, var(--bwf-brand-deep), var(--bwf-bg-sunken) 80%);
-}
+  &[data-fallback] {
+    background: linear-gradient(130deg, var(--bwf-brand-deep), var(--bwf-bg-sunken) 80%);
 
-.frame[data-fallback]::before {
-  content: '';
-  position: absolute;
-  right: -18%;
-  bottom: -38%;
-  width: 70%;
-  aspect-ratio: 1;
-  background: var(--bwf-on-brand);
-  mask: url('/assets/brand/emblem.svg') center / contain no-repeat;
-  opacity: 0.12;
+    &::before {
+      content: '';
+      position: absolute;
+      right: -18%;
+      bottom: -38%;
+      width: 70%;
+      aspect-ratio: 1;
+      background: var(--bwf-on-brand);
+      mask: url('/assets/brand/emblem.svg') center / contain no-repeat;
+      opacity: 0.12;
+    }
+  }
 }
 
 .img {

@@ -3,9 +3,11 @@ import { getRouteApi } from '@tanstack/react-router';
 import { useCallback, useMemo, useState } from 'react';
 
 import type { EventCode } from '~/types';
+import { toggleItem } from '~/utils/filter';
 
+import { useUpdateSearch } from '../../hooks';
 import type { TournamentSearch } from '../../types';
-import { parseCourts, parseEvents, toggleIn } from './utils';
+import { parseCourts, parseEvents } from './utils';
 
 const route = getRouteApi('/world-tour/$year/$slug');
 
@@ -14,8 +16,6 @@ const selectEvents = (s: TournamentSearch) => s.events?.join(',') ?? '';
 const selectCourts = (s: TournamentSearch) => s.courts?.join(',') ?? '';
 const selectQ = (s: TournamentSearch) => s.q ?? '';
 const selectFollowing = (s: TournamentSearch) => !!s.following;
-
-const orUndefined = <T>(list: T[]) => (list.length ? list : undefined);
 
 export interface MatchFilters {
   day: number;
@@ -34,7 +34,6 @@ export interface MatchFilters {
 }
 
 export const useMatchFilters = (dayCount: number, focusIndex: number): MatchFilters => {
-  const navigate = route.useNavigate();
   const rawDay = route.useSearch({ select: selectDay });
   const eventsKey = route.useSearch({ select: selectEvents });
   const courtsKey = route.useSearch({ select: selectCourts });
@@ -46,26 +45,16 @@ export const useMatchFilters = (dayCount: number, focusIndex: number): MatchFilt
   const events = useMemo(() => parseEvents(eventsKey), [eventsKey]);
   const courts = useMemo(() => parseCourts(courtsKey), [courtsKey]);
 
-  const update = useCallback(
-    (patch: (s: TournamentSearch) => Partial<TournamentSearch>) =>
-      void navigate({ search: (s) => ({ ...s, ...patch(s) }), replace: true, resetScroll: false }),
-    [navigate],
-  );
+  const update = useUpdateSearch();
 
-  const setDay = useCallback((d: number) => update(() => ({ day: d })), [update]);
-  const toggleEvent = useCallback(
-    (ev: EventCode) => update((s) => ({ events: orUndefined(toggleIn(s.events ?? [], ev)) })),
-    [update],
-  );
-  const toggleCourt = useCallback(
-    (c: number) => update((s) => ({ courts: orUndefined(toggleIn(s.courts ?? [], c)) })),
-    [update],
-  );
-  const clear = useCallback(() => update(() => ({ events: undefined, courts: undefined })), [update]);
+  const setDay = useCallback((d: number) => update({ day: d }), [update]);
+  const toggleEvent = useCallback((ev: EventCode) => update((s) => ({ events: toggleItem(s.events, ev) })), [update]);
+  const toggleCourt = useCallback((c: number) => update((s) => ({ courts: toggleItem(s.courts, c) })), [update]);
+  const clear = useCallback(() => update({ events: undefined, courts: undefined }), [update]);
   const setQ = useCallback(
     (v: string) => {
       setDraft(v);
-      update(() => ({ q: v || undefined }));
+      update({ q: v || undefined });
     },
     [update],
   );

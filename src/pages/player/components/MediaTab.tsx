@@ -12,7 +12,7 @@ import { useTournamentMedia, useVisibleMedia } from '~/hooks/useTournamentMedia'
 import { useTournamentsByCode } from '~/hooks/useTournaments';
 import type { PlayerMatch, Tournament } from '~/types';
 import { regionHiddenNote } from '~/utils/media';
-import type { BriefStory } from '~/utils/news';
+import { toStories, type BriefStory } from '~/utils/news';
 import { tournamentParams } from '~/utils/tournaments';
 
 import { NEWS_STEP, VIDEO_LABELS, VIDEO_STEP } from '../constants';
@@ -24,7 +24,6 @@ import {
   indexPlayerMatches,
   liveVideos,
   mergeVideos,
-  toStories,
   type VideoEntry,
   type VideoGroup,
 } from '../media';

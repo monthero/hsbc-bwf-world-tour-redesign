@@ -1,5 +1,9 @@
 .burger {
   display: none;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    display: flex;
+  }
 }
 
 .content {
@@ -41,17 +45,17 @@
   font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.01em;
-}
 
-.link:hover {
-  background: var(--bwf-raised);
-  color: var(--bwf-text);
-}
+  &:hover {
+    background: var(--bwf-raised);
+    color: var(--bwf-text);
+  }
 
-.link[data-active] {
-  background: var(--bwf-red-tint);
-  color: var(--bwf-text);
-  box-shadow: inset 3px 0 0 var(--bwf-red);
+  &[data-active] {
+    background: var(--bwf-red-tint);
+    color: var(--bwf-text);
+    box-shadow: inset 3px 0 0 var(--bwf-red);
+  }
 }
 
 .foot {
@@ -81,10 +85,4 @@
   color: var(--bwf-red-soft);
   font-size: 13px;
   font-weight: 500;
-}
-
-@mixin smaller-than $mantine-breakpoint-md {
-  .burger {
-    display: flex;
-  }
 }

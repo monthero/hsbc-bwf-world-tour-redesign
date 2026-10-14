@@ -7,30 +7,47 @@
   border-radius: 20px;
   background: var(--bwf-bg-sunken);
   border: 1px solid var(--bwf-border);
-}
 
-.hero[data-image]::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: var(--hero);
-  background-size: cover;
-  background-position: var(--hero-pos, right 25%);
-}
+  &[data-image]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--hero);
+    background-size: cover;
+    background-position: var(--hero-pos, right 25%);
 
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      var(--bwf-bg-sunken) 26%,
-      alpha(var(--bwf-bg-sunken), 0.6) 52%,
-      alpha(var(--bwf-bg-sunken), 0) 80%
-    ),
-    linear-gradient(0deg, alpha(var(--bwf-bg-sunken), 0.9) 0%, alpha(var(--bwf-bg-sunken), 0) 45%);
-  box-shadow: inset 4px 0 0 var(--bwf-red);
+    @mixin smaller-than $mantine-breakpoint-sm {
+      background-position: var(--hero-pos, center 15%);
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        var(--bwf-bg-sunken) 26%,
+        alpha(var(--bwf-bg-sunken), 0.6) 52%,
+        alpha(var(--bwf-bg-sunken), 0) 80%
+      ),
+      linear-gradient(0deg, alpha(var(--bwf-bg-sunken), 0.9) 0%, alpha(var(--bwf-bg-sunken), 0) 45%);
+    box-shadow: inset 4px 0 0 var(--bwf-red);
+
+    @mixin smaller-than $mantine-breakpoint-sm {
+      background: linear-gradient(
+        0deg,
+        var(--bwf-bg) 6%,
+        alpha(var(--bwf-bg), 0.15) 60%,
+        alpha(var(--bwf-bg), 0.45) 100%
+      );
+    }
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    min-height: 420px;
+  }
 }
 
 .content {
@@ -43,6 +60,10 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 20px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding: 20px;
+  }
 }
 
 .identity {
@@ -64,11 +85,11 @@
 
 .prize {
   color: var(--bwf-muted);
-}
 
-.prize b {
-  color: var(--bwf-text);
-  font-weight: 600;
+  b {
+    color: var(--bwf-text);
+    font-weight: 600;
+  }
 }
 
 .title {
@@ -76,6 +97,10 @@
   align-items: center;
   gap: 22px;
   min-width: 0;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 16px;
+  }
 }
 
 .avatar {
@@ -91,25 +116,28 @@
   font-size: 76px;
   line-height: 0.92;
   overflow-wrap: anywhere;
-}
 
-.name .first,
-.name .last {
-  display: block;
-  font-size: 0.52em;
-  font-weight: 400;
-  font-stretch: 92%;
-  letter-spacing: -0.01em;
-  color: var(--bwf-text-3);
-}
+  .first,
+  .last {
+    display: block;
+    font-size: 0.52em;
+    font-weight: 400;
+    font-stretch: 92%;
+    letter-spacing: -0.01em;
+    color: var(--bwf-text-3);
 
-.name .first[data-strong],
-.name .last[data-strong] {
-  font-size: 1em;
-  font-weight: 850;
-  font-stretch: 68%;
-  letter-spacing: -0.005em;
-  color: var(--bwf-text);
+    &[data-strong] {
+      font-size: 1em;
+      font-weight: 850;
+      font-stretch: 68%;
+      letter-spacing: -0.005em;
+      color: var(--bwf-text);
+    }
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 54px;
+  }
 }
 
 .cards {
@@ -130,12 +158,12 @@
   flex-direction: column;
   gap: 2px;
   color: var(--bwf-muted);
-}
 
-.card:first-child {
-  background: alpha(var(--bwf-red), 0.82);
-  border-color: alpha(var(--bwf-red-text), 0.6);
-  color: var(--bwf-red-pale);
+  &:first-child {
+    background: alpha(var(--bwf-red), 0.82);
+    border-color: alpha(var(--bwf-red-text), 0.6);
+    color: var(--bwf-red-pale);
+  }
 }
 
 .cardLabel {
@@ -169,11 +197,11 @@
 
 .cardSub {
   font-size: 12px;
-}
 
-.cardSub b {
-  font-weight: 700;
-  color: var(--bwf-text);
+  b {
+    font-weight: 700;
+    color: var(--bwf-text);
+  }
 }
 
 .cardHigh {
@@ -187,35 +215,4 @@
 
 .cardPartner {
   color: inherit;
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .hero {
-    min-height: 420px;
-  }
-
-  .hero[data-image]::before {
-    background-position: var(--hero-pos, center 15%);
-  }
-
-  .hero::after {
-    background: linear-gradient(
-      0deg,
-      var(--bwf-bg) 6%,
-      alpha(var(--bwf-bg), 0.15) 60%,
-      alpha(var(--bwf-bg), 0.45) 100%
-    );
-  }
-
-  .content {
-    padding: 20px;
-  }
-
-  .title {
-    gap: 16px;
-  }
-
-  .name {
-    font-size: 54px;
-  }
 }

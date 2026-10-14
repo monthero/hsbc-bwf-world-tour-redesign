@@ -177,8 +177,7 @@ export const PlayersData = z.object({
 });
 export type PlayersData = z.infer<typeof PlayersData>;
 
-export const CareerMatchDto = MatchDto.extend({ tournament: z.string(), day: z.string() });
-export type CareerMatchDto = z.infer<typeof CareerMatchDto>;
+const CareerMatchDto = MatchDto.extend({ tournament: z.string(), day: z.string() });
 
 export const PlayerProfileDto = z.object({
   id: z.string(),
@@ -372,9 +371,6 @@ export type NewsMonthCount = z.infer<typeof NewsMonthCount>;
 
 export const NewsMonth = z.object({ month: z.string(), items: z.array(NewsItem) });
 export type NewsMonth = z.infer<typeof NewsMonth>;
-
-export const PopularList = z.object({ asOf: z.string(), items: z.array(NewsItem) });
-export type PopularList = z.infer<typeof PopularList>;
 
 export const NewsIndex = z.object({
   asOf: z.string(),

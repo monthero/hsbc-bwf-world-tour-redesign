@@ -1,7 +1,10 @@
 import type { Game, Match, PlayerMatch, Side } from '~/types';
 import { date, formatDayMonth, formatDayMonthYear } from '~/utils/dates';
-import { formatDuration, formatRank } from '~/utils/format';
-import { gameWon, noteLabel, opposite, roundName } from '~/utils/matches';
+import { formatDuration, formatRank, joinDots } from '~/utils/format';
+import type { WL } from '~/utils/h2h';
+import { courtLabel, gameWon, noteLabel, opposite, roundName } from '~/utils/matches';
+
+import type { FormItem } from '../Outcome';
 
 export interface SplitRow {
   key: string;
@@ -32,13 +35,6 @@ export interface Meeting {
   games: readonly Game[];
 }
 
-export interface FormItem {
-  key: string;
-  outcome: 'W' | 'L';
-}
-
-type WL = readonly [number, number];
-
 const both = <T>(f: (s: Side) => T) => [f(0), f(1)] as const;
 
 const lead = (g: Game, s: Side) => g[s] - g[opposite(s)];
@@ -47,15 +43,14 @@ const flipGames = (games: readonly Game[]) => games.map(([x, y]) => [y, x] as co
 
 export const percent = (a: number, t: number, empty = '0%') => (t ? `${Math.round((a / t) * 100)}%` : empty);
 
-export const metaLead = (m: Match) =>
-  [m.date ? date(m.date).format('ddd') : '', m.court ? `Court ${m.court}` : ''].filter(Boolean).join(' · ');
+export const metaLead = (m: Match) => joinDots([m.date && date(m.date).format('ddd'), courtLabel(m.court)]);
 
 const SCHEDULED = 'Scheduled';
 
 export const statusLine = (m: Match) => {
-  if (m.status === 'P') return ['Live', formatDuration(m.durationMin)].filter(Boolean).join(' · ');
+  if (m.status === 'P') return joinDots(['Live', formatDuration(m.durationMin)]);
   if (m.status === 'N') return m.time ? `${SCHEDULED} · not before` : SCHEDULED;
-  return ['Finished', noteLabel(m.note, 'long'), formatDuration(m.durationMin)].filter(Boolean).join(' · ');
+  return joinDots(['Finished', noteLabel(m.note, 'long'), formatDuration(m.durationMin)]);
 };
 
 export const statRows = (games: readonly Game[], tab: number): SplitRow[] => {
@@ -85,8 +80,7 @@ export const statRows = (games: readonly Game[], tab: number): SplitRow[] => {
 export const formItems = (list: readonly PlayerMatch[]): FormItem[] =>
   list.map((pm) => ({ key: pm.key, outcome: pm.outcome === 'W' ? 'W' : 'L' }));
 
-const venueOf = (pm: PlayerMatch) =>
-  [pm.tournament.venue, pm.match.court ? `Court ${pm.match.court}` : ''].filter(Boolean).join(' · ') || undefined;
+const venueOf = (pm: PlayerMatch) => joinDots([pm.tournament.venue, courtLabel(pm.match.court)]) || undefined;
 
 export const toMeetings = (list: readonly PlayerMatch[], full: boolean): Meeting[] =>
   list.map((pm) => ({

@@ -1,5 +1,4 @@
 import { useMergedRef } from '@mantine/hooks';
-import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type Ref, type RefObject } from 'react';
 
@@ -9,13 +8,11 @@ import { useScrolledPast } from '~/hooks/useScrolledPast';
 import type { Tournament } from '~/types';
 
 import { OFF_TIPS, TAB_LABELS } from '../constants';
-import { useCalendarBack } from '../hooks';
+import { useCalendarBack, useUpdateSearch } from '../hooks';
 import { TournamentTab, type TabAvailability } from '../types';
 
 import classes from './TabNav.module.css';
 import utils from '~/styles/utils.module.css';
-
-const route = getRouteApi('/world-tour/$year/$slug');
 
 const SENTINEL_OPTS = { offset: 0 };
 
@@ -41,16 +38,13 @@ export const TabNav = memo<{
   available: TabAvailability | null;
   hasLive: boolean;
 }>(({ ref, anchorRef, tournament: t, tab, available, hasLive }) => {
-  const navigate = route.useNavigate();
+  const update = useUpdateSearch();
   const back = useCalendarBack(t.year);
   const [sentinelRef, mini] = useScrolledPast<HTMLDivElement>(SENTINEL_OPTS);
   const anchor = useMergedRef(anchorRef, sentinelRef);
   const items = useMemo(() => tabItems(available, hasLive), [available, hasLive]);
 
-  const onSelect = useCallback(
-    (v: TournamentTab) => void navigate({ search: (s) => ({ ...s, tab: v }), replace: true, resetScroll: false }),
-    [navigate],
-  );
+  const onSelect = useCallback((v: TournamentTab) => update({ tab: v }), [update]);
 
   return (
     <>

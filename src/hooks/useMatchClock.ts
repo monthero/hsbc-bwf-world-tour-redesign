@@ -4,7 +4,7 @@ import { useSettings } from '~/stores/settings';
 import type { Match } from '~/types';
 import { instantClock, matchClock, venueTimeAt, type ClockPrefs } from '~/utils/match-time';
 
-export const useClockPrefs = (): ClockPrefs => {
+const useClockPrefs = (): ClockPrefs => {
   const timeZone = useSettings((s) => s.timeZone);
   const clock = useSettings((s) => s.clock);
   return useMemo(() => ({ timeZone, clock }), [timeZone, clock]);

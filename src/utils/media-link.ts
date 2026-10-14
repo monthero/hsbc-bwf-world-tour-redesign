@@ -1,12 +1,12 @@
 import type { MediaItem } from '../api/schemas.ts';
-import { foldText } from './fold.ts';
+import { foldWords } from './fold.ts';
 
-export interface LinkPlayer {
+interface LinkPlayer {
   name: string;
   surname: string;
 }
 
-export interface LinkTeam {
+interface LinkTeam {
   players: readonly LinkPlayer[];
 }
 
@@ -27,14 +27,9 @@ export interface LinkedMedia<M extends LinkMatch> {
   matchOf: ReadonlyMap<string, M>;
 }
 
-const words = (s: string) =>
-  foldText(s)
-    .split(/[^a-z]+/)
-    .filter(Boolean);
-
 const nameHit = (title: readonly string[], p: LinkPlayer) => {
-  const own = words(p.name);
-  const surname = words(p.surname);
+  const own = foldWords(p.name);
+  const surname = foldWords(p.surname);
   if (title.every((w) => own.includes(w))) return title.some((w) => surname.includes(w)) ? 2 : 1;
   const overlap = title.filter((w) => own.includes(w)).length;
   const extraGiven = surname.length > 0 && surname.every((w) => title.includes(w)) && overlap >= 2;
@@ -57,7 +52,7 @@ const matchHit = (sides: readonly [string[][], string[][]], m: LinkMatch) => {
 
 const bestMatch = <M extends LinkMatch>(item: MediaItem, matches: readonly M[]) => {
   if (!item.sides) return null;
-  const sides: [string[][], string[][]] = [item.sides[0].map(words), item.sides[1].map(words)];
+  const sides: [string[][], string[][]] = [item.sides[0].map(foldWords), item.sides[1].map(foldWords)];
   let best = 0;
   let found: M[] = [];
   for (const m of matches) {

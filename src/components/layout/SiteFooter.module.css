@@ -7,20 +7,20 @@
   background: linear-gradient(180deg, alpha(var(--bwf-brand), 0.14), transparent 260px), var(--bwf-bg-sunken);
   color: var(--bwf-dim);
   font-size: 13px;
-}
 
-.footer::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  left: clamp(-60px, -2vw, -20px);
-  bottom: clamp(-400px, -24vw, -190px);
-  width: clamp(440px, 48vw, 780px);
-  aspect-ratio: 1;
-  background: var(--bwf-brand);
-  mask: url('/assets/brand/emblem.svg') center / contain no-repeat;
-  opacity: 0.11;
-  pointer-events: none;
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: clamp(-60px, -2vw, -20px);
+    bottom: clamp(-400px, -24vw, -190px);
+    width: clamp(440px, 48vw, 780px);
+    aspect-ratio: 1;
+    background: var(--bwf-brand);
+    mask: url('/assets/brand/emblem.svg') center / contain no-repeat;
+    opacity: 0.11;
+    pointer-events: none;
+  }
 }
 
 .grid {
@@ -29,6 +29,15 @@
   gap: 40px clamp(24px, 4vw, 64px);
   padding-top: 56px;
   padding-bottom: 48px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding-top: 40px;
+    padding-bottom: 36px;
+  }
 }
 
 .about {
@@ -76,10 +85,10 @@
 .link {
   color: var(--bwf-dim);
   transition: color 0.15s;
-}
 
-.link:hover {
-  color: var(--bwf-text);
+  &:hover {
+    color: var(--bwf-text);
+  }
 }
 
 .social {
@@ -140,46 +149,35 @@
   display: flex;
   opacity: 0.9;
   transition: opacity 0.15s;
-}
 
-.partnerLogo:hover {
-  opacity: 1;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .hsbc {
   width: auto;
   height: 40px;
   margin-left: -1px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    height: 32px;
+  }
 }
 
 .bwf {
   height: 21px;
   color: var(--bwf-text);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    height: 17px;
+  }
 }
 
 @mixin smaller-than $mantine-breakpoint-md {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .about,
   .hq {
     grid-column: 1 / -1;
     max-width: none;
-  }
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .hsbc {
-    height: 32px;
-  }
-
-  .bwf {
-    height: 17px;
-  }
-
-  .grid {
-    padding-top: 40px;
-    padding-bottom: 36px;
   }
 }

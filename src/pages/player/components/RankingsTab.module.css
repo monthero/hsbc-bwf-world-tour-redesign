@@ -40,11 +40,11 @@
   border-radius: 12px;
   background: var(--bwf-surface);
   border: 1px solid var(--bwf-border);
-}
 
-.row[data-current] {
-  background: alpha(var(--bwf-red), 0.09);
-  border-color: alpha(var(--bwf-red-text), 0.38);
+  &[data-current] {
+    background: alpha(var(--bwf-red), 0.09);
+    border-color: alpha(var(--bwf-red-text), 0.38);
+  }
 }
 
 .rowMain {
@@ -89,9 +89,9 @@
 .best {
   font-size: 11px;
   color: var(--bwf-dim);
-}
 
-.best b {
-  color: var(--bwf-gold);
-  font-weight: 400;
+  b {
+    color: var(--bwf-gold);
+    font-weight: 400;
+  }
 }

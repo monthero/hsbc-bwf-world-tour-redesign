@@ -14,7 +14,7 @@ export const LIVE_COOLDOWN_MS = 5 * 60_000;
 let failures = 0;
 let openUntil = 0;
 
-export const liveBlocked = () => Date.now() < openUntil;
+const liveBlocked = () => Date.now() < openUntil;
 
 const settle = (ok: boolean) => {
   failures = ok ? 0 : failures + 1;

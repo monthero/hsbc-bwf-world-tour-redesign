@@ -5,24 +5,28 @@
   font-size: 18px;
   line-height: 1.72;
   text-wrap: pretty;
-}
 
-.paragraph strong,
-.list strong {
-  color: var(--bwf-text);
-  font-weight: 600;
+  strong {
+    color: var(--bwf-text);
+    font-weight: 600;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 17px;
+    line-height: 1.68;
+  }
 }
 
 .list {
   padding-left: 1.3em;
-}
 
-.list li + li {
-  margin-top: 0.4em;
-}
+  li + li {
+    margin-top: 0.4em;
+  }
 
-.list li::marker {
-  color: var(--bwf-red-text);
+  li::marker {
+    color: var(--bwf-red-text);
+  }
 }
 
 .link {
@@ -34,15 +38,15 @@
   transition:
     color 0.15s,
     text-decoration-color 0.15s;
-}
 
-.link:hover {
-  color: var(--bwf-red-pale);
-  text-decoration-color: var(--bwf-red-text);
-}
+  &:hover {
+    color: var(--bwf-red-pale);
+    text-decoration-color: var(--bwf-red-text);
+  }
 
-.link[data-kind='player'] {
-  font-weight: 600;
+  &[data-kind='player'] {
+    font-weight: 600;
+  }
 }
 
 .heading {
@@ -52,6 +56,10 @@
   font-weight: 600;
   letter-spacing: -0.015em;
   text-wrap: balance;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 21px;
+  }
 }
 
 h3.heading,
@@ -64,44 +72,64 @@ h4.heading {
   margin: 12px 0;
   padding: 8px 0 8px 28px;
   border-left: 3px solid var(--bwf-red);
-}
 
-.quote blockquote {
-  margin: 0;
-  font-size: 23px;
-  line-height: 1.42;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  color: var(--bwf-text);
-  text-wrap: pretty;
-}
+  blockquote {
+    margin: 0;
+    font-size: 23px;
+    line-height: 1.42;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--bwf-text);
+    text-wrap: pretty;
 
-.quote figcaption {
-  margin-top: 12px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--bwf-red-text);
+    @mixin smaller-than $mantine-breakpoint-sm {
+      font-size: 20px;
+    }
+  }
+
+  figcaption {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--bwf-red-text);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding-left: 18px;
+  }
 }
 
 .figure {
   margin: 12px 0;
-}
 
-.figure:has([data-fallback]) {
-  display: none;
+  &:has([data-fallback]) {
+    display: none;
+  }
+
+  figcaption {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--bwf-dim);
+
+    @mixin smaller-than $mantine-breakpoint-sm {
+      padding-inline: var(--bwf-gutter);
+    }
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-inline: calc(-1 * var(--bwf-gutter));
+  }
 }
 
 .figureImage {
   border-radius: 14px;
-}
 
-.figure figcaption {
-  margin-top: 10px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--bwf-dim);
+  @mixin smaller-than $mantine-breakpoint-sm {
+    border-radius: 0;
+  }
 }
 
 .video {
@@ -120,11 +148,16 @@ h4.heading {
   transition:
     border-color 0.2s,
     background 0.2s;
-}
 
-.video:hover {
-  border-color: var(--bwf-border-hover);
-  background: var(--bwf-surface-3);
+  &:hover {
+    border-color: var(--bwf-border-hover);
+    background: var(--bwf-surface-3);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 
 .videoThumb {
@@ -134,12 +167,12 @@ h4.heading {
   overflow: hidden;
   border-radius: 10px;
   background: var(--bwf-surface-3);
-}
 
-.videoThumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .play {
@@ -185,41 +218,4 @@ h4.heading {
   border: 0;
   border-radius: 2px;
   background: var(--bwf-border-strong);
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .paragraph,
-  .list {
-    font-size: 17px;
-    line-height: 1.68;
-  }
-
-  .heading {
-    font-size: 21px;
-  }
-
-  .quote {
-    padding-left: 18px;
-  }
-
-  .quote blockquote {
-    font-size: 20px;
-  }
-
-  .figure {
-    margin-inline: calc(-1 * var(--bwf-gutter));
-  }
-
-  .figureImage {
-    border-radius: 0;
-  }
-
-  .figure figcaption {
-    padding-inline: var(--bwf-gutter);
-  }
-
-  .video {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
 }

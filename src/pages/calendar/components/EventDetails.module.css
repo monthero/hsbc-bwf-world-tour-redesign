@@ -29,10 +29,10 @@
   line-height: 1.25;
   letter-spacing: -0.01em;
   transition: color 0.15s;
-}
 
-.title:hover {
-  color: var(--bwf-red-text);
+  &:hover {
+    color: var(--bwf-red-text);
+  }
 }
 
 .meta {
@@ -69,9 +69,9 @@
   font-size: 13px;
   font-weight: 600;
   transition: background 0.15s;
-}
 
-.go:hover {
-  background: var(--bwf-border-strong);
-  color: var(--mantine-color-white);
+  &:hover {
+    background: var(--bwf-border-strong);
+    color: var(--mantine-color-white);
+  }
 }

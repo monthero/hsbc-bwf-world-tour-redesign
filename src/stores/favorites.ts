@@ -8,7 +8,7 @@ import { Continent, EventCode, Level } from '~/api/schemas';
 import { SEASON_YEAR } from '~/constants';
 import { continentOf } from '~/utils/countries';
 
-import { safeJSONStorage } from './persistence';
+import { mergeParsed, safeJSONStorage } from './persistence';
 
 export type FavoriteKind = 'player' | 'country' | 'continent' | 'discipline' | 'tournament' | 'level';
 
@@ -20,16 +20,15 @@ const STORE_VERSION = 2;
 const stamp = { addedAt: z.number() };
 const Stamp = z.object(stamp);
 
-export const PlayerFavorite = z.object({ ...stamp, name: z.string(), cc: z.string() });
+const PlayerFavorite = z.object({ ...stamp, name: z.string(), cc: z.string() });
 export type PlayerFavorite = z.infer<typeof PlayerFavorite>;
 
-export const TournamentFavorite = z.object({
+const TournamentFavorite = z.object({
   ...stamp,
   name: z.string(),
   slug: z.string(),
   year: z.number().catch(SEASON_YEAR),
 });
-export type TournamentFavorite = z.infer<typeof TournamentFavorite>;
 
 export const FavoritesData = z.object({
   players: z.record(z.string(), PlayerFavorite).catch({}),
@@ -54,11 +53,10 @@ type FavoriteMetas = {
   player: { name: string; cc: string };
   tournament: { name: string; slug: string; year: number };
 };
-export type FavoriteId<K extends FavoriteKind> = FavoriteIds[K];
-export type FavoriteMeta<K extends FavoriteKind> = K extends keyof FavoriteMetas ? FavoriteMetas[K] : never;
+type FavoriteId<K extends FavoriteKind> = FavoriteIds[K];
 type MetaArgs<K extends FavoriteKind> = K extends keyof FavoriteMetas ? [meta: FavoriteMetas[K]] : [];
 
-export interface FavoritesActions {
+interface FavoritesActions {
   toggle: <K extends FavoriteKind>(kind: K, id: FavoriteId<K>, ...meta: MetaArgs<K>) => void;
   add: <K extends FavoriteKind>(kind: K, id: FavoriteId<K>, ...meta: MetaArgs<K>) => void;
   remove: <K extends FavoriteKind>(kind: K, id: FavoriteId<K>) => void;
@@ -91,11 +89,6 @@ const emptyData = (): FavoritesData => ({
   tournaments: {},
   levels: {},
 });
-
-const parseData = (raw: unknown): FavoritesData => {
-  const parsed = FavoritesData.safeParse(raw);
-  return parsed.success ? parsed.data : emptyData();
-};
 
 const migrate = (persisted: unknown, version: number) =>
   (version < STORE_VERSION && persisted && typeof persisted === 'object'
@@ -154,7 +147,7 @@ export const useFavorites = create<FavoritesState>()(
         levels: s.levels,
       }),
       migrate,
-      merge: (persisted, current) => ({ ...current, ...parseData(persisted) }),
+      merge: mergeParsed(FavoritesData, emptyData),
     },
   ),
 );

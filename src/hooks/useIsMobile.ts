@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-export const MOBILE_QUERY = '(max-width: 47.99em)';
+const MOBILE_QUERY = '(max-width: 47.99em)';
 
 const media = typeof window === 'undefined' ? null : window.matchMedia(MOBILE_QUERY);
 const listeners = new Set<() => void>();

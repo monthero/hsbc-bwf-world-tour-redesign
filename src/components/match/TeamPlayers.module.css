@@ -3,56 +3,56 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-}
 
-.team[data-layout='inline'] {
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 12px;
-}
+  &[data-layout='inline'] {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+  }
 
-.team[data-align='end'] {
-  align-items: flex-end;
-  text-align: right;
-}
+  &[data-align='end'] {
+    align-items: flex-end;
+    text-align: right;
+  }
 
-.team[data-pair-seed] {
-  display: grid;
-  --name-min: min-content;
-  grid-template-columns: [name] minmax(var(--name-min), max-content) [seed] auto;
-  justify-content: start;
-  gap: 2px 6px;
-}
+  &[data-pair-seed] {
+    display: grid;
+    --name-min: min-content;
+    grid-template-columns: [name] minmax(var(--name-min), max-content) [seed] auto;
+    justify-content: start;
+    gap: 2px 6px;
 
-.team[data-pair-seed][data-truncate] {
-  --name-min: 0;
-}
+    &[data-truncate] {
+      --name-min: 0;
+    }
 
-.team[data-pair-seed][data-align='end'] {
-  grid-template-columns: [seed] auto [name] minmax(var(--name-min), max-content);
-  justify-content: end;
-}
+    &[data-align='end'] {
+      grid-template-columns: [seed] auto [name] minmax(var(--name-min), max-content);
+      justify-content: end;
+    }
+  }
 
-.team[data-slots] {
-  display: grid;
-  grid-template-columns:
-    [name] minmax(var(--name-min, 0px), max-content) [seed] auto [fill] minmax(0, 1fr)
-    [aside] auto [end] auto;
-  grid-auto-flow: dense;
-  column-gap: 0;
-  align-items: start;
-}
+  &[data-slots] {
+    display: grid;
+    grid-template-columns:
+      [name] minmax(var(--name-min, 0px), max-content) [seed] auto [fill] minmax(0, 1fr)
+      [aside] auto [end] auto;
+    grid-auto-flow: dense;
+    column-gap: 0;
+    align-items: start;
 
-.team[data-slots][data-align='end'] {
-  grid-template-columns:
-    [end] auto [aside] auto [fill] minmax(0, 1fr) [seed] auto
-    [name] minmax(var(--name-min, 0px), max-content);
-}
+    &[data-align='end'] {
+      grid-template-columns:
+        [end] auto [aside] auto [fill] minmax(0, 1fr) [seed] auto
+        [name] minmax(var(--name-min, 0px), max-content);
+    }
+  }
 
-.team[data-pair-seed] > .player,
-.team[data-slots] > .player {
-  grid-column: name;
+  &[data-pair-seed] > .player,
+  &[data-slots] > .player {
+    grid-column: name;
+  }
 }
 
 .pairSeed {
@@ -65,22 +65,22 @@
   grid-column: aside;
   grid-row: 1;
   align-self: center;
-}
 
-.team[data-pair] > .aside {
-  grid-row: 1 / span 2;
-}
+  .team[data-pair] > & {
+    grid-row: 1 / span 2;
+  }
 
-.aside:empty {
-  display: none;
+  &:empty {
+    display: none;
+  }
 }
 
 .end {
   display: contents;
-}
 
-.end > * {
-  grid-column: end;
+  & > * {
+    grid-column: end;
+  }
 }
 
 .team[data-slots] > .pairSeed {
@@ -106,36 +106,36 @@
   align-items: center;
   gap: 7px;
   min-width: 0;
-}
 
-.team[data-align='end'] .player {
-  flex-direction: row-reverse;
+  .team[data-align='end'] & {
+    flex-direction: row-reverse;
+  }
+
+  .team[data-wrap] & {
+    align-items: flex-start;
+  }
 }
 
 .name {
   min-width: 0;
   text-wrap: pretty;
-}
 
-.team[data-truncate] .name {
-  display: block;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.team[data-wrap] .player {
-  align-items: flex-start;
+  .team[data-truncate] & {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .nameLine {
   min-width: 0;
   text-wrap: pretty;
-}
 
-.nameLine > :not(:first-child) {
-  margin-left: 6px;
+  & > :not(:first-child) {
+    margin-left: 6px;
+  }
 }
 
 .flagLine {

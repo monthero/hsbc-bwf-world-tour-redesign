@@ -35,7 +35,7 @@ const send = async <S extends z.ZodType>(path: string, method: string, body: unk
   return schema.parse(json) as z.infer<S>;
 };
 
-export const adminPlayersQuery = () =>
+const adminPlayersQuery = () =>
   queryOptions({
     queryKey: ['admin', 'players'],
     queryFn: ({ signal }) => getJson(`${ADMIN_API}/players`, AdminPlayers, signal),
@@ -98,7 +98,7 @@ export const useFetchImage = () =>
 
 const EQUIPMENT_KEY = ['admin', 'equipment'] as const;
 
-export const equipmentQuery = (kind: EquipmentKind) =>
+const equipmentQuery = (kind: EquipmentKind) =>
   queryOptions({
     queryKey: [...EQUIPMENT_KEY, kind],
     queryFn: ({ signal }) => getJson(`${ADMIN_API}/equipment?kind=${kind}`, EquipmentList, signal),

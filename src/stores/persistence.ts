@@ -1,3 +1,4 @@
+import type { z } from 'zod';
 import { createJSONStorage, type StateStorage } from 'zustand/middleware';
 
 const attempt = <T>(fn: () => T, fallback: T): T => {
@@ -15,6 +16,13 @@ const safeLocalStorage: StateStorage = {
 };
 
 export const safeJSONStorage = <S>() => createJSONStorage<S>(() => safeLocalStorage);
+
+export const mergeParsed =
+  <T>(schema: z.ZodType<T>, fallback: () => T) =>
+  <S>(persisted: unknown, current: S): S => {
+    const parsed = schema.safeParse(persisted);
+    return { ...current, ...(parsed.success ? parsed.data : fallback()) };
+  };
 
 interface PersistedStore {
   persist: { getOptions: () => { name?: string }; rehydrate: () => Promise<void> | void };

@@ -11,6 +11,10 @@
 
 .strip[data-past] {
   gap: 8px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-inline: -21px;
+  }
 }
 
 .card {
@@ -25,11 +29,11 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-}
 
-.card[data-past] {
-  background: var(--bwf-bg-sunken);
-  border-color: var(--bwf-border);
+  &[data-past] {
+    background: var(--bwf-bg-sunken);
+    border-color: var(--bwf-border);
+  }
 }
 
 .scrim {
@@ -172,9 +176,5 @@
     scroll-padding: 0 28px;
     padding-inline: 28px;
     padding-bottom: 2px;
-  }
-
-  .strip[data-past] {
-    margin-inline: -21px;
   }
 }

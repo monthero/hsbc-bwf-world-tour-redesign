@@ -4,7 +4,7 @@ import type { FC } from 'react';
 
 import classes from './SeedTag.module.css';
 
-export const SEED_TIP = 'seeded by world ranking and placed apart in the draw so top entries can’t meet early';
+const SEED_TIP = 'seeded by world ranking and placed apart in the draw so top entries can’t meet early';
 
 export const SeedTag: FC<{
   seed: number | null | undefined;

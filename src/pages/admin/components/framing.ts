@@ -1,4 +1,4 @@
-import { useRef, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react';
+import { useCallback, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react';
 
 import type { Focus } from '~/types';
 
@@ -37,6 +37,25 @@ export const arrowNudge = (e: KeyboardEvent<HTMLElement>) => {
   e.preventDefault();
   const step = e.shiftKey ? BIG_STEP : STEP;
   return { dx: arrow[0] * step, dy: arrow[1] * step };
+};
+
+export const useFramingEditor = <F extends Focus>({
+  focus,
+  flip,
+  flipBlocked,
+  busy = false,
+  status,
+  onChange,
+}: FramingEditorProps<F>) => {
+  const [drag, setDrag] = useState<F | null>(null);
+  const onCommit = useCallback((next: F) => onChange({ focus: next, flip }), [onChange, flip]);
+  const onFlip = useCallback((next: boolean) => onChange({ focus, flip: next }), [onChange, focus]);
+  const onReset = useCallback(() => onChange({ focus: null, flip: false }), [onChange]);
+  const controls = useMemo(
+    () => ({ flip, flipBlocked, busy, resettable: !!focus || flip, status, onFlip, onReset }),
+    [flip, flipBlocked, busy, focus, status, onFlip, onReset],
+  );
+  return { shown: drag ?? focus, setDrag, onCommit, controls };
 };
 
 export const mirrored = <F extends Focus>(focus: F | null): F | null => focus && { ...focus, x: 100 - focus.x };

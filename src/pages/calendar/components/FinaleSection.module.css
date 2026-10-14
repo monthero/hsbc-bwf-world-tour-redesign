@@ -1,13 +1,13 @@
 .section {
   padding-bottom: 8px;
+
+  &[data-reached] .line {
+    background: var(--bwf-red);
+  }
 }
 
 .line {
   height: var(--node-y);
-}
-
-.section[data-reached] .line {
-  background: var(--bwf-red);
 }
 
 .node {
@@ -20,6 +20,12 @@
   background: var(--bwf-gold);
   color: var(--mantine-color-gold-9);
   box-shadow: 0 0 0 6px alpha(var(--bwf-gold), 0.14);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    width: 24px;
+    height: 24px;
+    box-shadow: 0 0 0 5px alpha(var(--bwf-gold), 0.14);
+  }
 }
 
 .head {
@@ -27,6 +33,12 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--bwf-gold);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: block;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
 }
 
 .sub {
@@ -35,18 +47,4 @@
   font-weight: 400;
   letter-spacing: 0;
   color: var(--bwf-faint);
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .node {
-    width: 24px;
-    height: 24px;
-    box-shadow: 0 0 0 5px alpha(var(--bwf-gold), 0.14);
-  }
-
-  .head {
-    display: block;
-    font-size: 17px;
-    letter-spacing: -0.01em;
-  }
 }

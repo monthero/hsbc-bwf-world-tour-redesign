@@ -5,17 +5,17 @@
   font-size: 12px;
   color: var(--bwf-muted);
   white-space: nowrap;
-}
 
-.record b {
-  font-weight: 600;
-  color: var(--bwf-text-2);
-}
+  b {
+    font-weight: 600;
+    color: var(--bwf-text-2);
+  }
 
-.record > * + *::before {
-  content: '·';
-  margin-right: 6px;
-  color: var(--bwf-faint);
+  & > * + *::before {
+    content: '·';
+    margin-right: 6px;
+    color: var(--bwf-faint);
+  }
 }
 
 .titles {

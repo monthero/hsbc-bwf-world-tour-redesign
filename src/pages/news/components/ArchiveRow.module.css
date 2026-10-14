@@ -1,5 +1,9 @@
 .row[data-kind='head'] {
   padding-top: 32px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding-top: 26px;
+  }
 }
 
 .row[data-kind='stories'][data-variant='card'] {
@@ -7,10 +11,10 @@
   grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
   gap: 16px;
   padding-bottom: 20px;
-}
 
-.row[data-kind='stories'][data-variant='card'][data-last] {
-  padding-bottom: 0;
+  &[data-last] {
+    padding-bottom: 0;
+  }
 }
 
 .row[data-kind='stories'][data-variant='compact']:not([data-first]) {
@@ -27,6 +31,11 @@
   flex-wrap: wrap;
   gap: 8px 12px;
   margin-bottom: 18px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 8px;
+    margin-bottom: 4px;
+  }
 }
 
 .name {
@@ -34,11 +43,16 @@
   font-size: 26px;
   font-weight: 600;
   letter-spacing: -0.02em;
-}
 
-.name span {
-  color: var(--bwf-faint);
-  font-weight: 500;
+  span {
+    color: var(--bwf-faint);
+    font-weight: 500;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 19px;
+    letter-spacing: -0.015em;
+  }
 }
 
 .badge {
@@ -48,44 +62,28 @@
   color: var(--bwf-red-text);
   font-size: 12px;
   font-weight: 500;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding: 2px 8px;
+    font-size: 11px;
+  }
 }
 
 .count {
   margin-left: auto;
   font-size: 13px;
   color: var(--bwf-faint);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 12px;
+  }
 }
 
 .failed {
-  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding: 18px 20px;
   text-align: left;
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .row[data-kind='head'] {
-    padding-top: 26px;
-  }
-
-  .head {
-    gap: 8px;
-    margin-bottom: 4px;
-  }
-
-  .name {
-    font-size: 19px;
-    letter-spacing: -0.015em;
-  }
-
-  .badge {
-    padding: 2px 8px;
-    font-size: 11px;
-  }
-
-  .count {
-    font-size: 12px;
-  }
 }

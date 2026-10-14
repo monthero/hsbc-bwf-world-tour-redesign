@@ -7,6 +7,10 @@
 .column {
   min-width: 0;
   padding: 14px 14px 10px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding: 2px 14px 4px;
+  }
 }
 
 .colHead {
@@ -45,20 +49,34 @@ a.colHead:hover {
   padding: 7px 0;
   border-top: 1px solid var(--bwf-line);
   font-size: 13px;
+
+  &[data-out] {
+    opacity: 0.45;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    min-height: 48px;
+    padding: 8px 0;
+    font-size: 14px;
+
+    &:first-child {
+      border-top: 0;
+    }
+  }
 }
 
 .rank {
   font-size: 12px;
   font-weight: 600;
   color: var(--bwf-muted);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 13px;
+  }
 }
 
 .row[data-qualify='qualified'] .rank {
   color: var(--bwf-gold);
-}
-
-.row[data-out] {
-  opacity: 0.45;
 }
 
 .names {
@@ -69,6 +87,10 @@ a.colHead:hover {
   grid-column: 4;
   font-size: 12px;
   color: var(--bwf-dim);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 13px;
+  }
 }
 
 .lineLabel {
@@ -78,6 +100,10 @@ a.colHead:hover {
 
 .skeleton {
   height: 440px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    height: 600px;
+  }
 }
 
 .champions {
@@ -96,16 +122,42 @@ a.colHead:hover {
   gap: 12px;
   min-width: 0;
   padding: 14px;
-}
 
-.champion .colHead {
-  margin-bottom: 0;
+  .colHead {
+    margin-bottom: 0;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: grid;
+    grid-template-columns: 91px minmax(0, 1fr);
+    grid-template-areas:
+      'avatars head'
+      'avatars names';
+    align-items: center;
+    gap: 2px 14px;
+    padding: 12px 14px;
+
+    .colHead {
+      grid-area: head;
+    }
+
+    .names {
+      grid-area: names;
+      font-size: 14px;
+    }
+  }
 }
 
 .caption {
   margin: 0;
   font-size: 12px;
   color: var(--bwf-dim);
+}
+
+.avatars {
+  @mixin smaller-than $mantine-breakpoint-sm {
+    grid-area: avatars;
+  }
 }
 
 @mixin smaller-than $mantine-breakpoint-lg {
@@ -116,58 +168,8 @@ a.colHead:hover {
 }
 
 @mixin smaller-than $mantine-breakpoint-sm {
-  .column {
-    padding: 2px 14px 4px;
-  }
-
-  .row {
-    min-height: 48px;
-    padding: 8px 0;
-    font-size: 14px;
-  }
-
-  .row:first-child {
-    border-top: 0;
-  }
-
-  .rank {
-    font-size: 13px;
-  }
-
-  .points {
-    font-size: 13px;
-  }
-
-  .skeleton {
-    height: 600px;
-  }
-
   .champions {
     grid-template-columns: minmax(0, 1fr);
     gap: 8px;
-  }
-
-  .champion {
-    display: grid;
-    grid-template-columns: 91px minmax(0, 1fr);
-    grid-template-areas:
-      'avatars head'
-      'avatars names';
-    align-items: center;
-    gap: 2px 14px;
-    padding: 12px 14px;
-  }
-
-  .champion .colHead {
-    grid-area: head;
-  }
-
-  .champion .names {
-    grid-area: names;
-    font-size: 14px;
-  }
-
-  .avatars {
-    grid-area: avatars;
   }
 }

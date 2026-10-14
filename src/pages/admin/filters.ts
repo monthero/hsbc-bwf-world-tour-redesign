@@ -3,6 +3,7 @@ import { SEASON_YEAR } from '~/constants';
 import type { EventCode } from '~/types';
 import { countryName } from '~/utils/countries';
 import { ISO_DAY, today } from '~/utils/dates';
+import { countBy, countryOptions, searchTokens, type CountOption } from '~/utils/filter';
 import { compareText, foldText } from '~/utils/names';
 
 import { compactKey, splitBrand, type BrandMatcher } from './catalog';
@@ -27,12 +28,6 @@ export interface AdminRow {
   hasNotes: boolean;
   candidate: boolean;
   brands: readonly string[];
-}
-
-export interface CountOption {
-  value: string;
-  label: string;
-  count: number;
 }
 
 export interface Toggle {
@@ -144,19 +139,11 @@ const toRow = (player: AdminPlayer, brands: readonly string[], staleBefore: stri
   brands,
 });
 
-const countBy = (rows: readonly AdminRow[], keysOf: (r: AdminRow) => readonly string[]) => {
-  const counts = new Map<string, number>();
-  for (const r of rows) for (const k of keysOf(r)) counts.set(k, (counts.get(k) ?? 0) + 1);
-  return counts;
-};
-
 const computeRows = (players: readonly AdminPlayer[], knownBrands: readonly BrandMatcher[]) => {
   const { labels, catalogLabels, brandsOf } = brandIndex(players, knownBrands);
   const staleBefore = ACTIVE_SINCE.year();
   const rows = players.map((p) => toRow(p, brandsOf.get(p.id) ?? [], staleBefore));
-  const countries: CountOption[] = [...countBy(rows, (r) => [r.player.cc])]
-    .map(([value, count]) => ({ value, label: countryName(value), count }))
-    .sort((a, b) => compareText(a.label, b.label));
+  const countries = countryOptions(rows, (r) => [r.player.cc]);
   const brands: CountOption[] = [...countBy(rows, (r) => r.brands)]
     .map(([value, count]) => ({
       value,
@@ -183,7 +170,7 @@ export const buildRows = (players: readonly AdminPlayer[], knownBrands: readonly
 };
 
 export const filterRows = (rows: readonly AdminRow[], c: Criteria) => {
-  const tokens = foldText(c.query).split(/\s+/).filter(Boolean);
+  const tokens = searchTokens(c.query);
   const since = ACTIVE_SINCE[c.active]();
   const toggles = TOGGLES.filter((t) => c.flags.includes(t.key));
   return rows

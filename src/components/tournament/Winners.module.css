@@ -1,11 +1,11 @@
 .winners {
   display: flex;
   flex-direction: column;
-}
 
-.winners[data-bordered] {
-  margin-top: 14px;
-  border-top: 1px solid var(--mantine-color-slate-4);
+  &[data-bordered] {
+    margin-top: 14px;
+    border-top: 1px solid var(--mantine-color-slate-4);
+  }
 }
 
 .winnerRow {
@@ -39,10 +39,10 @@
   font-weight: 500;
   color: var(--bwf-red-text);
   text-decoration: none;
-}
 
-.podium:hover {
-  color: var(--bwf-red-soft);
+  &:hover {
+    color: var(--bwf-red-soft);
+  }
 }
 
 .dropdown {

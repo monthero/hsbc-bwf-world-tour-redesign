@@ -26,11 +26,10 @@
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-}
 
-.add:hover,
-.cancel:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .cancel {

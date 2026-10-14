@@ -5,6 +5,11 @@
   border-radius: 16px;
   border: 1px solid var(--bwf-border);
   background: var(--bwf-surface);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
 }
 
 .stat {
@@ -12,10 +17,22 @@
   flex-direction: column-reverse;
   gap: 4px;
   padding: 14px 22px 13px;
-}
 
-.stat + .stat {
-  border-left: 1px solid var(--bwf-border);
+  & + .stat {
+    border-left: 1px solid var(--bwf-border);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding: 12px 14px;
+
+    &:nth-child(3) {
+      border-left: 0;
+    }
+
+    &:nth-child(n + 3) {
+      border-top: 1px solid var(--bwf-border);
+    }
+  }
 }
 
 .label {
@@ -33,37 +50,18 @@
   line-height: 1;
   letter-spacing: -0.01em;
   font-variant-numeric: tabular-nums;
-}
 
-.value small {
-  margin-left: 1px;
-  font-size: 0.6em;
-  color: var(--bwf-muted);
+  small {
+    margin-left: 1px;
+    font-size: 0.6em;
+    color: var(--bwf-muted);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 28px;
+  }
 }
 
 .stat[data-gold] .value {
   color: var(--bwf-gold);
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .stats {
-    grid-template-columns: 1fr 1fr;
-    width: 100%;
-  }
-
-  .stat {
-    padding: 12px 14px;
-  }
-
-  .stat:nth-child(3) {
-    border-left: 0;
-  }
-
-  .stat:nth-child(n + 3) {
-    border-top: 1px solid var(--bwf-border);
-  }
-
-  .value {
-    font-size: 28px;
-  }
 }

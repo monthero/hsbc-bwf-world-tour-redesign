@@ -8,7 +8,7 @@ import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
 import type { EventCode } from '~/types';
 
-import { useOpenMatch } from '../hooks';
+import { useOpenMatch, useUpdateSearch } from '../hooks';
 import type { PlayersView, TabProps } from '../types';
 import { ContinentSection } from './players/ContinentSection';
 import { DisciplineSection } from './players/DisciplineSection';
@@ -82,35 +82,19 @@ export const PlayersTab: FC<TabProps> = ({ schedule, draw, entries }) => {
   const ev = route.useSearch({ select: (s) => s.pev });
   const top10 = route.useSearch({ select: (s) => s.top10 ?? false });
   const q = route.useSearch({ select: (s) => s.q ?? '' });
-  const navigate = route.useNavigate();
+  const update = useUpdateSearch();
   const { data: directory } = usePlayerDirectory();
 
   const latest = useMemo(() => latestEntries(schedule.matches, draw, entries), [schedule.matches, draw, entries]);
   const ranked = useMemo(() => rankEntries(latest, directory), [latest, directory]);
 
   const onView = useCallback(
-    (v: PlayersView | null) =>
-      v &&
-      navigate({
-        search: (s) => ({ ...s, pby: v === 'country' ? undefined : v }),
-        replace: true,
-        resetScroll: false,
-      }),
-    [navigate],
+    (v: PlayersView | null) => v && update({ pby: v === 'country' ? undefined : v }),
+    [update],
   );
-  const onEvent = useCallback(
-    (v: EventCode | null) =>
-      navigate({ search: (s) => ({ ...s, pev: v ?? undefined }), replace: true, resetScroll: false }),
-    [navigate],
-  );
-  const onTop10 = useCallback(
-    () => navigate({ search: (s) => ({ ...s, top10: s.top10 ? undefined : true }), replace: true, resetScroll: false }),
-    [navigate],
-  );
-  const onQuery = useCallback(
-    (v: string) => navigate({ search: (s) => ({ ...s, q: v || undefined }), replace: true, resetScroll: false }),
-    [navigate],
-  );
+  const onEvent = useCallback((v: EventCode | null) => update({ pev: v ?? undefined }), [update]);
+  const onTop10 = useCallback(() => update((s) => ({ top10: s.top10 ? undefined : true })), [update]);
+  const onQuery = useCallback((v: string) => update({ q: v || undefined }), [update]);
 
   const byCountry = view === 'country';
 

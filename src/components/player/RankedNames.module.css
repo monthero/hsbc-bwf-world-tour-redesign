@@ -13,9 +13,9 @@
   transition:
     color 0.15s,
     background 0.15s;
-}
 
-.ext:hover {
-  color: var(--bwf-text);
-  background: var(--bwf-raised);
+  &:hover {
+    color: var(--bwf-text);
+    background: var(--bwf-raised);
+  }
 }

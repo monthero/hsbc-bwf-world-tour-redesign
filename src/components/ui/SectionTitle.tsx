@@ -6,7 +6,7 @@ import { IconExpand } from './icons';
 
 import classes from './SectionTitle.module.css';
 
-export interface SectionToggle {
+interface SectionToggle {
   open: boolean;
   onToggle: () => void;
   controls?: string;

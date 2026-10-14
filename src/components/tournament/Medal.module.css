@@ -1,18 +1,18 @@
 .medal {
   display: block;
   flex: none;
-}
 
-.medal[data-kind='gold'] {
-  color: var(--bwf-gold);
-}
+  &[data-kind='gold'] {
+    color: var(--bwf-gold);
+  }
 
-.medal[data-kind='silver'] {
-  color: var(--bwf-silver);
-}
+  &[data-kind='silver'] {
+    color: var(--bwf-silver);
+  }
 
-.medal[data-kind='bronze'] {
-  color: var(--bwf-bronze);
+  &[data-kind='bronze'] {
+    color: var(--bwf-bronze);
+  }
 }
 
 .count {
@@ -38,77 +38,78 @@
     border-color 0.25s ease,
     box-shadow 0.25s ease,
     background 0.25s ease;
-}
 
-.count[data-kind='gold'] {
-  --tone: var(--bwf-gold);
-  --value: var(--bwf-gold-text);
-}
+  &[data-kind='gold'] {
+    --tone: var(--bwf-gold);
+    --value: var(--bwf-gold-text);
+  }
 
-.count[data-kind='silver'] {
-  --tone: var(--bwf-silver);
-  --value: var(--bwf-silver-text);
-}
+  &[data-kind='silver'] {
+    --tone: var(--bwf-silver);
+    --value: var(--bwf-silver-text);
+  }
 
-.count[data-kind='bronze'] {
-  --tone: var(--bwf-bronze);
-  --value: var(--bwf-bronze-text);
-}
+  &[data-kind='bronze'] {
+    --tone: var(--bwf-bronze);
+    --value: var(--bwf-bronze-text);
+  }
 
-.count[data-size='sm'] {
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 10px 14px;
-  border: 0;
-  border-top: 2px solid var(--value);
-}
+  &[data-size='sm'] {
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 0;
+    border-top: 2px solid var(--value);
+  }
 
-button.count {
-  cursor: pointer;
-}
+  button& {
+    cursor: pointer;
 
-button.count::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, alpha(var(--tone), 0.7) 50%, transparent);
-  opacity: 0.55;
-}
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, alpha(var(--tone), 0.7) 50%, transparent);
+      opacity: 0.55;
+    }
 
-button.count:hover:not(:disabled) {
-  border-color: alpha(var(--tone), 0.45);
-}
+    &:hover:not(:disabled) {
+      border-color: alpha(var(--tone), 0.45);
+    }
+  }
 
-.count[data-active] {
-  background: linear-gradient(180deg, alpha(var(--tone), 0.16) 0%, alpha(var(--tone), 0.05) 100%), var(--bwf-surface-3);
-  border-color: alpha(var(--tone), 0.55);
-  box-shadow:
-    0 0 0 1px alpha(var(--tone), 0.35),
-    0 6px 22px -10px alpha(var(--tone), 0.55);
-}
+  &[data-active] {
+    background:
+      linear-gradient(180deg, alpha(var(--tone), 0.16) 0%, alpha(var(--tone), 0.05) 100%), var(--bwf-surface-3);
+    border-color: alpha(var(--tone), 0.55);
+    box-shadow:
+      0 0 0 1px alpha(var(--tone), 0.35),
+      0 6px 22px -10px alpha(var(--tone), 0.55);
 
-.count[data-active]::before {
-  opacity: 1;
-}
+    &::before {
+      opacity: 1;
+    }
+  }
 
-.count[data-dimmed] {
-  opacity: 0.45;
-}
+  &[data-dimmed] {
+    opacity: 0.45;
+  }
 
-.count:disabled {
-  cursor: default;
-}
+  &:disabled {
+    cursor: default;
+  }
 
-.count[data-zero] {
-  --value: var(--bwf-faint);
-}
+  &[data-zero] {
+    --value: var(--bwf-faint);
 
-.count[data-zero]::before {
-  opacity: 0;
+    &::before {
+      opacity: 0;
+    }
+  }
 }
 
 .countMedal {

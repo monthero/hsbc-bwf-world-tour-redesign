@@ -5,6 +5,11 @@
   padding-top: clamp(12px, 2.4vw, 28px);
   display: flex;
   flex-direction: column;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    --logo: 48px;
+    --lift: calc(var(--logo) + 28px);
+  }
 }
 
 .top {
@@ -25,6 +30,27 @@
   height: clamp(88px, 10vw, 128px);
   border-radius: clamp(14px, 1.6vw, 18px);
   overflow: hidden;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    height: clamp(176px, 50vw, 240px);
+    margin-inline: calc(-1 * var(--bwf-gutter));
+    border-radius: 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        transparent 40%,
+        alpha(var(--bwf-bg), 0.5) 70%,
+        alpha(var(--bwf-bg), 0.9) 90%,
+        var(--bwf-bg)
+      );
+    }
+  }
 }
 
 .cancelled {
@@ -32,6 +58,10 @@
   z-index: 1;
   top: 12px;
   right: 12px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    right: var(--bwf-gutter);
+  }
 }
 
 .body {
@@ -43,6 +73,18 @@
   align-items: start;
   gap: 8px var(--gx);
   padding-left: var(--pl);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    position: relative;
+    z-index: 1;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'logo'
+      'title'
+      'meta';
+    margin-top: calc(-1 * var(--lift));
+    padding-left: 0;
+  }
 }
 
 .logo {
@@ -51,6 +93,10 @@
   z-index: 1;
   margin-top: calc(-1 * clamp(28px, 3.4vw, 44px));
   box-shadow: 0 10px 28px alpha(var(--mantine-color-black), 0.5);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-top: 0;
+  }
 }
 
 .title {
@@ -64,6 +110,12 @@
   font-weight: 600;
   letter-spacing: -0.025em;
   text-wrap: balance;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding-top: 0;
+    font-size: 26px;
+    line-height: 1.12;
+  }
 }
 
 .subtitle {
@@ -79,6 +131,10 @@
   gap: 4px 14px;
   font-size: 13px;
   color: var(--bwf-muted);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    row-gap: 6px;
+  }
 }
 
 .dates {
@@ -124,62 +180,6 @@
 }
 
 @mixin smaller-than $mantine-breakpoint-sm {
-  .header {
-    --logo: 48px;
-    --lift: calc(var(--logo) + 28px);
-  }
-
-  .banner {
-    height: clamp(176px, 50vw, 240px);
-    margin-inline: calc(-1 * var(--bwf-gutter));
-    border-radius: 0;
-
-    &::before {
-      content: '';
-      position: absolute;
-      z-index: 1;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(
-        180deg,
-        transparent 40%,
-        alpha(var(--bwf-bg), 0.5) 70%,
-        alpha(var(--bwf-bg), 0.9) 90%,
-        var(--bwf-bg)
-      );
-    }
-  }
-
-  .cancelled {
-    right: var(--bwf-gutter);
-  }
-
-  .body {
-    position: relative;
-    z-index: 1;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      'logo'
-      'title'
-      'meta';
-    margin-top: calc(-1 * var(--lift));
-    padding-left: 0;
-  }
-
-  .logo {
-    margin-top: 0;
-  }
-
-  .title {
-    padding-top: 0;
-    font-size: 26px;
-    line-height: 1.12;
-  }
-
-  .meta {
-    row-gap: 6px;
-  }
-
   .venue {
     flex-basis: 100%;
   }

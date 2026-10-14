@@ -8,10 +8,10 @@
   border-radius: calc(var(--size) * 0.25);
   background: var(--mantine-color-white);
   box-shadow: 0 4px 14px alpha(var(--mantine-color-black), 0.35);
-}
 
-.tile[data-flat] {
-  box-shadow: none;
+  &[data-flat] {
+    box-shadow: none;
+  }
 }
 
 .mono {
@@ -32,8 +32,8 @@
   object-fit: contain;
   opacity: 0;
   transition: opacity 0.3s ease-out;
-}
 
-.tile img[data-loaded] {
-  opacity: 1;
+  &[data-loaded] {
+    opacity: 1;
+  }
 }

@@ -23,70 +23,70 @@
     border-color 0.15s,
     color 0.15s,
     opacity 0.15s;
-}
 
-.star[data-box='xs'] {
-  --box: 24px;
-}
+  &[data-box='xs'] {
+    --box: 24px;
+  }
 
-.star[data-box='sm'] {
-  --box: 28px;
-}
+  &[data-box='sm'] {
+    --box: 28px;
+  }
 
-.star[data-box='lg'] {
-  --box: 44px;
-}
+  &[data-box='lg'] {
+    --box: 44px;
+  }
 
-.star[data-variant='ghost']:hover {
-  background: var(--bwf-raised);
-}
+  &[data-variant='ghost']:hover {
+    background: var(--bwf-raised);
+  }
 
-.star[data-variant='outline'] {
-  border-color: var(--bwf-border-strong);
-  color: var(--bwf-text-3);
-}
+  &[data-variant='outline'] {
+    border-color: var(--bwf-border-strong);
+    color: var(--bwf-text-3);
 
-.star[data-variant='outline']:hover {
-  border-color: var(--bwf-border-focus);
-}
+    &:hover {
+      border-color: var(--bwf-border-focus);
+    }
+  }
 
-.star[data-variant='pill'] {
-  width: auto;
-  padding: 0 14px 0 12px;
-  border-radius: 999px;
-  border-color: var(--bwf-border-strong);
-  background: alpha(var(--mantine-color-white), 0.04);
-  color: var(--bwf-text-3);
-  font-size: 13px;
-  font-weight: 600;
-}
+  &[data-variant='pill'] {
+    width: auto;
+    padding: 0 14px 0 12px;
+    border-radius: 999px;
+    border-color: var(--bwf-border-strong);
+    background: alpha(var(--mantine-color-white), 0.04);
+    color: var(--bwf-text-3);
+    font-size: 13px;
+    font-weight: 600;
 
-.star[data-variant='pill'][data-box='sm'] {
-  padding: 0 12px;
-  font-size: 12px;
-  font-weight: 500;
-}
+    &[data-box='sm'] {
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
 
-.star[data-variant='pill']:hover {
-  border-color: var(--bwf-gold-edge);
-}
+    &:hover {
+      border-color: var(--bwf-gold-edge);
+    }
+  }
 
-.star[data-variant='glass'] {
-  background: var(--bwf-glass-bg);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  color: var(--bwf-text-3);
-}
+  &[data-variant='glass'] {
+    background: var(--bwf-glass-bg);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: var(--bwf-text-3);
+  }
 
-.star[data-implied],
-.star[data-active] {
-  color: var(--bwf-gold);
-}
+  &[data-implied],
+  &[data-active] {
+    color: var(--bwf-gold);
+  }
 
-.star[data-variant='outline'][data-active],
-.star[data-variant='pill'][data-active] {
-  background: var(--bwf-gold-tint);
-  border-color: var(--bwf-gold-edge);
+  &[data-variant='outline'][data-active],
+  &[data-variant='pill'][data-active] {
+    background: var(--bwf-gold-tint);
+    border-color: var(--bwf-gold-edge);
+  }
 }
 
 .starLabel {
@@ -96,9 +96,9 @@
 @mixin smaller-than $mantine-breakpoint-sm {
   .star[data-variant='pill'] {
     padding: 0 9px;
-  }
 
-  .star[data-variant='pill'] .starLabel {
-    display: none;
+    & .starLabel {
+      display: none;
+    }
   }
 }

@@ -58,35 +58,22 @@ export const SiteLink = memo(SiteLinkBody);
 export const SocialLinks = memo<{ items: readonly SocialItem[]; size?: 'sm' | 'md'; className?: string }>(
   ({ items, size = 'sm', className }) => (
     <ul className={clsx(classes.social, className)} data-size={size}>
-      {items.map(({ label, href, icon: Icon }) => (
-        <li key={href}>
-          {size === 'md' ? (
-            <ActionIcon
-              component="a"
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              variant="soft"
-              color="red"
-              radius="xl"
-              size={36}
-              aria-label={`BWF on ${label}`}
-            >
-              <Icon />
-            </ActionIcon>
-          ) : (
-            <a
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              className={classes.socialLink}
-              aria-label={`BWF on ${label}`}
-            >
-              <Icon />
-            </a>
-          )}
-        </li>
-      ))}
+      {items.map(({ label, href, icon: Icon }) => {
+        const link = { href, target: '_blank', rel: 'noreferrer', 'aria-label': `BWF on ${label}` };
+        return (
+          <li key={href}>
+            {size === 'md' ? (
+              <ActionIcon component="a" {...link} variant="soft" color="red" radius="xl" size={36}>
+                <Icon />
+              </ActionIcon>
+            ) : (
+              <a {...link} className={classes.socialLink}>
+                <Icon />
+              </a>
+            )}
+          </li>
+        );
+      })}
     </ul>
   ),
 );

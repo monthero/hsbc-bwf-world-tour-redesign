@@ -13,11 +13,11 @@
   display: flex;
   gap: clamp(20px, 2.8vw, 32px);
   overflow-x: auto;
-}
 
-.tabs[data-size='sm'] {
-  --tab-h: 40px;
-  gap: 18px;
+  &[data-size='sm'] {
+    --tab-h: 40px;
+    gap: 18px;
+  }
 }
 
 .tab {
@@ -37,28 +37,28 @@
   -webkit-user-select: none;
   user-select: none;
   transition: color 0.25s;
-}
 
-.tabs[data-size='sm'] .tab {
-  font-size: 13px;
-}
+  .tabs[data-size='sm'] & {
+    font-size: 13px;
+  }
 
-.tab:hover {
-  color: var(--bwf-text);
-}
+  &:hover {
+    color: var(--bwf-text);
+  }
 
-.tab[data-active] {
-  color: var(--bwf-text);
-  font-weight: 600;
-}
+  &[data-active] {
+    color: var(--bwf-text);
+    font-weight: 600;
+  }
 
-.tab[aria-disabled] {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
+  &[aria-disabled] {
+    opacity: 0.35;
+    cursor: not-allowed;
 
-.tab[aria-disabled]:hover {
-  color: var(--bwf-dim);
+    &:hover {
+      color: var(--bwf-dim);
+    }
+  }
 }
 
 .bar {

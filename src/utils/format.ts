@@ -16,6 +16,8 @@ export const formatChange = (n: number) => {
 
 export const plural = (n: number, one: string, many = `${one}s`) => `${formatNumber(n)} ${n === 1 ? one : many}`;
 
+export const joinDots = (parts: readonly (string | null | undefined | false)[]) => parts.filter(Boolean).join(' · ');
+
 export const formatDuration = (min: number) => (min ? `${min} min` : '');
 
 const BYTE_UNITS = ['B', 'KB', 'MB', 'GB'];
@@ -52,7 +54,7 @@ export const parseHeightCm = (value: unknown): number | null => {
   return metric?.[1] ? plausibleCm(metricCm(Number.parseFloat(metric[1].replace(',', '.')), metric[2])) : null;
 };
 
-export const formatFeetInches = (cm: number) => {
+const formatFeetInches = (cm: number) => {
   const inches = Math.round(cm / CM_PER_INCH);
   return `${Math.floor(inches / INCHES_PER_FOOT)}′${inches % INCHES_PER_FOOT}″`;
 };

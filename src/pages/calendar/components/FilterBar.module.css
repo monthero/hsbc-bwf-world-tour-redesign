@@ -1,5 +1,9 @@
 .bar {
   transition: top 0.28s var(--bwf-ease);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding: 10px 0;
+  }
 }
 
 .inner {
@@ -8,12 +12,23 @@
   flex-wrap: wrap;
   gap: 16px;
   padding-block: 14px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: block;
+    padding: 0;
+  }
 }
 
 .chips {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0 16px;
+  }
 }
 
 .chip {
@@ -22,6 +37,11 @@
 
 .status {
   width: 300px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    width: auto;
+    padding: 8px 16px 0;
+  }
 }
 
 .jump {
@@ -40,34 +60,12 @@
   -webkit-user-select: none;
   user-select: none;
   transition: background 0.15s;
-}
 
-.jump:hover {
-  background: var(--bwf-red-hover);
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .bar {
-    padding: 10px 0;
+  &:hover {
+    background: var(--bwf-red-hover);
   }
 
-  .inner {
-    display: block;
-    padding: 0;
-  }
-
-  .chips {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding: 0 16px;
-  }
-
-  .status {
-    width: auto;
-    padding: 8px 16px 0;
-  }
-
-  .jump {
+  @mixin smaller-than $mantine-breakpoint-sm {
     display: none;
   }
 }

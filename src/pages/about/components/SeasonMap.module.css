@@ -1,10 +1,24 @@
 .stage {
   position: relative;
   aspect-ratio: 1000 / 401;
-}
 
-.stage[aria-hidden] {
-  pointer-events: none;
+  &[aria-hidden] {
+    pointer-events: none;
+  }
+
+  &[data-highlight] {
+    .leader:not([data-active]) {
+      opacity: 0.3;
+    }
+
+    .routes {
+      opacity: 0.4;
+    }
+
+    .pins > :not([data-active]) {
+      opacity: 0.3;
+    }
+  }
 }
 
 .land {
@@ -23,46 +37,36 @@
   overflow: visible;
   pointer-events: none;
   transition: opacity 0.15s;
+
+  path {
+    fill: none;
+    stroke: var(--bwf-ghost);
+    stroke-width: 1.5;
+    stroke-dasharray: 2 5;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+
+    &[data-done] {
+      stroke: alpha(var(--bwf-red), 0.32);
+      stroke-width: 1.25;
+      stroke-dasharray: none;
+    }
+  }
 }
 
-.routes path {
-  fill: none;
-  stroke: var(--bwf-ghost);
-  stroke-width: 1.5;
-  stroke-dasharray: 2 5;
-  stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
-}
+.leader {
+  line {
+    stroke: var(--bwf-faint);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
 
-.routes path[data-done] {
-  stroke: alpha(var(--bwf-red), 0.32);
-  stroke-width: 1.25;
-  stroke-dasharray: none;
-}
-
-.leader line {
-  stroke: var(--bwf-faint);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-}
-
-.leader circle {
-  fill: var(--bwf-muted);
-}
-
-.stage[data-highlight] .leader:not([data-active]) {
-  opacity: 0.3;
+  circle {
+    fill: var(--bwf-muted);
+  }
 }
 
 .pins {
   position: absolute;
   inset: 0;
-}
-
-.stage[data-highlight] .routes {
-  opacity: 0.4;
-}
-
-.stage[data-highlight] .pins > :not([data-active]) {
-  opacity: 0.3;
 }

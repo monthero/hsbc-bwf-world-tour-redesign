@@ -3,7 +3,7 @@ import type { Match, PlayerMatch, SeasonIndex } from '~/types';
 import { opposite, teamEventKey, winnerSide } from './matches';
 import { winLoss } from './season';
 
-type WL = readonly [number, number];
+export type WL = readonly [number, number];
 
 export interface H2HRecord {
   a: number;

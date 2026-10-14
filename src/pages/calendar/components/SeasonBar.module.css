@@ -1,10 +1,10 @@
 .bar {
   position: relative;
   z-index: 20;
-}
 
-.bar[data-size='md'] {
-  margin-top: 4px;
+  &[data-size='md'] {
+    margin-top: 4px;
+  }
 }
 
 .pop {
@@ -18,17 +18,15 @@
   border-radius: 16px;
   transform: translateX(calc(var(--p) * -1));
   animation: pop-in 0.14s var(--bwf-ease);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    width: 100%;
+  }
 }
 
 @keyframes pop-in {
   from {
     opacity: 0;
     translate: 0 -4px;
-  }
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .pop {
-    width: 100%;
   }
 }

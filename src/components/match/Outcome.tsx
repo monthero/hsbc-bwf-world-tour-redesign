@@ -8,7 +8,7 @@ import { MatchTime } from './MatchTime';
 
 import classes from './Outcome.module.css';
 
-export type OutcomeVariant = 'badge' | 'tile' | 'dot' | 'pill';
+type OutcomeVariant = 'badge' | 'tile' | 'dot' | 'pill';
 
 const PILL_LABELS: Partial<Record<MatchOutcome, string>> = { W: 'WON', L: 'LOST' };
 

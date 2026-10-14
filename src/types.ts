@@ -1,11 +1,9 @@
 export type {
   Calendar,
   CalendarEventDto,
-  CareerMatchDto,
   Continent,
   CurrentRank,
   EditionRef,
-  EntryStage,
   EventCode,
   Focus,
   Level,
@@ -22,7 +20,6 @@ export type {
   RankingRow,
   RankingTable,
   Retirement,
-  Seasons,
   Series,
   TournamentMatches,
 } from '~/api/schemas';
@@ -210,7 +207,7 @@ export interface BioView {
   ambition: string;
 }
 
-export interface RaceView {
+interface RaceView {
   rank: number;
   change: number;
   points: number;

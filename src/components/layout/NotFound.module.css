@@ -10,20 +10,26 @@
   margin-bottom: calc(var(--bwf-footer-gap) * -1);
   background: radial-gradient(ellipse 60% 50% at 50% 34%, alpha(var(--bwf-brand), 0.1), transparent 70%);
   text-align: center;
-}
 
-.root::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  right: clamp(-220px, -10vw, -60px);
-  bottom: clamp(-260px, -14vw, -80px);
-  width: clamp(320px, 42vw, 640px);
-  aspect-ratio: 1;
-  background: var(--bwf-brand);
-  mask: url('/assets/brand/emblem.svg') center / contain no-repeat;
-  opacity: 0.07;
-  pointer-events: none;
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    right: clamp(-220px, -10vw, -60px);
+    bottom: clamp(-260px, -14vw, -80px);
+    width: clamp(320px, 42vw, 640px);
+    aspect-ratio: 1;
+    background: var(--bwf-brand);
+    mask: url('/assets/brand/emblem.svg') center / contain no-repeat;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    min-height: clamp(480px, calc(100svh - 200px), 760px);
+    padding-top: 32px;
+    padding-bottom: 8px;
+  }
 }
 
 .inner {
@@ -41,6 +47,11 @@
   overflow: visible;
   transform: perspective(900px) rotateX(50deg);
   mask-image: linear-gradient(to top, black 55%, transparent);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    width: min(100%, 320px);
+    margin-bottom: 4px;
+  }
 }
 
 .surface {
@@ -83,6 +94,11 @@
   transform-box: fill-box;
   transform-origin: center;
   animation: ripple 2.4s var(--bwf-ease-out) infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 .call {
@@ -115,6 +131,10 @@
   line-height: 1.05;
   letter-spacing: -0.03em;
   text-wrap: balance;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-top: 16px;
+  }
 }
 
 .description {
@@ -124,10 +144,18 @@
   font-size: 15px;
   line-height: 1.55;
   text-wrap: pretty;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 14px;
+  }
 }
 
 .primary {
   margin-top: 30px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-top: 24px;
+  }
 }
 
 .more {
@@ -147,37 +175,5 @@
   100% {
     opacity: 0;
     transform: scale(4.5);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ring {
-    animation: none;
-    opacity: 0;
-  }
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .root {
-    min-height: clamp(480px, calc(100svh - 200px), 760px);
-    padding-top: 32px;
-    padding-bottom: 8px;
-  }
-
-  .court {
-    width: min(100%, 320px);
-    margin-bottom: 4px;
-  }
-
-  .title {
-    margin-top: 16px;
-  }
-
-  .description {
-    font-size: 14px;
-  }
-
-  .primary {
-    margin-top: 24px;
   }
 }

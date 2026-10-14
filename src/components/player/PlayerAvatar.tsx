@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, type CSSProperties, type ReactEventHandler } from 'react';
 
-import { usePlayerLinkSearch } from '~/hooks/useCurrentTournament';
+import { usePlayerLinkSearch } from '~/hooks/usePlayerLinkSearch';
 import { usePlayerPhoto } from '~/hooks/usePlayers';
 import type { PhotoCrop, Player } from '~/types';
 import { photoVars } from '~/utils/images';
@@ -12,7 +12,7 @@ import classes from './PlayerAvatar.module.css';
 
 type AvatarIdentity = { player: Pick<Player, 'id' | 'name'> } | { id: string; name: string };
 
-export type PlayerAvatarProps = AvatarIdentity & {
+type PlayerAvatarProps = AvatarIdentity & {
   photo?: string | null;
   size?: number;
   crop?: number;
@@ -64,7 +64,7 @@ export const PlayerAvatar = memo<PlayerAvatarProps>((props) => {
   );
 });
 
-export type AvatarMember = Pick<Player, 'id' | 'name'> & { photo?: string | null };
+type AvatarMember = Pick<Player, 'id' | 'name'> & { photo?: string | null };
 
 export const AvatarGroup = memo<{ players: readonly AvatarMember[]; size?: number; crop?: number; className?: string }>(
   ({ players, size = 48, crop, className }) => {

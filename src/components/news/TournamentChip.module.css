@@ -14,29 +14,29 @@
   transition:
     border-color 0.15s,
     color 0.15s;
-}
 
-.chip::before {
-  content: '';
-  flex: none;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--lv);
-}
+  &::before {
+    content: '';
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lv);
+  }
 
-.chip[data-variant='outline'] {
-  height: 22px;
-  padding: 0 8px;
-  border-radius: 999px;
-  border: 1px solid var(--bwf-border-strong);
-}
+  &[data-variant='outline'] {
+    height: 22px;
+    padding: 0 8px;
+    border-radius: 999px;
+    border: 1px solid var(--bwf-border-strong);
+  }
 
-.chip[data-variant='glass'] {
-  color: var(--bwf-text);
-}
+  &[data-variant='glass'] {
+    color: var(--bwf-text);
+  }
 
-.chip:hover {
-  color: var(--bwf-text);
-  border-color: var(--bwf-border-focus);
+  &:hover {
+    color: var(--bwf-text);
+    border-color: var(--bwf-border-focus);
+  }
 }

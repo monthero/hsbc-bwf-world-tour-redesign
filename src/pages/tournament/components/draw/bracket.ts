@@ -2,7 +2,7 @@ import type { DrawSlot, EventCode, Match, Side, Team, TournamentSchedule } from 
 import { date } from '~/utils/dates';
 import { isDoubles, roundName, winnerSide } from '~/utils/matches';
 
-export const DRAW_ROUNDS = [
+const DRAW_ROUNDS = [
   { id: 'R32', label: 'Round of 32', size: 16 },
   { id: 'R16', label: 'Round of 16', size: 8 },
   { id: 'QF', label: 'Quarter-finals', size: 4 },
@@ -27,13 +27,13 @@ export interface BracketBox {
   bye: boolean;
 }
 
-export interface BracketPath {
+interface BracketPath {
   key: string;
   d: string;
   win: boolean;
 }
 
-export interface BracketColumn {
+interface BracketColumn {
   id: string;
   label: string;
   day: string;

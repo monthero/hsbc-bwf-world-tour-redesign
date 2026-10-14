@@ -12,38 +12,38 @@
   border: 0;
   background: none;
   cursor: pointer;
-}
 
-.cell::before {
-  content: '';
-  position: absolute;
-  inset: -12px 0;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -12px 0;
+  }
 
-.cell span {
-  width: 100%;
-  height: 5px;
-  border-radius: 2px;
-  background: var(--bwf-border-strong);
-  transition:
-    transform 0.12s var(--bwf-ease),
-    background 0.12s;
+  span {
+    width: 100%;
+    height: 5px;
+    border-radius: 2px;
+    background: var(--bwf-border-strong);
+    transition:
+      transform 0.12s var(--bwf-ease),
+      background 0.12s;
+  }
 }
 
 .cells[data-size='md'] .cell {
   align-items: flex-end;
   height: 26px;
   padding: 0 1.5px;
-}
 
-.cells[data-size='md'] .cell::before {
-  inset: -14px 0 -10px;
-}
+  &::before {
+    inset: -14px 0 -10px;
+  }
 
-.cells[data-size='md'] .cell span {
-  height: 6px;
-  border-radius: 3px;
-  transform-origin: bottom;
+  span {
+    height: 6px;
+    border-radius: 3px;
+    transform-origin: bottom;
+  }
 }
 
 .cells[data-size='sm'] .cell:hover span {

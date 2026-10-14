@@ -5,7 +5,7 @@ import { date } from '~/utils/dates';
 import { matchesQuery, normQuery, roundName } from '~/utils/matches';
 import { foldText } from '~/utils/names';
 
-export interface MediaGroup {
+interface MediaGroup {
   key: string;
   label: string | null;
   items: MediaItem[];

@@ -1,5 +1,9 @@
 .section {
   padding-bottom: 28px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding-bottom: 20px;
+  }
 }
 
 .grid {
@@ -9,6 +13,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: flex;
+    gap: 10px;
+  }
 }
 
 .card {
@@ -23,16 +32,23 @@
   border: 1px solid alpha(var(--tone), 0.24);
   background: linear-gradient(160deg, alpha(var(--tone), 0.13) 0%, transparent 60%), var(--bwf-bg-sunken);
   --avatar-ring: var(--bwf-bg-sunken);
-}
 
-.card[data-medal='silver'] {
-  --tone: var(--bwf-silver);
-  --tone-text: var(--bwf-silver-text);
-}
+  &[data-medal='silver'] {
+    --tone: var(--bwf-silver);
+    --tone-text: var(--bwf-silver-text);
+  }
 
-.card[data-medal='bronze'] {
-  --tone: var(--bwf-bronze);
-  --tone-text: var(--bwf-bronze-text);
+  &[data-medal='bronze'] {
+    --tone: var(--bwf-bronze);
+    --tone-text: var(--bwf-bronze-text);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    flex: none;
+    width: 84%;
+    gap: 14px;
+    padding: 14px;
+  }
 }
 
 .top {
@@ -71,6 +87,10 @@
   flex: 1;
   font-size: 16px;
   line-height: 1.25;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 15px;
+  }
 }
 
 .name {
@@ -108,26 +128,4 @@
 
 .played {
   margin-right: auto;
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .section {
-    padding-bottom: 20px;
-  }
-
-  .grid {
-    display: flex;
-    gap: 10px;
-  }
-
-  .card {
-    flex: none;
-    width: 84%;
-    gap: 14px;
-    padding: 14px;
-  }
-
-  .names {
-    font-size: 15px;
-  }
 }

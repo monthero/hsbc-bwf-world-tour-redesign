@@ -20,15 +20,11 @@ export const EntryRank: FC<{ rank: number; className?: string }> = ({ rank, clas
     </Tooltip>
   ) : null;
 
-export const EntryStatus: FC<{ entry: LatestEntry; withStage?: boolean; className?: string }> = ({
-  entry,
-  withStage = true,
-  className,
-}) => {
+export const EntryStatus: FC<{ entry: LatestEntry; withStage?: boolean }> = ({ entry, withStage = true }) => {
   const status = entryStatus(entry);
   if (!entry.match && !withStage && !entry.qualifier) return null;
   return (
-    <span className={clsx(classes.status, className)} data-tone={status.tone}>
+    <span className={classes.status} data-tone={status.tone}>
       {entry.qualifier && (
         <Tooltip label="Came through qualifying">
           <span className={clsx(utils.raise, classes.qualifier)}>Q</span>

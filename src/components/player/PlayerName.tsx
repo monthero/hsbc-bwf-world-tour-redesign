@@ -3,8 +3,8 @@ import { clsx } from 'clsx';
 import { use, useMemo, type FC, type MouseEvent } from 'react';
 
 import { PlayerHoverContext } from '~/contexts';
-import { usePlayerLinkSearch } from '~/hooks/useCurrentTournament';
 import { useFitLevel } from '~/hooks/useFitLevel';
+import { usePlayerLinkSearch } from '~/hooks/usePlayerLinkSearch';
 import type { Player } from '~/types';
 import { nameForms, type NameForm } from '~/utils/names';
 

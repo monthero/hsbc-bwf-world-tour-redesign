@@ -34,12 +34,14 @@ export interface FieldInputProps {
   onImage: (image: ImageResult) => void;
 }
 
+const overrideLabel = (field: FieldDef) => `${field.label} override`;
+
 const textValue = (onValue: (v: string) => void) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
   onValue(e.currentTarget.value);
 
 export const TextField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <TextInput
-    aria-label={`${field.label} override`}
+    aria-label={overrideLabel(field)}
     value={value}
     placeholder={placeholder}
     onChange={textValue(onValue)}
@@ -53,7 +55,7 @@ export const NameField: FC<FieldInputProps> = ({ field, playerId, value, placeho
   return (
     <div className={classes.name}>
       <TextInput
-        aria-label={`${field.label} override`}
+        aria-label={overrideLabel(field)}
         value={value}
         placeholder={placeholder}
         onChange={textValue(onValue)}
@@ -83,7 +85,7 @@ export const HeightField: FC<FieldInputProps> = ({ field, value, placeholder, bw
   const bwfCm = Number(bwf);
   return (
     <NumberInput
-      aria-label={`${field.label} override`}
+      aria-label={overrideLabel(field)}
       value={Number(value) || ''}
       placeholder={bwfCm ? formatField(field, bwf) : placeholder}
       onChange={(v) => onValue(typeof v === 'number' ? String(v) : '')}
@@ -100,7 +102,7 @@ export const HeightField: FC<FieldInputProps> = ({ field, value, placeholder, bw
 
 export const LongField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <Textarea
-    aria-label={`${field.label} override`}
+    aria-label={overrideLabel(field)}
     value={value}
     placeholder={placeholder}
     onChange={textValue(onValue)}
@@ -113,7 +115,7 @@ export const LongField: FC<FieldInputProps> = ({ field, value, placeholder, onVa
 
 export const DateField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <DateInput
-    aria-label={`${field.label} override`}
+    aria-label={overrideLabel(field)}
     value={value || null}
     placeholder={placeholder}
     onChange={(v) => onValue(v ?? '')}
@@ -127,7 +129,7 @@ export const DateField: FC<FieldInputProps> = ({ field, value, placeholder, onVa
 
 export const MonthField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <MonthPickerInput
-    aria-label={`${field.label} override`}
+    aria-label={overrideLabel(field)}
     value={value ? monthOf(value).format(ISO_DAY) : null}
     placeholder={placeholder}
     onChange={(v) => onValue(v ? monthKeyOf(v) : '')}
@@ -144,13 +146,13 @@ export const CatalogField: FC<FieldInputProps> = ({ field, value, placeholder, o
     value={value}
     onChange={onValue}
     placeholder={placeholder}
-    label={`${field.label} override`}
+    label={overrideLabel(field)}
   />
 );
 
 export const PlaysField: FC<FieldInputProps> = ({ field, value, placeholder, onValue }) => (
   <Select
-    aria-label={`${field.label} override`}
+    aria-label={overrideLabel(field)}
     data={PLAYS_OPTIONS}
     value={value || null}
     placeholder={placeholder}

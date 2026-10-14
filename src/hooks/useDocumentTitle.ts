@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { BWF_SITE, CURRENT_SITE } from '~/components/layout/links';
+import { joinDots } from '~/utils/format';
 
 type TitlePart = string | undefined;
 
@@ -12,7 +13,7 @@ const siteName = (site: TitleSite) => {
 };
 
 export const useDocumentTitle = (parts: TitlePart | readonly TitlePart[], site: TitleSite = {}) => {
-  const title = [parts, siteName(site)].flat().filter(Boolean).join(' · ');
+  const title = joinDots([parts, siteName(site)].flat());
   useEffect(() => {
     const prev = document.title;
     document.title = title;

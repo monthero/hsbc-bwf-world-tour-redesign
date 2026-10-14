@@ -1,10 +1,11 @@
 import type { MediaItem } from '~/api/schemas';
 import type { Match } from '~/types';
 
+import { weakCached } from './cache';
+import { foldWords } from './fold';
 import { plural } from './format';
 import { roundName } from './matches';
 import type { MatchMedia } from './media-link';
-import { foldText } from './names';
 
 export { linkMedia, type LinkedMedia, type MatchMedia } from './media-link';
 
@@ -58,12 +59,11 @@ export const isAvailableIn = (item: MediaItem, country: string | null) => {
   return !region.blocked?.includes(country);
 };
 
-const visibleCache = new WeakMap<readonly MediaItem[], Map<string, readonly MediaItem[]>>();
+const visibleCache = weakCached((_items: readonly MediaItem[]) => new Map<string, readonly MediaItem[]>());
 
 export const visibleIn = <T extends MediaItem>(items: readonly T[], hideFor: string | null): readonly T[] => {
   if (!hideFor) return items;
-  const byCountry = visibleCache.get(items) ?? new Map<string, readonly MediaItem[]>();
-  visibleCache.set(items, byCountry);
+  const byCountry = visibleCache(items);
   const hit = byCountry.get(hideFor) as readonly T[] | undefined;
   if (hit) return hit;
   const kept = items.filter((i) => isAvailableIn(i, hideFor));
@@ -81,19 +81,14 @@ const COURT_SEGMENT = /^court \d+$/i;
 const VERSUS = / vs /i;
 const SIDE_TAGS = / ?(?:\([A-Z]{3}\)|\[\d+\])/g;
 
-const words = (s: string) =>
-  foldText(s)
-    .split(/[^a-z]+/)
-    .filter(Boolean);
-
 const isEventSegment = (segment: string, name: readonly string[]) => {
   if (!name.length || !YEAR.test(segment)) return false;
-  const have = words(segment);
+  const have = foldWords(segment);
   return name.every((w) => have.includes(w));
 };
 
 export const compactTitle = (title: string, eventName: string) => {
-  const name = words(eventName);
+  const name = foldWords(eventName);
   const parts = title.split('|').map((p) => p.trim());
   const rest = parts.filter((p) => !isEventSegment(p, name));
   if (rest.length === parts.length) return title;

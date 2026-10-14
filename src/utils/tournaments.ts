@@ -104,11 +104,11 @@ export const isDone = (t: Pick<Tournament, 'status'>) => t.status === 'done';
 
 export const isLive = (t: Pick<Tournament, 'status'>) => t.status === 'live';
 
-export const hasStarted = (t: Pick<Tournament, 'status'>) => t.status === 'done' || t.status === 'live';
+export const hasStarted = (t: Pick<Tournament, 'status'>) => isDone(t) || isLive(t);
 
-export const hasWinners = (t: Tournament) => t.status === 'done' && t.champions.length > 0;
+export const hasWinners = (t: Tournament) => isDone(t) && t.champions.length > 0;
 
 export const liveAndNext = (held: readonly Tournament[]) => ({
-  live: held.find((t) => t.status === 'live'),
+  live: held.find(isLive),
   next: held.find((t) => t.status === 'up'),
 });

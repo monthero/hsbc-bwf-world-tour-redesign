@@ -11,6 +11,7 @@ import type { EventCode, PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
 import { roundName } from '~/utils/matches';
 import { medalOfResult } from '~/utils/medals';
+import { centerChild } from '~/utils/scroll';
 import { opponentsOf } from '~/utils/season';
 import { tournamentParams } from '~/utils/tournaments';
 
@@ -28,7 +29,7 @@ const ROW_SKELETON = [0, 1, 2, 3];
 
 const centerOption = (el: HTMLDivElement | null, index: number) => {
   const on = el?.querySelectorAll<HTMLElement>('button')[index];
-  if (el && on) el.scrollTo({ left: on.offsetLeft - (el.clientWidth - on.offsetWidth) / 2, behavior: 'smooth' });
+  if (el && on) centerChild(el, on, 'smooth');
 };
 
 const podium = (result: number | null): result is number => result !== null && !!medalOfResult(result);

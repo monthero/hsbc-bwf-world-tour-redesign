@@ -3,6 +3,13 @@
   grid-template-columns: repeat(5, minmax(0, 1fr)) minmax(0, 0.8fr);
   align-items: end;
   gap: 10px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
 }
 
 .tier {
@@ -14,15 +21,23 @@
   background: var(--bwf-surface);
   border: 1px solid var(--bwf-border);
   transition: border-color 0.2s;
-}
 
-.tier:hover {
-  border-color: var(--bwf-border-hover);
-}
+  &:hover {
+    border-color: var(--bwf-border-hover);
+  }
 
-.tier:has(> a:focus-visible) {
-  outline: 2px solid var(--bwf-border-focus);
-  outline-offset: 2px;
+  &:has(> a:focus-visible) {
+    outline: 2px solid var(--bwf-border-focus);
+    outline-offset: 2px;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    align-items: center;
+    min-height: 72px;
+    border-radius: 14px;
+  }
 }
 
 .fill {
@@ -48,12 +63,24 @@
   padding: 14px 14px 0;
   font-size: 12px;
   color: var(--bwf-dim);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 12px 0 12px 12px;
+    font-size: 11px;
+  }
 }
 
 .figure {
   font-size: 44px;
   line-height: 0.9;
   color: var(--lv);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 36px;
+  }
 }
 
 .info {
@@ -62,6 +89,11 @@
   align-items: flex-start;
   gap: 10px;
   padding: 10px 14px 14px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 6px;
+    padding: 12px 14px 12px 6px;
+  }
 }
 
 .head {
@@ -85,15 +117,27 @@
   font-size: 12px;
   line-height: 1.35;
   color: var(--bwf-dim);
-}
 
-.meta > span {
-  text-wrap: balance;
-}
+  > span {
+    text-wrap: balance;
+  }
 
-.meta b {
-  font-weight: 600;
-  color: var(--bwf-text-3);
+  b {
+    font-weight: 600;
+    color: var(--bwf-text-3);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 6px;
+    font-size: 11px;
+
+    > span + span::before {
+      content: '·';
+      margin-right: 6px;
+    }
+  }
 }
 
 .chips {
@@ -122,37 +166,46 @@
   transition:
     color 0.15s,
     background 0.15s;
-}
 
-.chip:hover {
-  background: var(--bwf-surface-4);
-  color: var(--bwf-text);
-}
+  &:hover {
+    background: var(--bwf-surface-4);
+    color: var(--bwf-text);
+  }
 
-.chip[data-done] {
-  color: var(--bwf-faint);
-  text-decoration: line-through;
-  text-decoration-color: var(--bwf-ghost);
+  &[data-done] {
+    color: var(--bwf-faint);
+    text-decoration: line-through;
+    text-decoration-color: var(--bwf-ghost);
+  }
 }
 
 .path {
   border-style: dashed;
   border-color: var(--bwf-border-strong);
   background: transparent;
-}
 
-.path:hover {
-  border-color: var(--bwf-border-strong);
-}
+  &:hover {
+    border-color: var(--bwf-border-strong);
+  }
 
-.path .fill {
-  height: 34px;
-  border-bottom: 2px dashed var(--bwf-ghost);
-  background: repeating-linear-gradient(135deg, var(--bwf-surface-3) 0 6px, transparent 6px 12px);
-}
+  .fill {
+    height: 34px;
+    border-bottom: 2px dashed var(--bwf-ghost);
+    background: repeating-linear-gradient(135deg, var(--bwf-surface-3) 0 6px, transparent 6px 12px);
+  }
 
-.path .info {
-  padding-top: 14px;
+  .info {
+    padding-top: 14px;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: block;
+    min-height: 0;
+
+    .info {
+      padding: 12px 14px;
+    }
+  }
 }
 
 .pathLabel {
@@ -171,41 +224,9 @@
 }
 
 @mixin smaller-than $mantine-breakpoint-sm {
-  .ladder {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .tier {
-    display: grid;
-    grid-template-columns: 64px minmax(0, 1fr);
-    align-items: center;
-    min-height: 72px;
-    border-radius: 14px;
-  }
-
   .fill,
   .chips {
     display: none;
-  }
-
-  .count {
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    padding: 12px 0 12px 12px;
-    font-size: 11px;
-  }
-
-  .figure {
-    font-size: 36px;
-  }
-
-  .info {
-    gap: 6px;
-    padding: 12px 14px 12px 6px;
   }
 
   .mPrize {
@@ -223,26 +244,5 @@
     background:
       linear-gradient(var(--lv), var(--lv)) 0 0 / var(--w) 100% no-repeat,
       var(--bwf-surface-3);
-  }
-
-  .meta {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0 6px;
-    font-size: 11px;
-  }
-
-  .meta > span + span::before {
-    content: '·';
-    margin-right: 6px;
-  }
-
-  .path {
-    display: block;
-    min-height: 0;
-  }
-
-  .path .info {
-    padding: 12px 14px;
   }
 }

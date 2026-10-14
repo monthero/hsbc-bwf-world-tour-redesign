@@ -18,10 +18,10 @@
     min-height: 4px;
     border-left: 1px dashed currentColor;
   }
-}
 
-.root[data-active] {
-  color: var(--bwf-red-text);
+  &[data-active] {
+    color: var(--bwf-red-text);
+  }
 }
 
 .text {

@@ -1,5 +1,6 @@
+import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
-import { memo, useCallback, useState } from 'react';
+import { memo } from 'react';
 
 import { BottomSheet, FloatingPill, IconFilters } from '~/components/ui';
 import type { TournamentDay } from '~/types';
@@ -69,9 +70,7 @@ export const CondensedFilters = memo<BarProps & { days: TournamentDay[]; visible
 
 export const MobileFilters = memo<BarProps & { days: TournamentDay[]; visible: boolean }>(
   ({ filters: f, view, days, visible }) => {
-    const [open, setOpen] = useState(false);
-    const show = useCallback(() => setOpen(true), []);
-    const close = useCallback(() => setOpen(false), []);
+    const [open, { open: show, close }] = useDisclosure(false);
     const d = days[f.day];
     return (
       <>

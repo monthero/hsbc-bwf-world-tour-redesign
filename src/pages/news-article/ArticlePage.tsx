@@ -1,19 +1,19 @@
-import { Button, Skeleton } from '@mantine/core';
+import { Skeleton } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { useCallback, useMemo, type FC } from 'react';
 
 import { isNotFound, useNewsArticle, useNewsIndex, useRelatedNews } from '~/api/news';
-import type { NewsArticle, NewsItem } from '~/api/schemas';
+import type { NewsArticle } from '~/api/schemas';
 import { NotFound, type NotFoundAction } from '~/components/layout';
 import { PopularNews, SubscribeCard } from '~/components/news';
-import { BackPill, EmptyState, IconExternal } from '~/components/ui';
+import { BackPill, IconExternal, RetryState } from '~/components/ui';
 import { NOT_FOUND } from '~/constants';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useTournamentLookup } from '~/hooks/useNews';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
-import { toStory, type TournamentLookup } from '~/utils/news';
+import { toStories, toStory } from '~/utils/news';
 
 import { ArticleHeader } from './components/ArticleHeader';
 import { Block } from './components/blocks/Blocks';
@@ -34,9 +34,6 @@ const MISSING_ACTION: NotFoundAction = { label: 'Back to news', link: BACK };
 const TITLE_SITE = {};
 const BODY_SKELETON = ['100%', '94%', '97%', '62%', '100%', '91%', '78%'] as const;
 
-const storiesOf = (items: readonly NewsItem[], lookup: TournamentLookup | undefined) =>
-  items.map((i) => toStory(i, lookup));
-
 export const ArticlePage: FC = () => {
   const { id } = route.useParams();
   const { data: article, error, isError, refetch } = useNewsArticle(id);
@@ -50,12 +47,7 @@ export const ArticlePage: FC = () => {
     return (
       <div className={clsx(utils.container, classes.state)}>
         <BackPill link={BACK}>News</BackPill>
-        <EmptyState className={classes.empty}>
-          <p>Couldn’t load this story.</p>
-          <Button variant="default" radius="xl" onClick={retry}>
-            Try again
-          </Button>
-        </EmptyState>
+        <RetryState message="Couldn’t load this story." onRetry={retry} className={classes.empty} />
       </div>
     );
 
@@ -75,9 +67,9 @@ const Article: FC<{ article: NewsArticle | undefined }> = ({ article }) => {
     () => featuredPlayers(article ? [...article.players, ...article.matchedPlayers] : [], directory),
     [article, directory],
   );
-  const popular = useMemo(() => index?.popular.map((i) => toStory(i, lookup)), [index, lookup]);
-  const more = useMemo(() => storiesOf(related.tournament, lookup), [related.tournament, lookup]);
-  const latest = useMemo(() => storiesOf(related.latest, lookup), [related.latest, lookup]);
+  const popular = useMemo(() => index && toStories(index.popular, lookup), [index, lookup]);
+  const more = useMemo(() => toStories(related.tournament, lookup), [related.tournament, lookup]);
+  const latest = useMemo(() => toStories(related.latest, lookup), [related.latest, lookup]);
   const loadingRelated = related.isLoading;
 
   return (

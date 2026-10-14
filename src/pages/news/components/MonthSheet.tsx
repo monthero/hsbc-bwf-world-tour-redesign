@@ -1,4 +1,5 @@
-import { memo, useCallback, useRef, useState } from 'react';
+import { useDisclosure } from '@mantine/hooks';
+import { memo, useCallback, useRef } from 'react';
 
 import { BottomSheet, FilterChip, IconCalendar, IconExpand } from '~/components/ui';
 
@@ -12,14 +13,15 @@ export const MonthSheet = memo<{
   current: string | null;
   onPick: PickMonth;
 }>(({ years, current, onPick }) => {
-  const [open, setOpen] = useState(false);
+  const [open, { open: show, close }] = useDisclosure(false);
   const picked = useRef<string | null>(null);
-  const show = useCallback(() => setOpen(true), []);
-  const close = useCallback(() => setOpen(false), []);
-  const pick = useCallback((key: string) => {
-    picked.current = key;
-    setOpen(false);
-  }, []);
+  const pick = useCallback(
+    (key: string) => {
+      picked.current = key;
+      close();
+    },
+    [close],
+  );
   const onExited = useCallback(() => {
     const key = picked.current;
     picked.current = null;

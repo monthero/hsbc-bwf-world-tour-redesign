@@ -1,11 +1,11 @@
-import { memo, useCallback, useState, type FC, type KeyboardEvent, type PointerEvent } from 'react';
+import { memo, type FC, type KeyboardEvent, type PointerEvent } from 'react';
 
 import { Hero } from '~/pages/player/components/Hero';
 import type { CareerHigh } from '~/pages/player/types';
 import type { EventCode, Focus, Player, RankView } from '~/types';
 import { heroVars } from '~/utils/images';
 
-import { arrowNudge, clampPercent, useDrag, type FramingEditorProps } from './framing';
+import { arrowNudge, clampPercent, useDrag, useFramingEditor, type FramingEditorProps } from './framing';
 import { FramingControls } from './FramingControls';
 
 import classes from './HeroFraming.module.css';
@@ -71,28 +71,14 @@ export const HeroFraming = memo<
     image: string;
     prize?: string;
   }
->(({ player, hero, image, focus, flip, prize = '', flipBlocked, busy = false, status, onChange }) => {
-  const [drag, setDrag] = useState<Focus | null>(null);
-  const shown = drag ?? focus;
-  const onCommit = useCallback((next: Focus) => onChange({ focus: next, flip }), [onChange, flip]);
-  const onFlip = useCallback((next: boolean) => onChange({ focus, flip: next }), [onChange, focus]);
-  const onReset = useCallback(() => onChange({ focus: null, flip: false }), [onChange]);
+>(({ player, hero, image, prize = '', ...editor }) => {
+  const { shown, setDrag, onCommit, controls } = useFramingEditor(editor);
   return (
     <div className={classes.framing}>
       <div className={classes.top}>
         <FocusPad image={image} focus={shown} onDrag={setDrag} onCommit={onCommit} />
         <span className={classes.mobile} style={heroVars(image, shown)} />
-        <FramingControls
-          title="Hero framing"
-          readout={focusLabel(shown)}
-          flip={flip}
-          flipBlocked={flipBlocked}
-          busy={busy}
-          resettable={!!focus || flip}
-          status={status}
-          onFlip={onFlip}
-          onReset={onReset}
-        />
+        <FramingControls title="Hero framing" readout={focusLabel(shown)} {...controls} />
       </div>
       <HeroPreview player={player} hero={hero} prize={prize} focus={shown} />
     </div>

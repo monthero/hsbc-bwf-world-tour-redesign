@@ -11,7 +11,7 @@ import {
 import type { Continent } from '~/types';
 import { continentOf } from '~/utils/countries';
 
-export type FollowTarget =
+type FollowTarget =
   | { players: readonly FavoritePlayerRef[] }
   | { kind: 'country'; id: string }
   | { kind: 'continent'; id: Continent }
@@ -26,7 +26,7 @@ export interface FollowLook {
   className?: string;
 }
 
-export type FollowButtonProps = FollowTarget & FollowLook;
+type FollowButtonProps = FollowTarget & FollowLook;
 
 const followLabel = (active: boolean, name?: string) => {
   if (active) return 'Following';

@@ -1,8 +1,7 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { TIP_DELAY, useLazyTip } from '~/components/ui';
+import { LazyTip, useLazyTip } from '~/components/ui';
 import { countryName, flagUrl } from '~/utils/countries';
 
 import classes from './Flag.module.css';
@@ -28,7 +27,7 @@ export const Flag = memo<{ cc: string; size?: FlagSize; tip?: boolean; className
           loading="lazy"
           onPointerEnter={lazy.arm}
         />
-        {lazy.target && <Tooltip target={lazy.target} label={name} openDelay={TIP_DELAY.open} />}
+        <LazyTip target={lazy.target} label={name} />
       </>
     );
   },

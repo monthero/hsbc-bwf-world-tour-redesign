@@ -3,27 +3,27 @@
   font-size: 11px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-}
 
-.change[data-dir='up'] {
-  color: var(--bwf-green);
-}
+  &[data-dir='up'] {
+    color: var(--bwf-green);
+  }
 
-.change[data-dir='down'] {
-  color: var(--bwf-red-text);
-}
+  &[data-dir='down'] {
+    color: var(--bwf-red-text);
+  }
 
-.change[data-variant='pill'] {
-  padding: 1px 6px;
-  border-radius: 999px;
-}
+  &[data-variant='pill'] {
+    padding: 1px 6px;
+    border-radius: 999px;
 
-.change[data-variant='pill'][data-dir='up'] {
-  background: alpha(var(--bwf-green), 0.14);
-}
+    &[data-dir='up'] {
+      background: alpha(var(--bwf-green), 0.14);
+    }
 
-.change[data-variant='pill'][data-dir='down'] {
-  background: alpha(var(--bwf-red-text), 0.14);
+    &[data-dir='down'] {
+      background: alpha(var(--bwf-red-text), 0.14);
+    }
+  }
 }
 
 .hash {

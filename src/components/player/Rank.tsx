@@ -68,31 +68,27 @@ export const RaceQualifier: FC<{ rank: RankView }> = ({ rank: k }) => (
   <QualifyMark qualified={k.race?.qualified} blocked={k.race?.blocked} />
 );
 
-const CompactCard: FC<{ rank: RankView }> = ({ rank: k }) => {
-  return (
-    <div className={classes.card}>
-      <span className={classes.head}>
-        <EventTag event={k.ev} />
-        <span className={classes.evName}>{EVENT_NAMES[k.ev]}</span>
-      </span>
-      <div className={classes.split}>
-        <div className={classes.cCol}>
-          <span className={classes.cKey}>Current</span>
-          <span className={classes.cLine}>
-            <span className={classes.cNum}>{formatRank(k.rank)}</span>
-            <RankChange value={k.change} />
-          </span>
-          {!k.rank && <span className={classes.cWith}>Not ranked this week</span>}
-          {k.partner && <Partner player={k.partner} className={classes.cWith} />}
-        </div>
-        <div className={classes.cCol}>
-          <span className={classes.cKey}>Career high</span>
-          <span className={clsx(classes.cNum, classes.gold)}>{formatRank(k.highest)}</span>
-          {k.highestPartner && <Partner player={k.highestPartner} className={classes.cWith} />}
-        </div>
+export const RankCard = memo<{ rank: RankView }>(({ rank: k }) => (
+  <div className={classes.card}>
+    <span className={classes.head}>
+      <EventTag event={k.ev} />
+      <span className={classes.evName}>{EVENT_NAMES[k.ev]}</span>
+    </span>
+    <div className={classes.split}>
+      <div className={classes.cCol}>
+        <span className={classes.cKey}>Current</span>
+        <span className={classes.cLine}>
+          <span className={classes.cNum}>{formatRank(k.rank)}</span>
+          <RankChange value={k.change} />
+        </span>
+        {!k.rank && <span className={classes.cWith}>Not ranked this week</span>}
+        {k.partner && <Partner player={k.partner} className={classes.cWith} />}
+      </div>
+      <div className={classes.cCol}>
+        <span className={classes.cKey}>Career high</span>
+        <span className={clsx(classes.cNum, classes.gold)}>{formatRank(k.highest)}</span>
+        {k.highestPartner && <Partner player={k.highestPartner} className={classes.cWith} />}
       </div>
     </div>
-  );
-};
-
-export const RankCard = memo<{ rank: RankView }>(({ rank }) => <CompactCard rank={rank} />);
+  </div>
+));

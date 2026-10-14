@@ -37,10 +37,10 @@
   background: var(--bwf-surface-4);
   color: var(--bwf-sep);
   font-size: 22px;
-}
 
-.avatar[data-fill] .photo {
-  object-position: var(--photo-pos, center 18%);
+  & .photo {
+    object-position: var(--photo-pos, center 18%);
+  }
 }
 
 .avatar[data-ring] {
@@ -56,8 +56,8 @@
 
 .member {
   box-shadow: 0 0 0 2px var(--avatar-ring, var(--bwf-surface-2));
-}
 
-.member + .member {
-  margin-left: calc(var(--size) * -0.25);
+  & + .member {
+    margin-left: calc(var(--size) * -0.25);
+  }
 }

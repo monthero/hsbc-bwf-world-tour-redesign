@@ -9,7 +9,9 @@ import { useIsMobile } from '~/hooks/useIsMobile';
 import { useScrolledPast } from '~/hooks/useScrolledPast';
 import { useTournaments } from '~/hooks/useTournaments';
 import type { Level, Tournament } from '~/types';
+import { toggleItem } from '~/utils/filter';
 import { headerOffset } from '~/utils/layout';
+import { STAY } from '~/utils/navigation';
 import { summarize } from '~/utils/season';
 import { isHeld } from '~/utils/tournaments';
 
@@ -136,13 +138,8 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
   const onLevel = useCallback(
     (level: Level) =>
       void navigate({
-        search: (s) => {
-          const cur = s.levels ?? [];
-          const nextLevels = cur.includes(level) ? cur.filter((l) => l !== level) : [...cur, level];
-          return { ...s, levels: nextLevels.length ? nextLevels : undefined };
-        },
-        replace: true,
-        resetScroll: false,
+        search: (s) => ({ ...s, levels: toggleItem(s.levels, level) }),
+        ...STAY,
       }),
     [navigate],
   );
@@ -151,8 +148,7 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
     (v: StatusFilter | null) =>
       void navigate({
         search: (s) => ({ ...s, status: v && v !== 'all' ? v : undefined }),
-        replace: true,
-        resetScroll: false,
+        ...STAY,
       }),
     [navigate],
   );

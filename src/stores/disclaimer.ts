@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { safeJSONStorage } from './persistence';
+import { mergeParsed, safeJSONStorage } from './persistence';
 
 const STORAGE_KEY = 'bwf-disclaimer';
 const STORE_VERSION = 1;
@@ -16,11 +16,6 @@ interface DisclaimerState extends DisclaimerData {
 
 const EMPTY: DisclaimerData = { acknowledgedAt: null };
 
-const parseData = (raw: unknown): DisclaimerData => {
-  const parsed = DisclaimerData.safeParse(raw);
-  return parsed.success ? parsed.data : EMPTY;
-};
-
 export const useDisclaimer = create<DisclaimerState>()(
   persist(
     (set) => ({
@@ -33,7 +28,7 @@ export const useDisclaimer = create<DisclaimerState>()(
       storage: safeJSONStorage<DisclaimerData>(),
       partialize: (s): DisclaimerData => ({ acknowledgedAt: s.acknowledgedAt }),
       migrate: () => EMPTY,
-      merge: (persisted, current) => ({ ...current, ...parseData(persisted) }),
+      merge: mergeParsed(DisclaimerData, () => EMPTY),
     },
   ),
 );

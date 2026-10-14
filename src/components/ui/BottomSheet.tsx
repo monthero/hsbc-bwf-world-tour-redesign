@@ -3,8 +3,6 @@ import type { CSSProperties, FC, ReactNode } from 'react';
 
 import classes from './BottomSheet.module.css';
 
-const OVERLAY = { backgroundOpacity: 0.62, blur: 4 };
-
 export const BottomSheet: FC<{
   opened: boolean;
   onClose: () => void;
@@ -22,7 +20,6 @@ export const BottomSheet: FC<{
       position="bottom"
       withCloseButton={false}
       padding={0}
-      overlayProps={OVERLAY}
       classNames={{ content: classes.sheet, body: bodyClassName ?? classes.body }}
       style={{ '--sheet-max-h': maxHeight } as CSSProperties}
     >

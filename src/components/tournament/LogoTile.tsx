@@ -15,7 +15,7 @@ export const LogoTile: FC<{
   alt?: string;
   className?: string;
 }> = ({ src, size, flat, eager, name, alt = '', className }) => {
-  const { ref, onLoad, onError, loaded, failed } = useImageState(src);
+  const { img, loaded, failed } = useImageState(src);
   const label = name ?? alt;
   return (
     <span
@@ -28,17 +28,7 @@ export const LogoTile: FC<{
           {initials(label)}
         </span>
       )}
-      {!failed && (
-        <img
-          src={src}
-          alt={alt}
-          loading={eager ? 'eager' : 'lazy'}
-          ref={ref}
-          onLoad={onLoad}
-          onError={onError}
-          data-loaded={loaded || undefined}
-        />
-      )}
+      {!failed && <img src={src} alt={alt} loading={eager ? 'eager' : 'lazy'} {...img} />}
     </span>
   );
 };

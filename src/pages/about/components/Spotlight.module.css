@@ -4,27 +4,25 @@
   grid-auto-columns: minmax(0, 1fr);
   gap: 16px;
   margin-top: 16px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    grid-auto-flow: row;
+    gap: 12px;
+  }
 }
 
 .skeleton {
   height: 280px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    height: 132px;
+
+    &:not([data-id='finale']) {
+      display: none;
+    }
+  }
 }
 
 .finale {
   height: 100%;
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .grid {
-    grid-auto-flow: row;
-    gap: 12px;
-  }
-
-  .skeleton {
-    height: 132px;
-  }
-
-  .skeleton:not([data-id='finale']) {
-    display: none;
-  }
 }

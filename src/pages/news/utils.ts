@@ -1,5 +1,6 @@
 import type { NewsMonthCount } from '~/api/schemas';
 import { monthOf } from '~/utils/dates';
+import { plural } from '~/utils/format';
 
 import { CARD_MIN_WIDTH, CARD_RATIO, GRID_GAP, GRID_ROW_GAP, ROW_ESTIMATE } from './constants';
 import type { ArchiveRow, ArchiveYear, MonthGroup } from './types';
@@ -24,7 +25,7 @@ export const buildArchive = (months: readonly NewsMonthCount[]): ArchiveYear[] =
 
 export const MONTH_SHORT = Array.from({ length: MONTHS_IN_YEAR }, (_, i) => monthOf('2000-01').month(i).format('MMM'));
 
-export const storiesLabel = (n: number) => (n === 1 ? '1 story' : `${n} stories`);
+export const storiesLabel = (n: number) => plural(n, 'story', 'stories');
 
 export const columnsFor = (width: number) => Math.max(1, Math.floor((width + GRID_GAP) / (CARD_MIN_WIDTH + GRID_GAP)));
 

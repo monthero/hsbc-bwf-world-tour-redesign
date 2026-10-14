@@ -9,10 +9,10 @@
 .icon {
   flex: none;
   position: relative;
-}
 
-.icon::after {
-  content: '';
-  position: absolute;
-  inset: -6px;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+  }
 }

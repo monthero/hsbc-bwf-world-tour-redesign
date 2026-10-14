@@ -10,9 +10,9 @@
   transition:
     background 0.15s,
     border-color 0.15s;
-}
 
-.field[data-active] {
-  background: var(--bwf-surface-3);
-  border-color: var(--bwf-gold-edge);
+  &[data-active] {
+    background: var(--bwf-surface-3);
+    border-color: var(--bwf-gold-edge);
+  }
 }

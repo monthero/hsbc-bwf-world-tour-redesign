@@ -1,48 +1,12 @@
 .header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 24px 48px;
-  padding-top: 56px;
-  padding-bottom: 28px;
-}
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding-top: 32px;
 
-.titles {
-  min-width: 0;
-}
-
-.kicker {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--bwf-muted);
-}
-
-.kicker::before {
-  content: '';
-  flex: none;
-  width: 14px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--bwf-red);
-}
-
-.title {
-  margin: 12px 0 0;
-  font-size: 48px;
-  line-height: 1;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-}
-
-.meta {
-  margin: 12px 0 0;
-  font-size: 15px;
-  color: var(--bwf-muted);
+    h1,
+    h1 + p:not(.note) {
+      margin-top: 12px;
+    }
+  }
 }
 
 .note {
@@ -57,37 +21,25 @@
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 10px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 .kind {
   width: 260px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    width: auto;
+  }
 }
 
 .ev {
   width: 340px;
-}
 
-@mixin smaller-than $mantine-breakpoint-sm {
-  .header {
-    padding-top: 32px;
-    padding-bottom: 20px;
-  }
-
-  .title {
-    font-size: 34px;
-  }
-
-  .meta {
-    font-size: 14px;
-  }
-
-  .switches {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .kind,
-  .ev {
+  @mixin smaller-than $mantine-breakpoint-sm {
     width: auto;
   }
 }

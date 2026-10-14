@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, type RefObject } from 'react';
 
-import { MOTION_EASE } from '~/constants';
+import { MOTION_EASE } from '~/theme';
 import { prefersReducedMotion } from '~/utils/motion';
 
 const DEFAULT_DISTANCE = () => 24;

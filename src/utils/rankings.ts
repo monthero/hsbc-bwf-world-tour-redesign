@@ -14,6 +14,7 @@ import type {
   SeasonIndex,
 } from '~/types';
 
+import { weakCached } from './cache';
 import { foldText, toPlayer } from './names';
 import { playerById } from './season';
 
@@ -38,9 +39,7 @@ export const raceRank = (race: RaceRankings | undefined, players: readonly Playe
   return 0;
 };
 
-const qualCache = new WeakMap<RaceRankings, WeakMap<SeasonIndex, Qualifiers>>();
-
-export const pickQualifiers = <T>(entries: readonly T[], countriesOf: (e: T) => readonly string[]): Set<T> => {
+const pickQualifiers = <T>(entries: readonly T[], countriesOf: (e: T) => readonly string[]): Set<T> => {
   const perCountry = new Map<string, number>();
   const ok = new Set<T>();
   for (const e of entries) {
@@ -53,12 +52,9 @@ export const pickQualifiers = <T>(entries: readonly T[], countriesOf: (e: T) => 
   return ok;
 };
 
-export const isBlocked = (rank: number, qualified: boolean) => !qualified && rank <= QUALIFY_SPOTS;
+const isBlocked = (rank: number, qualified: boolean) => !qualified && rank <= QUALIFY_SPOTS;
 
-export const raceQualifiers = (race: RaceRankings, index: SeasonIndex): Qualifiers => {
-  let inner = qualCache.get(race);
-  const hit = inner?.get(index);
-  if (hit) return hit;
+const buildQualifiers = (race: RaceRankings, index: SeasonIndex): Qualifiers => {
   const byEv = new Map<EventCode, Map<number, Set<string>>>();
   for (const [id, rows] of Object.entries(race.players)) {
     const cc = index.players.get(id)?.cc;
@@ -75,10 +71,14 @@ export const raceQualifiers = (race: RaceRankings, index: SeasonIndex): Qualifie
     const sorted = [...ranks.keys()].sort((a, b) => a - b);
     out[ev] = pickQualifiers(sorted, (r) => [...(ranks.get(r) ?? [])]);
   }
-  if (!inner) qualCache.set(race, (inner = new WeakMap()));
-  inner.set(index, out);
   return out;
 };
+
+const qualifiersByRace = weakCached((race: RaceRankings) =>
+  weakCached((index: SeasonIndex) => buildQualifiers(race, index)),
+);
+
+export const raceQualifiers = (race: RaceRankings, index: SeasonIndex) => qualifiersByRace(race)(index);
 
 export const buildRanks = (
   current: CurrentRank[],

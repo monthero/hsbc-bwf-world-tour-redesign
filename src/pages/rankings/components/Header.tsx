@@ -1,8 +1,7 @@
 import { Skeleton } from '@mantine/core';
-import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { Segmented } from '~/components/ui';
+import { PageHeader, Segmented } from '~/components/ui';
 import { EVENT_OPTIONS, QUALIFY_PER_COUNTRY, QUALIFY_SPOTS } from '~/constants';
 import { useFinalsCity } from '~/hooks/useTournaments';
 import type { EventCode, RankingKind, RankingTable } from '~/types';
@@ -12,6 +11,8 @@ import { publicationLabel } from '../utils';
 
 import classes from './Header.module.css';
 import utils from '~/styles/utils.module.css';
+
+const TITLE_SKELETON = <Skeleton height={40} width={280} radius={8} />;
 
 const RaceNote = memo(() => {
   const city = useFinalsCity();
@@ -31,17 +32,19 @@ export const Header = memo<{
   onEv: (ev: EventCode | null) => void;
 }>(({ table, kind, ev, onKind, onEv }) => {
   return (
-    <header className={clsx(utils.container, classes.header)}>
-      <div className={classes.titles}>
-        <span className={classes.kicker}>Rankings</span>
-        <h1 className={classes.title}>{table ? table.name : <Skeleton height={40} width={280} radius={8} />}</h1>
-        {table && <p className={clsx(utils.num, classes.meta)}>{publicationLabel(table.publication)}</p>}
-        {kind === 'race' && <RaceNote />}
-      </div>
-      <div className={classes.switches}>
-        <Segmented options={KIND_OPTIONS} value={kind} onChange={onKind} className={classes.kind} />
-        <Segmented options={EVENT_OPTIONS} value={ev} onChange={onEv} className={classes.ev} />
-      </div>
-    </header>
+    <PageHeader
+      kicker="Rankings"
+      title={table ? table.name : TITLE_SKELETON}
+      meta={table && <span className={utils.num}>{publicationLabel(table.publication)}</span>}
+      aside={
+        <div className={classes.switches}>
+          <Segmented options={KIND_OPTIONS} value={kind} onChange={onKind} className={classes.kind} />
+          <Segmented options={EVENT_OPTIONS} value={ev} onChange={onEv} className={classes.ev} />
+        </div>
+      }
+      className={classes.header}
+    >
+      {kind === 'race' && <RaceNote />}
+    </PageHeader>
   );
 });

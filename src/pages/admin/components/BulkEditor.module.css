@@ -30,6 +30,10 @@
   border-radius: 12px;
   border: 1px solid var(--bwf-border);
   background: var(--bwf-surface-2);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .remove {
@@ -86,11 +90,11 @@
   font-size: 13px;
   font-weight: 600;
   color: var(--bwf-text);
-}
 
-.planTitle span {
-  font-weight: 400;
-  color: var(--bwf-muted);
+  span {
+    font-weight: 400;
+    color: var(--bwf-muted);
+  }
 }
 
 .preview {
@@ -110,6 +114,11 @@
   padding: 7px 12px;
   border-bottom: 1px solid var(--bwf-line);
   font-size: 12px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2px 10px;
+  }
 }
 
 .head {
@@ -128,6 +137,10 @@
   gap: 6px;
   min-width: 0;
   font-weight: 600;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    grid-column: 1 / -1;
+  }
 }
 
 .value {
@@ -143,19 +156,4 @@
   padding: 8px 12px;
   font-size: 12px;
   color: var(--bwf-muted);
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .edit {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .change {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2px 10px;
-  }
-
-  .who {
-    grid-column: 1 / -1;
-  }
 }

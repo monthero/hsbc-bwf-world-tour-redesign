@@ -6,6 +6,13 @@
   grid-template-columns: 150px 32px minmax(0, 1fr);
   gap: 20px;
   padding: 32px 0;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    --node-y: 37px;
+    --rail-x: 8px;
+    display: block;
+    padding: 26px 0 0 24px;
+  }
 }
 
 .line {
@@ -29,21 +36,12 @@
   display: flex;
   flex-direction: column;
   padding-top: 4px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding: 0 6px 10px;
+  }
 }
 
 .body {
   grid-column: 3;
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .section {
-    --node-y: 37px;
-    --rail-x: 8px;
-    display: block;
-    padding: 26px 0 0 24px;
-  }
-
-  .head {
-    padding: 0 6px 10px;
-  }
 }

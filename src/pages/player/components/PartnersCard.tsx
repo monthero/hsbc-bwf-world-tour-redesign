@@ -1,5 +1,6 @@
+import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useMemo } from 'react';
 
 import { EventTag } from '~/components/match';
 import { Partner } from '~/components/player';
@@ -8,17 +9,15 @@ import { plural } from '~/utils/format';
 
 import { PARTNER_LIMIT, PARTNER_MIN_MATCHES } from '../constants';
 import type { PartnerRow } from '../types';
+import { yearRange } from '../utils';
 import { SeasonRecord } from './SeasonRecord';
 
 import classes from './PartnersCard.module.css';
 import shared from './shared.module.css';
 import utils from '~/styles/utils.module.css';
 
-const yearSpan = (r: PartnerRow) => (r.first === r.last ? String(r.first) : `${r.first}–${r.last}`);
-
 export const PartnersCard = memo<{ rows: PartnerRow[] }>(({ rows }) => {
-  const [all, setAll] = useState(false);
-  const showAll = useCallback(() => setAll(true), []);
+  const [all, { open: showAll }] = useDisclosure(false);
   const main = useMemo(
     () => rows.filter((r, i) => i < PARTNER_LIMIT && (i === 0 || r.matches >= PARTNER_MIN_MATCHES)),
     [rows],
@@ -50,7 +49,7 @@ const PartnerItem = memo<{ row: PartnerRow; multi: boolean }>(({ row: r, multi }
         <Partner player={r.partner} label={false} />
         <span className={clsx(utils.num, classes.meta)}>
           {multi && <EventTag event={r.event} />}
-          {yearSpan(r)} · {plural(r.matches, 'match', 'matches')}
+          {yearRange(r.first, r.last)} · {plural(r.matches, 'match', 'matches')}
         </span>
       </span>
       <span className={classes.side}>

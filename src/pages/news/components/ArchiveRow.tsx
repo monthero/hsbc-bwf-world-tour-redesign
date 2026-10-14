@@ -1,8 +1,8 @@
-import { Button, Skeleton } from '@mantine/core';
+import { Skeleton } from '@mantine/core';
 import { memo, useCallback, type CSSProperties, type FC } from 'react';
 
 import { NewsCard, StorySkeleton, SubscribeCard } from '~/components/news';
-import { EmptyState } from '~/components/ui';
+import { RetryState } from '~/components/ui';
 
 import type { ArchiveRow as Row, MonthGroup } from '../types';
 import { storiesLabel } from '../utils';
@@ -28,12 +28,12 @@ const MonthHead: FC<{ group: MonthGroup; current: boolean }> = ({ group, current
 const MonthFailed: FC<{ group: MonthGroup; onRetry: (key: string) => void }> = ({ group, onRetry }) => {
   const retry = useCallback(() => onRetry(group.key), [onRetry, group.key]);
   return (
-    <EmptyState className={classes.failed}>
-      {`Couldn’t load ${group.name} ${group.year}.`}
-      <Button variant="default" radius="xl" size="xs" onClick={retry}>
-        Try again
-      </Button>
-    </EmptyState>
+    <RetryState
+      message={`Couldn’t load ${group.name} ${group.year}.`}
+      onRetry={retry}
+      compact
+      className={classes.failed}
+    />
   );
 };
 

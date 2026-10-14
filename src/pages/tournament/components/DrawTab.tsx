@@ -8,7 +8,7 @@ import { EVENT_NAMES, EVENT_OPTIONS } from '~/constants';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import type { EventCode } from '~/types';
 
-import { useOpenMatch } from '../hooks';
+import { useOpenMatch, useUpdateSearch } from '../hooks';
 import type { TabProps } from '../types';
 import { buildBracket, hasDraw } from './draw/bracket';
 import { BracketView } from './draw/BracketView';
@@ -23,7 +23,7 @@ const route = getRouteApi('/world-tour/$year/$slug');
 export const DrawTab: FC<TabProps> = ({ tournament, schedule, draw }) => {
   const ev = route.useSearch({ select: (s) => s.draw ?? 'MS' });
   const round = route.useSearch({ select: (s) => s.round ?? 0 });
-  const navigate = route.useNavigate();
+  const update = useUpdateSearch();
   const onOpen = useOpenMatch();
   const mobile = useIsMobile();
 
@@ -31,14 +31,8 @@ export const DrawTab: FC<TabProps> = ({ tournament, schedule, draw }) => {
   const has = useMemo(() => hasDraw(schedule, draw, ev), [schedule, draw, ev]);
   const bracket = useMemo(() => (has ? buildBracket(schedule, draw, ev, live) : null), [has, schedule, draw, ev, live]);
 
-  const onEvent = useCallback(
-    (v: EventCode | null) => v && navigate({ search: (s) => ({ ...s, draw: v }), replace: true, resetScroll: false }),
-    [navigate],
-  );
-  const onRound = useCallback(
-    (r: number) => navigate({ search: (s) => ({ ...s, round: r }), replace: true, resetScroll: false }),
-    [navigate],
-  );
+  const onEvent = useCallback((v: EventCode | null) => v && update({ draw: v }), [update]);
+  const onRound = useCallback((r: number) => update({ round: r }), [update]);
 
   return (
     <section className={clsx(utils.container, page.tabSection, classes.section)}>

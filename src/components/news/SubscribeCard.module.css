@@ -11,24 +11,24 @@
   color: var(--bwf-text);
   text-decoration: none;
   transition: border-color 0.2s;
-}
 
-.card::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  right: -40px;
-  bottom: -70px;
-  width: 220px;
-  aspect-ratio: 1;
-  background: var(--bwf-brand);
-  mask: url('/assets/brand/emblem.svg') center / contain no-repeat;
-  opacity: 0.12;
-  pointer-events: none;
-}
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    right: -40px;
+    bottom: -70px;
+    width: 220px;
+    aspect-ratio: 1;
+    background: var(--bwf-brand);
+    mask: url('/assets/brand/emblem.svg') center / contain no-repeat;
+    opacity: 0.12;
+    pointer-events: none;
+  }
 
-.card:hover {
-  border-color: var(--bwf-border-hover);
+  &:hover {
+    border-color: var(--bwf-border-hover);
+  }
 }
 
 .icon {
@@ -70,16 +70,16 @@
 .card[data-compact] {
   gap: 14px;
   padding: 16px;
-}
 
-.card[data-compact] .icon {
-  display: none;
-}
+  & .icon {
+    display: none;
+  }
 
-.card[data-compact] .title {
-  font-size: 15px;
-}
+  & .title {
+    font-size: 15px;
+  }
 
-.card[data-compact] .body {
-  font-size: 12px;
+  & .body {
+    font-size: 12px;
+  }
 }

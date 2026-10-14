@@ -6,7 +6,7 @@ import { Fragment, memo, useCallback, useMemo, useState, type FC } from 'react';
 import { EventCode } from '~/api/schemas';
 import { TeamPlayers } from '~/components/match';
 import { AvatarGroup, QualifyLine, QualifyMark, RankedNames } from '~/components/player';
-import { IconNext, Segmented, SectionTitle } from '~/components/ui';
+import { Segmented, SectionTitle } from '~/components/ui';
 import { EVENT_NAMES, EVENT_OPTIONS, QUALIFY_SPOTS } from '~/constants';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useRankingTable } from '~/hooks/useRankings';
@@ -20,9 +20,9 @@ import { ABOUT_SECTIONS, FINALS_CHAMPIONS, FINALS_RESULTS, QUALIFIED_FOR, RACE_L
 import { raceTop } from '../summaries';
 import type { SeasonFocus } from '../types';
 import { crownedFinals, raceSettled } from '../utils';
+import { SectionLink } from './SectionLink';
 
 import classes from './RaceTop8.module.css';
-import more from './SectionLink.module.css';
 import utils from '~/styles/utils.module.css';
 
 interface RaceColumn {
@@ -100,10 +100,9 @@ const FinalsChampions: FC<{ finals: Tournament; className?: string }> = ({ final
   const isMobile = useIsMobile();
   const caption = `${t.heading} · ${t.place}`;
   const aside = (
-    <Link to="/world-tour/$year/$slug" params={tournamentParams(t)} search={PODIUM_SEARCH} className={more.more}>
+    <SectionLink link={{ to: '/world-tour/$year/$slug', params: tournamentParams(t), search: PODIUM_SEARCH }}>
       {FINALS_RESULTS}
-      <IconNext size={14} />
-    </Link>
+    </SectionLink>
   );
   return (
     <section className={className} aria-label={FINALS_CHAMPIONS}>
@@ -137,12 +136,7 @@ const RaceStandings: FC<{ focus: SeasonFocus | undefined; className?: string }> 
       ? `Final standings · ${formatDayMonth(published)}`
       : `Top ${QUALIFY_SPOTS} qualify · as of ${formatDayMonth(published)}`);
   const ready = columns && focus;
-  const aside = (
-    <Link to="/rankings" search={standingsSearch(ev)} className={more.more}>
-      Full standings
-      <IconNext size={14} />
-    </Link>
-  );
+  const aside = <SectionLink link={{ to: '/rankings', search: standingsSearch(ev) }}>Full standings</SectionLink>;
   return (
     <section className={className} aria-label={title}>
       <SectionTitle count={isMobile ? undefined : caption} aside={aside}>

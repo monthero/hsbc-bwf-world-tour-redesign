@@ -14,7 +14,7 @@ export const MediaCover: FC<{
   className?: string;
   children?: ReactNode;
 }> = ({ src, position, fade = 'bottom', muted, className, children }) => {
-  const { ref, onLoad, onError, loaded, failed } = useImageState(src);
+  const { img, failed } = useImageState(src);
   return (
     <div className={clsx(classes.media, className)} data-fade={fade} data-muted={muted || undefined}>
       {!failed && (
@@ -24,10 +24,7 @@ export const MediaCover: FC<{
           alt=""
           loading="lazy"
           style={position ? { objectPosition: position } : undefined}
-          ref={ref}
-          onLoad={onLoad}
-          onError={onError}
-          data-loaded={loaded || undefined}
+          {...img}
         />
       )}
       {children}

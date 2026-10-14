@@ -26,7 +26,7 @@ const keyScore = (key: string, { terms, phrase }: SearchQuery) => {
   return terms.every((t) => key.includes(t)) ? 3 : NO_MATCH;
 };
 
-export const matchScore = (keys: readonly string[], q: SearchQuery) =>
+const matchScore = (keys: readonly string[], q: SearchQuery) =>
   keys.reduce((best, key) => {
     const s = keyScore(key, q);
     return s === NO_MATCH || (best !== NO_MATCH && best <= s) ? best : s;

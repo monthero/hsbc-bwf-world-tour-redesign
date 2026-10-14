@@ -5,18 +5,18 @@
   color: var(--bwf-text);
   text-decoration: none;
   transition: background 0.15s;
-}
 
-.ticker[data-live] {
-  background: linear-gradient(90deg, var(--bwf-red-tint), transparent 70%), var(--bwf-surface);
-}
+  &[data-live] {
+    background: linear-gradient(90deg, var(--bwf-red-tint), transparent 70%), var(--bwf-surface);
+  }
 
-.ticker:hover {
-  background: var(--bwf-surface-3);
-}
+  &:hover {
+    background: var(--bwf-surface-3);
+  }
 
-.ticker[data-live]:hover {
-  background: linear-gradient(90deg, var(--bwf-red-tint), transparent 70%), var(--bwf-surface-3);
+  &[data-live]:hover {
+    background: linear-gradient(90deg, var(--bwf-red-tint), transparent 70%), var(--bwf-surface-3);
+  }
 }
 
 .inner {
@@ -25,6 +25,10 @@
   gap: 10px;
   height: 40px;
   font-size: 13px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 8px;
+  }
 }
 
 .kind {
@@ -39,10 +43,10 @@
   text-transform: uppercase;
   -webkit-user-select: none;
   user-select: none;
-}
 
-.ticker[data-live] .kind {
-  color: var(--bwf-red-text);
+  .ticker[data-live] & {
+    color: var(--bwf-red-text);
+  }
 }
 
 .title {
@@ -68,18 +72,14 @@
   transition:
     transform 0.2s var(--bwf-ease),
     color 0.15s;
-}
 
-.ticker:hover .arrow {
-  transform: translateX(2px);
-  color: var(--bwf-text);
+  .ticker:hover & {
+    transform: translateX(2px);
+    color: var(--bwf-text);
+  }
 }
 
 @mixin smaller-than $mantine-breakpoint-sm {
-  .inner {
-    gap: 8px;
-  }
-
   .place,
   .ticker:not([data-live]) .status {
     display: none;

@@ -64,10 +64,10 @@ const bio = (
   extra?: Pick<FieldDef, 'missing' | 'badge' | 'catalog' | 'trustBwf' | 'format'>,
 ) => ({ key: `bio.${key}`, label, group, input, ...extra }) satisfies BioFieldDef;
 
-export const EQUIPMENT = 'Equipment';
+const EQUIPMENT = 'Equipment';
 export const IMAGES = 'Images';
 
-export const FIELDS: readonly FieldDef[] = [
+const FIELDS: readonly FieldDef[] = [
   { key: NAME_KEY, label: 'Display name', group: 'Identity', input: 'name' },
   { key: RETIRED_KEY, label: 'Retired since', group: 'Identity', input: 'month' },
   { key: 'photo', label: 'Photo', group: IMAGES, input: 'image', missing: true, badge: true },
@@ -130,8 +130,6 @@ export const bwfValue = (p: AdminPlayer, key: FieldKey) => {
   const bioKey = bioKeyOf(key);
   return encodeBio(decodeBio(bioKey, p.bio[bioKey]));
 };
-
-export { overrideValue };
 
 export const effectiveValue = (p: AdminPlayer, key: FieldKey) => overrideValue(p.override, key) || bwfValue(p, key);
 

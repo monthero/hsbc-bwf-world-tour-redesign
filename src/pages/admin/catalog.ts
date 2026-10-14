@@ -1,5 +1,6 @@
 import type { CascaderOption } from '@mantine/core';
 
+import { searchTokens } from '~/utils/filter';
 import { foldText } from '~/utils/names';
 
 import type { Brand, EquipmentRow } from './schema';
@@ -55,7 +56,7 @@ export const catalogPath = (rows: readonly EquipmentRow[], value: string) => {
 };
 
 export const catalogSearch = (query: string, path: readonly CascaderOption[]) => {
-  const tokens = foldText(query).split(/\s+/).filter(Boolean);
+  const tokens = searchTokens(query);
   const name = path.at(-1)?.value ?? '';
   const text = foldText(name);
   const compact = compactKey(name);

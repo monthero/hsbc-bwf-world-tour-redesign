@@ -33,7 +33,7 @@ import { compareText, foldText, toPlayer } from './names';
 
 export const roundName = (r: string) => ROUND_NAMES[r] ?? r;
 
-export const groupName = (g: string) => `Group ${g}`;
+const groupName = (g: string) => `Group ${g}`;
 
 const dayRoundName = (r: string) => (r in GROUP_ROUND_NAMES ? GROUP_STAGE : roundName(r));
 
@@ -49,7 +49,7 @@ export const isDoubles = (ev: EventCode) => DOUBLES_EVENTS.has(ev);
 
 export const opposite = (side: Side): Side => (side === 0 ? 1 : 0);
 
-export const teamKey = (players: readonly { id: string }[]) =>
+const teamKey = (players: readonly { id: string }[]) =>
   players
     .map((p) => p.id)
     .sort(compareText)
@@ -60,7 +60,7 @@ export const teamEventKey = (ev: EventCode, key: string) => `${ev}|${key}`;
 export const byMatchTime = (a: Match, b: Match) =>
   a.date.localeCompare(b.date) || a.time.localeCompare(b.time) || a.court - b.court;
 
-export const toTeam = (t: MatchDto['teams'][number]): Team => {
+const toTeam = (t: MatchDto['teams'][number]): Team => {
   const players = t.players.filter((p) => p.name).map((p) => toPlayer(p.name, p.cc, p.id));
   return { seed: t.seed, players, key: teamKey(players) };
 };
@@ -99,6 +99,8 @@ export const toDrawSlots = (list: readonly DrawMatchDto[]): DrawSlot[] =>
 
 export const toEntryListings = (list: readonly EntryDto[]): EntryListing[] =>
   list.map((e) => ({ ...e, team: toTeam(e.team) }));
+
+export const courtLabel = (court: number) => (court ? `Court ${court}` : '');
 
 export const isScheduled = (m: Match) => m.date !== '';
 
@@ -187,8 +189,7 @@ export const sideResult = (m: Match, side: Side): SideResult => {
   return w === side ? 'won' : 'lost';
 };
 
-export const advanceLabel = (round: string) =>
-  round === 'F' ? 'Champion' : `Into ${NEXT_ROUND[round] ?? 'next round'}`;
+const advanceLabel = (round: string) => (round === 'F' ? 'Champion' : `Into ${NEXT_ROUND[round] ?? 'next round'}`);
 
 export const sideStatus = (m: Match, side: Side, { court = false } = {}): { tone: SideResult; label: string } => {
   const tone = sideResult(m, side);
@@ -221,7 +222,7 @@ export const noteTip = (m: Match) => {
   const long = noteLabel(m.note, 'long');
   const winner = winnerSide(m);
   if (!long || winner === null) return long;
-  return `${long} · ${teamLabel(m.teams[winner === 0 ? 1 : 0], ' & ')} ${noteLabel(m.note, 'verb')}`;
+  return `${long} · ${teamLabel(m.teams[opposite(winner)], ' & ')} ${noteLabel(m.note, 'verb')}`;
 };
 
 export const teamPlayers = (m: Match) => m.teams.flatMap((t) => t.players);
@@ -242,17 +243,14 @@ export const normQuery = (q: string) => foldText(q.trim());
 const playerHas = (p: Player, s: string) =>
   foldText(p.name).includes(s) || p.cc.toLowerCase() === s || foldText(countryName(p.cc)).includes(s);
 
-export const playerMatchesQuery = (p: Player, q: string) => {
-  const s = normQuery(q);
-  return !s || playerHas(p, s);
-};
+const teamHas = (t: Pick<Team, 'players'>, s: string) => t.players.some((p) => playerHas(p, s));
 
 export const teamMatchesQuery = (t: Pick<Team, 'players'>, q: string) => {
   const s = normQuery(q);
-  return !s || t.players.some((p) => playerHas(p, s));
+  return !s || teamHas(t, s);
 };
 
 export const matchesQuery = (m: Match, q: string) => {
   const s = normQuery(q);
-  return !s || m.teams.some((t) => t.players.some((p) => playerHas(p, s)));
+  return !s || m.teams.some((t) => teamHas(t, s));
 };

@@ -11,27 +11,27 @@
   transition:
     transform 0.35s var(--bwf-ease),
     box-shadow 0.35s var(--bwf-ease);
-}
 
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 20px 50px alpha(var(--mantine-color-black), 0.45),
-    0 0 0 1px alpha(var(--bwf-gold), 0.5);
-}
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 20px 50px alpha(var(--mantine-color-black), 0.45),
+      0 0 0 1px alpha(var(--bwf-gold), 0.5);
+  }
 
-.card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      alpha(var(--bwf-bg), 0.94) 0%,
-      alpha(var(--bwf-bg), 0.7) 45%,
-      alpha(var(--bwf-bg), 0.25) 100%
-    ),
-    radial-gradient(70% 90% at 0% 100%, alpha(var(--bwf-gold), 0.18), transparent 70%);
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        90deg,
+        alpha(var(--bwf-bg), 0.94) 0%,
+        alpha(var(--bwf-bg), 0.7) 45%,
+        alpha(var(--bwf-bg), 0.25) 100%
+      ),
+      radial-gradient(70% 90% at 0% 100%, alpha(var(--bwf-gold), 0.18), transparent 70%);
+  }
 }
 
 .cover {
@@ -131,15 +131,15 @@
   display: flex;
   align-items: baseline;
   gap: 6px;
-}
 
-.mCountdown .days {
-  font-size: 34px;
-  letter-spacing: -0.03em;
-}
+  & .days {
+    font-size: 34px;
+    letter-spacing: -0.03em;
+  }
 
-.mCountdown .daysLabel {
-  font-size: 12px;
+  & .daysLabel {
+    font-size: 12px;
+  }
 }
 
 .mBody {
@@ -148,21 +148,21 @@
   gap: 6px;
   padding: 14px 16px 16px;
   background: linear-gradient(180deg, alpha(var(--bwf-gold), 0.08), alpha(var(--bwf-gold), 0.02));
-}
 
-.mBody .tagline {
-  margin: 0;
-  font-size: 11px;
-}
+  & .tagline {
+    margin: 0;
+    font-size: 11px;
+  }
 
-.mBody .title {
-  font-size: 20px;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
+  & .title {
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
 
-.mBody .meta {
-  gap: 6px;
-  font-size: 12px;
-  color: var(--bwf-muted);
+  & .meta {
+    gap: 6px;
+    font-size: 12px;
+    color: var(--bwf-muted);
+  }
 }

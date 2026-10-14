@@ -10,9 +10,3 @@ export const RankingsSearch = z.object({
 });
 
 export type RankingsSearch = z.infer<typeof RankingsSearch>;
-
-export interface CountryOption {
-  value: string;
-  label: string;
-  count: number;
-}

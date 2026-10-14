@@ -63,7 +63,7 @@ const MeetingCard = memo<{ meet: Meeting }>(({ meet: x }) => {
         <span className={clsx(utils.num, classes.meetStage)}>{x.stage}</span>
       </div>
       <div className={classes.meetBody}>
-        <OutcomeBadge outcome={x.won ? 'W' : 'L'} label={x.won ? 'WON' : 'LOST'} variant="pill" />
+        <OutcomeBadge outcome={x.won ? 'W' : 'L'} variant="pill" />
         <span className={clsx(utils.num, classes.meetGames)}>
           {x.games.map((g, i) => (
             <span key={i}>
@@ -77,12 +77,7 @@ const MeetingCard = memo<{ meet: Meeting }>(({ meet: x }) => {
             </span>
           ))}
         </span>
-        <OutcomeBadge
-          outcome={x.won ? 'L' : 'W'}
-          label={x.won ? 'LOST' : 'WON'}
-          variant="pill"
-          className={classes.resultEnd}
-        />
+        <OutcomeBadge outcome={x.won ? 'L' : 'W'} variant="pill" className={classes.resultEnd} />
       </div>
       {(x.venue || x.dur) && (
         <span className={classes.meetSub}>

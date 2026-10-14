@@ -17,10 +17,10 @@
   vertical-align: -0.05em;
   color: var(--bwf-faint);
   transition: color 0.15s;
-}
 
-.link:hover .external {
-  color: var(--bwf-text-3);
+  .link:hover & {
+    color: var(--bwf-text-3);
+  }
 }
 
 .social {
@@ -30,6 +30,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
+
+  &[data-size='md'] {
+    gap: 6px;
+    font-size: 16px;
+  }
 }
 
 .socialLink {
@@ -45,14 +50,9 @@
   transition:
     color 0.15s,
     background 0.15s;
-}
 
-.social[data-size='md'] {
-  gap: 6px;
-  font-size: 16px;
-}
-
-.socialLink:hover {
-  background: var(--bwf-raised);
-  color: var(--bwf-text);
+  &:hover {
+    background: var(--bwf-raised);
+    color: var(--bwf-text);
+  }
 }

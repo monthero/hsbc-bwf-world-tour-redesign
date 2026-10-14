@@ -3,9 +3,10 @@ import { memo, useCallback, useLayoutEffect, useMemo, useRef, type FC } from 're
 
 import { FilterChip, LiveDot, SearchField, Segmented, StarButton, type SegmentedOption } from '~/components/ui';
 import type { TournamentDay } from '~/types';
+import { centerChild } from '~/utils/scroll';
 
 import type { MatchFilters } from './useMatchFilters';
-import { centerChild, type CourtChipModel, type EventChipModel } from './utils';
+import type { CourtChipModel, EventChipModel } from './utils';
 
 import classes from './FilterControls.module.css';
 import utils from '~/styles/utils.module.css';

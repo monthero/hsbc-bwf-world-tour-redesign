@@ -2,11 +2,11 @@ import { useDebouncedCallback } from '@mantine/hooks';
 import { clsx } from 'clsx';
 import { memo, useCallback, useEffect, useRef, useState, type FC, type ReactNode } from 'react';
 
-import { Flag } from '~/components/country';
+import { CountSelect } from '~/components/filters';
 import { FilterChip, SearchField, Segmented, StickyBar } from '~/components/ui';
 import { EVENT_OPTIONS } from '~/constants';
 import type { EventCode } from '~/types';
-import { formatNumber, plural } from '~/utils/format';
+import { shownLabel, toggleItem, type CountOption } from '~/utils/filter';
 
 import {
   ACTIVITY_OPTIONS,
@@ -14,19 +14,15 @@ import {
   DEFAULT_SORT,
   SORT_OPTIONS,
   TOGGLES,
-  type CountOption,
   type Criteria,
   type Toggle,
 } from '../filters';
 import type { Activity, AdminSearch, SortKey } from '../types';
-import { CountSelect } from './CountSelect';
 
 import classes from './FilterBar.module.css';
 import utils from '~/styles/utils.module.css';
 
 const DEBOUNCE = { delay: 200, flushOnUnmount: true };
-
-const flagIcon = (cc: string) => <Flag cc={cc} size="sm" tip={false} />;
 
 const ToggleChip = memo<{ toggle: Toggle; active: boolean; onToggle: (key: string) => void }>(
   ({ toggle, active, onToggle }) => (
@@ -95,10 +91,7 @@ export const FilterControls = memo<{
     [onPatch],
   );
   const onToggle = useCallback(
-    (key: string) => {
-      const flags = criteria.flags.includes(key) ? criteria.flags.filter((f) => f !== key) : [...criteria.flags, key];
-      onPatch({ flags: flags.length ? flags : undefined });
-    },
+    (key: string) => onPatch({ flags: toggleItem(criteria.flags, key) }),
     [criteria.flags, onPatch],
   );
 
@@ -112,7 +105,10 @@ export const FilterControls = memo<{
           onChange={onCountry}
           placeholder="All countries"
           label="Filter by country"
-          icon={flagIcon}
+          nothingFound="No match"
+          width={200}
+          align="start"
+          flags
         />
         <CountSelect
           data={brands}
@@ -120,10 +116,12 @@ export const FilterControls = memo<{
           onChange={onBrand}
           placeholder="Any equipment brand"
           label="Filter by equipment brand"
+          nothingFound="No match"
+          width={200}
+          align="start"
         />
         <span className={clsx(utils.num, classes.count)} aria-live="polite">
-          {shown !== total && `${formatNumber(shown)} of `}
-          {plural(total, 'player')}
+          {shownLabel(shown, total, 'player')}
         </span>
       </div>
       <div className={classes.row}>

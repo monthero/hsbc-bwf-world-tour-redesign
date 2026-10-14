@@ -12,48 +12,48 @@
   transition:
     border-color 0.15s,
     box-shadow 0.15s;
-}
 
-.search[data-size='sm'] {
-  gap: 7px;
-  height: 30px;
-  padding: 0 11px;
-}
+  &[data-size='sm'] {
+    gap: 7px;
+    height: 30px;
+    padding: 0 11px;
+  }
 
-.search[data-size='lg'] {
-  height: 44px;
-  padding: 0 14px;
-  border-radius: 12px;
-  background: var(--bwf-bg);
-}
+  &[data-size='lg'] {
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 12px;
+    background: var(--bwf-bg);
+  }
 
-.search:focus-within {
-  border-color: var(--bwf-red-edge);
-  box-shadow: 0 0 0 3px var(--bwf-red-tint);
-  color: var(--bwf-red-text);
-}
+  &:focus-within {
+    border-color: var(--bwf-red-edge);
+    box-shadow: 0 0 0 3px var(--bwf-red-tint);
+    color: var(--bwf-red-text);
+  }
 
-.search input {
-  flex: 1;
-  min-width: 0;
-  border: 0;
-  outline: 0;
-  background: none;
-  color: var(--bwf-text);
-  font: inherit;
-  font-size: 13px;
-}
+  & input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: none;
+    color: var(--bwf-text);
+    font: inherit;
+    font-size: 13px;
+  }
 
-.search[data-size='sm'] input {
-  font-size: 12px;
-}
+  &[data-size='sm'] input {
+    font-size: 12px;
+  }
 
-.search[data-size='lg'] input {
-  font-size: 14px;
-}
+  &[data-size='lg'] input {
+    font-size: 14px;
+  }
 
-.search input::placeholder {
-  color: var(--bwf-faint);
+  & input::placeholder {
+    color: var(--bwf-faint);
+  }
 }
 
 .searchClear {

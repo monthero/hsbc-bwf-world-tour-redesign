@@ -1,9 +1,8 @@
 import { Skeleton } from '@mantine/core';
-import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { useMemo, type FC } from 'react';
 
-import { IconNext, SectionTitle } from '~/components/ui';
+import { SectionTitle } from '~/components/ui';
 import { QUALIFY_PER_COUNTRY, QUALIFY_SPOTS, SEASON_YEAR, TOUR_CYCLES } from '~/constants';
 import { useTournaments } from '~/hooks/useTournaments';
 import { date } from '~/utils/dates';
@@ -11,10 +10,10 @@ import { finalsOf, knownFinalsCity } from '~/utils/tournaments';
 
 import { ABOUT_SECTIONS } from '../constants';
 import { tierSummaries } from '../summaries';
+import { SectionLink } from './SectionLink';
 import { TierLadder } from './TierLadder';
 
 import classes from './HowItWorks.module.css';
-import more from './SectionLink.module.css';
 import utils from '~/styles/utils.module.css';
 
 const TITLE = ABOUT_SECTIONS[0].title;
@@ -23,12 +22,9 @@ const NUMBER_WORDS = ['no', 'one', 'two', 'three', 'four', 'five', 'six'];
 
 const PATHWAY = TOUR_CYCLES.find((c) => SEASON_YEAR >= c.from && SEASON_YEAR <= c.to)?.super100 === 'pathway';
 
-const MORE = (
-  <Link to="/calendar" className={more.more}>
-    Full calendar
-    <IconNext size={14} />
-  </Link>
-);
+const CALENDAR_LINK = { to: '/calendar' } as const;
+
+const MORE = <SectionLink link={CALENDAR_LINK}>Full calendar</SectionLink>;
 
 export const HowItWorks: FC<{ className?: string }> = ({ className }) => {
   const { data } = useTournaments(SEASON_YEAR);

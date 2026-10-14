@@ -26,11 +26,15 @@
   touch-action: none;
   -webkit-user-select: none;
   user-select: none;
-}
 
-.pad:focus-visible {
-  outline: 2px solid var(--bwf-border-focus);
-  outline-offset: 2px;
+  &:focus-visible {
+    outline: 2px solid var(--bwf-border-focus);
+    outline-offset: 2px;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    flex-basis: 100%;
+  }
 }
 
 .thumb {
@@ -51,30 +55,30 @@
     0 0 0 1px alpha(var(--mantine-color-black), 0.6),
     inset 0 0 0 1px alpha(var(--mantine-color-black), 0.6);
   pointer-events: none;
-}
 
-.cross::before,
-.cross::after {
-  content: '';
-  position: absolute;
-  background: var(--mantine-color-white);
-  box-shadow: 0 0 0 1px alpha(var(--mantine-color-black), 0.5);
-}
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background: var(--mantine-color-white);
+    box-shadow: 0 0 0 1px alpha(var(--mantine-color-black), 0.5);
+  }
 
-.cross::before {
-  left: 50%;
-  top: -9px;
-  bottom: -9px;
-  width: 2px;
-  margin-left: -1px;
-}
+  &::before {
+    left: 50%;
+    top: -9px;
+    bottom: -9px;
+    width: 2px;
+    margin-left: -1px;
+  }
 
-.cross::after {
-  top: 50%;
-  left: -9px;
-  right: -9px;
-  height: 2px;
-  margin-top: -1px;
+  &::after {
+    top: 50%;
+    left: -9px;
+    right: -9px;
+    height: 2px;
+    margin-top: -1px;
+  }
 }
 
 .mobile {
@@ -87,14 +91,8 @@
   background-image: var(--hero);
   background-size: cover;
   background-position: var(--hero-pos, center 15%);
-}
 
-@mixin smaller-than $mantine-breakpoint-sm {
-  .pad {
-    flex-basis: 100%;
-  }
-
-  .mobile {
+  @mixin smaller-than $mantine-breakpoint-sm {
     width: 100px;
   }
 }

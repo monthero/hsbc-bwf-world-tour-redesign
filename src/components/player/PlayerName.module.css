@@ -9,25 +9,25 @@
     color 0.14s,
     background 0.14s,
     box-shadow 0.14s;
-}
 
-.playerName [data-strong] {
-  font-weight: 600;
-}
+  & [data-strong] {
+    font-weight: 600;
+  }
 
-.playerName[data-layout='stacked'] {
-  display: flex;
-  flex-direction: column;
-}
+  &[data-layout='stacked'] {
+    display: flex;
+    flex-direction: column;
+  }
 
-a.playerName:hover {
-  color: var(--mantine-color-white);
-  background: var(--bwf-red-tint);
-  box-shadow: 0 0 0 3px var(--bwf-red-tint);
-}
+  a&:hover {
+    color: var(--mantine-color-white);
+    background: var(--bwf-red-tint);
+    box-shadow: 0 0 0 3px var(--bwf-red-tint);
+  }
 
-.playerName[data-fit] {
-  display: inline-block;
+  &[data-fit] {
+    display: inline-block;
+  }
 }
 
 .sizer {

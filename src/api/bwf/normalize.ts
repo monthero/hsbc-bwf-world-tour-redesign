@@ -99,19 +99,14 @@ export interface SideStats {
 
 export type MatchStats = [SideStats, SideStats];
 
+const sideStats = (r: NonNullable<BwfMatchStat['results']>, t: 'team1' | 'team2'): SideStats => ({
+  longestRun: r[`${t}_consecutive_points`],
+  ralliesWon: r[`${t}_rallies_won`],
+  challenges: { used: r[`${t}_challenge_used`], won: r[`${t}_challenge_won`], lost: r[`${t}_challenge_lost`] },
+});
+
 export const toMatchStats = ({ results: r }: BwfMatchStat): MatchStats | null =>
-  r && [
-    {
-      longestRun: r.team1_consecutive_points,
-      ralliesWon: r.team1_rallies_won,
-      challenges: { used: r.team1_challenge_used, won: r.team1_challenge_won, lost: r.team1_challenge_lost },
-    },
-    {
-      longestRun: r.team2_consecutive_points,
-      ralliesWon: r.team2_rallies_won,
-      challenges: { used: r.team2_challenge_used, won: r.team2_challenge_won, lost: r.team2_challenge_lost },
-    },
-  ];
+  r && [sideStats(r, 'team1'), sideStats(r, 'team2')];
 
 export interface LiveServer {
   id: string;

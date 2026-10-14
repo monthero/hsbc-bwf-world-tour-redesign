@@ -5,52 +5,50 @@
     color-mix(in srgb, var(--lv, var(--bwf-brand-deep)) 55%, var(--bwf-bg-sunken)),
     var(--bwf-bg-sunken) 85%
   );
-}
 
-.media[data-muted] {
-  background: linear-gradient(130deg, var(--bwf-surface-2), var(--bwf-bg-sunken) 85%);
-}
+  &[data-muted] {
+    background: linear-gradient(130deg, var(--bwf-surface-2), var(--bwf-bg-sunken) 85%);
+  }
 
-.media::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  &[data-fade='bottom']::after {
+    background: linear-gradient(180deg, transparent 30%, alpha(var(--bwf-bg), 0.6));
+  }
+
+  &[data-fade='strong']::after {
+    background: linear-gradient(180deg, transparent 30%, alpha(var(--bwf-bg), 0.85));
+  }
+
+  & > :not(.img) {
+    z-index: 1;
+  }
+
+  &[data-muted] .img {
+    filter: grayscale(1);
+
+    &[data-loaded] {
+      opacity: 0.45;
+    }
+  }
 }
 
 .img {
   border-radius: inherit;
   opacity: 0;
   transition: opacity 0.4s ease-out;
-}
 
-.img[data-loaded] {
-  opacity: 1;
-}
+  &[data-loaded] {
+    opacity: 1;
+  }
 
-.media[data-fade='bottom']::after {
-  background: linear-gradient(180deg, transparent 30%, alpha(var(--bwf-bg), 0.6));
-}
-
-.media[data-fade='strong']::after {
-  background: linear-gradient(180deg, transparent 30%, alpha(var(--bwf-bg), 0.85));
-}
-
-.media > :not(.img) {
-  z-index: 1;
-}
-
-.media[data-muted] .img {
-  filter: grayscale(1);
-}
-
-.media[data-muted] .img[data-loaded] {
-  opacity: 0.45;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .img {
+  @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
 }

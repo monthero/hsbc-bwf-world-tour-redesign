@@ -5,6 +5,7 @@ import { refreshTournamentMedia, tournamentMediaQuery, viewerGeoQuery } from '~/
 import type { MediaItem } from '~/api/schemas';
 import { useShowBlocked } from '~/stores/settings';
 import type { Match, MatchStatus, Tournament, TournamentDay } from '~/types';
+import { weakCached } from '~/utils/cache';
 import {
   courtStreams,
   hasCourtStreams,
@@ -29,17 +30,14 @@ interface TournamentLinks extends LinkedMedia<Match> {
   courts: ReadonlyMap<string, MediaItem>;
 }
 
-const linkCache = new WeakMap<readonly MediaItem[], WeakMap<readonly Match[], TournamentLinks>>();
+const linksByItems = weakCached((items: readonly MediaItem[]) =>
+  weakCached((matches: readonly Match[]): TournamentLinks => ({
+    ...linkMedia(items, matches),
+    courts: courtStreams(items),
+  })),
+);
 
-const linksOf = (items: readonly MediaItem[], matches: readonly Match[]) => {
-  const byMatches = linkCache.get(items) ?? new WeakMap<readonly Match[], TournamentLinks>();
-  linkCache.set(items, byMatches);
-  const hit = byMatches.get(matches);
-  if (hit) return hit;
-  const links = { ...linkMedia(items, matches), courts: courtStreams(items) };
-  byMatches.set(matches, links);
-  return links;
-};
+const linksOf = (items: readonly MediaItem[], matches: readonly Match[]) => linksByItems(items)(matches);
 
 const playRemaining = (day: TournamentDay | undefined) => !!day?.matches.some((m) => m.status !== 'F');
 
@@ -54,7 +52,7 @@ const useMediaFeed = (t: Tournament) => {
   return { items, matches, today, onAir, isLoading: media.isLoading, isError: media.isError };
 };
 
-export const useViewerCountry = () => useQuery(viewerGeoQuery()).data?.country ?? null;
+const useViewerCountry = () => useQuery(viewerGeoQuery()).data?.country ?? null;
 
 export const useMediaAvailable = (item: MediaItem) => isAvailableIn(item, useViewerCountry());
 

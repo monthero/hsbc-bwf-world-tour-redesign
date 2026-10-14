@@ -2,36 +2,40 @@
   border-radius: 50%;
   box-shadow: var(--bwf-spot-glow);
   pointer-events: none;
-}
 
-.spot:not([data-solid]) {
-  position: absolute;
-  inset: 0;
-}
+  &:not([data-solid]) {
+    position: absolute;
+    inset: 0;
+  }
 
-:where(.spot[data-solid]) {
-  position: relative;
-}
+  :where(&[data-solid]) {
+    position: relative;
+  }
 
-.spot[data-solid] {
-  flex: none;
-  width: var(--spot-size, 7px);
-  height: var(--spot-size, 7px);
-  background: var(--bwf-red);
-}
+  &[data-solid] {
+    flex: none;
+    width: var(--spot-size, 7px);
+    height: var(--spot-size, 7px);
+    background: var(--bwf-red);
+  }
 
-.spot::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1.5px solid var(--bwf-red);
-  opacity: 0.35;
-  transform: scale(1.8);
-}
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid var(--bwf-red);
+    opacity: 0.35;
+    transform: scale(1.8);
+  }
 
-.spot[data-live]::after {
-  animation: halo 2s var(--bwf-ease) infinite;
+  &[data-live]::after {
+    animation: halo 2s var(--bwf-ease) infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
 }
 
 @keyframes halo {
@@ -43,11 +47,5 @@
   to {
     opacity: 0;
     transform: scale(2.2);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .spot[data-live]::after {
-    animation: none;
   }
 }

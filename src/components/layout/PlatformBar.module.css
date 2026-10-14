@@ -22,6 +22,17 @@
   align-self: stretch;
   gap: clamp(14px, 2vw, 24px);
   min-width: 0;
+
+  & .current::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--bwf-on-brand);
+  }
 }
 
 .familyLink {
@@ -40,11 +51,11 @@
   -webkit-user-select: none;
   user-select: none;
   transition: color 0.15s;
-}
 
-.familyLink:hover,
-.familyLink[aria-expanded='true'] {
-  color: var(--bwf-text);
+  &:hover,
+  &[aria-expanded='true'] {
+    color: var(--bwf-text);
+  }
 }
 
 .current {
@@ -52,26 +63,15 @@
   font-weight: 600;
 }
 
-.family .current::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--bwf-on-brand);
-}
-
 .chevron {
   width: 12px;
   height: 12px;
   margin-left: 4px;
   transition: transform 0.2s var(--bwf-ease);
-}
 
-[aria-expanded='true'] > .chevron {
-  transform: rotate(180deg);
+  [aria-expanded='true'] > & {
+    transform: rotate(180deg);
+  }
 }
 
 .switcher {
@@ -88,11 +88,15 @@
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-}
 
-.switcher:hover,
-.switcher[aria-expanded='true'] {
-  background: var(--bwf-raised);
+  &:hover,
+  &[aria-expanded='true'] {
+    background: var(--bwf-raised);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    display: inline-flex;
+  }
 }
 
 .social {
@@ -112,26 +116,26 @@
   color: var(--bwf-text-2);
   font-size: 13px;
   font-weight: 500;
-}
 
-.menuItem[data-hovered] {
-  background: var(--bwf-raised);
-  color: var(--bwf-text);
-}
+  &[data-hovered] {
+    background: var(--bwf-raised);
+    color: var(--bwf-text);
+  }
 
-.menuItem.current {
-  color: var(--bwf-text);
-  font-weight: 600;
+  &.current {
+    color: var(--bwf-text);
+    font-weight: 600;
+  }
 }
 
 .menuIcon {
   width: 13px;
   height: 13px;
   color: var(--bwf-faint);
-}
 
-.current .menuIcon {
-  color: var(--bwf-text);
+  .current & {
+    color: var(--bwf-text);
+  }
 }
 
 .menuLabel {
@@ -152,9 +156,5 @@
   .family,
   .social {
     display: none;
-  }
-
-  .switcher {
-    display: inline-flex;
   }
 }

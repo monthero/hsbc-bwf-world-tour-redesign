@@ -16,10 +16,10 @@
   padding: 14px 0;
   border-bottom: 1px solid var(--bwf-line);
   font-size: 14px;
-}
 
-.row:last-child {
-  border-bottom: 0;
+  &:last-child {
+    border-bottom: 0;
+  }
 }
 
 .rowLabel {
@@ -38,10 +38,10 @@
   color: var(--bwf-red-soft);
   font-weight: 500;
   text-decoration: none;
-}
 
-.maps:hover {
-  color: var(--bwf-red-pale);
+  &:hover {
+    color: var(--bwf-red-pale);
+  }
 }
 
 .card {
@@ -71,26 +71,30 @@
   text-align: left;
   cursor: pointer;
   transition: background 0.15s;
-}
 
-.day:hover:not(:disabled) {
-  background: var(--bwf-surface-3);
-}
+  &:hover:not(:disabled) {
+    background: var(--bwf-surface-3);
+  }
 
-.day:disabled {
-  cursor: default;
-}
+  &:disabled {
+    cursor: default;
+  }
 
-.day[data-today] {
-  background: alpha(var(--bwf-red), 0.05);
-}
+  &[data-today] {
+    background: alpha(var(--bwf-red), 0.05);
+  }
 
-.day[data-past] {
-  color: var(--bwf-dim);
-}
+  &[data-past] {
+    color: var(--bwf-dim);
+  }
 
-.day[data-rest] .dayRound {
-  color: var(--bwf-ghost);
+  &[data-rest] .dayRound {
+    color: var(--bwf-ghost);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    grid-template-columns: 96px minmax(0, 1fr) auto;
+  }
 }
 
 .dayLabel {
@@ -101,6 +105,10 @@
 
 .short {
   display: none;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: inline;
+  }
 }
 
 .dayRound {
@@ -137,19 +145,19 @@
   color: var(--bwf-text);
   font-size: 14px;
   transition: background 0.15s;
-}
 
-.follow:hover {
-  background: var(--bwf-surface-3);
+  &:hover {
+    background: var(--bwf-surface-3);
+  }
 }
 
 .followTime {
   font-variant-numeric: tabular-nums;
   font-size: 13px;
-}
 
-.followTime[data-live] {
-  color: var(--bwf-red-text);
+  &[data-live] {
+    color: var(--bwf-red-text);
+  }
 }
 
 .followBody {
@@ -202,15 +210,7 @@
 }
 
 @mixin smaller-than $mantine-breakpoint-sm {
-  .day {
-    grid-template-columns: 96px minmax(0, 1fr) auto;
-  }
-
   .long {
     display: none;
-  }
-
-  .short {
-    display: inline;
   }
 }

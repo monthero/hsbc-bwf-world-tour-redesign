@@ -16,12 +16,12 @@
 .link {
   color: inherit;
   text-decoration: none;
-}
 
-.link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+  }
 }

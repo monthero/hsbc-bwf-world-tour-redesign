@@ -30,16 +30,12 @@
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
-}
 
-@container (max-width: 1000px) {
-  .eventGrid {
+  @container (max-width: 1000px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-}
 
-@mixin smaller-than $mantine-breakpoint-sm {
-  .eventGrid {
+  @mixin smaller-than $mantine-breakpoint-sm {
     grid-template-columns: minmax(0, 1fr);
   }
 }

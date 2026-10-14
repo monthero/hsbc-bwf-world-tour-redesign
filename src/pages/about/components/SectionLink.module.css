@@ -8,8 +8,8 @@
   color: var(--bwf-dim);
   text-decoration: none;
   transition: color 0.15s;
-}
 
-.more:hover {
-  color: var(--bwf-text);
+  &:hover {
+    color: var(--bwf-text);
+  }
 }

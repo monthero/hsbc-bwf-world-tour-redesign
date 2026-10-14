@@ -4,7 +4,7 @@ import { EditionRef, EventCode, Focus, IsoDay, MonthKey, PhotoCrop } from '../..
 import { parseHeightCm } from '../../utils/format.ts';
 import { cleanName, nameIssue } from '../../utils/surname.ts';
 
-export const BIO_KEYS = [
+const BIO_KEYS = [
   'born',
   'height',
   'plays',

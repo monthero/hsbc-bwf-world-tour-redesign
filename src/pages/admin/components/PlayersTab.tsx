@@ -3,6 +3,7 @@ import { clsx } from 'clsx';
 import { useCallback, useMemo, useState, type FC } from 'react';
 
 import { EmptyState } from '~/components/ui';
+import { STAY } from '~/utils/navigation';
 
 import { useAdminPlayers, useEquipment } from '../api';
 import { brandMatchers } from '../catalog';
@@ -19,8 +20,6 @@ import classes from './PlayersTab.module.css';
 import utils from '~/styles/utils.module.css';
 
 const route = getRouteApi('/admin');
-
-const NAV = { replace: true, resetScroll: false } as const;
 
 const NO_FLAGS: readonly string[] = [];
 const NO_PLAYERS: readonly AdminPlayer[] = [];
@@ -64,7 +63,7 @@ export const PlayersTab: FC = () => {
   );
 
   const patch = useCallback(
-    (next: Partial<AdminSearch>) => void navigate({ search: (s) => ({ ...s, ...next }), ...NAV }),
+    (next: Partial<AdminSearch>) => void navigate({ search: (s) => ({ ...s, ...next }), ...STAY }),
     [navigate],
   );
   const onOpen = useCallback((id: string) => patch({ edit: id }), [patch]);

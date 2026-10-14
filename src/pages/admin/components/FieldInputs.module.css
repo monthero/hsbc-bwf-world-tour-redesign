@@ -25,13 +25,13 @@
   object-fit: cover;
   object-position: center 20%;
   background: var(--bwf-surface-4);
-}
 
-.preview[data-kind='hero'] {
-  width: 100%;
-  max-width: 220px;
-  height: auto;
-  aspect-ratio: 25 / 12;
+  &[data-kind='hero'] {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    aspect-ratio: 25 / 12;
+  }
 }
 
 .fetch {

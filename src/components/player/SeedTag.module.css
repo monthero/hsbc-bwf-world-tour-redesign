@@ -7,10 +7,10 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   cursor: help;
-}
 
-.seed[data-variant='pill'] {
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: alpha(var(--bwf-green), 0.14);
+  &[data-variant='pill'] {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: alpha(var(--bwf-green), 0.14);
+  }
 }

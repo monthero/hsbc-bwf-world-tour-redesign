@@ -2,24 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 
 import { playerQuery, playersQuery, raceRankingsQuery, rankingHistoryQuery } from '~/api/queries';
 import type { DirectoryRecord, Player, PlayerDirectory, PlayerRecord, PlayersData, Retirement } from '~/types';
+import { weakCached } from '~/utils/cache';
 import { toPlayer } from '~/utils/names';
 import { playerPhoto, type PhotoOptions } from '~/utils/players';
 import { playerStanding, searchKey, type PlayerStanding } from '~/utils/search';
 
 export type { PlayerDirectory } from '~/types';
 
-const cachedBy = <T>(build: (d: PlayersData) => T) => {
-  const cache = new WeakMap<PlayersData, T>();
-  return (d: PlayersData): T => {
-    const hit = cache.get(d);
-    if (hit) return hit;
-    const value = build(d);
-    cache.set(d, value);
-    return value;
-  };
-};
-
-const selectDirectory = cachedBy((d): PlayerDirectory => {
+const selectDirectory = weakCached((d: PlayersData): PlayerDirectory => {
   const byId = new Map<string, DirectoryRecord>();
   for (const [id, rec] of Object.entries(d.players)) byId.set(id, { ...rec, id });
   return { week: d.rankingsWeek, get: (id) => byId.get(id) };
@@ -45,7 +35,7 @@ const searchEntry = (id: string, rec: PlayerRecord): PlayerSearchEntry => {
   };
 };
 
-const selectSearchIndex = cachedBy((d): PlayerSearchEntry[] =>
+const selectSearchIndex = weakCached((d: PlayersData): PlayerSearchEntry[] =>
   Object.entries(d.players).map(([id, rec]) => searchEntry(id, rec)),
 );
 

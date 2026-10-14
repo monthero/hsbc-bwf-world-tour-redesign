@@ -7,25 +7,23 @@
 .groupLink {
   align-self: flex-start;
   text-decoration: none;
-}
 
-.groupLink:hover > span {
-  color: var(--bwf-text);
+  &:hover > span {
+    color: var(--bwf-text);
+  }
 }
 
 .videos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
   gap: 20px 16px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 10px;
+  }
 }
 
 .more {
   align-self: center;
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .videos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px 10px;
-  }
 }

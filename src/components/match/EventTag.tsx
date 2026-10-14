@@ -1,8 +1,7 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { TIP_DELAY, useLazyTip } from '~/components/ui';
+import { LazyTip, useLazyTip } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import type { EventCode } from '~/types';
 
@@ -18,7 +17,7 @@ const Tag = memo<{ label: string; tip: string; tone?: NoteTone; className?: stri
         <span className={clsx(classes.tag, className)} data-tone={tone} data-tip onPointerEnter={lazy.arm}>
           {label}
         </span>
-        {lazy.target && <Tooltip target={lazy.target} label={tip} openDelay={TIP_DELAY.open} />}
+        <LazyTip target={lazy.target} label={tip} />
       </>
     );
   },

@@ -5,7 +5,7 @@ import { ZOOM_MAX, ZOOM_MIN } from '~/api/schemas';
 import { FramedPhoto, PlayerAvatar } from '~/components/player';
 import type { PhotoCrop } from '~/types';
 
-import { arrowNudge, clampPercent, useDrag, type FramingEditorProps } from './framing';
+import { arrowNudge, clampPercent, useDrag, useFramingEditor, type FramingEditorProps } from './framing';
 import { FramingControls } from './FramingControls';
 
 import classes from './PhotoFraming.module.css';
@@ -97,41 +97,28 @@ export const PhotoFraming = memo<
     photo: string;
     image: string;
   }
->(({ id, name, photo, image, focus, flip, flipBlocked, busy = false, status, onChange }) => {
-  const [drag, setDrag] = useState<PhotoCrop | null>(null);
+>(({ id, name, photo, image, ...editor }) => {
+  const { focus } = editor;
+  const { shown, setDrag, onCommit, controls } = useFramingEditor(editor);
   const [natural, setNatural] = useState<Size>(SQUARE);
-  const shown = drag ?? focus;
   const stage = shown ?? DEFAULT_CROP;
   const onLoad = useCallback(
     (e: SyntheticEvent<HTMLImageElement>) =>
       setNatural({ w: e.currentTarget.naturalWidth || 1, h: e.currentTarget.naturalHeight || 1 }),
     [],
   );
-  const onCommit = useCallback((next: PhotoCrop) => onChange({ focus: next, flip }), [onChange, flip]);
-  const onZoom = useCallback((zoom: number) => setDrag({ ...(focus ?? DEFAULT_CROP), zoom }), [focus]);
+  const onZoom = useCallback((zoom: number) => setDrag({ ...(focus ?? DEFAULT_CROP), zoom }), [focus, setDrag]);
   const onZoomEnd = useCallback(
     (zoom: number) => {
       setDrag(null);
       onCommit({ ...(focus ?? DEFAULT_CROP), zoom });
     },
-    [focus, onCommit],
+    [focus, setDrag, onCommit],
   );
-  const onFlip = useCallback((next: boolean) => onChange({ focus, flip: next }), [onChange, focus]);
-  const onReset = useCallback(() => onChange({ focus: null, flip: false }), [onChange]);
   return (
     <div className={classes.framing}>
       <Stage image={image} crop={stage} natural={natural} onLoad={onLoad} onDrag={setDrag} onCommit={onCommit} />
-      <FramingControls
-        title="Photo framing"
-        readout={cropLabel(shown)}
-        flip={flip}
-        flipBlocked={flipBlocked}
-        busy={busy}
-        resettable={!!focus || flip}
-        status={status}
-        onFlip={onFlip}
-        onReset={onReset}
-      >
+      <FramingControls title="Photo framing" readout={cropLabel(shown)} {...controls}>
         <Slider
           className={classes.zoom}
           thumbLabel="Zoom"

@@ -8,7 +8,7 @@ import type { MonthGroup, StatusFilter } from './types';
 
 const NOW = today();
 
-export const CURRENT_MONTH = NOW.month();
+const CURRENT_MONTH = NOW.month();
 
 const monthIndexes = Array.from({ length: 12 }, (_, m) => m);
 

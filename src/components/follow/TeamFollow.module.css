@@ -6,16 +6,18 @@
   height: 1lh;
 }
 
-.pairStar::before {
-  content: '';
-  position: absolute;
-  inset: 0 -8px;
-}
+.pairStar {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 -8px;
+  }
 
-.cell:first-child > .pairStar::before {
-  top: -8px;
-}
+  .cell:first-child > &::before {
+    top: -8px;
+  }
 
-.cell:last-child > .pairStar::before {
-  bottom: -8px;
+  .cell:last-child > &::before {
+    bottom: -8px;
+  }
 }

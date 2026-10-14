@@ -1,4 +1,4 @@
-export { NewsCard, type NewsCardVariant } from './NewsCard';
+export { NewsCard } from './NewsCard';
 export { NewsImage } from './NewsImage';
 export { NewsGrid } from './NewsGrid';
 export { NewsMeta } from './NewsMeta';

@@ -2,6 +2,7 @@ import { clsx } from 'clsx';
 import { memo, useCallback, useEffect, useRef, type Ref } from 'react';
 
 import { FilterChip, StickyBar } from '~/components/ui';
+import { centerChild } from '~/utils/scroll';
 
 import { SECTION } from '../constants';
 import type { ArchiveYear, NavItem, PickMonth } from '../types';
@@ -36,7 +37,7 @@ export const MonthChips = memo<{
     const el = row.current;
     const chip = el?.querySelector<HTMLElement>(`[data-id="${current}"]`);
     if (!el || !chip) return;
-    el.scrollTo({ left: chip.offsetLeft - el.clientWidth / 2 + chip.offsetWidth / 2, behavior: 'smooth' });
+    centerChild(el, chip, 'smooth');
   }, [current]);
 
   return (

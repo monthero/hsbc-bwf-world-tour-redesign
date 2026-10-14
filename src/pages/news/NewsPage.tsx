@@ -9,14 +9,16 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FC } from 'reac
 import { newsMonthQuery, useFetchNewsMonths, useNewsIndex, useNewsMonths } from '~/api/news';
 import type { NewsIndex, NewsMonth, NewsMonthCount } from '~/api/schemas';
 import { PopularNews } from '~/components/news';
-import { EmptyState, PageHeader } from '~/components/ui';
+import { PageHeader, RetryState } from '~/components/ui';
 import { SEASON_YEAR } from '~/constants';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useTournamentLookup } from '~/hooks/useNews';
 import { useWindowList } from '~/hooks/useWindowList';
 import { monthKeyOf, monthOf } from '~/utils/dates';
-import { toStory, type NewsStory, type TournamentLookup } from '~/utils/news';
+import { STAY } from '~/utils/navigation';
+import { toStories, type NewsStory, type TournamentLookup } from '~/utils/news';
+import { scrollBehavior } from '~/utils/scroll';
 
 import { ArchiveRow } from './components/ArchiveRow';
 import { LatestSection } from './components/LatestSection';
@@ -37,7 +39,7 @@ import {
   URL_SYNC_MS,
 } from './constants';
 import type { MonthGroup, NavItem, NewsSearch, Probe } from './types';
-import { scrollBehavior, useSectionSpy } from './useSectionSpy';
+import { useSectionSpy } from './useSectionSpy';
 import { buildArchive, buildRows, columnsFor, estimateRow } from './utils';
 
 import classes from './NewsPage.module.css';
@@ -46,7 +48,6 @@ import utils from '~/styles/utils.module.css';
 const route = getRouteApi('/news');
 
 const TITLE_SITE = { season: SEASON_YEAR };
-const STAY = { replace: true, resetScroll: false } as const;
 const NO_MONTHS: NewsMonthCount[] = [];
 
 const selectMonth = (s: NewsSearch) => s.month;
@@ -56,7 +57,7 @@ const STORIES = new WeakMap<NewsMonth, { lookup: TournamentLookup | undefined; s
 const storiesOf = (page: NewsMonth, lookup: TournamentLookup | undefined) => {
   const hit = STORIES.get(page);
   if (hit && hit.lookup === lookup) return hit.stories;
-  const stories = page.items.map((it) => toStory(it, lookup));
+  const stories = toStories(page.items, lookup);
   STORIES.set(page, { lookup, stories });
   return stories;
 };
@@ -90,24 +91,18 @@ export const NewsPage: FC = () => {
       <PageHeader kicker="News" title={NEWS_TITLE} meta={NEWS_META} />
       {isError && !data ? (
         <div className={utils.container}>
-          <EmptyState className={classes.error}>
-            <p>Couldn’t load the latest news.</p>
-            <span className={classes.errorActions}>
-              <Button variant="default" radius="xl" onClick={retry}>
-                Try again
-              </Button>
-              <Button
-                component="a"
-                href={OFFICIAL_NEWS_URL}
-                target="_blank"
-                rel="noreferrer"
-                variant="subtle"
-                radius="xl"
-              >
-                Read on the official site
-              </Button>
-            </span>
-          </EmptyState>
+          <RetryState message="Couldn’t load the latest news." onRetry={retry} className={classes.error}>
+            <Button
+              component="a"
+              href={OFFICIAL_NEWS_URL}
+              target="_blank"
+              rel="noreferrer"
+              variant="subtle"
+              radius="xl"
+            >
+              Read on the official site
+            </Button>
+          </RetryState>
         </div>
       ) : (
         <Feed index={data} isMobile={isMobile} />
@@ -128,8 +123,8 @@ const Feed: FC<{ index: NewsIndex | undefined; isMobile: boolean }> = ({ index, 
   const { active, register, jump, offset } = useSectionSpy(gap, barRef, probeRef);
   const popularRef = useCallback((el: HTMLElement | null) => register(SECTION.popular, el), [register]);
 
-  const latest = useMemo(() => index?.latest.slice(0, LATEST_COUNT).map((i) => toStory(i, lookup)), [index, lookup]);
-  const popular = useMemo(() => index?.popular.slice(0, POPULAR_COUNT).map((i) => toStory(i, lookup)), [index, lookup]);
+  const latest = useMemo(() => index && toStories(index.latest.slice(0, LATEST_COUNT), lookup), [index, lookup]);
+  const popular = useMemo(() => index && toStories(index.popular.slice(0, POPULAR_COUNT), lookup), [index, lookup]);
   const archive = useMemo(() => index && buildArchive(index.months), [index]);
 
   const months = index?.months ?? NO_MONTHS;

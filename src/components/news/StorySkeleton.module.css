@@ -23,13 +23,13 @@
   align-items: flex-start;
   gap: 14px;
   padding: 14px 0;
-}
 
-.row[data-variant='list'] {
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-  padding: 12px;
+  &[data-variant='list'] {
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 12px;
+  }
 }
 
 .thumb {
@@ -45,9 +45,9 @@
 .row[data-variant='compact'] {
   gap: 12px;
   padding: 12px 0;
-}
 
-.row[data-variant='compact'] .thumb {
-  order: -1;
-  width: 76px;
+  & .thumb {
+    order: -1;
+    width: 76px;
+  }
 }

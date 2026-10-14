@@ -14,7 +14,7 @@ import {
 } from '~/utils/live';
 import { gameWon, matchRoundName, opposite } from '~/utils/matches';
 
-export interface LiveChip {
+interface LiveChip {
   label: string;
   tone: StatusTone;
 }

@@ -6,6 +6,11 @@
   gap: 48px;
   padding-top: 56px;
   padding-bottom: 28px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: block;
+    padding: 28px 20px 18px;
+  }
 }
 
 .kicker {
@@ -15,15 +20,23 @@
   font-size: 13px;
   font-weight: 500;
   color: var(--bwf-muted);
-}
 
-.kicker::before {
-  content: '';
-  flex: none;
-  width: 14px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--bwf-red);
+  &::before {
+    content: '';
+    flex: none;
+    width: 14px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--bwf-red);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 12px;
+
+    &::before {
+      width: 12px;
+    }
+  }
 }
 
 .yearButton {
@@ -43,18 +56,18 @@
   -webkit-user-select: none;
   user-select: none;
   transition: border-color 0.15s;
-}
 
-.yearButton:hover {
-  border-color: var(--bwf-border-focus);
-}
+  &:hover {
+    border-color: var(--bwf-border-focus);
+  }
 
-.yearButton svg {
-  transition: transform 0.2s;
-}
+  svg {
+    transition: transform 0.2s;
+  }
 
-.yearButton[aria-expanded='true'] svg {
-  transform: rotate(180deg);
+  &[aria-expanded='true'] svg {
+    transform: rotate(180deg);
+  }
 }
 
 .provisional {
@@ -81,21 +94,21 @@
   color: var(--bwf-muted);
   font-size: 13px;
   font-weight: 500;
-}
 
-.yearItem:hover,
-.yearItem[data-hovered] {
-  background: var(--bwf-raised);
-}
+  &:hover,
+  &[data-hovered] {
+    background: var(--bwf-raised);
+  }
 
-.yearItem[data-active] {
-  background: var(--bwf-raised);
-  color: var(--bwf-text);
-  font-weight: 600;
-}
+  &[data-active] {
+    background: var(--bwf-raised);
+    color: var(--bwf-text);
+    font-weight: 600;
+  }
 
-.yearItem svg {
-  color: var(--bwf-red-text);
+  svg {
+    color: var(--bwf-red-text);
+  }
 }
 
 .title {
@@ -104,20 +117,35 @@
   line-height: 1;
   font-weight: 600;
   letter-spacing: -0.03em;
-}
 
-.title span {
-  color: var(--bwf-gold);
+  span {
+    color: var(--bwf-gold);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-top: 10px;
+    font-size: 32px;
+  }
 }
 
 .subtitle {
   margin: 12px 0 0;
   font-size: 15px;
   color: var(--bwf-muted);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-top: 8px;
+    font-size: 13px;
+  }
 }
 
 .progress {
   width: min(420px, 100%);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    width: 100%;
+    margin-top: 18px;
+  }
 }
 
 .stats {
@@ -134,6 +162,11 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--bwf-text);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: inherit;
+    letter-spacing: 0;
+  }
 }
 
 .live {
@@ -142,43 +175,8 @@
   gap: 7px;
   color: var(--bwf-red-text);
   font-weight: 500;
-}
 
-@mixin smaller-than $mantine-breakpoint-sm {
-  .hero {
-    display: block;
-    padding: 28px 20px 18px;
-  }
-
-  .kicker {
-    font-size: 12px;
-  }
-
-  .kicker::before {
-    width: 12px;
-  }
-
-  .title {
-    margin-top: 10px;
-    font-size: 32px;
-  }
-
-  .subtitle {
-    margin-top: 8px;
-    font-size: 13px;
-  }
-
-  .progress {
-    width: 100%;
-    margin-top: 18px;
-  }
-
-  .count {
-    font-size: inherit;
-    letter-spacing: 0;
-  }
-
-  .live {
+  @mixin smaller-than $mantine-breakpoint-sm {
     gap: 6px;
   }
 }

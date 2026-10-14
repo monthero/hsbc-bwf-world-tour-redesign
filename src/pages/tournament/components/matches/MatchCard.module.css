@@ -28,10 +28,10 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--bwf-muted);
-}
 
-.time[data-up] {
-  color: var(--bwf-text);
+  &[data-up] {
+    color: var(--bwf-text);
+  }
 }
 
 .court {
@@ -77,15 +77,15 @@
   border-radius: 6px;
   color: var(--bwf-text);
   font-weight: 500;
-}
 
-.team[data-result='won'] {
-  background: var(--bwf-win-bg);
-  font-weight: 600;
-}
+  &[data-result='won'] {
+    background: var(--bwf-win-bg);
+    font-weight: 600;
+  }
 
-.team[data-result='lost'] {
-  color: var(--bwf-dim);
+  &[data-result='lost'] {
+    color: var(--bwf-dim);
+  }
 }
 
 .who {
@@ -99,11 +99,11 @@
 .players {
   min-width: 0;
   font-size: 14px;
-}
 
-.card[data-doubles] .players {
-  font-size: 13px;
-  line-height: 17px;
+  .card[data-doubles] & {
+    font-size: 13px;
+    line-height: 17px;
+  }
 }
 
 .name {
@@ -115,8 +115,8 @@
   width: 16px;
   height: 16px;
   color: transparent;
-}
 
-.team[data-result='won'] .check {
-  color: var(--bwf-green);
+  .team[data-result='won'] & {
+    color: var(--bwf-green);
+  }
 }

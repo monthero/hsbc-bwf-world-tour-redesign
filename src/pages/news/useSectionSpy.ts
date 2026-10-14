@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { headerOffset } from '~/utils/layout';
-import { prefersReducedMotion } from '~/utils/motion';
+import { scrollBehavior } from '~/utils/scroll';
 
 import type { Probe, RegisterSection } from './types';
-
-export const scrollBehavior = (instant?: boolean): ScrollBehavior =>
-  instant || prefersReducedMotion() ? 'auto' : 'smooth';
 
 export const useSectionSpy = (
   gap: number,

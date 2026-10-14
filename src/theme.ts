@@ -160,6 +160,9 @@ const c = (name: BwfColor, shade: number) => `var(--mantine-color-${name}-${shad
 const tint = (color: string, pct: number) => `color-mix(in srgb, ${color} ${pct}%, transparent)`;
 const mix = (a: string, b: string, pct: number) => `color-mix(in srgb, ${a} ${pct}%, ${b})`;
 const tourRed = '#d72630';
+const OVERLAY = { backgroundOpacity: 0.62, blur: 4 };
+
+export const MOTION_EASE = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
 
 const variantColorResolver: VariantColorsResolver = (input) => {
   if (input.variant !== 'soft' && input.variant !== 'tint') return defaultVariantColorsResolver(input);
@@ -197,14 +200,15 @@ export const theme = createTheme({
     ActionIcon: ActionIcon.extend({ classNames: { root: variants.root } }),
     Badge: Badge.extend({ classNames: { root: variants.root } }),
     Button: Button.extend({ classNames: { root: variants.root } }),
-    Modal: { defaultProps: { overlayProps: { backgroundOpacity: 0.62, blur: 4 } } },
+    Drawer: { defaultProps: { overlayProps: OVERLAY } },
+    Modal: { defaultProps: { overlayProps: OVERLAY } },
     Tooltip: { defaultProps: { color: 'dark.0', c: 'dark.7', fz: 12, fw: 500, multiline: true, maw: 240 } },
   },
 });
 
 export const cssVariablesResolver: CSSVariablesResolver = () => ({
   variables: {
-    '--bwf-ease': 'cubic-bezier(0.2, 0.8, 0.2, 1)',
+    '--bwf-ease': MOTION_EASE,
     '--bwf-ease-out': 'cubic-bezier(0.16, 1, 0.3, 1)',
     '--bwf-gutter': 'clamp(16px, 3vw, 56px)',
     '--bwf-page-max': '1520px',

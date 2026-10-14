@@ -15,13 +15,14 @@ import type {
   Tournament,
 } from '~/types';
 
+import { weakCached } from './cache';
 import { allGames, opposite, teamEventKey } from './matches';
 import { toPlayer } from './names';
 import { finalsOf, isDone, isHeld, isLive, liveAndNext } from './tournaments';
 
 const NO_TARGET: ReturnType<typeof liveAndNext> = { live: undefined, next: undefined };
 
-export const seasonPhase = (year: number): SeasonPhase => {
+const seasonPhase = (year: number): SeasonPhase => {
   if (year < SEASON_YEAR) return 'past';
   return year > SEASON_YEAR ? 'future' : 'current';
 };
@@ -52,7 +53,7 @@ export const finalsCountdown = (t: Tournament) => {
   return { value: String(t.daysUntil), label: t.daysUntil === 1 ? 'day to go' : 'days to go' };
 };
 
-export const outcomeOf = (m: Match, side: Side): MatchOutcome => {
+const outcomeOf = (m: Match, side: Side): MatchOutcome => {
   if (m.status === 'F') return m.winner === side + 1 ? 'W' : 'L';
   return m.status === 'P' ? 'Live' : 'up';
 };
@@ -71,11 +72,7 @@ const push = <K, V>(map: Map<K, V[]>, key: K, value: V) => {
   else map.set(key, [value]);
 };
 
-const indexCache = new WeakMap<SeasonMatch[], SeasonIndex>();
-
-export const seasonIndexOf = (list: SeasonMatch[]): SeasonIndex => {
-  const hit = indexCache.get(list);
-  if (hit) return hit;
+export const seasonIndexOf = weakCached((list: SeasonMatch[]): SeasonIndex => {
   const players = new Map<string, Player>();
   const matches = new Map<string, PlayerMatch[]>();
   const teams = new Map<string, PlayerMatch[]>();
@@ -99,10 +96,8 @@ export const seasonIndexOf = (list: SeasonMatch[]): SeasonIndex => {
   }
   for (const arr of matches.values()) arr.sort(byRecency);
   for (const arr of teams.values()) arr.sort(byRecency);
-  const index = { players, matches, teams };
-  indexCache.set(list, index);
-  return index;
-};
+  return { players, matches, teams };
+});
 
 export const playerById = (
   id: string,

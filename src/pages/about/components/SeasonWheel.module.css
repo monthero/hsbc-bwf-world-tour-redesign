@@ -2,17 +2,17 @@
   position: relative;
   margin-inline: calc(-1 * var(--bwf-gutter));
   border-top: 1px solid var(--bwf-border);
-}
 
-.wrap::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  margin-left: -6px;
-  border: 6px solid transparent;
-  border-bottom-color: var(--bwf-text);
-  pointer-events: none;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    margin-left: -6px;
+    border: 6px solid transparent;
+    border-bottom-color: var(--bwf-text);
+    pointer-events: none;
+  }
 }
 
 .wheel {
@@ -22,10 +22,10 @@
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   padding: 24px calc(50% - 22px) 10px;
-}
 
-.wheel::-webkit-scrollbar {
-  display: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .item {
@@ -47,29 +47,50 @@
   scroll-snap-align: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-}
 
-.item i {
-  width: 28px;
-  height: 8px;
-  border-radius: 3px;
-  background: var(--lv);
-  transition:
-    height 0.15s var(--bwf-ease),
-    width 0.15s var(--bwf-ease);
-}
+  i {
+    width: 28px;
+    height: 8px;
+    border-radius: 3px;
+    background: var(--lv);
+    transition:
+      height 0.15s var(--bwf-ease),
+      width 0.15s var(--bwf-ease);
+  }
 
-.item[data-status='done'] i {
-  background: color-mix(in srgb, var(--lv) 42%, var(--bwf-bg-sunken));
-}
+  &[data-status='done'] i {
+    background: color-mix(in srgb, var(--lv) 42%, var(--bwf-bg-sunken));
+  }
 
-.item[data-status='cancelled'] i {
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--bwf-ghost);
-}
+  &[data-status='cancelled'] i {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--bwf-ghost);
+  }
 
-.item[data-spot] i {
-  box-shadow: var(--bwf-spot-glow);
+  &[data-spot] i {
+    box-shadow: var(--bwf-spot-glow);
+  }
+
+  &[aria-pressed='true'] {
+    color: var(--bwf-text);
+    font-weight: 700;
+
+    i {
+      width: 32px;
+      height: 16px;
+    }
+  }
+
+  &[data-today]::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 4px;
+    bottom: 0;
+    width: 2px;
+    border-radius: 1px;
+    background: var(--bwf-red);
+  }
 }
 
 .spot {
@@ -77,27 +98,6 @@
   top: 6px;
   left: 50%;
   margin-left: -3.5px;
-}
-
-.item[aria-pressed='true'] {
-  color: var(--bwf-text);
-  font-weight: 700;
-}
-
-.item[aria-pressed='true'] i {
-  width: 32px;
-  height: 16px;
-}
-
-.item[data-today]::before {
-  content: '';
-  position: absolute;
-  left: -1px;
-  top: 4px;
-  bottom: 0;
-  width: 2px;
-  border-radius: 1px;
-  background: var(--bwf-red);
 }
 
 .month {

@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 
 import { HEIGHT_UNITS } from '~/utils/format';
 
-import { safeJSONStorage } from './persistence';
+import { mergeParsed, safeJSONStorage } from './persistence';
 
 const STORAGE_KEY = 'bwf-settings';
 const STORE_VERSION = 1;
@@ -33,11 +33,6 @@ interface SettingsState extends SettingsData {
 
 const DEFAULTS: SettingsData = SettingsData.parse({});
 
-const parseData = (raw: unknown): SettingsData => {
-  const parsed = SettingsData.safeParse(raw);
-  return parsed.success ? parsed.data : DEFAULTS;
-};
-
 export const useSettings = create<SettingsState>()(
   persist(
     (set) => ({
@@ -56,7 +51,7 @@ export const useSettings = create<SettingsState>()(
         showBlocked,
       }),
       migrate: () => DEFAULTS,
-      merge: (persisted, current) => ({ ...current, ...parseData(persisted) }),
+      merge: mergeParsed(SettingsData, () => DEFAULTS),
     },
   ),
 );

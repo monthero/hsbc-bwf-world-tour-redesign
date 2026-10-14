@@ -52,47 +52,47 @@
   border-radius: 14px;
   border: 1px dashed var(--bwf-border-strong);
   background: var(--bwf-bg-sunken);
-}
 
-.hero[data-decided] {
-  border: 1px solid alpha(var(--bwf-gold), 0.24);
-  background: linear-gradient(160deg, alpha(var(--bwf-gold), 0.14) 0%, transparent 65%), var(--bwf-bg-sunken);
-}
+  &[data-decided] {
+    border: 1px solid alpha(var(--bwf-gold), 0.24);
+    background: linear-gradient(160deg, alpha(var(--bwf-gold), 0.14) 0%, transparent 65%), var(--bwf-bg-sunken);
+  }
 
-.hero[data-photos] {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  min-height: 232px;
-  border-color: alpha(var(--bwf-gold), 0.45);
-  background: var(--bwf-surface-4);
-}
+  &[data-photos] {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    min-height: 232px;
+    border-color: alpha(var(--bwf-gold), 0.45);
+    background: var(--bwf-surface-4);
 
-.hero[data-photos] :is(.heroTop, .heroWho) {
-  position: relative;
-  z-index: 1;
-  pointer-events: none;
-  text-shadow: 0 1px 6px alpha(var(--mantine-color-black), 0.6);
-}
+    :is(.heroTop, .heroWho) {
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+      text-shadow: 0 1px 6px alpha(var(--mantine-color-black), 0.6);
+    }
 
-.hero[data-photos] :is(.heroTop, .heroWho) a {
-  pointer-events: auto;
-}
+    :is(.heroTop, .heroWho) a {
+      pointer-events: auto;
+    }
 
-.hero[data-photos] .heroTop {
-  color: var(--mantine-color-gold-4);
-}
+    .heroTop {
+      color: var(--mantine-color-gold-4);
+    }
 
-.hero[data-photos] .heroName {
-  color: var(--mantine-color-white);
-}
+    .heroName {
+      color: var(--mantine-color-white);
+    }
 
-.hero[data-photos] .rank {
-  color: alpha(var(--mantine-color-white), 0.72);
-}
+    .rank {
+      color: alpha(var(--mantine-color-white), 0.72);
+    }
 
-.hero[data-photos] .rank b {
-  color: var(--mantine-color-white);
+    .rank b {
+      color: var(--mantine-color-white);
+    }
+  }
 }
 
 .heroTop {
@@ -153,13 +153,13 @@
   font-size: 12px;
   color: var(--bwf-text-3);
   cursor: help;
-}
 
-.rank b {
-  margin-left: 2px;
-  font-weight: 650;
-  font-variant-numeric: tabular-nums;
-  color: var(--bwf-text);
+  b {
+    margin-left: 2px;
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+    color: var(--bwf-text);
+  }
 }
 
 .list {
@@ -169,14 +169,14 @@
   gap: 10px;
   padding: 12px 2px 0;
   border-top: 1px solid var(--bwf-line);
-}
 
-.list[data-medal='silver'] {
-  --tone: var(--bwf-silver-text);
-}
+  &[data-medal='silver'] {
+    --tone: var(--bwf-silver-text);
+  }
 
-.list[data-medal='bronze'] {
-  --tone: var(--bwf-bronze-text);
+  &[data-medal='bronze'] {
+    --tone: var(--bwf-bronze-text);
+  }
 }
 
 .line {
@@ -184,26 +184,28 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: start;
   gap: 8px 10px;
+
+  &:has(.lineAvatars) {
+    > .medal {
+      grid-area: 1 / 1;
+      justify-self: start;
+      align-self: start;
+      z-index: 1;
+      margin: 19px 0 0 -5px;
+      padding: 1px;
+      border-radius: 50%;
+      background: var(--bwf-surface);
+    }
+
+    > .linePrize {
+      padding-top: 8px;
+    }
+  }
 }
 
 .lineAvatars {
   --avatar-ring: var(--bwf-surface);
   grid-area: 1 / 1;
-}
-
-.line:has(.lineAvatars) > .medal {
-  grid-area: 1 / 1;
-  justify-self: start;
-  align-self: start;
-  z-index: 1;
-  margin: 19px 0 0 -5px;
-  padding: 1px;
-  border-radius: 50%;
-  background: var(--bwf-surface);
-}
-
-.line:has(.lineAvatars) > .linePrize {
-  padding-top: 8px;
 }
 
 .medal {
@@ -261,11 +263,11 @@
   min-width: 0;
   font-size: 13px;
   color: var(--bwf-text);
-}
 
-.seed[data-tone='lost'] .seedPlayers {
-  color: var(--bwf-faint);
-  text-decoration: line-through;
+  .seed[data-tone='lost'] & {
+    color: var(--bwf-faint);
+    text-decoration: line-through;
+  }
 }
 
 .status {
@@ -273,22 +275,22 @@
   font-size: 12px;
   color: var(--bwf-muted);
   font-variant-numeric: tabular-nums;
-}
 
-.status[data-tip] {
-  cursor: help;
-}
+  &[data-tip] {
+    cursor: help;
+  }
 
-.seed[data-tone='lost'] .status {
-  color: var(--bwf-faint);
-}
+  .seed[data-tone='lost'] & {
+    color: var(--bwf-faint);
+  }
 
-.seed[data-tone='live'] .status {
-  color: var(--bwf-red-text);
-}
+  .seed[data-tone='live'] & {
+    color: var(--bwf-red-text);
+  }
 
-.seed[data-tone='won'] .status {
-  color: var(--bwf-text);
+  .seed[data-tone='won'] & {
+    color: var(--bwf-text);
+  }
 }
 
 .noSeeds {

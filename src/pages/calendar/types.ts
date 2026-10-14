@@ -21,7 +21,7 @@ export type CalendarSearch = z.infer<typeof CalendarSearch>;
 
 export type StatusFilter = 'all' | 'done' | 'up';
 
-export type MonthTone = 'past' | 'current' | 'future';
+type MonthTone = 'past' | 'current' | 'future';
 
 export type JumpDirection = 'up' | 'down' | null;
 

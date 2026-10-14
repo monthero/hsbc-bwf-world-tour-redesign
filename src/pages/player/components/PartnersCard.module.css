@@ -18,10 +18,10 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-}
 
-.main > :first-child {
-  font-size: 13px;
+  & > :first-child {
+    font-size: 13px;
+  }
 }
 
 .meta {

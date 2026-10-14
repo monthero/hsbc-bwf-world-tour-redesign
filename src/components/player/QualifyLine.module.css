@@ -11,21 +11,19 @@
   white-space: nowrap;
   -webkit-user-select: none;
   user-select: none;
-}
 
-.line::before,
-.line::after {
-  content: '';
-  flex: 1;
-  border-top: 1px dashed var(--bwf-gold-edge);
-}
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-top: 1px dashed var(--bwf-gold-edge);
+  }
 
-.line::before {
-  flex: 0 0 24px;
-}
+  &::before {
+    flex: 0 0 24px;
+  }
 
-@mixin smaller-than $mantine-breakpoint-sm {
-  .line {
+  @mixin smaller-than $mantine-breakpoint-sm {
     padding-inline: 0;
     font-size: 10px;
   }

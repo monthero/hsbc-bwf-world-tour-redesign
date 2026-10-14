@@ -1,12 +1,12 @@
 .time {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
-}
 
-.time[data-tip] {
-  position: relative;
-  z-index: 1;
-  cursor: help;
+  &[data-tip] {
+    position: relative;
+    z-index: 1;
+    cursor: help;
+  }
 }
 
 .shift {
@@ -23,10 +23,10 @@
   font-size: 0.78em;
   font-weight: 500;
   color: var(--bwf-faint);
-}
 
-.time[data-stacked] .zone {
-  display: block;
-  margin-left: 0;
-  line-height: 1.3;
+  .time[data-stacked] & {
+    display: block;
+    margin-left: 0;
+    line-height: 1.3;
+  }
 }

@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { memo, type FC, type RefCallback } from 'react';
+import { memo, type FC, type ReactNode, type RefCallback } from 'react';
 
 import { MediaCover } from '~/components/ui';
 import type { Tournament } from '~/types';
@@ -25,6 +25,20 @@ const Countdown: FC<{ tournament: Tournament; className?: string }> = ({ tournam
   );
 };
 
+const Facts: FC<{ tournament: Tournament; place: ReactNode; sepClassName?: string }> = ({
+  tournament: t,
+  place,
+  sepClassName,
+}) => (
+  <span className={classes.meta}>
+    {place}
+    <span className={sepClassName}>·</span>
+    <span className={utils.num}>{t.dates}</span>
+    <span className={sepClassName}>·</span>
+    <span className={utils.num}>{t.prizeLabel}</span>
+  </span>
+);
+
 interface CardProps {
   tournament: Tournament;
   anchorRef?: RefCallback<HTMLElement>;
@@ -44,13 +58,7 @@ const WideCard: FC<CardProps> = ({ tournament: t, anchorRef, className }) => (
         <LogoTile src={t.logo} name={t.name} size={60} />
         <span className={classes.tagline}>{FINALS_TAGLINE}</span>
         <span className={classes.title}>{t.title}</span>
-        <span className={classes.meta}>
-          <TournamentPlace tournament={t} flagSize="md" />
-          <span className={classes.sep}>·</span>
-          <span className={utils.num}>{t.dates}</span>
-          <span className={classes.sep}>·</span>
-          <span className={utils.num}>{t.prizeLabel}</span>
-        </span>
+        <Facts tournament={t} place={<TournamentPlace tournament={t} flagSize="md" />} sepClassName={classes.sep} />
       </div>
       <Countdown tournament={t} className={classes.countdown} />
     </div>
@@ -70,13 +78,7 @@ const CompactCard: FC<CardProps> = ({ tournament: t, anchorRef, className }) => 
     <div className={classes.mBody}>
       <span className={classes.tagline}>{FINALS_TAGLINE}</span>
       <span className={classes.title}>{t.title}</span>
-      <span className={classes.meta}>
-        <TournamentPlace tournament={t} cityOnly />
-        <span>·</span>
-        <span className={utils.num}>{t.dates}</span>
-        <span>·</span>
-        <span className={utils.num}>{t.prizeLabel}</span>
-      </span>
+      <Facts tournament={t} place={<TournamentPlace tournament={t} cityOnly />} />
     </div>
   </Link>
 );

@@ -13,18 +13,18 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   pointer-events: none;
-}
 
-.legend[data-compact] {
-  position: static;
-  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
-  gap: 12px 6px;
-  margin-top: 14px;
-  padding: 0;
-  border: 0;
-  background: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  &[data-compact] {
+    position: static;
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+    gap: 12px 6px;
+    margin-top: 14px;
+    padding: 0;
+    border: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 .row {
@@ -58,20 +58,22 @@
   margin-inline: 1px 2px;
 }
 
-.row[data-picking] .item:not([data-active]) {
-  color: var(--bwf-faint);
-}
+.row[data-picking] {
+  .item:not([data-active]) {
+    color: var(--bwf-faint);
+  }
 
-.row[data-picking] .item[data-dot]:not([data-active])::before {
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--tone);
-}
+  .item[data-dot]:not([data-active])::before {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--tone);
+  }
 
-.row[data-picking] .item:not([data-active]) .marker {
-  background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--bwf-red);
-}
+  .item:not([data-active]) .marker {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--bwf-red);
 
-.row[data-picking] .item:not([data-active]) .marker::after {
-  display: none;
+    &::after {
+      display: none;
+    }
+  }
 }

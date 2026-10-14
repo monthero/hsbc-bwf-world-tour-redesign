@@ -17,8 +17,8 @@
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-}
 
-.clear:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }

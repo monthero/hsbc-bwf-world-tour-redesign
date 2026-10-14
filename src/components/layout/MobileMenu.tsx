@@ -11,7 +11,6 @@ import { Wordmark } from './Wordmark';
 import classes from './MobileMenu.module.css';
 
 const DRAWER_CLASSES = { content: classes.content, body: classes.body };
-const OVERLAY = { backgroundOpacity: 0.62, blur: 4 };
 
 export const MobileMenu = memo(() => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -29,7 +28,6 @@ export const MobileMenu = memo(() => {
         size="min(360px, 88vw)"
         withCloseButton={false}
         padding={0}
-        overlayProps={OVERLAY}
         classNames={DRAWER_CLASSES}
         aria-label="Menu"
       >

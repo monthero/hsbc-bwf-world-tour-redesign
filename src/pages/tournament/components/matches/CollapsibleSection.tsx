@@ -13,13 +13,11 @@ import utils from '~/styles/utils.module.css';
 export const CollapsibleSection = memo<{
   storeKey: string;
   title: ReactNode;
-  icon?: ReactNode;
   count?: ReactNode;
   aside?: ReactNode;
-  defaultOpen?: boolean;
-  className?: string;
+  defaultOpen: boolean;
   children: ReactNode;
-}>(({ storeKey, title, icon, count, aside, defaultOpen = true, className, children }) => {
+}>(({ storeKey, title, count, aside, defaultOpen, children }) => {
   const mobile = useIsMobile();
   const [open, toggle] = useSectionOpen(storeKey, defaultOpen);
   const ref = useRef<HTMLElement>(null);
@@ -36,9 +34,9 @@ export const CollapsibleSection = memo<{
   );
 
   return (
-    <section ref={ref} className={clsx(classes.root, className)}>
+    <section ref={ref} className={classes.root}>
       <div className={clsx(classes.head, mobile && utils.glass)}>
-        <SectionTitle as="h3" icon={icon} count={count} aside={aside} toggle={sectionToggle}>
+        <SectionTitle as="h3" count={count} aside={aside} toggle={sectionToggle}>
           {title}
         </SectionTitle>
       </div>

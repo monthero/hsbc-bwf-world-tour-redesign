@@ -3,20 +3,57 @@
   overflow: hidden;
   isolation: isolate;
   min-width: 0;
+
+  .tag {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+
+    @mixin larger-than $mantine-breakpoint-sm {
+      top: 18px;
+      left: 18px;
+    }
+  }
+
+  &:hover .title {
+    color: var(--bwf-red-pale);
+  }
+
+  @mixin larger-than $mantine-breakpoint-sm {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 480px;
+
+    .media {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      aspect-ratio: auto;
+    }
+  }
 }
 
 .media {
   aspect-ratio: 16 / 9;
+
+  @mixin larger-than $mantine-breakpoint-sm {
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 30%, alpha(var(--bwf-bg), 0.92));
+    }
+  }
 }
 
 .ghost {
   aspect-ratio: 16 / 9;
-}
 
-.lead .tag {
-  position: absolute;
-  top: 16px;
-  left: 16px;
+  @mixin larger-than $mantine-breakpoint-sm {
+    flex: 1;
+    aspect-ratio: auto;
+  }
 }
 
 .body {
@@ -24,6 +61,11 @@
   flex-direction: column;
   gap: 8px;
   padding: 14px 16px 16px;
+
+  @mixin larger-than $mantine-breakpoint-sm {
+    gap: 12px;
+    padding: 28px;
+  }
 }
 
 .title {
@@ -31,10 +73,13 @@
   line-height: 1.18;
   letter-spacing: -0.02em;
   text-wrap: balance;
-}
 
-.lead:hover .title {
-  color: var(--bwf-red-pale);
+  @mixin larger-than $mantine-breakpoint-sm {
+    max-width: 760px;
+    font-size: 34px;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
 }
 
 .excerpt {
@@ -47,6 +92,12 @@
   line-height: 1.5;
   color: var(--bwf-muted);
   text-wrap: pretty;
+
+  @mixin larger-than $mantine-breakpoint-sm {
+    max-width: 640px;
+    font-size: 15px;
+    color: var(--bwf-text-3);
+  }
 }
 
 .foot {
@@ -57,59 +108,8 @@
 
 .read {
   display: none;
-}
 
-@mixin larger-than $mantine-breakpoint-sm {
-  .lead {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    min-height: 480px;
-  }
-
-  .ghost {
-    flex: 1;
-    aspect-ratio: auto;
-  }
-
-  .lead .media {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    aspect-ratio: auto;
-  }
-
-  .media::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 30%, alpha(var(--bwf-bg), 0.92));
-  }
-
-  .lead .tag {
-    top: 18px;
-    left: 18px;
-  }
-
-  .body {
-    gap: 12px;
-    padding: 28px;
-  }
-
-  .title {
-    max-width: 760px;
-    font-size: 34px;
-    line-height: 1.08;
-    letter-spacing: -0.025em;
-  }
-
-  .excerpt {
-    max-width: 640px;
-    font-size: 15px;
-    color: var(--bwf-text-3);
-  }
-
-  .read {
+  @mixin larger-than $mantine-breakpoint-sm {
     display: inline-flex;
     align-items: center;
     gap: 4px;

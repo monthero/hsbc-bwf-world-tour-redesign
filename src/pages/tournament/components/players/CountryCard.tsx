@@ -1,6 +1,7 @@
 import { Collapse } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
 import { Flag } from '~/components/country';
 import { FollowButton } from '~/components/follow';
@@ -19,7 +20,7 @@ export const CountryCard = memo<{
   onOpen: (id: string) => void;
 }>(({ country, accordion, forceOpen, onOpen }) => {
   const { cc, name, entries } = country;
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, { toggle }] = useDisclosure(false);
   const open = !accordion || forceOpen || expanded;
 
   const rows = entries.map((e) => <EntryRow key={e.key} entry={e} onOpen={onOpen} />);
@@ -32,7 +33,7 @@ export const CountryCard = memo<{
           className={classes.cardToggle}
           aria-expanded={open}
           disabled={!accordion}
-          onClick={() => setExpanded((v) => !v)}
+          onClick={toggle}
         >
           <Flag cc={cc} size="lg" tip={false} className={classes.cardFlag} />
           <span className={classes.cardName}>{name}</span>

@@ -9,15 +9,15 @@
   line-height: 1;
   cursor: help;
   transition: color 0.15s;
-}
 
-.mark::after {
-  content: '';
-  position: absolute;
-  inset: -10px -8px;
-}
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -10px -8px;
+  }
 
-.mark:hover,
-.mark:focus-visible {
-  color: var(--bwf-text);
+  &:hover,
+  &:focus-visible {
+    color: var(--bwf-text);
+  }
 }

@@ -86,7 +86,7 @@ export const mergeDraw = (draw: readonly DrawSlot[], matches: readonly Match[]):
   return draw.map(({ match, slot }) => ({ match: byId.get(match.id) ?? match, slot }));
 };
 
-export type DayState = 'done' | 'now' | 'up';
+type DayState = 'done' | 'now' | 'up';
 
 export interface DaySlot {
   key: string;

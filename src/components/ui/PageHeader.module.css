@@ -6,6 +6,11 @@
   gap: 24px 48px;
   padding-top: 56px;
   padding-bottom: 28px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding-top: 28px;
+    padding-bottom: 20px;
+  }
 }
 
 .titles {
@@ -19,15 +24,15 @@
   font-size: 13px;
   font-weight: 500;
   color: var(--bwf-muted);
-}
 
-.kicker::before {
-  content: '';
-  flex: none;
-  width: 14px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--bwf-red);
+  &::before {
+    content: '';
+    flex: none;
+    width: 14px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--bwf-red);
+  }
 }
 
 .title {
@@ -37,6 +42,11 @@
   font-weight: 600;
   letter-spacing: -0.03em;
   text-wrap: balance;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-top: 10px;
+    font-size: 34px;
+  }
 }
 
 .meta {
@@ -44,20 +54,8 @@
   font-size: 15px;
   color: var(--bwf-muted);
   text-wrap: pretty;
-}
 
-@mixin smaller-than $mantine-breakpoint-sm {
-  .header {
-    padding-top: 28px;
-    padding-bottom: 20px;
-  }
-
-  .title {
-    margin-top: 10px;
-    font-size: 34px;
-  }
-
-  .meta {
+  @mixin smaller-than $mantine-breakpoint-sm {
     margin-top: 8px;
     font-size: 14px;
   }

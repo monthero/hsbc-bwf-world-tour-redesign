@@ -1,8 +1,8 @@
-import type { MediaItem, NewsBrief, PlayerVideo } from '~/api/schemas';
+import type { MediaItem, PlayerVideo } from '~/api/schemas';
 import type { Match, PlayerMatch, Tournament } from '~/types';
 import { date } from '~/utils/dates';
 import { compareText } from '~/utils/names';
-import { toStory, type BriefStory, type TournamentLookup } from '~/utils/news';
+import type { BriefStory } from '~/utils/news';
 import { opponentsOf } from '~/utils/season';
 
 import { NEWS_GROUP_MIN } from './constants';
@@ -74,9 +74,6 @@ export const groupVideos = (entries: readonly VideoEntry[]): VideoGroup[] =>
     tournament: list[0]?.tournament,
     entries: list,
   }));
-
-export const toStories = (news: readonly NewsBrief[], lookup: TournamentLookup | undefined) =>
-  news.map((n) => toStory(n, lookup));
 
 export const groupNews = (stories: readonly BriefStory[], total: number): NewsGroup[] => {
   if (total < NEWS_GROUP_MIN) return [{ key: 'all', label: null, stories: [...stories] }];

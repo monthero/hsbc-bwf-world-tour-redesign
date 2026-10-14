@@ -5,11 +5,27 @@ import { useTournamentNews } from '~/api/news';
 import { SEASON_YEAR } from '~/constants';
 import { useDraw, useEntries, useTournaments } from '~/hooks/useTournaments';
 import type { Tournament, TournamentSchedule } from '~/types';
+import { STAY } from '~/utils/navigation';
 import { finalsOf, roadTo } from '~/utils/tournaments';
 
+import type { TournamentSearch } from './types';
 import { mergeDraw, tabAvailability } from './utils';
 
 const route = getRouteApi('/world-tour/$year/$slug');
+
+type SearchPatch = Partial<TournamentSearch> | ((s: TournamentSearch) => Partial<TournamentSearch>);
+
+export const useUpdateSearch = () => {
+  const navigate = route.useNavigate();
+  return useCallback(
+    (patch: SearchPatch) =>
+      void navigate({
+        search: (s) => ({ ...s, ...(typeof patch === 'function' ? patch(s) : patch) }),
+        ...STAY,
+      }),
+    [navigate],
+  );
+};
 
 export const useOpenMatch = () => {
   const navigate = route.useNavigate();
@@ -20,11 +36,8 @@ export const useOpenMatch = () => {
 };
 
 export const useCloseMatch = () => {
-  const navigate = route.useNavigate();
-  return useCallback(
-    () => void navigate({ search: (s) => ({ ...s, match: undefined }), replace: true, resetScroll: false }),
-    [navigate],
-  );
+  const update = useUpdateSearch();
+  return useCallback(() => update({ match: undefined }), [update]);
 };
 
 export const useCalendarBack = (year: number) => {

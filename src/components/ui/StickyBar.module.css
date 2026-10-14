@@ -2,11 +2,11 @@
   position: sticky;
   background: var(--bwf-bg);
   border-bottom: 1px solid var(--bwf-line);
-}
 
-.bar[data-glass] {
-  background: var(--bwf-glass-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom-color: var(--bwf-border);
+  &[data-glass] {
+    background: var(--bwf-glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom-color: var(--bwf-border);
+  }
 }

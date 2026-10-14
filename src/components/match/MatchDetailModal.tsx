@@ -11,7 +11,7 @@ import { MatchDetail } from './detail';
 import classes from './MatchDetailModal.module.css';
 import utils from '~/styles/utils.module.css';
 
-export interface MatchDetailModalProps {
+interface MatchDetailModalProps {
   match: Match | null;
   tournament: Tournament;
   onClose: () => void;

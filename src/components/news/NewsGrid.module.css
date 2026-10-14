@@ -2,16 +2,16 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: 20px 16px;
-}
 
-@mixin smaller-than $mantine-breakpoint-sm {
-  .grid {
+  @mixin smaller-than $mantine-breakpoint-sm {
     display: flex;
     flex-direction: column;
     gap: 0;
   }
+}
 
-  .item + .item {
+.item + .item {
+  @mixin smaller-than $mantine-breakpoint-sm {
     border-top: 1px solid var(--bwf-line);
   }
 }

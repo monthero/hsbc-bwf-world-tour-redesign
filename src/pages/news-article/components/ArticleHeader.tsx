@@ -1,6 +1,7 @@
 import { Skeleton } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
-import { memo, useCallback, useState } from 'react';
+import { memo } from 'react';
 
 import type { NewsArticle } from '~/api/schemas';
 import { NewsImage, TournamentChip } from '~/components/news';
@@ -28,8 +29,7 @@ const Byline = memo<{ article: NewsArticle; minutes: number }>(({ article, minut
 ));
 
 const Players = memo<{ players: readonly FeaturedPlayer[] }>(({ players }) => {
-  const [expanded, setExpanded] = useState(false);
-  const expand = useCallback(() => setExpanded(true), []);
+  const [expanded, { open: expand }] = useDisclosure(false);
   const hidden = expanded ? 0 : Math.max(0, players.length - MAX_PLAYERS);
   return (
     <div className={clsx(utils.noScrollbar, classes.players)} data-expanded={expanded || undefined}>

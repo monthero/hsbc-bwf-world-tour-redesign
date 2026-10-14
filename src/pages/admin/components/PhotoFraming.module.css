@@ -20,15 +20,20 @@
   touch-action: none;
   -webkit-user-select: none;
   user-select: none;
-}
 
-.stage:active {
-  cursor: grabbing;
-}
+  &:active {
+    cursor: grabbing;
+  }
 
-.stage:focus-visible {
-  outline: 2px solid var(--bwf-border-focus);
-  outline-offset: 2px;
+  &:focus-visible {
+    outline: 2px solid var(--bwf-border-focus);
+    outline-offset: 2px;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    flex-basis: 100%;
+    max-width: 320px;
+  }
 }
 
 .mask {
@@ -52,11 +57,4 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 14px;
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .stage {
-    flex-basis: 100%;
-    max-width: 320px;
-  }
 }

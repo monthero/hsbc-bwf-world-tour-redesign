@@ -11,15 +11,15 @@
   transition:
     background 0.15s,
     border-color 0.15s;
-}
 
-.row:active {
-  background: var(--bwf-surface-3);
-}
+  &:active {
+    background: var(--bwf-surface-3);
+  }
 
-.row[data-status='done'] .logo,
-.row[data-status='cancelled'] .logo {
-  opacity: 0.45;
+  &[data-status='done'] .logo,
+  &[data-status='cancelled'] .logo {
+    opacity: 0.45;
+  }
 }
 
 .info {
@@ -80,10 +80,10 @@
 .countdown {
   font-weight: 500;
   color: var(--bwf-dim);
-}
 
-.countdown[data-next] {
-  color: var(--bwf-red-text);
+  &[data-next] {
+    color: var(--bwf-red-text);
+  }
 }
 
 .live {

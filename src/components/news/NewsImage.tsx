@@ -17,7 +17,7 @@ export const NewsImage = memo<{
   children?: ReactNode;
 }>(({ image, ratio, widths, sizes, eager, className, children }) => {
   const src = image ? newsImageUrl(image, widths[0] ?? 480, ratio) : '';
-  const { ref, onLoad, onError, loaded, failed } = useImageState(src);
+  const { img, failed } = useImageState(src);
   const shown = failed ? null : image;
   return (
     <span className={clsx(classes.frame, className)} data-ratio={ratio} data-fallback={shown ? undefined : true}>
@@ -30,10 +30,7 @@ export const NewsImage = memo<{
           alt={shown.caption ?? ''}
           loading={eager ? 'eager' : 'lazy'}
           decoding="async"
-          ref={ref}
-          onLoad={onLoad}
-          onError={onError}
-          data-loaded={loaded || undefined}
+          {...img}
         />
       )}
       {children}

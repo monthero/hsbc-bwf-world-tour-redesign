@@ -20,9 +20,9 @@
   transition:
     border-color 0.15s,
     color 0.15s;
-}
 
-.back:hover {
-  border-color: var(--bwf-border-focus);
-  color: var(--bwf-text);
+  &:hover {
+    border-color: var(--bwf-border-focus);
+    color: var(--bwf-text);
+  }
 }

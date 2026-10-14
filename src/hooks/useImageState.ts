@@ -1,4 +1,4 @@
-import { useCallback, useState, type RefCallback } from 'react';
+import { useCallback, useMemo, useState, type RefCallback } from 'react';
 
 type Status = { src: string; state: 'loaded' | 'failed' };
 
@@ -13,5 +13,10 @@ export const useImageState = (src: string) => {
     [src],
   );
   const state = status?.src === src ? status.state : null;
-  return { ref, onLoad, onError, loaded: state === 'loaded', failed: !src || state === 'failed' };
+  const loaded = state === 'loaded';
+  const img = useMemo(
+    () => ({ ref, onLoad, onError, 'data-loaded': loaded || undefined }),
+    [ref, onLoad, onError, loaded],
+  );
+  return { img, loaded, failed: !src || state === 'failed' };
 };

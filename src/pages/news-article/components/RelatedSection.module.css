@@ -1,17 +1,15 @@
 .section {
   padding-top: 48px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding-top: 32px;
+  }
 }
 
 .title {
   margin-bottom: 16px;
-}
 
-@mixin smaller-than $mantine-breakpoint-sm {
-  .section {
-    padding-top: 32px;
-  }
-
-  .title {
+  @mixin smaller-than $mantine-breakpoint-sm {
     margin-bottom: 6px;
   }
 }

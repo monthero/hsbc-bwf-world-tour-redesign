@@ -3,14 +3,13 @@ import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, type Mo
 import { LEVEL_VARS } from '~/constants';
 import type { Tournament } from '~/types';
 import { date } from '~/utils/dates';
+import { centerChild } from '~/utils/scroll';
 
 import type { OnActive, SeasonFocus } from '../types';
 import { SpotHalo } from './SpotHalo';
 
 import classes from './SeasonWheel.module.css';
 import utils from '~/styles/utils.module.css';
-
-const centerOf = (wheel: HTMLElement, el: HTMLElement) => el.offsetLeft + el.offsetWidth / 2 - wheel.clientWidth / 2;
 
 const WheelItem = memo<{
   tournament: Tournament;
@@ -68,7 +67,7 @@ export const SeasonWheel = memo<{
     const wheel = ref.current;
     if (!wheel || !items.length) return;
     const el = wheel.querySelector<HTMLElement>(`[data-code="${current.current}"]`);
-    if (el) wheel.scrollLeft = centerOf(wheel, el);
+    if (el) centerChild(wheel, el);
   }, [items]);
 
   useEffect(() => {
@@ -102,7 +101,7 @@ export const SeasonWheel = memo<{
 
   const onPick = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const wheel = ref.current;
-    if (wheel) wheel.scrollTo({ left: centerOf(wheel, e.currentTarget), behavior: 'smooth' });
+    if (wheel) centerChild(wheel, e.currentTarget, 'smooth');
   }, []);
 
   return (

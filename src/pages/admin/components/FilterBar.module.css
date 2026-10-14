@@ -3,6 +3,11 @@
   flex-direction: column;
   gap: 10px;
   padding-block: 12px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 8px;
+    padding-block: 10px;
+  }
 }
 
 .row {
@@ -10,11 +15,20 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 8px;
+  }
 }
 
 .search {
   flex: 1;
   max-width: 360px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    flex: 1 1 100%;
+    max-width: none;
+  }
 }
 
 .count {
@@ -48,20 +62,6 @@
 @mixin smaller-than $mantine-breakpoint-sm {
   div.bar {
     position: static;
-  }
-
-  .inner {
-    gap: 8px;
-    padding-block: 10px;
-  }
-
-  .row {
-    gap: 8px;
-  }
-
-  .search {
-    flex: 1 1 100%;
-    max-width: none;
   }
 
   .events,

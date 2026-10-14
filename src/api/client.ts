@@ -9,6 +9,8 @@ export class ApiError extends Error {
   }
 }
 
+export const STATIC = { staleTime: Infinity, gcTime: Infinity };
+
 const MAX_RETRIES = 3;
 
 export const hasStatus = (error: unknown, ...statuses: number[]) =>

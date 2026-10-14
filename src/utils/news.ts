@@ -2,6 +2,7 @@ import type { NewsBrief, NewsImage, NewsItem } from '~/api/schemas';
 import type { Tournament } from '~/types';
 
 import { date, formatDayMonth, hoursSince } from './dates';
+import { foldText } from './fold';
 
 const CLOUDINARY = 'https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto';
 
@@ -20,12 +21,7 @@ export const newsImageSrcSet = (image: NewsImage, widths: readonly number[], rat
 
 const KIND_PREFIXES = new Set(['where to watch', 'smashing stats', 'preview', 'talking points', 'in numbers']);
 
-const fold = (s: string) =>
-  s
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .trim();
+const fold = (s: string) => foldText(s).trim();
 
 export const tournamentKey = (year: number, name: string) => `${year}|${fold(name)}`;
 
@@ -79,3 +75,6 @@ export const toStory = <T extends NewsBrief>(item: T, lookup: TournamentLookup |
     when: timeLabel(item.publishedAt, hours),
   };
 };
+
+export const toStories = <T extends NewsBrief>(items: readonly T[], lookup: TournamentLookup | undefined) =>
+  items.map((i) => toStory(i, lookup));

@@ -7,15 +7,15 @@
   font-size: 13px;
   -webkit-user-select: none;
   user-select: none;
+
+  &[data-active] .count {
+    color: var(--bwf-text);
+    font-weight: 600;
+  }
 }
 
 .count {
   color: var(--bwf-muted);
-}
-
-.bar[data-active] .count {
-  color: var(--bwf-text);
-  font-weight: 600;
 }
 
 .link {
@@ -26,10 +26,10 @@
   font: inherit;
   font-weight: 600;
   cursor: pointer;
-}
 
-.link:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .bulk {

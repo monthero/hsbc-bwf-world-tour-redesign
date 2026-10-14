@@ -3,12 +3,21 @@
   flex-direction: column;
   gap: 24px;
   padding-top: 24px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 20px;
+    padding-top: 16px;
+  }
 }
 
 .intro {
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 10px;
+  }
 }
 
 .top {
@@ -41,12 +50,22 @@
   font-weight: 600;
   letter-spacing: -0.03em;
   text-wrap: balance;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 30px;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+  }
 }
 
 .details {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 8px;
+  }
 }
 
 .meta {
@@ -57,12 +76,16 @@
   margin: 0;
   font-size: 14px;
   color: var(--bwf-muted);
-}
 
-.meta > * + *::before {
-  content: '·';
-  margin: 0 8px;
-  color: var(--bwf-faint);
+  & > * + *::before {
+    content: '·';
+    margin: 0 8px;
+    color: var(--bwf-faint);
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 13px;
+  }
 }
 
 .byline {
@@ -75,12 +98,17 @@
   align-items: center;
   gap: 16px;
   overflow-x: auto;
-}
 
-.players[data-expanded] {
-  flex-wrap: wrap;
-  row-gap: 10px;
-  overflow: visible;
+  &[data-expanded] {
+    flex-wrap: wrap;
+    row-gap: 10px;
+    overflow: visible;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-inline: calc(-1 * var(--bwf-gutter));
+    padding-inline: var(--bwf-gutter);
+  }
 }
 
 .more {
@@ -98,11 +126,11 @@
   transition:
     color 0.15s,
     border-color 0.15s;
-}
 
-.more:hover {
-  border-color: var(--bwf-border-focus);
-  color: var(--bwf-text);
+  &:hover {
+    border-color: var(--bwf-border-focus);
+    color: var(--bwf-text);
+  }
 }
 
 .player {
@@ -117,6 +145,24 @@
 
 .hero {
   margin: 0;
+
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--bwf-dim);
+
+    @mixin smaller-than $mantine-breakpoint-sm {
+      padding-inline: var(--bwf-gutter);
+    }
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-inline: calc(-1 * var(--bwf-gutter));
+  }
 }
 
 .heroImage {
@@ -124,60 +170,12 @@
   max-height: 680px;
   border-radius: var(--bwf-card-radius);
   aspect-ratio: 16 / 9;
-}
 
-.hero figcaption {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 12px;
-  margin-top: 10px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--bwf-dim);
+  @mixin smaller-than $mantine-breakpoint-sm {
+    border-radius: 0;
+  }
 }
 
 .credit {
   color: var(--bwf-faint);
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .header {
-    gap: 20px;
-    padding-top: 16px;
-  }
-
-  .intro {
-    gap: 10px;
-  }
-
-  .details {
-    gap: 8px;
-  }
-
-  .title {
-    font-size: 30px;
-    line-height: 1.12;
-    letter-spacing: -0.025em;
-  }
-
-  .meta {
-    font-size: 13px;
-  }
-
-  .players {
-    margin-inline: calc(-1 * var(--bwf-gutter));
-    padding-inline: var(--bwf-gutter);
-  }
-
-  .hero {
-    margin-inline: calc(-1 * var(--bwf-gutter));
-  }
-
-  .heroImage {
-    border-radius: 0;
-  }
-
-  .hero figcaption {
-    padding-inline: var(--bwf-gutter);
-  }
 }

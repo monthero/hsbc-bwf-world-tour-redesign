@@ -5,18 +5,15 @@ import { IconBack, IconButton, IconNext, LiveDot, type IconProps } from '~/compo
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useScrollEdges } from '~/hooks/useScrollEdges';
 import type { TournamentDay } from '~/types';
-import { prefersReducedMotion } from '~/utils/motion';
+import { centerChild, scrollBehavior } from '~/utils/scroll';
 
 import { daySlots } from '../../utils';
 import { RestBreak } from '../RestBreak';
-import { centerChild } from './utils';
 
 import classes from './DayPicker.module.css';
 import utils from '~/styles/utils.module.css';
 
 const PAGE_RATIO = 0.75;
-
-const scrollBehavior = (): ScrollBehavior => (prefersReducedMotion() ? 'auto' : 'smooth');
 
 const step = (days: readonly TournamentDay[], from: number, dir: number) => {
   for (let i = from + dir; i >= 0 && i < days.length; i += dir) if (!days[i]?.isRest) return i;

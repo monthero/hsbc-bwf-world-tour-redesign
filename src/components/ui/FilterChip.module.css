@@ -20,46 +20,46 @@
     background 0.15s,
     color 0.15s,
     border-color 0.15s;
-}
 
-.chip:hover:not(:disabled) {
-  border-color: var(--bwf-border-focus);
-}
+  &:hover:not(:disabled) {
+    border-color: var(--bwf-border-focus);
+  }
 
-.chip[data-active] {
-  background: var(--bwf-red-tint);
-  border-color: var(--bwf-red-edge);
-  color: var(--bwf-red-pale);
-}
+  &[data-active] {
+    background: var(--bwf-red-tint);
+    border-color: var(--bwf-red-edge);
+    color: var(--bwf-red-pale);
+  }
 
-.chip[data-tone][data-active] {
-  background: alpha(var(--tone), 0.16);
-  border-color: alpha(var(--tone), 0.55);
-  color: var(--tone);
-}
+  &[data-tone][data-active] {
+    background: alpha(var(--tone), 0.16);
+    border-color: alpha(var(--tone), 0.55);
+    color: var(--tone);
+  }
 
-.chip[data-dot]::before {
-  content: '';
-  flex: none;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--tone, currentColor);
-}
+  &[data-dot]::before {
+    content: '';
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--tone, currentColor);
+  }
 
-.chip:disabled {
-  color: var(--bwf-ghost);
-  cursor: default;
-}
+  &:disabled {
+    color: var(--bwf-ghost);
+    cursor: default;
+  }
 
-.chip[data-size='sm'] {
-  height: 28px;
-  padding: 0 10px;
-  font-size: 12px;
-}
+  &[data-size='sm'] {
+    height: 28px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
 
-.chip[data-size='lg'] {
-  height: 44px;
-  padding: 0 12px;
-  border-radius: 12px;
+  &[data-size='lg'] {
+    height: 44px;
+    padding: 0 12px;
+    border-radius: 12px;
+  }
 }

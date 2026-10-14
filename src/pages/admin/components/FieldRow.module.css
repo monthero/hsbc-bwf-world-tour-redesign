@@ -9,15 +9,15 @@
   transition:
     background 0.15s,
     border-color 0.15s;
-}
 
-.field[data-wide] {
-  grid-column: 1 / -1;
-}
+  &[data-wide] {
+    grid-column: 1 / -1;
+  }
 
-.field[data-active] {
-  background: var(--bwf-surface-3);
-  border-color: var(--bwf-gold-edge);
+  &[data-active] {
+    background: var(--bwf-surface-3);
+    border-color: var(--bwf-gold-edge);
+  }
 }
 
 .head {
@@ -55,10 +55,10 @@
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-}
 
-.revert:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .bwf {

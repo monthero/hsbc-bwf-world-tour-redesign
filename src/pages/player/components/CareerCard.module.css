@@ -31,10 +31,10 @@
   -webkit-user-select: none;
   user-select: none;
   transition: background 0.15s;
-}
 
-.row:hover {
-  background: var(--bwf-surface-3);
+  &:hover {
+    background: var(--bwf-surface-3);
+  }
 }
 
 .year {
@@ -94,10 +94,10 @@
   font-weight: 500;
   text-decoration: none;
   transition: background 0.15s;
-}
 
-.chip:hover {
-  background: var(--bwf-raised);
+  &:hover {
+    background: var(--bwf-raised);
+  }
 }
 
 .chipLink {

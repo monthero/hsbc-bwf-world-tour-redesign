@@ -9,7 +9,7 @@ import type { MediaItem } from '~/api/schemas';
 import { TeamPlayers } from '~/components/match';
 import { WatchLive } from '~/components/media';
 import { AvatarGroup } from '~/components/player';
-import { CardHit, Duration, IconFire, StatusChip, type StatusTone } from '~/components/ui';
+import { CardHit, Duration, IconFire, ShuttleIcon, StatusChip, type StatusTone } from '~/components/ui';
 import type { Game, Match, Player, Side } from '~/types';
 import {
   CHALLENGE_LABELS,
@@ -21,7 +21,6 @@ import {
 import { gameWon } from '~/utils/matches';
 
 import { toLiveView, type LiveView, type SideView } from './liveView';
-import { ShuttleIcon } from './ShuttleIcon';
 import { matchTitle } from './utils';
 
 import classes from './LiveCard.module.css';

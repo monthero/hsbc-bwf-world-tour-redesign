@@ -10,10 +10,8 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-}
 
-@mixin smaller-than $mantine-breakpoint-sm {
-  .section {
+  @mixin smaller-than $mantine-breakpoint-sm {
     padding-bottom: 96px;
   }
 }

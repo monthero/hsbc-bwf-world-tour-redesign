@@ -9,10 +9,10 @@
   border-radius: 18px;
   color: var(--bwf-text);
   transition: border-color 0.2s;
-}
 
-.card:hover {
-  border-color: alpha(var(--bwf-red), 0.75);
+  &:hover {
+    border-color: alpha(var(--bwf-red), 0.75);
+  }
 }
 
 .head {
@@ -51,6 +51,12 @@
   grid-template-columns: var(--cols);
   column-gap: 8px;
   margin-inline: -4px;
+
+  @container live-card (width < 380px) {
+    --prev-w: 26px;
+    --now-w: 46px;
+    column-gap: 6px;
+  }
 }
 
 .row {
@@ -58,10 +64,10 @@
   display: grid;
   grid-template-columns: subgrid;
   align-items: center;
-}
 
-.row:last-child {
-  border-top: 1px solid alpha(var(--bwf-text), 0.1);
+  &:last-child {
+    border-top: 1px solid alpha(var(--bwf-text), 0.1);
+  }
 }
 
 .colHead,
@@ -92,6 +98,10 @@
 
 .avatars {
   --avatar-ring: var(--bwf-surface-3);
+
+  @container live-card (width < 380px) {
+    display: none;
+  }
 }
 
 .who {
@@ -104,6 +114,10 @@
 .names {
   font-size: 15px;
   font-weight: 500;
+
+  @container live-card (width < 380px) {
+    font-size: 14px;
+  }
 }
 
 .tags {
@@ -122,10 +136,10 @@
   font-variant-numeric: tabular-nums;
   color: var(--bwf-muted);
   cursor: help;
-}
 
-.challenge[data-used] {
-  color: var(--bwf-text);
+  &[data-used] {
+    color: var(--bwf-text);
+  }
 }
 
 .challengeIcon {
@@ -143,12 +157,12 @@
   display: inline-flex;
   flex: none;
   cursor: help;
-}
 
-.serve svg {
-  width: var(--serve);
-  height: var(--serve);
-  fill: var(--bwf-gold);
+  svg {
+    width: var(--serve);
+    height: var(--serve);
+    fill: var(--bwf-gold);
+  }
 }
 
 .prev {
@@ -156,11 +170,15 @@
   font-variant-numeric: tabular-nums;
   text-align: center;
   color: var(--bwf-faint);
-}
 
-.prev[data-won] {
-  font-weight: 700;
-  color: var(--bwf-text);
+  &[data-won] {
+    font-weight: 700;
+    color: var(--bwf-text);
+  }
+
+  @container live-card (width < 380px) {
+    font-size: 15px;
+  }
 }
 
 .now {
@@ -173,10 +191,14 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--bwf-text);
-}
 
-.row:last-child .now {
-  border-radius: 0 0 10px 10px;
+  .row:last-child & {
+    border-radius: 0 0 10px 10px;
+  }
+
+  @container live-card (width < 380px) {
+    font-size: 26px;
+  }
 }
 
 .board:has(.row[data-lead]) .row:not([data-lead]) .now {
@@ -186,10 +208,14 @@
 .points {
   font-variant-numeric: tabular-nums;
   line-height: 1;
-}
 
-.points[data-flash] {
-  animation: flash 1.6s var(--bwf-ease);
+  &[data-flash] {
+    animation: flash 1.6s var(--bwf-ease);
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
 }
 
 .footer {
@@ -220,11 +246,11 @@
   font-size: 14px;
   font-variant-numeric: tabular-nums;
   color: var(--bwf-muted);
-}
 
-.footValues > [data-lead] {
-  font-weight: 700;
-  color: var(--bwf-text);
+  > [data-lead] {
+    font-weight: 700;
+    color: var(--bwf-text);
+  }
 }
 
 .watch {
@@ -235,51 +261,19 @@
   transition:
     opacity 0.2s var(--bwf-ease-out),
     transform 0.2s var(--bwf-ease-out);
-}
 
-.card:is(:hover, :focus-within) .watch {
-  opacity: 1;
-  transform: none;
-}
+  .card:is(:hover, :focus-within) & {
+    opacity: 1;
+    transform: none;
+  }
 
-@media (hover: none) {
-  .watch {
+  @media (hover: none) {
     display: none;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .watch {
+  @media (prefers-reduced-motion: reduce) {
     transform: none;
     transition: none;
-  }
-
-  .points[data-flash] {
-    animation: none;
-  }
-}
-
-@container live-card (width < 380px) {
-  .board {
-    --prev-w: 26px;
-    --now-w: 46px;
-    column-gap: 6px;
-  }
-
-  .avatars {
-    display: none;
-  }
-
-  .names {
-    font-size: 14px;
-  }
-
-  .prev {
-    font-size: 15px;
-  }
-
-  .now {
-    font-size: 26px;
   }
 }
 

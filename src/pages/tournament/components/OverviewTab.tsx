@@ -1,4 +1,3 @@
-import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type FC, type ReactNode } from 'react';
 
@@ -14,7 +13,7 @@ import { teamPlayers } from '~/utils/matches';
 import { mapsUrl } from '~/utils/tournaments';
 
 import { FOLLOW_EMPTY, FOLLOW_HINT } from '../constants';
-import { useOpenMatch } from '../hooks';
+import { useOpenMatch, useUpdateSearch } from '../hooks';
 import type { TabProps } from '../types';
 import { buildPastWinners, type PastYear } from '../utils';
 import { Champions, ChampionStrip } from './Champions';
@@ -23,8 +22,6 @@ import { matchTitle } from './matches/utils';
 import page from '../TournamentPage.module.css';
 import classes from './OverviewTab.module.css';
 import utils from '~/styles/utils.module.css';
-
-const route = getRouteApi('/world-tour/$year/$slug');
 
 const Row: FC<{ label: string; children: ReactNode }> = ({ label, children }) => {
   return (
@@ -101,7 +98,7 @@ const PastYearBlock = memo<{ year: PastYear }>(({ year }) => {
 });
 
 export const OverviewTab: FC<TabProps> = ({ tournament: t, schedule }) => {
-  const navigate = route.useNavigate();
+  const update = useUpdateSearch();
   const openMatch = useOpenMatch();
   const matcher = useFavoritesMatcher();
   const followed = useFavoriteCount(FOLLOW_KINDS);
@@ -115,10 +112,7 @@ export const OverviewTab: FC<TabProps> = ({ tournament: t, schedule }) => {
   );
   const past = useMemo(() => (series ? buildPastWinners(t, series, dir) : []), [t, series, dir]);
 
-  const openDay = useCallback(
-    (day: number) => navigate({ search: (s) => ({ ...s, tab: 'matches', day }), replace: true, resetScroll: false }),
-    [navigate],
-  );
+  const openDay = useCallback((day: number) => update({ tab: 'matches', day }), [update]);
 
   const hasMatches = schedule.matches.length > 0;
 

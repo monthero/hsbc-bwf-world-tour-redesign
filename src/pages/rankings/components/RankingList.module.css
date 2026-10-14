@@ -3,30 +3,68 @@
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    &,
+    tbody {
+      display: block;
+    }
+  }
 }
 
-.head th {
-  padding: 14px 12px 10px;
-  border-bottom: 1px solid var(--bwf-line);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-align: left;
-  text-transform: uppercase;
-  color: var(--bwf-dim);
-  -webkit-user-select: none;
-  user-select: none;
+.head {
+  th {
+    padding: 14px 12px 10px;
+    border-bottom: 1px solid var(--bwf-line);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--bwf-dim);
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
-.row td {
-  padding: 9px 12px;
-  border-bottom: 1px solid var(--bwf-line);
-  vertical-align: middle;
-  transition: background 0.15s;
-}
+.row {
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--bwf-line);
+    vertical-align: middle;
+    transition: background 0.15s;
+  }
 
-.row:hover td {
-  background: var(--bwf-surface);
+  &:hover td {
+    background: var(--bwf-surface);
+  }
+
+  &[data-qualify='qualified'] {
+    td {
+      background: alpha(var(--bwf-green), 0.045);
+    }
+
+    td:first-child {
+      box-shadow: inset 3px 0 0 var(--bwf-green);
+    }
+
+    &:hover td {
+      background: alpha(var(--bwf-green), 0.09);
+    }
+  }
+
+  &[data-qualify='blocked'] td.rank {
+    color: var(--bwf-faint);
+  }
 }
 
 .rank {
@@ -53,10 +91,10 @@ td.rank {
   gap: 12px;
   min-width: 0;
   --avatar-ring: var(--bwf-bg);
-}
 
-.row:hover .whoInner {
-  --avatar-ring: var(--bwf-surface);
+  .row:hover & {
+    --avatar-ring: var(--bwf-surface);
+  }
 }
 
 .avatars {
@@ -66,6 +104,10 @@ td.rank {
 .names {
   flex: 0 1 auto;
   font-size: 14px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    font-size: 13px;
+  }
 }
 
 .played {
@@ -93,22 +135,6 @@ td.points {
   font-weight: 600;
 }
 
-.row[data-qualify='qualified'] td {
-  background: alpha(var(--bwf-green), 0.045);
-}
-
-.row[data-qualify='qualified'] td:first-child {
-  box-shadow: inset 3px 0 0 var(--bwf-green);
-}
-
-.row[data-qualify='qualified']:hover td {
-  background: alpha(var(--bwf-green), 0.09);
-}
-
-.row[data-qualify='blocked'] td.rank {
-  color: var(--bwf-faint);
-}
-
 .cutoff td {
   padding: 0;
 }
@@ -119,20 +145,6 @@ td.points {
 }
 
 @mixin smaller-than $mantine-breakpoint-sm {
-  .table,
-  .table tbody {
-    display: block;
-  }
-
-  .head {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
   .row {
     display: grid;
     grid-template-columns: 48px minmax(0, 1fr) auto;
@@ -143,31 +155,31 @@ td.points {
     column-gap: 10px;
     padding: 10px 4px;
     border-bottom: 1px solid var(--bwf-line);
-  }
 
-  .row td {
-    display: block;
-    width: auto;
-    padding: 0;
-    border: 0;
-    background: none;
-  }
+    td {
+      display: block;
+      width: auto;
+      padding: 0;
+      border: 0;
+      background: none;
+    }
 
-  .row:hover td {
-    background: none;
-  }
+    &:hover td {
+      background: none;
+    }
 
-  .row[data-qualify='qualified'] {
-    background: alpha(var(--bwf-green), 0.045);
-    box-shadow: inset 3px 0 0 var(--bwf-green);
-    padding-left: 10px;
-  }
+    &[data-qualify='qualified'] {
+      background: alpha(var(--bwf-green), 0.045);
+      box-shadow: inset 3px 0 0 var(--bwf-green);
+      padding-left: 10px;
+    }
 
-  .row[data-qualify='qualified'] td,
-  .row[data-qualify='qualified']:hover td,
-  .row[data-qualify='qualified'] td:first-child {
-    background: none;
-    box-shadow: none;
+    &[data-qualify='qualified'] td,
+    &[data-qualify='qualified']:hover td,
+    &[data-qualify='qualified'] td:first-child {
+      background: none;
+      box-shadow: none;
+    }
   }
 
   td.rank {
@@ -192,10 +204,6 @@ td.points {
 
   td.played {
     display: none;
-  }
-
-  .names {
-    font-size: 13px;
   }
 
   .cutoff,

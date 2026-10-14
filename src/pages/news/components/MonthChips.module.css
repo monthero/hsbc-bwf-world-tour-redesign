@@ -23,13 +23,13 @@
 .chip {
   height: 36px;
   padding: 0 14px;
+
+  &[data-active] .count {
+    color: var(--bwf-red-soft);
+  }
 }
 
 .count {
   color: var(--bwf-faint);
   font-size: 12px;
-}
-
-.chip[data-active] .count {
-  color: var(--bwf-red-soft);
 }

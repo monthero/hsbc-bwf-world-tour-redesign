@@ -1,6 +1,7 @@
 import type { EditionRef } from '~/types';
 
 import { formatDayMonthYear, formatMonth } from './dates';
+import { joinDots } from './format';
 
 export interface RetirementFacts {
   since?: string;
@@ -15,7 +16,7 @@ export interface RetirementRow {
 
 export const RETIRED_FROM = 'Retired from international badminton';
 
-export const editionLabel = (e: EditionRef) => `${e.name} ${e.year}`;
+const editionLabel = (e: EditionRef) => `${e.name} ${e.year}`;
 
 export const retirementSince = ({ since }: RetirementFacts) => (since ? `Since ${formatMonth(since)}` : '');
 
@@ -31,4 +32,4 @@ export const retirementParts = (facts: RetirementFacts) =>
     ...retirementRows(facts).map((r) => `${r.label}: ${r.value}`),
   ].filter((s): s is string => !!s);
 
-export const retirementNote = (facts: RetirementFacts) => retirementParts(facts).join(' · ');
+export const retirementNote = (facts: RetirementFacts) => joinDots(retirementParts(facts));

@@ -11,6 +11,7 @@ import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { usePlayerProfile } from '~/hooks/useSeason';
 import { useTournamentsByCode } from '~/hooks/useTournaments';
 import type { EventCode, PlayerMatch } from '~/types';
+import { STAY } from '~/utils/navigation';
 import { tournamentParams } from '~/utils/tournaments';
 
 import { Hero } from './components/Hero';
@@ -28,8 +29,6 @@ import classes from './PlayerPage.module.css';
 import utils from '~/styles/utils.module.css';
 
 const route = getRouteApi('/players/$id');
-
-const STAY = { replace: true, resetScroll: false } as const;
 
 const MISSING_TITLE = 'We couldn’t find that player';
 const MISSING_DESCRIPTION = 'They may not have played on the World Tour yet, or the link is out of date.';

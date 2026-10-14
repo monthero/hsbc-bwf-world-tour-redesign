@@ -46,7 +46,7 @@ const MoreEntry: FC<{ entry: PlatformEntry }> = ({ entry }) => {
       <Menu.Sub.Target>
         <Menu.Sub.Item rightSection={<IconNext className={classes.menuIcon} />}>{entry.label}</Menu.Sub.Item>
       </Menu.Sub.Target>
-      <Menu.Sub.Dropdown className={clsx(utils.popover, classes.menu)}>
+      <Menu.Sub.Dropdown className={MENU_CLASSES.dropdown}>
         {entry.items.map((it) => (
           <MenuLink key={it.label} item={it} />
         ))}

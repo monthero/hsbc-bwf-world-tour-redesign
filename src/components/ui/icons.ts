@@ -28,7 +28,7 @@ import UserRounded from '~icons/solar/user-rounded-linear';
 
 export type IconProps = SVGProps<SVGSVGElement> & { size?: number | string };
 
-const icon =
+export const icon =
   (svg: ComponentType<SVGProps<SVGSVGElement>>): FC<IconProps> =>
   ({ size = '1em', ...props }) =>
     createElement(svg, { width: size, height: size, 'aria-hidden': props['aria-label'] ? undefined : true, ...props });

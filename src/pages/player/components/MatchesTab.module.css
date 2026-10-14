@@ -8,11 +8,11 @@
   transition:
     border-color 0.15s,
     background 0.15s;
-}
 
-.row:hover {
-  border-color: var(--bwf-border-hover);
-  background: var(--bwf-surface-4);
+  &:hover {
+    border-color: var(--bwf-border-hover);
+    background: var(--bwf-surface-4);
+  }
 }
 
 .head {
@@ -34,20 +34,20 @@
   min-width: 0;
   max-width: 100%;
   overflow-x: auto;
-}
 
-.seasons .seasonSeg {
-  width: calc(var(--n) * 64px);
+  .seasonSeg {
+    width: calc(var(--n) * 64px);
+  }
 }
 
 .group {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
 
-.group + .group {
-  margin-top: 10px;
+  & + .group {
+    margin-top: 10px;
+  }
 }
 
 .groupHead {
@@ -72,10 +72,10 @@
   color: var(--bwf-text);
   text-decoration: none;
   text-wrap: pretty;
-}
 
-.tour:hover {
-  color: var(--bwf-red-soft);
+  &:hover {
+    color: var(--bwf-red-soft);
+  }
 }
 
 .round {
@@ -107,10 +107,10 @@
   gap: 10px;
   min-width: 0;
   padding: 6px 2px 0 44px;
-}
 
-.runHead .meta {
-  margin-top: 0;
+  .meta {
+    margin-top: 0;
+  }
 }
 
 .rowPartner {

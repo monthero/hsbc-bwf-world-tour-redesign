@@ -15,20 +15,18 @@
   box-shadow: 0 12px 32px alpha(var(--mantine-color-black), 0.45);
   transform: translate(20px, -50%);
   animation: in 0.16s var(--bwf-ease);
-}
 
-.popover[data-flip] {
-  transform: translate(calc(-100% - 20px), -50%);
+  &[data-flip] {
+    transform: translate(calc(-100% - 20px), -50%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 @keyframes in {
   from {
     opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .popover {
-    animation: none;
   }
 }

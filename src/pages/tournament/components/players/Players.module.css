@@ -105,10 +105,10 @@
   color: var(--bwf-text);
   text-align: left;
   cursor: pointer;
-}
 
-.cardToggle:disabled {
-  cursor: default;
+  &:disabled {
+    cursor: default;
+  }
 }
 
 .cardFlag {
@@ -132,10 +132,10 @@
   flex: none;
   color: var(--bwf-dim);
   transition: transform 0.25s var(--bwf-ease);
-}
 
-.chevron[data-open] {
-  transform: rotate(180deg);
+  &[data-open] {
+    transform: rotate(180deg);
+  }
 }
 
 .entry {
@@ -185,18 +185,18 @@
   font-size: 12px;
   font-weight: 400;
   color: var(--bwf-muted);
-}
 
-.status[data-tone='won'] {
-  color: var(--bwf-text);
-}
+  &[data-tone='won'] {
+    color: var(--bwf-text);
+  }
 
-.status[data-tone='lost'] {
-  color: var(--bwf-faint);
-}
+  &[data-tone='lost'] {
+    color: var(--bwf-faint);
+  }
 
-.status[data-tone='live'] {
-  color: var(--bwf-red-text);
+  &[data-tone='live'] {
+    color: var(--bwf-red-text);
+  }
 }
 
 @mixin smaller-than $mantine-breakpoint-sm {
@@ -223,6 +223,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+
+  @mixin larger-than $mantine-breakpoint-lg {
+    display: none;
+  }
 }
 
 .jumpCount {
@@ -236,6 +240,11 @@
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
   gap: 14px;
   align-items: start;
+
+  @mixin larger-than $mantine-breakpoint-lg {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+  }
 }
 
 .discipline {
@@ -249,6 +258,12 @@
   align-items: center;
   gap: 10px;
   padding: 14px 16px;
+
+  @mixin larger-than $mantine-breakpoint-lg {
+    flex-wrap: wrap;
+    gap: 2px 8px;
+    padding: 12px;
+  }
 }
 
 .discName {
@@ -256,12 +271,21 @@
   min-width: 0;
   font-size: 15px;
   font-weight: 600;
+
+  @mixin larger-than $mantine-breakpoint-lg {
+    font-size: 14px;
+  }
 }
 
 .discCount {
   font-size: 12px;
   font-variant-numeric: tabular-nums;
   color: var(--bwf-faint);
+
+  @mixin larger-than $mantine-breakpoint-lg {
+    flex-basis: 100%;
+    font-size: 11px;
+  }
 }
 
 .groupLabel {
@@ -274,6 +298,10 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--bwf-faint);
+
+  @mixin larger-than $mantine-breakpoint-lg {
+    padding: 12px 12px 6px;
+  }
 }
 
 .seeds {
@@ -291,15 +319,21 @@
   color: var(--bwf-text);
   font-size: 14px;
   font-weight: 500;
+
+  &[data-out] {
+    color: var(--bwf-muted);
+  }
+
+  @mixin larger-than $mantine-breakpoint-lg {
+    gap: 6px;
+    padding: 8px 4px 8px 12px;
+    font-size: 13px;
+  }
 }
 
 .groupLabel + .row,
 .groupLabel + .seeds > .row:first-child {
   border-top: 0;
-}
-
-.row[data-out] {
-  color: var(--bwf-muted);
 }
 
 .rowMain {
@@ -316,40 +350,4 @@
 
 .rowRank {
   font-variant-numeric: tabular-nums;
-}
-
-@mixin larger-than $mantine-breakpoint-lg {
-  .jump {
-    display: none;
-  }
-
-  .disciplines {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .discHead {
-    flex-wrap: wrap;
-    gap: 2px 8px;
-    padding: 12px;
-  }
-
-  .discName {
-    font-size: 14px;
-  }
-
-  .discCount {
-    flex-basis: 100%;
-    font-size: 11px;
-  }
-
-  .groupLabel {
-    padding: 12px 12px 6px;
-  }
-
-  .row {
-    gap: 6px;
-    padding: 8px 4px 8px 12px;
-    font-size: 13px;
-  }
 }
