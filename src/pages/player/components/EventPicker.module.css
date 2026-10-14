@@ -2,4 +2,9 @@
   flex: none;
   width: calc(var(--count) * 52px);
   max-width: 100%;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    flex: 1;
+    width: 100%;
+  }
 }

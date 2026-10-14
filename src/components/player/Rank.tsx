@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
 import { EventTag } from '~/components/match';
-import { IconCheck } from '~/components/ui';
+import { IconCheck, IconCheckCircle } from '~/components/ui';
 import { EVENT_NAMES, NOT_QUALIFY_TIP } from '~/constants';
 import { useFinalsCity } from '~/hooks/useTournaments';
 import type { RankView } from '~/types';
@@ -42,19 +42,32 @@ export const RankValue: FC<{ value: number | null | undefined; className?: strin
   );
 };
 
-const QualifiedBadge: FC = () => {
+const QualifiedBadge: FC<{ long?: boolean }> = ({ long }) => {
   const city = useFinalsCity();
   return (
     <Tooltip label={qualifyTip(city)}>
       <span className={classes.q}>
-        <IconCheck size={12} />Q
+        {long ? (
+          <>
+            Qualifies
+            <IconCheckCircle size={13} />
+          </>
+        ) : (
+          <>
+            <IconCheck size={12} />Q
+          </>
+        )}
       </span>
     </Tooltip>
   );
 };
 
-export const QualifyMark: FC<{ qualified?: boolean; blocked?: boolean }> = ({ qualified, blocked }) => {
-  if (qualified) return <QualifiedBadge />;
+export const QualifyMark: FC<{ qualified?: boolean; blocked?: boolean; long?: boolean }> = ({
+  qualified,
+  blocked,
+  long,
+}) => {
+  if (qualified) return <QualifiedBadge long={long} />;
   if (blocked)
     return (
       <Tooltip label={NOT_QUALIFY_TIP}>
@@ -64,8 +77,8 @@ export const QualifyMark: FC<{ qualified?: boolean; blocked?: boolean }> = ({ qu
   return null;
 };
 
-export const RaceQualifier: FC<{ rank: RankView }> = ({ rank: k }) => (
-  <QualifyMark qualified={k.race?.qualified} blocked={k.race?.blocked} />
+export const RaceQualifier: FC<{ rank: RankView; long?: boolean }> = ({ rank: k, long }) => (
+  <QualifyMark qualified={k.race?.qualified} blocked={k.race?.blocked} long={long} />
 );
 
 export const RankCard = memo<{ rank: RankView }>(({ rank: k }) => (

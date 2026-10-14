@@ -1,16 +1,17 @@
 import { Skeleton } from '@mantine/core';
 import { clsx } from 'clsx';
-import { memo, useCallback, useMemo, type ReactNode } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react';
+import RankingIcon from '~icons/solar/ranking-outline';
 
 import { CountryLabel } from '~/components/country';
 import { PlayerFollow } from '~/components/follow';
 import { Partner, PlayerAvatar, PlayerName, RaceQualifier, RankChange, RetiredBadge } from '~/components/player';
-import { CardHit } from '~/components/ui';
+import { CardHit, TapTip, TipSpan } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerPhoto } from '~/hooks/usePlayers';
 import type { BioView, EventCode, Focus, Player, RankView, Retirement, StatItem } from '~/types';
-import { formatNumber, formatRank } from '~/utils/format';
+import { formatRank, plural } from '~/utils/format';
 import { heroVars, playerHeroUrl } from '~/utils/images';
 
 import type { CareerHigh, CareerView } from '../types';
@@ -42,6 +43,7 @@ interface Cell {
 }
 
 const RANK_LIMIT = 3;
+const KEEP_SELECTION = 'a, button, input, [data-rank]';
 const PORTRAIT_CROP = 520;
 const STAT_SKELETON = [0, 1, 2, 3];
 
@@ -53,8 +55,26 @@ export const Hero = memo<HeroProps>(
     const ranked = useMemo(() => ranks.filter((k) => k.rank).slice(0, RANK_LIMIT), [ranks]);
     const pairs = ranked.some((k) => k.partner);
     const switchable = ranked.length > 1 ? onEvent : undefined;
+    const heroRef = useRef<HTMLElement>(null);
+    useEffect(() => {
+      const el = heroRef.current;
+      if (!el || !switchable || !event) return;
+      const onClick = (e: globalThis.MouseEvent) => {
+        if (e.target instanceof Element && !e.target.closest(KEEP_SELECTION)) switchable(undefined);
+      };
+      const onKey = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') switchable(undefined);
+      };
+      el.addEventListener('click', onClick);
+      document.addEventListener('keydown', onKey);
+      return () => {
+        el.removeEventListener('click', onClick);
+        document.removeEventListener('keydown', onKey);
+      };
+    }, [switchable, event]);
     return (
       <section
+        ref={heroRef}
         className={classes.hero}
         style={style}
         data-image={hero ? true : undefined}
@@ -99,6 +119,7 @@ export const Hero = memo<HeroProps>(
             className={classes.ranks}
             data-picked={switchable && event ? true : undefined}
             data-pairs={pairs || undefined}
+            data-single={ranked.length === 1 || undefined}
           >
             {ranked.map((k) => (
               <RankTile key={k.ev} rank={k} high={highs.get(k.ev)} active={k.ev === event} onEvent={switchable} />
@@ -111,23 +132,41 @@ export const Hero = memo<HeroProps>(
   },
 );
 
-const Vital = memo<{ item: StatItem }>(({ item: s }) => (
-  <div className={classes.vital} title={s.sub}>
-    <dt className={shared.label}>{s.label}</dt>
-    <dd className={classes.vitalValue}>
-      {s.value}
-      {s.unit && <span className={classes.unit}>{s.unit}</span>}
-      {s.inline && <span className={classes.unit}>{s.inline}</span>}
-    </dd>
-  </div>
-));
+const Vital = memo<{ item: StatItem }>(({ item: s }) => {
+  const el = (
+    <div className={classes.vital} data-tip={s.sub ? true : undefined}>
+      <dt className={shared.label}>{s.label}</dt>
+      <dd className={classes.vitalValue}>
+        {s.value}
+        {s.unit && <span className={classes.unit}>{s.unit}</span>}
+        {s.inline && <span className={classes.unit}>{s.inline}</span>}
+      </dd>
+    </div>
+  );
+  return s.sub ? <TapTip label={s.sub}>{el}</TapTip> : el;
+});
 
-const MiniStat = memo<{ label: string; children: ReactNode }>(({ label, children }) => (
-  <div className={classes.mini}>
-    <dt>{label}</dt>
-    <dd>{children}</dd>
-  </div>
-));
+const WEEKS_AT_BEST_TIP =
+  'Total weeks spent at this ranking. They don’t have to be in a row: it can add up over several spells.';
+
+const MiniStat = memo<{ label: string; sub?: string; subTip?: string; children: ReactNode }>(
+  ({ label, sub, subTip, children }) => (
+    <div className={classes.mini}>
+      <dt>{label}</dt>
+      <dd>
+        {children}
+        {sub &&
+          (subTip ? (
+            <TipSpan className={classes.miniSub} tip={subTip}>
+              {sub}
+            </TipSpan>
+          ) : (
+            <span className={classes.miniSub}>{sub}</span>
+          ))}
+      </dd>
+    </div>
+  ),
+);
 
 const RankTile = memo<{
   rank: RankView;
@@ -137,24 +176,40 @@ const RankTile = memo<{
 }>(({ rank: k, high, active, onEvent }) => {
   const pick = useCallback(() => onEvent?.(active ? undefined : k.ev), [onEvent, active, k.ev]);
   return (
-    <div className={classes.rank} data-active={active || undefined} data-switch={onEvent ? true : undefined}>
+    <div className={classes.rank} data-rank data-active={active || undefined} data-switch={onEvent ? true : undefined}>
       {onEvent && <CardHit label={active ? 'Show all disciplines' : `Focus on ${EVENT_NAMES[k.ev]}`} onClick={pick} />}
       <span className={classes.rankHead}>
         <span className={classes.rankEvent}>{EVENT_NAMES[k.ev]}</span>
-        <span className={classes.rankKind}>World ranking</span>
+        <TipSpan className={classes.rankKind} tip="World ranking">
+          <RankingIcon aria-label="World ranking" />
+        </TipSpan>
       </span>
       <span className={classes.rankPartner}>{k.partner && <Partner player={k.partner} label={false} />}</span>
       <span className={classes.rankLine}>
-        <span className={clsx(utils.figure, classes.rankNum)}>{formatRank(k.rank)}</span>
-        {k.change ? <RankChange value={k.change} /> : <span className={classes.flat}>–</span>}
+        <span className={clsx(utils.figure, classes.rankNum)}>
+          {k.rank ? (
+            <>
+              <span className={classes.rankHash}>#</span>
+              {k.rank}
+            </>
+          ) : (
+            formatRank(k.rank)
+          )}
+        </span>
+        {k.change ? <RankChange value={k.change} /> : null}
       </span>
       <dl className={classes.minis}>
         <MiniStat label="Race">
           {formatRank(k.race?.rank)}
-          {k.race && <RaceQualifier rank={k} />}
+          {k.race && <RaceQualifier rank={k} long />}
         </MiniStat>
-        <MiniStat label="Career high">{formatRank(high?.rank)}</MiniStat>
-        <MiniStat label="Weeks at high">{high?.weeks ? formatNumber(high.weeks) : '—'}</MiniStat>
+        <MiniStat
+          label="Career best"
+          sub={high?.weeks ? `for ${plural(high.weeks, 'week')}` : undefined}
+          subTip={high?.weeks && high.weeks > 1 ? WEEKS_AT_BEST_TIP : undefined}
+        >
+          {formatRank(high?.rank)}
+        </MiniStat>
       </dl>
     </div>
   );
