@@ -5,7 +5,7 @@ import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import type { FC } from 'react';
 
 import { DisclaimerModal } from '~/components/disclaimer';
-import { PageNotFound, SiteFooter, SiteHeader } from '~/components/layout';
+import { PageNotFound, SiteLayout } from '~/components/layout';
 import { PlayerHoverCard } from '~/components/player';
 import { PlayerHoverContext, type RenderPlayerHover } from '~/contexts';
 import { useStoreSync } from '~/hooks/useStoreSync';
@@ -16,11 +16,11 @@ const RootLayout: FC = () => {
   useStoreSync();
   return (
     <>
-      <SiteHeader />
-      <PlayerHoverContext value={renderPlayerHover}>
-        <Outlet />
-      </PlayerHoverContext>
-      <SiteFooter />
+      <SiteLayout>
+        <PlayerHoverContext value={renderPlayerHover}>
+          <Outlet />
+        </PlayerHoverContext>
+      </SiteLayout>
       <DisclaimerModal />
       {import.meta.env.DEV && (
         <>
