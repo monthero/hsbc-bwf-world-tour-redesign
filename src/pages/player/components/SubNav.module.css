@@ -4,3 +4,7 @@
   font-variant-numeric: tabular-nums;
   color: var(--bwf-muted);
 }
+
+.disciplines {
+  display: flex;
+}

@@ -1,126 +1,158 @@
 .hero {
+  --pad: clamp(20px, 2.6cqi, 36px);
+  --hairline: alpha(var(--mantine-color-white), 0.1);
+  --glow: radial-gradient(ellipse 70% 90% at 0% 100%, alpha(var(--bwf-brand), 0.3), transparent 60%);
   position: relative;
+  isolation: isolate;
   overflow: hidden;
-  min-height: 340px;
-  display: flex;
-  align-items: flex-end;
-  border-radius: 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 720px) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  grid-template-areas:
+    'id pic'
+    'ranks pic'
+    'stats stats';
+  gap: 22px 24px;
+  padding: var(--pad) var(--pad) 0;
+  border-radius: 22px;
   background: var(--bwf-bg-sunken);
-  border: 1px solid var(--bwf-border);
 
-  &[data-image]::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: var(--hero);
-    background-size: cover;
-    background-position: var(--hero-pos, right 25%);
-
-    @mixin smaller-than $mantine-breakpoint-sm {
-      background-position: var(--hero-pos, center 15%);
-    }
+  &:is([data-image], [data-portrait]) {
+    min-height: clamp(420px, 36cqi, 540px);
   }
 
+  &::before,
   &::after {
     content: '';
     position: absolute;
+    z-index: -1;
     inset: 0;
-    background:
-      linear-gradient(
-        90deg,
-        var(--bwf-bg-sunken) 26%,
-        alpha(var(--bwf-bg-sunken), 0.6) 52%,
-        alpha(var(--bwf-bg-sunken), 0) 80%
-      ),
-      linear-gradient(0deg, alpha(var(--bwf-bg-sunken), 0.9) 0%, alpha(var(--bwf-bg-sunken), 0) 45%);
-    box-shadow: inset 4px 0 0 var(--bwf-red);
-
-    @mixin smaller-than $mantine-breakpoint-sm {
-      background: linear-gradient(
-        0deg,
-        var(--bwf-bg) 6%,
-        alpha(var(--bwf-bg), 0.15) 60%,
-        alpha(var(--bwf-bg), 0.45) 100%
-      );
-    }
+    pointer-events: none;
   }
 
-  @mixin smaller-than $mantine-breakpoint-sm {
-    min-height: 420px;
+  &::after {
+    background: var(--glow);
+  }
+
+  &[data-image]::before {
+    background-image: var(--hero);
+    background-size: cover;
+    background-position: var(--hero-pos, right 25%);
+  }
+
+  &[data-image]::after {
+    background:
+      var(--glow),
+      linear-gradient(
+        90deg,
+        var(--bwf-bg-sunken) 22%,
+        alpha(var(--bwf-bg-sunken), 0.7) 48%,
+        alpha(var(--bwf-bg-sunken), 0) 78%
+      ),
+      linear-gradient(0deg, alpha(var(--bwf-bg-sunken), 0.85) 0%, alpha(var(--bwf-bg-sunken), 0) 40%);
+  }
+
+  &:not([data-image])::before {
+    --line: alpha(var(--mantine-color-white), 0.05);
+    background:
+      linear-gradient(var(--line), var(--line)) 64% 0 / 2px 100% no-repeat,
+      linear-gradient(var(--line), var(--line)) 92% 0 / 2px 100% no-repeat,
+      linear-gradient(var(--line), var(--line)) 0 34% / 100% 2px no-repeat,
+      radial-gradient(circle at 82% 24%, alpha(var(--mantine-color-white), 0.04), transparent 58%);
+  }
+
+  @container athlete (width < 640px) {
+    --pad: 16px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas:
+      'pic'
+      'id'
+      'ranks'
+      'stats';
+    gap: 16px;
+    border-radius: 20px;
+
+    &:is([data-image], [data-portrait]) {
+      min-height: 0;
+    }
+
+    &[data-image] {
+      padding-top: 180px;
+    }
+
+    &[data-image]::before {
+      bottom: auto;
+      height: 340px;
+      background-position: var(--hero-pos, center 15%);
+    }
+
+    &[data-image]::after {
+      background:
+        var(--glow),
+        linear-gradient(
+          180deg,
+          alpha(var(--bwf-bg-sunken), 0.15) 0,
+          alpha(var(--bwf-bg-sunken), 0) 90px,
+          alpha(var(--bwf-bg-sunken), 0.82) 220px,
+          var(--bwf-bg-sunken) 340px
+        );
+    }
   }
 }
 
-.content {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  padding: 28px 32px;
+.portrait {
+  grid-area: pic;
+  justify-self: end;
+  align-self: center;
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
+  width: clamp(180px, 20cqi, 280px);
+  aspect-ratio: 4 / 5;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 48px alpha(var(--mantine-color-black), 0.45);
 
-  @mixin smaller-than $mantine-breakpoint-sm {
-    padding: 20px;
+  @container athlete (width < 640px) {
+    justify-self: start;
+    width: 112px;
+    border-radius: 14px;
   }
 }
 
 .identity {
+  grid-area: id;
+  align-self: end;
   min-width: 0;
-  max-width: 560px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
-.meta {
+.tags {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 12px;
+  gap: 8px;
+}
+
+.country {
+  padding: 5px 11px;
   font-size: 13px;
-  color: var(--bwf-text-3);
-}
-
-.prize {
-  color: var(--bwf-muted);
-
-  b {
-    color: var(--bwf-text);
-    font-weight: 600;
-  }
-}
-
-.title {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  min-width: 0;
-
-  @mixin smaller-than $mantine-breakpoint-sm {
-    gap: 16px;
-  }
-}
-
-.avatar {
-  box-shadow:
-    0 0 0 3px var(--bwf-bg-sunken),
-    0 0 0 5px var(--bwf-red);
+  color: var(--bwf-text);
 }
 
 .name {
   min-width: 0;
   margin: 0;
   font-family: 'Archivo', var(--mantine-font-family);
-  font-size: 76px;
-  line-height: 0.92;
+  font-size: clamp(46px, 6.4cqi, 96px);
+  line-height: 0.9;
   overflow-wrap: anywhere;
+  text-shadow: 0 2px 24px alpha(var(--bwf-bg-sunken), 0.6);
 
-  .first,
-  .last {
+  .part {
     display: block;
-    font-size: 0.52em;
+    font-size: 0.46em;
     font-weight: 400;
     font-stretch: 92%;
     letter-spacing: -0.01em;
@@ -129,90 +161,309 @@
     &[data-strong] {
       font-size: 1em;
       font-weight: 850;
-      font-stretch: 68%;
+      font-stretch: 66%;
       letter-spacing: -0.005em;
+      text-transform: uppercase;
       color: var(--bwf-text);
     }
   }
-
-  @mixin smaller-than $mantine-breakpoint-sm {
-    font-size: 54px;
-  }
 }
 
-.cards {
+.vitals {
   display: flex;
   flex-wrap: wrap;
-  align-items: stretch;
-  gap: 10px;
-}
+  margin: 0;
 
-.card {
-  min-width: 140px;
-  padding: 12px 16px;
-  border-radius: 14px;
-  background: alpha(var(--bwf-bg), 0.7);
-  border: 1px solid var(--mantine-color-slate-3);
-  backdrop-filter: blur(10px);
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  color: var(--bwf-muted);
-
-  &:first-child {
-    background: alpha(var(--bwf-red), 0.82);
-    border-color: alpha(var(--bwf-red-text), 0.6);
-    color: var(--bwf-red-pale);
+  @container athlete (width < 640px) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-.cardLabel {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.cardRank {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-}
-
-.cardNum {
-  font-family: 'Archivo', var(--mantine-font-family);
-  font-size: 48px;
-  font-weight: 850;
-  font-stretch: 68%;
-  letter-spacing: 0;
-  line-height: 1;
-  color: var(--bwf-text);
-  font-variant-numeric: tabular-nums;
-}
-
-.cardChange {
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.cardSub {
-  font-size: 12px;
-
-  b {
-    font-weight: 700;
-    color: var(--bwf-text);
-  }
-}
-
-.cardHigh {
+.vital {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px solid alpha(var(--mantine-color-white), 0.12);
+  padding-inline: 18px;
+  border-left: 1px solid var(--hairline);
+
+  &:first-child {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  @container athlete (width < 640px) {
+    padding-inline: 12px;
+  }
 }
 
-.cardPartner {
-  color: inherit;
+.vitalValue {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  color: var(--bwf-text);
+
+  @container athlete (width < 640px) {
+    font-size: 17px;
+  }
+}
+
+.unit {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--bwf-muted);
+}
+
+.follow {
+  position: absolute;
+  z-index: 1;
+  top: var(--pad);
+  right: var(--pad);
+}
+
+.ranks {
+  grid-area: ranks;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 260px);
+  grid-template-rows: repeat(4, auto);
+  justify-content: start;
+  column-gap: 10px;
+
+  @container athlete (width < 640px) {
+    grid-auto-columns: minmax(158px, 1fr);
+    justify-content: stretch;
+    column-gap: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-inline: calc(-1 * var(--pad));
+    padding-inline: var(--pad);
+    scroll-padding-inline: var(--pad);
+  }
+}
+
+.rank {
+  position: relative;
+  grid-row: span 4;
+  display: grid;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: alpha(var(--bwf-bg), 0.55);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  scroll-snap-align: start;
+  transition:
+    border-color 0.15s,
+    opacity 0.2s,
+    transform 0.15s;
+
+  &[data-switch]:hover {
+    border-color: alpha(var(--mantine-color-white), 0.24);
+  }
+
+  &[data-switch]:has(> button:active) {
+    transform: scale(0.985);
+  }
+
+  &[data-active] {
+    border-color: alpha(var(--bwf-red-text), 0.55);
+    box-shadow: inset 0 2px 0 var(--bwf-red);
+  }
+
+  .ranks[data-picked] &:not([data-active]) {
+    opacity: 0.6;
+  }
+
+  @container athlete (width < 640px) {
+    padding: 10px 11px;
+  }
+}
+
+.rankHead {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.rankEvent {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.04em;
+  color: var(--bwf-text);
+}
+
+.rankKind {
+  font-size: 11px;
+  color: var(--bwf-muted);
+}
+
+.rankPartner {
+  min-width: 0;
+  padding-top: 8px;
+  font-size: 12px;
+  color: var(--bwf-text-3);
+
+  .ranks:not([data-pairs]) & {
+    display: none;
+  }
+}
+
+.rankLine {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-top: 6px;
+  font-size: 12px;
+}
+
+.rankNum {
+  font-size: 48px;
+  font-weight: 850;
+  font-stretch: 66%;
+  color: var(--bwf-text);
+
+  @container athlete (width < 640px) {
+    font-size: 38px;
+  }
+}
+
+.flat {
+  font-weight: 600;
+  color: var(--bwf-faint);
+}
+
+.minis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--hairline);
+}
+
+.mini {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-inline: 8px;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  & + & {
+    border-left: 1px solid var(--hairline);
+  }
+
+  dt {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--bwf-muted);
+  }
+
+  dd {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--bwf-text);
+  }
+
+  @container athlete (width < 640px) {
+    padding-inline: 6px;
+
+    dd {
+      font-size: 13px;
+    }
+  }
+}
+
+.stats {
+  grid-area: stats;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto;
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: center;
+  margin: 0 calc(-1 * var(--pad));
+  padding-left: var(--pad);
+  border-top: 1px solid var(--hairline);
+  background: alpha(var(--bwf-bg), 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  @container athlete (width < 640px) {
+    grid-auto-columns: minmax(104px, 1fr);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+}
+
+.statsLabel {
+  padding-right: 4px;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+}
+
+.stat {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px var(--pad);
+  border-left: 1px solid var(--hairline);
+
+  dd {
+    margin: 0;
+  }
+
+  @container athlete (width < 640px) {
+    gap: 2px;
+    padding: 10px 14px;
+  }
+}
+
+.statValue {
+  font-size: 34px;
+  color: var(--bwf-text);
+
+  @container athlete (width < 640px) {
+    font-size: 26px;
+  }
+}
+
+.statSub {
+  font-size: 12px;
+  color: var(--bwf-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.statSkeleton {
+  margin: 14px var(--pad);
+}
+
+.hero:not([data-image], [data-portrait]) .tags {
+  @container athlete (width < 640px) {
+    padding-right: 120px;
+  }
 }

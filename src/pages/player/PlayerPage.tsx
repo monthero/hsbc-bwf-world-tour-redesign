@@ -1,12 +1,12 @@
 import { Skeleton } from '@mantine/core';
-import { getRouteApi, useCanGoBack, useRouter } from '@tanstack/react-router';
+import { getRouteApi, useCanGoBack, useNavigate, useRouter } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
 import { NotFound, type NotFoundAction } from '~/components/layout';
 import { MatchDetailModal } from '~/components/match';
 import { BackPill } from '~/components/ui';
-import { NOT_FOUND, SEASON_YEAR } from '~/constants';
+import { NOT_FOUND } from '~/constants';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { usePlayerProfile } from '~/hooks/useSeason';
 import { useTournamentsByCode } from '~/hooks/useTournaments';
@@ -15,15 +15,16 @@ import { STAY } from '~/utils/navigation';
 import { tournamentParams } from '~/utils/tournaments';
 
 import { Hero } from './components/Hero';
+import { Kit } from './components/Kit';
 import { MatchesTab } from './components/MatchesTab';
 import { MediaTab } from './components/MediaTab';
 import { OverviewTab } from './components/OverviewTab';
 import { RankingsTab } from './components/RankingsTab';
 import { ResultsTab } from './components/ResultsTab';
-import { SubNav } from './components/SubNav';
+import { Disciplines, SubNav } from './components/SubNav';
 import { usePlayerHistory, usePlayerMediaCount } from './hooks';
-import type { PlayerTab } from './types';
-import { careerHighs, careerOf, eventsOf, partnerHistory } from './utils';
+import type { PlayerSearch, PlayerTab } from './types';
+import { careerHighs, careerOf, eventsOf, partnerHistory, scopeHistory } from './utils';
 
 import classes from './PlayerPage.module.css';
 import utils from '~/styles/utils.module.css';
@@ -36,10 +37,11 @@ const MISSING_ACTION: NotFoundAction = { label: 'Back to rankings', link: { to: 
 
 export const PlayerPage: FC = () => {
   const { id } = route.useParams();
-  return <PlayerProfile key={id} id={id} />;
+  const search = route.useSearch();
+  return <PlayerProfile key={id} id={id} search={search} />;
 };
 
-const Back = memo<{ from: string | undefined }>(({ from }) => {
+export const Back = memo<{ from: string | undefined }>(({ from }) => {
   const router = useRouter();
   const canGoBack = useCanGoBack();
   const byCode = useTournamentsByCode();
@@ -55,43 +57,43 @@ const Back = memo<{ from: string | undefined }>(({ from }) => {
   return <BackPill link={{ to: '/calendar' }}>Calendar</BackPill>;
 });
 
-const PlayerProfile: FC<{ id: string }> = ({ id }) => {
-  const { tab = 'overview', from, season, event } = route.useSearch();
-  const navigate = route.useNavigate();
+export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, search }) => {
+  const { tab = 'overview', from, season, event: picked } = search;
+  const navigate = useNavigate();
   const profile = usePlayerProfile(id);
   const { player, matches, ready, index, rankingId, bio, ranks } = profile;
   useDocumentTitle(!player && profile.status === 'missing' ? NOT_FOUND : [player?.name, 'Players'], 'bwf');
   const history = usePlayerHistory(rankingId, index);
   const mediaCount = usePlayerMediaCount(id).data;
-  const career = useMemo(() => careerOf(matches), [matches]);
-  const current = useMemo(() => career.seasons.find((s) => s.year === SEASON_YEAR), [career]);
   const events = useMemo(() => eventsOf(matches), [matches]);
-  const active = event && events.includes(event) ? event : undefined;
-  const scoped = useMemo(
-    () => (active ? careerOf(matches.filter((pm) => pm.match.event === active)) : career),
-    [active, matches, career],
-  );
-  const partners = useMemo(() => partnerHistory(matches, id), [matches, id]);
+  const event = picked && events.includes(picked) ? picked : undefined;
+  const scoped = useMemo(() => (event ? matches.filter((pm) => pm.match.event === event) : matches), [event, matches]);
+  const career = useMemo(() => careerOf(matches), [matches]);
+  const scopedCareer = useMemo(() => (event ? careerOf(scoped) : career), [event, scoped, career]);
+  const partners = useMemo(() => partnerHistory(scoped, id), [scoped, id]);
   const highs = useMemo(() => careerHighs(ranks, history.view), [ranks, history.view]);
+  const view = useMemo(() => scopeHistory(history.view, event), [history.view, event]);
   const [selected, setSelected] = useState<PlayerMatch | null>(null);
   const closeMatch = useCallback(() => setSelected(null), []);
   const setTab = useCallback(
-    (t: PlayerTab) => void navigate({ search: (s) => ({ ...s, tab: t === 'overview' ? undefined : t }), ...STAY }),
+    (t: PlayerTab) =>
+      void navigate({ to: '.', search: (s) => ({ ...s, tab: t === 'overview' ? undefined : t }), ...STAY }),
     [navigate],
   );
   const setSeason = useCallback(
-    (y: number) => void navigate({ search: (s) => ({ ...s, season: y }), ...STAY }),
+    (y: number) => void navigate({ to: '.', search: (s) => ({ ...s, season: y }), ...STAY }),
     [navigate],
   );
   const setEvent = useCallback(
-    (ev: EventCode | undefined) => void navigate({ search: (s) => ({ ...s, event: ev }), ...STAY }),
+    (ev: EventCode | undefined) => void navigate({ to: '.', search: (s) => ({ ...s, event: ev }), ...STAY }),
     [navigate],
   );
   const openSeason = useCallback(
-    (y: number) => void navigate({ search: (s) => ({ ...s, tab: 'matches', season: y }), resetScroll: false }),
+    (y: number) => void navigate({ to: '.', search: (s) => ({ ...s, tab: 'matches', season: y }), resetScroll: false }),
     [navigate],
   );
   const openResults = useCallback(() => setTab('results'), [setTab]);
+  const openMedia = useCallback(() => setTab('media'), [setTab]);
 
   if (!player && profile.status === 'missing')
     return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={MISSING_ACTION} />;
@@ -99,53 +101,55 @@ const PlayerProfile: FC<{ id: string }> = ({ id }) => {
   return (
     <section className={clsx(utils.container, classes.page)}>
       <Back from={from} />
-      {!player && <Skeleton height={340} radius={20} />}
+      {!player && <Skeleton height={440} radius={22} />}
       {player && (
         <>
           <Hero
             player={player}
             hero={profile.profile?.hero}
             focus={profile.profile?.heroFocus}
-            seed={profile.seed}
-            prize={bio.prize}
+            retired={profile.retired}
+            bio={bio}
             ranks={ranks}
             highs={highs}
-            retired={profile.retired}
+            career={career}
+            ready={ready}
+            event={event}
+            onEvent={setEvent}
           />
-          <SubNav tab={tab} onTab={setTab} player={player} mediaCount={mediaCount} />
+          {bio.equipment.length > 0 && <Kit items={bio.equipment} />}
+          <SubNav tab={tab} onTab={setTab} mediaCount={mediaCount} />
+          {tab !== 'media' && events.length > 1 && <Disciplines events={events} event={event} onEvent={setEvent} />}
           {tab === 'overview' && (
             <OverviewTab
               playerId={id}
-              season={current}
-              career={scoped}
-              events={events}
-              event={active}
+              matches={scoped}
+              seasons={scopedCareer.seasons}
+              titles={scopedCareer.titles}
               partners={partners}
-              ready={ready}
               bio={bio}
-              history={history.view}
+              history={view}
               historyLoading={history.loading}
+              ready={ready}
+              retired={!!profile.retired}
               onOpenMatch={setSelected}
               onSeason={openSeason}
-              onEvent={setEvent}
               onResults={openResults}
+              onMedia={openMedia}
             />
           )}
           {tab === 'matches' && (
             <MatchesTab
               playerId={id}
-              seasons={scoped.seasons}
-              events={events}
+              seasons={scopedCareer.seasons}
               season={season}
-              event={active}
               ready={ready}
               onSeason={setSeason}
-              onEvent={setEvent}
               onOpenMatch={setSelected}
             />
           )}
-          {tab === 'results' && <ResultsTab history={history.view} loading={history.loading} />}
-          {tab === 'rankings' && <RankingsTab ranks={ranks} history={history.view} loading={history.loading} />}
+          {tab === 'results' && <ResultsTab history={view} loading={history.loading} />}
+          {tab === 'rankings' && <RankingsTab ranks={ranks} history={view} loading={history.loading} />}
           {tab === 'media' && <MediaTab playerId={id} matches={matches} />}
         </>
       )}

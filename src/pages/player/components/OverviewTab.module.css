@@ -1,53 +1,133 @@
-.top {
+.overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
-}
+  gap: 16px;
 
-.upNext {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 18px 20px;
-  border-radius: 18px;
-  color: var(--bwf-text);
-  transition: border-color 0.15s;
+  &[data-side] {
+    grid-template-columns: minmax(0, 1.75fr) minmax(320px, 1fr);
+  }
 
-  &:hover {
-    border-color: alpha(var(--bwf-red-text), 0.6);
+  @container athlete (width < 960px) {
+    &[data-side] {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 }
 
-.upNextLabel {
-  color: var(--bwf-red-soft);
+.column {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.upNextOpps {
+.matches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+}
+
+.match {
+  position: relative;
+  min-width: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: var(--bwf-card-radius);
+  transition: border-color 0.2s;
+
+  &[data-kind='last']:hover {
+    border-color: var(--bwf-border-hover);
+  }
+
+  &:not([data-kind='last']) > header > :first-child {
+    color: var(--bwf-red-soft);
+  }
+}
+
+.when {
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 18px;
-  font-weight: 600;
 }
 
-.vs {
-  color: var(--bwf-muted);
+.matchTour {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tourName {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.matchBody {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--bwf-line);
+
+  .match:not([data-kind='last']) & {
+    border-top-color: alpha(var(--bwf-red), 0.2);
+  }
+}
+
+.opps {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
   font-weight: 500;
 }
 
-.upNextMeta {
+.stats {
+  display: grid;
+  grid-template-columns: minmax(140px, 1.4fr) repeat(4, minmax(0, 1fr));
+  gap: 16px 20px;
+
+  @container athlete (width < 640px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+  }
+}
+
+.stat {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  @container athlete (width < 640px) {
+    &:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+.line {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px 12px;
-  font-size: 13px;
-  color: var(--bwf-text-3);
+  gap: 8px 18px;
+
+  > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
 }
 
-.formSkeleton {
-  display: grid;
-  grid-template-columns: repeat(10, minmax(0, 1fr));
-  gap: 5px;
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--bwf-line);
 }
 
 .formFoot {
@@ -55,99 +135,79 @@
   color: var(--bwf-faint);
 }
 
-.glanceSub {
-  font-size: 12px;
-  color: var(--bwf-dim);
+.seasons {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 4px;
 }
 
-.bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 6px;
-  height: 160px;
-  margin-top: 2px;
-}
-
-.barCol {
-  --tone: var(--mantine-color-slate-3);
-  --tag: var(--bwf-faint);
-  flex: 1;
+.season {
   min-width: 0;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  padding: 6px 2px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--bwf-muted);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background 0.15s;
 
-  &[data-tier='gold'] {
-    --tone: var(--bwf-gold);
-    --tag: var(--bwf-gold);
+  &:hover {
+    background: var(--bwf-surface-3);
+
+    .bar::after {
+      background: var(--bwf-red);
+    }
   }
-
-  &[data-tier='silver'] {
-    --tone: var(--bwf-silver);
-    --tag: var(--bwf-silver);
-  }
-
-  &[data-tier='bronze'] {
-    --tone: var(--bwf-bronze);
-    --tag: var(--bwf-bronze);
-  }
-}
-
-.barTag {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--tag);
 }
 
 .bar {
-  width: 100%;
-  max-width: 44px;
-  height: var(--h);
-  border-radius: 6px 6px 2px 2px;
-  background: var(--tone);
+  position: relative;
+  width: min(100%, 28px);
+  height: 96px;
+  border-radius: 6px;
+  background: var(--bwf-surface-3);
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0;
+    height: var(--v);
+    border-radius: inherit;
+    background: var(--bwf-raised);
+    transition: background 0.15s;
+  }
+
+  @container athlete (width < 640px) {
+    height: 72px;
+  }
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr));
-  gap: 8px;
-}
-
-.ambition {
-  margin: 0;
-  max-width: 68ch;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--bwf-text-2);
-  text-wrap: pretty;
-}
-
-.links {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.social {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: var(--bwf-surface-4);
-  color: var(--bwf-text-3);
+.seasonRate {
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--bwf-text-3);
+}
+
+.seasonYear {
+  font-size: 12px;
+
+  @container athlete (width < 640px) {
+    font-size: 11px;
+  }
+}
+
+.link {
   text-decoration: none;
-  transition:
-    color 0.15s,
-    background 0.15s;
 
   &:hover {
-    background: var(--bwf-raised);
-    color: var(--bwf-text);
+    color: var(--bwf-red-soft);
   }
 }

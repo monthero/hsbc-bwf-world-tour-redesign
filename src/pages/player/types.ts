@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { EventCode } from '~/api/schemas';
+import { EventCode, type Level } from '~/api/schemas';
 import type { MedalKind, Player, PlayerMatch, Tournament } from '~/types';
 
 export const PlayerTab = z.enum(['overview', 'matches', 'results', 'rankings', 'media']);
@@ -50,8 +50,6 @@ export interface HistoryView {
   groups: HistoryGroup[];
   results: ResultGroup[];
 }
-
-export type MedalFilter = MedalKind | null;
 
 export type MedalCounts = Record<MedalKind, number>;
 
@@ -104,4 +102,25 @@ export interface CareerHigh {
   rank: number;
   weeks: number | null;
   partner: Player | null;
+}
+
+export interface WinLoss {
+  wins: number;
+  losses: number;
+}
+
+export interface RivalRow extends WinLoss {
+  key: string;
+  players: Player[];
+  matches: number;
+}
+
+export interface LevelRecord extends WinLoss {
+  level: Level;
+}
+
+export interface SeasonBreakdown {
+  levels: LevelRecord[];
+  deciders: WinLoss;
+  avgMin: number;
 }

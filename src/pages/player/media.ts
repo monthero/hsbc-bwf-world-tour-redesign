@@ -1,29 +1,13 @@
 import type { MediaItem, PlayerVideo } from '~/api/schemas';
 import type { Match, PlayerMatch, Tournament } from '~/types';
-import { date } from '~/utils/dates';
 import { compareText } from '~/utils/names';
-import type { BriefStory } from '~/utils/news';
 import { opponentsOf } from '~/utils/season';
-
-import { NEWS_GROUP_MIN } from './constants';
 
 export interface VideoEntry {
   item: MediaItem;
   code: string;
   match: Match | undefined;
   tournament: Tournament | undefined;
-}
-
-export interface VideoGroup {
-  key: string;
-  tournament: Tournament | undefined;
-  entries: VideoEntry[];
-}
-
-export interface NewsGroup {
-  key: string;
-  label: string | null;
-  stories: BriefStory[];
 }
 
 const matchKey = (code: string, event: string, round: string, opponents: readonly string[]) =>
@@ -67,19 +51,3 @@ export const mergeVideos = (...lists: (readonly VideoEntry[])[]) =>
   [...new Map(lists.flat().map((e) => [e.item.id, e])).values()].sort((a, b) =>
     b.item.publishedAt.localeCompare(a.item.publishedAt),
   );
-
-export const groupVideos = (entries: readonly VideoEntry[]): VideoGroup[] =>
-  [...Map.groupBy(entries, (e) => e.code)].map(([key, list]) => ({
-    key,
-    tournament: list[0]?.tournament,
-    entries: list,
-  }));
-
-export const groupNews = (stories: readonly BriefStory[], total: number): NewsGroup[] => {
-  if (total < NEWS_GROUP_MIN) return [{ key: 'all', label: null, stories: [...stories] }];
-  return [...Map.groupBy(stories, (s) => String(date(s.item.publishedAt).year()))].map(([year, list]) => ({
-    key: year,
-    label: year,
-    stories: list,
-  }));
-};

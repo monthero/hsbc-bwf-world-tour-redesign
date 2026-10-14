@@ -1,9 +1,12 @@
-import { memo, type FC, type KeyboardEvent, type PointerEvent } from 'react';
+import { memo, useMemo, type FC, type KeyboardEvent, type PointerEvent } from 'react';
 
 import { Hero } from '~/pages/player/components/Hero';
 import type { CareerHigh } from '~/pages/player/types';
+import { careerOf } from '~/pages/player/utils';
 import type { EventCode, Focus, Player, RankView } from '~/types';
+import { HEIGHT_UNIT } from '~/utils/format';
 import { heroVars } from '~/utils/images';
+import { buildBio } from '~/utils/players';
 
 import { arrowNudge, clampPercent, useDrag, useFramingEditor, type FramingEditorProps } from './framing';
 import { FramingControls } from './FramingControls';
@@ -13,6 +16,8 @@ import classes from './HeroFraming.module.css';
 const NO_RANKS: RankView[] = [];
 const NO_HIGHS: ReadonlyMap<EventCode, CareerHigh> = new Map();
 const CENTER: Focus = { x: 50, y: 50 };
+const EMPTY_BIO = buildBio(undefined, HEIGHT_UNIT);
+const NO_CAREER = careerOf([]);
 
 const pointAt = (e: PointerEvent<HTMLElement>): Focus => {
   const r = e.currentTarget.getBoundingClientRect();
@@ -25,9 +30,21 @@ const pointAt = (e: PointerEvent<HTMLElement>): Focus => {
 const focusLabel = (focus: Focus | null) => (focus ? `Focus ${focus.x}% · ${focus.y}%` : 'Default framing');
 
 const HeroPreview = memo<{ player: Player; hero: string; prize: string; focus: Focus | null }>(
-  ({ player, hero, prize, focus }) => (
-    <Hero player={player} hero={hero} seed={null} prize={prize} ranks={NO_RANKS} highs={NO_HIGHS} focus={focus} />
-  ),
+  ({ player, hero, prize, focus }) => {
+    const bio = useMemo(() => ({ ...EMPTY_BIO, prize }), [prize]);
+    return (
+      <Hero
+        player={player}
+        hero={hero}
+        focus={focus}
+        bio={bio}
+        ranks={NO_RANKS}
+        highs={NO_HIGHS}
+        career={NO_CAREER}
+        ready
+      />
+    );
+  },
 );
 
 const FocusPad: FC<{

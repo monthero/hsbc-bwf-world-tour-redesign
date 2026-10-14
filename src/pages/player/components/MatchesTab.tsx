@@ -3,83 +3,75 @@ import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
-import { EventTag, OutcomeBadge, OutcomeLabel, ScoreChips, TeamPlayers } from '~/components/match';
+import { ScoreChips, TeamPlayers } from '~/components/match';
 import { Partner } from '~/components/player';
-import { LogoTile } from '~/components/tournament';
-import { CardHit, EmptyState, Segmented, SectionTitle, type SegmentedOption } from '~/components/ui';
-import type { EventCode, PlayerMatch } from '~/types';
+import { CardHit, EmptyState, Segmented, type SegmentedOption } from '~/components/ui';
+import { EVENT_NAMES } from '~/constants';
+import type { PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
+import { plural } from '~/utils/format';
 import { roundName } from '~/utils/matches';
-import { medalOfResult } from '~/utils/medals';
-import { centerChild } from '~/utils/scroll';
+import { centerChild, scrollBehavior } from '~/utils/scroll';
 import { opponentsOf } from '~/utils/season';
 import { tournamentParams } from '~/utils/tournaments';
 
 import type { EventRun, SeasonView, TournamentRuns } from '../types';
-import { eventsOf, teammateOf, tournamentRuns } from '../utils';
-import { EventPicker } from './EventPicker';
-import { ResultPill } from './ResultPill';
-import { SeasonRecord } from './SeasonRecord';
+import { eventsOf, teammateOf, tournamentRuns, tournamentsOf, winRate } from '../utils';
+import { LevelDot, Outcome, ResultText } from './parts';
 
 import classes from './MatchesTab.module.css';
 import shared from './shared.module.css';
 import utils from '~/styles/utils.module.css';
 
-const ROW_SKELETON = [0, 1, 2, 3];
-
-const centerOption = (el: HTMLDivElement | null, index: number) => {
-  const on = el?.querySelectorAll<HTMLElement>('button')[index];
-  if (el && on) centerChild(el, on, 'smooth');
-};
-
-const podium = (result: number | null): result is number => result !== null && !!medalOfResult(result);
-
-interface MatchesTabProps {
+interface MatchesProps {
   playerId: string;
   seasons: SeasonView[];
-  events: readonly EventCode[];
   season: number | undefined;
-  event: EventCode | undefined;
   ready: boolean;
   onSeason: (year: number) => void;
-  onEvent: (event: EventCode | undefined) => void;
   onOpenMatch: (pm: PlayerMatch) => void;
 }
 
-export const MatchesTab = memo<MatchesTabProps>(
-  ({ playerId, seasons, events, season, event, ready, onSeason, onEvent, onOpenMatch }) => {
-    const current = seasons.find((s) => s.year === season) ?? seasons[0];
-    const groups = useMemo(() => (current ? tournamentRuns(current.matches, playerId) : []), [current, playerId]);
-    const mixed = useMemo(() => !!current && eventsOf(current.matches).length > 1, [current]);
-    if (!ready)
-      return (
-        <div className={clsx(utils.card, shared.panel)}>
-          {ROW_SKELETON.map((i) => (
-            <Skeleton key={i} height={104} radius={12} />
-          ))}
-        </div>
-      );
-    if (!current) return <EmptyState>No World Tour matches on record.</EmptyState>;
-    return (
-      <div className={shared.stack}>
-        {(events.length > 1 || seasons.length > 1) && (
-          <div className={classes.filters}>
-            {events.length > 1 && <EventPicker events={events} value={event} onChange={onEvent} />}
-            {seasons.length > 1 && <SeasonPicker seasons={seasons} year={current.year} onSeason={onSeason} />}
-          </div>
-        )}
-        <div className={clsx(utils.card, shared.panel)}>
-          <SectionTitle count={groups.length} aside={<SeasonRecord season={current} />}>
-            {seasons.length > 1 ? 'Tournaments' : `${current.year} tournaments`}
-          </SectionTitle>
+const sharedPartners = (groups: readonly TournamentRuns[]) => {
+  const byEvent = new Map<string, Set<string>>();
+  for (const run of groups.flatMap((g) => g.runs)) {
+    if (!run.partner) continue;
+    const set = byEvent.get(run.event) ?? new Set<string>();
+    set.add(run.partner.id || run.partner.name);
+    byEvent.set(run.event, set);
+  }
+  return new Set([...byEvent].filter(([, set]) => set.size > 1).map(([ev]) => ev));
+};
+
+export const MatchesTab = memo<MatchesProps>(({ playerId, seasons, season, ready, onSeason, onOpenMatch }) => {
+  const current = seasons.find((s) => s.year === season) ?? seasons[0];
+  const groups = useMemo(() => (current ? tournamentRuns(current.matches, playerId) : []), [current, playerId]);
+  const mixed = useMemo(() => !!current && eventsOf(current.matches).length > 1, [current]);
+  const varied = useMemo(() => sharedPartners(groups), [groups]);
+  const played = useMemo(() => (current ? tournamentsOf(current) : 0), [current]);
+  if (!ready) return <Skeleton height={520} radius={18} />;
+  if (!current) return <EmptyState>No World Tour matches on record.</EmptyState>;
+  return (
+    <div className={classes.tab}>
+      <div className={classes.bar}>
+        {seasons.length > 1 && <SeasonPicker seasons={seasons} year={current.year} onSeason={onSeason} />}
+        <span className={shared.sub}>
+          <b>
+            {current.wins}–{current.losses}
+          </b>{' '}
+          · {winRate(current.wins, current.losses)} · {plural(played, 'tournament')}
+        </span>
+      </div>
+      <div className={clsx(utils.card, shared.section)}>
+        <div className={shared.columns}>
           {groups.map((g) => (
-            <TournamentGroup key={g.key} group={g} self={playerId} mixed={mixed} onOpen={onOpenMatch} />
+            <TournamentGroup key={g.key} group={g} self={playerId} mixed={mixed} varied={varied} onOpen={onOpenMatch} />
           ))}
         </div>
       </div>
-    );
-  },
-);
+    </div>
+  );
+});
 
 const SeasonPicker = memo<{ seasons: SeasonView[]; year: number; onSeason: (year: number) => void }>(
   ({ seasons, year, onSeason }) => {
@@ -95,7 +87,11 @@ const SeasonPicker = memo<{ seasons: SeasonView[]; year: number; onSeason: (year
       },
       [onSeason],
     );
-    useEffect(() => centerOption(ref.current, index), [index]);
+    useEffect(() => {
+      const el = ref.current;
+      const on = el?.querySelectorAll<HTMLElement>('button')[index];
+      if (el && on) centerChild(el, on, scrollBehavior());
+    }, [index]);
     return (
       <div ref={ref} className={clsx(utils.noScrollbar, classes.seasons)}>
         <Segmented className={classes.seasonSeg} options={options} value={String(year)} onChange={select} />
@@ -108,78 +104,82 @@ const TournamentGroup = memo<{
   group: TournamentRuns;
   self: string;
   mixed: boolean;
+  varied: ReadonlySet<string>;
   onOpen: (pm: PlayerMatch) => void;
-}>(({ group, self, mixed, onOpen }) => {
+}>(({ group, self, mixed, varied, onOpen }) => {
   const t = group.tournament;
   const single = group.runs.length === 1 ? group.runs[0] : undefined;
   return (
     <div className={classes.group}>
       <div className={classes.groupHead}>
-        <LogoTile src={t.logo} name={t.name} size={32} eager />
-        <span className={classes.groupTitle}>
+        <LevelDot level={t.level} />
+        <span className={shared.rowMain}>
           <Link to="/world-tour/$year/$slug" params={tournamentParams(t)} className={classes.tour}>
             {t.shortTitle}
           </Link>
-          <span className={classes.stage}>
-            {t.dates} · {t.levelLabel}
-          </span>
-          {single && <RunMeta run={single} mixed={mixed} />}
+          <span className={shared.rowMeta}>{t.dates}</span>
         </span>
-        {single && podium(single.result) && <ResultPill result={single.result} />}
+        {single && <ResultText result={single.result} />}
       </div>
       {group.runs.map((run) => (
-        <RunView key={run.key} run={run} self={self} head={!single} onOpen={onOpen} />
+        <RunView
+          key={run.key}
+          run={run}
+          self={self}
+          head={!single || mixed || (!!run.partner && varied.has(run.event))}
+          result={!single}
+          onOpen={onOpen}
+        />
       ))}
     </div>
   );
 });
 
-const RunMeta = memo<{ run: EventRun; mixed: boolean }>(({ run, mixed }) => {
-  if (!mixed && !run.partner) return null;
-  return (
-    <span className={classes.meta}>
-      {mixed && <EventTag event={run.event} />}
-      {run.partner && <Partner player={run.partner} />}
-    </span>
-  );
-});
-
-const RunView = memo<{ run: EventRun; self: string; head: boolean; onOpen: (pm: PlayerMatch) => void }>(
-  ({ run, self, head, onOpen }) => {
-    return (
-      <>
-        {head && (
-          <div className={classes.runHead}>
-            <RunMeta run={run} mixed />
-            {podium(run.result) && <ResultPill result={run.result} />}
-          </div>
-        )}
-        {run.matches.map((pm) => (
-          <MatchRow key={pm.key} pm={pm} self={run.perMatch ? self : undefined} onOpen={onOpen} />
-        ))}
-      </>
-    );
-  },
-);
+const RunView = memo<{
+  run: EventRun;
+  self: string;
+  head: boolean;
+  result: boolean;
+  onOpen: (pm: PlayerMatch) => void;
+}>(({ run, self, head, result, onOpen }) => (
+  <div className={shared.rows}>
+    {head && (
+      <div className={classes.runHead}>
+        <span className={shared.rowMeta}>
+          <span>{EVENT_NAMES[run.event]}</span>
+          {run.partner && <Partner player={run.partner} />}
+        </span>
+        {result && <ResultText result={run.result} />}
+      </div>
+    )}
+    {run.matches.map((pm) => (
+      <MatchRow key={pm.key} pm={pm} self={run.perMatch ? self : undefined} onOpen={onOpen} />
+    ))}
+  </div>
+));
 
 const MatchRow = memo<{ pm: PlayerMatch; self: string | undefined; onOpen: (pm: PlayerMatch) => void }>(
   ({ pm, self, onOpen }) => {
-    const { match, tournament } = pm;
+    const { match } = pm;
     const open = useCallback(() => onOpen(pm), [onOpen, pm]);
     const partner = self === undefined ? null : teammateOf(pm, self);
     return (
-      <div className={clsx(utils.inset, classes.row)}>
-        <CardHit label={`Open match details · ${tournament.shortTitle}`} onClick={open} />
-        <div className={classes.head}>
-          <span className={classes.round}>{roundName(match.round)}</span>
-          {partner && <Partner player={partner} className={classes.rowPartner} />}
-          <span className={clsx(utils.num, classes.date)}>{formatDayMonth(match.date)}</span>
-        </div>
-        <div className={classes.body}>
-          <OutcomeBadge outcome={pm.outcome} label={<OutcomeLabel pm={pm} />} />
-          <TeamPlayers players={opponentsOf(pm)} flag="xs" className={classes.opps} nameClassName={classes.oppName} />
-          <ScoreChips match={match} side={pm.side} />
-        </div>
+      <div className={shared.row} data-lead>
+        <CardHit label={`Open match details · ${roundName(match.round)}`} onClick={open} />
+        <span className={classes.round} title={roundName(match.round)}>
+          {match.round}
+        </span>
+        <span className={shared.rowMain}>
+          <TeamPlayers players={opponentsOf(pm)} flag="xs" className={shared.rowTitle} />
+          <span className={shared.rowMeta}>
+            {match.date && <span>{formatDayMonth(match.date)}</span>}
+            {partner && <Partner player={partner} short />}
+          </span>
+        </span>
+        <span className={shared.rowSide}>
+          <ScoreChips match={match} side={pm.side} size="sm" />
+          <Outcome pm={pm} />
+        </span>
       </div>
     );
   },

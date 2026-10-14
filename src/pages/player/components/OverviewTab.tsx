@@ -1,46 +1,65 @@
-import { Skeleton, Tooltip } from '@mantine/core';
+import { Skeleton } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
-import { FormStrip, OutcomeLabel, TeamPlayers } from '~/components/match';
-import { BioStat, FactTile, Partner } from '~/components/player';
-import { CardHit, EmptyState, Eyebrow, Footnote, IconExternal, SectionTitle } from '~/components/ui';
+import { FormStrip, OutcomeLabel, ScoreChips, TeamPlayers } from '~/components/match';
+import { LogoTile } from '~/components/tournament';
+import { CardHit, Duration, EmptyState, LiveDot } from '~/components/ui';
 import { EVENT_NAMES, SEASON_YEAR } from '~/constants';
-import type { BioView, EventCode, PlayerMatch } from '~/types';
-import { formatNumber } from '~/utils/format';
+import type { BioView, PlayerMatch } from '~/types';
+import { formatDayMonth } from '~/utils/dates';
 import { roundName } from '~/utils/matches';
-import { opponentsOf, recentForm } from '~/utils/season';
+import { opponentsOf, ownTeam, recentForm } from '~/utils/season';
+import { tournamentParams } from '~/utils/tournaments';
 
-import { EQUIPMENT_NOTE, RECENT_LIMIT, RESULT_TAGS } from '../constants';
-import type { CareerView, HistoryView, PartnerRow, SeasonView } from '../types';
-import { resultLabel, resultTier, teammateOf } from '../utils';
-import { CareerCard } from './CareerCard';
-import { PartnersCard } from './PartnersCard';
+import { RECENT_LIMIT, TITLE_LIMIT } from '../constants';
+import type { HistoryView, PartnerRow, SeasonView } from '../types';
+import {
+  eventsOf,
+  hasProfile,
+  lastMatchOf,
+  nextMatchOf,
+  rivalsOf,
+  seasonBreakdown,
+  shareVars,
+  tournamentsOf,
+  winRate,
+  winShare,
+} from '../utils';
+import { MediaTeaser } from './MediaTab';
+import { LevelDot, ResultText, Section } from './parts';
+import { PartnersSection, RivalsSection } from './People';
+import { ProfileSection } from './ProfileSection';
+import { RankTrend } from './RankTrend';
 
 import classes from './OverviewTab.module.css';
 import shared from './shared.module.css';
 import utils from '~/styles/utils.module.css';
 
-interface OverviewTabProps {
+interface OverviewProps {
   playerId: string;
-  season: SeasonView | undefined;
-  career: CareerView;
-  events: readonly EventCode[];
-  event: EventCode | undefined;
+  matches: readonly PlayerMatch[];
+  seasons: SeasonView[];
+  titles: PlayerMatch[];
   partners: PartnerRow[];
-  ready: boolean;
   bio: BioView;
   history: HistoryView | undefined;
   historyLoading: boolean;
+  ready: boolean;
+  retired: boolean;
   onOpenMatch: (pm: PlayerMatch) => void;
   onSeason: (year: number) => void;
-  onEvent: (event: EventCode | undefined) => void;
   onResults: () => void;
+  onMedia: () => void;
 }
 
-const NO_MATCHES: PlayerMatch[] = [];
+type MatchKind = 'live' | 'next' | 'last';
 
-const FORM_SKELETON = Array.from({ length: RECENT_LIMIT }, (_, i) => i);
+const MATCH_LABELS: Record<MatchKind, string> = { live: 'Live now', next: 'Up next', last: 'Last match' };
+const RIVAL_REPEAT_MIN = 3;
+const RIVAL_LIMIT = 5;
 
 const formOutcome = (pm: PlayerMatch): 'W' | 'L' => (pm.outcome === 'W' ? 'W' : 'L');
 
@@ -49,207 +68,263 @@ const formTip = (pm: PlayerMatch) =>
     .map((p) => p.name)
     .join(' / ')} · ${pm.tournament.shortTitle}`;
 
-const barStyle = (points: number, max: number) =>
-  ({ '--h': `${Math.max(5, Math.round((points / max) * 100))}%` }) as CSSProperties;
-
-export const OverviewTab: FC<OverviewTabProps> = ({
-  playerId,
-  season,
-  career,
-  events,
-  event,
-  partners,
-  ready,
-  bio,
-  history,
-  historyLoading,
-  onOpenMatch,
-  onSeason,
-  onEvent,
-  onResults,
-}) => {
-  const matches = season?.matches ?? NO_MATCHES;
-  const upNext = matches.find((pm) => pm.outcome === 'up' || pm.outcome === 'Live');
-  const hasPersonal = bio.stats.length > 0 || bio.details.length > 0 || bio.links.length > 0;
-  const hasAbout = !!bio.ambition || bio.notes.length > 0;
-  const hasExtra = bio.equipment.length > 0 || hasAbout;
-  return (
-    <div className={shared.stack}>
-      {(hasPersonal || hasExtra) && (
-        <div className={clsx(shared.grid2, classes.top)}>
-          {hasPersonal && <PersonalDetails bio={bio} />}
-          {hasExtra && (
-            <div className={shared.stack}>
-              {bio.equipment.length > 0 && (
-                <div className={clsx(utils.card, shared.panel)}>
-                  <SectionTitle>
-                    <span>
-                      Equipment
-                      <Footnote note={EQUIPMENT_NOTE} />
-                    </span>
-                  </SectionTitle>
-                  <div className={classes.grid}>
-                    {bio.equipment.map((q) => (
-                      <FactTile key={q.key} label={q.label} value={q.value} tone="tile" />
-                    ))}
-                  </div>
-                </div>
+export const OverviewTab = memo<OverviewProps>(
+  ({
+    playerId,
+    matches,
+    seasons,
+    titles,
+    partners,
+    bio,
+    history,
+    historyLoading,
+    ready,
+    retired,
+    onOpenMatch,
+    onSeason,
+    onResults,
+    onMedia,
+  }) => {
+    const next = useMemo(() => nextMatchOf(matches), [matches]);
+    const last = useMemo(() => lastMatchOf(matches), [matches]);
+    const multi = useMemo(() => eventsOf(matches).length > 1, [matches]);
+    const rivals = useMemo(() => rivalsOf(matches, RIVAL_REPEAT_MIN, RIVAL_LIMIT), [matches]);
+    const season = seasons[0];
+    const trend = historyLoading || !!history?.results.some((g) => g.items.length > 1);
+    const side = trend || partners.length > 1 || rivals.length > 0 || hasProfile(bio);
+    return (
+      <div className={classes.overview} data-side={side || undefined}>
+        <div className={classes.column}>
+          {!ready && <Skeleton height={420} radius={18} />}
+          {ready && !season && <EmptyState>No World Tour matches on record since 2018.</EmptyState>}
+          {(next || last) && (
+            <div className={classes.matches}>
+              {next && (
+                <MatchCard
+                  pm={next}
+                  kind={next.outcome === 'Live' ? 'live' : 'next'}
+                  multi={multi}
+                  onOpen={onOpenMatch}
+                />
               )}
-              {hasAbout && <About bio={bio} />}
+              {last && (
+                <MatchCard
+                  pm={last}
+                  kind="last"
+                  label={retired ? 'Last match played' : undefined}
+                  multi={multi}
+                  onOpen={onOpenMatch}
+                />
+              )}
+            </div>
+          )}
+          {season && (
+            <div className={clsx(utils.card, shared.panel)}>
+              <SeasonSection season={season} onOpen={onOpenMatch} onSeason={onSeason} />
+              {seasons.length > 1 && <CareerSection seasons={seasons} onSeason={onSeason} />}
+              {titles.length > 0 && <TitlesSection titles={titles} multi={multi} />}
             </div>
           )}
         </div>
-      )}
-      {(!ready || season) && (
-        <div className={shared.grid2}>
-          {upNext && <UpNext pm={upNext} self={playerId} multi={events.length > 1} onOpen={onOpenMatch} />}
-          <FormCard season={season} ready={ready} onOpen={onOpenMatch} />
-        </div>
-      )}
-      <CareerCard
-        playerId={playerId}
-        career={career}
-        events={events}
-        event={event}
-        ready={ready}
-        onSeason={onSeason}
-        onEvent={onEvent}
-      />
-      {partners.length > 0 && <PartnersCard rows={partners} />}
-      <RankingGlance history={history} loading={historyLoading} onResults={onResults} />
-    </div>
-  );
-};
-
-const UpNext = memo<{ pm: PlayerMatch; self: string; multi: boolean; onOpen: (pm: PlayerMatch) => void }>(
-  ({ pm, self, multi, onOpen }) => {
-    const open = useCallback(() => onOpen(pm), [onOpen, pm]);
-    const partner = teammateOf(pm, self);
-    return (
-      <div className={clsx(utils.live, classes.upNext)}>
-        <CardHit label={`Open match details · ${pm.tournament.shortTitle}`} onClick={open} />
-        <Eyebrow className={classes.upNextLabel}>Up next · {pm.tournament.shortTitle}</Eyebrow>
-        <span className={classes.upNextOpps}>
-          <span className={classes.vs}>vs</span>
-          <TeamPlayers players={opponentsOf(pm)} flag="md" layout="inline" />
-        </span>
-        <span className={classes.upNextMeta}>
-          {roundName(pm.match.round)}
-          {multi && ` · ${EVENT_NAMES[pm.match.event]}`} · <OutcomeLabel pm={pm} zone />
-          {partner && <Partner player={partner} />}
-        </span>
+        {side && (
+          <div className={clsx(utils.card, shared.panel)}>
+            {trend && <RankTrend history={history} loading={historyLoading} onResults={onResults} />}
+            {rivals.length > 0 && <RivalsSection rows={rivals} />}
+            {partners.length > 1 && <PartnersSection rows={partners} />}
+            <ProfileSection bio={bio} />
+            <MediaTeaser playerId={playerId} matches={matches} onOpen={onMedia} />
+          </div>
+        )}
       </div>
     );
   },
 );
 
-const FormCard = memo<{
-  season: SeasonView | undefined;
-  ready: boolean;
+const MatchCard = memo<{
+  pm: PlayerMatch;
+  kind: MatchKind;
+  label?: string;
+  multi: boolean;
   onOpen: (pm: PlayerMatch) => void;
-}>(({ season, ready, onOpen }) => {
-  const matches = season?.matches ?? NO_MATCHES;
-  const form = useMemo(() => recentForm(matches, RECENT_LIMIT), [matches]);
+}>(({ pm, kind, label, multi, onOpen }) => {
+  const open = useCallback(() => onOpen(pm), [onOpen, pm]);
+  const { match, tournament: t } = pm;
+  const seed = kind === 'last' ? null : ownTeam(pm).seed;
+  return (
+    <article className={clsx(kind === 'last' ? utils.card : utils.live, classes.match)} data-kind={kind}>
+      <CardHit label={`Open match details · ${t.shortTitle}`} onClick={open} />
+      <header className={shared.head}>
+        <span className={shared.label}>
+          {kind === 'live' && <LiveDot pulse />}
+          {label ?? MATCH_LABELS[kind]}
+        </span>
+        <span className={clsx(shared.sub, classes.when)}>
+          {kind === 'last' && (pm.outcome === 'W' ? 'Won' : 'Lost')}
+          {match.date && <span>{formatDayMonth(match.date)}</span>}
+          {kind === 'next' && <OutcomeLabel pm={pm} zone />}
+        </span>
+      </header>
+      <div className={classes.matchTour}>
+        <LogoTile src={t.logo} name={t.name} size={36} />
+        <span className={shared.rowMain}>
+          <span className={clsx(utils.ellipsis, classes.tourName)}>
+            {seed ? `Seed ${seed} · ${t.shortTitle}` : t.shortTitle}
+          </span>
+          <span className={shared.rowMeta}>
+            {roundName(match.round)}
+            {multi && <span>{EVENT_NAMES[match.event]}</span>}
+          </span>
+        </span>
+      </div>
+      <div className={classes.matchBody}>
+        <span className={shared.sub}>vs</span>
+        <TeamPlayers players={opponentsOf(pm)} flag="sm" className={classes.opps} />
+        {kind === 'last' && <ScoreChips match={match} side={pm.side} size="sm" />}
+      </div>
+    </article>
+  );
+});
+
+const SeasonSection = memo<{
+  season: SeasonView;
+  onOpen: (pm: PlayerMatch) => void;
+  onSeason: (year: number) => void;
+}>(({ season, onOpen, onSeason }) => {
+  const form = useMemo(() => recentForm(season.matches, RECENT_LIMIT), [season.matches]);
   const items = useMemo(
     () => form.map((pm) => ({ key: pm.key, outcome: formOutcome(pm), tip: formTip(pm), onClick: () => onOpen(pm) })),
     [form, onOpen],
   );
+  const played = useMemo(() => tournamentsOf(season), [season]);
+  const breakdown = useMemo(() => seasonBreakdown(season), [season]);
+  const openSeason = useCallback(() => onSeason(season.year), [onSeason, season.year]);
+  const { deciders } = breakdown;
   return (
-    <div className={clsx(utils.card, shared.panel)}>
-      <Eyebrow>
-        {SEASON_YEAR} form · last {items.length}
-      </Eyebrow>
-      {!ready && (
-        <div className={classes.formSkeleton}>
-          {FORM_SKELETON.map((i) => (
-            <Skeleton key={i} height={38} radius={9} />
+    <Section
+      label={season.year === SEASON_YEAR ? `${season.year} season` : `Last season played · ${season.year}`}
+      aside={
+        <button type="button" className={shared.link} onClick={openSeason}>
+          All {season.year} matches
+        </button>
+      }
+    >
+      <div className={classes.stats}>
+        <div className={classes.stat}>
+          <span className={shared.sub}>Record</span>
+          <span className={shared.value}>
+            {season.wins}–{season.losses}
+          </span>
+          <span className={shared.track} style={shareVars(winShare(season.wins, season.losses) ?? 0, 1)} />
+        </div>
+        <Stat label="Win rate" value={winRate(season.wins, season.losses)} />
+        <Stat label="Tournaments" value={played} />
+        <Stat label="Deciding games" value={`${deciders.wins}–${deciders.losses}`} />
+        <div className={classes.stat}>
+          <span className={shared.sub}>Best run</span>
+          <span className={shared.value}>
+            <ResultText result={season.best} />
+          </span>
+        </div>
+      </div>
+      {breakdown.levels.length > 0 && (
+        <div className={classes.line}>
+          {breakdown.levels.map((l) => (
+            <span key={l.level} className={shared.sub}>
+              <LevelDot level={l.level} />
+              {l.level === 'Finals' ? 'Finals' : `S${l.level}`}{' '}
+              <b>
+                {l.wins}–{l.losses}
+              </b>
+            </span>
           ))}
+          {breakdown.avgMin > 0 && (
+            <span className={shared.sub}>
+              avg <Duration min={breakdown.avgMin} />
+            </span>
+          )}
         </div>
       )}
-      {ready && items.length > 0 && (
-        <>
+      {items.length > 0 && (
+        <div className={classes.form}>
+          <span className={shared.label}>
+            {season.year} form · last {items.length}
+          </span>
           <FormStrip items={items} variant="tile" />
           <span className={classes.formFoot}>Oldest → newest · tap for match</span>
-        </>
+        </div>
       )}
-      {ready && !items.length && <EmptyState variant="note">No completed matches this season.</EmptyState>}
-    </div>
+    </Section>
   );
 });
 
-const RankingGlance = memo<{
-  history: HistoryView | undefined;
-  loading: boolean;
-  onResults: () => void;
-}>(({ history, loading, onResults }) => {
-  const group = history?.results[0];
-  const items = useMemo(() => (group ? group.items.toReversed() : []), [group]);
-  if (loading) return <Skeleton height={260} radius={18} />;
-  if (!group || items.length < 2) return null;
-  const max = Math.max(1, ...items.map((t) => t.points));
+const Stat = memo<{ label: string; value: number | string }>(({ label, value }) => (
+  <div className={classes.stat}>
+    <span className={shared.sub}>{label}</span>
+    <span className={shared.value}>{value}</span>
+  </div>
+));
+
+const CareerSection = memo<{ seasons: SeasonView[]; onSeason: (year: number) => void }>(({ seasons, onSeason }) => {
+  const ordered = useMemo(() => seasons.toReversed(), [seasons]);
   return (
-    <div className={clsx(utils.card, shared.panel)}>
-      <SectionTitle
-        aside={
-          <button type="button" className={shared.more} onClick={onResults}>
-            All results
-          </button>
-        }
-      >
-        Last 52 weeks
-      </SectionTitle>
-      <span className={classes.glanceSub}>Ranking points per event · {EVENT_NAMES[group.ev]}</span>
-      <div className={classes.bars}>
-        {items.map((t) => (
-          <Tooltip key={t.key} label={`${t.name} · ${resultLabel(t.result)} · ${formatNumber(t.points)}`}>
-            <div className={classes.barCol} data-tier={resultTier(t.result)}>
-              <span className={classes.barTag}>{RESULT_TAGS[t.result]}</span>
-              <span className={classes.bar} style={barStyle(t.points, max)} />
-            </div>
-          </Tooltip>
+    <Section label="Season by season">
+      <div className={classes.seasons}>
+        {ordered.map((s) => (
+          <SeasonColumn key={s.year} season={s} onSeason={onSeason} />
         ))}
       </div>
-    </div>
+    </Section>
   );
 });
 
-const PersonalDetails = memo<{ bio: BioView }>(({ bio }) => {
+const SeasonColumn = memo<{ season: SeasonView; onSeason: (year: number) => void }>(({ season: s, onSeason }) => {
+  const open = useCallback(() => onSeason(s.year), [onSeason, s.year]);
   return (
-    <div className={clsx(utils.card, shared.panel)}>
-      <SectionTitle aside={bio.links.length > 0 && <SocialLinks bio={bio} />}>Personal details</SectionTitle>
-      <div className={classes.grid}>
-        {bio.stats.map((s) => (
-          <BioStat key={s.key} item={s} />
-        ))}
-        {bio.details.map((f) => (
-          <FactTile key={f.key} label={f.label} value={f.value} />
+    <button
+      type="button"
+      className={classes.season}
+      onClick={open}
+      aria-label={`See ${s.year} matches, ${s.wins}–${s.losses}`}
+    >
+      <span className={classes.seasonRate}>{winRate(s.wins, s.losses)}</span>
+      <span className={classes.bar} style={shareVars(winShare(s.wins, s.losses) ?? 0, 1, 4)} />
+      <span className={classes.seasonYear}>{s.year}</span>
+    </button>
+  );
+});
+
+const TitlesSection = memo<{ titles: PlayerMatch[]; multi: boolean }>(({ titles, multi }) => {
+  const [all, { open: showAll }] = useDisclosure(false);
+  const hidden = all ? 0 : Math.max(0, titles.length - TITLE_LIMIT);
+  const shown = hidden ? titles.slice(0, TITLE_LIMIT) : titles;
+  return (
+    <Section label="Titles">
+      <div className={shared.columns}>
+        {shown.map((pm) => (
+          <TitleRow key={pm.key} pm={pm} multi={multi} />
         ))}
       </div>
-    </div>
+      {hidden > 0 && (
+        <button type="button" className={clsx(shared.link, shared.more)} onClick={showAll}>
+          Show {hidden} more
+        </button>
+      )}
+    </Section>
   );
 });
 
-const SocialLinks = memo<{ bio: BioView }>(({ bio }) => {
+const TitleRow = memo<{ pm: PlayerMatch; multi: boolean }>(({ pm, multi }) => {
+  const t = pm.tournament;
   return (
-    <span className={classes.links}>
-      {bio.links.map((l) => (
-        <a key={l.key} href={l.value} target="_blank" rel="noreferrer" className={classes.social}>
-          {l.label}
-          <IconExternal size={12} />
-        </a>
-      ))}
-    </span>
-  );
-});
-
-const About = memo<{ bio: BioView }>(({ bio }) => {
-  return (
-    <div className={clsx(utils.card, shared.panel)}>
-      <SectionTitle>About</SectionTitle>
-      {bio.ambition && <p className={classes.ambition}>“{bio.ambition}”</p>}
-      {bio.notes.map((n) => (
-        <FactTile key={n.key} label={n.label} value={n.value} size="sm" tone="plain" />
-      ))}
+    <div className={shared.row} data-lead>
+      <LevelDot level={t.level} />
+      <Link to="/world-tour/$year/$slug" params={tournamentParams(t)} className={clsx(shared.rowTitle, classes.link)}>
+        <span className={utils.ellipsis}>{t.shortTitle}</span>
+      </Link>
+      <span className={shared.rowSide}>
+        {multi && <span>{pm.match.event}</span>}
+        <b>{t.year}</b>
+      </span>
     </div>
   );
 });

@@ -1,7 +1,8 @@
 .page {
+  container: athlete / inline-size;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
   padding-top: 22px;
   padding-bottom: 72px;
 }

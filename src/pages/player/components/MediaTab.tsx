@@ -1,41 +1,37 @@
 import { Skeleton } from '@mantine/core';
-import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState } from 'react';
 
 import type { NewsBrief, PlayerVideo } from '~/api/schemas';
 import { VideoCard } from '~/components/media';
 import { NewsGrid } from '~/components/news';
-import { EmptyState, Eyebrow, SectionTitle } from '~/components/ui';
+import { EmptyState } from '~/components/ui';
 import { useTournamentLookup } from '~/hooks/useNews';
 import { useTournamentMedia, useVisibleMedia } from '~/hooks/useTournamentMedia';
 import { useTournamentsByCode } from '~/hooks/useTournaments';
 import type { PlayerMatch, Tournament } from '~/types';
+import { plural } from '~/utils/format';
 import { regionHiddenNote } from '~/utils/media';
-import { toStories, type BriefStory } from '~/utils/news';
-import { tournamentParams } from '~/utils/tournaments';
+import { toStories } from '~/utils/news';
 
 import { NEWS_STEP, VIDEO_LABELS, VIDEO_STEP } from '../constants';
 import { usePlayerMedia, usePlayerMediaCount } from '../hooks';
-import {
-  archivedVideos,
-  groupNews,
-  groupVideos,
-  indexPlayerMatches,
-  liveVideos,
-  mergeVideos,
-  type VideoEntry,
-  type VideoGroup,
-} from '../media';
+import { archivedVideos, indexPlayerMatches, liveVideos, mergeVideos, type VideoEntry } from '../media';
+import { Section } from './parts';
 
 import classes from './MediaTab.module.css';
 import shared from './shared.module.css';
 import utils from '~/styles/utils.module.css';
 
+interface MediaProps {
+  playerId: string;
+  matches: readonly PlayerMatch[];
+}
+
 const NO_LIVE: VideoEntry[] = [];
 const NO_VIDEOS: PlayerVideo[] = [];
 const NO_NEWS: NewsBrief[] = [];
-const SKELETON_ROWS = 4;
+const TEASER_LIMIT = 2;
 const EMPTY = 'No BWF TV videos or news stories mention this player yet.';
 const FAILED = 'Couldn’t load videos and news right now.';
 
@@ -44,10 +40,28 @@ const emptyMessage = (failed: boolean, hidden: number) => {
   return hidden ? regionHiddenNote(hidden) : EMPTY;
 };
 
-interface MediaTabProps {
-  playerId: string;
-  matches: readonly PlayerMatch[];
-}
+const usePlayerFeed = (playerId: string, matches: readonly PlayerMatch[], live: readonly VideoEntry[]) => {
+  const count = usePlayerMediaCount(playerId);
+  const file = usePlayerMedia(playerId, !!count.data);
+  const byCode = useTournamentsByCode();
+  const lookup = useTournamentLookup();
+  const index = useMemo(() => indexPlayerMatches(matches), [matches]);
+  const all = file.data?.videos ?? NO_VIDEOS;
+  const archived = useVisibleMedia(all);
+  const videos = useMemo(
+    () => mergeVideos(archivedVideos(archived, index, byCode), live),
+    [archived, index, byCode, live],
+  );
+  const news = file.data?.news ?? NO_NEWS;
+  const stories = useMemo(() => toStories(news, lookup), [news, lookup]);
+  return {
+    videos,
+    stories,
+    pending: count.isPending || file.isLoading,
+    failed: count.isError || file.isError,
+    hidden: all.length - archived.length,
+  };
+};
 
 const useLimit = (step: number) => {
   const [limit, setLimit] = useState(step);
@@ -55,119 +69,88 @@ const useLimit = (step: number) => {
   return [limit, more] as const;
 };
 
+const Video = memo<{ entry: VideoEntry }>(({ entry: e }) => (
+  <VideoCard
+    item={e.item}
+    match={e.match}
+    label={VIDEO_LABELS[e.item.kind]}
+    eventName={e.tournament?.name}
+    timeZone={e.tournament?.timeZone}
+  />
+));
+
 const MoreButton = memo<{ hidden: number; step: number; onClick: () => void }>(({ hidden, step, onClick }) =>
   hidden > 0 ? (
-    <button type="button" className={clsx(shared.more, classes.more)} onClick={onClick}>
+    <button type="button" className={clsx(shared.link, shared.more)} onClick={onClick}>
       Show {Math.min(hidden, step)} more
     </button>
   ) : null,
 );
 
-const GroupLabel = memo<{ tournament: Tournament | undefined }>(({ tournament: t }) =>
-  t ? (
-    <Link
-      to="/world-tour/$year/$slug"
-      params={tournamentParams(t)}
-      search={{ tab: 'media' }}
-      className={classes.groupLink}
-    >
-      <Eyebrow>{t.shortTitle}</Eyebrow>
-    </Link>
-  ) : null,
-);
-
-const VideoGroupBlock = memo<{ group: VideoGroup }>(({ group }) => (
-  <div className={classes.group}>
-    <GroupLabel tournament={group.tournament} />
-    <div className={classes.videos}>
-      {group.entries.map((e) => (
-        <VideoCard
-          key={e.item.id}
-          item={e.item}
-          match={e.match}
-          label={VIDEO_LABELS[e.item.kind]}
-          eventName={e.tournament?.name}
-          timeZone={e.tournament?.timeZone}
-        />
-      ))}
-    </div>
-  </div>
-));
-
-const VideosPanel = memo<{ videos: readonly VideoEntry[] }>(({ videos }) => {
-  const [limit, more] = useLimit(VIDEO_STEP);
-  const groups = useMemo(() => groupVideos(videos.slice(0, limit)), [videos, limit]);
+const MediaBody = memo<MediaProps & { live: readonly VideoEntry[] }>(({ playerId, matches, live }) => {
+  const feed = usePlayerFeed(playerId, matches, live);
+  const [videoLimit, moreVideos] = useLimit(VIDEO_STEP);
+  const [newsLimit, moreNews] = useLimit(NEWS_STEP);
+  const videos = useMemo(() => feed.videos.slice(0, videoLimit), [feed.videos, videoLimit]);
+  const stories = useMemo(() => feed.stories.slice(0, newsLimit), [feed.stories, newsLimit]);
+  if (feed.pending) return <Skeleton height={360} radius={18} />;
+  if (!feed.videos.length && !feed.stories.length)
+    return <EmptyState>{emptyMessage(feed.failed, feed.hidden)}</EmptyState>;
   return (
-    <section className={clsx(utils.card, shared.panel)}>
-      <SectionTitle count={videos.length}>Videos</SectionTitle>
-      {groups.map((g) => (
-        <VideoGroupBlock key={g.key} group={g} />
-      ))}
-      <MoreButton hidden={videos.length - limit} step={VIDEO_STEP} onClick={more} />
-    </section>
-  );
-});
-
-const NewsPanel = memo<{ stories: readonly BriefStory[] }>(({ stories }) => {
-  const [limit, more] = useLimit(NEWS_STEP);
-  const groups = useMemo(() => groupNews(stories.slice(0, limit), stories.length), [stories, limit]);
-  return (
-    <section className={clsx(utils.card, shared.panel)}>
-      <SectionTitle count={stories.length}>News</SectionTitle>
-      {groups.map((g) => (
-        <div key={g.key} className={classes.group}>
-          {g.label && <Eyebrow>{g.label}</Eyebrow>}
-          <NewsGrid stories={g.stories} variant="row" />
-        </div>
-      ))}
-      <MoreButton hidden={stories.length - limit} step={NEWS_STEP} onClick={more} />
-    </section>
-  );
-});
-
-const LoadingPanel = memo(() => (
-  <div className={clsx(utils.card, shared.panel)} aria-busy>
-    <Skeleton height={18} width={120} radius={6} />
-    <NewsGrid stories={undefined} variant="row" skeletons={SKELETON_ROWS} />
-  </div>
-));
-
-const MediaContent = memo<MediaTabProps & { live: readonly VideoEntry[] }>(({ playerId, matches, live }) => {
-  const count = usePlayerMediaCount(playerId);
-  const file = usePlayerMedia(playerId, !!count.data);
-  const byCode = useTournamentsByCode();
-  const lookup = useTournamentLookup();
-  const index = useMemo(() => indexPlayerMatches(matches), [matches]);
-  const allArchived = file.data?.videos ?? NO_VIDEOS;
-  const archived = useVisibleMedia(allArchived);
-  const videos = useMemo(
-    () => mergeVideos(archivedVideos(archived, index, byCode), live),
-    [archived, index, byCode, live],
-  );
-  const news = file.data?.news ?? NO_NEWS;
-  const stories = useMemo(() => toStories(news, lookup), [news, lookup]);
-  const pending = count.isPending || file.isLoading;
-  const failed = count.isError || file.isError;
-  return (
-    <div className={shared.stack}>
-      {pending && <LoadingPanel />}
-      {!pending && !videos.length && !stories.length && (
-        <EmptyState>{emptyMessage(failed, allArchived.length - archived.length)}</EmptyState>
+    <div className={clsx(utils.card, shared.panel)}>
+      {videos.length > 0 && (
+        <Section label="Videos" aside={<span className={shared.sub}>{plural(feed.videos.length, 'video')}</span>}>
+          <div className={classes.videos}>
+            {videos.map((e) => (
+              <Video key={e.item.id} entry={e} />
+            ))}
+          </div>
+          <MoreButton hidden={feed.videos.length - videoLimit} step={VIDEO_STEP} onClick={moreVideos} />
+        </Section>
       )}
-      {videos.length > 0 && <VideosPanel videos={videos} />}
-      {stories.length > 0 && <NewsPanel stories={stories} />}
+      {stories.length > 0 && (
+        <Section
+          label="News"
+          aside={<span className={shared.sub}>{plural(feed.stories.length, 'story', 'stories')}</span>}
+        >
+          <NewsGrid stories={stories} variant="row" />
+          <MoreButton hidden={feed.stories.length - newsLimit} step={NEWS_STEP} onClick={moreNews} />
+        </Section>
+      )}
     </div>
   );
 });
 
-const WithLive = memo<MediaTabProps & { tournament: Tournament }>(({ tournament, playerId, matches }) => {
+const WithLive = memo<MediaProps & { tournament: Tournament }>(({ tournament, playerId, matches }) => {
   const { items, matchOf } = useTournamentMedia(tournament);
   const live = useMemo(() => liveVideos(items, matchOf, playerId, tournament), [items, matchOf, playerId, tournament]);
-  return <MediaContent playerId={playerId} matches={matches} live={live} />;
+  return <MediaBody playerId={playerId} matches={matches} live={live} />;
 });
 
-export const MediaTab = memo<MediaTabProps>(({ playerId, matches }) => {
+export const MediaTab = memo<MediaProps>(({ playerId, matches }) => {
   const current = useMemo(() => matches.find((pm) => pm.tournament.status === 'live')?.tournament, [matches]);
   if (current) return <WithLive tournament={current} playerId={playerId} matches={matches} />;
-  return <MediaContent playerId={playerId} matches={matches} live={NO_LIVE} />;
+  return <MediaBody playerId={playerId} matches={matches} live={NO_LIVE} />;
+});
+
+export const MediaTeaser = memo<MediaProps & { onOpen: () => void }>(({ playerId, matches, onOpen }) => {
+  const feed = usePlayerFeed(playerId, matches, NO_LIVE);
+  const shown = useMemo(() => feed.videos.slice(0, TEASER_LIMIT), [feed.videos]);
+  if (!shown.length) return null;
+  return (
+    <Section
+      label="Latest on BWF TV"
+      aside={
+        <button type="button" className={shared.link} onClick={onOpen}>
+          All media
+        </button>
+      }
+    >
+      <div className={classes.teaser}>
+        {shown.map((e) => (
+          <Video key={e.item.id} entry={e} />
+        ))}
+      </div>
+    </Section>
+  );
 });

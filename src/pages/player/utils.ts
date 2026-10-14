@@ -1,9 +1,12 @@
-import { EventCode } from '~/api/schemas';
-import type { Player, PlayerDirectory, PlayerMatch, RankingHistory, RankView, SeasonIndex } from '~/types';
+import type { CSSProperties } from 'react';
+
+import { EventCode, Level } from '~/api/schemas';
+import type { BioView, Player, PlayerDirectory, PlayerMatch, RankingHistory, RankView, SeasonIndex } from '~/types';
 import { formatDayMonthYear } from '~/utils/dates';
 import { formatRank } from '~/utils/format';
 import { medalOfResult } from '~/utils/medals';
-import { ownTeam, playerById, winLoss } from '~/utils/season';
+import { compareText } from '~/utils/names';
+import { opponentsOf, ownTeam, playerById, winLoss } from '~/utils/season';
 
 import { LOSS_RESULT, RESULT_LABELS } from './constants';
 import type {
@@ -19,6 +22,10 @@ import type {
   ResultGroup,
   SeasonView,
   TournamentRuns,
+  WinLoss,
+  RivalRow,
+  LevelRecord,
+  SeasonBreakdown,
 } from './types';
 
 type HistoryEntry = RankingHistory['history'][number];
@@ -110,7 +117,7 @@ const matchResult = (pm: PlayerMatch) => {
   return pm.outcome === 'L' ? LOSS_RESULT[pm.match.round] : undefined;
 };
 
-const bestResult = (list: readonly PlayerMatch[]) => {
+export const bestResult = (list: readonly PlayerMatch[]) => {
   let best: number | null = null;
   for (const pm of list) {
     const r = matchResult(pm);
@@ -241,3 +248,79 @@ export const winRate = (wins: number, losses: number) => {
   const share = winShare(wins, losses);
   return share === null ? '—' : `${Math.round(share * 100)}%`;
 };
+
+export const decided = (pm: PlayerMatch) => pm.outcome === 'W' || pm.outcome === 'L';
+
+export const nextMatchOf = (list: readonly PlayerMatch[]) =>
+  list.find((pm) => pm.outcome === 'Live') ?? list.filter((pm) => pm.outcome === 'up').at(-1);
+
+export const lastMatchOf = (list: readonly PlayerMatch[]) => list.find(decided);
+
+export const shareVars = (value: number, max: number, min = 0) =>
+  ({ '--v': `${Math.max(min, max ? Math.round((value / max) * 100) : 0)}%` }) as CSSProperties;
+
+export const finalsOf = (career: CareerView) => career.counts.gold + career.counts.silver;
+
+export const tournamentsOf = (season: SeasonView) => new Set(season.matches.map((pm) => pm.tournament.code)).size;
+
+const tally = (r: WinLoss, pm: PlayerMatch) => {
+  if (pm.outcome === 'W') r.wins++;
+  else r.losses++;
+};
+
+const teamKey = (players: readonly Player[]) =>
+  players
+    .map((p) => p.id || p.name)
+    .toSorted(compareText)
+    .join('/');
+
+export const rivalsOf = (matches: readonly PlayerMatch[], repeatMin: number, limit: number): RivalRow[] => {
+  const rows = new Map<string, RivalRow>();
+  for (const pm of matches) {
+    if (!decided(pm)) continue;
+    const players = opponentsOf(pm);
+    const key = teamKey(players);
+    const row = rows.get(key) ?? { key, players, matches: 0, wins: 0, losses: 0 };
+    rows.set(key, row);
+    row.matches++;
+    tally(row, pm);
+  }
+  const all = [...rows.values()].sort((a, b) => b.matches - a.matches || b.wins - a.wins);
+  const repeat = all.filter((r) => r.matches > 1);
+  return (repeat.length >= repeatMin ? repeat : all).slice(0, limit);
+};
+
+export const seasonBreakdown = (season: SeasonView): SeasonBreakdown => {
+  const levels = new Map<Level, LevelRecord>();
+  const deciders: WinLoss = { wins: 0, losses: 0 };
+  let minutes = 0;
+  let timed = 0;
+  for (const pm of season.matches) {
+    if (!decided(pm)) continue;
+    const level = pm.tournament.level;
+    const row = levels.get(level) ?? { level, wins: 0, losses: 0 };
+    levels.set(level, row);
+    tally(row, pm);
+    if (pm.match.games.length === 3) tally(deciders, pm);
+    if (pm.match.durationMin) {
+      minutes += pm.match.durationMin;
+      timed++;
+    }
+  }
+  return {
+    levels: Level.options.flatMap((l) => {
+      const row = levels.get(l);
+      return row ? [row] : [];
+    }),
+    deciders,
+    avgMin: timed ? Math.round(minutes / timed) : 0,
+  };
+};
+
+export const hasProfile = (bio: BioView) =>
+  bio.details.length > 0 || bio.links.length > 0 || bio.notes.length > 0 || !!bio.ambition;
+
+export const scopeHistory = (view: HistoryView | undefined, event: EventCode | undefined): HistoryView | undefined =>
+  view && event
+    ? { groups: view.groups.filter((g) => g.ev === event), results: view.results.filter((g) => g.ev === event) }
+    : view;

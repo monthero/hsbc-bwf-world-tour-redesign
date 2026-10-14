@@ -1,6 +1,5 @@
 import type { MediaKind } from '~/api/schemas';
 import type { TabItem } from '~/components/ui';
-import type { MedalKind } from '~/types';
 
 import type { PlayerTab } from './types';
 
@@ -27,12 +26,6 @@ export const LOSS_RESULT: Record<string, number> = { F: 2, SF: 3, QF: 5, R16: 9,
 
 export const RESULT_TAGS: Record<number, string> = { 1: 'W', 2: 'F', 3: 'SF' };
 
-export const MEDAL_TILES: readonly { kind: MedalKind; label: string }[] = [
-  { kind: 'gold', label: 'Titles' },
-  { kind: 'silver', label: 'Runner-up' },
-  { kind: 'bronze', label: 'Semi-finals' },
-];
-
 export const RECENT_LIMIT = 10;
 
 export const TITLE_LIMIT = 8;
@@ -41,15 +34,11 @@ export const RESULTS_TIP = 'Results counting toward the current world ranking';
 
 export const PARTNER_LIMIT = 6;
 
-export const PARTNER_MIN_MATCHES = 3;
-
 export const EQUIPMENT_NOTE =
   '[NOTE] Players change equipment often, by preference or for sponsorship reasons, so this information may be outdated.';
 
 export const VIDEO_STEP = 6;
 
 export const NEWS_STEP = 12;
-
-export const NEWS_GROUP_MIN = 10;
 
 export const VIDEO_LABELS: Partial<Record<MediaKind, string>> = { highlights: 'Highlights', full_match: 'Full match' };

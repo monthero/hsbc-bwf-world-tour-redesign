@@ -1,29 +1,22 @@
-.group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.groupLink {
-  align-self: flex-start;
-  text-decoration: none;
-
-  &:hover > span {
-    color: var(--bwf-text);
-  }
-}
-
 .videos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  grid-auto-flow: dense;
   gap: 20px 16px;
 
-  @mixin smaller-than $mantine-breakpoint-sm {
+  > :first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  @container athlete (width < 640px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px 10px;
   }
 }
 
-.more {
-  align-self: center;
+.teaser {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
