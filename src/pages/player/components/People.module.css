@@ -1,0 +1,56 @@
+.h2h {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  min-width: 56px;
+}
+
+.record {
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--bwf-text);
+
+  .h2h[data-edge='ahead'] & {
+    color: var(--bwf-green);
+  }
+
+  .h2h[data-edge='behind'] & {
+    color: var(--bwf-red-text);
+  }
+}
+
+.bar {
+  width: 56px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--bwf-green) calc(var(--won) * 100%),
+    alpha(var(--bwf-red-text), 0.45) calc(var(--won) * 100%)
+  );
+}
+
+.nameLine {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.current {
+  flex: none;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: alpha(var(--bwf-green), 0.14);
+  color: var(--bwf-green);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.titles {
+  color: var(--bwf-gold-text);
+  font-weight: 600;
+}

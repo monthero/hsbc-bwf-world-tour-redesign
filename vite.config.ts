@@ -1,5 +1,6 @@
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
+import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import Icons from 'unplugin-icons/vite';
 import { defineConfig, loadEnv } from 'vite';
 
@@ -17,7 +18,12 @@ export default defineConfig(({ mode }) => {
     plugins: [
       tanstackRouter({ target: 'react', autoCodeSplitting: true }),
       react(),
-      Icons({ compiler: 'jsx', jsx: 'react', scale: 1 }),
+      Icons({
+        compiler: 'jsx',
+        jsx: 'react',
+        scale: 1,
+        customCollections: { bwf: FileSystemIconLoader(`${root}/src/assets/icons`) },
+      }),
       vitePlugin(bwfProxy),
       vitePlugin(youtubeEndpoint({ key: env.YOUTUBE_API_KEY, root, persist: true })),
       vitePlugin(newsEndpoint(root)),

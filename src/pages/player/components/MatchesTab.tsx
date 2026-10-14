@@ -5,7 +5,8 @@ import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { ScoreChips, TeamPlayers } from '~/components/match';
 import { Partner } from '~/components/player';
-import { CardHit, EmptyState, Segmented, type SegmentedOption } from '~/components/ui';
+import { LevelBadge, LogoTile } from '~/components/tournament';
+import { CardHit, EmptyState, Segmented, TipSpan, type SegmentedOption } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import type { PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
@@ -17,7 +18,7 @@ import { tournamentParams } from '~/utils/tournaments';
 
 import type { EventRun, SeasonView, TournamentRuns } from '../types';
 import { eventsOf, teammateOf, tournamentRuns, tournamentsOf, winRate } from '../utils';
-import { LevelDot, Outcome, ResultText } from './parts';
+import { Outcome, ResultText } from './parts';
 
 import classes from './MatchesTab.module.css';
 import shared from './shared.module.css';
@@ -112,12 +113,15 @@ const TournamentGroup = memo<{
   return (
     <div className={classes.group}>
       <div className={classes.groupHead}>
-        <LevelDot level={t.level} />
+        <LogoTile src={t.logo} name={t.name} size={32} />
         <span className={shared.rowMain}>
           <Link to="/world-tour/$year/$slug" params={tournamentParams(t)} className={classes.tour}>
             {t.shortTitle}
           </Link>
-          <span className={shared.rowMeta}>{t.dates}</span>
+          <span className={shared.rowMeta}>
+            <LevelBadge level={t.level} size="sm" />
+            <span>{t.dates}</span>
+          </span>
         </span>
         {single && <ResultText result={single.result} />}
       </div>
@@ -166,11 +170,11 @@ const MatchRow = memo<{ pm: PlayerMatch; self: string | undefined; onOpen: (pm: 
     return (
       <div className={shared.row} data-lead>
         <CardHit label={`Open match details · ${roundName(match.round)}`} onClick={open} />
-        <span className={classes.round} title={roundName(match.round)}>
+        <TipSpan className={classes.round} tip={roundName(match.round)}>
           {match.round}
-        </span>
+        </TipSpan>
         <span className={shared.rowMain}>
-          <TeamPlayers players={opponentsOf(pm)} flag="xs" className={shared.rowTitle} />
+          <TeamPlayers players={opponentsOf(pm)} flag="xs" className={shared.rowNames} />
           <span className={shared.rowMeta}>
             {match.date && <span>{formatDayMonth(match.date)}</span>}
             {partner && <Partner player={partner} short />}

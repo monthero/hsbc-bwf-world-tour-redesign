@@ -166,6 +166,13 @@
   color: var(--bwf-text);
 }
 
+.rowNames {
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--bwf-text);
+}
+
 .rowMeta {
   min-width: 0;
   display: flex;

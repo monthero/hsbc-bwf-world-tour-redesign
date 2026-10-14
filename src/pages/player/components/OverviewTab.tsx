@@ -5,7 +5,7 @@ import { clsx } from 'clsx';
 import { memo, useCallback, useMemo } from 'react';
 
 import { FormStrip, OutcomeLabel, ScoreChips, TeamPlayers } from '~/components/match';
-import { LogoTile } from '~/components/tournament';
+import { LevelBadge, LogoTile } from '~/components/tournament';
 import { CardHit, Duration, EmptyState, LiveDot } from '~/components/ui';
 import { EVENT_NAMES, SEASON_YEAR } from '~/constants';
 import type { BioView, PlayerMatch } from '~/types';
@@ -317,12 +317,13 @@ const TitleRow = memo<{ pm: PlayerMatch; multi: boolean }>(({ pm, multi }) => {
   const t = pm.tournament;
   return (
     <div className={shared.row} data-lead>
-      <LevelDot level={t.level} />
+      <LogoTile src={t.logo} name={t.name} size={28} />
       <Link to="/world-tour/$year/$slug" params={tournamentParams(t)} className={clsx(shared.rowTitle, classes.link)}>
         <span className={utils.ellipsis}>{t.shortTitle}</span>
       </Link>
       <span className={shared.rowSide}>
         {multi && <span>{pm.match.event}</span>}
+        <LevelBadge level={t.level} size="sm" />
         <b>{t.year}</b>
       </span>
     </div>
