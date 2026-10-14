@@ -1,10 +1,10 @@
 import { EventCode } from '~/api/schemas';
 import type { useFavoritesMatcher } from '~/stores/favorites';
 import type { Match } from '~/types';
-import { dayMark, type ClockTime } from '~/utils/match-time';
+import { dayMark, type ClockTime, type NextKind } from '~/utils/match-time';
 import { matchesQuery, roundsLabel, teamLabel, teamPlayers } from '~/utils/matches';
 
-export interface MatchGroup {
+interface MatchGroup {
   key: string;
   label: string;
   items: Match[];
@@ -35,18 +35,12 @@ export interface MatchesView {
   upcoming: MatchSection;
   results: MatchSection;
   liveIn: number;
-  nextIds: ReadonlySet<string>;
+  next: ReadonlyMap<string, NextKind>;
 }
 
 export type PlayersMatcher = ReturnType<typeof useFavoritesMatcher>;
 
 export const matchTitle = (m: Match) => m.teams.map((t) => teamLabel(t)).join(' vs ');
-
-export const centerChild = (el: HTMLElement, child: HTMLElement, behavior: ScrollBehavior = 'auto') =>
-  el.scrollTo({ left: child.offsetLeft - (el.clientWidth - child.offsetWidth) / 2, behavior });
-
-export const toggleIn = <T>(list: readonly T[], v: T): T[] =>
-  list.includes(v) ? list.filter((x) => x !== v) : [...list, v];
 
 export const parseEvents = (s: string) => (s ? (s.split(',') as EventCode[]) : []);
 
@@ -56,7 +50,7 @@ const NO_TIME = 'Time to be announced';
 
 const isUpcoming = (m: Match) => m.status === 'N';
 
-const isSettled = (m: Match) => m.status === 'F';
+export const isSettled = (m: Match) => m.status === 'F';
 
 export type MatchClock = (m: Match) => ClockTime | null;
 
@@ -90,9 +84,11 @@ const toSection = (list: Match[], clock: MatchClock): MatchSection => {
 };
 
 const nextPerCourt = (matches: Match[]) => {
-  const seen = new Map<number, string>();
-  for (const m of matches) if (m.status === 'N' && !seen.has(m.court)) seen.set(m.court, m.id);
-  return new Set(seen.values());
+  const started = new Set(matches.filter((m) => m.status !== 'N').map((m) => m.court));
+  const next = new Map<number, [string, NextKind]>();
+  for (const m of matches)
+    if (m.status === 'N' && !next.has(m.court)) next.set(m.court, [m.id, started.has(m.court) ? 'later' : 'first']);
+  return new Map(next.values());
 };
 
 export const filterBase = (matches: Match[], q: string, following: boolean, matcher: PlayersMatcher) =>
@@ -131,6 +127,6 @@ export const buildView = (
     upcoming,
     results,
     liveIn: list.length - upcoming.count - results.count,
-    nextIds: nextPerCourt(dayMatches),
+    next: nextPerCourt(dayMatches),
   };
 };

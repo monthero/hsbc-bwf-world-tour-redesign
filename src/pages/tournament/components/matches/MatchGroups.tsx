@@ -3,6 +3,7 @@ import { memo } from 'react';
 
 import { FlagTipGroup } from '~/components/country';
 import { plural } from '~/utils/format';
+import type { NextKind } from '~/utils/match-time';
 
 import { CollapsibleSection } from './CollapsibleSection';
 import { MatchCard } from './MatchCard';
@@ -16,9 +17,9 @@ export const MatchGroups = memo<{
   storeKey: string;
   defaultOpen: boolean;
   section: MatchSection;
-  nextIds: ReadonlySet<string>;
+  next: ReadonlyMap<string, NextKind>;
   onOpen: (id: string) => void;
-}>(({ title, storeKey, defaultOpen, section, nextIds, onOpen }) => {
+}>(({ title, storeKey, defaultOpen, section, next, onOpen }) => {
   return (
     <FlagTipGroup>
       <CollapsibleSection
@@ -37,7 +38,7 @@ export const MatchGroups = memo<{
             </div>
             <div className={classes.grid}>
               {g.items.map((m) => (
-                <MatchCard key={m.id} match={m} isNext={nextIds.has(m.id)} onOpen={onOpen} />
+                <MatchCard key={m.id} match={m} next={next.get(m.id)} onOpen={onOpen} />
               ))}
             </div>
           </div>

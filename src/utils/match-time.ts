@@ -137,6 +137,19 @@ export const instantClock = (iso: string, venue: VenueTime, prefs: ClockPrefs): 
 export const venueTimeAt = (timeZone: string | null, iso: string) =>
   venueTimeOn(timeZone, dayjs.utc(iso).format(ISO_DAY), null);
 
+export type NextKind = 'first' | 'later';
+
+const SOON_MIN = 60;
+
+export const nextLabel = (start: ClockTime, kind: NextKind, now: Dayjs) => {
+  const today = now.utcOffset(start.at.utcOffset()).format(ISO_DAY);
+  const days = dayjs.utc(start.at.format(ISO_DAY)).diff(dayjs.utc(today), 'day');
+  if (days === 1) return 'Tomorrow';
+  if (days > 1) return start.at.format(WEEKDAY);
+  if (kind === 'later' || days < 0) return 'Next';
+  return start.at.diff(now, 'minute') <= SOON_MIN ? 'Soon' : 'In a few hours';
+};
+
 export const dayMark = (shift: number) => (shift > 0 ? `+${shift}` : `−${-shift}`);
 
 export const formatStamp = (c: ClockTime) => `${c.at.format(STAMP_DAY)}, ${c.text}${c.zone ? ` ${c.zone}` : ''}`;

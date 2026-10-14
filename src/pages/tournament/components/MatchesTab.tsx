@@ -14,7 +14,7 @@ import { CondensedFilters, InlineFilters, MobileFilters } from './matches/Filter
 import { LiveSection } from './matches/LiveSection';
 import { MatchGroups } from './matches/MatchGroups';
 import { useMatchFilters } from './matches/useMatchFilters';
-import { buildView, filterBase, type MatchesView } from './matches/utils';
+import { buildView, filterBase, isSettled, type MatchesView } from './matches/utils';
 
 import page from '../TournamentPage.module.css';
 import classes from './MatchesTab.module.css';
@@ -25,8 +25,6 @@ const NO_MATCHES: Match[] = [];
 const STALE_NOTE = 'Live scores are unavailable right now. Showing results that may be up to an hour old.';
 
 const byCourt = (a: Match, b: Match) => a.court - b.court;
-
-const isSettled = (m: Match) => m.status === 'F';
 
 const emptyMessage = (
   d: TournamentDay | undefined,
@@ -90,7 +88,7 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
             storeKey="matches:up"
             defaultOpen
             section={view.upcoming}
-            nextIds={view.nextIds}
+            next={view.next}
             onOpen={openMatch}
           />
         )}
@@ -100,7 +98,7 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
             storeKey={dayOver ? 'matches:results:done' : 'matches:results:live'}
             defaultOpen={dayOver}
             section={view.results}
-            nextIds={view.nextIds}
+            next={view.next}
             onOpen={openMatch}
           />
         )}

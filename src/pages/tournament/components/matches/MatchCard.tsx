@@ -4,7 +4,10 @@ import { memo, type FC } from 'react';
 import { FollowedMark } from '~/components/follow';
 import { EventTag, MatchTime, NoteTag, SideScores, TeamPlayers, type NoteTone } from '~/components/match';
 import { CardHit, Duration, IconCheck } from '~/components/ui';
+import { useMatchTime } from '~/hooks/useMatchClock';
+import { useNow } from '~/hooks/useNow';
 import type { Match, Player, Side } from '~/types';
+import { nextLabel, type NextKind } from '~/utils/match-time';
 import { isDoubles, noteLabel, noteTip, sideResult } from '~/utils/matches';
 
 import { matchTitle } from './utils';
@@ -37,11 +40,17 @@ const TeamRow: FC<{ match: Match; side: Side; doubles: boolean }> = ({ match: m,
   );
 };
 
+const NextLabel = memo<{ match: Match; kind: NextKind }>(({ match, kind }) => {
+  const start = useMatchTime(match);
+  const now = useNow();
+  return <span className={classes.next}>{start ? nextLabel(start, kind, now) : 'Next'}</span>;
+});
+
 export const MatchCard = memo<{
   match: Match;
-  isNext: boolean;
+  next?: NextKind;
   onOpen: (id: string) => void;
-}>(({ match: m, isNext, onOpen }) => {
+}>(({ match: m, next, onOpen }) => {
   const doubles = isDoubles(m.event);
   const done = m.status === 'F';
   const note = done ? noteLabel(m.note, 'short') : '';
@@ -56,7 +65,7 @@ export const MatchCard = memo<{
           <span className={classes.court}>Court {m.court}</span>
         </span>
         <span className={classes.tags}>
-          {isNext && <span className={classes.next}>Next</span>}
+          {next && <NextLabel match={m} kind={next} />}
           {done && <Duration min={m.durationMin} size={12} className={classes.meta} />}
           {note && <NoteTag label={note} tip={noteTip(m)} tone={NOTE_TONES[m.note ?? ''] ?? 'sky'} />}
           <EventTag event={m.event} />
