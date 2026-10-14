@@ -3,6 +3,18 @@ name: Sync and deploy (first run is a cold full sync and can take hours)
 on:
   push:
     branches: [main]
+    paths:
+      - '**'
+      - '!**.md'
+      - '!LICENSE'
+      - '!.gitignore'
+      - '!.vscode/**'
+      - '!server/admin.ts'
+      - '!src/routes/admin.tsx'
+      - '!src/routes/study-cases*'
+      - '!src/pages/study-cases/**'
+      - '!src/pages/admin/**'
+      - src/pages/admin/schema.ts
   workflow_dispatch:
   schedule:
     - cron: '0 */3 * * *'
