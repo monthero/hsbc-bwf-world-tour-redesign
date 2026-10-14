@@ -2,17 +2,19 @@ import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react';
 import HandBold from '~icons/solar/user-hand-up-bold';
-import HandLinear from '~icons/solar/user-hand-up-linear';
 
-import type { LiveServer } from '~/api/bwf/normalize';
+import type { LiveServer, MatchStats } from '~/api/bwf/normalize';
 import type { MediaItem } from '~/api/schemas';
 import { TeamPlayers } from '~/components/match';
 import { WatchLive } from '~/components/media';
 import { AvatarGroup } from '~/components/player';
-import { CardHit, Duration, IconFire, ShuttleIcon, StatusChip, type StatusTone } from '~/components/ui';
+import { CardHit, Duration, IconFire, ShuttleIcon, StatusChip, type StatusTone, InfoTip } from '~/components/ui';
 import type { Game, Match, Player, Side } from '~/types';
 import {
   CHALLENGE_LABELS,
+  CHALLENGE_RULE,
+  challengeHeadline,
+  challengeRows,
   challengeTip,
   type ChallengeOutcome,
   type ChallengeResult,
@@ -39,16 +41,15 @@ const Serve: FC<{ size?: number }> = ({ size = 15 }) => (
   </Tooltip>
 );
 
-const ChallengeCount: FC<{ side: SideView }> = ({ side: { stats } }) => {
-  if (!stats) return null;
-  const { used } = stats.challenges;
-  const tip = challengeTip(stats);
-  const Icon = used ? HandBold : HandLinear;
+const ChallengeCount: FC<{ side: SideView }> = ({ side: { stats, left } }) => {
+  if (!stats || left === null) return null;
+  const tip = challengeTip(stats, left);
+  const card = <InfoTip title={challengeHeadline(left)} subtitle={CHALLENGE_RULE} rows={challengeRows(stats)} inline />;
   return (
-    <Tooltip label={tip}>
-      <span className={clsx(utils.raise, classes.challenge)} data-used={used > 0 || undefined} aria-label={tip}>
-        <Icon className={classes.challengeIcon} aria-hidden />
-        {used}
+    <Tooltip label={card}>
+      <span className={clsx(utils.raise, classes.challenge)} data-left={left} aria-label={tip}>
+        <HandBold className={classes.challengeIcon} aria-hidden />
+        {left}
       </span>
     </Tooltip>
   );
@@ -118,13 +119,14 @@ const FootStat: FC<{ label: string; a: number; b: number }> = ({ label, a, b }) 
 export const LiveCard = memo<{
   match: Match;
   stats: LiveStats | null;
+  game: MatchStats | null;
   challenge: ChallengeResult | null;
   server?: LiveServer;
   stream?: MediaItem;
   onOpen: (id: string) => void;
   className?: string;
-}>(({ match: m, stats, challenge, server, stream, onOpen, className }) => {
-  const v = useMemo(() => toLiveView(m, stats, challenge, server), [m, stats, challenge, server]);
+}>(({ match: m, stats, game, challenge, server, stream, onOpen, className }) => {
+  const v = useMemo(() => toLiveView(m, stats, game, challenge, server), [m, stats, game, challenge, server]);
   const [a, b] = v.sides;
   const cols = useMemo(
     () =>

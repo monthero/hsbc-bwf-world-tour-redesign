@@ -7,6 +7,7 @@ export { Eyebrow } from './Eyebrow';
 export { FilterChip } from './FilterChip';
 export { FloatingPill } from './FloatingPill';
 export { IconButton } from './IconButton';
+export { InfoTip, type InfoTipRow } from './InfoTip';
 export * from './icons';
 export { LazyTip } from './LazyTip';
 export { LiveDot } from './LiveDot';

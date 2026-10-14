@@ -134,11 +134,15 @@
   font-size: 12px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  color: var(--bwf-muted);
+  color: var(--bwf-green);
   cursor: help;
 
-  &[data-used] {
-    color: var(--bwf-text);
+  &[data-left='1'] {
+    color: var(--bwf-gold-text);
+  }
+
+  &[data-left='0'] {
+    color: var(--bwf-red-text);
   }
 }
 

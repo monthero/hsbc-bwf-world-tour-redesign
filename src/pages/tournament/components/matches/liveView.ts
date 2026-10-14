@@ -1,8 +1,9 @@
-import type { LiveServer, SideStats } from '~/api/bwf/normalize';
+import type { LiveServer, MatchStats, SideStats } from '~/api/bwf/normalize';
 import type { StatusTone } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import type { Game, Match, Side, Team } from '~/types';
 import {
+  challengesLeft,
   livePhase,
   pointCall,
   reviewBy,
@@ -30,6 +31,7 @@ export interface SideView {
   flash: boolean;
   leading: boolean;
   stats: SideStats | null;
+  left: number | null;
   recent: ChallengeOutcome | null;
   review: boolean;
   result: string | null;
@@ -58,10 +60,16 @@ const resultOf = (phase: LivePhase, gameNo: number) => {
   return phase === 'over' ? 'Won the match' : `Won game ${gameNo}`;
 };
 
+const leftOf = (side: Side, gameNo: number, stats: LiveStats | null, game: MatchStats | null) => {
+  const lost = game?.[side].challenges.lost ?? (gameNo === 1 ? stats?.sides[side].challenges.lost : undefined);
+  return lost === undefined ? null : challengesLeft(lost);
+};
+
 const sideView = (
   m: Match,
   side: Side,
   stats: LiveStats | null,
+  game: MatchStats | null,
   challenge: ChallengeResult | null,
   result: string | null,
 ): SideView => {
@@ -77,6 +85,7 @@ const sideView = (
     flash: m.lastPoint === side + 1,
     leading: !!m.current && now > m.current[opposite(side)],
     stats: stats?.sides[side] ?? null,
+    left: leftOf(side, m.games.length + 1, stats, game),
     recent: challenge?.side === side ? challenge.outcome : null,
     review: reviewBy(m) === side,
     result: m.current && gameWon(m.current, side) ? result : null,
@@ -86,6 +95,7 @@ const sideView = (
 export const toLiveView = (
   m: Match,
   stats: LiveStats | null,
+  game: MatchStats | null,
   challenge: ChallengeResult | null,
   server: LiveServer | undefined,
 ): LiveView => {
@@ -102,6 +112,6 @@ export const toLiveView = (
     gameNo,
     status: statusOf(m, phase, deciding),
     server: phase === 'play' && server && m.serve === server.side + 1 ? server.id : null,
-    sides: [sideView(m, 0, stats, challenge, result), sideView(m, 1, stats, challenge, result)],
+    sides: [sideView(m, 0, stats, game, challenge, result), sideView(m, 1, stats, game, challenge, result)],
   };
 };

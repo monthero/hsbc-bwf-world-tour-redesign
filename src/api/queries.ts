@@ -8,7 +8,14 @@ import { finalDayOver } from '~/utils/matches';
 
 import { isRejected, LIVE_COOLDOWN_MS, livePollMs, liveRetry } from './bwf/http';
 import type { NameOf } from './bwf/normalize';
-import { fetchDayMatches, fetchDraw, fetchEntries, fetchLiveServers, fetchMatchStats } from './bwf/tournaments';
+import {
+  fetchDayMatches,
+  fetchDraw,
+  fetchEntries,
+  fetchGameStats,
+  fetchLiveServers,
+  fetchMatchStats,
+} from './bwf/tournaments';
 import { fetchJson, getJson, retryUnless, STATIC } from './client';
 import {
   Calendar,
@@ -89,6 +96,16 @@ export const liveMatchStatsQuery = (tmtId: number, matchCode: string) =>
       const sides = await fetchMatchStats(tmtId, matchCode, signal);
       return sides && trackLiveStats(client.getQueryData<LiveStats | null>(queryKey), sides, Date.now());
     },
+    staleTime: 5_000,
+    gcTime: 60_000,
+    retry: liveRetry,
+    refetchInterval: () => livePollMs(STATS_POLL_MS),
+  });
+
+export const liveGameStatsQuery = (tmtId: number, matchCode: string, game: number) =>
+  queryOptions({
+    queryKey: ['bwf', 'game-stats', tmtId, matchCode, game],
+    queryFn: ({ signal }) => fetchGameStats(tmtId, matchCode, game, signal),
     staleTime: 5_000,
     gcTime: 60_000,
     retry: liveRetry,

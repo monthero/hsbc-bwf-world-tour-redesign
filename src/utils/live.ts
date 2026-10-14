@@ -1,7 +1,6 @@
 import type { MatchStats } from '~/api/bwf/normalize';
 import type { Game, Match, Side } from '~/types';
 
-import { plural } from './format';
 import { gameWon, opposite } from './matches';
 
 export type ChallengeOutcome = 'won' | 'lost' | 'void';
@@ -31,8 +30,22 @@ export const CHALLENGE_LABELS: Record<ChallengeOutcome, string> = {
   void: 'Challenge · no decision',
 };
 
-export const challengeTip = (s: MatchStats[number]) =>
-  `${plural(s.challenges.used, 'challenge')} used · ${s.challenges.won} won · ${s.challenges.lost} lost`;
+export const CHALLENGES_PER_GAME = 2;
+
+export const challengesLeft = (lost: number) => Math.max(0, CHALLENGES_PER_GAME - lost);
+
+export const CHALLENGE_RULE = 'This game · only unsuccessful challenges use one up';
+
+export const challengeHeadline = (left: number) => `${left} of ${CHALLENGES_PER_GAME} challenges left`;
+
+export const challengeRows = ({ challenges: c }: MatchStats[number]) => [
+  { label: 'Used this match', value: c.used },
+  { label: 'Won', value: c.won },
+  { label: 'Lost', value: c.lost },
+];
+
+export const challengeTip = (s: MatchStats[number], left: number) =>
+  [challengeHeadline(left), ...challengeRows(s).map((r) => `${r.label}: ${r.value}`)].join(' · ');
 
 const SIDES: readonly Side[] = [0, 1];
 

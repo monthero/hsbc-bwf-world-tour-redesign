@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 import { memo, type CSSProperties } from 'react';
 
 import type { LiveServer } from '~/api/bwf/normalize';
-import { liveMatchStatsQuery, liveServersQuery } from '~/api/queries';
+import { liveGameStatsQuery, liveMatchStatsQuery, liveServersQuery } from '~/api/queries';
 import { LiveDot, SectionTitle } from '~/components/ui';
 import { useMatchStream } from '~/hooks/useTournamentMedia';
 import type { Match, Tournament } from '~/types';
@@ -19,10 +19,13 @@ const LIVE_ICON = <LiveDot pulse size={8} />;
 const CHALLENGE_SHOW_MS = 60_000;
 
 const useLiveStats = (tmtId: number | null, m: Match) => {
-  const q = useQuery({ ...liveMatchStatsQuery(tmtId ?? 0, m.code ?? ''), enabled: !!tmtId && !!m.code });
+  const enabled = !!tmtId && !!m.code;
+  const q = useQuery({ ...liveMatchStatsQuery(tmtId ?? 0, m.code ?? ''), enabled });
+  const g = useQuery({ ...liveGameStatsQuery(tmtId ?? 0, m.code ?? '', m.games.length + 1), enabled });
   const challenge = q.data?.challenge;
   return {
     stats: q.data ?? null,
+    game: g.data ?? null,
     challenge: challenge && q.dataUpdatedAt - challenge.at < CHALLENGE_SHOW_MS ? challenge : null,
   };
 };
@@ -33,13 +36,14 @@ const LiveItem = memo<{
   servers: Record<string, LiveServer> | undefined;
   onOpen: (id: string) => void;
 }>(({ match: m, tournament, servers, onOpen }) => {
-  const { stats, challenge } = useLiveStats(tournament.tmtId, m);
+  const { stats, game, challenge } = useLiveStats(tournament.tmtId, m);
   const stream = useMatchStream(tournament, m);
   const server = m.code ? servers?.[m.code] : undefined;
   return (
     <LiveCard
       match={m}
       stats={stats}
+      game={game}
       challenge={challenge}
       server={server}
       stream={stream}

@@ -23,6 +23,11 @@ export const fetchDayMatches = async (code: string, day: string, names: NameOf, 
 export const fetchMatchStats = async (tmtId: number, matchCode: string, signal?: AbortSignal) =>
   toMatchStats(await bwfGet('match-center/vue-match-stat', { tmtId, matchId: matchCode }, BwfMatchStat, signal));
 
+export const fetchGameStats = async (tmtId: number, matchCode: string, game: number, signal?: AbortSignal) =>
+  toMatchStats(
+    await bwfGet('match-center/vue-game-stat', { tmtId, matchId: matchCode, gameId: game }, BwfMatchStat, signal),
+  );
+
 export const fetchLiveServers = async (tmtId: number, signal?: AbortSignal) =>
   toLiveServers(await bwfGet('match-center/vue-live-matches', { tmtId }, BwfLiveMatches, signal));
 

@@ -63,6 +63,7 @@ const ROUTES: Record<string, Route> = {
     (q) => dayCache(q.date),
   ),
   '/match-center/vue-match-stat': route(z.strictObject({ tmtId: Id, matchId: Id }), () => LIVE_CACHE),
+  '/match-center/vue-game-stat': route(z.strictObject({ tmtId: Id, matchId: Id, gameId: Id }), () => LIVE_CACHE),
   '/match-center/vue-live-matches': route(z.strictObject({ tmtId: Id }), () => LIVE_CACHE),
   '/vue-tournament-draws': route(z.strictObject({ tmtTab: z.literal('draw'), tmtId: Id }), () => SCHEDULE_CACHE),
   '/vue-tournament-draw-data': route(
