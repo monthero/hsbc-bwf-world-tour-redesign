@@ -10,7 +10,7 @@
 .head,
 .row {
   display: grid;
-  grid-template-columns: 20px 36px minmax(160px, 2fr) 88px 112px 112px 132px 132px;
+  grid-template-columns: 20px 36px minmax(160px, 2fr) 88px 112px 112px 132px 132px 28px;
   align-items: center;
   gap: 14px;
   padding: 8px 16px;
@@ -47,15 +47,15 @@
     background: var(--bwf-red-tint);
   }
 
-  & > *:not(button, .check) {
+  & > *:not(button, .check, .profile) {
     pointer-events: none;
   }
 
   @mixin smaller-than $mantine-breakpoint-md {
-    grid-template-columns: 20px 36px auto minmax(0, 1fr) auto;
+    grid-template-columns: 20px 36px auto minmax(0, 1fr) auto auto;
     grid-template-areas:
-      'check avatar name name local'
-      'check avatar country rank badges';
+      'check avatar name name local profile'
+      'check avatar country rank badges badges';
     gap: 4px 10px;
     padding: 10px 12px;
   }
@@ -63,6 +63,10 @@
 
 .check {
   display: flex;
+}
+
+.profile {
+  justify-self: end;
 }
 
 .name {
@@ -180,5 +184,9 @@
 
   .rank {
     grid-area: rank;
+  }
+
+  .profile {
+    grid-area: profile;
   }
 }

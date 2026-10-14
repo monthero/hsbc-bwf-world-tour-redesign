@@ -6,6 +6,7 @@ import { memo, useMemo, type Ref } from 'react';
 import { Flag } from '~/components/country';
 import { EventTag } from '~/components/match';
 import { PlayerAvatar } from '~/components/player';
+import { IconButton, IconExternal } from '~/components/ui';
 import { useWindowList } from '~/hooks/useWindowList';
 import { formatDayMonthYear } from '~/utils/dates';
 import { formatRank } from '~/utils/format';
@@ -90,6 +91,16 @@ const PlayerRow = memo<{
         {row.overridden && <span className={classes.overridden}>Override</span>}
         {row.hasNotes && <span className={classes.note}>Note</span>}
       </span>
+      <IconButton
+        label={`Open ${row.name}'s profile in a new tab`}
+        tip="Open profile"
+        size="sm"
+        variant="ghost"
+        link={{ to: '/players/$id', params: { id: p.id }, target: '_blank' }}
+        className={clsx(utils.raise, classes.profile)}
+      >
+        <IconExternal />
+      </IconButton>
       {(row.candidate || p.override?.retired) && <RetirementLine row={row} />}
     </div>
   );
@@ -112,6 +123,7 @@ const Header = memo<{ all: boolean; some: boolean; onToggleAll: () => void }>(({
     <span>Last played</span>
     <span>Images</span>
     <span>Local</span>
+    <span />
   </div>
 ));
 
