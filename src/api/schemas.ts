@@ -132,6 +132,7 @@ export const PlayerBio = z.object({
   prize: OptionalString,
   ambition: OptionalString,
   racket: OptionalString,
+  racketNote: OptionalString,
   tension: OptionalString,
   tensionNote: OptionalString,
   string: OptionalString,

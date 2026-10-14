@@ -96,6 +96,7 @@ const FIELDS: readonly FieldDef[] = [
   bio('club', 'Club', 'Career'),
   bio('prize', 'Prize money', 'Career'),
   bio('racket', 'Racket', EQUIPMENT, 'catalog', { missing: true, catalog: 'racket', trustBwf: false }),
+  bio('racketNote', 'Racket extras', EQUIPMENT, 'text', { trustBwf: false }),
   bio('tension', 'Tension', EQUIPMENT, 'tension', { trustBwf: false, format: (v) => `${v} ${TENSION_UNIT}` }),
   bio('tensionNote', 'Tension note', EQUIPMENT, 'text', { trustBwf: false }),
   bio('string', 'String', EQUIPMENT, 'catalog', { catalog: 'string', trustBwf: false }),

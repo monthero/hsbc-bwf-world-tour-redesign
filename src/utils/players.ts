@@ -6,8 +6,14 @@ import { HEIGHT_UNIT, heightParts, parseTension, TENSION_UNIT, tensionParts } fr
 import { playerSquareUrl, playerThumbUrl } from './images';
 import { unshout } from './names';
 
-const facts = (list: { key: string; label: string; value: string | undefined }[], fmt: (s: string) => string) =>
-  list.flatMap((f): FactItem[] => (f.value ? [{ key: f.key, label: f.label, value: fmt(f.value) }] : []));
+const facts = (
+  list: { key: string; label: string; value: string | undefined; sub?: string }[],
+  fmt: (s: string) => string,
+) =>
+  list.flatMap((f): FactItem[] => {
+    const sub = f.sub?.trim();
+    return f.value ? [{ key: f.key, label: f.label, value: fmt(f.value), ...(sub && { sub }) }] : [];
+  });
 
 const keep = (s: string) => s;
 
@@ -64,7 +70,7 @@ export const buildBio = (bio: PlayerBio | undefined, units: BioUnits): BioView =
     unshout,
   );
   const equipment = [
-    ...facts([{ key: 'racket', label: 'Racket', value: b.racket }], keep),
+    ...facts([{ key: 'racket', label: 'Racket', value: b.racket, sub: b.racketNote }], keep),
     ...tensionFact(b, units.tension),
     ...facts(
       [

@@ -18,6 +18,7 @@ const BIO_KEYS = [
   'coach',
   'club',
   'racket',
+  'racketNote',
   'tension',
   'tensionNote',
   'string',
