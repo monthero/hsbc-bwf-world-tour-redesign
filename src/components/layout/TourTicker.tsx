@@ -1,18 +1,17 @@
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 
 import { LevelBadge, TournamentPlace, TournamentStatusBadge } from '~/components/tournament';
 import { IconNext, LiveDot } from '~/components/ui';
-import { useTournaments } from '~/hooks/useTournaments';
-import { isHeld, liveAndNext, tournamentParams } from '~/utils/tournaments';
+import { useLiveAndNext } from '~/hooks/useTournaments';
+import { tournamentParams } from '~/utils/tournaments';
 
 import classes from './TourTicker.module.css';
 import utils from '~/styles/utils.module.css';
 
 export const TourTicker = memo(() => {
-  const { data } = useTournaments();
-  const { live, next } = useMemo(() => liveAndNext(data?.filter(isHeld) ?? []), [data]);
+  const { live, next } = useLiveAndNext();
   const t = live ?? next;
   if (!t) return null;
   return (

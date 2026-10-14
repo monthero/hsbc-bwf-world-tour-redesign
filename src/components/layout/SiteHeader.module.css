@@ -13,6 +13,26 @@
   align-items: center;
   gap: clamp(20px, 3vw, 48px);
   height: 60px;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 8px;
+    height: 52px;
+  }
+}
+
+.wordmark {
+  @mixin smaller-than $mantine-breakpoint-md {
+    grid-row: 1;
+    grid-column: 2;
+    transition: opacity 0.2s;
+
+    .row:has([data-open]) & {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
 }
 
 .nav {
@@ -21,6 +41,10 @@
   align-self: stretch;
   gap: clamp(18px, 2.4vw, 30px);
   min-width: 0;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    display: none;
+  }
 }
 
 .link {
@@ -32,26 +56,47 @@
   font-weight: 500;
   white-space: nowrap;
   transition: color 0.2s;
-}
 
-.link:hover,
-.link[data-active] {
-  color: var(--bwf-text);
-}
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: var(--bwf-on-brand);
+    opacity: 0;
+    transform: scaleX(0);
+    transition:
+      transform 0.35s var(--bwf-ease-out),
+      opacity 0.2s;
+  }
 
-.link[data-active] {
-  font-weight: 600;
-}
+  &:hover,
+  &[data-active] {
+    color: var(--bwf-text);
+  }
 
-.link[data-active]::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 3px;
-  border-radius: 3px 3px 0 0;
-  background: var(--bwf-on-brand);
+  &:hover::after {
+    opacity: 0.45;
+    transform: scaleX(0.6);
+  }
+
+  &[data-active] {
+    font-weight: 600;
+
+    &::after {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      transition: none;
+    }
+  }
 }
 
 .actions {
@@ -59,41 +104,42 @@
   align-items: center;
   gap: 8px;
   margin-left: auto;
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    display: contents;
+  }
 }
 
 .settings {
   display: flex;
   transition: opacity 0.2s;
-}
 
-.row:has([data-open]) .settings {
-  opacity: 0;
-  visibility: hidden;
-}
-
-@mixin smaller-than $mantine-breakpoint-md {
-  .row {
-    height: 52px;
-  }
-
-  .nav {
-    display: none;
-  }
-}
-
-@mixin smaller-than $mantine-breakpoint-md {
-  .wordmark {
-    transition: opacity 0.2s;
-  }
-
-  .row:has([data-open]) .wordmark {
+  .row:has([data-open]) & {
     opacity: 0;
     visibility: hidden;
   }
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .settings {
-    transition: none;
+.search {
+  @mixin smaller-than $mantine-breakpoint-md {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: start;
+  }
+}
+
+.menu {
+  @mixin smaller-than $mantine-breakpoint-md {
+    grid-row: 1;
+    grid-column: 3;
+    justify-self: end;
   }
 }

@@ -73,7 +73,7 @@ const TournamentOption = memo<{ tournament: Tournament }>(({ tournament: t }) =>
   </Combobox.Option>
 ));
 
-export const SiteSearch = memo(() => {
+export const SiteSearch = memo<{ className?: string }>(({ className }) => {
   const open = useSearchStore((s) => s.open);
   const setOpen = useSearchStore((s) => s.setOpen);
   const [query, setQuery] = useState('');
@@ -155,7 +155,7 @@ export const SiteSearch = memo(() => {
   const onClose = useCallback(() => collapse(true), [collapse]);
 
   return (
-    <div ref={rootRef} className={classes.search} data-open={open || undefined} onBlur={onBlur}>
+    <div ref={rootRef} className={clsx(classes.search, className)} data-open={open || undefined} onBlur={onBlur}>
       <button
         ref={triggerRef}
         type="button"

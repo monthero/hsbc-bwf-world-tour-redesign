@@ -112,3 +112,8 @@ export const liveAndNext = (held: readonly Tournament[]) => ({
   live: held.find(isLive),
   next: held.find((t) => t.status === 'up'),
 });
+
+export const tournamentLink = (t: Pick<Tournament, 'year' | 'slug'>) =>
+  ({ to: '/world-tour/$year/$slug', params: tournamentParams(t) }) as const;
+
+export const liveOrNextLabel = (t: Tournament) => (isLive(t) ? liveDayLabel(t) : `Next · ${countdownLabel(t, 'in')}`);

@@ -225,6 +225,8 @@ export const cssVariablesResolver: CSSVariablesResolver = () => ({
     '--bwf-on-brand-line': tint('var(--mantine-color-white)', 20),
     '--bwf-on-brand-fill': tint('var(--mantine-color-white)', 10),
     '--bwf-on-brand-well': tint(c('dark', 9), 34),
+    '--bwf-on-brand-button': tint(c('dark', 9), 18),
+    '--bwf-on-brand-button-hover': tint(c('dark', 9), 30),
     '--bwf-bg': c('dark', 7),
     '--bwf-bg-sunken': c('slate', 9),
     '--bwf-surface': c('slate', 8),

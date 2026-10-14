@@ -12,7 +12,7 @@ export const IconButton: FC<
     children: ReactNode;
     size?: 'sm' | 'md';
     shape?: 'circle' | 'rounded';
-    variant?: 'ghost' | 'outline' | 'filled';
+    variant?: 'ghost' | 'outline' | 'filled' | 'brand';
     tip?: string;
     disabled?: boolean;
     className?: string;

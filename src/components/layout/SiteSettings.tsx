@@ -125,13 +125,19 @@ const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ v
   );
 });
 
+export const SettingsSheet = memo<{ opened: boolean; onClose: () => void }>(({ opened, onClose }) => (
+  <BottomSheet opened={opened} onClose={onClose} handle bodyClassName={classes.sheetBody}>
+    <SettingsPanel variant="sheet" onClose={onClose} />
+  </BottomSheet>
+));
+
 export const SiteSettings = memo<{ className?: string }>(({ className }) => {
   const isMobile = useIsMobile();
   const [opened, setOpened] = useState(false);
   const toggle = useCallback(() => setOpened((o) => !o), []);
   const close = useCallback(() => setOpened(false), []);
   const trigger = (
-    <IconButton label={LABEL} variant="outline" onClick={toggle} aria-expanded={opened} aria-haspopup="dialog">
+    <IconButton label={LABEL} variant="brand" onClick={toggle} aria-expanded={opened} aria-haspopup="dialog">
       <IconSettings size={18} />
     </IconButton>
   );
@@ -139,9 +145,7 @@ export const SiteSettings = memo<{ className?: string }>(({ className }) => {
     return (
       <span className={className}>
         {trigger}
-        <BottomSheet opened={opened} onClose={close} handle bodyClassName={classes.sheetBody}>
-          <SettingsPanel variant="sheet" onClose={close} />
-        </BottomSheet>
+        <SettingsSheet opened={opened} onClose={close} />
       </span>
     );
   return (

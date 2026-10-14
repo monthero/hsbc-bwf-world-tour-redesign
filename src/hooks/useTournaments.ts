@@ -13,7 +13,7 @@ import {
 import type { Calendar, SeasonMatch, Tournament, TournamentMatches } from '~/types';
 import { todayIso } from '~/utils/dates';
 import { buildSchedule, finalDayOver, toDrawSlots, toEntryListings } from '~/utils/matches';
-import { isHeld, isLive, knownFinalsCity, toTournament } from '~/utils/tournaments';
+import { isHeld, isLive, knownFinalsCity, liveAndNext, toTournament } from '~/utils/tournaments';
 
 const NO_TOURNAMENT: TournamentRef = { code: '', start: '', end: '', archived: false };
 
@@ -49,6 +49,11 @@ export const useTournaments = (year?: number) => {
   const q = useQuery({ ...calendarQuery(year), select: selectTournaments });
   const data = useResolved(q.data);
   return { ...q, data };
+};
+
+export const useLiveAndNext = () => {
+  const { data } = useTournaments();
+  return useMemo(() => liveAndNext(data?.filter(isHeld) ?? []), [data]);
 };
 
 export const useSeasonEdge = (year: number, enabled: boolean) => {

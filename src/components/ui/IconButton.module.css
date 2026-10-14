@@ -40,6 +40,12 @@
     background: var(--bwf-raised);
   }
 
+  &[data-variant='brand'] {
+    border-color: transparent;
+    background: var(--bwf-on-brand-button);
+    color: var(--bwf-on-brand);
+  }
+
   &:hover:not([aria-disabled]) {
     background: var(--bwf-raised);
     color: var(--bwf-text);
@@ -51,6 +57,11 @@
 
   &[data-variant='filled']:hover:not([aria-disabled]) {
     background: var(--bwf-border-strong);
+  }
+
+  &[data-variant='brand']:hover:not([aria-disabled]) {
+    background: var(--bwf-on-brand-button-hover);
+    color: var(--bwf-on-brand);
   }
 
   &[aria-disabled] {

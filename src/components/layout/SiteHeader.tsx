@@ -4,7 +4,7 @@ import { memo, useLayoutEffect, useRef, type RefObject } from 'react';
 import { HEADER_VAR } from '~/utils/layout';
 
 import { SITE_NAV } from './links';
-import { MobileMenu } from './MobileMenu';
+import { CourtMenu } from './menu/CourtMenu';
 import { PlatformBar } from './PlatformBar';
 import { SiteLink } from './SiteLink';
 import { SiteSearch } from './SiteSearch';
@@ -45,8 +45,8 @@ export const SiteHeader = memo(() => {
           </nav>
           <div className={classes.actions}>
             <SiteSettings className={classes.settings} />
-            <SiteSearch />
-            <MobileMenu />
+            <SiteSearch className={classes.search} />
+            <CourtMenu className={classes.menu} />
           </div>
         </div>
       </header>

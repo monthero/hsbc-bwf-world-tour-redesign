@@ -19,19 +19,17 @@
   height: 100%;
   padding: 0;
   border-radius: 50%;
-  border: 1px solid var(--bwf-border-strong);
-  background: none;
-  color: var(--bwf-text);
+  border: 0;
+  background: var(--bwf-on-brand-button);
+  color: var(--bwf-on-brand);
   font-size: 17px;
   cursor: pointer;
   transition:
     opacity 0.18s,
-    background 0.15s,
-    border-color 0.15s;
+    background 0.15s;
 
   &:hover {
-    background: var(--bwf-raised);
-    border-color: var(--bwf-border-hover);
+    background: var(--bwf-on-brand-button-hover);
   }
 
   .search[data-open] & {
@@ -81,6 +79,7 @@
     right: calc(var(--bwf-gutter) + var(--search-h) + 8px);
     width: auto;
     translate: 0 -50%;
+    clip-path: inset(0 calc(100% - var(--search-h)) 0 0 round 999px);
   }
 }
 
