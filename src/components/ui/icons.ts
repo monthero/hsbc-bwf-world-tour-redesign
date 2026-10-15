@@ -1,10 +1,10 @@
 import { createElement, type ComponentType, type FC, type SVGProps } from 'react';
 import Racket from '~icons/bwf/racket-linear';
 import Strings from '~icons/bwf/strings-linear';
-import Tension from '~icons/bwf/tension-linear';
 import ArrowCounterClockwise from '~icons/ph/arrow-counter-clockwise';
 import ArrowRight from '~icons/ph/arrow-right';
 import ArrowUpRight from '~icons/ph/arrow-up-right';
+import Barbell from '~icons/ph/barbell';
 import Cake from '~icons/ph/cake';
 import CalendarBlank from '~icons/ph/calendar-blank';
 import Camera from '~icons/ph/camera';
@@ -91,7 +91,7 @@ export const IconCup = icon(Trophy);
 export const IconRacket = icon(Racket);
 export const IconShoe = icon(SneakerMove);
 export const IconStrings = icon(Strings);
-export const IconTension = icon(Tension);
+export const IconTension = icon(Barbell);
 export const IconGitHub = icon(GithubLogo);
 
 const brand =
