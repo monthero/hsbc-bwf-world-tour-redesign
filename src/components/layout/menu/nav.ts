@@ -39,13 +39,13 @@ const META: Record<InternalItem['to'], Omit<NavItem, 'item' | 'index'>> = {
     glyph: icon(InfoDuotone),
   },
   '/calendar': {
-    blurb: 'Every stop',
+    blurb: 'Follow the tour',
     icon: icon(Calendar),
     activeIcon: icon(CalendarFill),
     glyph: icon(CalendarDuotone),
   },
   '/rankings': {
-    blurb: 'World & race',
+    blurb: 'World & tour',
     icon: icon(Ranking),
     activeIcon: icon(RankingFill),
     glyph: icon(RankingDuotone),
