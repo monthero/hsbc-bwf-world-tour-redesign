@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { AvatarGroup, RankedNames, RankValue } from '~/components/player';
+import { AvatarGroup, RankedNames } from '~/components/player';
 import { Medal } from '~/components/tournament';
 import type { MedalKind, RankRow } from '~/types';
 import { formatNumber, plural } from '~/utils/format';
@@ -16,9 +16,8 @@ const PodiumCard = memo<{ row: RankRow; medal: MedalKind }>(({ row, medal }) => 
   return (
     <li className={classes.card} data-medal={medal}>
       <div className={classes.top}>
-        <span className={classes.place}>
-          <Medal kind={medal} size={18} />
-          <RankValue value={row.rank} className={classes.rank} />
+        <span className={classes.place} aria-label={`Rank ${row.rank}`}>
+          <Medal kind={medal} size={28} />
         </span>
         {(row.change !== 0 || row.isNew) && <Movement change={row.change} isNew={row.isNew} variant="pill" />}
       </div>
