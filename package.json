@@ -19,9 +19,17 @@
     "countries": "node scripts/build-countries.mjs",
     "assets:map": "node --disable-warning=ExperimentalWarning scripts/assets/world-map.ts",
     "relay:dev": "wrangler dev --config workers/bwf-relay/wrangler.toml",
-    "relay:deploy": "wrangler deploy --config workers/bwf-relay/wrangler.toml"
+    "relay:deploy": "wrangler deploy --config workers/bwf-relay/wrangler.toml",
+    "i18n:extract": "lingui extract --clean"
   },
   "dependencies": {
+    "@fontsource-variable/noto-sans-devanagari": "^5.3.0",
+    "@fontsource-variable/noto-sans-jp": "^5.3.1",
+    "@fontsource-variable/noto-sans-kr": "^5.3.1",
+    "@fontsource-variable/noto-sans-sc": "^5.3.1",
+    "@fontsource-variable/noto-sans-thai": "^5.3.0",
+    "@lingui/core": "^6.9.1",
+    "@lingui/react": "^6.9.1",
     "@mantine/core": "^9.7.1",
     "@mantine/dates": "^9.7.1",
     "@mantine/hooks": "^9.7.1",
@@ -38,6 +46,9 @@
   "devDependencies": {
     "@cloudflare/workers-types": "5.20261006.1",
     "@iconify-json/solar": "^1.2.13",
+    "@lingui/cli": "^6.9.1",
+    "@lingui/format-po": "^6.9.1",
+    "@lingui/vite-plugin": "^6.9.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@tanstack/react-query-devtools": "^5.104.1",

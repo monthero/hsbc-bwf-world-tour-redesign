@@ -1,3 +1,4 @@
+import { lingui } from '@lingui/vite-plugin';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
@@ -18,6 +19,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       tanstackRouter({ target: 'react', autoCodeSplitting: true }),
       react(),
+      lingui({ macroTransform: true }),
       Icons({
         compiler: 'jsx',
         jsx: 'react',

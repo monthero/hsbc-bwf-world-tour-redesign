@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: hi\n"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "12-hour"
+msgstr "12-घंटे"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "24-hour"
+msgstr "24-घंटे"
+
+#. Settings label: choose a 12-hour or 24-hour clock
+#: src/components/layout/SiteSettings.tsx
+msgid "Clock"
+msgstr "घड़ी का प्रारूप"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Close settings"
+msgstr "सेटिंग्स बंद करें"
+
+#. Settings option: show player heights in feet and inches
+#: src/components/layout/SiteSettings.tsx
+msgid "ft & in"
+msgstr "फ़ुट और इंच"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Language"
+msgstr "भाषा"
+
+#. Settings option: show match times in the visitor’s own time zone
+#: src/components/layout/SiteSettings.tsx
+msgid "My time"
+msgstr "मेरा समय"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "My time uses your browser’s time zone ({zone})."
+msgstr "मेरा समय आपके ब्राउज़र के टाइम ज़ोन ({zone}) का उपयोग करता है।"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Player heights"
+msgstr "खिलाड़ियों की लंबाई"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Reset to defaults"
+msgstr "डिफ़ॉल्ट पर रीसेट करें"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Settings"
+msgstr "सेटिंग्स"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Show streams not available in my region"
+msgstr "मेरे क्षेत्र में अनुपलब्ध स्ट्रीम भी दिखाएँ"
+
+#. Settings label before the choice between venue time and my time
+#: src/components/layout/SiteSettings.tsx
+msgid "Show times in"
+msgstr "समय दिखाएँ"
+
+#. Settings label: unit for badminton racket string tension (lbs or kg)
+#: src/components/layout/SiteSettings.tsx
+msgid "String tensions"
+msgstr "स्ट्रिंग टेंशन"
+
+#. Settings section heading for match time display options
+#: src/components/layout/SiteSettings.tsx
+msgid "Times"
+msgstr "समय"
+
+#. Settings section heading for measurement units
+#: src/components/layout/SiteSettings.tsx
+msgid "Units"
+msgstr "इकाइयाँ"
+
+#. Settings option: show match times in the tournament venue’s local time zone
+#: src/components/layout/SiteSettings.tsx
+msgid "Venue time"
+msgstr "स्थल का समय"
+
+#. Settings section heading for video and live stream options
+#: src/components/layout/SiteSettings.tsx
+msgid "Videos"
+msgstr "वीडियो"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "When on, they appear greyed out. When off, they’re hidden from video lists and Watch buttons."
+msgstr "चालू होने पर ये धूसर दिखती हैं। बंद होने पर ये वीडियो सूचियों और देखें बटनों से छिप जाती हैं।"

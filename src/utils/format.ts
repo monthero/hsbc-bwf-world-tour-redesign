@@ -1,4 +1,6 @@
-export const formatNumber = (n: number) => n.toLocaleString('en-US');
+import { numberFormat } from '../i18n/current.ts';
+
+export const formatNumber = (n: number) => numberFormat().format(n);
 
 export const formatRank = (n: number | null | undefined, empty = '—') => (n ? `#${n}` : empty);
 

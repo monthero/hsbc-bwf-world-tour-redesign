@@ -15,6 +15,8 @@ import {
 import tooltip from '~/components/ui/Tooltip.module.css';
 import variants from '~/components/ui/variants.module.css';
 
+const FONT_STACK = "'Geist', var(--bwf-script-font, system-ui), system-ui, sans-serif";
+
 const red: MantineColorsTuple = [
   '#ffe9ea',
   '#ffd9da',
@@ -192,8 +194,8 @@ export const theme = createTheme({
   colors,
   white: '#ffffff',
   black: '#0b0b0c',
-  fontFamily: "'Geist', system-ui, sans-serif",
-  headings: { fontFamily: "'Geist', system-ui, sans-serif", fontWeight: '600' },
+  fontFamily: FONT_STACK,
+  headings: { fontFamily: FONT_STACK, fontWeight: '600' },
   defaultRadius: 'md',
   cursorType: 'pointer',
   focusRing: 'never',

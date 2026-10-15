@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh\n"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "12-hour"
+msgstr "12 小时制"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "24-hour"
+msgstr "24 小时制"
+
+#. Settings label: choose a 12-hour or 24-hour clock
+#: src/components/layout/SiteSettings.tsx
+msgid "Clock"
+msgstr "时钟格式"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Close settings"
+msgstr "关闭设置"
+
+#. Settings option: show player heights in feet and inches
+#: src/components/layout/SiteSettings.tsx
+msgid "ft & in"
+msgstr "英尺和英寸"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Language"
+msgstr "语言"
+
+#. Settings option: show match times in the visitor’s own time zone
+#: src/components/layout/SiteSettings.tsx
+msgid "My time"
+msgstr "我的时间"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "My time uses your browser’s time zone ({zone})."
+msgstr "“我的时间”使用浏览器的时区（{zone}）。"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Player heights"
+msgstr "球员身高"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Reset to defaults"
+msgstr "恢复默认设置"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Settings"
+msgstr "设置"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Show streams not available in my region"
+msgstr "显示我所在地区无法观看的直播"
+
+#. Settings label before the choice between venue time and my time
+#: src/components/layout/SiteSettings.tsx
+msgid "Show times in"
+msgstr "时间显示为"
+
+#. Settings label: unit for badminton racket string tension (lbs or kg)
+#: src/components/layout/SiteSettings.tsx
+msgid "String tensions"
+msgstr "穿线磅数"
+
+#. Settings section heading for match time display options
+#: src/components/layout/SiteSettings.tsx
+msgid "Times"
+msgstr "时间"
+
+#. Settings section heading for measurement units
+#: src/components/layout/SiteSettings.tsx
+msgid "Units"
+msgstr "单位"
+
+#. Settings option: show match times in the tournament venue’s local time zone
+#: src/components/layout/SiteSettings.tsx
+msgid "Venue time"
+msgstr "赛场时间"
+
+#. Settings section heading for video and live stream options
+#: src/components/layout/SiteSettings.tsx
+msgid "Videos"
+msgstr "视频"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "When on, they appear greyed out. When off, they’re hidden from video lists and Watch buttons."
+msgstr "开启时，这些直播显示为灰色；关闭时，它们会从视频列表和“观看”按钮中隐藏。"

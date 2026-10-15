@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: da\n"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "12-hour"
+msgstr "12-timers"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "24-hour"
+msgstr "24-timers"
+
+#. Settings label: choose a 12-hour or 24-hour clock
+#: src/components/layout/SiteSettings.tsx
+msgid "Clock"
+msgstr "Urformat"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Close settings"
+msgstr "Luk indstillinger"
+
+#. Settings option: show player heights in feet and inches
+#: src/components/layout/SiteSettings.tsx
+msgid "ft & in"
+msgstr "fod & tommer"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Language"
+msgstr "Sprog"
+
+#. Settings option: show match times in the visitor’s own time zone
+#: src/components/layout/SiteSettings.tsx
+msgid "My time"
+msgstr "Min tid"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "My time uses your browser’s time zone ({zone})."
+msgstr "Min tid bruger din browsers tidszone ({zone})."
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Player heights"
+msgstr "Spillerhøjder"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Reset to defaults"
+msgstr "Nulstil til standard"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Settings"
+msgstr "Indstillinger"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Show streams not available in my region"
+msgstr "Vis streams, der ikke er tilgængelige i min region"
+
+#. Settings label before the choice between venue time and my time
+#: src/components/layout/SiteSettings.tsx
+msgid "Show times in"
+msgstr "Vis tider i"
+
+#. Settings label: unit for badminton racket string tension (lbs or kg)
+#: src/components/layout/SiteSettings.tsx
+msgid "String tensions"
+msgstr "Strengespænding"
+
+#. Settings section heading for match time display options
+#: src/components/layout/SiteSettings.tsx
+msgid "Times"
+msgstr "Tider"
+
+#. Settings section heading for measurement units
+#: src/components/layout/SiteSettings.tsx
+msgid "Units"
+msgstr "Enheder"
+
+#. Settings option: show match times in the tournament venue’s local time zone
+#: src/components/layout/SiteSettings.tsx
+msgid "Venue time"
+msgstr "Spillestedets tid"
+
+#. Settings section heading for video and live stream options
+#: src/components/layout/SiteSettings.tsx
+msgid "Videos"
+msgstr "Videoer"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "When on, they appear greyed out. When off, they’re hidden from video lists and Watch buttons."
+msgstr "Når den er slået til, vises de nedtonet. Når den er slået fra, skjules de i videolister og Se-knapper."

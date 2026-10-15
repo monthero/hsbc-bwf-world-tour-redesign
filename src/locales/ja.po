@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ja\n"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "12-hour"
+msgstr "12時間表示"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "24-hour"
+msgstr "24時間表示"
+
+#. Settings label: choose a 12-hour or 24-hour clock
+#: src/components/layout/SiteSettings.tsx
+msgid "Clock"
+msgstr "時刻の表示形式"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Close settings"
+msgstr "設定を閉じる"
+
+#. Settings option: show player heights in feet and inches
+#: src/components/layout/SiteSettings.tsx
+msgid "ft & in"
+msgstr "フィート・インチ"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Language"
+msgstr "言語"
+
+#. Settings option: show match times in the visitor’s own time zone
+#: src/components/layout/SiteSettings.tsx
+msgid "My time"
+msgstr "自分の時間"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "My time uses your browser’s time zone ({zone})."
+msgstr "「自分の時間」はブラウザのタイムゾーン（{zone}）を使用します。"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Player heights"
+msgstr "選手の身長"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Reset to defaults"
+msgstr "初期設定に戻す"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Settings"
+msgstr "設定"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "Show streams not available in my region"
+msgstr "お住まいの地域で視聴できない配信も表示"
+
+#. Settings label before the choice between venue time and my time
+#: src/components/layout/SiteSettings.tsx
+msgid "Show times in"
+msgstr "時刻の基準"
+
+#. Settings label: unit for badminton racket string tension (lbs or kg)
+#: src/components/layout/SiteSettings.tsx
+msgid "String tensions"
+msgstr "ガットのテンション"
+
+#. Settings section heading for match time display options
+#: src/components/layout/SiteSettings.tsx
+msgid "Times"
+msgstr "時刻"
+
+#. Settings section heading for measurement units
+#: src/components/layout/SiteSettings.tsx
+msgid "Units"
+msgstr "単位"
+
+#. Settings option: show match times in the tournament venue’s local time zone
+#: src/components/layout/SiteSettings.tsx
+msgid "Venue time"
+msgstr "会場の時間"
+
+#. Settings section heading for video and live stream options
+#: src/components/layout/SiteSettings.tsx
+msgid "Videos"
+msgstr "動画"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "When on, they appear greyed out. When off, they’re hidden from video lists and Watch buttons."
+msgstr "オンにするとグレーで表示され、オフにすると動画リストと視聴ボタンに表示されなくなります。"
