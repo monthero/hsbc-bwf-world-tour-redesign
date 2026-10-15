@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 import { memo, useCallback, useEffect, useLayoutEffect, useState, type CSSProperties } from 'react';
 
 import { LogoTile } from '~/components/tournament';
-import { IconNext, IconSettings, ShuttleIcon } from '~/components/ui';
+import { IconButton, IconNext, IconSettings, ShuttleIcon } from '~/components/ui';
 import { useLiveAndNext } from '~/hooks/useTournaments';
 import type { Tournament } from '~/types';
 import { isLive, tournamentLink } from '~/utils/tournaments';
@@ -166,10 +166,9 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
             <div className={classes.foot}>
               <div className={classes.footHead}>
                 <span className={classes.footLabel}>Follow BWF</span>
-                <button type="button" className={classes.settings} onClick={openSettings}>
-                  <IconSettings size={16} />
-                  Settings
-                </button>
+                <IconButton label="Settings" className={classes.settings} onClick={openSettings}>
+                  <IconSettings size={18} />
+                </IconButton>
               </div>
               <SocialLinks items={SOCIAL_LINKS} className={classes.social} />
             </div>

@@ -1,11 +1,7 @@
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
-import RacketIcon from '~icons/bwf/racket-linear';
-import ShoesIcon from '~icons/bwf/shoe-linear';
-import StringIcon from '~icons/bwf/strings-linear';
-import TensionIcon from '~icons/bwf/tension-linear';
 
-import { Footnote, icon, type IconProps } from '~/components/ui';
+import { Footnote, IconRacket, IconShoe, IconStrings, IconTension, type IconProps } from '~/components/ui';
 import type { FactItem } from '~/types';
 
 import { EQUIPMENT_NOTE } from '../constants';
@@ -15,10 +11,10 @@ import shared from './shared.module.css';
 import utils from '~/styles/utils.module.css';
 
 const KIT_ICONS: Record<string, FC<IconProps>> = {
-  racket: icon(RacketIcon),
-  tension: icon(TensionIcon),
-  string: icon(StringIcon),
-  shoes: icon(ShoesIcon),
+  racket: IconRacket,
+  tension: IconTension,
+  string: IconStrings,
+  shoes: IconShoe,
 };
 
 export const Kit = memo<{ items: readonly FactItem[] }>(({ items }) => (

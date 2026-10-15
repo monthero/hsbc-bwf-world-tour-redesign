@@ -21,6 +21,12 @@
     border-color 0.15s,
     color 0.15s;
 
+  &[data-icon-only] {
+    justify-content: center;
+    width: 32px;
+    padding: 0;
+  }
+
   &:hover {
     border-color: var(--bwf-border-focus);
     color: var(--bwf-text);

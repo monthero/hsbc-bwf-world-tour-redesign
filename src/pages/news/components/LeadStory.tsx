@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { memo } from 'react';
 
 import { NewsImage, NewsMeta, NewsTitle, SkeletonLines, TournamentChip } from '~/components/news';
-import { IconNext } from '~/components/ui';
+import { IconArrowRight } from '~/components/ui';
 import type { NewsStory } from '~/utils/news';
 
 import classes from './LeadStory.module.css';
@@ -29,10 +29,7 @@ export const LeadStory = memo<{ story: NewsStory | undefined; isMobile: boolean 
         {story.item.excerpt && <p className={classes.excerpt}>{story.item.excerpt}</p>}
         <span className={classes.foot}>
           <NewsMeta story={story} />
-          <span className={classes.read}>
-            Read story
-            <IconNext />
-          </span>
+          <IconArrowRight className={classes.read} />
         </span>
       </div>
     </article>

@@ -6,7 +6,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
   width: var(--box);
   height: var(--box);
   padding: 0;
@@ -50,20 +49,9 @@
   }
 
   &[data-variant='pill'] {
-    width: auto;
-    padding: 0 14px 0 12px;
-    border-radius: 999px;
     border-color: var(--bwf-border-strong);
     background: alpha(var(--mantine-color-white), 0.04);
     color: var(--bwf-text-3);
-    font-size: 13px;
-    font-weight: 600;
-
-    &[data-box='sm'] {
-      padding: 0 12px;
-      font-size: 12px;
-      font-weight: 500;
-    }
 
     &:hover {
       border-color: var(--bwf-gold-edge);
@@ -86,19 +74,5 @@
   &[data-variant='pill'][data-active] {
     background: var(--bwf-gold-tint);
     border-color: var(--bwf-gold-edge);
-  }
-}
-
-.starLabel {
-  white-space: nowrap;
-}
-
-@mixin smaller-than $mantine-breakpoint-sm {
-  .star[data-variant='pill'] {
-    padding: 0 9px;
-
-    & .starLabel {
-      display: none;
-    }
   }
 }

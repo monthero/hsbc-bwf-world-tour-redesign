@@ -2,27 +2,34 @@ import { memo, type FC, type ReactNode } from 'react';
 
 import type { StatItem } from '~/types';
 
+import { FactLabel, FactTip } from './FactLabel';
+
 import classes from './BioFacts.module.css';
 
 const BORN_PREFIX = /^Born /;
 
 type TileSize = 'sm' | 'md';
 
-const Tile: FC<{ label: string; size: TileSize; tone: 'plain' | 'tile'; children: ReactNode }> = ({
+const Tile: FC<{ id?: string; label: string; size: TileSize; tone: 'plain' | 'tile'; children: ReactNode }> = ({
+  id = '',
   label,
   size,
   tone,
   children,
 }) => (
-  <div className={classes.tile} data-size={size} data-tone={tone}>
-    <span className={classes.label}>{label}</span>
-    {children}
-  </div>
+  <FactTip id={id} label={label}>
+    <div className={classes.tile} data-size={size} data-tone={tone}>
+      <span className={classes.label}>
+        <FactLabel id={id} label={label} size={size === 'sm' ? 14 : 16} />
+      </span>
+      {children}
+    </div>
+  </FactTip>
 );
 
 export const BioStat = memo<{ item: StatItem; size?: TileSize }>(({ item: s, size = 'md' }) => {
   return (
-    <Tile label={s.label} size={size} tone="tile">
+    <Tile id={s.key} label={s.label} size={size} tone="tile">
       <span className={classes.statLine}>
         <span className={classes.statValue}>{s.value}</span>
         {s.unit && <span className={classes.unit}>{s.unit}</span>}
@@ -34,13 +41,14 @@ export const BioStat = memo<{ item: StatItem; size?: TileSize }>(({ item: s, siz
 });
 
 export const FactTile = memo<{
+  id?: string;
   label: string;
   value: ReactNode;
   size?: TileSize;
   tone?: 'plain' | 'tile';
-}>(({ label, value, size = 'md', tone = 'tile' }) => {
+}>(({ id, label, value, size = 'md', tone = 'tile' }) => {
   return (
-    <Tile label={label} size={size} tone={tone}>
+    <Tile id={id} label={label} size={size} tone={tone}>
       <span className={classes.value}>{value}</span>
     </Tile>
   );

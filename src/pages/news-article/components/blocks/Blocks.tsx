@@ -74,10 +74,7 @@ const Video = memo<{ block: Of<'video'> }>(({ block }) => (
     </span>
     <span className={classes.videoText}>
       <span className={classes.videoTitle}>{block.title ?? 'Watch the highlights'}</span>
-      <span className={classes.videoCta}>
-        Watch on YouTube
-        <IconExternal />
-      </span>
+      <IconExternal className={classes.videoCta} />
     </span>
   </a>
 ));

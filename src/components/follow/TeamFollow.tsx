@@ -6,7 +6,7 @@ import { PlayerFollow, type FollowLook } from './FollowButton';
 
 import classes from './TeamFollow.module.css';
 
-export const TeamFollow = memo<Omit<FollowLook, 'name' | 'withLabel' | 'className'> & { players: readonly Player[] }>(
+export const TeamFollow = memo<Omit<FollowLook, 'name' | 'className'> & { players: readonly Player[] }>(
   ({ players, box, ...look }) => {
     const pair = players.length > 1;
     return players.map((p) => (

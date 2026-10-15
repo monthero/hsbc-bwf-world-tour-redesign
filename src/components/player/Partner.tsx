@@ -9,7 +9,7 @@ import { PlayerName } from './PlayerName';
 import classes from './Partner.module.css';
 
 export const Partner = memo<{ player: Player; label?: string | false; short?: boolean; className?: string }>(
-  ({ player, label = 'with', short, className }) => {
+  ({ player, label, short, className }) => {
     return (
       <span className={clsx(classes.partner, className)}>
         {label && <span className={classes.label}>{label}</span>}

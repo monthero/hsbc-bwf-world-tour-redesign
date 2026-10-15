@@ -21,19 +21,17 @@ export const FinaleSection = memo<{
   const ref = useCallback((el: HTMLElement | null) => register(t.month, el), [register, t.month]);
   const month = monthName(t.month);
   return (
-    <section ref={ref} className={clsx(timeline.section, classes.section)} data-reached={reached || undefined}>
+    <section
+      ref={ref}
+      aria-label={`The finale, ${month}`}
+      className={clsx(timeline.section, classes.section)}
+      data-reached={reached || undefined}
+    >
       <span className={clsx(timeline.line, classes.line)} />
       <span className={clsx(timeline.node, classes.node)}>
         <IconTrophy size={isMobile ? 12 : 15} />
       </span>
-      {isMobile ? (
-        <div className={clsx(timeline.head, classes.head)}>{month} · The finale</div>
-      ) : (
-        <div className={clsx(timeline.head, classes.head)}>
-          {month}
-          <span className={classes.sub}>The finale</span>
-        </div>
-      )}
+      <div className={clsx(timeline.head, classes.head)}>{month}</div>
       <FinaleCard
         tournament={t}
         anchorRef={anchorRef}

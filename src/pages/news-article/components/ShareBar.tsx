@@ -1,4 +1,4 @@
-import { ActionIcon, Button } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { memo, useCallback, type FC } from 'react';
 
@@ -58,7 +58,6 @@ export const ShareBar = memo<{ title: string }>(({ title }) => {
   const share = useCallback(() => void navigator.share({ title, url: pageUrl() }).catch(() => undefined), [title]);
   const copy = useCallback(() => clipboard.copy(pageUrl()), [clipboard]);
   const copyLabel = clipboard.copied ? 'Link copied' : 'Copy link';
-  const copyIcon = clipboard.copied ? <IconCheck /> : <IconLink />;
 
   if (isMobile && canShare())
     return (
@@ -70,15 +69,11 @@ export const ShareBar = memo<{ title: string }>(({ title }) => {
   return (
     <div className={classes.bar}>
       <ShareLinks title={title} />
-      {isMobile ? (
+      <Tip tap={false} label={copyLabel}>
         <ActionIcon variant="soft" radius="xl" size={32} onClick={copy} aria-label={copyLabel} className={classes.icon}>
-          {copyIcon}
+          {clipboard.copied ? <IconCheck /> : <IconLink />}
         </ActionIcon>
-      ) : (
-        <Button variant="soft" radius="xl" size="xs" h={32} leftSection={copyIcon} onClick={copy}>
-          {copyLabel}
-        </Button>
-      )}
+      </Tip>
     </div>
   );
 });

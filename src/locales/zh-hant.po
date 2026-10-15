@@ -7,12 +7,16 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: zh-hant\n"
 
+#: src/components/layout/SiteFooter.tsx
+msgid "(opens in a new tab)"
+msgstr ""
+
 #: src/components/layout/SiteSettings.tsx
-msgid "12-hour"
+msgid "12-hour clock"
 msgstr "12 小時制"
 
 #: src/components/layout/SiteSettings.tsx
-msgid "24-hour"
+msgid "24-hour clock"
 msgstr "24 小時制"
 
 #. Settings label: choose a 12-hour or 24-hour clock
@@ -23,11 +27,6 @@ msgstr "時鐘格式"
 #: src/components/layout/SiteSettings.tsx
 msgid "Close settings"
 msgstr "關閉設定"
-
-#. Settings option: show player heights in feet and inches
-#: src/components/layout/SiteSettings.tsx
-msgid "ft & in"
-msgstr "英呎和英吋"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Language"
@@ -41,6 +40,11 @@ msgstr "我的時間"
 #: src/components/layout/SiteSettings.tsx
 msgid "My time uses your browser’s time zone ({zone})."
 msgstr "「我的時間」使用瀏覽器的時區（{zone}）。"
+
+#. Footer link to the site’s source code on GitHub, inviting people to send feedback or contribute
+#: src/components/layout/SiteFooter.tsx
+msgid "Open source on GitHub. Feedback, ideas and contributions welcome"
+msgstr ""
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Player heights"
@@ -68,25 +72,15 @@ msgstr "時間顯示為"
 msgid "String tensions"
 msgstr "穿線磅數"
 
-#. Settings section heading for match time display options
-#: src/components/layout/SiteSettings.tsx
-msgid "Times"
-msgstr "時間"
-
-#. Settings section heading for measurement units
-#: src/components/layout/SiteSettings.tsx
-msgid "Units"
-msgstr "單位"
+#. Small print on the last row of the site footer, beside the GitHub source link
+#: src/components/layout/SiteFooter.tsx
+msgid "Unofficial and non-commercial. Built by a badminton fan, for badminton fans."
+msgstr ""
 
 #. Settings option: show match times in the tournament venue’s local time zone
 #: src/components/layout/SiteSettings.tsx
 msgid "Venue time"
 msgstr "賽場時間"
-
-#. Settings section heading for video and live stream options
-#: src/components/layout/SiteSettings.tsx
-msgid "Videos"
-msgstr "影片"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "When on, they appear greyed out. When off, they’re hidden from video lists and Watch buttons."

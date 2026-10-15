@@ -19,6 +19,7 @@ import Coins from '~icons/ph/coins';
 import EnvelopeSimple from '~icons/ph/envelope-simple';
 import FireFill from '~icons/ph/fire-fill';
 import GearSix from '~icons/ph/gear-six';
+import GithubLogo from '~icons/ph/github-logo';
 import Hand from '~icons/ph/hand';
 import HouseLine from '~icons/ph/house-line';
 import Info from '~icons/ph/info';
@@ -28,7 +29,6 @@ import MagnifyingGlass from '~icons/ph/magnifying-glass';
 import MapPin from '~icons/ph/map-pin';
 import MedalFill from '~icons/ph/medal-fill';
 import MonitorPlay from '~icons/ph/monitor-play';
-import PlayFill from '~icons/ph/play-fill';
 import Ruler from '~icons/ph/ruler';
 import ShareNetwork from '~icons/ph/share-network';
 import SlidersHorizontal from '~icons/ph/sliders-horizontal';
@@ -42,6 +42,7 @@ import Trophy from '~icons/ph/trophy';
 import TrophyFill from '~icons/ph/trophy-fill';
 import User from '~icons/ph/user';
 import X from '~icons/ph/x';
+import YoutubeLogoFill from '~icons/ph/youtube-logo-fill';
 
 export type IconProps = SVGProps<SVGSVGElement> & { size?: number | string };
 
@@ -77,7 +78,7 @@ export const IconShare = icon(ShareNetwork);
 export const IconLink = icon(LinkSimple);
 export const IconStream = icon(MonitorPlay);
 export const IconSettings = icon(GearSix);
-export const IconPlay = icon(PlayFill);
+export const IconWatchFilled = icon(YoutubeLogoFill);
 export const IconArrowRight = icon(ArrowRight);
 export const IconReset = icon(ArrowCounterClockwise);
 export const IconClock = icon(Clock);
@@ -93,6 +94,7 @@ export const IconRacket = icon(Racket);
 export const IconShoe = icon(SneakerMove);
 export const IconStrings = icon(Strings);
 export const IconTension = icon(Tension);
+export const IconGitHub = icon(GithubLogo);
 
 const brand =
   (d: string): FC<SVGProps<SVGSVGElement>> =>

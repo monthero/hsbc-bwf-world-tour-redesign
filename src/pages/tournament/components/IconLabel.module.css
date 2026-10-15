@@ -1,0 +1,9 @@
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon {
+  flex: none;
+}

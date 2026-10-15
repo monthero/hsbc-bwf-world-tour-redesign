@@ -1,9 +1,9 @@
 import { useDisclosure } from '@mantine/hooks';
-import { clsx } from 'clsx';
 import { memo, useMemo, type CSSProperties } from 'react';
 
 import { TeamPlayers } from '~/components/match';
 import { AvatarGroup, PlayerAvatar, PlayerName } from '~/components/player';
+import { MoreButton } from '~/components/ui';
 import { EVENT_NAMES, SEASON_YEAR } from '~/constants';
 import { plural } from '~/utils/format';
 
@@ -78,11 +78,7 @@ export const PartnersSection = memo<{ rows: PartnerRow[] }>(({ rows }) => {
           </div>
         ))}
       </div>
-      {hidden > 0 && (
-        <button type="button" className={clsx(shared.link, shared.more)} onClick={showAll}>
-          Show {hidden} more
-        </button>
-      )}
+      {hidden > 0 && <MoreButton count={hidden} onClick={showAll} />}
     </Section>
   );
 });

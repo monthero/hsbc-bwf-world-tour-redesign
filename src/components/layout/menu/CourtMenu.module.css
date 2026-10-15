@@ -363,28 +363,10 @@
   text-transform: uppercase;
 }
 
-.settings {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  padding: 0 14px;
-  border: 1px solid var(--bwf-border-strong);
-  border-radius: 999px;
+.footHead .settings {
+  --size: 44px;
   background: var(--bwf-surface);
   color: var(--bwf-text-2);
-  font: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background var(--fast),
-    border-color var(--fast);
-
-  &:hover {
-    background: var(--bwf-raised);
-    border-color: var(--bwf-border-hover);
-  }
 }
 
 .social {

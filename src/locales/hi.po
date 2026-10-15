@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: hi\n"
 
-#: src/components/layout/SiteSettings.tsx
-msgid "12-hour"
-msgstr "12-घंटे"
+#: src/components/layout/SiteFooter.tsx
+msgid "(opens in a new tab)"
+msgstr ""
 
 #: src/components/layout/SiteSettings.tsx
-msgid "24-hour"
-msgstr "24-घंटे"
+msgid "12-hour clock"
+msgstr "12-घंटे की घड़ी"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "24-hour clock"
+msgstr "24-घंटे की घड़ी"
 
 #. Settings label: choose a 12-hour or 24-hour clock
 #: src/components/layout/SiteSettings.tsx
@@ -23,11 +27,6 @@ msgstr "घड़ी का प्रारूप"
 #: src/components/layout/SiteSettings.tsx
 msgid "Close settings"
 msgstr "सेटिंग्स बंद करें"
-
-#. Settings option: show player heights in feet and inches
-#: src/components/layout/SiteSettings.tsx
-msgid "ft & in"
-msgstr "फ़ुट और इंच"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Language"
@@ -41,6 +40,11 @@ msgstr "मेरा समय"
 #: src/components/layout/SiteSettings.tsx
 msgid "My time uses your browser’s time zone ({zone})."
 msgstr "मेरा समय आपके ब्राउज़र के टाइम ज़ोन ({zone}) का उपयोग करता है।"
+
+#. Footer link to the site’s source code on GitHub, inviting people to send feedback or contribute
+#: src/components/layout/SiteFooter.tsx
+msgid "Open source on GitHub. Feedback, ideas and contributions welcome"
+msgstr ""
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Player heights"
@@ -68,25 +72,15 @@ msgstr "समय दिखाएँ"
 msgid "String tensions"
 msgstr "स्ट्रिंग टेंशन"
 
-#. Settings section heading for match time display options
-#: src/components/layout/SiteSettings.tsx
-msgid "Times"
-msgstr "समय"
-
-#. Settings section heading for measurement units
-#: src/components/layout/SiteSettings.tsx
-msgid "Units"
-msgstr "इकाइयाँ"
+#. Small print on the last row of the site footer, beside the GitHub source link
+#: src/components/layout/SiteFooter.tsx
+msgid "Unofficial and non-commercial. Built by a badminton fan, for badminton fans."
+msgstr ""
 
 #. Settings option: show match times in the tournament venue’s local time zone
 #: src/components/layout/SiteSettings.tsx
 msgid "Venue time"
 msgstr "स्थल का समय"
-
-#. Settings section heading for video and live stream options
-#: src/components/layout/SiteSettings.tsx
-msgid "Videos"
-msgstr "वीडियो"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "When on, they appear greyed out. When off, they’re hidden from video lists and Watch buttons."

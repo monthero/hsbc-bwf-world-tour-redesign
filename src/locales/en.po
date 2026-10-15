@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: en\n"
 
-#: src/components/layout/SiteSettings.tsx
-msgid "12-hour"
-msgstr "12-hour"
+#: src/components/layout/SiteFooter.tsx
+msgid "(opens in a new tab)"
+msgstr "(opens in a new tab)"
 
 #: src/components/layout/SiteSettings.tsx
-msgid "24-hour"
-msgstr "24-hour"
+msgid "12-hour clock"
+msgstr "12-hour clock"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "24-hour clock"
+msgstr "24-hour clock"
 
 #. Settings label: choose a 12-hour or 24-hour clock
 #: src/components/layout/SiteSettings.tsx
@@ -23,11 +27,6 @@ msgstr "Clock"
 #: src/components/layout/SiteSettings.tsx
 msgid "Close settings"
 msgstr "Close settings"
-
-#. Settings option: show player heights in feet and inches
-#: src/components/layout/SiteSettings.tsx
-msgid "ft & in"
-msgstr "ft & in"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Language"
@@ -41,6 +40,11 @@ msgstr "My time"
 #: src/components/layout/SiteSettings.tsx
 msgid "My time uses your browser’s time zone ({zone})."
 msgstr "My time uses your browser’s time zone ({zone})."
+
+#. Footer link to the site’s source code on GitHub, inviting people to send feedback or contribute
+#: src/components/layout/SiteFooter.tsx
+msgid "Open source on GitHub. Feedback, ideas and contributions welcome"
+msgstr "Open source on GitHub. Feedback, ideas and contributions welcome"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Player heights"
@@ -68,25 +72,15 @@ msgstr "Show times in"
 msgid "String tensions"
 msgstr "String tensions"
 
-#. Settings section heading for match time display options
-#: src/components/layout/SiteSettings.tsx
-msgid "Times"
-msgstr "Times"
-
-#. Settings section heading for measurement units
-#: src/components/layout/SiteSettings.tsx
-msgid "Units"
-msgstr "Units"
+#. Small print on the last row of the site footer, beside the GitHub source link
+#: src/components/layout/SiteFooter.tsx
+msgid "Unofficial and non-commercial. Built by a badminton fan, for badminton fans."
+msgstr "Unofficial and non-commercial. Built by a badminton fan, for badminton fans."
 
 #. Settings option: show match times in the tournament venue’s local time zone
 #: src/components/layout/SiteSettings.tsx
 msgid "Venue time"
 msgstr "Venue time"
-
-#. Settings section heading for video and live stream options
-#: src/components/layout/SiteSettings.tsx
-msgid "Videos"
-msgstr "Videos"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "When on, they appear greyed out. When off, they’re hidden from video lists and Watch buttons."

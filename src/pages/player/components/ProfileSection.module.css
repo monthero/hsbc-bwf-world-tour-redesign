@@ -1,13 +1,30 @@
 .links {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 4px;
+  align-self: center;
+  margin-block: -8px;
+  margin-right: -8px;
+}
 
-  a {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    text-decoration: none;
+.social {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  color: var(--bwf-muted);
+  text-decoration: none;
+  transition:
+    color 0.15s,
+    background 0.15s;
+
+  &:hover {
+    color: var(--bwf-text);
+    background: var(--bwf-surface-3);
   }
 }
 
@@ -29,6 +46,9 @@
   gap: 2px;
 
   dt {
+    display: flex;
+    align-items: center;
+    min-height: 16px;
     font-size: 11px;
     color: var(--bwf-faint);
   }
@@ -49,4 +69,10 @@
   line-height: 1.5;
   color: var(--bwf-text-2);
   text-wrap: pretty;
+}
+
+.toggle {
+  display: inline-flex;
+  margin: 2px -6px -6px;
+  padding: 6px;
 }

@@ -1,14 +1,24 @@
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type FC, type ReactNode } from 'react';
 
-import { MatchTime, TeamLabel } from '~/components/match';
+import { LiveMark, MatchTime, TeamLabel } from '~/components/match';
 import { LevelBadge, TournamentPlace } from '~/components/tournament';
-import { CardHit, EmptyState, IconCalendar, IconMapPin, IconStarFilled, SectionTitle } from '~/components/ui';
+import {
+  CardHit,
+  EmptyState,
+  IconCalendar,
+  IconCoins,
+  IconExternal,
+  IconMapPin,
+  IconStarFilled,
+  SectionTitle,
+  Tip,
+} from '~/components/ui';
 import { DRAW_SIZE, EVENT_NAMES, QUALIFY_SPOTS } from '~/constants';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
 import { useSeries } from '~/hooks/useTournaments';
 import { FOLLOW_KINDS, useFavoriteCount, useFavoritesMatcher } from '~/stores/favorites';
-import type { Match, TournamentDay } from '~/types';
+import type { Match, Tournament, TournamentDay } from '~/types';
 import { teamPlayers } from '~/utils/matches';
 import { mapsUrl } from '~/utils/tournaments';
 
@@ -17,20 +27,35 @@ import { useOpenMatch, useUpdateSearch } from '../hooks';
 import type { TabProps } from '../types';
 import { buildPastWinners, type PastYear } from '../utils';
 import { Champions, ChampionStrip } from './Champions';
+import { IconLabel } from './IconLabel';
 import { matchTitle } from './matches/utils';
 
 import page from '../TournamentPage.module.css';
 import classes from './OverviewTab.module.css';
 import utils from '~/styles/utils.module.css';
 
-const Row: FC<{ label: string; children: ReactNode }> = ({ label, children }) => {
+const MAPS = 'Open in Google Maps';
+const DATES = <IconLabel icon={IconCalendar} label="Dates" className={classes.lead} />;
+const PRIZE = <IconLabel icon={IconCoins} label="Prize money" className={classes.lead} />;
+const DRAWS = <span className={classes.rowLabel}>Draws</span>;
+
+const Row: FC<{ lead?: ReactNode; children: ReactNode }> = ({ lead, children }) => {
   return (
     <div className={classes.row}>
-      <span className={classes.rowLabel}>{label}</span>
+      {lead}
       {children}
     </div>
   );
 };
+
+const MapsLink: FC<{ tournament: Tournament }> = ({ tournament: t }) => (
+  <Tip label={MAPS}>
+    <a href={mapsUrl(t)} target="_blank" rel="noopener noreferrer" aria-label={MAPS} className={classes.maps}>
+      <IconMapPin size={16} />
+      <IconExternal size={10} />
+    </a>
+  </Tip>
+);
 
 const DayRow = memo<{
   day: TournamentDay;
@@ -78,7 +103,8 @@ const FollowRow = memo<{ match: Match; onOpen: (id: string) => void }>(({ match:
           <TeamLabel players={m.teams[0].players} sep=" & " /> vs <TeamLabel players={m.teams[1].players} sep=" & " />
         </span>
         <span className={classes.followMeta}>
-          {live && 'Live now · '}Court {m.court} · {EVENT_NAMES[m.event]}
+          {live && <LiveMark label="Live now" size={6} />}
+          Court {m.court} · {EVENT_NAMES[m.event]}
         </span>
       </span>
     </div>
@@ -122,30 +148,22 @@ export const OverviewTab: FC<TabProps> = ({ tournament: t, schedule }) => {
       <section className={clsx(utils.container, page.tabSection, classes.overview)}>
         <div className={page.tabGrid}>
           <div className={clsx(utils.card, classes.details)}>
-            <Row label="Dates">
+            <Row lead={DATES}>
               <span className={classes.value}>{t.datesLong}</span>
             </Row>
-            {t.venue && (
-              <Row label="Venue">
-                <span className={classes.value}>{t.venue}</span>
-              </Row>
-            )}
-            <Row label="City">
-              <TournamentPlace tournament={t} className={classes.value} />
+            <Row lead={<MapsLink tournament={t} />}>
+              <span className={classes.place}>
+                <TournamentPlace tournament={t} />
+                {t.venue && <span className={classes.venue}>{t.venue}</span>}
+              </span>
             </Row>
-            <Row label="Level">
+            <Row>
               <LevelBadge level={t.level} long />
             </Row>
-            <Row label="Prize money">
+            <Row lead={PRIZE}>
               <span className={utils.num}>{t.prizeLabel}</span>
             </Row>
-            <Row label="Location">
-              <a href={mapsUrl(t)} target="_blank" rel="noopener noreferrer" className={classes.maps}>
-                <IconMapPin size={15} />
-                Open in Google Maps
-              </a>
-            </Row>
-            <Row label="Draws">
+            <Row lead={DRAWS}>
               <span className={classes.value}>
                 5 events · {t.level === 'Finals' ? QUALIFY_SPOTS : DRAW_SIZE} per draw
               </span>

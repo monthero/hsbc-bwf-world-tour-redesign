@@ -110,10 +110,14 @@
   display: none;
 
   @mixin larger-than $mantine-breakpoint-sm {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    font-weight: 600;
+    display: block;
+    flex: none;
+    margin-inline-start: auto;
+    font-size: 18px;
+    transition: translate 0.2s var(--bwf-ease-out);
   }
+}
+
+.lead:hover .read {
+  translate: 4px 0;
 }

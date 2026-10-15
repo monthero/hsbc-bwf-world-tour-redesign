@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo, type FC } from 'react';
 
-import { StarButton, type StarBox, type StarVariant } from '~/components/ui';
+import { StarButton, Tip, type StarBox, type StarVariant } from '~/components/ui';
 import {
   useArePlayersFavorite,
   useFavorites,
@@ -19,7 +19,6 @@ type FollowTarget =
 
 export interface FollowLook {
   name?: string;
-  withLabel?: boolean;
   variant?: StarVariant;
   box?: StarBox;
   iconSize?: number;
@@ -28,37 +27,32 @@ export interface FollowLook {
 
 type FollowButtonProps = FollowTarget & FollowLook;
 
-const followLabel = (active: boolean, name?: string) => {
-  if (active) return 'Following';
-  return name ? `Follow ${name}` : 'Follow';
-};
-
 const View: FC<FollowLook & { active: boolean; implied?: boolean; fallback: string; onToggle: () => void }> = ({
   active,
   implied,
   fallback,
   onToggle,
   name,
-  withLabel,
   variant,
   box,
   iconSize,
   className,
 }) => {
   const who = name ?? fallback;
+  const label = active ? `Unfollow ${who}` : `Follow ${who}`;
   return (
-    <StarButton
-      active={active}
-      implied={implied}
-      label={active ? `Unfollow ${who}` : `Follow ${who}`}
-      size={iconSize}
-      box={box}
-      variant={variant}
-      className={className}
-      onClick={onToggle}
-    >
-      {withLabel && followLabel(active, name)}
-    </StarButton>
+    <Tip tap={false} label={label}>
+      <StarButton
+        active={active}
+        implied={implied}
+        label={label}
+        size={iconSize}
+        box={box}
+        variant={variant}
+        className={className}
+        onClick={onToggle}
+      />
+    </Tip>
   );
 };
 
@@ -95,12 +89,11 @@ const EntityFollow: FC<FollowLook & { target: EntityTarget }> = ({ target, ...lo
 
 export const FollowButton = memo<FollowButtonProps>((props) => {
   if ('players' in props) return <PlayersFollow {...props} />;
-  const { name, withLabel, variant, box, iconSize, className, ...target } = props;
+  const { name, variant, box, iconSize, className, ...target } = props;
   return (
     <EntityFollow
       target={target as EntityTarget}
       name={name}
-      withLabel={withLabel}
       variant={variant}
       box={box}
       iconSize={iconSize}

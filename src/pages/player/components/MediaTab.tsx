@@ -5,7 +5,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import type { NewsBrief, PlayerVideo } from '~/api/schemas';
 import { VideoCard } from '~/components/media';
 import { NewsGrid } from '~/components/news';
-import { EmptyState } from '~/components/ui';
+import { EmptyState, MoreButton } from '~/components/ui';
 import { useTournamentLookup } from '~/hooks/useNews';
 import { useTournamentMedia, useVisibleMedia } from '~/hooks/useTournamentMedia';
 import { useTournamentsByCode } from '~/hooks/useTournaments';
@@ -79,12 +79,8 @@ const Video = memo<{ entry: VideoEntry }>(({ entry: e }) => (
   />
 ));
 
-const MoreButton = memo<{ hidden: number; step: number; onClick: () => void }>(({ hidden, step, onClick }) =>
-  hidden > 0 ? (
-    <button type="button" className={clsx(shared.link, shared.more)} onClick={onClick}>
-      Show {Math.min(hidden, step)} more
-    </button>
-  ) : null,
+const LoadMore = memo<{ hidden: number; step: number; onClick: () => void }>(({ hidden, step, onClick }) =>
+  hidden > 0 ? <MoreButton count={Math.min(hidden, step)} onClick={onClick} /> : null,
 );
 
 const MediaBody = memo<MediaProps & { live: readonly VideoEntry[] }>(({ playerId, matches, live }) => {
@@ -105,7 +101,7 @@ const MediaBody = memo<MediaProps & { live: readonly VideoEntry[] }>(({ playerId
               <Video key={e.item.id} entry={e} />
             ))}
           </div>
-          <MoreButton hidden={feed.videos.length - videoLimit} step={VIDEO_STEP} onClick={moreVideos} />
+          <LoadMore hidden={feed.videos.length - videoLimit} step={VIDEO_STEP} onClick={moreVideos} />
         </Section>
       )}
       {stories.length > 0 && (
@@ -114,7 +110,7 @@ const MediaBody = memo<MediaProps & { live: readonly VideoEntry[] }>(({ playerId
           aside={<span className={shared.sub}>{plural(feed.stories.length, 'story', 'stories')}</span>}
         >
           <NewsGrid stories={stories} variant="row" />
-          <MoreButton hidden={feed.stories.length - newsLimit} step={NEWS_STEP} onClick={moreNews} />
+          <LoadMore hidden={feed.stories.length - newsLimit} step={NEWS_STEP} onClick={moreNews} />
         </Section>
       )}
     </div>

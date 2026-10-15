@@ -1,3 +1,4 @@
+import { VisuallyHidden } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type FC } from 'react';
@@ -204,8 +205,15 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
       </main>
       {target && (
         <FloatingPill visible={jump !== null} onClick={onJump}>
-          <LiveDot pulse />
-          {`${jumpPrefix} · ${target.name}`}
+          {live ? (
+            <>
+              <LiveDot pulse />
+              <VisuallyHidden>Live now: </VisuallyHidden>
+            </>
+          ) : (
+            `${jumpPrefix} · `
+          )}
+          {target.name}
           {jump === 'up' ? <IconCollapse size={15} /> : <IconExpand size={15} />}
         </FloatingPill>
       )}

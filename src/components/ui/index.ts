@@ -11,6 +11,7 @@ export { InfoTip, type InfoTipRow } from './InfoTip';
 export * from './icons';
 export { LiveDot } from './LiveDot';
 export { MediaCover } from './MediaCover';
+export { MoreButton } from './MoreButton';
 export { PageHeader } from './PageHeader';
 export { RetryState } from './RetryState';
 export { SearchField } from './SearchField';

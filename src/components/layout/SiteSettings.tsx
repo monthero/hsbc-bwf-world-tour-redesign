@@ -1,13 +1,27 @@
 import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Button, NativeSelect, Popover, Switch } from '@mantine/core';
+import { NativeSelect, Popover, Switch, VisuallyHidden } from '@mantine/core';
 import { clsx } from 'clsx';
-import { memo, useCallback, useState, type ChangeEvent, type FC, type ReactNode } from 'react';
+import { memo, useCallback, useId, useMemo, useState, type ChangeEvent, type FC, type ReactNode } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
-import { BottomSheet, Eyebrow, IconButton, IconClose, IconSettings, Segmented } from '~/components/ui';
+import {
+  BottomSheet,
+  IconButton,
+  IconClock,
+  IconClose,
+  IconReset,
+  IconRuler,
+  IconSettings,
+  IconTension,
+  IconTranslate,
+  Segmented,
+  Tip,
+  type SegmentedOption,
+} from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
-import { isLocale, LOCALE_META, LOCALES } from '~/i18n/locales';
+import { currentLocale } from '~/i18n/current';
+import { intlLocale, isLocale, LOCALE_META, LOCALES } from '~/i18n/locales';
 import { switchLocale } from '~/i18n/switch';
 import { useLazyOptions, type LazyOption } from '~/i18n/useLazyOptions';
 import {
@@ -27,9 +41,21 @@ import utils from '~/styles/utils.module.css';
 type PanelVariant = 'popover' | 'sheet';
 
 const LABEL = msg`Settings`;
+const LANGUAGE = msg`Language`;
+const CLOCK = msg({ message: 'Clock', comment: 'Settings label: choose a 12-hour or 24-hour clock' });
+const HEIGHTS = msg`Player heights`;
+const TENSIONS = msg({
+  message: 'String tensions',
+  comment: 'Settings label: unit for badminton racket string tension (lbs or kg)',
+});
+const RESET = msg`Reset to defaults`;
 const SEGMENT_HEIGHT: Record<PanelVariant, number> = { popover: 30, sheet: 38 };
+const ICON_SIZE: Record<PanelVariant, number> = { popover: 18, sheet: 20 };
 const DROPDOWN_TRANSITION = { transition: 'pop-top-right', duration: 160 } as const;
 const BROWSER_ZONE = dayjs.tz.guess().replaceAll('_', ' ');
+const SAMPLE_TIME = new Date(2000, 0, 1, 13);
+const SAMPLE_CM = 185;
+const SAMPLE_FT = [6, 1] as const;
 const SWITCH_CLASSES = {
   body: classes.switchBody,
   labelWrapper: classes.switchText,
@@ -52,21 +78,29 @@ const TIME_ZONE_OPTIONS: LazyOption<TimeZoneMode>[] = [
     label: msg({ message: 'My time', comment: 'Settings option: show match times in the visitor’s own time zone' }),
   },
 ];
-const CLOCK_OPTIONS: LazyOption<ClockMode>[] = [
-  { value: '24h', label: msg`24-hour` },
-  { value: '12h', label: msg`12-hour` },
-];
-const HEIGHT_OPTIONS: LazyOption<HeightUnit>[] = [
-  { value: 'cm', label: 'cm' },
-  {
-    value: 'ftin',
-    label: msg({ message: 'ft & in', comment: 'Settings option: show player heights in feet and inches' }),
-  },
+const CLOCK_MODES: { value: ClockMode; hourCycle: Intl.DateTimeFormatOptions['hourCycle']; name: ReactNode }[] = [
+  { value: '24h', hourCycle: 'h23', name: <Trans>24-hour clock</Trans> },
+  { value: '12h', hourCycle: 'h12', name: <Trans>12-hour clock</Trans> },
 ];
 const TENSION_OPTIONS: LazyOption<TensionUnit>[] = [
   { value: 'lbs', label: 'lbs' },
   { value: 'kg', label: 'kg' },
 ];
+
+const clockOptions = (tag: string): SegmentedOption<ClockMode>[] =>
+  CLOCK_MODES.map(({ value, hourCycle, name }) => ({
+    value,
+    label: new Intl.DateTimeFormat(tag, { hour: 'numeric', minute: '2-digit', hourCycle }).format(SAMPLE_TIME),
+    badge: <VisuallyHidden> {name}</VisuallyHidden>,
+  }));
+
+const heightOptions = (tag: string): SegmentedOption<HeightUnit>[] => {
+  const nf = new Intl.NumberFormat(tag);
+  return [
+    { value: 'cm', label: `${nf.format(SAMPLE_CM)} cm` },
+    { value: 'ftin', label: `${nf.format(SAMPLE_FT[0])}′${nf.format(SAMPLE_FT[1])}″` },
+  ];
+};
 
 const patch = (p: Partial<SettingsData>) => useSettings.getState().set(p);
 const reset = () => useSettings.getState().reset();
@@ -88,12 +122,20 @@ const Field: FC<{ label: ReactNode; hint?: ReactNode; children: ReactNode }> = (
   </div>
 );
 
-const Section: FC<{ title: ReactNode; children: ReactNode }> = ({ title, children }) => (
-  <section className={classes.section}>
-    <Eyebrow>{title}</Eyebrow>
-    {children}
-  </section>
-);
+const IconRow: FC<{ icon: ReactNode; label: string; children: ReactNode }> = ({ icon, label, children }) => {
+  const id = useId();
+  return (
+    <fieldset className={classes.row} aria-labelledby={id}>
+      <Tip label={label}>
+        <span className={classes.rowIcon}>
+          {icon}
+          <VisuallyHidden id={id}>{label}</VisuallyHidden>
+        </span>
+      </Tip>
+      {children}
+    </fieldset>
+  );
+};
 
 const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ variant, onClose }) => {
   const { timeZone, clock, height, tension, showBlocked } = useSettings(
@@ -107,58 +149,64 @@ const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ v
   );
   const changed = useSettingsChanged();
   const { t, i18n } = useLingui();
+  const tag = intlLocale(currentLocale());
   const timeZones = useLazyOptions(TIME_ZONE_OPTIONS);
-  const clocks = useLazyOptions(CLOCK_OPTIONS);
-  const heights = useLazyOptions(HEIGHT_OPTIONS);
+  const clocks = useMemo(() => clockOptions(tag), [tag]);
+  const heights = useMemo(() => heightOptions(tag), [tag]);
   const tensions = useLazyOptions(TENSION_OPTIONS);
   const h = SEGMENT_HEIGHT[variant];
+  const size = ICON_SIZE[variant];
   const zone = BROWSER_ZONE;
+  const language = i18n._(LANGUAGE);
+  const resetLabel = i18n._(RESET);
   return (
     <div className={classes.panel} data-variant={variant}>
       <div className={classes.head}>
         <span className={classes.title}>{i18n._(LABEL)}</span>
-        {onClose && (
-          <IconButton label={t`Close settings`} variant="ghost" onClick={onClose}>
-            <IconClose size={18} />
+        <span className={classes.actions}>
+          <IconButton label={resetLabel} tip={resetLabel} variant="ghost" disabled={!changed} onClick={reset}>
+            <IconReset size={18} />
           </IconButton>
-        )}
+          {onClose && (
+            <IconButton label={t`Close settings`} variant="ghost" onClick={onClose}>
+              <IconClose size={18} />
+            </IconButton>
+          )}
+        </span>
       </div>
-      <Section title={<Trans>Language</Trans>}>
-        <NativeSelect
-          aria-label={t`Language`}
-          data={LANGUAGE_OPTIONS}
-          value={i18n.locale}
-          onChange={onLanguage}
-          size={variant === 'sheet' ? 'md' : 'sm'}
-          radius="md"
-        />
-      </Section>
-      <Section title={<Trans comment="Settings section heading for match time display options">Times</Trans>}>
+      <section className={classes.section}>
+        <IconRow icon={<IconTranslate size={size} />} label={language}>
+          <NativeSelect
+            aria-label={language}
+            data={LANGUAGE_OPTIONS}
+            value={i18n.locale}
+            onChange={onLanguage}
+            size={variant === 'sheet' ? 'md' : 'sm'}
+            radius="md"
+            className={classes.grow}
+          />
+        </IconRow>
+      </section>
+      <section className={classes.section}>
         <Field
           label={<Trans comment="Settings label before the choice between venue time and my time">Show times in</Trans>}
           hint={<Trans>My time uses your browser’s time zone ({zone}).</Trans>}
         >
           <Segmented options={timeZones} value={timeZone} onChange={onTimeZone} height={h} />
         </Field>
-        <Field label={<Trans comment="Settings label: choose a 12-hour or 24-hour clock">Clock</Trans>}>
-          <Segmented options={clocks} value={clock} onChange={onClock} height={h} />
-        </Field>
-      </Section>
-      <Section title={<Trans comment="Settings section heading for measurement units">Units</Trans>}>
-        <Field label={<Trans>Player heights</Trans>}>
-          <Segmented options={heights} value={height} onChange={onHeight} height={h} />
-        </Field>
-        <Field
-          label={
-            <Trans comment="Settings label: unit for badminton racket string tension (lbs or kg)">
-              String tensions
-            </Trans>
-          }
-        >
-          <Segmented options={tensions} value={tension} onChange={onTension} height={h} />
-        </Field>
-      </Section>
-      <Section title={<Trans comment="Settings section heading for video and live stream options">Videos</Trans>}>
+        <IconRow icon={<IconClock size={size} />} label={i18n._(CLOCK)}>
+          <Segmented options={clocks} value={clock} onChange={onClock} height={h} className={classes.grow} />
+        </IconRow>
+      </section>
+      <section className={classes.section}>
+        <IconRow icon={<IconRuler size={size} />} label={i18n._(HEIGHTS)}>
+          <Segmented options={heights} value={height} onChange={onHeight} height={h} className={classes.grow} />
+        </IconRow>
+        <IconRow icon={<IconTension size={size} />} label={i18n._(TENSIONS)}>
+          <Segmented options={tensions} value={tension} onChange={onTension} height={h} className={classes.grow} />
+        </IconRow>
+      </section>
+      <section className={classes.section}>
         <Switch
           checked={showBlocked}
           onChange={onShowBlocked}
@@ -170,12 +218,7 @@ const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ v
           size={variant === 'sheet' ? 'md' : 'sm'}
           classNames={SWITCH_CLASSES}
         />
-      </Section>
-      <div className={classes.foot}>
-        <Button variant="subtle" color="gray" size="compact-xs" disabled={!changed} onClick={reset}>
-          <Trans>Reset to defaults</Trans>
-        </Button>
-      </div>
+      </section>
     </div>
   );
 });

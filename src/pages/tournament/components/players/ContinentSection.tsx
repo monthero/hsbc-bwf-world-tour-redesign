@@ -22,7 +22,7 @@ export const ContinentSection = memo<{
         <span className={classes.continentSummary}>
           {plural(countries.length, 'country', 'countries')} · {plural(count, 'entry', 'entries')}
         </span>
-        <FollowButton kind="continent" id={name} name={name} withLabel variant="pill" className={classes.follow} />
+        <FollowButton kind="continent" id={name} name={name} variant="pill" className={classes.follow} />
       </div>
       <div className={classes.cards}>
         {countries.map((c) => (

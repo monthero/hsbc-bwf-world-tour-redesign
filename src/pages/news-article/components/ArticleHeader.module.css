@@ -88,6 +88,17 @@
   }
 }
 
+.readTime {
+  display: inline-flex;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+
+  svg {
+    margin-inline-end: 4px;
+  }
+}
+
 .byline {
   color: var(--bwf-text);
   font-weight: 600;
@@ -177,5 +188,8 @@
 }
 
 .credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   color: var(--bwf-faint);
 }

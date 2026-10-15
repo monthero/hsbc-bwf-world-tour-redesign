@@ -48,12 +48,6 @@
   padding-block: 9px;
 }
 
-.pillSep {
-  width: 1px;
-  height: 14px;
-  background: var(--bwf-ghost);
-}
-
 .pillCount {
   display: flex;
   align-items: center;

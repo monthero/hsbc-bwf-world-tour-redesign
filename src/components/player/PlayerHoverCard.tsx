@@ -116,7 +116,7 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
       {bio.details.length > 0 && (
         <div className={clsx(classes.section, classes.grid)}>
           {bio.details.map((f) => (
-            <FactTile key={f.key} label={f.label} value={f.value} size="sm" />
+            <FactTile key={f.key} id={f.key} label={f.label} value={f.value} size="sm" />
           ))}
         </div>
       )}

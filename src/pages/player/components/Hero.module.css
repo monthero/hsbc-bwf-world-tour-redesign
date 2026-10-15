@@ -189,13 +189,13 @@
     border-left: 0;
   }
 
-  &[data-tip] {
-    cursor: help;
-  }
-
   @container athlete (width < 640px) {
     padding-inline: 12px;
   }
+}
+
+.key {
+  min-height: 17px;
 }
 
 .vitalValue {
@@ -446,7 +446,7 @@
   grid-auto-flow: column;
   grid-template-columns: auto;
   grid-auto-columns: minmax(0, 1fr);
-  align-items: center;
+  align-items: stretch;
   margin: 0 calc(-1 * var(--pad));
   padding-left: var(--pad);
   border-top: 1px solid var(--glass-edge);
@@ -458,12 +458,12 @@
   @container athlete (width < 640px) {
     grid-auto-flow: row;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    align-items: stretch;
     padding: 12px var(--pad) 4px;
   }
 }
 
 .statsLabel {
+  align-self: center;
   padding-right: 4px;
   writing-mode: vertical-rl;
   rotate: 180deg;
@@ -528,6 +528,7 @@
 }
 
 .statSkeleton {
+  align-self: center;
   margin: 14px var(--pad);
 }
 

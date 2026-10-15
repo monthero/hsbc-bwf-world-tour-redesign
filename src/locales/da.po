@@ -7,13 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: da\n"
 
-#: src/components/layout/SiteSettings.tsx
-msgid "12-hour"
-msgstr "12-timers"
+#: src/components/layout/SiteFooter.tsx
+msgid "(opens in a new tab)"
+msgstr ""
 
 #: src/components/layout/SiteSettings.tsx
-msgid "24-hour"
-msgstr "24-timers"
+msgid "12-hour clock"
+msgstr "12-timers ur"
+
+#: src/components/layout/SiteSettings.tsx
+msgid "24-hour clock"
+msgstr "24-timers ur"
 
 #. Settings label: choose a 12-hour or 24-hour clock
 #: src/components/layout/SiteSettings.tsx
@@ -23,11 +27,6 @@ msgstr "Urformat"
 #: src/components/layout/SiteSettings.tsx
 msgid "Close settings"
 msgstr "Luk indstillinger"
-
-#. Settings option: show player heights in feet and inches
-#: src/components/layout/SiteSettings.tsx
-msgid "ft & in"
-msgstr "fod & tommer"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Language"
@@ -41,6 +40,11 @@ msgstr "Min tid"
 #: src/components/layout/SiteSettings.tsx
 msgid "My time uses your browser’s time zone ({zone})."
 msgstr "Min tid bruger din browsers tidszone ({zone})."
+
+#. Footer link to the site’s source code on GitHub, inviting people to send feedback or contribute
+#: src/components/layout/SiteFooter.tsx
+msgid "Open source on GitHub. Feedback, ideas and contributions welcome"
+msgstr ""
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Player heights"
@@ -68,25 +72,15 @@ msgstr "Vis tider i"
 msgid "String tensions"
 msgstr "Strengespænding"
 
-#. Settings section heading for match time display options
-#: src/components/layout/SiteSettings.tsx
-msgid "Times"
-msgstr "Tider"
-
-#. Settings section heading for measurement units
-#: src/components/layout/SiteSettings.tsx
-msgid "Units"
-msgstr "Enheder"
+#. Small print on the last row of the site footer, beside the GitHub source link
+#: src/components/layout/SiteFooter.tsx
+msgid "Unofficial and non-commercial. Built by a badminton fan, for badminton fans."
+msgstr ""
 
 #. Settings option: show match times in the tournament venue’s local time zone
 #: src/components/layout/SiteSettings.tsx
 msgid "Venue time"
 msgstr "Spillestedets tid"
-
-#. Settings section heading for video and live stream options
-#: src/components/layout/SiteSettings.tsx
-msgid "Videos"
-msgstr "Videoer"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "When on, they appear greyed out. When off, they’re hidden from video lists and Watch buttons."

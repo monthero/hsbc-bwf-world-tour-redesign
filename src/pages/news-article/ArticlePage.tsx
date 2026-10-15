@@ -18,7 +18,7 @@ import { toStories, toStory } from '~/utils/news';
 import { ArticleHeader } from './components/ArticleHeader';
 import { Block } from './components/blocks/Blocks';
 import { RelatedSection } from './components/RelatedSection';
-import { OFFICIAL_HOST } from './constants';
+import { BACK, BACK_LABEL, OFFICIAL_HOST } from './constants';
 import { LookupContext } from './context';
 import { featuredPlayers, readMinutes } from './utils';
 
@@ -27,10 +27,9 @@ import utils from '~/styles/utils.module.css';
 
 const route = getRouteApi('/news_/$id');
 
-const BACK = { to: '/news' } as const;
 const MISSING_TITLE = 'We couldn’t find that story';
 const MISSING_DESCRIPTION = 'It may have been taken down from the BWF newsroom, or the link is out of date.';
-const MISSING_ACTION: NotFoundAction = { label: 'Back to news', link: BACK };
+const MISSING_ACTION: NotFoundAction = { label: BACK_LABEL, link: BACK };
 const TITLE_SITE = {};
 const BODY_SKELETON = ['100%', '94%', '97%', '62%', '100%', '91%', '78%'] as const;
 
@@ -46,7 +45,7 @@ export const ArticlePage: FC = () => {
   if (isError && !article)
     return (
       <div className={clsx(utils.container, classes.state)}>
-        <BackPill link={BACK}>News</BackPill>
+        <BackPill link={BACK} label={BACK_LABEL} iconOnly />
         <RetryState message="Couldn’t load this story." onRetry={retry} className={classes.empty} />
       </div>
     );

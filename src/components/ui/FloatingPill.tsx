@@ -9,11 +9,13 @@ export const FloatingPill: FC<{
   children: ReactNode;
   mobileOnly?: boolean;
   className?: string;
-}> = ({ visible, onClick, children, mobileOnly, className }) => {
+  label?: string;
+}> = ({ visible, onClick, children, mobileOnly, className, label }) => {
   return (
     <button
       type="button"
       className={clsx(classes.pill, className)}
+      aria-label={label}
       data-visible={visible || undefined}
       data-mobile-only={mobileOnly || undefined}
       inert={!visible}

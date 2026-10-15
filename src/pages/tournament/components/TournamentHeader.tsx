@@ -2,13 +2,14 @@ import { clsx } from 'clsx';
 import { memo, type FC, type ReactNode } from 'react';
 
 import { LogoTile, TournamentHoverCard, TournamentPlace, TournamentStatusBadge } from '~/components/tournament';
-import { BackPill, IconBack, IconButton, IconNext, MediaCover } from '~/components/ui';
+import { BackPill, IconBack, IconButton, IconCoins, IconNext, MediaCover } from '~/components/ui';
 import { LEVEL_META, LEVEL_VARS } from '~/constants';
 import type { Tournament, TournamentSchedule } from '~/types';
 import { tournamentParams } from '~/utils/tournaments';
 
 import { useCalendarBack } from '../hooks';
 import { DayTimeline } from './DayTimeline';
+import { IconLabel } from './IconLabel';
 
 import classes from './TournamentHeader.module.css';
 import utils from '~/styles/utils.module.css';
@@ -73,10 +74,9 @@ export const TournamentHeader = memo<{
               {LEVEL_META[t.level].long}
               {t.level !== 'Finals' && <span className={classes.series}>World Tour</span>}
             </b>
-            <span className={classes.prize}>
+            <IconLabel icon={IconCoins} label="Prize money" size={13} className={classes.prize}>
               <strong>{t.prizeLabel}</strong>
-              <span className={classes.prizeWord}> prize money</span>
-            </span>
+            </IconLabel>
           </span>
         </div>
       </div>

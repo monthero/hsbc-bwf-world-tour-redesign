@@ -74,11 +74,9 @@ export const MobileFilters = memo<BarProps & { days: TournamentDay[]; visible: b
     const d = days[f.day];
     return (
       <>
-        <FloatingPill visible={visible && !open} onClick={show} mobileOnly>
+        <FloatingPill visible={visible && !open} onClick={show} label="Filters" mobileOnly>
           <IconFilters size={16} />
           {d && <span>{`${d.shortLabel} ${d.month}`}</span>}
-          <span className={classes.pillSep} />
-          <span>Filters</span>
           {f.count > 0 && <span className={classes.pillCount}>{f.count}</span>}
         </FloatingPill>
         <BottomSheet opened={open} onClose={close} handle bodyClassName={classes.sheetBody}>

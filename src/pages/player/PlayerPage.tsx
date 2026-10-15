@@ -47,7 +47,12 @@ export const Back = memo<{ from: string | undefined }>(({ from }) => {
   const byCode = useTournamentsByCode();
   const tournament = from ? byCode?.get(from) : undefined;
   const goBack = useCallback(() => router.history.back(), [router]);
-  if (canGoBack) return <BackPill onClick={goBack}>{tournament?.shortTitle ?? 'Back'}</BackPill>;
+  if (canGoBack)
+    return tournament ? (
+      <BackPill onClick={goBack}>{tournament.shortTitle}</BackPill>
+    ) : (
+      <BackPill onClick={goBack} label="Back" iconOnly />
+    );
   if (tournament)
     return (
       <BackPill link={{ to: '/world-tour/$year/$slug', params: tournamentParams(tournament) }}>

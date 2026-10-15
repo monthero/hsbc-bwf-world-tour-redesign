@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
 import { Partner, PlayerAvatar, PlayerName, RaceQualifier, RankChange } from '~/components/player';
-import { EmptyState, IconExpand } from '~/components/ui';
+import { EmptyState, IconExpand, MoreButton } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import { useFinalsCity } from '~/hooks/useTournaments';
 import type { Player, RankView } from '~/types';
@@ -117,7 +117,7 @@ const DisciplineCard = memo<{ view: DisciplineView; rank: RankView | undefined }
 const Race = memo<{ rank: RankView }>(({ rank: k }) => {
   const city = useFinalsCity();
   if (!k.race) return null;
-  const { rank, change, points, qualified, blocked } = k.race;
+  const { rank, change, points } = k.race;
   return (
     <div className={classes.race}>
       <span className={shared.label}>{city ? `Race to ${city}` : 'Race to the Finals'}</span>
@@ -128,8 +128,6 @@ const Race = memo<{ rank: RankView }>(({ rank: k }) => {
       </span>
       <span className={shared.sub}>
         <b>{formatNumber(points)}</b> pts
-        {qualified && ' · qualifying spot'}
-        {blocked && ' · country quota full'}
       </span>
     </div>
   );
@@ -172,9 +170,7 @@ const Partners = memo<{ rows: HistoryRow[]; label: string }>(({ rows, label }) =
         ))}
       </div>
       {rows.length > PARTNER_LIMIT && (
-        <button type="button" className={clsx(shared.link, classes.more)} onClick={toggle}>
-          {all ? 'Show fewer' : `Show all ${rows.length}`}
-        </button>
+        <MoreButton count={rows.length - PARTNER_LIMIT} expanded={all} onClick={toggle} className={classes.more} />
       )}
     </div>
   );
@@ -182,7 +178,7 @@ const Partners = memo<{ rows: HistoryRow[]; label: string }>(({ rows, label }) =
 
 const PartnerItem = memo<{ row: HistoryRow }>(({ row: r }) => (
   <div className={classes.item} data-current={r.current || undefined}>
-    {r.partner && <Partner player={r.partner} label={false} className={classes.who} />}
+    {r.partner && <Partner player={r.partner} className={classes.who} />}
     <span className={classes.period}>{periodOf(r)}</span>
     <span className={classes.best}>
       best <b>{formatRank(r.best)}</b>
@@ -229,7 +225,6 @@ const PastItem = memo<{ view: DisciplineView; initial: boolean }>(({ view: d, in
 
 const PastPartner: FC<{ player: Player }> = ({ player }) => (
   <span className={classes.pastPartner}>
-    with
     <PlayerAvatar player={player} size={18} />
     <PlayerName player={player} link={false} className={classes.pastName} />
   </span>

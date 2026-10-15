@@ -1,0 +1,36 @@
+.more {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 44px;
+  height: 30px;
+  padding: 0 10px 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--bwf-border-strong);
+  background: transparent;
+  color: var(--bwf-text-3);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+
+  &:hover {
+    border-color: var(--bwf-border-focus);
+    color: var(--bwf-text);
+  }
+
+  &[aria-expanded='true'] {
+    padding: 0 10px;
+  }
+}

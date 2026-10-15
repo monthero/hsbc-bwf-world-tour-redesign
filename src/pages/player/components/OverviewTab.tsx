@@ -6,7 +6,7 @@ import { memo, useCallback, useMemo } from 'react';
 
 import { FormStrip, OutcomeLabel, ScoreChips, TeamPlayers } from '~/components/match';
 import { LevelBadge, LogoTile } from '~/components/tournament';
-import { CardHit, Duration, EmptyState, LiveDot } from '~/components/ui';
+import { CardHit, Duration, EmptyState, LiveDot, MoreButton } from '~/components/ui';
 import { EVENT_NAMES, SEASON_YEAR } from '~/constants';
 import type { BioView, PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
@@ -304,11 +304,7 @@ const TitlesSection = memo<{ titles: PlayerMatch[]; multi: boolean }>(({ titles,
           <TitleRow key={pm.key} pm={pm} multi={multi} />
         ))}
       </div>
-      {hidden > 0 && (
-        <button type="button" className={clsx(shared.link, shared.more)} onClick={showAll}>
-          Show {hidden} more
-        </button>
-      )}
+      {hidden > 0 && <MoreButton count={hidden} onClick={showAll} />}
     </Section>
   );
 });

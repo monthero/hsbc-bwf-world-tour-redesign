@@ -5,7 +5,16 @@ import RankingIcon from '~icons/ph/ranking';
 
 import { CountryLabel } from '~/components/country';
 import { PlayerFollow } from '~/components/follow';
-import { Partner, PlayerAvatar, PlayerName, RaceQualifier, RankChange, RetiredBadge } from '~/components/player';
+import {
+  FactLabel,
+  FactTip,
+  Partner,
+  PlayerAvatar,
+  PlayerName,
+  RaceQualifier,
+  RankChange,
+  RetiredBadge,
+} from '~/components/player';
 import { CardHit, Tip } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import { useIsMobile } from '~/hooks/useIsMobile';
@@ -86,7 +95,7 @@ export const Hero = memo<HeroProps>(
           </span>
         )}
         <span className={classes.follow}>
-          <PlayerFollow player={player} withLabel variant="pill" />
+          <PlayerFollow player={player} variant="pill" />
         </span>
         <div className={classes.identity}>
           <span className={classes.tags}>
@@ -132,19 +141,20 @@ export const Hero = memo<HeroProps>(
   },
 );
 
-const Vital = memo<{ item: StatItem }>(({ item: s }) => {
-  const el = (
-    <div className={classes.vital} data-tip={s.sub ? true : undefined}>
-      <dt className={shared.label}>{s.label}</dt>
+const Vital = memo<{ item: StatItem }>(({ item: s }) => (
+  <FactTip id={s.key} label={s.label} note={s.sub}>
+    <div className={classes.vital}>
+      <dt className={clsx(shared.label, classes.key)}>
+        <FactLabel id={s.key} label={s.label} size={16} />
+      </dt>
       <dd className={classes.vitalValue}>
         {s.value}
         {s.unit && <span className={classes.unit}>{s.unit}</span>}
         {s.inline && <span className={classes.unit}>{s.inline}</span>}
       </dd>
     </div>
-  );
-  return s.sub ? <Tip label={s.sub}>{el}</Tip> : el;
-});
+  </FactTip>
+));
 
 const WEEKS_AT_BEST_TIP =
   'Total weeks spent at this ranking. They don’t have to be in a row: it can add up over several spells.';
@@ -186,7 +196,7 @@ const RankTile = memo<{
           </span>
         </Tip>
       </span>
-      <span className={classes.rankPartner}>{k.partner && <Partner player={k.partner} label={false} />}</span>
+      <span className={classes.rankPartner}>{k.partner && <Partner player={k.partner} />}</span>
       <span className={classes.rankLine}>
         <span className={clsx(utils.figure, classes.rankNum)}>
           {k.rank ? (

@@ -1,0 +1,11 @@
+.serve {
+  flex: none;
+  display: inline-flex;
+  cursor: help;
+
+  svg {
+    width: var(--serve);
+    height: var(--serve);
+    fill: var(--bwf-gold);
+  }
+}

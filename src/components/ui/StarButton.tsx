@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import type { FC, ReactNode } from 'react';
+import type { FC, FocusEvent, PointerEvent } from 'react';
 
 import { IconStar, IconStarFilled } from './icons';
 
@@ -17,10 +17,13 @@ export const StarButton: FC<{
   variant?: StarVariant;
   className?: string;
   onClick: () => void;
-  children?: ReactNode;
-}> = ({ active, implied, label, size = 16, box = 'md', variant = 'ghost', className, onClick, children }) => {
+  onPointerEnter?: (e: PointerEvent<HTMLElement>) => void;
+  onPointerUp?: (e: PointerEvent<HTMLElement>) => void;
+  onFocus?: (e: FocusEvent<HTMLElement>) => void;
+}> = ({ active, implied, label, size = 16, box = 'md', variant = 'ghost', className, onClick, ...trigger }) => {
   return (
     <button
+      {...trigger}
       type="button"
       className={clsx(classes.star, className)}
       data-variant={variant}
@@ -35,7 +38,6 @@ export const StarButton: FC<{
       }}
     >
       {active ? <IconStarFilled size={size} /> : <IconStar size={size} />}
-      {children && <span className={classes.starLabel}>{children}</span>}
     </button>
   );
 };

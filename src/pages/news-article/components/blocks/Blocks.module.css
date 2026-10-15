@@ -188,11 +188,12 @@ h4.heading {
 .videoText {
   min-width: 0;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .videoTitle {
+  flex: 1;
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
@@ -203,11 +204,9 @@ h4.heading {
 }
 
 .videoCta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 600;
+  flex: none;
+  margin-top: 2px;
+  font-size: 18px;
   color: var(--bwf-red-text);
 }
 

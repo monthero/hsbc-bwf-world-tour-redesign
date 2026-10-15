@@ -208,10 +208,6 @@
   background: var(--lv, var(--bwf-faint));
 }
 
-.more {
-  align-self: flex-start;
-}
-
 .result {
   font-size: 13px;
   font-weight: 500;

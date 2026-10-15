@@ -1,4 +1,4 @@
-import { Skeleton } from '@mantine/core';
+import { Skeleton, VisuallyHidden } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 import { memo } from 'react';
@@ -6,25 +6,35 @@ import { memo } from 'react';
 import type { NewsArticle } from '~/api/schemas';
 import { NewsImage, TournamentChip } from '~/components/news';
 import { PlayerAvatar, PlayerName } from '~/components/player';
-import { BackPill, Eyebrow } from '~/components/ui';
+import { BackPill, Eyebrow, IconCamera, IconClock, Tip } from '~/components/ui';
 import { formatDayMonthYear } from '~/utils/dates';
 import type { NewsStory } from '~/utils/news';
 
-import { HERO_SIZES, HERO_WIDTHS } from '../constants';
-import { MAX_PLAYERS } from '../constants';
+import { BACK, BACK_LABEL, HERO_SIZES, HERO_WIDTHS, MAX_PLAYERS } from '../constants';
 import type { FeaturedPlayer } from '../utils';
 import { ShareBar } from './ShareBar';
 
 import classes from './ArticleHeader.module.css';
 import utils from '~/styles/utils.module.css';
 
-const BACK = { to: '/news' } as const;
+const ReadTime = memo<{ minutes: number }>(({ minutes }) => {
+  const label = `${minutes} min read`;
+  return (
+    <Tip label={label}>
+      <span className={classes.readTime}>
+        <IconClock />
+        <span aria-hidden>{minutes}′</span>
+        <VisuallyHidden>{label}</VisuallyHidden>
+      </span>
+    </Tip>
+  );
+});
 
 const Byline = memo<{ article: NewsArticle; minutes: number }>(({ article, minutes }) => (
   <p className={classes.meta}>
     <span className={classes.byline}>{article.byline ?? 'BWF'}</span>
     <time dateTime={article.publishedAt}>{formatDayMonthYear(article.publishedAt)}</time>
-    <span>{`${minutes} min read`}</span>
+    <ReadTime minutes={minutes} />
   </p>
 ));
 
@@ -60,7 +70,7 @@ export const ArticleHeader = memo<{
       <div className={classes.intro}>
         <div className={classes.top}>
           <span className={classes.kicker}>
-            <BackPill link={BACK}>News</BackPill>
+            <BackPill link={BACK} label={BACK_LABEL} iconOnly />
             {story?.tournament && <TournamentChip tournament={story.tournament} />}
             {story?.kind && <Eyebrow className={classes.kind}>{story.kind}</Eyebrow>}
           </span>
@@ -95,7 +105,13 @@ export const ArticleHeader = memo<{
         {(article?.image?.caption || article?.photoCredit) && (
           <figcaption>
             {article.image?.caption}
-            {article.photoCredit && <span className={classes.credit}>{`Photo: ${article.photoCredit}`}</span>}
+            {article.photoCredit && (
+              <span className={classes.credit}>
+                <IconCamera />
+                <VisuallyHidden>Photo: </VisuallyHidden>
+                {article.photoCredit}
+              </span>
+            )}
           </figcaption>
         )}
       </figure>
