@@ -293,8 +293,8 @@
     opacity 0.2s,
     transform 0.15s;
 
-  &[data-switch]:hover {
-    border-color: alpha(var(--bwf-red), 0.75);
+  &[data-switch]:is(:hover, :has(:focus-visible)) {
+    border-color: alpha(var(--event), 0.75);
   }
 
   &[data-switch]:has(> button:active) {
@@ -302,12 +302,12 @@
   }
 
   &[data-active] {
-    border-color: alpha(var(--bwf-red), 0.8);
+    border-color: alpha(var(--event), 0.8);
     background:
-      linear-gradient(180deg, alpha(var(--bwf-red), 0.26), alpha(var(--bwf-red), 0.08)), alpha(var(--bwf-bg), 0.3);
+      linear-gradient(180deg, alpha(var(--event), 0.26), alpha(var(--event), 0.08)), alpha(var(--bwf-bg), 0.3);
     box-shadow:
       var(--glass-light),
-      0 0 0 3px alpha(var(--bwf-red), 0.16),
+      0 0 0 3px alpha(var(--event), 0.16),
       0 10px 30px alpha(var(--mantine-color-black), 0.28);
   }
 
@@ -333,20 +333,20 @@
   font-weight: 600;
   font-variant-caps: all-small-caps;
   letter-spacing: 0.04em;
-  color: var(--bwf-red-soft);
+  color: var(--event-text);
 }
 
 .rankHash {
   margin-right: 2px;
   font-size: 0.6em;
   vertical-align: 0.42em;
-  color: var(--bwf-red);
+  color: var(--event);
 }
 
 .rankKind {
   display: flex;
   font-size: 22px;
-  color: var(--bwf-red-soft);
+  color: var(--event-text);
 }
 
 .rankPartner {

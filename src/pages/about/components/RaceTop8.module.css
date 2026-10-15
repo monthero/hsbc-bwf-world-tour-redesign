@@ -25,14 +25,8 @@
   text-decoration: none;
 }
 
-a.colHead:hover {
-  color: var(--bwf-red-text);
-}
-
-.colHead span {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--bwf-faint);
+a.colHead:is(:hover, :focus-visible) {
+  color: var(--event-text);
 }
 
 .list {

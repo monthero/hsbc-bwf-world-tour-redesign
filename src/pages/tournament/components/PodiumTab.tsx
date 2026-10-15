@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
 import { Flag } from '~/components/country';
-import { TeamPlayers, TimedStatus } from '~/components/match';
+import { EventTag, TeamPlayers, TimedStatus } from '~/components/match';
 import { AvatarGroup, SeedTag } from '~/components/player';
 import { Medal } from '~/components/tournament';
 import { SectionTitle, Tip } from '~/components/ui';
@@ -144,10 +144,11 @@ const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
   );
 };
 
-const CardHead: FC<{ name: string; note: string }> = ({ name, note }) => {
+const CardHead: FC<{ data: PodiumEvent; note: string }> = ({ data, note }) => {
   return (
     <div className={classes.head}>
-      <span className={classes.name}>{name}</span>
+      <EventTag event={data.event} tip={false} />
+      <span className={classes.name}>{data.name}</span>
       <span className={classes.note}>{note}</span>
     </div>
   );
@@ -157,7 +158,7 @@ const MedalCard = memo<{ data: PodiumEvent; dir: PlayerDirectory | undefined }>(
   const [champion, ...rest] = e.places;
   return (
     <div className={clsx(utils.card, classes.card, classes.medalCard)}>
-      <CardHead name={e.name} note={e.when} />
+      <CardHead data={e} note={e.when} />
       {champion && <ChampionBlock place={champion} event={e.event} dir={dir} />}
       {rest.map((p) => (
         <PlaceList key={p.label} place={p} event={e.event} dir={dir} />
@@ -169,7 +170,7 @@ const MedalCard = memo<{ data: PodiumEvent; dir: PlayerDirectory | undefined }>(
 const SeedCard = memo<{ data: PodiumEvent; hasMatches: boolean }>(({ data: e, hasMatches }) => {
   return (
     <div className={clsx(utils.card, classes.card)}>
-      <CardHead name={e.name} note={e.seedsNote} />
+      <CardHead data={e} note={e.seedsNote} />
       <div className={classes.seeds}>
         {e.seeds.map((s) => (
           <SeedRow key={s.key} entry={s} />

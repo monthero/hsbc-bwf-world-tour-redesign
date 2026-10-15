@@ -1,9 +1,12 @@
 import { clsx } from 'clsx';
 import type { CSSProperties, ReactNode } from 'react';
 
+import type { EventCode } from '~/types';
+
 import { Tip } from './Tip';
 
 import classes from './Segmented.module.css';
+import discipline from '~/styles/discipline.module.css';
 
 export interface SegmentedOption<T extends string> {
   value: T;
@@ -12,6 +15,7 @@ export interface SegmentedOption<T extends string> {
   badge?: ReactNode;
   muted?: boolean;
   disabled?: boolean;
+  event?: EventCode;
 }
 
 interface SegmentedProps<T extends string> {
@@ -39,10 +43,12 @@ export const Segmented = <T extends string>({
 }: SegmentedProps<T>) => {
   const n = Math.max(1, options.length);
   const hit = options.findIndex((o) => o.value === value);
+  const picked = options[hit]?.event;
   return (
     <div
-      className={clsx(classes.root, className)}
+      className={clsx(classes.root, picked && discipline.tone, className)}
       data-variant={variant}
+      data-event={picked}
       data-center={center || undefined}
       style={{ '--n': n, '--i': Math.max(0, hit), '--h': `${height}px`, maxWidth } as CSSProperties}
     >
@@ -53,7 +59,8 @@ export const Segmented = <T extends string>({
           <Tip tap={false} key={o.value} label={o.tip} disabled={!o.tip}>
             <button
               type="button"
-              className={classes.option}
+              className={clsx(classes.option, o.event && discipline.tone)}
+              data-event={o.event}
               data-muted={o.muted || undefined}
               disabled={o.disabled && !on}
               aria-pressed={on}

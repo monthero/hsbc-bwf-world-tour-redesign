@@ -23,6 +23,7 @@ export const EVENT_OPTIONS: readonly SegmentedOption<EventCode>[] = EventCode.op
   value: code,
   label: code,
   tip: EVENT_NAMES[code],
+  event: code,
 }));
 
 export const DOUBLES_EVENTS: ReadonlySet<EventCode> = new Set<EventCode>(['MD', 'WD', 'XD']);

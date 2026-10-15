@@ -23,7 +23,7 @@ export const RankTrend = memo<{ history: HistoryView | undefined; loading: boole
     const [key, setKey] = useState<string | null>(null);
     const group = groups.find((g) => g.key === key) ?? groups[0];
     const options = useMemo(
-      (): SegmentedOption<string>[] => groups.map((g) => ({ value: g.key, label: groupLabel(g) })),
+      (): SegmentedOption<string>[] => groups.map((g) => ({ value: g.key, label: groupLabel(g), event: g.ev })),
       [groups],
     );
     const pick = useCallback((v: string | null) => v && setKey(v), []);

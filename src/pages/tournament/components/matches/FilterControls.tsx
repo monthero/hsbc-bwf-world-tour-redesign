@@ -39,6 +39,7 @@ export const EventChips = memo<ChipsProps & { chips: EventChipModel[]; onToggle:
         {chips.map((c) => (
           <FilterChip
             key={c.code}
+            event={c.code}
             size={SIZE[variant]}
             active={c.active}
             disabled={!c.count && !c.active}

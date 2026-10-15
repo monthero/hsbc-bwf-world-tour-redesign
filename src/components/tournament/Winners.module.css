@@ -21,7 +21,7 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 18px;
-  color: var(--bwf-dim);
+  color: var(--event-text);
 }
 
 .player {

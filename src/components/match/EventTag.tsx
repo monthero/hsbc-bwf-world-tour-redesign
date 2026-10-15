@@ -7,24 +7,32 @@ import type { EventCode, Match } from '~/types';
 import { noteLabel, noteTip } from '~/utils/matches';
 
 import classes from './EventTag.module.css';
+import discipline from '~/styles/discipline.module.css';
 
 export type NoteTone = 'violet' | 'sky';
 
 const NOTE_TONES: Partial<Record<string, NoteTone>> = { Walkover: 'sky', Retired: 'violet' };
 
-const Tag = memo<{ label: string; tip: string; tone?: NoteTone; className?: string }>(
-  ({ label, tip, tone, className }) => (
+const Tag = memo<{ label: string; tip: string; tone?: NoteTone; event?: EventCode; className?: string }>(
+  ({ label, tip, tone, event, className }) => (
     <Tip label={tip}>
-      <span className={clsx(classes.tag, className)} data-tone={tone}>
+      <span className={clsx(classes.tag, className)} data-tone={tone} data-event={event}>
         {label}
       </span>
     </Tip>
   ),
 );
 
-export const EventTag = memo<{ event: EventCode; className?: string }>(({ event, className }) => (
-  <Tag label={event} tip={EVENT_NAMES[event]} className={clsx(classes.eventTag, className)} />
-));
+export const EventTag = memo<{ event: EventCode; tip?: boolean; className?: string }>(
+  ({ event, tip = true, className }) => (
+    <Tag
+      label={event}
+      tip={tip ? EVENT_NAMES[event] : ''}
+      event={event}
+      className={clsx(discipline.tone, classes.eventTag, className)}
+    />
+  ),
+);
 
 export const NoteTag = memo<{ label: string; tip: string; tone: NoteTone }>(({ label, tip, tone }) => (
   <Tag label={label} tip={tip} tone={tone} className={classes.note} />

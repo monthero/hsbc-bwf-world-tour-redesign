@@ -37,6 +37,25 @@
     color: var(--tone);
   }
 
+  &[data-event] {
+    border-color: alpha(var(--event), 0.3);
+
+    &:is(:hover, :focus-visible):not(:disabled) {
+      border-color: alpha(var(--event), 0.75);
+      color: var(--event-text);
+    }
+
+    &[data-active] {
+      background: alpha(var(--event), 0.22);
+      border-color: alpha(var(--event), 0.6);
+      color: var(--event-text);
+    }
+
+    &:disabled {
+      border-color: var(--bwf-border-strong);
+    }
+  }
+
   &[data-dot]::before {
     content: '';
     flex: none;

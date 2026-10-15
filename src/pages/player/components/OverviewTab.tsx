@@ -4,11 +4,11 @@ import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo } from 'react';
 
-import { FormStrip, OutcomeLabel, ScoreChips, TeamPlayers } from '~/components/match';
+import { EventTag, FormStrip, OutcomeLabel, ScoreChips, TeamPlayers } from '~/components/match';
 import { WatchButton } from '~/components/media';
 import { LevelBadge, LogoTile } from '~/components/tournament';
 import { CardHit, Duration, EmptyState, LiveDot, MoreButton } from '~/components/ui';
-import { EVENT_NAMES, SEASON_YEAR } from '~/constants';
+import { SEASON_YEAR } from '~/constants';
 import { useMatchReplays } from '~/hooks/useTournamentMedia';
 import type { BioView, PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
@@ -179,7 +179,7 @@ const MatchCard = memo<{
           </span>
           <span className={shared.rowMeta}>
             {roundName(match.round)}
-            {multi && <span>{EVENT_NAMES[match.event]}</span>}
+            {multi && <EventTag event={match.event} />}
           </span>
         </span>
         {kind === 'last' && <MatchReplay pm={pm} />}

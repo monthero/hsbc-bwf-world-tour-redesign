@@ -28,6 +28,7 @@ import { finalsOf, winRate, yearRange } from '../utils';
 
 import classes from './Hero.module.css';
 import shared from './shared.module.css';
+import discipline from '~/styles/discipline.module.css';
 import utils from '~/styles/utils.module.css';
 
 interface HeroProps {
@@ -186,7 +187,13 @@ const RankTile = memo<{
 }>(({ rank: k, high, active, onEvent }) => {
   const pick = useCallback(() => onEvent?.(active ? undefined : k.ev), [onEvent, active, k.ev]);
   return (
-    <div className={classes.rank} data-rank data-active={active || undefined} data-switch={onEvent ? true : undefined}>
+    <div
+      className={clsx(classes.rank, discipline.tone)}
+      data-event={k.ev}
+      data-rank
+      data-active={active || undefined}
+      data-switch={onEvent ? true : undefined}
+    >
       {onEvent && <CardHit label={active ? 'Show all disciplines' : `Focus on ${EVENT_NAMES[k.ev]}`} onClick={pick} />}
       <span className={classes.rankHead}>
         <span className={classes.rankEvent}>{EVENT_NAMES[k.ev]}</span>

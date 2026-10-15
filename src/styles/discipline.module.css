@@ -1,0 +1,26 @@
+.tone {
+  &[data-event='MS'] {
+    --event: var(--mantine-color-indigo-5);
+    --event-text: var(--mantine-color-indigo-2);
+  }
+
+  &[data-event='WS'] {
+    --event: var(--mantine-color-pink-5);
+    --event-text: var(--mantine-color-pink-2);
+  }
+
+  &[data-event='MD'] {
+    --event: var(--mantine-color-orange-5);
+    --event-text: var(--mantine-color-orange-2);
+  }
+
+  &[data-event='WD'] {
+    --event: var(--mantine-color-grape-5);
+    --event-text: var(--mantine-color-grape-2);
+  }
+
+  &[data-event='XD'] {
+    --event: var(--mantine-color-cyan-5);
+    --event-text: var(--mantine-color-cyan-2);
+  }
+}

@@ -3,11 +3,10 @@ import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
-import { ScoreChips, TeamPlayers } from '~/components/match';
+import { EventTag, ScoreChips, TeamPlayers } from '~/components/match';
 import { Partner } from '~/components/player';
 import { LevelBadge, LogoTile } from '~/components/tournament';
 import { CardHit, EmptyState, Segmented, Tip, type SegmentedOption } from '~/components/ui';
-import { EVENT_NAMES } from '~/constants';
 import type { PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
 import { plural } from '~/utils/format';
@@ -150,7 +149,7 @@ const RunView = memo<{
     {head && (
       <div className={classes.runHead}>
         <span className={shared.rowMeta}>
-          <span>{EVENT_NAMES[run.event]}</span>
+          <EventTag event={run.event} />
           {run.partner && <Partner player={run.partner} />}
         </span>
         {result && <ResultText result={run.result} />}

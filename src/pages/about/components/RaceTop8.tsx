@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 import { Fragment, memo, useCallback, useMemo, useState, type FC } from 'react';
 
 import { EventCode } from '~/api/schemas';
-import { TeamPlayers } from '~/components/match';
+import { EventTag, TeamPlayers } from '~/components/match';
 import { AvatarGroup, QualifyLine, QualifyMark, RankedNames } from '~/components/player';
 import { Segmented, SectionTitle } from '~/components/ui';
 import { EVENT_NAMES, EVENT_OPTIONS, QUALIFY_SPOTS } from '~/constants';
@@ -23,6 +23,7 @@ import { crownedFinals, raceSettled } from '../utils';
 import { SectionLink } from './SectionLink';
 
 import classes from './RaceTop8.module.css';
+import discipline from '~/styles/discipline.module.css';
 import utils from '~/styles/utils.module.css';
 
 interface RaceColumn {
@@ -77,9 +78,14 @@ const RaceList: FC<{ column: RaceColumn; settled: boolean }> = ({ column, settle
 
 const DesktopColumn = memo<{ column: RaceColumn; settled: boolean }>(({ column, settled }) => (
   <div className={clsx(utils.card, classes.column)}>
-    <Link to="/rankings" search={standingsSearch(column.ev)} className={classes.colHead}>
+    <Link
+      to="/rankings"
+      search={standingsSearch(column.ev)}
+      className={clsx(classes.colHead, discipline.tone)}
+      data-event={column.ev}
+    >
       {EVENT_NAMES[column.ev]}
-      <span>{column.ev}</span>
+      <EventTag event={column.ev} tip={false} />
     </Link>
     <RaceList column={column} settled={settled} />
   </div>
@@ -89,7 +95,7 @@ const ChampionCard = memo<{ champion: Champion }>(({ champion: c }) => (
   <li className={clsx(utils.card, classes.champion)}>
     <span className={classes.colHead}>
       {EVENT_NAMES[c.event]}
-      <span>{c.event}</span>
+      <EventTag event={c.event} tip={false} />
     </span>
     <AvatarGroup players={c.players} size={52} crop={156} className={classes.avatars} />
     <TeamPlayers players={c.players} truncate className={classes.names} />

@@ -3,6 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
+import { EventTag } from '~/components/match';
 import { Partner, PlayerAvatar, PlayerName, RaceQualifier, RankChange } from '~/components/player';
 import { EmptyState, IconExpand, MoreButton } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
@@ -96,7 +97,10 @@ const Figure: FC<{ value: number | null | undefined; className?: string }> = ({ 
 const DisciplineCard = memo<{ view: DisciplineView; rank: RankView | undefined }>(({ view: d, rank }) => (
   <section className={clsx(utils.card, classes.card)}>
     <header className={classes.head}>
-      <h2 className={classes.title}>{EVENT_NAMES[d.ev]}</h2>
+      <h2 className={classes.title}>
+        <EventTag event={d.ev} tip={false} />
+        {EVENT_NAMES[d.ev]}
+      </h2>
       {d.lead?.partner && <Partner player={d.lead.partner} className={classes.partner} />}
     </header>
     <div className={classes.summary}>
@@ -202,7 +206,10 @@ const PastItem = memo<{ view: DisciplineView; initial: boolean }>(({ view: d, in
     <div className={classes.pastItem}>
       <button type="button" className={classes.toggle} aria-expanded={open} onClick={toggle}>
         <span className={classes.toggleMain}>
-          <span className={classes.toggleTitle}>{EVENT_NAMES[d.ev]}</span>
+          <span className={classes.toggleTitle}>
+            <EventTag event={d.ev} tip={false} />
+            {EVENT_NAMES[d.ev]}
+          </span>
           <span className={classes.toggleMeta}>
             {d.last && <span>Last ranked {formatMonthYear(d.last)}</span>}
             {partner && <PastPartner player={partner} />}

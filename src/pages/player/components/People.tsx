@@ -1,10 +1,10 @@
 import { useDisclosure } from '@mantine/hooks';
 import { memo, useMemo, type CSSProperties } from 'react';
 
-import { TeamPlayers } from '~/components/match';
+import { EventTag, TeamPlayers } from '~/components/match';
 import { AvatarGroup, PlayerAvatar, PlayerName } from '~/components/player';
 import { MoreButton } from '~/components/ui';
-import { EVENT_NAMES, SEASON_YEAR } from '~/constants';
+import { SEASON_YEAR } from '~/constants';
 import { plural } from '~/utils/format';
 
 import { PARTNER_LIMIT } from '../constants';
@@ -68,7 +68,7 @@ export const PartnersSection = memo<{ rows: PartnerRow[] }>(({ rows }) => {
                 {r.last >= SEASON_YEAR && <span className={classes.current}>Current</span>}
               </span>
               <span className={shared.rowMeta}>
-                {multi && <span>{EVENT_NAMES[r.event]}</span>}
+                {multi && <EventTag event={r.event} />}
                 <span>{yearRange(r.first, r.last)}</span>
                 <span>{plural(r.matches, 'match', 'matches')}</span>
                 {r.titles > 0 && <span className={classes.titles}>{plural(r.titles, 'title')}</span>}

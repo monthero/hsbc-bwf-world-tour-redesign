@@ -11,6 +11,7 @@ import type { Tournament } from '~/types';
 import { hasWinners, tournamentParams } from '~/utils/tournaments';
 
 import classes from './Winners.module.css';
+import discipline from '~/styles/discipline.module.css';
 import utils from '~/styles/utils.module.css';
 
 const HOVER_EVENTS = { hover: true, focus: false, touch: false };
@@ -24,7 +25,9 @@ export const WinnersList: FC<{ champions: Tournament['champions']; bordered?: bo
       <div className={classes.winners} data-bordered={bordered || undefined}>
         {champions.map((c) => (
           <div key={c.event} className={classes.winnerRow}>
-            <span className={classes.event}>{EVENT_NAMES[c.event]}</span>
+            <span className={clsx(classes.event, discipline.tone)} data-event={c.event}>
+              {EVENT_NAMES[c.event]}
+            </span>
             <TeamPlayers players={c.players} nameClassName={classes.player} />
           </div>
         ))}

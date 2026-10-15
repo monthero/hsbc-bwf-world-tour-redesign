@@ -7,8 +7,8 @@
 }
 
 .eventTag {
-  background: alpha(var(--bwf-red), 0.22);
-  color: var(--bwf-red-pale);
+  background: alpha(var(--event), 0.22);
+  color: var(--event-text);
 }
 
 .note {
