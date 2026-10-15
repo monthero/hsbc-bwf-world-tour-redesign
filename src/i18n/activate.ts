@@ -46,4 +46,5 @@ export const activateLocale = async (locale: Locale) => {
   const [messages] = await Promise.all([loadCatalog(locale), applyScript(meta.script)]);
   i18n.loadAndActivate({ locale, messages });
   document.documentElement.lang = meta.lang;
+  document.querySelector('meta[http-equiv="content-language"]')?.setAttribute('content', meta.lang);
 };
