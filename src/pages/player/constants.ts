@@ -35,7 +35,7 @@ export const RESULTS_TIP = 'Results counting toward the current world ranking';
 export const PARTNER_LIMIT = 6;
 
 export const EQUIPMENT_NOTE =
-  '[NOTE] Players change equipment often, by preference or for sponsorship reasons, so this information may be outdated.';
+  "[NOTE] Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome at vmnokk@gmail.com.";
 
 export const VIDEO_STEP = 6;
 
