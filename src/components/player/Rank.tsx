@@ -26,20 +26,9 @@ export const RankChange: FC<{ value: number; variant?: 'text' | 'pill'; classNam
   );
 };
 
-export const RankValue: FC<{ value: number | null | undefined; className?: string }> = ({ value, className }) => {
-  return (
-    <span className={className}>
-      {value ? (
-        <>
-          <span className={classes.hash}>#</span>
-          {value}
-        </>
-      ) : (
-        '—'
-      )}
-    </span>
-  );
-};
+export const RankValue: FC<{ value: number | null | undefined; className?: string }> = ({ value, className }) => (
+  <span className={className}>{value || '—'}</span>
+);
 
 const QualifiedBadge: FC<{ long?: boolean }> = ({ long }) => {
   const city = useFinalsCity();

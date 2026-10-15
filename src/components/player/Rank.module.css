@@ -26,14 +26,6 @@
   }
 }
 
-.hash {
-  margin-right: 2px;
-  font-size: 0.5em;
-  font-weight: 500;
-  color: var(--bwf-dim);
-  vertical-align: 0.45em;
-}
-
 .card {
   min-width: 0;
   display: flex;
