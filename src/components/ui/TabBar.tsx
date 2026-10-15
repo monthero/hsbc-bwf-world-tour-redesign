@@ -1,8 +1,9 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { useLayoutEffect, useRef, type ReactNode } from 'react';
 
 import { prefersReducedMotion } from '~/utils/motion';
+
+import { Tip } from './Tip';
 
 import classes from './TabBar.module.css';
 import utils from '~/styles/utils.module.css';
@@ -106,7 +107,7 @@ export const TabBar = <T extends string>({
       {items.map((it) => {
         const active = it.value === value;
         return (
-          <Tooltip key={it.value} label={it.tip} disabled={!it.tip}>
+          <Tip key={it.value} label={it.tip} disabled={!it.tip} tap={!!it.disabled}>
             <button
               type="button"
               data-tab={it.value}
@@ -119,7 +120,7 @@ export const TabBar = <T extends string>({
               {it.label}
               {it.badge}
             </button>
-          </Tooltip>
+          </Tip>
         );
       })}
       <span ref={barRef} className={classes.bar} />

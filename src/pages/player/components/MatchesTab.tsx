@@ -6,7 +6,7 @@ import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { ScoreChips, TeamPlayers } from '~/components/match';
 import { Partner } from '~/components/player';
 import { LevelBadge, LogoTile } from '~/components/tournament';
-import { CardHit, EmptyState, Segmented, TipSpan, type SegmentedOption } from '~/components/ui';
+import { CardHit, EmptyState, Segmented, Tip, type SegmentedOption } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import type { PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
@@ -170,9 +170,9 @@ const MatchRow = memo<{ pm: PlayerMatch; self: string | undefined; onOpen: (pm: 
     return (
       <div className={shared.row} data-lead>
         <CardHit label={`Open match details · ${roundName(match.round)}`} onClick={open} />
-        <TipSpan className={classes.round} tip={roundName(match.round)}>
-          {match.round}
-        </TipSpan>
+        <Tip label={roundName(match.round)}>
+          <span className={classes.round}>{match.round}</span>
+        </Tip>
         <span className={shared.rowMain}>
           <TeamPlayers players={opponentsOf(pm)} flag="xs" className={shared.rowNames} />
           <span className={shared.rowMeta}>

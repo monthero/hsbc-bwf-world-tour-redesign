@@ -1,4 +1,3 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
@@ -6,7 +5,7 @@ import { Flag } from '~/components/country';
 import { TeamPlayers, TimedStatus } from '~/components/match';
 import { AvatarGroup, SeedTag } from '~/components/player';
 import { Medal } from '~/components/tournament';
-import { SectionTitle } from '~/components/ui';
+import { SectionTitle, Tip } from '~/components/ui';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
 import type { EventCode, PlayerDirectory, Team } from '~/types';
 import { formatRank } from '~/utils/format';
@@ -39,21 +38,21 @@ const WorldRank: FC<{ team: Team; event: EventCode; dir: PlayerDirectory | undef
   const rank = worldRank(dir, team.players, event);
   if (!rank) return null;
   return (
-    <Tooltip label={RANK_TIP}>
+    <Tip label={RANK_TIP}>
       <span className={classes.rank}>
         World rank <b>{formatRank(rank)}</b>
       </span>
-    </Tooltip>
+    </Tip>
   );
 };
 
 const PlaceMedal: FC<{ place: PodiumPlace; size: number }> = ({ place: p, size }) => {
   return (
-    <Tooltip label={p.label}>
+    <Tip label={p.label}>
       <span className={classes.medal}>
         <Medal kind={p.medal} size={size} />
       </span>
-    </Tooltip>
+    </Tip>
   );
 };
 
@@ -130,16 +129,16 @@ const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
       {s.team ? (
         <>
           <TeamPlayers players={s.team.players} truncate className={classes.seedPlayers} />
-          <Tooltip label={s.tip} disabled={!s.tip}>
+          <Tip label={s.tip} disabled={!s.tip}>
             <span className={classes.status} data-tip={s.tip ? true : undefined}>
               <TimedStatus match={s.match} tone={s.tone} label={s.status} />
             </span>
-          </Tooltip>
+          </Tip>
         </>
       ) : (
-        <Tooltip label={MISSING_TIP}>
+        <Tip label={MISSING_TIP}>
           <span className={classes.missing}>Not in the data</span>
-        </Tooltip>
+        </Tip>
       )}
     </div>
   );

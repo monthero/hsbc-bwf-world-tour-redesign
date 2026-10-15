@@ -6,7 +6,7 @@ import RankingIcon from '~icons/solar/ranking-outline';
 import { CountryLabel } from '~/components/country';
 import { PlayerFollow } from '~/components/follow';
 import { Partner, PlayerAvatar, PlayerName, RaceQualifier, RankChange, RetiredBadge } from '~/components/player';
-import { CardHit, TapTip, TipSpan } from '~/components/ui';
+import { CardHit, Tip } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerPhoto } from '~/hooks/usePlayers';
@@ -143,7 +143,7 @@ const Vital = memo<{ item: StatItem }>(({ item: s }) => {
       </dd>
     </div>
   );
-  return s.sub ? <TapTip label={s.sub}>{el}</TapTip> : el;
+  return s.sub ? <Tip label={s.sub}>{el}</Tip> : el;
 });
 
 const WEEKS_AT_BEST_TIP =
@@ -157,9 +157,9 @@ const MiniStat = memo<{ label: string; sub?: string; subTip?: string; children: 
         {children}
         {sub &&
           (subTip ? (
-            <TipSpan className={classes.miniSub} tip={subTip}>
-              {sub}
-            </TipSpan>
+            <Tip label={subTip}>
+              <span className={classes.miniSub}>{sub}</span>
+            </Tip>
           ) : (
             <span className={classes.miniSub}>{sub}</span>
           ))}
@@ -180,9 +180,11 @@ const RankTile = memo<{
       {onEvent && <CardHit label={active ? 'Show all disciplines' : `Focus on ${EVENT_NAMES[k.ev]}`} onClick={pick} />}
       <span className={classes.rankHead}>
         <span className={classes.rankEvent}>{EVENT_NAMES[k.ev]}</span>
-        <TipSpan className={classes.rankKind} tip="World ranking">
-          <RankingIcon aria-label="World ranking" />
-        </TipSpan>
+        <Tip label="World ranking">
+          <span className={classes.rankKind}>
+            <RankingIcon aria-label="World ranking" />
+          </span>
+        </Tip>
       </span>
       <span className={classes.rankPartner}>{k.partner && <Partner player={k.partner} label={false} />}</span>
       <span className={classes.rankLine}>

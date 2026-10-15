@@ -1,8 +1,8 @@
-import { ActionIcon, Button, Tooltip } from '@mantine/core';
+import { ActionIcon, Button } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { memo, useCallback, type FC } from 'react';
 
-import { IconCheck, IconFacebook, IconLink, IconShare, IconWeibo, IconX, type IconProps } from '~/components/ui';
+import { IconCheck, IconFacebook, IconLink, IconShare, IconWeibo, IconX, type IconProps, Tip } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
 
 import { COPIED_MS } from '../constants';
@@ -34,7 +34,7 @@ const pageUrl = () => window.location.href;
 const ShareLinks = memo<{ title: string }>(({ title }) => {
   const url = pageUrl();
   return SHARE_TARGETS.map(({ label, icon: Icon, href }) => (
-    <Tooltip key={label} label={`Share on ${label}`}>
+    <Tip tap={false} key={label} label={`Share on ${label}`}>
       <ActionIcon
         component="a"
         href={href(url, title)}
@@ -48,7 +48,7 @@ const ShareLinks = memo<{ title: string }>(({ title }) => {
       >
         <Icon />
       </ActionIcon>
-    </Tooltip>
+    </Tip>
   ));
 });
 

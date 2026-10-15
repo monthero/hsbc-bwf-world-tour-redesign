@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { memo, useMemo, type CSSProperties } from 'react';
 
 import { LevelBadge } from '~/components/tournament';
-import { LazyTip, useLazyTip } from '~/components/ui';
+import { Tip } from '~/components/ui';
 import { LEVEL_META, LEVEL_VARS, SUPER_100_POINTS } from '~/constants';
 import type { Tournament } from '~/types';
 import { formatNumber, plural } from '~/utils/format';
@@ -18,23 +18,18 @@ import utils from '~/styles/utils.module.css';
 const FILL_MIN = 28;
 const FILL_RANGE = 150;
 
-const EventChip = memo<{ tournament: Tournament }>(({ tournament: t }) => {
-  const lazy = useLazyTip<HTMLAnchorElement>(t.title !== t.name);
-  return (
-    <>
-      <Link
-        to="/world-tour/$year/$slug"
-        params={tournamentParams(t)}
-        className={classes.chip}
-        data-done={t.status === 'done' || undefined}
-        onPointerEnter={lazy.arm}
-      >
-        {t.name}
-      </Link>
-      <LazyTip target={lazy.target} label={t.title} />
-    </>
-  );
-});
+const EventChip = memo<{ tournament: Tournament }>(({ tournament: t }) => (
+  <Tip label={t.title} disabled={t.title === t.name} tap={false}>
+    <Link
+      to="/world-tour/$year/$slug"
+      params={tournamentParams(t)}
+      className={classes.chip}
+      data-done={t.status === 'done' || undefined}
+    >
+      {t.name}
+    </Link>
+  </Tip>
+));
 
 const unitOf = (t: TierSummary) => {
   if (t.level === 'Finals') return 'finale';

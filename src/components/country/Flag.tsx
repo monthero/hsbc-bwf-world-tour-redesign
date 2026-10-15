@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { LazyTip, useLazyTip } from '~/components/ui';
+import { Tip } from '~/components/ui';
 import { countryName, flagUrl } from '~/utils/countries';
 
 import classes from './Flag.module.css';
@@ -14,9 +14,8 @@ export const Flag = memo<{ cc: string; size?: FlagSize; tip?: boolean; className
   ({ cc, size = 'sm', tip = true, className }) => {
     const [w, h] = FLAG_SIZES[size];
     const name = countryName(cc);
-    const lazy = useLazyTip<HTMLImageElement>(tip && !!name);
     return (
-      <>
+      <Tip label={name} disabled={!tip} tap={false}>
         <img
           className={clsx(classes.flag, className)}
           data-tip={tip && !!name ? true : undefined}
@@ -25,10 +24,8 @@ export const Flag = memo<{ cc: string; size?: FlagSize; tip?: boolean; className
           width={w}
           height={h}
           loading="lazy"
-          onPointerEnter={lazy.arm}
         />
-        <LazyTip target={lazy.target} label={name} />
-      </>
+      </Tip>
     );
   },
 );

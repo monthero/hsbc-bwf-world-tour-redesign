@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { LazyTip, useLazyTip } from '~/components/ui';
+import { Tip } from '~/components/ui';
 import { useMatchTime } from '~/hooks/useMatchClock';
 import type { Match, SideResult } from '~/types';
 import { dayMark } from '~/utils/match-time';
@@ -16,22 +16,19 @@ export const MatchTime = memo<{
   className?: string;
 }>(({ match, zone = true, stacked = false, fallback = '', className }) => {
   const t = useMatchTime(match);
-  const lazy = useLazyTip<HTMLSpanElement>(!!t?.alt);
   if (!t) return fallback ? <span className={className}>{fallback}</span> : null;
   return (
-    <>
+    <Tip label={t.alt}>
       <span
         className={clsx(classes.time, className)}
         data-tip={t.alt ? true : undefined}
         data-stacked={stacked || undefined}
-        onPointerEnter={lazy.arm}
       >
         {t.text}
         {t.shift !== 0 && <span className={classes.shift}>{dayMark(t.shift)}</span>}
         {zone && t.zone && <span className={classes.zone}>{t.zone}</span>}
       </span>
-      <LazyTip target={lazy.target} label={t.alt} />
-    </>
+    </Tip>
   );
 });
 

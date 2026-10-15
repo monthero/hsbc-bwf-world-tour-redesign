@@ -2,7 +2,7 @@ import { Badge, type MantineSize } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useMemo, type MouseEvent } from 'react';
 
-import { InfoTip, TapTip } from '~/components/ui';
+import { InfoTip, Tip } from '~/components/ui';
 import type { Retirement } from '~/types';
 import { RETIRED_FROM, retirementNote, retirementRows, retirementSince } from '~/utils/retirement';
 
@@ -22,7 +22,7 @@ export const RetiredBadge = memo<{ retired: Retirement | undefined; size?: Manti
     const note = useMemo(() => (retired ? retirementNote(retired) : ''), [retired]);
     if (!retired) return null;
     return (
-      <TapTip label={<RetiredTip retired={retired} />}>
+      <Tip label={<RetiredTip retired={retired} />}>
         <Badge
           component="button"
           type="button"
@@ -35,7 +35,7 @@ export const RetiredBadge = memo<{ retired: Retirement | undefined; size?: Manti
         >
           Retired
         </Badge>
-      </TapTip>
+      </Tip>
     );
   },
 );

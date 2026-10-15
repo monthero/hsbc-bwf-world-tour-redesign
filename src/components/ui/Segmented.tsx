@@ -1,6 +1,7 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import type { CSSProperties, ReactNode } from 'react';
+
+import { Tip } from './Tip';
 
 import classes from './Segmented.module.css';
 
@@ -49,7 +50,7 @@ export const Segmented = <T extends string>({
       {options.map((o) => {
         const on = o.value === value;
         return (
-          <Tooltip key={o.value} label={o.tip} disabled={!o.tip}>
+          <Tip tap={false} key={o.value} label={o.tip} disabled={!o.tip}>
             <button
               type="button"
               className={classes.option}
@@ -61,7 +62,7 @@ export const Segmented = <T extends string>({
               {o.label}
               {o.badge}
             </button>
-          </Tooltip>
+          </Tip>
         );
       })}
     </div>

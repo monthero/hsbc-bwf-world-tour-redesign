@@ -1,8 +1,8 @@
-import { Skeleton, Tooltip } from '@mantine/core';
+import { Skeleton } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState } from 'react';
 
-import { Segmented, type SegmentedOption } from '~/components/ui';
+import { Segmented, type SegmentedOption, Tip } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import { formatNumber } from '~/utils/format';
 
@@ -88,7 +88,7 @@ const TrendBar = memo<{ item: BreakdownItem; max: number; active: boolean; onPic
     const pick = useCallback(() => onPick(t.key), [onPick, t.key]);
     const label = `${t.name} · ${resultLabel(t.result)} · ${formatNumber(t.points)}`;
     return (
-      <Tooltip label={label}>
+      <Tip label={label}>
         <button
           type="button"
           className={classes.col}
@@ -101,7 +101,7 @@ const TrendBar = memo<{ item: BreakdownItem; max: number; active: boolean; onPic
           <span className={classes.tag}>{RESULT_TAGS[t.result]}</span>
           <span className={classes.fill} style={shareVars(t.points, max, 5)} />
         </button>
-      </Tooltip>
+      </Tip>
     );
   },
 );

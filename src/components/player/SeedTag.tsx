@@ -1,6 +1,7 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import type { FC } from 'react';
+
+import { Tip } from '~/components/ui';
 
 import classes from './SeedTag.module.css';
 
@@ -13,10 +14,10 @@ export const SeedTag: FC<{
 }> = ({ seed, variant = 'inline', className }) => {
   if (!seed) return null;
   return (
-    <Tooltip label={`Seed ${seed} · ${SEED_TIP}`}>
+    <Tip label={`Seed ${seed} · ${SEED_TIP}`}>
       <span className={clsx(classes.seed, className)} data-variant={variant}>
         {variant === 'pill' ? `Seed ${seed}` : `(${seed})`}
       </span>
-    </Tooltip>
+    </Tip>
   );
 };

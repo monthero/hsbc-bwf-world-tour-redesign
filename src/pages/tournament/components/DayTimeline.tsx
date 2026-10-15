@@ -1,6 +1,6 @@
 import { memo, useMemo, type FC } from 'react';
 
-import { IconCheck, IconTimer, LiveDot, TapTip } from '~/components/ui';
+import { IconCheck, IconTimer, LiveDot, Tip } from '~/components/ui';
 import type { Tournament, TournamentSchedule } from '~/types';
 import { countdownLabel } from '~/utils/tournaments';
 
@@ -56,7 +56,7 @@ const DayRound = memo<{ d: TimelineDay }>(({ d }) => {
       <span className={classes.short}>{d.short}</span>
     </b>
   );
-  return d.expected ? <TapTip label={EXPECTED_ROUND_TIP}>{el}</TapTip> : el;
+  return d.expected ? <Tip label={EXPECTED_ROUND_TIP}>{el}</Tip> : el;
 });
 
 const DayItem = memo<{ d: TimelineDay; repeat: boolean }>(({ d, repeat }) =>

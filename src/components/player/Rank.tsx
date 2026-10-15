@@ -1,9 +1,8 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
 import { EventTag } from '~/components/match';
-import { IconCheck, IconCheckCircle } from '~/components/ui';
+import { IconCheck, IconCheckCircle, Tip } from '~/components/ui';
 import { EVENT_NAMES, NOT_QUALIFY_TIP } from '~/constants';
 import { useFinalsCity } from '~/hooks/useTournaments';
 import type { RankView } from '~/types';
@@ -45,7 +44,7 @@ export const RankValue: FC<{ value: number | null | undefined; className?: strin
 const QualifiedBadge: FC<{ long?: boolean }> = ({ long }) => {
   const city = useFinalsCity();
   return (
-    <Tooltip label={qualifyTip(city)}>
+    <Tip label={qualifyTip(city)}>
       <span className={classes.q}>
         {long ? (
           <>
@@ -58,7 +57,7 @@ const QualifiedBadge: FC<{ long?: boolean }> = ({ long }) => {
           </>
         )}
       </span>
-    </Tooltip>
+    </Tip>
   );
 };
 
@@ -70,9 +69,9 @@ export const QualifyMark: FC<{ qualified?: boolean; blocked?: boolean; long?: bo
   if (qualified) return <QualifiedBadge long={long} />;
   if (blocked)
     return (
-      <Tooltip label={NOT_QUALIFY_TIP}>
+      <Tip label={NOT_QUALIFY_TIP}>
         <span className={classes.qOut}>Q</span>
-      </Tooltip>
+      </Tip>
     );
   return null;
 };

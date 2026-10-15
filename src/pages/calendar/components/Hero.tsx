@@ -1,8 +1,8 @@
-import { Menu, Tooltip } from '@mantine/core';
+import { Menu } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, type FC } from 'react';
 
-import { IconCheck, IconExpand, LiveDot } from '~/components/ui';
+import { IconCheck, IconExpand, LiveDot, Tip } from '~/components/ui';
 import { useSeasons } from '~/hooks/useTournaments';
 import type { SeasonSummary, Tournament } from '~/types';
 
@@ -85,9 +85,9 @@ export const Hero = memo<{
           HSBC BWF World Tour
           <YearMenu year={season.year} onYear={onYear} />
           {season.phase === 'future' && (
-            <Tooltip label={PROVISIONAL_TIP}>
+            <Tip label={PROVISIONAL_TIP}>
               <span className={classes.provisional}>Provisional</span>
-            </Tooltip>
+            </Tip>
           )}
         </div>
         <h1 className={classes.title}>

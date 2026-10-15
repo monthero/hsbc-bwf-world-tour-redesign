@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { TipSpan } from '~/components/ui';
+import { Tip } from '~/components/ui';
 
 import type { FieldState } from '../fields';
 
@@ -13,7 +13,9 @@ const STATE_TIPS: Record<FieldState, string> = {
 };
 
 export const StateBadge = memo<{ label: string; state: FieldState }>(({ label, state }) => (
-  <TipSpan className={classes.badge} data-state={state} tip={`${label}: ${STATE_TIPS[state]}`}>
-    {label}
-  </TipSpan>
+  <Tip label={`${label}: ${STATE_TIPS[state]}`}>
+    <span className={classes.badge} data-state={state}>
+      {label}
+    </span>
+  </Tip>
 ));

@@ -1,7 +1,8 @@
-import { Tooltip } from '@mantine/core';
 import { Link, type LinkProps } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import type { FC, HTMLAttributes, ReactNode, Ref } from 'react';
+
+import { Tip } from './Tip';
 
 import classes from './IconButton.module.css';
 
@@ -52,5 +53,11 @@ export const IconButton: FC<
         {children}
       </button>
     );
-  return tip ? <Tooltip label={tip}>{el}</Tooltip> : el;
+  return tip ? (
+    <Tip tap={false} label={tip}>
+      {el}
+    </Tip>
+  ) : (
+    el
+  );
 };

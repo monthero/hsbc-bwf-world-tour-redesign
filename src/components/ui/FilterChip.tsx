@@ -1,6 +1,7 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import type { ComponentPropsWithoutRef, CSSProperties, FC, ReactNode } from 'react';
+
+import { Tip } from './Tip';
 
 import classes from './FilterChip.module.css';
 
@@ -26,5 +27,11 @@ export const FilterChip: FC<
       {...rest}
     />
   );
-  return tip ? <Tooltip label={tip}>{el}</Tooltip> : el;
+  return tip ? (
+    <Tip tap={false} label={tip}>
+      {el}
+    </Tip>
+  ) : (
+    el
+  );
 };

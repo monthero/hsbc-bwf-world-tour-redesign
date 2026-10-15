@@ -1,4 +1,3 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react';
 import HandBold from '~icons/solar/user-hand-up-bold';
@@ -8,7 +7,7 @@ import type { MediaItem } from '~/api/schemas';
 import { TeamPlayers } from '~/components/match';
 import { WatchLive } from '~/components/media';
 import { AvatarGroup } from '~/components/player';
-import { CardHit, Duration, IconFire, ShuttleIcon, StatusChip, type StatusTone, InfoTip } from '~/components/ui';
+import { CardHit, Duration, IconFire, ShuttleIcon, StatusChip, type StatusTone, InfoTip, Tip } from '~/components/ui';
 import type { Game, Match, Player, Side } from '~/types';
 import {
   CHALLENGE_LABELS,
@@ -34,11 +33,11 @@ const FIRE = <IconFire size={12} />;
 const CHALLENGE_TONES: Record<ChallengeOutcome, StatusTone> = { won: 'green', lost: 'red', void: 'silver' };
 
 const Serve: FC<{ size?: number }> = ({ size = 15 }) => (
-  <Tooltip label="Serving">
+  <Tip label="Serving">
     <span className={clsx(utils.raise, classes.serve)} style={{ '--serve': `${size}px` } as CSSProperties}>
       <ShuttleIcon />
     </span>
-  </Tooltip>
+  </Tip>
 );
 
 const ChallengeCount: FC<{ side: SideView }> = ({ side: { stats, left } }) => {
@@ -46,12 +45,12 @@ const ChallengeCount: FC<{ side: SideView }> = ({ side: { stats, left } }) => {
   const tip = challengeTip(stats, left);
   const card = <InfoTip title={challengeHeadline(left)} subtitle={CHALLENGE_RULE} rows={challengeRows(stats)} inline />;
   return (
-    <Tooltip label={card}>
+    <Tip label={card}>
       <span className={clsx(utils.raise, classes.challenge)} data-left={left} aria-label={tip}>
         <HandBold className={classes.challengeIcon} aria-hidden />
         {left}
       </span>
-    </Tooltip>
+    </Tip>
   );
 };
 

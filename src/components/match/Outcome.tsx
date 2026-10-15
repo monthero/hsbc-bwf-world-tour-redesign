@@ -1,7 +1,7 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, type ReactNode } from 'react';
 
+import { Tip } from '~/components/ui';
 import type { MatchOutcome, PlayerMatch } from '~/types';
 
 import { MatchTime } from './MatchTime';
@@ -29,7 +29,7 @@ export const OutcomeBadge = memo<{
   ) : (
     <span {...props}>{text}</span>
   );
-  return tip ? <Tooltip label={tip}>{el}</Tooltip> : el;
+  return tip ? <Tip label={tip}>{el}</Tip> : el;
 });
 
 export interface FormItem {

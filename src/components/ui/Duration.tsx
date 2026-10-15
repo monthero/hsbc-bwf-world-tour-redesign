@@ -2,15 +2,17 @@ import { clsx } from 'clsx';
 import { memo } from 'react';
 
 import { IconTimer } from './icons';
-import { TipSpan } from './TipSpan';
+import { Tip } from './Tip';
 
 import classes from './Duration.module.css';
 
 export const Duration = memo<{ min: number; size?: number; className?: string }>(({ min, size = 13, className }) =>
   min ? (
-    <TipSpan className={clsx(classes.duration, className)} tip={`${min} minutes`}>
-      <IconTimer size={size} />
-      {min}′
-    </TipSpan>
+    <Tip label={`${min} minutes`}>
+      <span className={clsx(classes.duration, className)}>
+        <IconTimer size={size} />
+        {min}′
+      </span>
+    </Tip>
   ) : null,
 );

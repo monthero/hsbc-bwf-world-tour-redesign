@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { TipSpan } from '~/components/ui';
+import { Tip } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import type { EventCode } from '~/types';
 
@@ -11,9 +11,11 @@ export type NoteTone = 'violet' | 'sky';
 
 const Tag = memo<{ label: string; tip: string; tone?: NoteTone; className?: string }>(
   ({ label, tip, tone, className }) => (
-    <TipSpan tip={tip} className={clsx(classes.tag, className)} data-tone={tone}>
-      {label}
-    </TipSpan>
+    <Tip label={tip}>
+      <span className={clsx(classes.tag, className)} data-tone={tone}>
+        {label}
+      </span>
+    </Tip>
   ),
 );
 

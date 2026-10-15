@@ -1,10 +1,9 @@
-import { Tooltip } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
 import { TeamFollow } from '~/components/follow';
 import { EventTag, TeamPlayers, TimedStatus } from '~/components/match';
-import { CardHit } from '~/components/ui';
+import { CardHit, Tip } from '~/components/ui';
 import { formatRank } from '~/utils/format';
 import { isScheduled, teamLabel } from '~/utils/matches';
 
@@ -15,9 +14,9 @@ import utils from '~/styles/utils.module.css';
 
 export const EntryRank: FC<{ rank: number; className?: string }> = ({ rank, className }) =>
   rank > 0 ? (
-    <Tooltip label="BWF World Ranking in this category">
+    <Tip label="BWF World Ranking in this category">
       <span className={clsx(utils.raise, classes.rank, className)}>{formatRank(rank)}</span>
-    </Tooltip>
+    </Tip>
   ) : null;
 
 export const EntryStatus: FC<{ entry: LatestEntry; withStage?: boolean }> = ({ entry, withStage = true }) => {
@@ -26,9 +25,9 @@ export const EntryStatus: FC<{ entry: LatestEntry; withStage?: boolean }> = ({ e
   return (
     <span className={classes.status} data-tone={status.tone}>
       {entry.qualifier && (
-        <Tooltip label="Came through qualifying">
+        <Tip label="Came through qualifying">
           <span className={clsx(utils.raise, classes.qualifier)}>Q</span>
-        </Tooltip>
+        </Tip>
       )}
       {(entry.match || withStage) && <TimedStatus match={entry.match} tone={status.tone} label={status.label} />}
     </span>

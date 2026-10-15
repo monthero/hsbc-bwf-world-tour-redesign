@@ -1,9 +1,9 @@
-import { Button, Tooltip } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
-import { IconStream, TapTip } from '~/components/ui';
+import { IconStream, Tip } from '~/components/ui';
 import { useMediaAvailable } from '~/hooks/useTournamentMedia';
 import { watchUrl } from '~/utils/media';
 
@@ -20,14 +20,14 @@ export const WatchLive = memo<{ item: MediaItem; className?: string }>(({ item, 
   const cls = clsx(utils.raise, className);
   if (!available)
     return (
-      <TapTip label={REGION_NOTE}>
+      <Tip label={REGION_NOTE}>
         <Button {...BUTTON_PROPS} component="span" className={cls} data-disabled aria-label={REGION_NOTE}>
           {LABEL}
         </Button>
-      </TapTip>
+      </Tip>
     );
   return (
-    <Tooltip label={item.title}>
+    <Tip tap={false} label={item.title}>
       <Button
         {...BUTTON_PROPS}
         component="a"
@@ -39,6 +39,6 @@ export const WatchLive = memo<{ item: MediaItem; className?: string }>(({ item, 
       >
         {LABEL}
       </Button>
-    </Tooltip>
+    </Tip>
   );
 });
