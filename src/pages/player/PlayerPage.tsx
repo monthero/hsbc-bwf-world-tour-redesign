@@ -6,6 +6,7 @@ import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
 import { NotFound, type NotFoundAction } from '~/components/layout';
 import { MatchDetailModal } from '~/components/match';
+import { Equipment } from '~/components/player';
 import { BackPill } from '~/components/ui';
 import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { usePlayerProfile } from '~/hooks/useSeason';
@@ -16,7 +17,6 @@ import { STAY } from '~/utils/navigation';
 import { tournamentParams } from '~/utils/tournaments';
 
 import { Hero } from './components/Hero';
-import { Kit } from './components/Kit';
 import { MatchesTab } from './components/MatchesTab';
 import { MediaTab } from './components/MediaTab';
 import { OverviewTab } from './components/OverviewTab';
@@ -132,7 +132,7 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
             event={event}
             onEvent={setEvent}
           />
-          {bio.equipment.length > 0 && <Kit items={bio.equipment} />}
+          {bio.equipment.length > 0 && <Equipment items={bio.equipment} className={clsx(utils.card, classes.kit)} />}
           <SubNav tab={tab} onTab={setTab} mediaCount={mediaCount} />
           {tab !== 'media' && events.length > 1 && <Disciplines events={events} event={event} onEvent={setEvent} />}
           {tab === 'overview' && (

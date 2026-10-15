@@ -1,4 +1,5 @@
 export { BioStat, FactTile } from './BioFacts';
+export { Equipment } from './Equipment';
 export { FactLabel, FactTip } from './FactLabel';
 export { AvatarGroup, FramedPhoto, PlayerAvatar } from './PlayerAvatar';
 export { Partner } from './Partner';

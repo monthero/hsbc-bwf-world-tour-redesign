@@ -13,6 +13,7 @@ import type { PlayerMatch } from '~/types';
 import { byMatchTime, opposite, roundName } from '~/utils/matches';
 
 import { BioStat, FactTile } from './BioFacts';
+import { Equipment } from './Equipment';
 import { PlayerAvatar } from './PlayerAvatar';
 import { PlayerName } from './PlayerName';
 import { RankCard } from './Rank';
@@ -122,12 +123,7 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
       )}
       {bio.equipment.length > 0 && (
         <div className={classes.section}>
-          <Eyebrow>Equipment</Eyebrow>
-          <div className={classes.grid}>
-            {bio.equipment.map((q) => (
-              <FactTile key={q.key} label={q.label} value={q.value} size="sm" tone="tile" />
-            ))}
-          </div>
+          <Equipment items={bio.equipment} size="sm" className={utils.inset} />
         </div>
       )}
       {bio.ambition && (
