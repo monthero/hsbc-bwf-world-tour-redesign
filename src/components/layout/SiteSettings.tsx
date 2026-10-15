@@ -113,10 +113,10 @@ const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ v
         </Field>
       </Section>
       <Section title="Units">
-        <Field label="Player height">
+        <Field label="Player heights">
           <Segmented options={HEIGHT_OPTIONS} value={height} onChange={onHeight} height={h} />
         </Field>
-        <Field label="String tension">
+        <Field label="String tensions">
           <Segmented options={TENSION_OPTIONS} value={tension} onChange={onTension} height={h} />
         </Field>
       </Section>
