@@ -1,6 +1,26 @@
 [
   {
     "kind": "racket",
+    "brand": "apacs",
+    "model": "Assailant Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "apacs",
+    "model": "Cross Court Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "felet",
+    "model": "3K Woven Fence"
+  },
+  {
+    "kind": "racket",
+    "brand": "felet",
+    "model": "Woven 999"
+  },
+  {
+    "kind": "racket",
     "brand": "flypower",
     "model": "Enigma 900 V3"
   },
@@ -13,6 +33,16 @@
     "kind": "racket",
     "brand": "flypower",
     "model": "Samiya"
+  },
+  {
+    "kind": "racket",
+    "brand": "fz-forza",
+    "model": "HT Precision 88S V2"
+  },
+  {
+    "kind": "racket",
+    "brand": "gosen",
+    "model": "Gravitas 8.5SX"
   },
   {
     "kind": "racket",
@@ -46,13 +76,38 @@
   },
   {
     "kind": "racket",
+    "brand": "kumpoo",
+    "model": "Asura II"
+  },
+  {
+    "kind": "racket",
+    "brand": "kumpoo",
+    "model": "Ride the Wind 100"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "3D Calibar 600C"
+  },
+  {
+    "kind": "racket",
     "brand": "li-ning",
     "model": "Aeronaut 9000"
   },
   {
     "kind": "racket",
     "brand": "li-ning",
+    "model": "Aeronaut 9000C"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
     "model": "Aeronaut 9000I"
+  },
+  {
+    "kind": "racket",
+    "brand": "li-ning",
+    "model": "AXForce 70"
   },
   {
     "kind": "racket",
@@ -107,11 +162,6 @@
   {
     "kind": "racket",
     "brand": "li-ning",
-    "model": "BladeX 800 Shida"
-  },
-  {
-    "kind": "racket",
-    "brand": "li-ning",
     "model": "BladeX 900"
   },
   {
@@ -137,7 +187,7 @@
   {
     "kind": "racket",
     "brand": "victor",
-    "model": "Auraspeed 99 Antonsen"
+    "model": "Auraspeed 99"
   },
   {
     "kind": "racket",
@@ -148,6 +198,11 @@
     "kind": "racket",
     "brand": "victor",
     "model": "Auraspeed 100X Ultra G"
+  },
+  {
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Auraspeed Fantôme"
   },
   {
     "kind": "racket",
@@ -237,27 +292,17 @@
   {
     "kind": "racket",
     "brand": "yonex",
+    "model": "Astrox 99"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
     "model": "Astrox 99 Pro"
   },
   {
     "kind": "racket",
     "brand": "yonex",
     "model": "Astrox 100 ZZ"
-  },
-  {
-    "kind": "racket",
-    "brand": "yonex",
-    "model": "Astrox 100 ZZ Kurenai"
-  },
-  {
-    "kind": "racket",
-    "brand": "yonex",
-    "model": "Astrox 100 ZZ Navy"
-  },
-  {
-    "kind": "racket",
-    "brand": "yonex",
-    "model": "Astrox 100 ZZ VA"
   },
   {
     "kind": "racket",
@@ -278,6 +323,16 @@
     "kind": "racket",
     "brand": "yonex",
     "model": "Nanoflare 1000Z"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Voltric Z-Force"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
+    "model": "Voltric Z-Force II"
   },
   {
     "kind": "shoes",
@@ -313,11 +368,6 @@
     "kind": "shoes",
     "brand": "yonex",
     "model": "Power Cushion 65 Z3"
-  },
-  {
-    "kind": "shoes",
-    "brand": "yonex",
-    "model": "Power Cushion 65 Z3 Black"
   },
   {
     "kind": "shoes",
@@ -543,5 +593,10 @@
     "kind": "string",
     "brand": "yonex",
     "model": "Exbolt 68"
+  },
+  {
+    "kind": "string",
+    "brand": "yonex",
+    "model": "Nanogy 95"
   }
 ]
