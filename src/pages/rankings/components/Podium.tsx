@@ -7,7 +7,6 @@ import type { MedalKind, RankRow } from '~/types';
 import { formatNumber, plural } from '~/utils/format';
 
 import { PODIUM_MEDALS } from '../constants';
-import { Movement } from './Movement';
 
 import classes from './Podium.module.css';
 import utils from '~/styles/utils.module.css';
@@ -15,15 +14,12 @@ import utils from '~/styles/utils.module.css';
 const PodiumCard = memo<{ row: RankRow; medal: MedalKind }>(({ row, medal }) => {
   return (
     <li className={classes.card} data-medal={medal}>
-      <div className={classes.top}>
-        <span className={classes.place} aria-label={`Rank ${row.rank}`}>
-          <Medal kind={medal} size={28} />
-        </span>
-        {(row.change !== 0 || row.isNew) && <Movement change={row.change} isNew={row.isNew} variant="pill" />}
-      </div>
       <div className={classes.who}>
         <AvatarGroup players={row.players} size={56} crop={168} className={classes.avatars} />
         <RankedNames players={row.players} wrap className={classes.names} nameClassName={classes.name} />
+        <span className={classes.place} aria-label={`Rank ${row.rank}`}>
+          <Medal kind={medal} size={28} />
+        </span>
       </div>
       <div className={clsx(utils.num, classes.stats)}>
         <span className={classes.points}>
