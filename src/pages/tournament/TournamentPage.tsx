@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react';
 import { Loader } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -6,14 +7,14 @@ import { useLayoutEffect, useMemo, useRef, type FC, type RefObject } from 'react
 import { NotFound } from '~/components/layout';
 import { MatchDetailModal } from '~/components/match';
 import { EmptyState } from '~/components/ui';
-import { NOT_FOUND } from '~/constants';
 import { TournamentContext } from '~/contexts';
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { useSlideIn } from '~/hooks/useSlideIn';
 import { useLiveStreamSync } from '~/hooks/useTournamentMedia';
 import { useSchedule, useTournament } from '~/hooks/useTournaments';
 import type { Tournament } from '~/types';
 import { headerOffset, TABBAR_VAR } from '~/utils/layout';
+import { NOT_FOUND_META, tournamentMeta } from '~/utils/meta';
 
 import { DrawTab } from './components/DrawTab';
 import { MatchesTab } from './components/MatchesTab';
@@ -141,7 +142,9 @@ export const TournamentPage: FC = () => {
   const { tournament, prev, next, isPending } = useTournament(year, slug);
   const back = useCalendarBack(Number(year));
   const missing = !tournament && !isPending;
-  useDocumentTitle(missing ? NOT_FOUND : tournament?.title, missing ? 'bwf' : { season: tournament?.year });
+  const { _ } = useLingui();
+  const meta = useMemo(() => tournament && tournamentMeta(_, tournament), [_, tournament]);
+  useDocumentMeta(missing ? NOT_FOUND_META : meta);
   const action = useMemo(() => ({ label: `Back to the ${year} calendar`, link: back.link }), [year, back.link]);
   if (tournament) return <TournamentView key={tournament.code} tournament={tournament} prev={prev} next={next} />;
   if (missing)

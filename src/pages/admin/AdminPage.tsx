@@ -1,12 +1,14 @@
 import { clsx } from 'clsx';
 import type { FC } from 'react';
 
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 
 import { PlayersTab } from './components/PlayersTab';
 
 import classes from './AdminPage.module.css';
 import utils from '~/styles/utils.module.css';
+
+const ADMIN_META = { title: 'Admin' };
 
 const Console: FC = () => (
   <div className={classes.page}>
@@ -20,6 +22,6 @@ const Console: FC = () => (
 );
 
 export const AdminPage: FC = () => {
-  useDocumentTitle('Admin', 'bwf');
+  useDocumentMeta(ADMIN_META);
   return <Console />;
 };

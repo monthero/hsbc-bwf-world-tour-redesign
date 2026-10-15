@@ -4,8 +4,9 @@ import { useMemo, type FC } from 'react';
 
 import { PageHeader, SectionTitle } from '~/components/ui';
 import { SEASON_YEAR } from '~/constants';
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { useTournaments } from '~/hooks/useTournaments';
+import { ABOUT_PAGE_META } from '~/utils/meta';
 import { knownFinalsCity } from '~/utils/tournaments';
 
 import { HowItWorks } from './components/HowItWorks';
@@ -19,8 +20,6 @@ import { crownedFinals, seasonFocus, seasonLede, seasonStats } from './utils';
 import classes from './AboutPage.module.css';
 import utils from '~/styles/utils.module.css';
 
-const TITLE_SITE = { season: SEASON_YEAR };
-
 const STATS_SKELETON = <Skeleton className={classes.stats} radius={16} />;
 
 const SEASON_SKELETON = (
@@ -32,7 +31,7 @@ const SEASON_SKELETON = (
 );
 
 export const AboutPage: FC = () => {
-  useDocumentTitle('About', TITLE_SITE);
+  useDocumentMeta(ABOUT_PAGE_META);
   const { data } = useTournaments(SEASON_YEAR);
   const focus = useMemo(() => (data ? seasonFocus(data) : undefined), [data]);
   const stats = useMemo(() => (data && focus ? seasonStats(data, focus) : undefined), [data, focus]);

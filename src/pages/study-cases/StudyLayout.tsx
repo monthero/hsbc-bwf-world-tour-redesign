@@ -12,7 +12,8 @@ import {
 } from 'react';
 
 import { FilterChip, IconBack, PageHeader, Segmented, StickyBar } from '~/components/ui';
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
+import { joinDots } from '~/utils/format';
 
 import {
   DESKTOP_COLUMNS,
@@ -57,7 +58,7 @@ export const StudyShell: FC<{
   bleed?: ReactNode;
   children: ReactNode;
 }> = ({ title, meta, width, onWidth, controls, secondary, aside, bleed, children }) => {
-  useDocumentTitle([title, 'Study cases'], 'bwf');
+  useDocumentMeta({ title: joinDots([title, 'Study cases']) });
   const page = useRef<HTMLDivElement>(null);
   const bar = useRef<HTMLDivElement>(null);
   useBarHeight(bar, page);

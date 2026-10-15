@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react';
 import { VisuallyHidden } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -5,13 +6,14 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, 
 
 import { EmptyState, FloatingPill, IconCollapse, IconExpand, LiveDot } from '~/components/ui';
 import { SEASON_YEAR } from '~/constants';
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useScrolledPast } from '~/hooks/useScrolledPast';
 import { useTournaments } from '~/hooks/useTournaments';
 import type { Level, Tournament } from '~/types';
 import { toggleItem } from '~/utils/filter';
 import { headerOffset } from '~/utils/layout';
+import { calendarMeta } from '~/utils/meta';
 import { STAY } from '~/utils/navigation';
 import { summarize } from '~/utils/season';
 import { isHeld } from '~/utils/tournaments';
@@ -37,7 +39,9 @@ let autoScrolled = false;
 export const CalendarPage: FC = () => {
   const year = route.useSearch({ select: (s) => s.year ?? SEASON_YEAR });
   const { data } = useTournaments(year);
-  useDocumentTitle('Calendar', { season: year });
+  const { _ } = useLingui();
+  const meta = useMemo(() => calendarMeta(_, year), [_, year]);
+  useDocumentMeta(meta);
   return data ? <Calendar key={year} year={year} tournaments={data} /> : null;
 };
 

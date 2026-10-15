@@ -39,7 +39,6 @@ export const isGroup = (e: PlatformEntry): e is ItemGroup => 'items' in e;
 
 export const OFFICIAL_URL = 'https://bwfworldtour.bwfbadminton.com';
 export const CURRENT_SITE = 'HSBC BWF World Tour';
-export const BWF_SITE = 'BWF';
 export const OFFICIAL_SITE: ExternalItem = { label: 'View the official site', href: OFFICIAL_URL };
 
 const BWF_CORPORATE: ExternalItem = { label: 'BWF Corporate', href: 'https://corporate.bwfbadminton.com' };

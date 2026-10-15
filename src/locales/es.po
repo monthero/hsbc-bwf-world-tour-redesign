@@ -11,6 +11,46 @@ msgstr ""
 msgid "(opens in a new tab)"
 msgstr ""
 
+#. One world ranking of a player, e.g. "Men’s singles world No. 1"
+#: src/utils/meta.ts
+msgid "{discipline} world No. {rank}"
+msgstr ""
+
+#. Description of an unranked player. {name} e.g. "Kento Momota", {country} e.g. "Japan", {disciplines} e.g. "Men’s singles"
+#: src/utils/meta.ts
+msgid "{name} from {country}: {disciplines}. Profile, results, matches and ranking history."
+msgstr ""
+
+#. Description of a ranked player. {name} e.g. "Viktor Axelsen", {country} e.g. "Denmark", {rankings} e.g. "Men’s singles world No. 1"
+#: src/utils/meta.ts
+msgid "{name} from {country}: {rankings}. Profile, results, matches and ranking history."
+msgstr ""
+
+#. Description of a player with no ranking or matches yet. {name} e.g. "Viktor Axelsen", {country} e.g. "Denmark"
+#: src/utils/meta.ts
+msgid "{name} from {country}. Profile, results, matches and ranking history."
+msgstr ""
+
+#. Description of a cancelled tournament. {name} e.g. "VICTOR Denmark Open 2026", {level} e.g. "Super 750", {place} e.g. "Odense, Denmark", {dates} e.g. "13–18 October 2026"
+#: src/utils/meta.ts
+msgid "{name}, a {level} tournament in {place} planned for {dates}, was cancelled."
+msgstr ""
+
+#. Description of a finished tournament. {name} e.g. "VICTOR Denmark Open 2026", {level} e.g. "Super 750", {place} e.g. "Odense, Denmark", {dates} e.g. "13–18 October 2026"
+#: src/utils/meta.ts
+msgid "{name}, a {level} tournament in {place}, {dates}. See the champions, results and draw."
+msgstr ""
+
+#. Description of an upcoming tournament. {name} e.g. "VICTOR Denmark Open 2026", {level} e.g. "Super 750", {place} e.g. "Odense, Denmark", {dates} e.g. "13–18 October 2026"
+#: src/utils/meta.ts
+msgid "{name}, a {level} tournament in {place}, {dates}. See the players, draw and schedule."
+msgstr ""
+
+#. Browser tab title. {page} is the page name (a tournament, player or section), {site} is the site name
+#: src/utils/meta.ts
+msgid "{page} · {site}"
+msgstr ""
+
 #: src/components/layout/SiteSettings.tsx
 msgid "12-hour clock"
 msgstr "Formato de 12 horas"
@@ -18,6 +58,21 @@ msgstr "Formato de 12 horas"
 #: src/components/layout/SiteSettings.tsx
 msgid "24-hour clock"
 msgstr "Formato de 24 horas"
+
+#. Browser tab title for the page explaining how the World Tour works
+#: src/utils/meta.ts
+msgid "About"
+msgstr ""
+
+#. Page description for the BWF World Rankings page
+#: src/utils/meta.ts
+msgid "BWF World Rankings in men’s and women’s singles, men’s and women’s doubles and mixed doubles, with weekly movement."
+msgstr ""
+
+#. Browser tab title for a season calendar. {year} is the season, e.g. 2026
+#: src/utils/meta.ts
+msgid "Calendar {year}"
+msgstr ""
 
 #. Settings label: choose a 12-hour or 24-hour clock
 #: src/components/layout/SiteSettings.tsx
@@ -28,9 +83,34 @@ msgstr "Formato de hora"
 msgid "Close settings"
 msgstr "Cerrar ajustes"
 
+#. Page description for the About page
+#: src/utils/meta.ts
+msgid "How the HSBC BWF World Tour works: tournament levels, ranking points, the season so far and the race to the World Tour Finals."
+msgstr ""
+
+#. Site name in browser tabs and link previews; the official tour brand, usually kept in English
+#: src/utils/meta.ts
+msgid "HSBC BWF World Tour"
+msgstr ""
+
 #: src/components/layout/SiteSettings.tsx
 msgid "Language"
 msgstr "Idioma"
+
+#. Description of a tournament being played right now. {name} e.g. "VICTOR Denmark Open 2026", {level} e.g. "Super 750", {place} e.g. "Odense, Denmark", {dates} e.g. "13–18 October 2026"
+#: src/utils/meta.ts
+msgid "Live now: {name}, a {level} tournament in {place}, {dates}. Follow live scores, the draw and results."
+msgstr ""
+
+#. Default page description for search engines and link previews
+#: src/utils/meta.ts
+msgid "Live scores, draws, results, the season calendar, world rankings and news from the HSBC BWF World Tour, badminton’s top tournament circuit."
+msgstr ""
+
+#. Page description for the news index
+#: src/utils/meta.ts
+msgid "Match reports, previews and stats from every stop on the HSBC BWF World Tour."
+msgstr ""
 
 #. Settings option: show match times in the visitor’s own time zone
 #: src/components/layout/SiteSettings.tsx
@@ -41,14 +121,34 @@ msgstr "Mi hora"
 msgid "My time uses your browser’s time zone ({zone})."
 msgstr "Mi hora usa la zona horaria de tu navegador ({zone})."
 
+#. Browser tab title for the news index
+#: src/utils/meta.ts
+msgid "News"
+msgstr ""
+
 #. Footer link to the site’s source code on GitHub, inviting people to send feedback or contribute
 #: src/components/layout/SiteFooter.tsx
 msgid "Open source on GitHub. Feedback, ideas and contributions welcome"
 msgstr ""
 
+#. Browser tab title for a missing page, tournament, player or story
+#: src/utils/meta.ts
+msgid "Page not found"
+msgstr ""
+
 #: src/components/layout/SiteSettings.tsx
 msgid "Player heights"
 msgstr "Estatura de los jugadores"
+
+#. Browser tab title for the standings of the race to qualify for the World Tour Finals
+#: src/utils/meta.ts
+msgid "Race to Finals"
+msgstr ""
+
+#. Page description for the Race to Finals standings
+#: src/utils/meta.ts
+msgid "Race to the HSBC BWF World Tour Finals: who is on course to qualify in each of the five disciplines this season."
+msgstr ""
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Reset to defaults"
@@ -67,10 +167,30 @@ msgstr "Mostrar emisiones no disponibles en mi región"
 msgid "Show times in"
 msgstr "Mostrar horas en"
 
+#. Browser tab title when a page fails to load
+#: src/utils/meta.ts
+msgid "Something went wrong"
+msgstr ""
+
 #. Settings label: unit for badminton racket string tension (lbs or kg)
 #: src/components/layout/SiteSettings.tsx
 msgid "String tensions"
 msgstr "Tensión del cordaje"
+
+#. Page description for a season calendar. {year} is the season, e.g. 2026
+#: src/utils/meta.ts
+msgid "The {year} HSBC BWF World Tour calendar: every tournament with its dates, host city, level and live status."
+msgstr ""
+
+#. Shown, and used as the page description, when a page fails to load
+#: src/utils/meta.ts
+msgid "This page couldn’t be loaded right now."
+msgstr ""
+
+#. Page description for a missing page
+#: src/utils/meta.ts
+msgid "This page isn’t on the HSBC BWF World Tour site. The link may be broken or out of date."
+msgstr ""
 
 #. Small print on the last row of the site footer, beside the GitHub source link
 #: src/components/layout/SiteFooter.tsx
@@ -85,3 +205,8 @@ msgstr "Hora de la sede"
 #: src/components/layout/SiteSettings.tsx
 msgid "When on, they appear greyed out. When off, they’re hidden from video lists and Watch buttons."
 msgstr "Si está activado, aparecen atenuadas. Si está desactivado, se ocultan de las listas de vídeos y de los botones Ver."
+
+#. Browser tab title for the BWF World Rankings page
+#: src/utils/meta.ts
+msgid "World rankings"
+msgstr ""

@@ -4,9 +4,9 @@ import { clsx } from 'clsx';
 import { memo, type FC, type ReactNode } from 'react';
 
 import { IconBack, IconSearch } from '~/components/ui';
-import { NOT_FOUND } from '~/constants';
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { openSearch } from '~/stores/search';
+import { NOT_FOUND_META } from '~/utils/meta';
 
 import { SITE_NAV, type InternalItem } from './links';
 
@@ -78,6 +78,6 @@ export const NotFound = memo<{
 ));
 
 export const PageNotFound: FC = () => {
-  useDocumentTitle(NOT_FOUND, 'bwf');
+  useDocumentMeta(NOT_FOUND_META);
   return <NotFound />;
 };

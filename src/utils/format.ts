@@ -1,4 +1,4 @@
-import { numberFormat } from '../i18n/current.ts';
+import { listFormat, numberFormat } from '../i18n/current.ts';
 
 export const formatNumber = (n: number) => numberFormat().format(n);
 
@@ -17,6 +17,8 @@ export const formatChange = (n: number) => {
 };
 
 export const plural = (n: number, one: string, many = `${one}s`) => `${formatNumber(n)} ${n === 1 ? one : many}`;
+
+export const formatList = (items: readonly string[]) => listFormat().format(items);
 
 export const joinDots = (parts: readonly (string | null | undefined | false)[]) => parts.filter(Boolean).join(' · ');
 

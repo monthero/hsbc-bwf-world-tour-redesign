@@ -8,11 +8,11 @@ import type { NewsArticle } from '~/api/schemas';
 import { NotFound, type NotFoundAction } from '~/components/layout';
 import { PopularNews, SubscribeCard } from '~/components/news';
 import { BackPill, IconExternal, RetryState } from '~/components/ui';
-import { NOT_FOUND } from '~/constants';
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useTournamentLookup } from '~/hooks/useNews';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
+import { articleMeta, ERROR_META, NOT_FOUND_META } from '~/utils/meta';
 import { toStories, toStory } from '~/utils/news';
 
 import { ArticleHeader } from './components/ArticleHeader';
@@ -30,19 +30,24 @@ const route = getRouteApi('/news_/$id');
 const MISSING_TITLE = 'We couldn’t find that story';
 const MISSING_DESCRIPTION = 'It may have been taken down from the BWF newsroom, or the link is out of date.';
 const MISSING_ACTION: NotFoundAction = { label: BACK_LABEL, link: BACK };
-const TITLE_SITE = {};
 const BODY_SKELETON = ['100%', '94%', '97%', '62%', '100%', '91%', '78%'] as const;
 
 export const ArticlePage: FC = () => {
   const { id } = route.useParams();
   const { data: article, error, isError, refetch } = useNewsArticle(id);
   const missing = isNotFound(error);
-  useDocumentTitle(missing ? NOT_FOUND : [article?.title, 'News'], TITLE_SITE);
+  const failed = isError && !article;
+  const meta = useMemo(() => {
+    if (missing) return NOT_FOUND_META;
+    if (failed) return ERROR_META;
+    return article && articleMeta(article);
+  }, [missing, failed, article]);
+  useDocumentMeta(meta);
   const retry = useCallback(() => void refetch(), [refetch]);
 
   if (missing) return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={MISSING_ACTION} />;
 
-  if (isError && !article)
+  if (failed)
     return (
       <div className={clsx(utils.container, classes.state)}>
         <BackPill link={BACK} label={BACK_LABEL} iconOnly />

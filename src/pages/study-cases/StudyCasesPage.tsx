@@ -3,15 +3,17 @@ import { clsx } from 'clsx';
 import type { FC } from 'react';
 
 import { EmptyState, IconNext, PageHeader } from '~/components/ui';
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 
 import { STUDY_CASES } from './cases';
 
 import classes from './StudyCasesPage.module.css';
 import utils from '~/styles/utils.module.css';
 
+const STUDY_META = { title: 'Study cases' };
+
 export const StudyCasesPage: FC = () => {
-  useDocumentTitle('Study cases', 'bwf');
+  useDocumentMeta(STUDY_META);
   return (
     <div className={classes.page}>
       <PageHeader

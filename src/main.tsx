@@ -9,7 +9,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { PageNotFound } from './components/layout';
+import { PageError, PageNotFound } from './components/layout';
 import { activateLocale } from './i18n/activate';
 import { isLocale, localeInPath, SOURCE_LOCALE, stripLocale, withLocale } from './i18n/locales';
 import { routeTree } from './routeTree.gen';
@@ -37,6 +37,7 @@ const router = createRouter({
   defaultPreloadStaleTime: 0,
   scrollRestoration: true,
   defaultNotFoundComponent: PageNotFound,
+  defaultErrorComponent: PageError,
 });
 
 declare module '@tanstack/react-router' {

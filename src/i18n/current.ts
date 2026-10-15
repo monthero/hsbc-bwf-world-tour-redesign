@@ -13,3 +13,5 @@ export const numberFormat = (options: Intl.NumberFormatOptions = {}) => {
   if (!format) cache.set(key, (format = new Intl.NumberFormat(tag, options)));
   return format;
 };
+
+export const listFormat = () => new Intl.ListFormat(intlLocale(currentLocale()), { type: 'conjunction' });

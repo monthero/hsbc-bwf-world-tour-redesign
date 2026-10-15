@@ -9,7 +9,7 @@ export const BWF_RELAY_URL = 'https://bwf-relay.monthero-dev.workers.dev';
 export const LIVE_NEWS = LIVE_DATA && import.meta.env.DEV;
 export const SEASON_YEAR = today().year();
 export const FIRST_SEASON = 2018;
-export const NOT_FOUND = 'Not found';
+export const SITE_ORIGIN = 'https://hsbc-bwf-world-tour-redesign.vercel.app';
 
 export const EVENT_NAMES: Record<EventCode, string> = {
   MS: "Men's singles",

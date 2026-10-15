@@ -5,12 +5,13 @@ import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState, ty
 
 import { EmptyState } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useRankingTable } from '~/hooks/useRankings';
 import type { EventCode, RankingKind, RankingTable, RankRow } from '~/types';
 import { countryOptions, searchTokens } from '~/utils/filter';
 import { isDoubles } from '~/utils/matches';
+import { RANKINGS_PAGE_META } from '~/utils/meta';
 import { STAY } from '~/utils/navigation';
 import { buildRankRows } from '~/utils/rankings';
 
@@ -36,7 +37,7 @@ export const RankingsPage: FC = () => {
   const { kind = DEFAULT_KIND, ev = DEFAULT_EV } = route.useSearch();
   const navigate = route.useNavigate();
   const { data: table } = useRankingTable(kind);
-  useDocumentTitle('Rankings', 'bwf');
+  useDocumentMeta(RANKINGS_PAGE_META[kind]);
 
   const onKind = useCallback(
     (v: RankingKind | null) =>

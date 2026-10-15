@@ -10,12 +10,12 @@ import { newsMonthQuery, useFetchNewsMonths, useNewsIndex, useNewsMonths } from 
 import type { NewsIndex, NewsMonth, NewsMonthCount } from '~/api/schemas';
 import { PopularNews } from '~/components/news';
 import { PageHeader, RetryState } from '~/components/ui';
-import { SEASON_YEAR } from '~/constants';
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useTournamentLookup } from '~/hooks/useNews';
 import { useWindowList } from '~/hooks/useWindowList';
 import { monthKeyOf, monthOf } from '~/utils/dates';
+import { NEWS_PAGE_META } from '~/utils/meta';
 import { STAY } from '~/utils/navigation';
 import { toStories, type NewsStory, type TournamentLookup } from '~/utils/news';
 import { scrollBehavior } from '~/utils/scroll';
@@ -47,7 +47,6 @@ import utils from '~/styles/utils.module.css';
 
 const route = getRouteApi('/news');
 
-const TITLE_SITE = { season: SEASON_YEAR };
 const NO_MONTHS: NewsMonthCount[] = [];
 
 const selectMonth = (s: NewsSearch) => s.month;
@@ -82,7 +81,7 @@ const LEAD_NAV: readonly NavItem[] = [
 ];
 
 export const NewsPage: FC = () => {
-  useDocumentTitle('News', TITLE_SITE);
+  useDocumentMeta(NEWS_PAGE_META);
   const isMobile = useIsMobile();
   const { data, isError, refetch } = useNewsIndex();
   const retry = useCallback(() => void refetch(), [refetch]);

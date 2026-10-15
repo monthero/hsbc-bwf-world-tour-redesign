@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react';
 import { Skeleton } from '@mantine/core';
 import { getRouteApi, useCanGoBack, useNavigate, useRouter } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -6,11 +7,11 @@ import { memo, useCallback, useMemo, useState, type FC } from 'react';
 import { NotFound, type NotFoundAction } from '~/components/layout';
 import { MatchDetailModal } from '~/components/match';
 import { BackPill } from '~/components/ui';
-import { NOT_FOUND } from '~/constants';
-import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { usePlayerProfile } from '~/hooks/useSeason';
 import { useTournamentsByCode } from '~/hooks/useTournaments';
 import type { EventCode, PlayerMatch } from '~/types';
+import { NOT_FOUND_META, playerMeta } from '~/utils/meta';
 import { STAY } from '~/utils/navigation';
 import { tournamentParams } from '~/utils/tournaments';
 
@@ -67,10 +68,18 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
   const navigate = useNavigate();
   const profile = usePlayerProfile(id);
   const { player, matches, ready, index, rankingId, bio, ranks } = profile;
-  useDocumentTitle(!player && profile.status === 'missing' ? NOT_FOUND : [player?.name, 'Players'], 'bwf');
   const history = usePlayerHistory(rankingId, index);
   const mediaCount = usePlayerMediaCount(id).data;
   const matchEvents = useMemo(() => eventsOf(matches), [matches]);
+  const { _ } = useLingui();
+  const hero = profile.profile?.hero;
+  const photo = profile.record?.photo ?? profile.profile?.photo;
+  const meta = useMemo(
+    () => player && playerMeta(_, player, ranks, matchEvents, { hero, photo }),
+    [_, player, ranks, matchEvents, hero, photo],
+  );
+  const missing = !player && profile.status === 'missing';
+  useDocumentMeta(missing ? NOT_FOUND_META : meta);
   const rankEvents = useMemo(() => rankedEventsOf(history.view), [history.view]);
   const events = tab === 'rankings' ? rankEvents : matchEvents;
   const event = picked && events.includes(picked) ? picked : undefined;
@@ -102,8 +111,7 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
   const openResults = useCallback(() => setTab('results'), [setTab]);
   const openMedia = useCallback(() => setTab('media'), [setTab]);
 
-  if (!player && profile.status === 'missing')
-    return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={MISSING_ACTION} />;
+  if (missing) return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={MISSING_ACTION} />;
 
   return (
     <section className={clsx(utils.container, classes.page)}>
