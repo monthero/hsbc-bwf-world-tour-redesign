@@ -3,6 +3,7 @@ import { memo, useLayoutEffect, useRef, type RefObject } from 'react';
 
 import { HEADER_VAR } from '~/utils/layout';
 
+import { DevLinks } from './DevLinks';
 import { SITE_NAV } from './links';
 import { CourtMenu } from './menu/CourtMenu';
 import { PlatformBar } from './PlatformBar';
@@ -44,6 +45,7 @@ export const SiteHeader = memo(() => {
             ))}
           </nav>
           <div className={classes.actions}>
+            <DevLinks className={classes.dev} />
             <SiteSettings className={classes.settings} />
             <SiteSearch className={classes.search} />
             <CourtMenu className={classes.menu} />

@@ -110,6 +110,26 @@
   }
 }
 
+.dev {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.2s;
+
+  .row:has([data-open]) & {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @mixin smaller-than $mantine-breakpoint-md {
+    display: none;
+  }
+}
+
 .settings {
   display: flex;
   transition: opacity 0.2s;

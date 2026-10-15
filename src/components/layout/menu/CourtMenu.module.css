@@ -363,6 +363,12 @@
   text-transform: uppercase;
 }
 
+.footActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .footHead .settings {
   --size: 44px;
   background: var(--bwf-surface);

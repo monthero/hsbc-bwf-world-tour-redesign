@@ -9,6 +9,7 @@ import { useLiveAndNext } from '~/hooks/useTournaments';
 import type { Tournament } from '~/types';
 import { isLive, tournamentLink } from '~/utils/tournaments';
 
+import { DevLinks } from '../DevLinks';
 import { SOCIAL_LINKS } from '../links';
 import { SocialLinks } from '../SiteLink';
 import { SettingsSheet } from '../SiteSettings';
@@ -166,9 +167,12 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
             <div className={classes.foot}>
               <div className={classes.footHead}>
                 <span className={classes.footLabel}>Follow BWF</span>
-                <IconButton label="Settings" className={classes.settings} onClick={openSettings}>
-                  <IconSettings size={18} />
-                </IconButton>
+                <span className={classes.footActions}>
+                  <DevLinks variant="ghost" buttonClassName={classes.settings} onNavigate={close} />
+                  <IconButton label="Settings" className={classes.settings} onClick={openSettings}>
+                    <IconSettings size={18} />
+                  </IconButton>
+                </span>
               </div>
               <SocialLinks items={SOCIAL_LINKS} className={classes.social} />
             </div>
