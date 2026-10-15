@@ -4,10 +4,10 @@ import HandBold from '~icons/ph/hand-palm-fill';
 
 import type { LiveServer, MatchStats } from '~/api/bwf/normalize';
 import type { MediaItem } from '~/api/schemas';
-import { TeamPlayers } from '~/components/match';
+import { ServeMark, TeamPlayers } from '~/components/match';
 import { WatchLive } from '~/components/media';
 import { AvatarGroup } from '~/components/player';
-import { CardHit, Duration, IconFire, ShuttleIcon, StatusChip, type StatusTone, InfoTip, Tip } from '~/components/ui';
+import { CardHit, Duration, IconFire, StatusChip, type StatusTone, InfoTip, Tip } from '~/components/ui';
 import type { Game, Match, Player, Side } from '~/types';
 import {
   CHALLENGE_LABELS,
@@ -28,17 +28,7 @@ import classes from './LiveCard.module.css';
 import utils from '~/styles/utils.module.css';
 
 const AVATAR = 34;
-const FIRE = <IconFire size={12} />;
-
 const CHALLENGE_TONES: Record<ChallengeOutcome, StatusTone> = { won: 'green', lost: 'red', void: 'silver' };
-
-const Serve: FC<{ size?: number }> = ({ size = 15 }) => (
-  <Tip label="Serving">
-    <span className={clsx(utils.raise, classes.serve)} style={{ '--serve': `${size}px` } as CSSProperties}>
-      <ShuttleIcon />
-    </span>
-  </Tip>
-);
 
 const ChallengeCount: FC<{ side: SideView }> = ({ side: { stats, left } }) => {
   if (!stats || left === null) return null;
@@ -54,16 +44,24 @@ const ChallengeCount: FC<{ side: SideView }> = ({ side: { stats, left } }) => {
   );
 };
 
+const Streak: FC<{ n: number }> = ({ n }) => {
+  const label = `${n} in a row`;
+  return (
+    <Tip label={label}>
+      <span className={clsx(utils.raise, classes.challenge, classes.streak)} aria-label={label}>
+        <IconFire className={classes.challengeIcon} />
+        {n}
+      </span>
+    </Tip>
+  );
+};
+
 const Tags: FC<{ side: SideView }> = ({ side: s }) => (
   <span className={classes.tags}>
     <ChallengeCount side={s} />
     {s.result && <StatusChip tone="green">{s.result}</StatusChip>}
     {s.call && <StatusChip tone="gold">{s.call}</StatusChip>}
-    {s.streak > 0 && (
-      <StatusChip tone="red" icon={FIRE}>
-        {s.streak} in a row
-      </StatusChip>
-    )}
+    {s.streak > 0 && <Streak n={s.streak} />}
     {s.review && <StatusChip tone="blue">Challenge · under review</StatusChip>}
     {s.recent && <StatusChip tone={CHALLENGE_TONES[s.recent]}>{CHALLENGE_LABELS[s.recent]}</StatusChip>}
   </span>
@@ -77,7 +75,10 @@ const GameScore: FC<{ game: Game; side: Side }> = ({ game, side }) => (
 
 const TeamRow: FC<{ view: LiveView; side: SideView }> = ({ view: v, side: s }) => {
   const server = v.server;
-  const after = useCallback((p: Player) => p.id === server && <Serve size={13} />, [server]);
+  const after = useCallback(
+    (p: Player) => p.id === server && <ServeMark size={13} className={utils.raise} />,
+    [server],
+  );
   return (
     <div className={classes.row} data-lead={s.leading || undefined}>
       <div className={classes.team}>
@@ -93,7 +94,9 @@ const TeamRow: FC<{ view: LiveView; side: SideView }> = ({ view: v, side: s }) =
           <Tags side={s} />
         </div>
       </div>
-      {!server && <span className={classes.serveCell}>{s.serving && <Serve />}</span>}
+      {!server && (
+        <span className={classes.serveCell}>{s.serving && <ServeMark size={15} className={utils.raise} />}</span>
+      )}
       {v.games.map((g, i) => (
         <GameScore key={i} game={g} side={s.side} />
       ))}

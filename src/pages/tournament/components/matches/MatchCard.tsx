@@ -2,20 +2,18 @@ import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
 import { FollowedMark } from '~/components/follow';
-import { EventTag, MatchTime, NoteTag, SideScores, TeamPlayers, type NoteTone } from '~/components/match';
+import { EventTag, MatchNote, MatchTime, SideScores, TeamPlayers } from '~/components/match';
 import { CardHit, Duration, IconCheck } from '~/components/ui';
 import { useMatchTime } from '~/hooks/useMatchClock';
 import { useNow } from '~/hooks/useNow';
 import type { Match, Player, Side } from '~/types';
 import { nextLabel, type NextKind } from '~/utils/match-time';
-import { isDoubles, noteLabel, noteTip, sideResult } from '~/utils/matches';
+import { isDoubles, sideResult } from '~/utils/matches';
 
 import { matchTitle } from './utils';
 
 import classes from './MatchCard.module.css';
 import utils from '~/styles/utils.module.css';
-
-const NOTE_TONES: Partial<Record<string, NoteTone>> = { Walkover: 'sky', Retired: 'violet' };
 
 const followedMark = (p: Player) => <FollowedMark id={p.id} />;
 
@@ -53,7 +51,6 @@ export const MatchCard = memo<{
 }>(({ match: m, next, onOpen }) => {
   const doubles = isDoubles(m.event);
   const done = m.status === 'F';
-  const note = done ? noteLabel(m.note, 'short') : '';
   return (
     <div className={clsx(utils.card, classes.card)} data-interactive data-doubles={doubles || undefined}>
       <CardHit label={`Match details: ${matchTitle(m)}`} onClick={() => onOpen(m.id)} />
@@ -67,7 +64,7 @@ export const MatchCard = memo<{
         <span className={classes.tags}>
           {next && <NextLabel match={m} kind={next} />}
           {done && <Duration min={m.durationMin} size={12} className={classes.meta} />}
-          {note && <NoteTag label={note} tip={noteTip(m)} tone={NOTE_TONES[m.note ?? ''] ?? 'sky'} />}
+          <MatchNote match={m} />
           <EventTag event={m.event} />
         </span>
       </div>

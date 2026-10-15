@@ -31,7 +31,8 @@ export const VideoCard = memo<{
   label?: string;
   eventName?: string;
   timeZone?: string | null;
-}>(({ item, match, label, eventName, timeZone = null }) => {
+  layout?: 'card' | 'row';
+}>(({ item, match, label, eventName, timeZone = null, layout = 'card' }) => {
   const available = useMediaAvailable(item);
   const start = useInstantTime(startOf(item), timeZone);
   const title = useMemo(() => (eventName ? compactTitle(item.title, eventName) : item.title), [item.title, eventName]);
@@ -61,12 +62,19 @@ export const VideoCard = memo<{
   );
   if (!available)
     return (
-      <div className={classes.card} title={item.title} data-disabled>
+      <div className={classes.card} title={item.title} data-layout={layout} data-disabled>
         {body}
       </div>
     );
   return (
-    <a href={watchUrl(item.id)} target="_blank" rel="noreferrer" className={classes.card} title={item.title}>
+    <a
+      href={watchUrl(item.id)}
+      target="_blank"
+      rel="noreferrer"
+      className={classes.card}
+      title={item.title}
+      data-layout={layout}
+    >
       {body}
     </a>
   );

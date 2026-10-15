@@ -20,6 +20,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 8px;
+  min-height: calc(1.25rem * var(--mantine-scale));
   font-size: 12px;
   color: var(--bwf-text-3);
 }
@@ -47,10 +48,11 @@
 .board {
   --prev-w: 34px;
   --now-w: 58px;
+  flex: 1;
   display: grid;
   grid-template-columns: var(--cols);
+  grid-template-rows: auto 1fr 1fr;
   column-gap: 8px;
-  margin-inline: -4px;
 
   @container live-card (width < 380px) {
     --prev-w: 26px;
@@ -72,8 +74,10 @@
 
 .colHead,
 .nowHead {
-  padding-bottom: 4px;
+  align-self: stretch;
+  padding: 6px 0 4px;
   font-size: 11px;
+  line-height: 1;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-align: center;
@@ -81,8 +85,6 @@
 }
 
 .nowHead {
-  align-self: stretch;
-  padding-top: 6px;
   border-radius: 10px 10px 0 0;
   background: alpha(var(--bwf-red), 0.2);
   color: var(--bwf-red-pale);
@@ -93,7 +95,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 0 10px 4px;
+  padding-block: 10px;
 }
 
 .avatars {
@@ -146,6 +148,10 @@
   }
 }
 
+.streak {
+  color: var(--mantine-color-orange-5);
+}
+
 .challengeIcon {
   width: 15px;
   height: 15px;
@@ -157,20 +163,9 @@
   width: 15px;
 }
 
-.serve {
-  display: inline-flex;
-  flex: none;
-  cursor: help;
-
-  svg {
-    width: var(--serve);
-    height: var(--serve);
-    fill: var(--bwf-gold);
-  }
-}
-
 .prev {
   font-size: 17px;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
   text-align: center;
   color: var(--bwf-faint);
@@ -223,12 +218,17 @@
 }
 
 .footer {
+  --foot-h: 32px;
   display: flex;
   align-items: center;
   gap: 8px 16px;
-  min-height: 34px;
+  min-height: calc(var(--foot-h) + 11px);
   padding-top: 10px;
   border-top: 1px solid alpha(var(--bwf-red), 0.2);
+
+  @media (pointer: coarse) {
+    --foot-h: 36px;
+  }
 }
 
 .stats {
@@ -260,24 +260,10 @@
 .watch {
   flex: none;
   margin-left: auto;
-  opacity: 0;
-  transform: translateY(4px);
-  transition:
-    opacity 0.2s var(--bwf-ease-out),
-    transform 0.2s var(--bwf-ease-out);
 
-  .card:is(:hover, :focus-within) & {
-    opacity: 1;
-    transform: none;
-  }
-
-  @media (hover: none) {
-    display: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transform: none;
-    transition: none;
+  @media (pointer: coarse) {
+    width: var(--foot-h);
+    height: var(--foot-h);
   }
 }
 

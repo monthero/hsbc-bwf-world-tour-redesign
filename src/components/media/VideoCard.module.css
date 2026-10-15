@@ -117,3 +117,50 @@
   font-size: 12px;
   color: var(--bwf-muted);
 }
+
+.card[data-layout='row'] {
+  display: grid;
+  grid-template-columns: clamp(112px, 30%, 148px) minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+
+  & .thumb {
+    border-radius: 10px;
+  }
+
+  & .duration,
+  & .live {
+    bottom: 5px;
+    padding: 1px 5px;
+    font-size: 10px;
+  }
+
+  & .duration {
+    right: 5px;
+  }
+
+  & .live {
+    left: 5px;
+  }
+
+  & .body {
+    gap: 3px;
+  }
+
+  & .title {
+    font-size: 13px;
+    transition: color 0.15s;
+  }
+
+  &:hover .title {
+    color: var(--mantine-color-white);
+  }
+
+  & .label {
+    font-size: 10px;
+  }
+
+  & .meta {
+    font-size: 11px;
+  }
+}

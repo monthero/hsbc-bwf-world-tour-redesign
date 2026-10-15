@@ -1,4 +1,4 @@
-import type { MatchStats } from '~/api/bwf/normalize';
+import type { LiveServer, MatchStats } from '~/api/bwf/normalize';
 import type { Game, Match, Side } from '~/types';
 
 import { gameWon, opposite } from './matches';
@@ -69,6 +69,25 @@ export const livePhase = (m: Match): LivePhase => {
 
 export const reviewBy = (m: Match): Side | null =>
   m.review && m.lastPoint ? opposite(m.lastPoint === 1 ? 0 : 1) : null;
+
+export interface LiveStatus {
+  label: string;
+  tone: 'green' | 'gold' | 'blue';
+}
+
+const gamesWon = (m: Match, side: Side) => m.games.filter((g) => gameWon(g, side)).length;
+
+export const liveStatus = (m: Match): LiveStatus | null => {
+  const phase = livePhase(m);
+  if (phase === 'over') return { label: 'Match over', tone: 'green' };
+  if (phase === 'between') return { label: 'Between games', tone: 'gold' };
+  if (m.pause && reviewBy(m) === null) return { label: m.pause, tone: 'gold' };
+  const deciding = m.games.length === 2 && gamesWon(m, 0) === 1 && gamesWon(m, 1) === 1;
+  return deciding ? { label: 'Deciding game', tone: 'blue' } : null;
+};
+
+export const servingPlayer = (m: Match, server: LiveServer | undefined) =>
+  livePhase(m) === 'play' && server && m.serve === server.side + 1 ? server.id : null;
 
 const nextStreak = (prev: LiveStats, sides: MatchStats): Streak | null => {
   const a = sides[0].ralliesWon - prev.sides[0].ralliesWon;

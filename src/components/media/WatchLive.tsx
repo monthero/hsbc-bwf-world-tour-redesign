@@ -1,9 +1,9 @@
-import { Button } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
-import { IconStream, Tip } from '~/components/ui';
+import { IconWatchFilled, Tip } from '~/components/ui';
 import { useMediaAvailable } from '~/hooks/useTournamentMedia';
 import { watchUrl } from '~/utils/media';
 
@@ -11,9 +11,8 @@ import { REGION_NOTE } from './VideoCard';
 
 import utils from '~/styles/utils.module.css';
 
-const STREAM_ICON = <IconStream />;
-const LABEL = 'Watch';
-const BUTTON_PROPS = { variant: 'quiet', size: 'compact-xs', radius: 'xl', leftSection: STREAM_ICON } as const;
+const WATCH_ICON = <IconWatchFilled size={18} />;
+const BUTTON_PROPS = { variant: 'tint', color: 'red', size: 32, radius: 'xl' } as const;
 
 export const WatchLive = memo<{ item: MediaItem; className?: string }>(({ item, className }) => {
   const available = useMediaAvailable(item);
@@ -21,14 +20,14 @@ export const WatchLive = memo<{ item: MediaItem; className?: string }>(({ item, 
   if (!available)
     return (
       <Tip label={REGION_NOTE}>
-        <Button {...BUTTON_PROPS} component="span" className={cls} data-disabled aria-label={REGION_NOTE}>
-          {LABEL}
-        </Button>
+        <ActionIcon {...BUTTON_PROPS} component="span" className={cls} data-disabled aria-label={REGION_NOTE}>
+          {WATCH_ICON}
+        </ActionIcon>
       </Tip>
     );
   return (
     <Tip tap={false} label={item.title}>
-      <Button
+      <ActionIcon
         {...BUTTON_PROPS}
         component="a"
         href={watchUrl(item.id)}
@@ -37,8 +36,8 @@ export const WatchLive = memo<{ item: MediaItem; className?: string }>(({ item, 
         className={cls}
         aria-label={`Watch on YouTube: ${item.title}`}
       >
-        {LABEL}
-      </Button>
+        {WATCH_ICON}
+      </ActionIcon>
     </Tip>
   );
 });

@@ -2,7 +2,8 @@ import type { Game, Match, PlayerMatch, Side } from '~/types';
 import { date, formatDayMonth, formatDayMonthYear } from '~/utils/dates';
 import { formatDuration, formatRank, joinDots } from '~/utils/format';
 import type { WL } from '~/utils/h2h';
-import { courtLabel, gameWon, noteLabel, opposite, roundName } from '~/utils/matches';
+import { gameDone } from '~/utils/live';
+import { courtLabel, gameWon, opposite, roundName } from '~/utils/matches';
 
 import type { FormItem } from '../Outcome';
 
@@ -13,7 +14,14 @@ export interface SplitRow {
   b: number;
   fa?: string;
   fb?: string;
-  neutral?: boolean;
+  sa?: string;
+  sb?: string;
+  bar?: boolean;
+}
+
+export interface StatView {
+  rows: SplitRow[];
+  points: number;
 }
 
 export interface CompareRow {
@@ -43,38 +51,55 @@ const flipGames = (games: readonly Game[]) => games.map(([x, y]) => [y, x] as co
 
 export const percent = (a: number, t: number, empty = '0%') => (t ? `${Math.round((a / t) * 100)}%` : empty);
 
+export const shareOf = (a: number, b: number) => (a + b ? (a / (a + b)) * 100 : 50);
+
 export const metaLead = (m: Match) => joinDots([m.date && date(m.date).format('ddd'), courtLabel(m.court)]);
 
-const SCHEDULED = 'Scheduled';
+const margin = (x: number) => (x > 0 ? `+${x}` : '—');
 
-export const statusLine = (m: Match) => {
-  if (m.status === 'P') return joinDots(['Live', formatDuration(m.durationMin)]);
-  if (m.status === 'N') return m.time ? `${SCHEDULED} · not before` : SCHEDULED;
-  return joinDots(['Finished', noteLabel(m.note, 'long'), formatDuration(m.durationMin)]);
-};
+const pointsRow = (a: number, b: number): SplitRow => ({
+  key: 'p',
+  label: 'Points won',
+  a,
+  b,
+  sa: percent(a, a + b),
+  sb: percent(b, a + b),
+  bar: true,
+});
 
-export const statRows = (games: readonly Game[], tab: number): SplitRow[] => {
-  if (!games.length) return [];
+const marginRow = (label: string, a: number, b: number): SplitRow => ({
+  key: 'm',
+  label,
+  a,
+  b,
+  fa: margin(a),
+  fb: margin(b),
+});
+
+const NO_STATS: StatView = { rows: [], points: 0 };
+
+export const statView = (games: readonly Game[], tab: number): StatView => {
+  if (!games.length) return NO_STATS;
   if (tab === 0) {
-    const [gwA, gwB] = both((s) => games.filter((g) => gameWon(g, s)).length);
+    const done = games.filter(gameDone);
+    const [gwA, gwB] = both((s) => done.filter((g) => gameWon(g, s)).length);
     const [pA, pB] = both((s) => games.reduce((x, g) => x + g[s], 0));
-    const [mA, mB] = both((s) => Math.max(0, ...games.map((g) => lead(g, s))));
-    return [
-      { key: 'g', label: 'Games won', a: gwA, b: gwB },
-      { key: 'p', label: 'Points won', a: pA, b: pB },
-      { key: 's', label: 'Share of points', a: pA, b: pB, fa: percent(pA, pA + pB), fb: percent(pB, pA + pB) },
-      { key: 'm', label: 'Biggest game win', a: mA, b: mB, fa: mA ? `+${mA}` : '—', fb: mB ? `+${mB}` : '—' },
-    ];
+    const [mA, mB] = both((s) => Math.max(0, ...done.map((g) => lead(g, s))));
+    return {
+      rows: [
+        { key: 'g', label: 'Games won', a: gwA, b: gwB, bar: true },
+        pointsRow(pA, pB),
+        marginRow('Biggest game margin', mA, mB),
+      ],
+      points: pA + pB,
+    };
   }
   const g = games[tab - 1];
-  if (!g) return [];
+  if (!g) return NO_STATS;
   const [a, b] = g;
-  const t = a + b;
-  return [
-    { key: 'sc', label: 'Score', a, b },
-    { key: 'sh', label: 'Share of points', a, b, fa: percent(a, t), fb: percent(b, t) },
-    { key: 'pp', label: 'Points played', a: t, b: t, neutral: true },
-  ];
+  const rows = [pointsRow(a, b)];
+  if (gameDone(g)) rows.push(marginRow('Winning margin', lead(g, 0), lead(g, 1)));
+  return { rows, points: a + b };
 };
 
 export const formItems = (list: readonly PlayerMatch[]): FormItem[] =>

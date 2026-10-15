@@ -1,24 +1,21 @@
 import type { LiveServer, MatchStats, SideStats } from '~/api/bwf/normalize';
-import type { StatusTone } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import type { Game, Match, Side, Team } from '~/types';
 import {
   challengesLeft,
   livePhase,
+  liveStatus,
   pointCall,
   reviewBy,
+  servingPlayer,
   STREAK_MIN,
   type ChallengeOutcome,
   type ChallengeResult,
   type LivePhase,
   type LiveStats,
+  type LiveStatus,
 } from '~/utils/live';
 import { gameWon, matchRoundName, opposite } from '~/utils/matches';
-
-interface LiveChip {
-  label: string;
-  tone: StatusTone;
-}
 
 export interface SideView {
   side: Side;
@@ -43,17 +40,10 @@ export interface LiveView {
   durationMin: number;
   games: readonly Game[];
   gameNo: number;
-  status: LiveChip | null;
+  status: LiveStatus | null;
   server: string | null;
   sides: readonly [SideView, SideView];
 }
-
-const statusOf = (m: Match, phase: LivePhase, deciding: boolean): LiveChip | null => {
-  if (phase === 'over') return { label: 'Match over', tone: 'green' };
-  if (phase === 'between') return { label: 'Between games', tone: 'gold' };
-  if (m.pause && reviewBy(m) === null) return { label: m.pause, tone: 'gold' };
-  return deciding ? { label: 'Deciding game', tone: 'red' } : null;
-};
 
 const resultOf = (phase: LivePhase, gameNo: number) => {
   if (phase === 'play') return null;
@@ -101,8 +91,6 @@ export const toLiveView = (
 ): LiveView => {
   const phase = livePhase(m);
   const gameNo = m.games.length + 1;
-  const won = (s: Side) => m.games.filter((g) => gameWon(g, s)).length;
-  const deciding = gameNo === 3 && won(0) === 1 && won(1) === 1;
   const result = resultOf(phase, gameNo);
   return {
     court: m.court,
@@ -110,8 +98,8 @@ export const toLiveView = (
     durationMin: m.durationMin,
     games: m.games,
     gameNo,
-    status: statusOf(m, phase, deciding),
-    server: phase === 'play' && server && m.serve === server.side + 1 ? server.id : null,
+    status: liveStatus(m),
+    server: servingPlayer(m, server),
     sides: [sideView(m, 0, stats, game, challenge, result), sideView(m, 1, stats, game, challenge, result)],
   };
 };

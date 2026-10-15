@@ -21,6 +21,7 @@ export const TeamPlayers = memo<{
   truncate?: boolean;
   wrap?: boolean;
   empty?: ReactNode;
+  before?: (p: Player, i: number) => ReactNode;
   after?: (p: Player, i: number) => ReactNode;
   aside?: ReactNode;
   end?: ReactNode;
@@ -37,6 +38,7 @@ export const TeamPlayers = memo<{
     truncate,
     wrap,
     empty = 'TBD',
+    before,
     after,
     aside,
     end,
@@ -58,6 +60,7 @@ export const TeamPlayers = memo<{
         {players.length
           ? players.map((p, i) => (
               <span key={p.id || p.name} className={classes.player}>
+                {before?.(p, i)}
                 {flag && (
                   <Wrap when={wrap} className={classes.flagLine}>
                     <Flag cc={p.cc} size={flag} />
@@ -88,8 +91,9 @@ export const TeamLabel = memo<{
   players: readonly Player[];
   sep?: ' / ' | ' & ';
   link?: boolean;
+  fit?: boolean;
   className?: string;
-}>(({ players, sep = ' / ', link = true, className }) => {
+}>(({ players, sep = ' / ', link = true, fit, className }) => {
   const short = players.length > 1;
   return (
     <span className={className}>
@@ -97,7 +101,7 @@ export const TeamLabel = memo<{
         ? players.map((p, i) => (
             <Fragment key={p.id || p.name}>
               {i > 0 && sep}
-              <PlayerName player={p} link={link} short={short} />
+              <PlayerName player={p} link={link} short={short} fit={fit && !short} />
             </Fragment>
           ))
         : 'TBD'}
