@@ -5,7 +5,7 @@ import HandBold from '~icons/ph/hand-palm-fill';
 import type { LiveServer, MatchStats } from '~/api/bwf/normalize';
 import type { MediaItem } from '~/api/schemas';
 import { ServeMark, TeamPlayers } from '~/components/match';
-import { WatchLive } from '~/components/media';
+import { WatchButton } from '~/components/media';
 import { AvatarGroup } from '~/components/player';
 import { CardHit, Duration, IconFire, StatusChip, type StatusTone, InfoTip, Tip } from '~/components/ui';
 import type { Game, Match, Player, Side } from '~/types';
@@ -169,7 +169,7 @@ export const LiveCard = memo<{
           <FootStat label="Points" a={a.points} b={b.points} />
           {a.stats && b.stats && <FootStat label="Longest run" a={a.stats.longestRun} b={b.stats.longestRun} />}
         </span>
-        {stream && <WatchLive item={stream} className={classes.watch} />}
+        {stream && <WatchButton item={stream} className={classes.watch} />}
       </div>
     </div>
   );

@@ -7,11 +7,13 @@ import { useShowBlocked } from '~/stores/settings';
 import type { Match, MatchStatus, Tournament, TournamentDay } from '~/types';
 import { weakCached } from '~/utils/cache';
 import {
+  courtReplays,
   courtStreams,
   hasCourtStreams,
   isAvailableIn,
   isStreaming,
   linkMedia,
+  matchReplays,
   matchStream,
   offAir,
   visibleIn,
@@ -28,13 +30,21 @@ const END_DELAY_MS = 90_000;
 
 interface TournamentLinks extends LinkedMedia<Match> {
   courts: ReadonlyMap<string, MediaItem>;
+  courtVods: ReadonlyMap<string, MediaItem>;
+  replays: ReadonlyMap<string, MediaItem>;
 }
 
 const linksByItems = weakCached((items: readonly MediaItem[]) =>
-  weakCached((matches: readonly Match[]): TournamentLinks => ({
-    ...linkMedia(items, matches),
-    courts: courtStreams(items),
-  })),
+  weakCached((matches: readonly Match[]): TournamentLinks => {
+    const linked = linkMedia(items, matches);
+    const courtVods = courtReplays(items, matches);
+    return {
+      ...linked,
+      courts: courtStreams(items),
+      courtVods,
+      replays: matchReplays(linked.byMatch, courtVods, matches),
+    };
+  }),
 );
 
 const linksOf = (items: readonly MediaItem[], matches: readonly Match[]) => linksByItems(items)(matches);
@@ -69,6 +79,8 @@ export const useTournamentMedia = (t: Tournament) => {
   const linked = useMemo(() => linksOf(items, matches), [items, matches]);
   return { ...linked, ...feed, items, hidden: all.length - items.length, enabled: hasStarted(t) };
 };
+
+export const useMatchReplays = (t: Tournament) => useTournamentMedia(t).replays;
 
 export const useMatchStream = (t: Tournament, match: Match) => {
   const { byMatch, courts } = useTournamentMedia(t);

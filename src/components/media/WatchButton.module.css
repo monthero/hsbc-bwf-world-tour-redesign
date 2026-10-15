@@ -1,0 +1,46 @@
+.button {
+  flex: none;
+
+  @media (pointer: coarse) {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.tag {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 19px;
+  border-radius: 5px;
+  background: alpha(var(--mantine-color-teal-5), 0.22);
+  color: var(--mantine-color-teal-2);
+  transition:
+    background 0.15s,
+    color 0.15s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -8px -6px;
+  }
+
+  &:is(:hover, :focus-visible):not([data-disabled]) {
+    background: alpha(var(--mantine-color-teal-5), 0.38);
+    color: var(--mantine-color-teal-1);
+  }
+
+  &[data-disabled] {
+    opacity: 0.45;
+    cursor: help;
+  }
+
+  @media (pointer: coarse) {
+    &::after {
+      inset: -12px -8px;
+    }
+  }
+}

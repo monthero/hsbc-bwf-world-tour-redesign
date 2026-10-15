@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
+import type { MediaItem } from '~/api/schemas';
 import { FlagTipGroup } from '~/components/country';
 import { plural } from '~/utils/format';
 import type { NextKind } from '~/utils/match-time';
@@ -18,8 +19,9 @@ export const MatchGroups = memo<{
   defaultOpen: boolean;
   section: MatchSection;
   next: ReadonlyMap<string, NextKind>;
+  replays?: ReadonlyMap<string, MediaItem>;
   onOpen: (id: string) => void;
-}>(({ title, storeKey, defaultOpen, section, next, onOpen }) => {
+}>(({ title, storeKey, defaultOpen, section, next, replays, onOpen }) => {
   return (
     <FlagTipGroup>
       <CollapsibleSection
@@ -38,7 +40,7 @@ export const MatchGroups = memo<{
             </div>
             <div className={classes.grid}>
               {g.items.map((m) => (
-                <MatchCard key={m.id} match={m} next={next.get(m.id)} onOpen={onOpen} />
+                <MatchCard key={m.id} match={m} next={next.get(m.id)} replay={replays?.get(m.id)} onOpen={onOpen} />
               ))}
             </div>
           </div>

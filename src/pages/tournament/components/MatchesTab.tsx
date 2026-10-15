@@ -4,6 +4,7 @@ import { useDeferredValue, useMemo, type FC } from 'react';
 import { EmptyState } from '~/components/ui';
 import { useMatchClock } from '~/hooks/useMatchClock';
 import { useScrolledPast } from '~/hooks/useScrolledPast';
+import { useMatchReplays } from '~/hooks/useTournamentMedia';
 import { FOLLOW_KINDS, useFavoriteCount, useFavoritesMatcher } from '~/stores/favorites';
 import type { Match, TournamentDay } from '~/types';
 
@@ -50,6 +51,7 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
   const followCount = useFavoriteCount(FOLLOW_KINDS);
   const [filtersRef, filtersOut] = useScrolledPast<HTMLDivElement>();
   const clock = useMatchClock();
+  const replays = useMatchReplays(tournament);
 
   const dayData = days[f.day];
   const dayMatches = dayData?.matches ?? NO_MATCHES;
@@ -99,6 +101,7 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
             defaultOpen={dayOver}
             section={view.results}
             next={view.next}
+            replays={replays}
             onOpen={openMatch}
           />
         )}

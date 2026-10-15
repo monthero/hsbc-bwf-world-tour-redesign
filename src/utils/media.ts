@@ -2,8 +2,10 @@ import type { MediaItem } from '~/api/schemas';
 import type { Match } from '~/types';
 
 import { weakCached } from './cache';
+import { dayjs } from './dates';
 import { foldWords } from './fold';
 import { plural } from './format';
+import { venueTimeOn } from './match-time';
 import { roundName } from './matches';
 import type { MatchMedia } from './media-link';
 
@@ -30,11 +32,15 @@ export const isStreaming = (item: MediaItem) => item.live !== 'none';
 
 const courtKey = (day: number, court: number) => `${day}:${court}`;
 
+const matchKey = (m: Pick<Match, 'dayIndex' | 'court'>) => courtKey(m.dayIndex + 1, m.court);
+
+const isCourtStream = (item: MediaItem) => item.kind === 'court_stream' && !!item.day && !!item.court;
+
 export const courtStreams = (items: readonly MediaItem[]) => {
   const out = new Map<string, MediaItem>();
   for (const item of items) {
-    if (item.kind !== 'court_stream' || !isStreaming(item) || !item.day || !item.court) continue;
-    const key = courtKey(item.day, item.court);
+    if (!isCourtStream(item) || !isStreaming(item)) continue;
+    const key = courtKey(item.day ?? 0, item.court ?? 0);
     if (!out.has(key)) out.set(key, item);
   }
   return out;
@@ -44,7 +50,63 @@ export const matchStream = (
   byMatch: ReadonlyMap<string, MatchMedia>,
   byCourt: ReadonlyMap<string, MediaItem>,
   m: Pick<Match, 'id' | 'dayIndex' | 'court'>,
-) => byMatch.get(m.id)?.stream ?? byCourt.get(courtKey(m.dayIndex + 1, m.court));
+) => byMatch.get(m.id)?.stream ?? byCourt.get(matchKey(m));
+
+const SESSION_LEAD_MS = 30 * 60_000;
+
+type TimedMatch = Pick<Match, 'id' | 'dayIndex' | 'court' | 'status' | 'date' | 'time' | 'timeZone' | 'utcOffset'>;
+
+const matchInstant = (m: TimedMatch) => {
+  if (!m.date || !m.time) return null;
+  const { utcOffset } = venueTimeOn(m.timeZone, m.date, m.utcOffset);
+  return utcOffset === null ? null : dayjs.utc(`${m.date}T${m.time}`).subtract(utcOffset, 'minute').valueOf();
+};
+
+const covers = (item: MediaItem, at: number) =>
+  !item.startedAt ||
+  (Date.parse(item.startedAt) - SESSION_LEAD_MS <= at && (!item.endedAt || at <= Date.parse(item.endedAt)));
+
+const sessionOf = (list: readonly MediaItem[], m: TimedMatch) => {
+  const at = matchInstant(m);
+  const fits = at === null ? list : list.filter((i) => covers(i, at));
+  return fits.length === 1 ? fits[0] : undefined;
+};
+
+export const courtReplays = (items: readonly MediaItem[], matches: readonly TimedMatch[]) => {
+  const streams = Map.groupBy(
+    items.filter((i) => isCourtStream(i) && i.live !== 'upcoming'),
+    (i) => courtKey(i.day ?? 0, i.court ?? 0),
+  );
+  const busy = new Set(matches.filter((m) => m.status !== 'F').map(matchKey));
+  const out = new Map<string, MediaItem>();
+  for (const m of matches) {
+    const key = matchKey(m);
+    const list = m.status === 'F' ? streams.get(key) : undefined;
+    const vod = list && sessionOf(list, m);
+    if (vod && (vod.live === 'none' || !busy.has(key))) out.set(m.id, vod);
+  }
+  return out;
+};
+
+const namedStream = (media: MatchMedia | undefined) => (media?.stream?.live === 'live' ? media.stream : undefined);
+
+export const replayStream = (media: MatchMedia | undefined, court: MediaItem | undefined) =>
+  namedStream(media) ?? court;
+
+export const matchReplays = (
+  byMatch: ReadonlyMap<string, MatchMedia>,
+  courts: ReadonlyMap<string, MediaItem>,
+  matches: readonly Pick<Match, 'id' | 'status'>[],
+) => {
+  const out = new Map<string, MediaItem>();
+  for (const m of matches) {
+    if (m.status !== 'F') continue;
+    const media = byMatch.get(m.id);
+    const item = media?.full ?? namedStream(media) ?? media?.highlights ?? courts.get(m.id);
+    if (item) out.set(m.id, item);
+  }
+  return out;
+};
 
 export const hasCourtStreams = (items: readonly MediaItem[], day: number) =>
   items.some((i) => i.kind === 'court_stream' && i.day === day);

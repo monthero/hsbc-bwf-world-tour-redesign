@@ -5,9 +5,11 @@ import { clsx } from 'clsx';
 import { memo, useCallback, useMemo } from 'react';
 
 import { FormStrip, OutcomeLabel, ScoreChips, TeamPlayers } from '~/components/match';
+import { WatchButton } from '~/components/media';
 import { LevelBadge, LogoTile } from '~/components/tournament';
 import { CardHit, Duration, EmptyState, LiveDot, MoreButton } from '~/components/ui';
 import { EVENT_NAMES, SEASON_YEAR } from '~/constants';
+import { useMatchReplays } from '~/hooks/useTournamentMedia';
 import type { BioView, PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
 import { roundName } from '~/utils/matches';
@@ -140,6 +142,11 @@ export const OverviewTab = memo<OverviewProps>(
   },
 );
 
+const MatchReplay = memo<{ pm: PlayerMatch }>(({ pm }) => {
+  const item = useMatchReplays(pm.tournament).get(pm.match.id);
+  return item ? <WatchButton item={item} size="sm" className={classes.watch} /> : null;
+});
+
 const MatchCard = memo<{
   pm: PlayerMatch;
   kind: MatchKind;
@@ -175,6 +182,7 @@ const MatchCard = memo<{
             {multi && <span>{EVENT_NAMES[match.event]}</span>}
           </span>
         </span>
+        {kind === 'last' && <MatchReplay pm={pm} />}
       </div>
       <div className={classes.matchBody}>
         <span className={shared.sub}>vs</span>

@@ -1,8 +1,10 @@
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
+import type { MediaItem } from '~/api/schemas';
 import { FollowedMark } from '~/components/follow';
 import { EventTag, MatchNote, MatchTime, SideScores, TeamPlayers } from '~/components/match';
+import { WatchButton } from '~/components/media';
 import { CardHit, Duration, IconCheck } from '~/components/ui';
 import { useMatchTime } from '~/hooks/useMatchClock';
 import { useNow } from '~/hooks/useNow';
@@ -47,8 +49,9 @@ const NextLabel = memo<{ match: Match; kind: NextKind }>(({ match, kind }) => {
 export const MatchCard = memo<{
   match: Match;
   next?: NextKind;
+  replay?: MediaItem;
   onOpen: (id: string) => void;
-}>(({ match: m, next, onOpen }) => {
+}>(({ match: m, next, replay, onOpen }) => {
   const doubles = isDoubles(m.event);
   const done = m.status === 'F';
   return (
@@ -63,6 +66,7 @@ export const MatchCard = memo<{
         </span>
         <span className={classes.tags}>
           {next && <NextLabel match={m} kind={next} />}
+          {replay && <WatchButton item={replay} size="sm" />}
           {done && <Duration min={m.durationMin} size={12} className={classes.meta} />}
           <MatchNote match={m} />
           <EventTag event={m.event} />

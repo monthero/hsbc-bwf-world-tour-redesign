@@ -258,13 +258,7 @@
 }
 
 .watch {
-  flex: none;
   margin-left: auto;
-
-  @media (pointer: coarse) {
-    width: var(--foot-h);
-    height: var(--foot-h);
-  }
 }
 
 @keyframes flash {

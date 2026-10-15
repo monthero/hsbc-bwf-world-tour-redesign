@@ -50,7 +50,7 @@ interface Video {
   id: string;
   snippet: { title: string; publishedAt: string; tags?: string[]; liveBroadcastContent?: string };
   contentDetails?: { duration?: string; regionRestriction?: NonNullable<MediaItem['region']> };
-  liveStreamingDetails?: { scheduledStartTime?: string };
+  liveStreamingDetails?: { scheduledStartTime?: string; actualStartTime?: string; actualEndTime?: string };
 }
 
 const foldLetters = (s: string) => fold(s).replace(/ø/g, 'o').replace(/æ/g, 'ae').replace(/ß/g, 'ss');
@@ -186,6 +186,8 @@ const toItem = (v: Video): MediaItem => {
     day: court ? Number(court[1]) : null,
     court: court ? Number(court[2]) : null,
     scheduledAt: v.liveStreamingDetails?.scheduledStartTime ?? null,
+    startedAt: v.liveStreamingDetails?.actualStartTime ?? null,
+    endedAt: v.liveStreamingDetails?.actualEndTime ?? null,
     region: v.contentDetails?.regionRestriction ?? null,
   };
 };
@@ -223,7 +225,12 @@ const fetchTournamentMedia = async (key: string, e: MediaEvent): Promise<Tournam
 
 const isEventTitle = (e: MediaEvent, title: string) => playlistScore(e, title) > 0;
 
-const fetchTournamentStreams = async (key: string, e: MediaEvent, catalog: TournamentMedia) => {
+const fetchTournamentStreams = async (
+  key: string,
+  e: MediaEvent,
+  catalog: TournamentMedia,
+  known: readonly MediaItem[],
+) => {
   const since = (catalog.playlistId ? dayjs.utc() : dayjs.utc(e.start))
     .subtract(UPLOADS_LOOKBACK_DAYS, 'day')
     .toISOString();
@@ -236,13 +243,21 @@ const fetchTournamentStreams = async (key: string, e: MediaEvent, catalog: Tourn
   );
   const ids = new Set([
     ...uploads.filter((u) => isEventTitle(e, u.snippet.title)).map((u) => u.snippet.resourceId.videoId),
-    ...catalog.items.filter((i) => i.live !== 'none').map((i) => i.id),
+    ...[...catalog.items, ...known].filter((i) => i.live !== 'none').map((i) => i.id),
   ]);
   return (await videosOf(key, [...ids])).map(toItem);
 };
 
-const mergeItems = (older: readonly MediaItem[], newer: readonly MediaItem[]) =>
-  [...new Map([...older, ...newer].map((i) => [i.id, i])).values()].toSorted(newestFirst);
+const STAGE: Record<MediaItem['live'], number> = { upcoming: 0, live: 1, none: 2 };
+
+const mergeItems = (older: readonly MediaItem[], newer: readonly MediaItem[]) => {
+  const out = new Map(older.map((i) => [i.id, i]));
+  for (const item of newer) {
+    const prev = out.get(item.id);
+    out.set(item.id, prev && STAGE[prev.live] > STAGE[item.live] ? prev : item);
+  }
+  return [...out.values()].toSorted(newestFirst);
+};
 
 export type MediaPhase = 'upcoming' | 'live' | 'settled';
 
@@ -292,9 +307,8 @@ export const createMediaService = ({ key, root, persist }: MediaServiceOptions) 
     const maxAge = refresh ? REFRESH_MIN_AGE_MS : HOUR_MS;
     if (hit && Date.now() - hit.at < maxAge) return hit.value;
     const previous = hit?.value ?? NO_STREAMS;
-    const value = catalog(e)
-      .then((c) => fetchTournamentStreams(key, e, c))
-      .then(async (next) => mergeItems(await previous, next))
+    const value = Promise.all([catalog(e), previous])
+      .then(async ([c, known]) => mergeItems(known, await fetchTournamentStreams(key, e, c, known)))
       .catch(() => previous);
     streamCache.set(e.code, { at: Date.now(), value });
     return value;

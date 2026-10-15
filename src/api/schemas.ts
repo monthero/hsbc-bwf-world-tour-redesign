@@ -330,6 +330,8 @@ export const MediaItem = z.object({
   day: NullableNumber,
   court: NullableNumber,
   scheduledAt: NullableString.default(null),
+  startedAt: NullableString.default(null),
+  endedAt: NullableString.default(null),
   region: z
     .object({ allowed: z.array(z.string()).optional(), blocked: z.array(z.string()).optional() })
     .nullable()
