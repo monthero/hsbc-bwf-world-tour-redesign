@@ -1,7 +1,7 @@
 import { Skeleton } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react';
-import RankingIcon from '~icons/solar/ranking-outline';
+import RankingIcon from '~icons/ph/ranking';
 
 import { CountryLabel } from '~/components/country';
 import { PlayerFollow } from '~/components/follow';

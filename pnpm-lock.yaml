@@ -72,9 +72,9 @@ importers:
       '@cloudflare/workers-types':
         specifier: 5.20261006.1
         version: 5.20261006.1
-      '@iconify-json/solar':
-        specifier: ^1.2.13
-        version: 1.2.13
+      '@iconify-json/ph':
+        specifier: ^1.2.2
+        version: 1.2.2
       '@lingui/cli':
         specifier: ^6.9.1
         version: 6.9.1(esbuild@0.28.1)(rolldown@1.2.13)
@@ -504,8 +504,8 @@ packages:
   '@fontsource-variable/noto-sans-thai@5.3.0':
     resolution: {integrity: sha512-jHEC1vo8gD09GKf8jtH1IMoPqWmQQSKH3gkyD3ibCIMEkVpEqJ9NJ2c181VHKbTHXc7Wu9CbuBU3yjQNvpbEbw==}
 
-  '@iconify-json/solar@1.2.13':
-    resolution: {integrity: sha512-/ZWb6xRib6pzxD/qTkKWYhuzSU2yu0bY+EN0spgtz1NM3d5f4eYueQZpL3PfCdsg5uVfm4Ldtt3cAyQL+YI8/Q==}
+  '@iconify-json/ph@1.2.2':
+    resolution: {integrity: sha512-PgkEZNtqa8hBGjHXQa4pMwZa93hmfu8FUSjs/nv4oUU6yLsgv+gh9nu28Kqi8Fz9CCVu4hj1MZs9/60J57IzFw==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -3111,7 +3111,7 @@ snapshots:
 
   '@fontsource-variable/noto-sans-thai@5.3.0': {}
 
-  '@iconify-json/solar@1.2.13':
+  '@iconify-json/ph@1.2.2':
     dependencies:
       '@iconify/types': 2.0.0
 

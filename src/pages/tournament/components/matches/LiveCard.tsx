@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react';
-import HandBold from '~icons/solar/user-hand-up-bold';
+import HandBold from '~icons/ph/hand-palm-fill';
 
 import type { LiveServer, MatchStats } from '~/api/bwf/normalize';
 import type { MediaItem } from '~/api/schemas';

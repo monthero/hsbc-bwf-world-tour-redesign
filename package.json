@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "5.20261006.1",
-    "@iconify-json/solar": "^1.2.13",
+    "@iconify-json/ph": "^1.2.2",
     "@lingui/cli": "^6.9.1",
     "@lingui/format-po": "^6.9.1",
     "@lingui/vite-plugin": "^6.9.1",

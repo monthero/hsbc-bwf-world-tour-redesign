@@ -1,19 +1,19 @@
 import type { FC } from 'react';
-import CalendarBold from '~icons/solar/calendar-bold';
-import CalendarDuotone from '~icons/solar/calendar-bold-duotone';
-import CalendarLinear from '~icons/solar/calendar-linear';
-import Home2Bold from '~icons/solar/home-2-bold';
-import Home2Duotone from '~icons/solar/home-2-bold-duotone';
-import Home2Linear from '~icons/solar/home-2-linear';
-import InfoCircleBold from '~icons/solar/info-circle-bold';
-import InfoCircleLinear from '~icons/solar/info-circle-linear';
-import InfoSquareDuotone from '~icons/solar/info-square-bold-duotone';
-import Notebook2Duotone from '~icons/solar/notebook-2-bold-duotone';
-import NotebookBold from '~icons/solar/notebook-minimalistic-bold';
-import NotebookLinear from '~icons/solar/notebook-minimalistic-linear';
-import RankingBold from '~icons/solar/ranking-bold';
-import RankingDuotone from '~icons/solar/ranking-bold-duotone';
-import RankingLinear from '~icons/solar/ranking-linear';
+import Calendar from '~icons/ph/calendar-blank';
+import CalendarDuotone from '~icons/ph/calendar-blank-duotone';
+import CalendarFill from '~icons/ph/calendar-blank-fill';
+import House from '~icons/ph/house';
+import HouseDuotone from '~icons/ph/house-duotone';
+import HouseFill from '~icons/ph/house-fill';
+import Info from '~icons/ph/info';
+import InfoDuotone from '~icons/ph/info-duotone';
+import InfoFill from '~icons/ph/info-fill';
+import Newspaper from '~icons/ph/newspaper';
+import NewspaperDuotone from '~icons/ph/newspaper-duotone';
+import NewspaperFill from '~icons/ph/newspaper-fill';
+import Ranking from '~icons/ph/ranking';
+import RankingDuotone from '~icons/ph/ranking-duotone';
+import RankingFill from '~icons/ph/ranking-fill';
 
 import { icon, type IconProps } from '~/components/ui';
 
@@ -31,30 +31,30 @@ export interface NavItem {
 const isInternal = (i: SiteItem): i is InternalItem => 'to' in i;
 
 const META: Record<InternalItem['to'], Omit<NavItem, 'item' | 'index'>> = {
-  '/': { blurb: 'Home', icon: icon(Home2Linear), activeIcon: icon(Home2Bold), glyph: icon(Home2Duotone) },
+  '/': { blurb: 'Home', icon: icon(House), activeIcon: icon(HouseFill), glyph: icon(HouseDuotone) },
   '/about': {
     blurb: 'How it works',
-    icon: icon(InfoCircleLinear),
-    activeIcon: icon(InfoCircleBold),
-    glyph: icon(InfoSquareDuotone),
+    icon: icon(Info),
+    activeIcon: icon(InfoFill),
+    glyph: icon(InfoDuotone),
   },
   '/calendar': {
     blurb: 'Every stop',
-    icon: icon(CalendarLinear),
-    activeIcon: icon(CalendarBold),
+    icon: icon(Calendar),
+    activeIcon: icon(CalendarFill),
     glyph: icon(CalendarDuotone),
   },
   '/rankings': {
     blurb: 'World & race',
-    icon: icon(RankingLinear),
-    activeIcon: icon(RankingBold),
+    icon: icon(Ranking),
+    activeIcon: icon(RankingFill),
     glyph: icon(RankingDuotone),
   },
   '/news': {
     blurb: 'Latest stories',
-    icon: icon(NotebookLinear),
-    activeIcon: icon(NotebookBold),
-    glyph: icon(Notebook2Duotone),
+    icon: icon(Newspaper),
+    activeIcon: icon(NewspaperFill),
+    glyph: icon(NewspaperDuotone),
   },
 };
 
