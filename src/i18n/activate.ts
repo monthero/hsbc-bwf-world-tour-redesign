@@ -9,6 +9,10 @@ const SCRIPT_FONTS: Record<Exclude<Script, 'latin'>, { stack: string; load: () =
     stack: "'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC Variable'",
     load: () => import('@fontsource-variable/noto-sans-sc'),
   },
+  tc: {
+    stack: "'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC Variable'",
+    load: () => import('@fontsource-variable/noto-sans-tc'),
+  },
   jp: {
     stack: "'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP Variable'",
     load: () => import('@fontsource-variable/noto-sans-jp'),
