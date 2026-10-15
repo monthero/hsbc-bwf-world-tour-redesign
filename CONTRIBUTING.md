@@ -2,6 +2,8 @@
 
 Thanks for wanting to help! This is a personal, non-commercial side project, but contributions are welcome: bug fixes, design improvements, data corrections and translations.
 
+Using an AI coding agent? Point it at [AGENTS.md](AGENTS.md), which sums up the architecture and conventions.
+
 ## How it works
 
 - Anyone can fork the repository and open a pull request against `main`.

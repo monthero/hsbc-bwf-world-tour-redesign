@@ -1,0 +1,46 @@
+# HSBC BWF World Tour, redesigned
+
+> An unofficial, non-commercial fan redesign of the HSBC BWF World Tour website: tournament calendar, results, draws, players, rankings and news for every World Tour season since 2018. It is not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. All tournament data, results, images and logos belong to BWF, the players and their rights holders.
+
+The site is a JavaScript single-page app, so pages render in the browser. The same data is published as static JSON under `/data/`, which is the easiest way to read it without running JavaScript. Players are identified by their BWF player id everywhere, in page URLs and data files alike. Events use the codes MS, WS, MD, WD and XD; tournament levels are 300, 500, 750, 1000 and Finals.
+
+## Pages
+
+- [Calendar](https://hsbc-bwf-world-tour-redesign.vercel.app/calendar): the current season's tournaments by month; past and next seasons at `/calendar?year={year}`
+- [Tournament](https://hsbc-bwf-world-tour-redesign.vercel.app/world-tour/2025/all-england-open): one page per edition at `/world-tour/{year}/{slug}`, with tabs selected by `?tab=overview|matches|draw|players|podium|media|news`
+- [Player](https://hsbc-bwf-world-tour-redesign.vercel.app/players/25831): one profile per player at `/players/{id}`, with tabs `?tab=overview|matches|results|rankings|media`
+- [Rankings](https://hsbc-bwf-world-tour-redesign.vercel.app/rankings): BWF World Rankings; the HSBC Race to Finals at `/rankings?kind=race`
+- [News](https://hsbc-bwf-world-tour-redesign.vercel.app/news): BWF news by month; single articles at `/news/{id}`
+- [About the Tour](https://hsbc-bwf-world-tour-redesign.vercel.app/about): the season map, how each level works and the race to the Finals
+- [Sitemap](https://hsbc-bwf-world-tour-redesign.vercel.app/sitemap.xml): every calendar, tournament, player and news page
+
+## Data
+
+All files are JSON, refreshed from BWF several times a day. Tournament `code` values are the GUIDs found in the calendar files.
+
+- [Seasons](https://hsbc-bwf-world-tour-redesign.vercel.app/data/seasons.json): the current season and, per season, the number of events and how many are completed
+- [Calendar](https://hsbc-bwf-world-tour-redesign.vercel.app/data/calendar-2025.json): `/data/calendar-{year}.json`, every edition of a season with code, slug, level, dates, city, country, venue, prize money, time zone, cancelled flag and champions per event
+- [Tournament matches](https://hsbc-bwf-world-tour-redesign.vercel.app/data/tournaments/F6304F7C-D298-4E3D-AA62-A6B933CBB8C7.json): `/data/tournaments/{code}.json`, every match by day with court, local time, event, round, seeds, players, game scores, winner (1 or 2) and duration; only for editions that have matches
+- [Series](https://hsbc-bwf-world-tour-redesign.vercel.app/data/series/all-england-open.json): `/data/series/{series}.json`, every edition of one tournament series with its finals
+- [Player directory](https://hsbc-bwf-world-tour-redesign.vercel.app/data/players.json): every player by id with name, country code, photo and current world ranks
+- [Player profile](https://hsbc-bwf-world-tour-redesign.vercel.app/data/players/25831.json): `/data/players/{id}.json`, bio (born, height, plays, equipment when known) and full World Tour match history
+- [Player ranking history](https://hsbc-bwf-world-tour-redesign.vercel.app/data/rankings/25831.json): `/data/rankings/{id}.json`, world ranking history per event and partner, weekly ranks and the points breakdown; only for ranked players
+- [World Rankings table](https://hsbc-bwf-world-tour-redesign.vercel.app/data/ranking-tables/world.json): the latest BWF World Rankings for all five events
+- [Race to Finals table](https://hsbc-bwf-world-tour-redesign.vercel.app/data/ranking-tables/race.json): the latest HSBC Race to Finals standings for all five events
+- [Race standings by player](https://hsbc-bwf-world-tour-redesign.vercel.app/data/race-rankings.json): Race to Finals rank, partner and points keyed by player id
+- [News index](https://hsbc-bwf-world-tour-redesign.vercel.app/data/news/index.json): latest and popular stories and article counts per month
+- [News by month](https://hsbc-bwf-world-tour-redesign.vercel.app/data/news/2025-05.json): `/data/news/{YYYY-MM}.json`, every story of a month with title, date, excerpt, original BWF URL and linked tournaments and players
+- [News by tournament](https://hsbc-bwf-world-tour-redesign.vercel.app/data/news/tournaments/F6304F7C-D298-4E3D-AA62-A6B933CBB8C7.json): `/data/news/tournaments/{code}.json`, the stories about one edition
+- [News article](https://hsbc-bwf-world-tour-redesign.vercel.app/data/news/articles/96158.json): `/data/news/articles/{id}.json`, the full text of a story as blocks, with byline, tags and mentioned players
+- [Player media index](https://hsbc-bwf-world-tour-redesign.vercel.app/data/player-media/index.json): news and video counts per player id
+- [Player media](https://hsbc-bwf-world-tour-redesign.vercel.app/data/player-media/25831.json): `/data/player-media/{id}.json`, news stories and YouTube match videos linked to a player; only for players that have any
+
+## Live data
+
+While a tournament is being played, the browser fetches live scores from BWF's live API through a small relay. Those live updates are not in `/data/`, which holds the latest synced snapshot.
+
+## Source
+
+- [GitHub repository](https://github.com/monthero/hsbc-bwf-world-tour-redesign): the code, released under the 0BSD license
+- [README](https://github.com/monthero/hsbc-bwf-world-tour-redesign/blob/main/README.md): what the project is and how to run it locally
+- [CONTRIBUTING](https://github.com/monthero/hsbc-bwf-world-tour-redesign/blob/main/CONTRIBUTING.md): how to contribute

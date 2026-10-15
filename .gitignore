@@ -30,6 +30,7 @@ data/cache
 
 public/assets/players/
 public/data/
+public/sitemap*.xml
 
 .vercel
 

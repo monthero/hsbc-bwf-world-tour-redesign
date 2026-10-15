@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hsbc-bwf-world-tour-redesign.vercel.app/sitemap.xml
