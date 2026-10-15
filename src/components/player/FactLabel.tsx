@@ -1,26 +1,13 @@
 import { VisuallyHidden } from '@mantine/core';
 import { memo, type FC } from 'react';
 
-import {
-  IconCake,
-  IconHand,
-  IconHouse,
-  IconMapPin,
-  IconRuler,
-  IconTranslate,
-  Tip,
-  type IconProps,
-  type TipProps,
-} from '~/components/ui';
+import { IconCake, IconHand, IconRuler, Tip, type IconProps, type TipProps } from '~/components/ui';
 import { joinDots } from '~/utils/format';
 
 const FACT_ICONS: Partial<Record<string, FC<IconProps>>> = {
   age: IconCake,
   height: IconRuler,
   hand: IconHand,
-  birthplace: IconMapPin,
-  residence: IconHouse,
-  languages: IconTranslate,
 };
 
 export const FactLabel = memo<{ id: string; label: string; size?: number }>(({ id, label, size }) => {
