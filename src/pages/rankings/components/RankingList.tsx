@@ -1,8 +1,9 @@
-import { Tooltip, VisuallyHidden } from '@mantine/core';
+import { VisuallyHidden } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, type FC, type Ref } from 'react';
 
-import { AvatarGroup, QualifyLine, QualifyMark, RankedNames, RankValue } from '~/components/player';
+import { AvatarGroup, QualifyLine, RankedNames, RankValue } from '~/components/player';
+import { Tip } from '~/components/ui';
 import { QUALIFY_SPOTS } from '~/constants';
 import { useFinalsCity } from '~/hooks/useTournaments';
 import { useWindowList } from '~/hooks/useWindowList';
@@ -50,7 +51,6 @@ const Row = memo<{
           <span className={classes.whoInner}>
             {avatars && <AvatarGroup players={row.players} size={32} crop={96} className={classes.avatars} />}
             <RankedNames players={row.players} truncate className={classes.names} />
-            {row.qualify && <QualifyMark qualified={row.qualify === 'qualified'} blocked={row.qualify === 'blocked'} />}
           </span>
         </td>
         {played && <td className={clsx(utils.num, classes.played)}>{row.tournaments ?? '—'}</td>}
@@ -95,11 +95,11 @@ export const RankingList = memo<{
             {doubles ? 'Pair' : 'Player'}
           </th>
           {played && (
-            <Tooltip label="Tournaments played">
+            <Tip label="Tournaments played">
               <th scope="col" className={classes.played}>
                 Tournaments
               </th>
-            </Tooltip>
+            </Tip>
           )}
           <th scope="col" className={classes.points}>
             Points

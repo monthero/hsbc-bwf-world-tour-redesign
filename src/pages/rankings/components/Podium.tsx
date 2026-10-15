@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { AvatarGroup, QualifyMark, RankedNames, RankValue } from '~/components/player';
+import { AvatarGroup, RankedNames, RankValue } from '~/components/player';
 import { Medal } from '~/components/tournament';
 import type { MedalKind, RankRow } from '~/types';
 import { formatNumber, plural } from '~/utils/format';
@@ -32,7 +32,6 @@ const PodiumCard = memo<{ row: RankRow; medal: MedalKind }>(({ row, medal }) => 
           <span className={classes.unit}>pts</span>
         </span>
         {row.tournaments !== null && <span className={classes.played}>{plural(row.tournaments, 'tournament')}</span>}
-        <QualifyMark qualified={row.qualify === 'qualified'} blocked={row.qualify === 'blocked'} />
       </div>
     </li>
   );
