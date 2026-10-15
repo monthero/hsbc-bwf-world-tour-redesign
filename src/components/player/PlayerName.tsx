@@ -77,7 +77,7 @@ export const PlayerName: FC<{
   const label = fitted && level > 0 ? player.name : undefined;
   const named =
     !link || !player.id ? (
-      <span className={cls} data-layout={layout} data-fit={fitted || undefined} aria-label={label}>
+      <span className={cls} data-layout={layout} data-fit={fitted || undefined} aria-label={label} translate="no">
         {body}
       </span>
     ) : (
@@ -89,6 +89,7 @@ export const PlayerName: FC<{
         data-layout={layout}
         data-fit={fitted || undefined}
         aria-label={label}
+        translate="no"
         onClick={stop}
       >
         {body}
