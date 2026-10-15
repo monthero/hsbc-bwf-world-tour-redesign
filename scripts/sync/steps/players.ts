@@ -19,7 +19,7 @@ const text = (...values: (string | null | undefined)[]) => {
   return undefined;
 };
 
-const HANDS: Record<string, string> = { R: 'Right-handed', L: 'Left-handed', '1': 'Right-handed', '2': 'Left-handed' };
+const HANDS: Record<string, string> = { R: 'R', L: 'L', '1': 'R', '2': 'L' };
 
 const heightOf = (...values: (string | null | undefined)[]) =>
   values.map(parseHeightCm).find((cm) => cm !== null) ?? undefined;

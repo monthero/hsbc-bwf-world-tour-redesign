@@ -2,7 +2,7 @@ import type { HeightUnit, TensionUnit } from '~/stores/settings';
 import type { BioView, FactItem, PhotoCrop, PlayerBio, PlayerDirectory, StatItem } from '~/types';
 
 import { ageOn, formatDayMonthYear } from './dates';
-import { HEIGHT_UNIT, heightParts, parseTension, TENSION_UNIT, tensionParts } from './format';
+import { handLabel, HEIGHT_UNIT, heightParts, parseTension, TENSION_UNIT, tensionParts } from './format';
 import { playerSquareUrl, playerThumbUrl } from './images';
 import { unshout } from './names';
 
@@ -47,10 +47,8 @@ export const buildBio = (bio: PlayerBio | undefined, units: BioUnits): BioView =
     stats.push({ key: 'age', label: 'Age', value: String(ageOn(b.born)), sub: `Born ${formatDayMonthYear(b.born)}` });
   else if (b.age) stats.push({ key: 'age', label: 'Age', value: String(b.age) });
   if (b.height) stats.push({ key: 'height', label: 'Height', ...heightParts(b.height, units.height) });
-  if (b.plays) {
-    const hand = b.plays.replace(/-handed$/i, '').split('-')[0] ?? '';
-    stats.push({ key: 'hand', label: 'Playing hand', value: unshout(hand) });
-  }
+  const hand = handLabel(b.plays);
+  if (hand) stats.push({ key: 'hand', label: 'Playing hand', value: hand });
   const natTeam = b.natTeam?.trim();
   const details = facts(
     [

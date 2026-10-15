@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { EventCode, MonthKey, type EditionRef, type Retirement } from '../../src/api/schemas.ts';
 import { imageAssetPath, ImageKind } from '../../src/pages/admin/schema.ts';
-import { parseHeightCm } from '../../src/utils/format.ts';
+import { parseHeightCm, parsePlays } from '../../src/utils/format.ts';
 import { dominantOffset, utcOffsetOf } from '../../src/utils/utc-offset.ts';
 import {
   historyPath,
@@ -149,9 +149,10 @@ const venueOf = (e: EditionRow) => {
 
 const isCancelled = (e: EditionRow) => !!e.cancelled || (!!e.archived && e.match_count === 0);
 
-const withHeight = ({ height, ...rest }: Record<string, unknown>) => {
+const normalizeBio = ({ height, plays, ...rest }: Record<string, unknown>) => {
   const cm = parseHeightCm(height);
-  return cm ? { ...rest, height: cm } : rest;
+  const hand = parsePlays(plays);
+  return { ...rest, ...(cm && { height: cm }), ...(hand && { plays: hand }) };
 };
 
 const dayOffsets = (rows: readonly MatchRow[]) => {
@@ -246,7 +247,7 @@ export const exportData = async (
   }));
   const playerOf = new Map(players.map((p) => [p.id, p]));
   const bioOf = (p: PlayerRow) =>
-    withHeight({ ...(p.bio ? (JSON.parse(p.bio) as Record<string, unknown>) : {}), ...overrides[p.id]?.bio });
+    normalizeBio({ ...(p.bio ? (JSON.parse(p.bio) as Record<string, unknown>) : {}), ...overrides[p.id]?.bio });
   const nameOf = (id: number | string | null | undefined, fallback: string | null = '') => {
     const key = id ? String(id) : '';
     return (key && (nameOverride(key) ?? playerOf.get(key)?.name)) || fallback || '';

@@ -1,5 +1,5 @@
 import { dayjs, ISO_DAY } from '~/utils/dates';
-import { formatBytes, formatHeight, TENSION_UNIT } from '~/utils/format';
+import { formatBytes, formatHeight, HAND_LABELS, handLabel, HANDS, TENSION_UNIT } from '~/utils/format';
 import { localAsset, playerHeroUrl, playerThumbUrl } from '~/utils/images';
 import { titleCase } from '~/utils/names';
 import { nameIssue } from '~/utils/surname';
@@ -84,7 +84,7 @@ const FIELDS: readonly FieldDef[] = [
   { key: 'hero', label: 'Hero', group: IMAGES, input: 'image', missing: true, badge: true },
   bio('born', 'Born', 'Personal', 'date'),
   bio('height', 'Height', 'Personal', 'height', { format: (v) => formatHeight(Number(v)) }),
-  bio('plays', 'Plays', 'Personal', 'plays'),
+  bio('plays', 'Plays', 'Personal', 'plays', { format: (v) => handLabel(v) || v }),
   bio('nickname', 'Nickname', 'Personal'),
   bio('birthplace', 'Birthplace', 'Personal'),
   bio('residence', 'Lives in', 'Personal'),
@@ -133,7 +133,7 @@ export const nameError = (draft: Draft) => {
   return name ? nameIssue(name) : null;
 };
 
-export const PLAYS_OPTIONS = ['Right-handed', 'Left-handed'];
+export const PLAYS_OPTIONS = HANDS.map((value) => ({ value, label: HAND_LABELS[value] }));
 
 export const bwfValue = (p: AdminPlayer, key: FieldKey) => {
   if (isNameField(key)) return p.name;
