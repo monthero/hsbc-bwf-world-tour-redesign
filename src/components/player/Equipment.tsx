@@ -8,7 +8,7 @@ import classes from './Equipment.module.css';
 import utils from '~/styles/utils.module.css';
 
 const EQUIPMENT_NOTE =
-  "[NOTE] Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome at vmnokk@gmail.com.";
+  "[NOTE] Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome on GitHub.";
 
 const ICONS: Record<string, FC<IconProps>> = {
   racket: IconRacket,
