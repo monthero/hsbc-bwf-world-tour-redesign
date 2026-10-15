@@ -10,18 +10,25 @@
     "aliases": []
   },
   {
+    "id": "artengo",
+    "name": "Artengo",
+    "aliases": []
+  },
+  {
     "id": "ashaway",
     "name": "Ashaway",
     "aliases": []
   },
   {
-    "id": "babolat",
-    "name": "Babolat",
-    "aliases": []
+    "id": "asics",
+    "name": "Asics",
+    "aliases": [
+      "ASICS"
+    ]
   },
   {
-    "id": "bonny",
-    "name": "Bonny",
+    "id": "babolat",
+    "name": "Babolat",
     "aliases": []
   },
   {
@@ -52,6 +59,13 @@
     ]
   },
   {
+    "id": "gosen",
+    "name": "Gosen",
+    "aliases": [
+      "GOSEN"
+    ]
+  },
+  {
     "id": "hundred",
     "name": "Hundred",
     "aliases": [
@@ -60,8 +74,18 @@
     ]
   },
   {
+    "id": "kason",
+    "name": "Kason",
+    "aliases": []
+  },
+  {
     "id": "kawasaki",
     "name": "Kawasaki",
+    "aliases": []
+  },
+  {
+    "id": "kumpoo",
+    "name": "Kumpoo",
     "aliases": []
   },
   {
@@ -88,6 +112,11 @@
     "aliases": []
   },
   {
+    "id": "thwack",
+    "name": "Thwack",
+    "aliases": []
+  },
+  {
     "id": "victor",
     "name": "Victor",
     "aliases": []
@@ -96,6 +125,13 @@
     "id": "wilson",
     "name": "Wilson",
     "aliases": []
+  },
+  {
+    "id": "yangyang",
+    "name": "YangYang",
+    "aliases": [
+      "Yang Yang"
+    ]
   },
   {
     "id": "yonex",
