@@ -1,6 +1,9 @@
+import { Trans } from '@lingui/react/macro';
+import { VisuallyHidden } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
+import { IconGitHub } from '~/components/ui';
 import { today } from '~/utils/dates';
 import { localAsset } from '~/utils/images';
 
@@ -14,6 +17,7 @@ import utils from '~/styles/utils.module.css';
 
 const YEAR = today().year();
 const HSBC_LOGO = localAsset('/assets/brand/hsbc.svg');
+const SOURCE_URL = 'https://github.com/monthero/hsbc-bwf-world-tour-redesign';
 
 export const SiteFooter = memo(() => (
   <footer className={classes.footer}>
@@ -75,6 +79,24 @@ export const SiteFooter = memo(() => (
           <img src={HSBC_LOGO} alt="" width={120} height={40} className={classes.hsbc} />
         </a>
         <BwfMark className={classes.bwf} />
+      </div>
+    </div>
+    <div className={classes.fan}>
+      <div className={clsx(utils.container, classes.fanInner)}>
+        <p className={classes.fanNote}>
+          <Trans comment="Small print on the last row of the site footer, beside the GitHub source link">
+            Unofficial and non-commercial. Built by a badminton fan, for badminton fans.
+          </Trans>
+        </p>
+        <a href={SOURCE_URL} target="_blank" rel="noopener noreferrer" className={clsx(classes.link, classes.source)}>
+          <IconGitHub size={18} />
+          <Trans comment="Footer link to the site’s source code on GitHub, inviting people to send feedback or contribute">
+            Open source on GitHub. Feedback, ideas and contributions welcome
+          </Trans>
+          <VisuallyHidden>
+            <Trans>(opens in a new tab)</Trans>
+          </VisuallyHidden>
+        </a>
       </div>
     </div>
   </footer>
