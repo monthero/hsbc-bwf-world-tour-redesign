@@ -44,6 +44,11 @@ const byAdoption = (order: readonly string[]) => {
     (rank.get(compactKey(a)) ?? Infinity) - (rank.get(compactKey(b)) ?? Infinity) || a.localeCompare(b);
 };
 
+export const byPopularity = (brands: readonly Brand[], order: readonly string[]) => {
+  const sort = byAdoption(order);
+  return [...brands].sort((a, b) => sort(a.name, b.name));
+};
+
 const brandNode = (brand: string) => `brand:${brand}`;
 const leaf = (r: EquipmentRow): CascaderOption => ({ value: r.name, label: r.model });
 

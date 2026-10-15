@@ -2,7 +2,7 @@ import { Button, Cascader, Select, TextInput, type CascaderFormatValue } from '@
 import { memo, useCallback, useMemo, useState, type ChangeEvent, type FC } from 'react';
 
 import { useAddBrand, useAddEquipment, useAdminPlayers, useEquipment } from '../api';
-import { brandMatchers, catalogPath, catalogSearch, catalogTree, guessParts } from '../catalog';
+import { brandMatchers, byPopularity, catalogPath, catalogSearch, catalogTree, guessParts } from '../catalog';
 import { buildRows } from '../filters';
 import type { AdminPlayer, Brand, EquipmentKind, EquipmentRow } from '../schema';
 import { FLOATING_PROPS, INPUT_CLASSES } from './inputs';
@@ -46,10 +46,14 @@ const AddToCatalog: FC<{
   kind: EquipmentKind;
   value: string;
   brands: readonly Brand[];
+  order: readonly string[];
   onAdded: (name: string) => void;
-}> = ({ kind, value, brands, onAdded }) => {
+}> = ({ kind, value, brands, order, onAdded }) => {
   const matchers = useMemo(() => brandMatchers(brands), [brands]);
-  const brandOptions = useMemo(() => brands.map((b) => ({ value: b.id, label: b.name })), [brands]);
+  const brandOptions = useMemo(
+    () => byPopularity(brands, order).map((b) => ({ value: b.id, label: b.name })),
+    [brands, order],
+  );
   const [open, setOpen] = useState(false);
   const [creatingBrand, setCreatingBrand] = useState(false);
   const [parts, setParts] = useState(() => guessParts(value, matchers));
@@ -175,7 +179,14 @@ export const CatalogCascader = memo<{
           </button>
         </span>
       )}
-      <AddToCatalog key={typed} kind={kind} value={unknown ? typed : ''} brands={brands} onAdded={onChange} />
+      <AddToCatalog
+        key={typed}
+        kind={kind}
+        value={unknown ? typed : ''}
+        brands={brands}
+        order={order}
+        onAdded={onChange}
+      />
     </div>
   );
 });
