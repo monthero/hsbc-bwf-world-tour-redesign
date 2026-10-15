@@ -126,11 +126,31 @@
         "y": 37
       },
       "bio": {
-        "racket": "Yonex Nanoflare 800 Pro"
+        "racket": "Yonex Nanoflare 800 Pro",
+        "racketNote": "3UG5",
+        "tension": "29",
+        "string": "Yonex BG65 Titanium",
+        "shoes": "Yonex Power Cushion Aerus Z2"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "heroFocus": {
           "source": "user",
           "asOf": "2026-10-14"
@@ -148,6 +168,17 @@
         }
       }
     },
+    "43840": {
+      "bio": {
+        "racket": "Yonex Arcsaber 7 Pro",
+        "racketNote": "4U",
+        "tension": "29.76",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion Eclipsion Z3"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "44414": {
       "bio": {
         "racket": "Li-Ning AXForce 100 II"
@@ -155,12 +186,55 @@
       "source": "user",
       "asOf": "2026-10-12"
     },
-    "48528": {
+    "45171": {
       "bio": {
-        "racket": "Yonex Arcsaber 11 Pro"
+        "racket": "Felet 3K Woven Fence",
+        "tension": "31",
+        "string": "Felet 68",
+        "shoes": "Felet Flying Pro V2"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-15"
+    },
+    "46169": {
+      "bio": {
+        "racket": "Yonex Astrox 88S Pro",
+        "racketNote": "3U",
+        "tension": "30.86",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion Eclipsion Z3"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
+    "48528": {
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "4U",
+        "tension": "29/31",
+        "string": "Yonex Exbolt 65",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "50152": {
       "retired": "2019-06",
@@ -177,9 +251,12 @@
       "hero": "https://www.yonex.co.uk/cdn/shop/files/TSB01199.jpg",
       "bio": {
         "height": 173,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Zhuzhou",
         "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "4U",
+        "tension": "28/30",
+        "string": "Yonex Exbolt 63",
         "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "World Championships 2025 – bronze (Mixed doubles)"
       },
@@ -206,9 +283,21 @@
           "source": "user",
           "asOf": "2026-10-12"
         },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -258,6 +347,16 @@
           "asOf": "2026-10-14"
         }
       }
+    },
+    "52071": {
+      "bio": {
+        "racket": "Cross Court Pro",
+        "racketNote": "3U",
+        "tension": "31",
+        "shoes": "Velocity Boost Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "52748": {
       "retired": "2026-01",
@@ -374,15 +473,42 @@
     },
     "55414": {
       "bio": {
-        "racket": "Yonex Nanoflare 800 Pro"
+        "racket": "Yonex Nanoflare 800 Pro",
+        "racketNote": "4U",
+        "tension": "28/30",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion Comfort Z3"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "55417": {
       "bio": {
         "birthplace": "Saitama Prefecture",
         "coach": "Norio Imai",
+        "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "4U",
+        "tension": "26/28",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Asian Championships 2025 – silver (Mixed doubles); Asia Mixed Team Championships 2025 – bronze (Mixed team)"
       },
       "source": "https://www.wikidata.org/wiki/Q62647178",
@@ -395,6 +521,26 @@
         "bio.coach": {
           "source": "https://en.wikipedia.org/wiki/Natsu_Saito",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -406,7 +552,7 @@
       },
       "bio": {
         "height": 162,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Tangerang",
         "achievements": "Uber Cup 2026 – bronze (women's team); Asia Team Championships 2026 – bronze (women's team); SEA Games 2025 – silver (women's team); SEA Games 2025 – bronze (WD)"
       },
@@ -439,7 +585,7 @@
       "hero": "https://cdn-assets.jawapos.com/images/1/2025/03/06/GkYK1DhXgAAiT91-copy-2400580700.jpg",
       "bio": {
         "height": 170,
-        "plays": "Right-handed",
+        "plays": "R",
         "nickname": "Joaquin, Jokim",
         "birthplace": "Jakarta",
         "coach": "Chafidz Yusuf",
@@ -491,12 +637,42 @@
       "source": "user",
       "asOf": "2026-10-12"
     },
-    "56706": {
+    "56352": {
       "bio": {
-        "racket": "Victor DriveX 12 O"
+        "racket": "Victor Drive X 12",
+        "shoes": "Victor P8500 Nitrolite"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-15"
+    },
+    "56706": {
+      "bio": {
+        "racket": "Victor DriveX 12 O",
+        "racketNote": "4U",
+        "tension": "30/31",
+        "string": "Victor VBS-63",
+        "shoes": "Victor P9200CHP"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "57246": {
       "hero": "https://www.yonex.co.uk/cdn/shop/files/20260109_1207_MalaysiaOpen2026_BPYL9670.jpg",
@@ -507,6 +683,9 @@
       "bio": {
         "birthplace": "Changsha",
         "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "4U",
+        "tension": "26/28",
+        "string": "Yonex Exbolt 63",
         "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "World Championships 2025 – silver (Mixed doubles); World Championships 2023 – bronze (Mixed doubles); World Championships 2026 – bronze (Mixed doubles); Sudirman Cup 2025 – gold (Mixed team); Asian Games 2026 – gold (Mixed doubles); Asian Games 2026 – gold (Women's team); Asian Championships 2023 – gold (Mixed doubles); Asian Championships 2024 – bronze (Mixed doubles); Asian Championships 2025 – bronze (Mixed doubles); Asia Mixed Team Championships 2023 – gold (Mixed team)"
       },
@@ -521,9 +700,21 @@
           "source": "https://www.wikidata.org/wiki/Q62641073",
           "asOf": "2026-10-12"
         },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         },
         "hero": {
           "source": "https://www.yonex.co.uk/pages/athlete/wei-ya-xin",
@@ -554,7 +745,7 @@
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1772642956/wordpress_assets_test/Aaron-Tai-Kang-Khai-Xing_AE2026/Aaron-Tai-Kang-Khai-Xing_AE2026.jpg",
       "bio": {
         "height": 163,
-        "plays": "Right-handed",
+        "plays": "R",
         "racket": "Yonex Astrox 77 Pro",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
@@ -579,6 +770,35 @@
         }
       }
     },
+    "57791": {
+      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGhhVYf7KM5xFTNNvvExX20KV15dVCox-JwRpDuvXGAZjz_Ebs8yG9LHbD&s=10",
+      "hero": "https://images.gofundme.com/A1bP25ELKdu8w3yJg8GNUhvTzqU=/1200x800/https://d2g8igdw686xgo.cloudfront.net/79156583_1712427105648836_r.jpeg",
+      "heroFocus": {
+        "x": 30,
+        "y": 0
+      },
+      "photoCrop": {
+        "x": 50.1,
+        "y": 13.8,
+        "zoom": 3.4
+      },
+      "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGhhVYf7KM5xFTNNvvExX20KV15dVCox-JwRpDuvXGAZjz_Ebs8yG9LHbD&s=10",
+      "asOf": "2026-10-14",
+      "meta": {
+        "hero": {
+          "source": "https://images.gofundme.com/A1bP25ELKdu8w3yJg8GNUhvTzqU=/1200x800/https://d2g8igdw686xgo.cloudfront.net/79156583_1712427105648836_r.jpeg",
+          "asOf": "2026-10-14"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-14"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-14"
+        }
+      }
+    },
     "57823": {
       "retired": "2024-08",
       "source": "https://www.badspi.jp/202408221603/",
@@ -590,12 +810,44 @@
         }
       }
     },
-    "57945": {
+    "57943": {
       "bio": {
-        "racket": "Yonex Astrox 100 ZZ Kurenai"
+        "racket": "Yonex Astrox 100 ZZ",
+        "tension": "31/33",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-15"
+    },
+    "57945": {
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ Kurenai",
+        "racketNote": "4U",
+        "tension": "29/31",
+        "string": "Yonex BG80 Power",
+        "shoes": "Li-Ning Invincible Ace"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "58089": {
       "bio": {
@@ -641,6 +893,28 @@
         }
       }
     },
+    "58488": {
+      "hero": "https://instagram.fosl3-1.fna.fbcdn.net/v/t51.82787-15/651175754_18091701995140225_7505400078125135420_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=Mzg1Mzc2MTU2Njk2NTA4MjM5NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=74X1jw9jh9QQ7kNvwFQVgw1&_nc_oc=AdrOr_L7MEJ5zkVS_ozjzNeXhfymzCXbSnXoL5CtOrSZwGT4HcTrCODbBQjCiuikz7A&_nc_zt=23&_nc_ht=instagram.fosl3-1.fna&_nc_gid=5-ieGtuqP2DFSUK6q52Ryw&_nc_ss=78689&oh=00_AQOeDuoGOoP24ogCl-euOKJYZeon83sLrizyJ-HxAk0H0w&oe=6AD5E5B6",
+      "heroFocus": {
+        "x": 48,
+        "y": 50
+      },
+      "bio": {
+        "racket": "Kumpoo Ride the Wind 100"
+      },
+      "source": "https://instagram.fosl3-1.fna.fbcdn.net/v/t51.82787-15/651175754_18091701995140225_7505400078125135420_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=Mzg1Mzc2MTU2Njk2NTA4MjM5NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=74X1jw9jh9QQ7kNvwFQVgw1&_nc_oc=AdrOr_L7MEJ5zkVS_ozjzNeXhfymzCXbSnXoL5CtOrSZwGT4HcTrCODbBQjCiuikz7A&_nc_zt=23&_nc_ht=instagram.fosl3-1.fna&_nc_gid=5-ieGtuqP2DFSUK6q52Ryw&_nc_ss=78689&oh=00_AQOeDuoGOoP24ogCl-euOKJYZeon83sLrizyJ-HxAk0H0w&oe=6AD5E5B6",
+      "asOf": "2026-10-15",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
+    },
     "58931": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Cheng_Xing_-_Indonesia_Open_2026.jpg",
       "heroFocus": {
@@ -649,7 +923,7 @@
       },
       "bio": {
         "height": 184,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Jiujiang Town"
       },
       "source": "https://commons.wikimedia.org/wiki/File:Cheng_Xing_-_Indonesia_Open_2026.jpg",
@@ -677,8 +951,13 @@
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1780077831/wordpress_assets_test/cr_20260529_1811_SingaporeOpen2026_BPYL2728/cr_20260529_1811_SingaporeOpen2026_BPYL2728.jpg",
       "bio": {
         "height": 163,
-        "plays": "Left-handed",
+        "plays": "L",
         "birthplace": "Miyagi Prefecture",
+        "racket": "Yonex Nanoflare 1000Z",
+        "racketNote": "4U",
+        "tension": "30/32",
+        "string": "Yonex Exbolt 65",
+        "shoes": "Yonex Power Cushion Aerus Z2",
         "achievements": "Sudirman Cup 2025 – bronze (mixed team); Asian Games 2026 – silver (women's team)"
       },
       "source": "https://bwfbadminton.com/news-single/2026/05/30/singapore-open-flat-and-furious/",
@@ -699,6 +978,26 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q27880611",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -709,6 +1008,17 @@
       "source": "user",
       "asOf": "2026-10-12"
     },
+    "59609": {
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "4U",
+        "tension": "30/31",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "59621": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/0/09/Toh_Ee_Wei.jpg",
       "heroFocus": {
@@ -718,6 +1028,12 @@
       "bio": {
         "birthplace": "Malacca",
         "coach": "Nova Widianto",
+        "racket": "Yonex Voltric Z Force 1",
+        "racketNote": "4U",
+        "tension": "27",
+        "tensionNote": "26.5–27 range",
+        "string": "Yonex Aerosonic",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "World Championships 2025 – gold (Mixed doubles); Sudirman Cup 2023 – bronze (Mixed team); SEA Games 2025 – bronze (Women's team); SEA Games 2025 – bronze (Mixed doubles)"
       },
       "source": "https://commons.wikimedia.org/wiki/File:Toh_Ee_Wei.jpg",
@@ -735,6 +1051,30 @@
           "source": "https://en.wikipedia.org/wiki/Toh_Ee_Wei",
           "asOf": "2026-10-12"
         },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tensionNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "heroFocus": {
           "source": "user",
           "asOf": "2026-10-12"
@@ -745,7 +1085,7 @@
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1803/v1760311494/wordpress_assets_test/Unnati-Hooda2_WJC25/Unnati-Hooda2_WJC25.jpg",
       "bio": {
         "height": 167,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Rohtak",
         "racket": "Yonex Nanoflare 1000Z"
       },
@@ -770,12 +1110,45 @@
         }
       }
     },
-    "59880": {
+    "59709": {
       "bio": {
-        "racket": "Yonex Nanoflare 700 Pro"
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "4U",
+        "tension": "30/31",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion 65 Z3"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-15"
+    },
+    "59880": {
+      "bio": {
+        "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "4U",
+        "tension": "27/29",
+        "string": "Yonex Exbolt 63",
+        "shoes": "Yonex Power Cushion 65 Z3"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "59966": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1790426698/wordpress_assets_test/20260822_1752_WorldChampionships2026_BPJS4247/20260822_1752_WorldChampionships2026_BPJS4247.jpg",
@@ -828,7 +1201,7 @@
       "heroFlip": true,
       "bio": {
         "height": 165,
-        "plays": "Left-handed",
+        "plays": "L",
         "birthplace": "Hyūga-shi",
         "coach": "Hajime Komiyama",
         "achievements": "Asian Games 2026 – silver (Women's team); Asian Championships 2026 – bronze (Mixed doubles)"
@@ -898,7 +1271,7 @@
       "hero": "https://pbsi.id/wp-content/uploads/2026/07/AmriNita8_R32_JapanOpen2026_PBSI_20260715-scaled.jpg",
       "bio": {
         "height": 170,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Majalengka",
         "achievements": "World Championships 2026 – bronze (Mixed doubles); Asian Games 2026 – silver (Mixed doubles); Asian Games 2026 – bronze (Women's team); Asia Team Championships 2022 – gold (Women's team); SEA Games 2025 – silver (Women's team)"
       },
@@ -937,15 +1310,37 @@
     "61435": {
       "bio": {
         "racket": "Li-Ning Halbertec 9000",
+        "racketNote": "4U",
+        "tension": "28",
+        "string": "Li-Ning No.1",
         "shoes": "Li-Ning Blade 2 Pro"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "61444": {
       "hero": "https://cdn.shopify.com/s/files/1/1037/9241/0965/files/news260115_830_02.webp",
       "bio": {
         "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "3U",
+        "tension": "30/31",
+        "tensionNote": "or 31/32",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Olympic Games 2024 – silver (Mixed doubles); World Championships 2025 – gold (Men's doubles); World Championships 2026 – bronze (Men's doubles); Sudirman Cup 2017 – gold (Mixed team); Sudirman Cup 2023 – silver (Mixed team); Sudirman Cup 2025 – silver (Mixed team); Sudirman Cup 2021 – bronze (Mixed team); Asian Games 2022 – silver (Men's doubles); Asian Games 2022 – bronze (Men's team); Asian Games 2026 – bronze (Men's doubles); Asia Championships 2026 – gold (Men's doubles); Asia Championships 2019 – bronze (Men's doubles); Asia Mixed Team Championships 2023 – silver (Mixed team); Asia Team Championships 2018 – bronze (Men's team); Asia Team Championships 2024 – bronze (Men's team); Asia Team Championships 2026 – bronze (Men's team)"
       },
       "source": "user",
@@ -954,6 +1349,26 @@
         "bio.achievements": {
           "source": "https://en.wikipedia.org/wiki/Kim_Won-ho",
           "asOf": "2026-10-12"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tensionNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
         },
         "hero": {
           "source": "https://www.yonex.co.uk/blogs/badminton/team-yonex-sweeps-all-five-titles-at-malaysia-open-2026",
@@ -965,14 +1380,29 @@
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1784996302/wordpress_assets_test/cr_20260725_1833_ChinaOpen2026_BPGE1640/cr_20260725_1833_ChinaOpen2026_BPGE1640.jpg",
       "bio": {
         "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "3UG4",
+        "tension": "32",
+        "string": "Yonex BG80",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         },
         "hero": {
           "source": "https://bwfbadminton.com/news-single/2026/07/25/china-open-against-the-drift-into-history/",
@@ -982,24 +1412,72 @@
     },
     "61731": {
       "bio": {
-        "racket": "Yonex Astrox 88D Pro"
-      },
-      "source": "user",
-      "asOf": "2026-10-12"
-    },
-    "61854": {
-      "bio": {
-        "racket": "Yonex Astrox 77 Pro",
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "4U",
+        "tension": "32",
+        "string": "Yonex BG80",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
+    },
+    "61854": {
+      "bio": {
+        "racket": "Yonex Astrox 77 Pro",
+        "racketNote": "3U",
+        "tension": "27/29",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
+    },
+    "62277": {
+      "bio": {
+        "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "4U",
+        "tension": "27/29",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "62639": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1746969515/wordpress_assets_test/cr_20250511_1416_TaipeiOpen2025_BPHY5986/cr_20250511_1416_TaipeiOpen2025_BPHY5986.jpg",
@@ -1010,7 +1488,7 @@
       "heroFlip": true,
       "bio": {
         "height": 175,
-        "plays": "Left-handed",
+        "plays": "L",
         "birthplace": "Taiwan"
       },
       "source": "https://bwfbadminton.com/news-single/2025/05/11/taipei-open-home-glory-after-17-years-loh-returns-to-podium-top/",
@@ -1041,7 +1519,7 @@
     "62713": {
       "bio": {
         "height": 163,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Manila",
         "achievements": "Asian Games 2026 – bronze (Mixed doubles)"
       },
@@ -1067,7 +1545,11 @@
         "zoom": 1.6
       },
       "bio": {
-        "racket": "Yonex Arcsaber 11 Pro"
+        "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "4U",
+        "tension": "30/31",
+        "string": "Yonex BG66 Ultimax",
+        "shoes": "Yonex Power Cushion Aerus Z2"
       },
       "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Qe5Eu51Z2AHY0cDUfvkpWvPZs8eAR_bp94jwMtUfDz_7aswZVqyw-wrg&s=10",
       "asOf": "2026-10-14",
@@ -1075,6 +1557,22 @@
         "bio.racket": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         },
         "hero": {
           "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9ZeF_s_XvQNwgwt6R1z3Kt4xO0oVZ0V6vhbZnLnBm24Vp7la7BDlWgOQ&s=10",
@@ -1112,6 +1610,9 @@
       "bio": {
         "birthplace": "Guilin",
         "racket": "Yonex Astrox 88D Pro",
+        "tension": "28/30",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "World Championships 2025 – silver (XD); World Championships 2023 – bronze (XD); World Championships 2026 – bronze (XD); Sudirman Cup 2025 – gold (mixed team); Asian Games 2026 – gold (XD); Asian Games 2026 – silver (men's team); Asia Championships 2023 – gold (XD); Asia Championships 2024 – bronze (XD); Asia Championships 2025 – bronze (XD); Asia Mixed Team Championships 2023 – gold (mixed team)"
       },
       "source": "user",
@@ -1124,6 +1625,18 @@
         "bio.birthplace": {
           "source": "https://www.wikidata.org/wiki/Q78577931",
           "asOf": "2026-10-12"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -1149,11 +1662,21 @@
       "source": "user",
       "asOf": "2026-10-12"
     },
+    "63520": {
+      "bio": {
+        "racket": "Li-Ning 3D Calibar 600C",
+        "tension": "30",
+        "string": "Li-Ning No.7 Boost",
+        "shoes": "Li-Ning Yunting Purple Blaze"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "63530": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1770562494/wordpress_assets_test/20251111_1836_KumamotoMastersJapan2025_BPTE3810-1/20251111_1836_KumamotoMastersJapan2025_BPTE3810-1.jpg",
       "bio": {
         "height": 170,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Kyoto Prefecture",
         "achievements": "Asia Team Championships 2026 – gold (men's team); Asia Mixed Team Championships 2025 – bronze (mixed team)"
       },
@@ -1211,6 +1734,8 @@
       },
       "bio": {
         "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "4U",
+        "tension": "32",
         "string": "Yonex BG80",
         "shoes": "Yonex Subaxia GT",
         "instagram": "https://www.instagram.com/kunlavut.v",
@@ -1227,6 +1752,10 @@
           "source": "user",
           "asOf": "2026-10-14"
         },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
@@ -1234,6 +1763,10 @@
         "bio.string": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         },
         "hero": {
           "source": "https://imgcdn.acebadmintoncommunity.com/imago1066577719.jpg.jpeg",
@@ -1245,38 +1778,74 @@
         }
       }
     },
+    "64944": {
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "4UG6",
+        "tension": "31/33",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion Aerus Z2"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "65144": {
       "bio": {
         "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "3U",
+        "string": "Yonex Exbolt 68",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
     "65267": {
       "bio": {
         "racket": "Yonex Astrox 77 Pro",
+        "racketNote": "4U",
+        "tension": "29/31",
+        "string": "Yonex Aerobite",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
     "65349": {
       "bio": {
         "height": 178,
-        "plays": "Right-handed",
+        "plays": "R",
         "achievements": "Asia Team Championships 2026 – bronze (women's team); World University Games 2025 – silver (mixed team); World University Games 2025 – silver (WD)"
       },
       "source": "https://www.wikidata.org/wiki/Q114275280",
@@ -1291,9 +1860,14 @@
     "65674": {
       "bio": {
         "height": 179,
-        "plays": "Left-handed",
+        "plays": "L",
         "nickname": "Omo",
         "birthplace": "Bangkok",
+        "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "3U",
+        "tension": "30",
+        "string": "Yonex Aerobite Boost",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Asian Games 2026 – bronze (Men's team); Asia Mixed Team Championships 2023 – bronze (Mixed team); Asia Mixed Team Championships 2025 – bronze (Mixed team); World University Games 2021 – bronze (Mixed team); World University Games 2025 – bronze (Men's doubles); SEA Games 2021 – gold (Men's team); SEA Games 2023 – silver (Men's doubles); SEA Games 2023 – bronze (Mixed doubles); SEA Games 2023 – bronze (Men's team); SEA Games 2025 – bronze (Men's team)"
       },
       "source": "https://www.wikidata.org/wiki/Q124480162",
@@ -1306,6 +1880,26 @@
         "bio.nickname": {
           "source": "https://en.wikipedia.org/wiki/Pakkapon_Teeraratsakul",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -1327,7 +1921,7 @@
       "hero": "https://pbsi.id/wp-content/uploads/2026/01/JafarFelisha4_R32_DaihatsuIndonesiaMasters2026_PBSI_20260121-scaled.jpg",
       "bio": {
         "height": 170,
-        "plays": "Left-handed",
+        "plays": "L",
         "birthplace": "Tangerang",
         "achievements": "Asian Championships 2025 – bronze (Mixed doubles); SEA Games 2025 – gold (Men's team); SEA Games 2025 – bronze (Mixed doubles)"
       },
@@ -1365,10 +1959,48 @@
     },
     "66513": {
       "bio": {
-        "racket": "Yonex Nanoflare 700 Pro"
+        "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "3U",
+        "tension": "29/30",
+        "tensionNote": "or 28/29",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tensionNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
+    },
+    "67158": {
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "3U",
+        "tension": "30",
+        "string": "Yonex Aerobite Boost",
+        "shoes": "Yonex Power Cushion Infinity 2"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "67176": {
       "retired": "2024-07",
@@ -1396,7 +2028,7 @@
       "hero": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Amalia_Cahaya_Pratiwi.jpg",
       "bio": {
         "height": 170,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Sukoharjo",
         "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Uber Cup 2026 – bronze (Women's team); Asian Championships 2026 – bronze (Women's doubles); Asia Team Championships 2022 – gold (Women's team); Asia Team Championships 2024 – bronze (Women's team); Asia Team Championships 2026 – bronze (Women's team); SEA Games 2023 – gold (Women's doubles); SEA Games 2023 – silver (Women's team)"
       },
@@ -1427,15 +2059,42 @@
         "y": 59
       },
       "bio": {
-        "racket": "Yonex Astrox 88D Pro"
+        "racket": "Yonex Astrox 88D Pro",
+        "tension": "33/35",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion Aerus Z2"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
+    },
+    "67922": {
+      "bio": {
+        "racket": "Gosen Gravitas 8.5SX",
+        "tension": "30/31",
+        "string": "Ryzonic 65",
+        "shoes": "Asics Gel-Tactic 13"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "67949": {
       "bio": {
         "height": 162,
-        "plays": "Left-handed",
+        "plays": "L",
         "birthplace": "Kemaman District",
         "coach": "Herry Iman Pierngadi",
         "achievements": "SEA Games 2021 – silver (Men's team)"
@@ -1466,7 +2125,7 @@
       },
       "bio": {
         "height": 183,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Hillerød",
         "racket": "Flypower Enigma 900 V3",
         "achievements": "Thomas Cup 2026 – bronze (Men's team); European Championships 2025 – bronze (Men's doubles); European Championships 2026 – bronze (Men's doubles); European Mixed Team Championships 2025 – gold (Mixed team); European Men's Team Championships 2024 – gold (Men's team); European Men's Team Championships 2026 – silver (Men's team)"
@@ -1501,6 +2160,17 @@
       }
     },
     "68282": {
+      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUqm2Wi40R6m2FdiwTFnfnZo0_kK2M7jLUTn1m7ZRWtRCgYZZtfjfV-Aw&s=10",
+      "hero": "https://resizer-vortals.eco.astro.com.my/tr:w-auto,h-auto,q-80,f-webp/https://d3lmgsai2rsy7d.cloudfront.net/stadium/media/article/2025/Apr/494527713_1116203427207501_3469629582443119080_n.jpg",
+      "heroFocus": {
+        "x": 16,
+        "y": 20
+      },
+      "photoCrop": {
+        "x": 50,
+        "y": 0,
+        "zoom": 1.35
+      },
       "bio": {
         "racket": "Li-Ning BladeX 800 Shida"
       },
@@ -1509,6 +2179,22 @@
       "meta": {
         "bio.racket": {
           "source": "user"
+        },
+        "hero": {
+          "source": "https://resizer-vortals.eco.astro.com.my/tr:w-auto,h-auto,q-80,f-webp/https://d3lmgsai2rsy7d.cloudfront.net/stadium/media/article/2025/Apr/494527713_1116203427207501_3469629582443119080_n.jpg",
+          "asOf": "2026-10-14"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-14"
+        },
+        "photo": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUqm2Wi40R6m2FdiwTFnfnZo0_kK2M7jLUTn1m7ZRWtRCgYZZtfjfV-Aw&s=10",
+          "asOf": "2026-10-14"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-14"
         }
       }
     },
@@ -1516,7 +2202,7 @@
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1706/v1775919809/wordpress_assets_test/Ayush-ShettySF2_BAC26/Ayush-ShettySF2_BAC26.jpg",
       "bio": {
         "height": 195,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Karnataka",
         "coach": "Vimal Kumar Sagar Chopda",
         "racket": "Yonex Astrox 100 ZZ",
@@ -1577,10 +2263,32 @@
     },
     "68628": {
       "bio": {
-        "racket": "Yonex Nanoflare 700 Pro"
+        "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "4U",
+        "tension": "28",
+        "string": "Yonex BG66 Ultimax",
+        "shoes": "Yonex Power Cushion Eclipsion Z3"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "68633": {
       "photo": "data/uploads/68633.webp",
@@ -1609,10 +2317,37 @@
     },
     "68870": {
       "bio": {
-        "racket": "Yonex Nanoflare 1000Z"
+        "racket": "Yonex Nanoflare 1000Z",
+        "racketNote": "3U",
+        "tension": "30/32",
+        "tensionNote": "or 31/33",
+        "string": "Yonex BG80 Power",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tensionNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "69009": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/9/90/Women%27s_double_finalist_of_YONEX_Bendigo_International_2024_%282%29.jpg",
@@ -1669,7 +2404,7 @@
       "hero": "https://pbsi.id/wp-content/uploads/2026/01/JafarFelisha_SF_DaihatsuIndonesiaMasters2026_PBSI_20260124-scaled.jpg",
       "bio": {
         "height": 160,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Jakarta",
         "racket": "Yonex Astrox 88S Pro",
         "achievements": "Asia Championships 2025 – bronze (XD); SEA Games 2025 – silver (women's team); SEA Games 2025 – bronze (XD)"
@@ -1714,7 +2449,7 @@
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/v1769505741/wordpress_assets_test/cr_20260123_1407_IndonesiaMasters2026_BPRS5415/cr_20260123_1407_IndonesiaMasters2026_BPRS5415.jpg",
       "bio": {
         "height": 172,
-        "plays": "Right-handed",
+        "plays": "R",
         "nickname": "Pink",
         "birthplace": "Chiang Mai",
         "racket": "Li-Ning BladeX 900",
@@ -1765,17 +2500,41 @@
         }
       }
     },
+    "70443": {
+      "bio": {
+        "racket": "Assailant Pro",
+        "racketNote": "3U",
+        "tension": "32"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "70500": {
       "bio": {
         "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "3U",
+        "tension": "31/33",
+        "string": "Yonex BG80 / BG65",
         "shoes": "Yonex Power Cushion 65 Z3 Black"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -1796,10 +2555,32 @@
     "70930": {
       "bio": {
         "nickname": "Kim Ga-eun",
-        "racket": "Li-Ning AXForce 80 Lite"
+        "racket": "Li-Ning AXForce 80 Lite",
+        "racketNote": "4U",
+        "tension": "28/30",
+        "string": "Li-Ning No.60",
+        "shoes": "Li-Ning Blade Max"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "70969": {
       "retired": "2022-02",
@@ -1814,18 +2595,52 @@
     },
     "71023": {
       "bio": {
-        "racket": "Yonex Nanoflare 800 Pro"
+        "racket": "Yonex Nanoflare 800 Pro",
+        "racketNote": "3U",
+        "tension": "32/34",
+        "string": "Yonex Exbolt 68",
+        "shoes": "Yonex Power Cushion 65 Z3"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
+    },
+    "71065": {
+      "bio": {
+        "racket": "Yonex Astrox 88S Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "71223": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_2100/v1790174422/wordpress_assets_test/ainagoc_ag_ph19_260923_05021-opq3031174835/ainagoc_ag_ph19_260923_05021-opq3031174835.jpg",
       "bio": {
         "height": 182,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Anhui",
         "coach": "Chen Qiqiu",
+        "racket": "Yonex Nanoflare 800 Pro",
+        "racketNote": "4U",
+        "tension": "30/32",
+        "string": "Yonex Exbolt 68",
+        "shoes": "Yonex Power Cushion 65 Z3",
         "achievements": "World Championships 2025 – silver (Men's doubles); Thomas Cup 2026 – gold (Men's team); Sudirman Cup 2025 – gold (Mixed team); Asian Games 2026 – silver (Men's team); Asian Championships 2025 – silver (Men's doubles); Asia Team Championships 2024 – gold (Men's team)"
       },
       "source": "https://bwfbadminton.com/news-single/2026/09/23/asian-games-indonesia-earn-title-shot/",
@@ -1850,6 +2665,26 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q115106868",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -1866,10 +2701,32 @@
     },
     "71391": {
       "bio": {
-        "racket": "Yonex Astrox 88D Pro"
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "4U",
+        "tension": "29/31",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "71612": {
       "bio": {
@@ -1892,15 +2749,34 @@
     },
     "72435": {
       "bio": {
-        "racket": "Yonex Astrox 100 ZZ",
+        "racket": "Yonex Duora Z Strike",
+        "racketNote": "3U",
+        "tension": "31/33",
+        "string": "Yonex BG80",
         "shoes": "Yonex Power Cushion 65 Z3 Black"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -1908,7 +2784,10 @@
       "photo": "https://images.ctfassets.net/v8zaoys2pgzt/4NX1SBGBM50kAaqBnvlb3w/859dcf2f5ea72a2beef03515b1ea844f/Sean_Vendy.jpg",
       "hero": "https://www.romfordrecorder.co.uk/resources/images/20605612.jpg?type=og-image",
       "bio": {
-        "racket": "Yonex Astrox 100 ZZ Kurenai"
+        "racket": "Yonex Astrox 100 ZZ Kurenai",
+        "tension": "32/35",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "https://images.ctfassets.net/v8zaoys2pgzt/4NX1SBGBM50kAaqBnvlb3w/859dcf2f5ea72a2beef03515b1ea844f/Sean_Vendy.jpg",
       "asOf": "2026-10-12",
@@ -1916,6 +2795,18 @@
         "bio.racket": {
           "source": "user",
           "asOf": "2026-10-12"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         },
         "hero": {
           "source": "https://www.romfordrecorder.co.uk/resources/images/20605612.jpg?type=og-image",
@@ -1937,8 +2828,8 @@
       },
       "bio": {
         "racket": "Victor Auraspeed Fantôme J",
-        "string": "Victor VBS-66 Nano",
-        "shoes": "Victor P9200cHP"
+        "string": "Victor VBS-66N",
+        "shoes": "Victor P9200CHP"
       },
       "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU8lQUaXYpVCVZ-VJOHDtksl-GpfKKsujIK_m-Qkvm1vo8swUt6CwOqyD2&s=10",
       "asOf": "2026-10-14",
@@ -1948,12 +2839,10 @@
           "asOf": "2026-10-14"
         },
         "bio.shoes": {
-          "source": "user",
-          "asOf": "2026-10-14"
+          "source": "user"
         },
         "bio.string": {
-          "source": "user",
-          "asOf": "2026-10-14"
+          "source": "user"
         },
         "hero": {
           "source": "https://www.siamsport.co.th/static/41e704bf-5636-491b-bcf6-14fef89ba23b.jpg",
@@ -2009,10 +2898,32 @@
     },
     "73442": {
       "bio": {
-        "racket": "Victor Thruster Ryuga III CQ"
+        "racket": "Victor Thruster Ryuga III CQ",
+        "racketNote": "3U",
+        "tension": "31/33",
+        "string": "Victor VBS-61 + VBS-66 (hybrid)",
+        "shoes": "Victor S82III Nitrolite"
       },
       "source": "user",
-      "asOf": "2026-10-11"
+      "asOf": "2026-10-11",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "74331": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1772643214/wordpress_assets_test/20260304_1257_AllEngland2026_BPLL8182/20260304_1257_AllEngland2026_BPLL8182.jpg",
@@ -2046,6 +2957,10 @@
         "nickname": "Fame",
         "birthplace": "Nakhon Pathom",
         "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "3U",
+        "tension": "30",
+        "string": "Yonex Aerobite Boost",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Uber Cup 2020 – bronze (Women's team); Asian Games 2022 – bronze (Women's team); Asian Championships 2026 – silver (Mixed doubles); SEA Games 2025 – gold (Women's team); SEA Games 2025 – silver (Mixed doubles)"
       },
       "source": "user",
@@ -2062,6 +2977,22 @@
         "bio.nickname": {
           "source": "https://en.wikipedia.org/wiki/Supissara_Paewsampran",
           "asOf": "2026-10-12"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         },
         "hero": {
           "source": "https://bwfbadminton.com/news-single/2026/08/10/mixed-doubles-top-five-pairs-to-watch/",
@@ -2101,15 +3032,37 @@
     },
     "76115": {
       "bio": {
-        "racket": "Li-Ning AXForce 90 MAX Dragon"
+        "racket": "Li-Ning AXForce 90 MAX Dragon",
+        "racketNote": "3U",
+        "tension": "31",
+        "string": "Li-Ning N69"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "76275": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1717242564/wordpress_assets_test/cr_20240531_1621_SingaporeOpen2024_BPYN3906/cr_20240531_1621_SingaporeOpen2024_BPYN3906.jpg",
       "bio": {
         "birthplace": "Tainan",
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "4U",
+        "tension": "30/31",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion 65 Z3",
         "achievements": "World Championships 2026 – bronze (MD); Thomas Cup 2024 – bronze (men's team); Asia Championships 2024 – bronze (MD); Universiade 2017 – gold (mixed team)"
       },
       "source": "https://bwfbadminton.com/news-single/2024/06/01/singapore-open-stability-drives-surprise-package/",
@@ -2122,21 +3075,63 @@
         "bio.birthplace": {
           "source": "https://www.wikidata.org/wiki/Q27847764",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
     "76278": {
       "bio": {
-        "racket": "Yonex Arcsaber 11 Pro"
+        "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "3U",
+        "tension": "31/33",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "76281": {
       "hero": "https://pbsi.id/wp-content/uploads/2026/09/AmriNita9_QF_AsianGames2026_PBSI_20260928-scaled.jpg",
       "bio": {
         "height": 174,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Jakarta",
         "achievements": "World Championships 2026 – bronze (XD); Asian Games 2026 – gold (men's team); Asian Games 2026 – silver (XD); SEA Games 2025 – gold (men's team)"
       },
@@ -2169,8 +3164,13 @@
       },
       "bio": {
         "height": 172,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Tangerang",
+        "racket": "Li-Ning BladeX 700",
+        "racketNote": "3U",
+        "tension": "30/31",
+        "string": "Li-Ning No.1",
+        "shoes": "Li-Ning DF-02 Pro",
         "achievements": "World Championships 2025 – bronze (WS); Sudirman Cup 2025 – bronze (mixed team); Uber Cup 2026 – bronze (women's team); Asia Mixed Team Championships 2025 – gold (mixed team); Asia Team Championships 2022 – gold (women's team); Asia Team Championships 2024 – bronze (women's team); SEA Games 2021 – silver (women's team); SEA Games 2025 – silver (women's team); SEA Games 2021 – bronze (WS); SEA Games 2025 – bronze (WS)"
       },
       "source": "https://bwfbadminton.com/news-single/2025/12/10/wardanis-loudest-roar-yet/",
@@ -2192,11 +3192,42 @@
           "source": "https://www.wikidata.org/wiki/Q58683239",
           "asOf": "2026-10-12"
         },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "heroFocus": {
           "source": "user",
           "asOf": "2026-10-12"
         }
       }
+    },
+    "77042": {
+      "bio": {
+        "racket": "Yonex Nanoflare 1000Z",
+        "racketNote": "3U",
+        "tension": "30/32",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z3"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "77262": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/f/f5/%E5%A7%9C%E7%8F%89%E8%B5%AB2025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
@@ -2219,10 +3250,27 @@
     "77689": {
       "bio": {
         "racket": "Li-Ning Halbertec 9000",
+        "racketNote": "4U",
+        "tension": "31",
+        "string": "Li-Ning No.1",
         "shoes": "Li-Ning Blade 2 Pro"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "77832": {
       "retired": "2025-03",
@@ -2240,7 +3288,7 @@
       "heroFlip": true,
       "bio": {
         "height": 182,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Malacca",
         "racket": "Yonex Astrox 77 Pro",
         "achievements": "Sudirman Cup 2021 – bronze (mixed team); Asia Team Championships 2022 – gold (men's team); SEA Games 2021 – silver (men's team); SEA Games 2025 – silver (men's team); SEA Games 2025 – bronze (MD)"
@@ -2276,10 +3324,38 @@
     },
     "78778": {
       "bio": {
-        "racket": "Yonex Astrox 77 Pro"
+        "racket": "Yonex Astrox 77 Pro",
+        "tension": "26/27",
+        "string": "Yonex Exbolt 63",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
+    },
+    "78839": {
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "4U",
+        "tension": "31/33",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion Aerus Z2"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "79059": {
       "retired": "2021-11",
@@ -2324,9 +3400,14 @@
     "79501": {
       "bio": {
         "height": 167,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Kumamoto Prefecture",
         "coach": "Lee Wan Wah Harmono Yuwono (Hitachi)",
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "4U",
+        "tension": "32/34",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Asia Team Championships 2026 – gold (Men's team); Asia Mixed Team Championships 2025 – bronze (Mixed team)"
       },
       "source": "https://www.wikidata.org/wiki/Q127162733",
@@ -2339,6 +3420,26 @@
         "bio.coach": {
           "source": "https://en.wikipedia.org/wiki/Yuichi_Shimogami",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -2346,8 +3447,13 @@
       "hero": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Febriana_Dwipuji_Kusuma.jpg",
       "bio": {
         "height": 163,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Jember",
+        "racket": "Victor Auraspeed HS Plus",
+        "racketNote": "4U",
+        "tension": "29",
+        "string": "Victor VBS-66N",
+        "shoes": "Victor P9200CHP",
         "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Uber Cup 2026 – bronze (Women's team); Asian Games 2026 – bronze (Women's team); Asia Team Championships 2022 – gold (Women's team); Asia Team Championships 2024 – bronze (Women's team); Asia Team Championships 2026 – bronze (Women's team); SEA Games 2023 – gold (Women's doubles); SEA Games 2023 – silver (Women's team); SEA Games 2025 – silver (Women's doubles); SEA Games 2025 – silver (Women's team)"
       },
       "source": "https://commons.wikimedia.org/wiki/File:Febriana_Dwipuji_Kusuma.jpg",
@@ -2368,13 +3474,33 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q56686377",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
     "79906": {
       "bio": {
         "height": 172,
-        "plays": "Left-handed",
+        "plays": "L",
         "birthplace": "Ōsaki-shi",
         "coach": "Lee Wan Wah Hiroyuki Endo",
         "achievements": "Asia Team Championships 2026 – gold (Men's team)"
@@ -2391,6 +3517,17 @@
           "asOf": "2026-10-12"
         }
       }
+    },
+    "80005": {
+      "bio": {
+        "racket": "Yonex Nanoflare 800 Pro",
+        "racketNote": "4U",
+        "tension": "27/29",
+        "string": "Yonex BG66 Ultimax",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "80057": {
       "retired": "2024-05",
@@ -2486,24 +3623,90 @@
     },
     "81599": {
       "bio": {
-        "racket": "Yonex Nanoflare 700 Pro"
+        "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "4U",
+        "tension": "27/29",
+        "string": "Yonex Exbolt 63",
+        "shoes": "Yonex Power Cushion Eclipsion Z3"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "81609": {
       "bio": {
-        "racket": "Yonex Arcsaber 7 Pro"
+        "racket": "Yonex Arcsaber 7 Pro",
+        "racketNote": "4U",
+        "tension": "29/31",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion Comfort Z3"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "81657": {
       "bio": {
-        "racket": "Yonex Astrox 100 ZZ"
+        "racket": "Yonex Astrox 100 ZZ",
+        "racketNote": "4U",
+        "tension": "33/35",
+        "string": "Yonex Exbolt 68",
+        "shoes": "Yonex Power Cushion Aerus Z2"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "81844": {
       "photo": "data/uploads/81844.jpg",
@@ -2513,9 +3716,12 @@
         "y": 53
       },
       "bio": {
-        "plays": "Left-handed",
+        "plays": "L",
         "birthplace": "Jinzhou",
         "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "4U",
+        "tension": "30/32",
+        "string": "Yonex Aerobite",
         "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "World Championships 2025 – bronze (XD); Sudirman Cup 2025 – gold (mixed team)"
       },
@@ -2538,9 +3744,21 @@
           "source": "user",
           "asOf": "2026-10-12"
         },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         },
         "heroFocus": {
           "source": "user",
@@ -2556,10 +3774,14 @@
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1567/v1741980771/wordpress_assets_test/Tomoka-Miyazaki2_4AE25/Tomoka-Miyazaki2_4AE25.jpg",
       "bio": {
         "height": 164,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Osaka",
         "club": "Japan national badminton team",
         "racket": "Yonex Nanoflare 1000Z",
+        "racketNote": "4U",
+        "tension": "23/25",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z3",
         "achievements": "Sudirman Cup 2025 – bronze (mixed team); Uber Cup 2024 – bronze (women's team); Uber Cup 2026 – bronze (women's team); Asian Games 2026 – silver (women's team); Asia Mixed Team Championships 2025 – bronze (mixed team); Asia Team Championships 2024 – bronze (women's team)"
       },
       "source": "user",
@@ -2585,6 +3807,22 @@
           "source": "https://www.wikidata.org/wiki/Q115252949",
           "asOf": "2026-10-12"
         },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "hero": {
           "source": "https://bwfbadminton.com/news-single/2025/03/15/all-england-yamaguchi-keeps-the-reins/",
           "asOf": "2026-10-12"
@@ -2608,9 +3846,31 @@
         "x": 27,
         "y": 39
       },
+      "bio": {
+        "racket": "Yonex Astrox 77 Pro",
+        "tension": "30",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
       "source": "https://pbsi.id/2026/06/14/australian-open-2026-ana-trias-kembali-jadi-runner-up-di-sydney/",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "heroFocus": {
           "source": "user",
           "asOf": "2026-10-12"
@@ -2621,7 +3881,7 @@
       "hero": "https://upload.wikimedia.org/wikipedia/commons/5/5c/%E5%A5%87%E6%9D%B1%E6%9F%B12025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
       "bio": {
         "height": 174,
-        "plays": "Right-handed",
+        "plays": "R",
         "racket": "Victor Auraspeed Fantôme F AC",
         "achievements": "Sudirman Cup 2025 – silver (Mixed team); Asian Championships 2026 – silver (Men's doubles); Asia Team Championships 2024 – bronze (Men's team); Asia Team Championships 2026 – bronze (Men's team)"
       },
@@ -2684,7 +3944,11 @@
     "83419": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1627/v1740287370/wordpress_assets_test/Kim-Hye-Jeong-Kong-Hee-Yong_IO25/Kim-Hye-Jeong-Kong-Hee-Yong_IO25.jpg",
       "bio": {
-        "racket": "Yonex Arcsaber 11 Pro"
+        "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "4U",
+        "tension": "28/30",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion Aerus Z2"
       },
       "source": "https://bwfbadminton.com/news-single/2025/02/23/new-combinations-light-up-circuit/",
       "asOf": "2026-10-12",
@@ -2692,15 +3956,64 @@
         "bio.racket": {
           "source": "user",
           "asOf": "2026-10-12"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
-    "84062": {
+    "83802": {
       "bio": {
-        "racket": "Li-Ning AXForce 80"
+        "racket": "Victor Auraspeed 100X Ultra",
+        "racketNote": "4UG6",
+        "tension": "30/31",
+        "string": "Victor VBS-66N",
+        "shoes": "Victor P8500 Nitrolite"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-15"
+    },
+    "84062": {
+      "bio": {
+        "racket": "Li-Ning AXForce 80",
+        "racketNote": "4U",
+        "tension": "30",
+        "string": "Li-Ning No.1",
+        "shoes": "Li-Ning DF-01 Max"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "84064": {
       "bio": {
@@ -2712,7 +4025,7 @@
     "84159": {
       "bio": {
         "height": 167,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Takaoka",
         "achievements": "Asia Team Championships 2022 – bronze (Women's team)"
       },
@@ -2727,10 +4040,32 @@
     },
     "84523": {
       "bio": {
-        "racket": "Yonex Arcsaber 11 Pro"
+        "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "4UG5",
+        "tension": "29/31",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "84669": {
       "retired": "2024-08",
@@ -2771,7 +4106,7 @@
       },
       "bio": {
         "height": 173,
-        "plays": "Right-handed",
+        "plays": "R",
         "nickname": "Kai Wun",
         "birthplace": "Malacca",
         "coach": "Herry Iman Pierngadi",
@@ -2838,7 +4173,7 @@
       "heroFlip": true,
       "bio": {
         "height": 165,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Guangdong",
         "achievements": "World Championships 2026 – bronze (Women's doubles); Uber Cup 2026 – silver (Women's team); Asian Championships 2026 – gold (Women's doubles); Asia Mixed Team Championships 2023 – gold (Mixed team)"
       },
@@ -2873,16 +4208,38 @@
     },
     "85551": {
       "bio": {
-        "racket": "Yonex Arcsaber 7 Pro"
+        "racket": "Yonex Arcsaber 7 Pro",
+        "racketNote": "4U",
+        "tension": "28",
+        "string": "Yonex BG66 Ultimax",
+        "shoes": "Yonex Power Cushion Eclipsion Z3"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "85845": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/8/88/%E5%B8%95%E5%B0%BC%E6%9F%A5%E8%93%AC%C2%B7%E6%8F%90%E6%8B%89%E8%96%A9%E5%BA%AB%E7%88%BE%E6%A6%AE%E7%8D%B22023%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E7%94%B7%E5%96%AE%E4%BA%9E%E8%BB%8D.jpg",
       "bio": {
         "height": 178,
-        "plays": "Left-handed",
+        "plays": "L",
         "nickname": "EQ",
         "achievements": "Asia Mixed Team Championships 2023 – bronze (mixed team); Asia Mixed Team Championships 2025 – bronze (mixed team); SEA Games 2021 – gold (men's team); SEA Games 2023 – bronze (men's team); SEA Games 2025 – bronze (men's team); World University Games 2021 – silver (MS); World University Games 2021 – bronze (mixed team)"
       },
@@ -2916,6 +4273,9 @@
       "bio": {
         "birthplace": "Luzhou",
         "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "4U",
+        "tension": "28/30",
+        "string": "Yonex BG66 Ultimax",
         "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "World Championships 2023 – bronze (WD); Sudirman Cup 2023 – gold (mixed team); Uber Cup 2024 – gold (women's team); Uber Cup 2022 – silver (women's team); Uber Cup 2026 – silver (women's team); Asian Games 2022 – silver (women's team); Asia Championships 2024 – silver (WD); Asia Championships 2025 – bronze (WD); Asia Team Championships 2026 – silver (women's team)"
       },
@@ -2930,9 +4290,21 @@
           "source": "https://www.wikidata.org/wiki/Q62083472",
           "asOf": "2026-10-12"
         },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         },
         "hero": {
           "source": "https://bwfbadminton.com/news-single/2026/08/11/womens-doubles-top-five-pairs-to-watch/",
@@ -2981,9 +4353,12 @@
       },
       "bio": {
         "height": 175,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Blitar",
         "racket": "Victor Auraspeed HS Plus C",
+        "tension": "31",
+        "string": "Felet BS 68",
+        "shoes": "Felet Flash Pro",
         "achievements": "SEA Games 2025 – gold (Men's doubles); SEA Games 2025 – gold (Men's team)"
       },
       "source": "https://pbsi.id/2026/07/15/japan-open-2026-sabar-reza-menang-dengan-kondisi-cedera/",
@@ -3009,11 +4384,32 @@
           "source": "user",
           "asOf": "2026-10-12"
         },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "heroFocus": {
           "source": "user",
           "asOf": "2026-10-12"
         }
       }
+    },
+    "86226": {
+      "bio": {
+        "racket": "Kumpoo Asura II",
+        "string": "Kumpoo JS-67",
+        "shoes": "Kumpoo KH-G805"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "86532": {
       "photo": "data/uploads/86532.jpg",
@@ -3023,10 +4419,13 @@
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_2414/v1784291073/wordpress_assets_test/20260717_1416_JapanOpen2026_BPJS9922/20260717_1416_JapanOpen2026_BPJS9922.jpg",
       "bio": {
         "height": 170,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Kikuchi",
         "club": "Japan national badminton team",
         "racket": "Yonex Astrox 99 Pro",
+        "tension": "32/35",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Asia Team Championships 2026 – gold (men's team); Asia Mixed Team Championships 2025 – bronze (mixed team)"
       },
       "source": "user",
@@ -3052,6 +4451,18 @@
           "source": "https://www.wikidata.org/wiki/Q106485922",
           "asOf": "2026-10-12"
         },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "hero": {
           "source": "https://bwfbadminton.com/news-single/2026/07/17/japan-open-yamaguchi-leads-home-surge/",
           "asOf": "2026-10-12"
@@ -3073,6 +4484,15 @@
         }
       }
     },
+    "87428": {
+      "bio": {
+        "racket": "Victor Auraspeed 100X Ultra",
+        "racketNote": "4U",
+        "tension": "25/27"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "87432": {
       "hero": "https://pbsi.id/wp-content/uploads/2026/06/SabarReza_SF_AustralianOpen2026_PBSI_20260613-scaled.jpg",
       "heroFocus": {
@@ -3081,8 +4501,12 @@
       },
       "bio": {
         "height": 171,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Sumedang",
+        "racket": "Felet Woven 999",
+        "tension": "31/33",
+        "string": "Felet BS 68",
+        "shoes": "Felet Flash Pro",
         "achievements": "Asia Mixed Team Championships 2019 – bronze (mixed team); SEA Games 2025 – gold (MD); SEA Games 2025 – gold (men's team)"
       },
       "source": "https://pbsi.id/2026/06/13/australian-open-2026-sabar-reza-ke-final-pertama-tahun-ini/",
@@ -3104,6 +4528,22 @@
           "source": "https://www.wikidata.org/wiki/Q27817583",
           "asOf": "2026-10-12"
         },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "heroFocus": {
           "source": "user",
           "asOf": "2026-10-12"
@@ -3123,10 +4563,32 @@
     },
     "87442": {
       "bio": {
-        "racket": "Yonex Astrox 77 Pro"
+        "racket": "Yonex Astrox 77 Pro",
+        "racketNote": "4U",
+        "tension": "28/29",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion Aerus Z2"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "88094": {
       "retired": "2025-01",
@@ -3163,6 +4625,25 @@
         }
       }
     },
+    "88126": {
+      "bio": {
+        "plays": "R",
+        "racket": "Yonex Arcsaber 11 Pro",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
+    "88135": {
+      "bio": {
+        "racket": "Victor Auraspeed Fantome",
+        "racketNote": "4U",
+        "tension": "26/28"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "88322": {
       "hero": "https://storage.googleapis.com/origin-awsassets.nst.com.my/images/articles/9FCB377F73FB89E044A670467E20C4C9_low_11.jpg",
       "heroFocus": {
@@ -3171,7 +4652,7 @@
       },
       "bio": {
         "height": 180,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Johor",
         "racket": "Yonex Arcsaber 11 Pro",
         "shoes": "Yonex Power Cushion 65 Z4",
@@ -3224,7 +4705,7 @@
       },
       "bio": {
         "height": 170,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Hunan"
       },
       "source": "https://commons.wikimedia.org/wiki/File:Zhang_Chi_-_Indonesia_Open_2026.jpg",
@@ -3269,10 +4750,32 @@
     },
     "88876": {
       "bio": {
-        "racket": "Victor Auraspeed 100X"
+        "racket": "Victor Auraspeed 100X",
+        "racketNote": "4U",
+        "tension": "31/33",
+        "string": "Victor VBS-66N",
+        "shoes": "Victor A970cADV"
       },
       "source": "user",
-      "asOf": "2026-10-11"
+      "asOf": "2026-10-11",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "89068": {
       "retired": "2025-03",
@@ -3288,14 +4791,24 @@
     "89426": {
       "bio": {
         "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "4U",
+        "tension": "27",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -3312,10 +4825,32 @@
     },
     "90531": {
       "bio": {
-        "racket": "Yonex Astrox 100 ZZ Navy"
+        "racket": "Yonex Astrox 100 ZZ Navy",
+        "racketNote": "3U",
+        "tension": "27/29",
+        "string": "Yonex Exbolt 68",
+        "shoes": "Yonex Power Cushion Eclipsion Z3"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "90623": {
       "retired": "2022-02",
@@ -3328,6 +4863,16 @@
         }
       }
     },
+    "90768": {
+      "bio": {
+        "racket": "Victor Auraspeed 100X Ultra",
+        "racketNote": "3U",
+        "tension": "33/31",
+        "string": "Victor VBS-66N"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "91090": {
       "photo": "data/uploads/91090.jpg",
       "hero": "https://www.yonex.co.uk/cdn/shop/files/TSB02083.jpg",
@@ -3336,7 +4881,12 @@
         "y": 22
       },
       "bio": {
-        "racket": "Yonex Nanoflare 1000Z"
+        "racket": "Yonex Nanoflare 1000Z",
+        "racketNote": "3U",
+        "tension": "29/31",
+        "tensionNote": "+5% pre-stretch",
+        "string": "Yonex Exbolt 68",
+        "shoes": "Yonex Power Cushion Aerus Z2"
       },
       "source": "https://bwfbadminton.com/news-single/2026/01/26/indonesia-masters-malaysias-three-farhans-glee/",
       "asOf": "2026-10-12",
@@ -3344,6 +4894,26 @@
         "bio.racket": {
           "source": "user",
           "asOf": "2026-10-12"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tensionNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
         },
         "hero": {
           "source": "https://www.yonex.co.uk/cdn/shop/files/TSB02083.jpg",
@@ -3359,6 +4929,17 @@
         }
       }
     },
+    "91130": {
+      "bio": {
+        "racket": "Victor Ryuga 2 Pro",
+        "racketNote": "3U",
+        "tension": "31/33",
+        "string": "Victor VBS-68 Power",
+        "shoes": "Victor A970cADV"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "91224": {
       "bio": {
         "racket": "Flypower Hrusangkali"
@@ -3367,16 +4948,42 @@
     },
     "91292": {
       "bio": {
-        "racket": "Victor DriveX 12 O"
+        "racket": "Victor DriveX 12 O",
+        "racketNote": "4U",
+        "tension": "29/30",
+        "string": "Victor VBS-68",
+        "shoes": "Victor C90 Nitrolite"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "91440": {
       "hero": "https://www.yonex.co.uk/cdn/shop/files/TSC01084.jpg",
       "bio": {
         "birthplace": "Bandung",
         "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "4U",
+        "tension": "31",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Thomas Cup 2022 – silver (Men's team); Thomas Cup 2024 – silver (Men's team); Asian Games 2026 – gold (Men's team); Asian Games 2026 – bronze (Men's doubles); Asian Championships 2026 – bronze (Men's doubles); Asia Mixed Team Championships 2025 – gold (Mixed team); Asia Team Championships 2022 – silver (Men's team); Southeast Asian Games 2023 – gold (Men's team); Southeast Asian Games 2023 – bronze (Men's doubles)"
       },
       "source": "user",
@@ -3390,18 +4997,98 @@
           "source": "https://www.wikidata.org/wiki/Q63018181",
           "asOf": "2026-10-12"
         },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "hero": {
           "source": "https://www.yonex.co.uk/pages/athlete/muhammad-shohibul-fikri",
           "asOf": "2026-10-12"
         }
       }
     },
-    "91554": {
+    "91533": {
       "bio": {
-        "racket": "Victor Auraspeed 99 Antonsen"
+        "racket": "Yonex Nanoflare 700 Pro",
+        "tension": "27/29",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-15"
+    },
+    "91554": {
+      "bio": {
+        "racket": "Victor Auraspeed 99 Antonsen",
+        "tension": "31/33",
+        "tensionNote": "+10% pre-stretch",
+        "string": "Victor VBS-63",
+        "shoes": "Victor A970 Nitrolite"
+      },
+      "source": "user",
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tensionNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
+    },
+    "91715": {
+      "bio": {
+        "racket": "HT Precision 88S V2",
+        "tension": "30",
+        "string": "Victor VBS-66N",
+        "shoes": "Trust V3"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
+    "91896": {
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "3U",
+        "tension": "29/31",
+        "string": "Yonex BG66 Force",
+        "shoes": "Yonex Power Cushion Aerus Z2"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
+    "92593": {
+      "bio": {
+        "racket": "Victor Drive X 12",
+        "racketNote": "4UG5",
+        "tension": "33",
+        "string": "Victor VBS-70",
+        "shoes": "Victor P8500 Nitrolite"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "92913": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/a/a4/%E9%82%B1%E7%9B%B8%E6%A6%A4-2025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
@@ -3411,7 +5098,7 @@
       },
       "bio": {
         "height": 189,
-        "plays": "Left-handed",
+        "plays": "L",
         "birthplace": "Hsinchu City",
         "coach": "Chen Hung-ling"
       },
@@ -3442,10 +5129,27 @@
     },
     "92967": {
       "bio": {
-        "racket": "Yonex Astrox 77 Pro"
+        "racket": "Yonex Astrox 77 Pro",
+        "tension": "28/30",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion 65 Z3"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "92980": {
       "bio": {
@@ -3454,11 +5158,26 @@
       "source": "user",
       "asOf": "2026-10-12"
     },
+    "93074": {
+      "bio": {
+        "racket": "Victor Auraspeed Fantome",
+        "racketNote": "4U",
+        "tension": "28/30",
+        "shoes": "Victor S82III Nitrolite"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "93130": {
       "bio": {
         "height": 191,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Jiangxi",
+        "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "4U",
+        "tension": "28/30",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "World Championships 2025 – silver (MD); Thomas Cup 2026 – gold (men's team); Sudirman Cup 2025 – gold (mixed team); Asia Championships 2025 – silver (MD); Asia Team Championships 2024 – gold (men's team)"
       },
       "source": "https://www.wikidata.org/wiki/Q115107559",
@@ -3467,6 +5186,26 @@
         "bio.achievements": {
           "source": "https://en.wikipedia.org/wiki/Chen_Boyang",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
@@ -3511,7 +5250,7 @@
       "hero": "https://pbsi.id/wp-content/uploads/2026/04/RachelFebi6_D5_TUC2026_PBSI_20260428-scaled.jpg",
       "bio": {
         "height": 165,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Bogor",
         "racket": "Yonex Arcsaber 7 Pro",
         "achievements": "Uber Cup 2024 – silver (Women's team); Uber Cup 2026 – bronze (Women's team); Asian Games 2026 – bronze (Women's team); Asia Mixed Team Championships 2025 – gold (Mixed team); Asia Team Championships 2024 – bronze (Women's team); Asia Team Championships 2026 – bronze (Women's team); SEA Games 2023 – silver (Women's doubles); SEA Games 2023 – silver (Women's team); SEA Games 2025 – silver (Women's team); SEA Games 2025 – bronze (Women's doubles)"
@@ -3543,10 +5282,42 @@
     },
     "94580": {
       "bio": {
-        "racket": "Yonex Astrox 99 Pro"
+        "racket": "Yonex Astrox 99 Pro",
+        "racketNote": "3U",
+        "tension": "29.76",
+        "string": "Yonex Aerobite",
+        "shoes": "Yonex Power Cushion 65 Z3"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
+    },
+    "94814": {
+      "bio": {
+        "racket": "Victor Drive X 12",
+        "racketNote": "3U",
+        "tension": "33/31",
+        "string": "Victor VBS-66N"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
     },
     "95062": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Badminton_at_2023_National_Games_of_Taiwan_-_12.jpg",
@@ -3556,7 +5327,7 @@
       },
       "bio": {
         "height": 169,
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Pingtung City"
       },
       "source": "https://commons.wikimedia.org/wiki/File:Badminton_at_2023_National_Games_of_Taiwan_-_12.jpg",
@@ -3606,16 +5377,43 @@
       "asOf": "2026-10-12"
     },
     "96312": {
+      "hero": "https://www.reuters.com/resizer/v2/52JFKMM75ROE7JIPGKAXGXJ24I.jpg?auth=7189c7785e310c6dcc1532e4abfef825ee55b23d2caa74eab1e30cf6b9985a88&width=1920&quality=80",
       "bio": {
-        "racket": "Yonex Astrox 100 ZZ Kurenai"
+        "racket": "Yonex Astrox 100 ZZ Kurenai",
+        "racketNote": "3U",
+        "tension": "24/26",
+        "string": "Yonex Exbolt 63",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://www.reuters.com/resizer/v2/52JFKMM75ROE7JIPGKAXGXJ24I.jpg?auth=7189c7785e310c6dcc1532e4abfef825ee55b23d2caa74eab1e30cf6b9985a88&width=1920&quality=80",
+          "asOf": "2026-10-14"
+        }
+      }
     },
     "96725": {
       "bio": {
         "height": 169,
-        "plays": "Right-handed",
+        "plays": "R",
         "achievements": "Asia Team Championships 2026 – bronze (Women's team)"
       },
       "source": "https://www.wikidata.org/wiki/Q50822044",
@@ -3667,7 +5465,7 @@
       "hero": "https://img.olympics.com/images/image/private/t_s_16_9_g_auto/t_s_w1460/f_auto/primary/svhhow4k4izdwht8v73b",
       "bio": {
         "height": 186,
-        "plays": "Right-handed",
+        "plays": "R",
         "nickname": "Yoo Tae-bin",
         "birthplace": "Seoul, South Korea",
         "languages": "Korean, English",
@@ -3705,7 +5503,7 @@
     "99069": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/7/75/Sim_Yu_Jin.jpg",
       "bio": {
-        "plays": "Right-handed",
+        "plays": "R",
         "birthplace": "Chungju",
         "racket": "Victor Auraspeed Fantôme J",
         "string": "Victor VBS-66N",
@@ -3738,8 +5536,32 @@
     },
     "99102": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/c/c4/%E7%94%B7%E5%AD%90%E9%9B%99%E6%89%93%E9%A0%92%E7%8D%8E.jpg",
+      "bio": {
+        "racket": "Yonex Nanoflare 1000Z",
+        "tension": "32/33",
+        "string": "Yonex Exbolt 65",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
       "source": "https://commons.wikimedia.org/wiki/File:%E7%94%B7%E5%AD%90%E9%9B%99%E6%89%93%E9%A0%92%E7%8D%8E.jpg",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.tension": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "99389": {
       "bio": {
@@ -3778,6 +5600,16 @@
         }
       }
     },
+    "99778": {
+      "bio": {
+        "racket": "Victor Drive X 12",
+        "tension": "29/30",
+        "string": "Victor VBS-66N",
+        "shoes": "Victor P9200CHP"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "99781": {
       "hero": "https://thumbs.tvonenews.com/images/2026/01/22/697211e27c1c9-ganda-putra-indonesia-raymond-indranikolaus-joaquin.jpg",
       "heroFocus": {
@@ -3786,7 +5618,7 @@
       },
       "bio": {
         "height": 172,
-        "plays": "Right-handed",
+        "plays": "R",
         "nickname": "Mon",
         "birthplace": "Bandung",
         "racket": "Hundred Nitrix 70 Volta",
