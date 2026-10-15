@@ -36,7 +36,7 @@ Most of this information is already on the official site. The focus here is on h
 
 The hosted version may not stay online forever. Everything also runs on your own machine, with no accounts or cloud services needed.
 
-You need [Node 22+](https://nodejs.org) and pnpm (`corepack enable` sets up the version pinned in `package.json`).
+You need [Node 22.22.1 or newer](https://nodejs.org) and pnpm (`corepack enable` sets up the version pinned in `package.json`).
 
 ```sh
 git clone https://github.com/monthero/hsbc-bwf-world-tour-redesign.git
@@ -60,4 +60,20 @@ pnpm start              # http://localhost:5173
 
 ## Built with
 
-React, TypeScript, Vite, [Mantine](https://mantine.dev), [TanStack Router and Query](https://tanstack.com), [zod](https://zod.dev) and [dayjs](https://day.js.org), with a Node + SQLite data pipeline.
+- [React](https://react.dev) and [TypeScript](https://www.typescriptlang.org), built with [Vite](https://vite.dev) (through [Vite+](https://viteplus.dev))
+- [Mantine](https://mantine.dev) for UI components and styling, with CSS modules
+- [TanStack Router](https://tanstack.com/router), [Query](https://tanstack.com/query) and [Virtual](https://tanstack.com/virtual) for routing, data fetching and long lists
+- [zod](https://zod.dev) to validate BWF's data
+- [zustand](https://zustand.docs.pmnd.rs) for settings and followed players
+- [dayjs](https://day.js.org) for dates and time zones
+- [Lingui](https://lingui.dev) for internationalization
+- [Phosphor Icons](https://phosphoricons.com) via [unplugin-icons](https://github.com/unplugin/unplugin-icons)
+- [Fontsource](https://fontsource.org) Noto fonts for Chinese, Japanese, Korean, Thai and Hindi
+- [d3-geo](https://d3js.org/d3-geo), [TopoJSON](https://github.com/topojson/topojson-client) and [world-atlas](https://github.com/topojson/world-atlas) for the season map
+- [sharp](https://sharp.pixelplumbing.com) to process player photos
+- [Vite+](https://viteplus.dev) to run [Oxlint](https://oxc.rs/docs/guide/usage/linter) and [Oxfmt](https://oxc.rs/docs/guide/usage/formatter) for linting, formatting and type-aware checks, plus the pre-commit hook
+- Node's built-in SQLite for the data sync cache, and a [Cloudflare Worker](https://developers.cloudflare.com/workers) ([wrangler](https://developers.cloudflare.com/workers/wrangler)) to relay live scores
+
+## Contributing
+
+Pull requests are welcome: bug fixes, design ideas, data corrections and translations. See [CONTRIBUTING.md](CONTRIBUTING.md) for how it works and the house rules.
