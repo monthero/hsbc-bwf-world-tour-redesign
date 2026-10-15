@@ -19,7 +19,7 @@ import utils from '~/styles/utils.module.css';
 
 const followedMark = (p: Player) => <FollowedMark id={p.id} />;
 
-const TeamRow: FC<{ match: Match; side: Side; doubles: boolean }> = ({ match: m, side, doubles }) => {
+const TeamRow: FC<{ match: Match; side: Side }> = ({ match: m, side }) => {
   const result = sideResult(m, side);
   return (
     <div className={classes.team} data-result={result}>
@@ -27,7 +27,7 @@ const TeamRow: FC<{ match: Match; side: Side; doubles: boolean }> = ({ match: m,
         <TeamPlayers
           players={m.teams[side].players}
           seed={m.teams[side].seed}
-          flag={doubles ? 'xs' : 'sm'}
+          flag="sm"
           truncate
           after={followedMark}
           className={classes.players}
@@ -73,8 +73,8 @@ export const MatchCard = memo<{
         </span>
       </div>
       <div className={classes.teams}>
-        <TeamRow match={m} side={0} doubles={doubles} />
-        <TeamRow match={m} side={1} doubles={doubles} />
+        <TeamRow match={m} side={0} />
+        <TeamRow match={m} side={1} />
       </div>
     </div>
   );
