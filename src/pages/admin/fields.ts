@@ -257,10 +257,12 @@ export interface BulkChange {
 export const planBulk = (players: readonly AdminPlayer[], key: BioFieldKey, value: string | null): BulkChange[] => {
   const bioKey = bioKeyOf(key);
   const wanted = value === null ? undefined : decodeBio(bioKey, value);
+  const trusted = FIELD_BY_KEY.get(key)?.trustBwf !== false;
   return players.flatMap((player) => {
     const bwf = bwfValue(player, key);
     const current = overrideValue(player.override, key);
-    const next = wanted ?? decodeBio(bioKey, bwf);
-    return decodeBio(bioKey, current || bwf) === next ? [] : [{ player, bwf, current, next: encodeBio(next) }];
+    const next = wanted ?? (trusted ? decodeBio(bioKey, bwf) : undefined);
+    const shown = decodeBio(bioKey, current || (trusted ? bwf : ''));
+    return shown === next ? [] : [{ player, bwf, current, next: encodeBio(next) }];
   });
 };

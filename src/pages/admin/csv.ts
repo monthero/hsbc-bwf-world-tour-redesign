@@ -7,6 +7,7 @@ import { bwfValue, displayName, effectiveValue, FIELD_BY_KEY, planBulk, type Bul
 import {
   bioKeyOf,
   CSV_FIELDS,
+  overrideValue,
   CSV_ID,
   decodeBio,
   type AdminPlayer,
@@ -46,7 +47,8 @@ const emptyPlan = (error: string | null): ImportPlan => ({
 
 const nextValue = (player: AdminPlayer, key: BioFieldKey, change: BulkChange) => {
   const bioKey = bioKeyOf(key);
-  return decodeBio(bioKey, bwfValue(player, key)) === decodeBio(bioKey, change.next) ? null : change.next;
+  const trusted = FIELD_BY_KEY.get(key)?.trustBwf !== false;
+  return trusted && decodeBio(bioKey, bwfValue(player, key)) === decodeBio(bioKey, change.next) ? null : change.next;
 };
 
 export const planImport = (text: string, players: readonly AdminPlayer[]): ImportPlan => {
@@ -97,7 +99,8 @@ const byCountryThenName = (a: AdminPlayer, b: AdminPlayer) =>
   countryName(a.cc).localeCompare(countryName(b.cc)) || displayName(a).localeCompare(displayName(b));
 
 const cellOf = (p: AdminPlayer, column: CsvColumn, brands: readonly BrandMatcher[]) => {
-  const value = effectiveValue(p, CSV_FIELDS[column]);
+  const key = CSV_FIELDS[column];
+  const value = key === 'bio.racket' ? overrideValue(p.override, key) : effectiveValue(p, key);
   if (column === 'hand') return parsePlays(value) ?? '';
   return column === 'racket' && isBrandOnly(value, brands) ? '' : value;
 };

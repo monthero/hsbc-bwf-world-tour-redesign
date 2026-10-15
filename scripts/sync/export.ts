@@ -253,11 +253,10 @@ export const exportData = async (
     hero: overrideImage(p.id, 'hero') ?? p.hero ?? null,
   }));
   const playerOf = new Map(players.map((p) => [p.id, p]));
-  const bioOf = (p: PlayerRow) =>
-    normalizeBio(
-      { ...(p.bio ? (JSON.parse(p.bio) as Record<string, unknown>) : {}), ...overrides[p.id]?.bio },
-      brandOnly,
-    );
+  const bioOf = (p: PlayerRow) => {
+    const { racket: _bwfRacket, ...bwf } = p.bio ? (JSON.parse(p.bio) as Record<string, unknown>) : {};
+    return normalizeBio({ ...bwf, ...overrides[p.id]?.bio }, brandOnly);
+  };
   const nameOf = (id: number | string | null | undefined, fallback: string | null = '') => {
     const key = id ? String(id) : '';
     return (key && (nameOverride(key) ?? playerOf.get(key)?.name)) || fallback || '';
