@@ -97,8 +97,8 @@ export const PlayersTab: FC = () => {
     const players = selected.size
       ? (data?.players.filter((p) => selected.has(p.id)) ?? NO_PLAYERS)
       : filtered.map((r) => r.player);
-    downloadText(`bwf-players-${todayStamp()}.csv`, exportCsv(players));
-  }, [selected, data, filtered]);
+    downloadText(`bwf-players-${todayStamp()}.csv`, exportCsv(players, knownBrands));
+  }, [selected, data, filtered, knownBrands]);
 
   return (
     <>

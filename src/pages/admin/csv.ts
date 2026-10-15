@@ -2,6 +2,7 @@ import { countryName, flagEmoji } from '~/utils/countries';
 import { parseCsv, toCsv } from '~/utils/csv';
 import { parsePlays } from '~/utils/format';
 
+import { isBrandOnly, type BrandMatcher } from './catalog';
 import { bwfValue, displayName, effectiveValue, FIELD_BY_KEY, planBulk, type BulkChange } from './fields';
 import {
   bioKeyOf,
@@ -95,15 +96,16 @@ export const planImport = (text: string, players: readonly AdminPlayer[]): Impor
 const byCountryThenName = (a: AdminPlayer, b: AdminPlayer) =>
   countryName(a.cc).localeCompare(countryName(b.cc)) || displayName(a).localeCompare(displayName(b));
 
-const cellOf = (p: AdminPlayer, column: CsvColumn) => {
+const cellOf = (p: AdminPlayer, column: CsvColumn, brands: readonly BrandMatcher[]) => {
   const value = effectiveValue(p, CSV_FIELDS[column]);
-  return column === 'hand' ? (parsePlays(value) ?? '') : value;
+  if (column === 'hand') return parsePlays(value) ?? '';
+  return column === 'racket' && isBrandOnly(value, brands) ? '' : value;
 };
 
-export const exportCsv = (players: readonly AdminPlayer[]) =>
+export const exportCsv = (players: readonly AdminPlayer[], brands: readonly BrandMatcher[]) =>
   toCsv([
     ['country', CSV_ID, 'name', ...CSV_COLUMNS],
     ...[...players]
       .sort(byCountryThenName)
-      .map((p) => [flagEmoji(p.cc), p.id, displayName(p), ...CSV_COLUMNS.map((c) => cellOf(p, c))]),
+      .map((p) => [flagEmoji(p.cc), p.id, displayName(p), ...CSV_COLUMNS.map((c) => cellOf(p, c, brands))]),
   ]);

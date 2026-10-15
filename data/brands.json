@@ -1,12 +1,32 @@
 [
   {
+    "id": "adidas",
+    "name": "Adidas",
+    "aliases": []
+  },
+  {
     "id": "apacs",
     "name": "Apacs",
     "aliases": []
   },
   {
+    "id": "ashaway",
+    "name": "Ashaway",
+    "aliases": []
+  },
+  {
     "id": "babolat",
     "name": "Babolat",
+    "aliases": []
+  },
+  {
+    "id": "bonny",
+    "name": "Bonny",
+    "aliases": []
+  },
+  {
+    "id": "carlton",
+    "name": "Carlton",
     "aliases": []
   },
   {
@@ -58,8 +78,23 @@
     "aliases": []
   },
   {
+    "id": "protech",
+    "name": "Protech",
+    "aliases": []
+  },
+  {
+    "id": "rsl",
+    "name": "RSL",
+    "aliases": []
+  },
+  {
     "id": "victor",
     "name": "Victor",
+    "aliases": []
+  },
+  {
+    "id": "wilson",
+    "name": "Wilson",
     "aliases": []
   },
   {

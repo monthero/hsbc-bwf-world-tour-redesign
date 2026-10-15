@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { EventCode, MonthKey, type EditionRef, type Retirement } from '../../src/api/schemas.ts';
 import { imageAssetPath, ImageKind } from '../../src/pages/admin/schema.ts';
-import { parseHeightCm, parsePlays } from '../../src/utils/format.ts';
+import { parseHeightCm, parsePlays, tidySpaces } from '../../src/utils/format.ts';
 import { dominantOffset, utcOffsetOf } from '../../src/utils/utc-offset.ts';
 import {
   historyPath,
@@ -17,6 +17,7 @@ import {
 } from './bwf.ts';
 import { dayjs } from './dates.ts';
 import { all, type Db } from './db.ts';
+import { brandKeys, compactKey, readCatalog } from './equipment.ts';
 import { createMapPlacer } from './geo.ts';
 import { FOREVER, type Client } from './http.ts';
 import type { Output } from './output.ts';
@@ -149,10 +150,15 @@ const venueOf = (e: EditionRow) => {
 
 const isCancelled = (e: EditionRow) => !!e.cancelled || (!!e.archived && e.match_count === 0);
 
-const normalizeBio = ({ height, plays, ...rest }: Record<string, unknown>) => {
+const tidyValues = (bio: Record<string, unknown>) =>
+  Object.fromEntries(Object.entries(bio).map(([k, v]) => [k, typeof v === 'string' ? tidySpaces(v) : v]));
+
+const normalizeBio = (bio: Record<string, unknown>, brands: ReadonlySet<string>) => {
+  const { height, plays, racket, ...rest } = tidyValues(bio);
   const cm = parseHeightCm(height);
   const hand = parsePlays(plays);
-  return { ...rest, ...(cm && { height: cm }), ...(hand && { plays: hand }) };
+  const model = typeof racket === 'string' && !brands.has(compactKey(racket)) ? racket : undefined;
+  return { ...rest, ...(cm && { height: cm }), ...(hand && { plays: hand }), ...(model && { racket: model }) };
 };
 
 const dayOffsets = (rows: readonly MatchRow[]) => {
@@ -224,6 +230,7 @@ export const exportData = async (
   const editionOf = new Map(editions.map((e) => [e.code, e]));
 
   const overrides = readOverrides(overridesFile);
+  const brandOnly = new Set(readCatalog(path.dirname(overridesFile)).brands.flatMap(brandKeys));
   const nameOverride = (id: string) => overrides[id]?.name?.trim() || undefined;
   const missingAssets: string[] = [];
   const overrideAssets = new Map(
@@ -247,7 +254,10 @@ export const exportData = async (
   }));
   const playerOf = new Map(players.map((p) => [p.id, p]));
   const bioOf = (p: PlayerRow) =>
-    normalizeBio({ ...(p.bio ? (JSON.parse(p.bio) as Record<string, unknown>) : {}), ...overrides[p.id]?.bio });
+    normalizeBio(
+      { ...(p.bio ? (JSON.parse(p.bio) as Record<string, unknown>) : {}), ...overrides[p.id]?.bio },
+      brandOnly,
+    );
   const nameOf = (id: number | string | null | undefined, fallback: string | null = '') => {
     const key = id ? String(id) : '';
     return (key && (nameOverride(key) ?? playerOf.get(key)?.name)) || fallback || '';

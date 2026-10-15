@@ -81,6 +81,8 @@ export const handLabel = (value: unknown) => {
   return hand ? HAND_LABELS[hand] : '';
 };
 
+export const tidySpaces = (text: string) => text.replace(/[^\S\r\n]+/g, ' ').trim();
+
 export const TENSION_UNIT = 'lbs';
 export const TENSION_UNITS = [TENSION_UNIT, 'kg'] as const;
 type TensionUnit = (typeof TENSION_UNITS)[number];

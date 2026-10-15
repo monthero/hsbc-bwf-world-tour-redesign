@@ -28,6 +28,11 @@ export const splitBrand = (value: string, brands: readonly BrandMatcher[]) => {
   return null;
 };
 
+export const isBrandOnly = (value: string, brands: readonly BrandMatcher[]) => {
+  const key = compactKey(value);
+  return !!key && brands.some((b) => b.keys.includes(key));
+};
+
 export const guessParts = (value: string, brands: readonly BrandMatcher[]) => {
   const hit = splitBrand(value, brands);
   return { brandId: hit?.brand.id ?? '', model: (hit?.rest ?? words(value)).join(' ') };

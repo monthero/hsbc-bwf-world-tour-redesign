@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { EditionRef, EventCode, Focus, IsoDay, MonthKey, PhotoCrop } from '../../api/schemas.ts';
-import { parseHeightCm, parsePlays, parseTension } from '../../utils/format.ts';
+import { parseHeightCm, parsePlays, parseTension, tidySpaces } from '../../utils/format.ts';
 import { cleanName, nameIssue } from '../../utils/surname.ts';
 
 const BIO_KEYS = [
@@ -46,7 +46,7 @@ const BIO_PARSERS: Partial<Record<BioKey, (value: unknown) => BioValue | null>> 
 export const decodeBio = (key: BioKey, value: unknown): BioValue | undefined => {
   const parse = BIO_PARSERS[key];
   if (parse) return parse(value) ?? undefined;
-  const text = typeof value === 'string' || typeof value === 'number' ? String(value).trim() : '';
+  const text = typeof value === 'string' || typeof value === 'number' ? tidySpaces(String(value)) : '';
   return text || undefined;
 };
 
