@@ -22,11 +22,11 @@ const PodiumCard = memo<{ row: RankRow; medal: MedalKind }>(({ row, medal }) => 
         </span>
       </div>
       <div className={clsx(utils.num, classes.stats)}>
+        {row.tournaments !== null && <span className={classes.played}>{plural(row.tournaments, 'tournament')}</span>}
         <span className={classes.points}>
           {formatNumber(row.points)}
           <span className={classes.unit}>pts</span>
         </span>
-        {row.tournaments !== null && <span className={classes.played}>{plural(row.tournaments, 'tournament')}</span>}
       </div>
     </li>
   );
