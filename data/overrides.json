@@ -69,6 +69,17 @@
         }
       }
     },
+    "25831": {
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ VA",
+        "tension": "33/32",
+        "tensionNote": "+10% pre-stretch",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion 65 Z VA"
+      },
+      "source": "user",
+      "asOf": "2026-10-15"
+    },
     "26238": {
       "retired": "2021-01",
       "source": "https://www.badspi.jp/202101282300/",
@@ -5030,6 +5041,17 @@
       "asOf": "2026-10-15"
     },
     "91554": {
+      "photo": "https://instagram.fein1-2.fna.fbcdn.net/v/t51.82787-15/658454540_18581717104030690_8324612915829334157_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=Mzg3NDk5MDcyNDA4NTMyODE1NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=32iWpx-uvtUQ7kNvwHlMGzu&_nc_oc=AdrAN1VyySyTn-fUBF3azCjv5DWW_aAbCaWv0WcEC08AY1LlleAu4dmhfJ7p933Gosg&_nc_zt=23&_nc_ht=instagram.fein1-2.fna&_nc_gid=XggNwJKAgga6yum9L8DKGw&_nc_ss=7b289&oh=00_AQOS3GQwIab1VeyfGY5ZJreSrsJtNvJC8tLRPYDNSy6J-Q&oe=6AD64495",
+      "hero": "https://images.augustman.com/wp-content/uploads/sites/2/2025/08/21201020/snapins-ai_3634515570651543018-1-1.jpeg",
+      "heroFocus": {
+        "x": 53,
+        "y": 70
+      },
+      "photoCrop": {
+        "x": 64,
+        "y": 0,
+        "zoom": 1.95
+      },
       "bio": {
         "racket": "Victor Auraspeed 99 Antonsen",
         "tension": "31/33",
@@ -5053,6 +5075,22 @@
           "asOf": "2026-10-15"
         },
         "bio.tensionNote": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://images.augustman.com/wp-content/uploads/sites/2/2025/08/21201020/snapins-ai_3634515570651543018-1-1.jpeg",
+          "asOf": "2026-10-15"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "photo": {
+          "source": "https://instagram.fein1-2.fna.fbcdn.net/v/t51.82787-15/658454540_18581717104030690_8324612915829334157_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=Mzg3NDk5MDcyNDA4NTMyODE1NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=32iWpx-uvtUQ7kNvwHlMGzu&_nc_oc=AdrAN1VyySyTn-fUBF3azCjv5DWW_aAbCaWv0WcEC08AY1LlleAu4dmhfJ7p933Gosg&_nc_zt=23&_nc_ht=instagram.fein1-2.fna&_nc_gid=XggNwJKAgga6yum9L8DKGw&_nc_ss=7b289&oh=00_AQOS3GQwIab1VeyfGY5ZJreSrsJtNvJC8tLRPYDNSy6J-Q&oe=6AD64495",
+          "asOf": "2026-10-15"
+        },
+        "photoCrop": {
           "source": "user",
           "asOf": "2026-10-15"
         }
