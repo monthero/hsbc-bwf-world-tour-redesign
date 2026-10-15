@@ -15,6 +15,7 @@ import {
   ImageResult,
   SaveResult,
   type BulkRequest,
+  type ImportRequest,
   type BrandInput,
   type EquipmentInput,
   type EquipmentKind,
@@ -88,6 +89,15 @@ export const useBulkOverride = () => {
   const { apply, resync } = useApplyEntries();
   return useMutation({
     mutationFn: (req: BulkRequest) => send('/overrides/players', 'PATCH', req, BulkResult),
+    onSuccess: ({ entries }) => apply(entries),
+    onError: resync,
+  });
+};
+
+export const useImportOverrides = () => {
+  const { apply, resync } = useApplyEntries();
+  return useMutation({
+    mutationFn: (req: ImportRequest) => send('/overrides/import', 'POST', req, BulkResult),
     onSuccess: ({ entries }) => apply(entries),
     onError: resync,
   });

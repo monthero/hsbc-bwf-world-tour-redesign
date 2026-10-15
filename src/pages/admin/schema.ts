@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { EditionRef, EventCode, Focus, IsoDay, MonthKey, PhotoCrop } from '../../api/schemas.ts';
-import { parseHeightCm, parseTension } from '../../utils/format.ts';
+import { parseHeightCm, parsePlays, parseTension } from '../../utils/format.ts';
 import { cleanName, nameIssue } from '../../utils/surname.ts';
 
 const BIO_KEYS = [
@@ -39,6 +39,7 @@ export type BioValues = Partial<Record<BioKey, BioValue>>;
 
 const BIO_PARSERS: Partial<Record<BioKey, (value: unknown) => BioValue | null>> = {
   height: parseHeightCm,
+  plays: parsePlays,
   tension: parseTension,
 };
 
@@ -166,6 +167,28 @@ export const BulkRequest = z.object({
   asOf: IsoDay.optional(),
 });
 export type BulkRequest = z.input<typeof BulkRequest>;
+
+export const ImportRow = z.object({ id: PlayerId, changes: z.array(BulkFieldChange).min(1) });
+export type ImportRow = z.infer<typeof ImportRow>;
+
+export const ImportRequest = z.object({
+  rows: z.array(ImportRow).min(1).max(10_000),
+  source: Text.default(DEFAULT_SOURCE),
+  asOf: IsoDay.optional(),
+});
+export type ImportRequest = z.input<typeof ImportRequest>;
+
+export const CSV_FIELDS = {
+  hand: 'bio.plays',
+  racket: 'bio.racket',
+  racket_extra_info: 'bio.racketNote',
+  strings: 'bio.string',
+  tension: 'bio.tension',
+  tension_extra_info: 'bio.tensionNote',
+  shoes: 'bio.shoes',
+} as const satisfies Record<string, BioFieldKey>;
+export type CsvColumn = keyof typeof CSV_FIELDS;
+export const CSV_ID = 'player_id';
 
 export const BulkResult = z.object({
   entries: z.record(z.string(), PlayerOverride.nullable()),

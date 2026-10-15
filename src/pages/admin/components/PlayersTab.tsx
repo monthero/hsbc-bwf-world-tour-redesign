@@ -3,15 +3,19 @@ import { clsx } from 'clsx';
 import { useCallback, useMemo, useState, type FC } from 'react';
 
 import { EmptyState } from '~/components/ui';
+import { downloadText } from '~/utils/download';
 import { STAY } from '~/utils/navigation';
 
 import { useAdminPlayers, useEquipment } from '../api';
 import { brandMatchers } from '../catalog';
+import { exportCsv } from '../csv';
+import { todayStamp } from '../fields';
 import { buildRows, DEFAULT_ACTIVITY, DEFAULT_SORT, filterRows, type Criteria } from '../filters';
 import type { AdminPlayer } from '../schema';
 import type { AdminSearch } from '../types';
 import { BulkEditor } from './BulkEditor';
 import { FilterControls, FilterShell } from './FilterBar';
+import { ImportCsv } from './ImportCsv';
 import { PlayerEditor } from './PlayerEditor';
 import { PlayerTable } from './PlayerTable';
 import { SelectionBar } from './SelectionBar';
@@ -31,6 +35,7 @@ export const PlayersTab: FC = () => {
   const { data, error } = useAdminPlayers();
   const [selected, setSelected] = useState(NO_IDS);
   const [bulkOpen, setBulkOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
 
   const { data: catalog } = useEquipment('racket');
   const knownBrands = useMemo(() => brandMatchers(catalog?.brands ?? []), [catalog]);
@@ -86,6 +91,14 @@ export const PlayersTab: FC = () => {
   const onClear = useCallback(() => setSelected(NO_IDS), []);
   const onBulk = useCallback(() => setBulkOpen(true), []);
   const onBulkClose = useCallback(() => setBulkOpen(false), []);
+  const onImport = useCallback(() => setImportOpen(true), []);
+  const onImportClose = useCallback(() => setImportOpen(false), []);
+  const onExport = useCallback(() => {
+    const players = selected.size
+      ? (data?.players.filter((p) => selected.has(p.id)) ?? NO_PLAYERS)
+      : filtered.map((r) => r.player);
+    downloadText(`bwf-players-${todayStamp()}.csv`, exportCsv(players));
+  }, [selected, data, filtered]);
 
   return (
     <>
@@ -105,6 +118,8 @@ export const PlayersTab: FC = () => {
           onSelectAll={onSelectAll}
           onClear={onClear}
           onBulk={onBulk}
+          onImport={onImport}
+          onExport={onExport}
         />
       </FilterShell>
       <div className={clsx(utils.container, classes.body)}>
@@ -122,6 +137,7 @@ export const PlayersTab: FC = () => {
       </div>
       <PlayerEditor player={editing} onClose={onClose} />
       <BulkEditor opened={bulkOpen} onClose={onBulkClose} players={bulkPlayers} />
+      <ImportCsv opened={importOpen} onClose={onImportClose} players={data?.players ?? NO_PLAYERS} />
     </>
   );
 };

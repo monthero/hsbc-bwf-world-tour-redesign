@@ -2,29 +2,21 @@ import { Button, Select } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
-import { Flag } from '~/components/country';
 import { IconButton, IconClose, Segmented, type SegmentedOption } from '~/components/ui';
-import { formatNumber, plural } from '~/utils/format';
+import { plural } from '~/utils/format';
 
 import { useBulkOverride } from '../api';
-import {
-  BIO_FIELDS,
-  displayName,
-  FIELD_BY_KEY,
-  formatField,
-  planBulk,
-  todayStamp,
-  type BulkChange,
-  type FieldDef,
-} from '../fields';
+import { BIO_FIELDS, FIELD_BY_KEY, planBulk, todayStamp, type BulkChange } from '../fields';
 import { DEFAULT_SOURCE, type AdminPlayer, type BioFieldKey, type BulkFieldChange, type Provenance } from '../schema';
 import { AdminModal } from './AdminModal';
+import { ChangePreview, PreviewSummary } from './ChangePreview';
 import { ProvenanceInputs } from './FieldInputs';
 import { FIELD_INPUTS } from './inputMap';
 import { exportedIn, FLOATING_PROPS, INPUT_CLASSES } from './inputs';
 import { SaveStatus } from './SaveStatus';
 
 import classes from './BulkEditor.module.css';
+import parts from './ModalParts.module.css';
 import utils from '~/styles/utils.module.css';
 
 type BulkAction = 'set' | 'clear';
@@ -44,8 +36,6 @@ interface FieldPlan {
 }
 
 const PREFERRED_FIELDS: readonly BioFieldKey[] = ['bio.racket', 'bio.tension', 'bio.string', 'bio.shoes'];
-const PREVIEW_LIMIT = 30;
-const EMPTY = '—';
 
 const ACTION_OPTIONS: readonly SegmentedOption<BulkAction>[] = [
   { value: 'set', label: 'Set value' },
@@ -74,43 +64,6 @@ const newEdit = (id: number, field: BioFieldKey): FieldEdit => ({ id, field, act
 const nextValueOf = (e: FieldEdit) => (e.action === 'set' ? e.value.trim() : null);
 
 const noop = () => {};
-
-const ValueCell: FC<{ field: FieldDef | undefined; value: string; className: string | undefined }> = ({
-  field,
-  value,
-  className,
-}) => {
-  const shown = formatField(field, value);
-  return (
-    <span className={clsx(utils.ellipsis, className)} title={shown}>
-      {shown || EMPTY}
-    </span>
-  );
-};
-
-const ChangeRow = memo<{ change: BulkChange; field: FieldDef | undefined }>(({ change, field }) => {
-  const { player, bwf, current, next } = change;
-  return (
-    <li className={classes.change}>
-      <span className={classes.who}>
-        <Flag cc={player.cc} size="xs" tip={false} />
-        <span className={utils.ellipsis}>{displayName(player)}</span>
-      </span>
-      <ValueCell field={field} value={bwf} className={classes.value} />
-      <ValueCell field={field} value={current} className={classes.value} />
-      <ValueCell field={field} value={next} className={classes.next} />
-    </li>
-  );
-});
-
-const PREVIEW_HEAD = (
-  <li className={clsx(classes.change, classes.head)} aria-hidden>
-    <span className={classes.who}>Player</span>
-    <span>BWF</span>
-    <span>Override</span>
-    <span>New</span>
-  </li>
-);
 
 const FieldEditRow = memo<{
   edit: FieldEdit;
@@ -159,26 +112,6 @@ const FieldEditRow = memo<{
     </div>
   );
 });
-
-const PlanPreview = memo<{ plan: FieldPlan }>(({ plan }) => (
-  <section className={classes.plan}>
-    <h3 className={clsx(utils.num, classes.planTitle)}>
-      {plan.label}
-      <span>{plan.changes.length ? `${plural(plan.changes.length, 'player')} will change` : 'No change'}</span>
-    </h3>
-    {!!plan.changes.length && (
-      <ul className={classes.preview}>
-        {PREVIEW_HEAD}
-        {plan.changes.slice(0, PREVIEW_LIMIT).map((c) => (
-          <ChangeRow key={c.player.id} change={c} field={FIELD_BY_KEY.get(plan.edit.field)} />
-        ))}
-        {plan.changes.length > PREVIEW_LIMIT && (
-          <li className={classes.more}>and {formatNumber(plan.changes.length - PREVIEW_LIMIT)} more</li>
-        )}
-      </ul>
-    )}
-  </section>
-));
 
 export const BulkEditor: FC<{ opened: boolean; onClose: () => void; players: readonly AdminPlayer[] }> = ({
   opened,
@@ -247,9 +180,9 @@ export const BulkEditor: FC<{ opened: boolean; onClose: () => void; players: rea
       onClose={onClosed}
       size={820}
       title={
-        <div className={classes.title}>
-          <h2 className={classes.heading}>Bulk edit</h2>
-          <span className={clsx(utils.num, classes.sub)}>{plural(players.length, 'player')} selected</span>
+        <div className={parts.title}>
+          <h2 className={parts.heading}>Bulk edit</h2>
+          <span className={clsx(utils.num, parts.sub)}>{plural(players.length, 'player')} selected</span>
         </div>
       }
       actions={
@@ -265,7 +198,7 @@ export const BulkEditor: FC<{ opened: boolean; onClose: () => void; players: rea
         />
       }
     >
-      <div className={classes.form}>
+      <div className={parts.form}>
         {edits.map((e) => (
           <FieldEditRow
             key={e.id}
@@ -285,13 +218,9 @@ export const BulkEditor: FC<{ opened: boolean; onClose: () => void; players: rea
         </div>
         <ProvenanceInputs value={provenance} onChange={setProvenance} />
       </div>
-      <p className={clsx(utils.num, classes.summary)}>
-        {ids.length
-          ? `${plural(ids.length, 'player')} will change across ${plural(active.length, 'field')}`
-          : 'No players would change'}
-      </p>
+      <PreviewSummary players={ids.length} fields={active.length} />
       {plans.map((p) => (
-        <PlanPreview key={p.edit.id} plan={p} />
+        <ChangePreview key={p.edit.id} label={p.label} field={FIELD_BY_KEY.get(p.edit.field)} changes={p.changes} />
       ))}
     </AdminModal>
   );

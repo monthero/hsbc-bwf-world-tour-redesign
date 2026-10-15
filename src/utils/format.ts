@@ -65,6 +65,22 @@ export const formatHeight = (cm: number, unit: HeightUnit = 'cm') =>
 export const heightParts = (cm: number, unit: HeightUnit) =>
   unit === 'ftin' ? { value: formatFeetInches(cm) } : { value: String(cm), unit: HEIGHT_UNIT };
 
+export const HANDS = ['R', 'L'] as const;
+export type Hand = (typeof HANDS)[number];
+export const HAND_LABELS: Record<Hand, string> = { R: 'Right', L: 'Left' };
+const HAND = /^(r|l)(?:ight|eft)?(?:[\s-]*handed)?$/i;
+
+export const parsePlays = (value: unknown): Hand | null => {
+  if (typeof value !== 'string') return null;
+  const hand = HAND.exec(value.trim())?.[1]?.toUpperCase();
+  return hand === 'R' || hand === 'L' ? hand : null;
+};
+
+export const handLabel = (value: unknown) => {
+  const hand = parsePlays(value);
+  return hand ? HAND_LABELS[hand] : '';
+};
+
 export const TENSION_UNIT = 'lbs';
 export const TENSION_UNITS = [TENSION_UNIT, 'kg'] as const;
 type TensionUnit = (typeof TENSION_UNITS)[number];

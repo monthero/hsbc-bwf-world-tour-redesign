@@ -10,6 +10,7 @@ import { prettyJson } from '../scripts/sync/util.ts';
 import { EventCode } from '../src/api/schemas.ts';
 import {
   BulkRequest,
+  ImportRequest,
   canonicalOverride,
   ImageRequest,
   OverridesFile,
@@ -19,6 +20,8 @@ import {
   withField,
   type AdminPlayer,
   type BulkResult,
+  type ImportRow,
+  type Provenance,
   type ImageResult,
   type SaveResult,
 } from '../src/pages/admin/schema.ts';
@@ -30,6 +33,7 @@ import { retirementNews } from './retirement.ts';
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
 const EXPORT_ARGS = ['--disable-warning=ExperimentalWarning', 'scripts/sync/index.ts', '--only', 'export', '--offline'];
 const PLAYERS_ROUTE = '/overrides/players';
+const IMPORT_ROUTE = '/overrides/import';
 const PLAYER_ROUTE = new RegExp(`^${PLAYERS_ROUTE}/(\\d+)$`);
 
 const PLAYERS_SQL = `
@@ -180,15 +184,14 @@ const createAdmin = (root: string) => {
     });
   };
 
-  const bulkUpdate = (body: unknown) => {
-    const { ids, changes, source, asOf } = parseWith(BulkRequest, body);
-    return serial(async (): Promise<BulkResult> => {
+  const applyRows = (rows: readonly ImportRow[], provenance: Provenance) =>
+    serial(async (): Promise<BulkResult> => {
       let file = await readOverrides();
       const entries: BulkResult['entries'] = {};
-      for (const id of new Set(ids)) {
+      for (const { id, changes } of rows) {
         const before = canonicalOverride(file.players[id]);
         const after = changes.reduce<PlayerOverride | null>(
-          (entry, c) => withField(entry, c.field, c.value, { source, asOf }),
+          (entry, c) => withField(entry, c.field, c.value, provenance),
           before,
         );
         if (sameOverride(before, after)) continue;
@@ -200,6 +203,18 @@ const createAdmin = (root: string) => {
       await writeOverrides(file);
       return { entries, changed, exportMs: await runExport() };
     });
+
+  const bulkUpdate = (body: unknown) => {
+    const { ids, changes, source, asOf } = parseWith(BulkRequest, body);
+    return applyRows(
+      [...new Set(ids)].map((id) => ({ id, changes })),
+      { source, asOf },
+    );
+  };
+
+  const importRows = (body: unknown) => {
+    const { rows, source, asOf } = parseWith(ImportRequest, body);
+    return applyRows(rows, { source, asOf });
   };
 
   const fetchImage = async (body: unknown): Promise<ImageResult> => {
@@ -220,6 +235,7 @@ const createAdmin = (root: string) => {
     const player = PLAYER_ROUTE.exec(url)?.[1];
     if (method === 'PUT' && player) return sendJson(res, 200, await savePlayer(player, await readBody(req)));
     if (method === 'PATCH' && url === PLAYERS_ROUTE) return sendJson(res, 200, await bulkUpdate(await readBody(req)));
+    if (method === 'POST' && url === IMPORT_ROUTE) return sendJson(res, 200, await importRows(await readBody(req)));
     if (method === 'POST' && url === '/images') return sendJson(res, 200, await fetchImage(await readBody(req)));
     const catalog = await equipment(method, req.url ?? '/', req);
     if (catalog !== undefined) return sendJson(res, 200, catalog);

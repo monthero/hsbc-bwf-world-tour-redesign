@@ -14,7 +14,9 @@ export const SelectionBar = memo<{
   onSelectAll: () => void;
   onClear: () => void;
   onBulk: () => void;
-}>(({ count, filtered, allFiltered, onSelectAll, onClear, onBulk }) => (
+  onImport: () => void;
+  onExport: () => void;
+}>(({ count, filtered, allFiltered, onSelectAll, onClear, onBulk, onImport, onExport }) => (
   <div className={classes.bar} data-active={count > 0 || undefined}>
     <span className={clsx(utils.num, classes.count)}>
       {count ? `${formatNumber(count)} selected` : 'None selected'}
@@ -25,14 +27,22 @@ export const SelectionBar = memo<{
       </button>
     )}
     {count > 0 && (
-      <>
-        <button type="button" className={classes.link} onClick={onClear}>
-          Clear
-        </button>
-        <Button size="xs" radius="xl" onClick={onBulk} className={classes.bulk}>
+      <button type="button" className={classes.link} onClick={onClear}>
+        Clear
+      </button>
+    )}
+    <div className={classes.tools}>
+      <Button size="xs" radius="xl" variant="subtle" color="gray" onClick={onImport}>
+        Import CSV
+      </Button>
+      <Button size="xs" radius="xl" variant="subtle" color="gray" onClick={onExport} disabled={!count && !filtered}>
+        Export {count ? 'selected' : 'filtered'}
+      </Button>
+      {count > 0 && (
+        <Button size="xs" radius="xl" onClick={onBulk}>
           Bulk edit
         </Button>
-      </>
-    )}
+      )}
+    </div>
   </div>
 ));
