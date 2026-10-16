@@ -58,6 +58,27 @@
         }
       }
     },
+    "19726": {
+      "hero": "https://img.ligaolahraga.com/public/images/news/2026/09/07/china-masters-gelar-perdana-sumire-nakade-miyu-takahashi-di-level-super-750.webp",
+      "photoCrop": {
+        "x": 50,
+        "y": 86.9,
+        "zoom": 1
+      },
+      "bio": {
+        "racket": "Yonex Nanoflare 700 Pro",
+        "racketNote": "4U",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "user",
+      "asOf": "2026-10-16",
+      "meta": {
+        "hero": {
+          "source": "https://img.ligaolahraga.com/public/images/news/2026/09/07/china-masters-gelar-perdana-sumire-nakade-miyu-takahashi-di-level-super-750.webp",
+          "asOf": "2026-10-16"
+        }
+      }
+    },
     "24686": {
       "retired": "2024-08",
       "source": "https://www.siamsport.co.th/other-sports/badminton/70824/",
@@ -1186,7 +1207,6 @@
         "racket": "Yonex Voltric Z-Force",
         "racketNote": "4U",
         "tension": "27",
-        "tensionNote": "26.5–27 range",
         "string": "Yonex Aerosonic",
         "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "World Championships 2025 – gold (Mixed doubles); Sudirman Cup 2023 – bronze (Mixed team); SEA Games 2025 – bronze (Women's team); SEA Games 2025 – bronze (Mixed doubles)"
@@ -1223,10 +1243,6 @@
           "asOf": "2026-10-15"
         },
         "bio.tension": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
-        "bio.tensionNote": {
           "source": "user",
           "asOf": "2026-10-15"
         },
@@ -1525,7 +1541,6 @@
         "racket": "Yonex Nanoflare 700 Pro",
         "racketNote": "3U",
         "tension": "30/31",
-        "tensionNote": "or 31/32",
         "string": "Yonex BG80",
         "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Olympic Games 2024 – silver (Mixed doubles); World Championships 2025 – gold (Men's doubles); World Championships 2026 – bronze (Men's doubles); Sudirman Cup 2017 – gold (Mixed team); Sudirman Cup 2023 – silver (Mixed team); Sudirman Cup 2025 – silver (Mixed team); Sudirman Cup 2021 – bronze (Mixed team); Asian Games 2022 – silver (Men's doubles); Asian Games 2022 – bronze (Men's team); Asian Games 2026 – bronze (Men's doubles); Asia Championships 2026 – gold (Men's doubles); Asia Championships 2019 – bronze (Men's doubles); Asia Mixed Team Championships 2023 – silver (Mixed team); Asia Team Championships 2018 – bronze (Men's team); Asia Team Championships 2024 – bronze (Men's team); Asia Team Championships 2026 – bronze (Men's team)"
@@ -1550,10 +1565,6 @@
           "asOf": "2026-10-15"
         },
         "bio.tension": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
-        "bio.tensionNote": {
           "source": "user",
           "asOf": "2026-10-15"
         },
@@ -2190,7 +2201,6 @@
         "racket": "Yonex Nanoflare 700 Pro",
         "racketNote": "3U",
         "tension": "29/30",
-        "tensionNote": "or 28/29",
         "string": "Yonex BG80",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
@@ -2210,10 +2220,6 @@
           "asOf": "2026-10-15"
         },
         "bio.tension": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
-        "bio.tensionNote": {
           "source": "user",
           "asOf": "2026-10-15"
         }
@@ -2347,8 +2353,22 @@
     },
     "68015": {
       "hero": "https://hkbadmintonassn.org.hk/wp-content/uploads/2026/09/20260927_Asian-Games_WD_Yeung-Nga-Ting_Yeung-Pui-Lam_3.jpg",
+      "bio": {
+        "racket": "Yonex Astrox 77 Pro",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
       "source": "https://hkbadmintonassn.org.hk/",
-      "asOf": "2026-10-12"
+      "asOf": "2026-10-12",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        }
+      }
     },
     "68134": {
       "hero": "https://badminton.dk/wp-content/uploads/2026/05/20260524_1734_MalaysiaMasters2026_BPTE3746-scaled.jpg",
@@ -2573,7 +2593,6 @@
         "racket": "Yonex Nanoflare 1000Z",
         "racketNote": "3U",
         "tension": "30/32",
-        "tensionNote": "or 31/33",
         "string": "Yonex BG80 Power",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
@@ -2593,10 +2612,6 @@
           "asOf": "2026-10-15"
         },
         "bio.tension": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
-        "bio.tensionNote": {
           "source": "user",
           "asOf": "2026-10-15"
         }
@@ -2812,6 +2827,31 @@
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
+        }
+      }
+    },
+    "70692": {
+      "hero": "https://usabadminton.org/wp-content/uploads/2026/07/20260628_1546_USOpen2026_BPYL6293-scaled.jpg",
+      "heroFocus": {
+        "x": 46,
+        "y": 79
+      },
+      "photoCrop": {
+        "x": 50,
+        "y": 86.1,
+        "zoom": 1
+      },
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ",
+        "racketNote": "Kurenai, 4U",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "user",
+      "asOf": "2026-10-16",
+      "meta": {
+        "hero": {
+          "source": "https://usabadminton.org/wp-content/uploads/2026/07/20260628_1546_USOpen2026_BPYL6293-scaled.jpg",
+          "asOf": "2026-10-16"
         }
       }
     },
@@ -3364,7 +3404,9 @@
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1616/v1722199717/wordpress_assets_test/2Paris_Yeung-Nga-TIng-Pui-Lam/2Paris_Yeung-Nga-TIng-Pui-Lam.jpg",
       "bio": {
         "birthplace": "Hong Kong",
-        "residence": "Hong Kong"
+        "residence": "Hong Kong",
+        "racket": "Yonex Arcsaber 7 Pro",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "https://bwfbadminton.com/news-single/2024/07/29/defending-champs-lee-wang-pull-ahead/",
       "asOf": "2026-10-12",
@@ -3373,9 +3415,17 @@
           "source": "https://www.wikidata.org/wiki/Q111045668",
           "asOf": "2026-10-12"
         },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-15"
+        },
         "bio.residence": {
           "source": "https://www.wikidata.org/wiki/Q111045668",
           "asOf": "2026-10-12"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-15"
         }
       }
     },
