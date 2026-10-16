@@ -1,4 +1,4 @@
-import { parseHeightCm } from '../../../src/utils/format.ts';
+import { parseHeightCm } from '../../../src/utils/parse.ts';
 import { bioPath, summaryPath, type ApiBio, type ApiSummary } from '../bwf.ts';
 import type { Context } from '../context.ts';
 import { addDays, DAY_MS } from '../dates.ts';

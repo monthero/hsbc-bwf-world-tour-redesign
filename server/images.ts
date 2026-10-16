@@ -15,7 +15,7 @@ import {
   type ImageKind,
   type ImageResult,
 } from '../src/pages/admin/schema.ts';
-import { formatBytes } from '../src/utils/format.ts';
+import { formatBytes } from '../src/utils/bytes.ts';
 import { errorMessage, HttpError, readText, writeAtomic } from './http.ts';
 
 const MAX_BYTES = 40 * 1024 * 1024;

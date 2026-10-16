@@ -54,20 +54,32 @@ const ctx: Context = {
 };
 
 const started = Date.now();
-if (only.has('calendar')) await syncCalendar(ctx);
-if (only.has('details')) await syncDetails(ctx);
-if (only.has('matches')) await syncMatches(ctx);
-if (only.has('players')) await syncPlayers(ctx);
-if (only.has('rankings')) await syncRankings(ctx);
-if (only.has('news'))
-  await syncNews(ctx, {
+const timings: string[] = [];
+const step = async (name: (typeof STEPS)[number], run: () => unknown) => {
+  if (!only.has(name)) return;
+  const at = Date.now();
+  const before = httpStats();
+  await run();
+  const secs = ((Date.now() - at) / 1000).toFixed(1);
+  timings.push(`${name} ${secs}s`);
+  console.log(`  ${name} took ${secs}s, ${httpStats().network - before.network} downloaded`);
+};
+
+await step('calendar', () => syncCalendar(ctx));
+await step('details', () => syncDetails(ctx));
+await step('matches', () => syncMatches(ctx));
+await step('players', () => syncPlayers(ctx));
+await step('rankings', () => syncRankings(ctx));
+await step('news', () =>
+  syncNews(ctx, {
     offline,
     catalogFile: CATALOG,
     overridesFile: OVERRIDES,
     maxPages: values['news-pages'] ? Number(values['news-pages']) : undefined,
-  });
-if (only.has('images')) await syncImages(ROOT, OVERRIDES, offline);
-if (only.has('export')) {
+  }),
+);
+await step('images', () => syncImages(ROOT, OVERRIDES, offline));
+await step('export', async () => {
   const output = createOutput(OUT);
   await exportData(
     db,
@@ -83,10 +95,11 @@ if (only.has('export')) {
   const pruned = output.prune();
   if (pruned) console.log(`export: removed ${pruned} stale files`);
   exportSitemap(db, path.join(ROOT, 'public'), today);
-}
+});
 
+console.log(`timings: ${timings.join(' · ')}`);
 const s = httpStats();
 console.log(
-  `done in ${Math.round((Date.now() - started) / 1000)}s · ${s.network} downloaded · ${s.cached} from cache · ${s.failed} failed`,
+  `done in ${Math.round((Date.now() - started) / 1000)}s · ${s.network} downloaded · ${s.cached} from cache · ${s.failed} failed · ${s.skipped} skipped after a recent 500`,
 );
 db.close();

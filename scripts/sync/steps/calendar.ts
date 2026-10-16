@@ -3,7 +3,7 @@ import type { Edition } from '../catalog.ts';
 import type { Context } from '../context.ts';
 import { HOUR_MS } from '../dates.ts';
 import { all, tx } from '../db.ts';
-import { within } from '../http.ts';
+import { pool, within } from '../http.ts';
 
 const SIX_HOURS = 6 * HOUR_MS;
 
@@ -13,8 +13,11 @@ const calendarFresh = (year: number, currentYear: number) => (at: number) =>
 export const syncCalendar = async ({ db, client, catalog, years, currentYear }: Context) => {
   const editions = new Map<string, Edition>();
   let complete = true;
-  for (const year of years) {
-    const res = await client.get<ApiCalendar>(calendarPath(year), calendarFresh(year, currentYear));
+  const responses = await pool(years, (year) =>
+    client.get<ApiCalendar>(calendarPath(year), calendarFresh(year, currentYear)),
+  );
+  for (const [i, year] of years.entries()) {
+    const res = responses[i];
     if (!res) complete = false;
     for (const t of res?.data.results.flatMap((m) => m.tournaments) ?? []) {
       const e = catalog.edition(t, year);

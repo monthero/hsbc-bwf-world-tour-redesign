@@ -24,7 +24,7 @@ import {
 } from '../bwf.ts';
 import type { Context } from '../context.ts';
 import { DAY_MS, HOUR_MS } from '../dates.ts';
-import { all, tx } from '../db.ts';
+import { all, readState, tx, writeState } from '../db.ts';
 import { FOREVER, pool, within, type Cached, type Client } from '../http.ts';
 import { photoOf } from '../normalize.ts';
 import { collapseSpaces, readJsonFile } from '../util.ts';
@@ -36,6 +36,12 @@ const PAGE_SIZES = [1000, 100, 10, 1];
 const SPLIT_RETRIES = 1;
 const WEEKLY_FLOOR = 2008;
 const WEEKLY_GAP = 2;
+const HISTORY_STATE = 'rankings.history';
+
+interface HistoryState {
+  key: string;
+  done: string[];
+}
 
 const COUNTRIES = readJsonFile<Record<string, { name: string }>>(
   resolve(import.meta.dirname, '../../../src/utils/countries.json'),
@@ -156,15 +162,17 @@ export const weeklyHistory = async (
   const known = Math.min(...history.map((h) => Number(h.date?.slice(0, 4)) || currentYear));
   const rows: ApiWeeklyRow[] = [];
   let empty = 0;
+  let complete = true;
   for (let year = currentYear; year >= WEEKLY_FLOOR && (year >= known || empty < WEEKLY_GAP); year--) {
     const path = weeklyPath(id, year, year === currentYear ? publication : undefined);
     const res = await client.get<ApiWeekly>(path, FOREVER);
     if (res) client.prune(weeklyPrefix(id, year), path);
+    else complete = false;
     const data = res?.data.data ?? [];
     empty = data.length ? 0 : empty + 1;
     rows.push(...data);
   }
-  return rows;
+  return { rows, complete };
 };
 
 const syncNames = async ({ db, client }: Context) => {
@@ -194,13 +202,25 @@ export const syncRankings = async (ctx: Context) => {
     WORLD,
   ).map((r) => r.id);
 
+  const key = `${world}:${ctx.currentYear}`;
+  const state = readState<HistoryState | null>(db, HISTORY_STATE, null);
+  const complete = new Set(state?.key === key ? state.done : []);
+  const todo = ids.filter((id) => !complete.has(id));
+
   let done = 0;
-  await pool(ids, async (id) => {
+  await pool(todo, async (id) => {
     const path = historyPath(id, world);
     const res = await client.get<ApiHistory>(path, FOREVER);
     client.prune(historyPrefix(id), path);
-    if (res?.data.data.length) await weeklyHistory(client, id, res.data.data, ctx.currentYear, world);
-    if (++done % 500 === 0) console.log(`  ranking history ${done}/${ids.length}`);
+    const weekly = res?.data.data.length
+      ? await weeklyHistory(client, id, res.data.data, ctx.currentYear, world)
+      : { complete: true };
+    if (res && weekly.complete) complete.add(id);
+    if (++done % 500 === 0) console.log(`  ranking history ${done}/${todo.length}`);
   });
-  console.log(`ranking history: ${ids.length} ranked players`);
+  const finished = ids.filter((id) => complete.has(id));
+  writeState(db, HISTORY_STATE, { key, done: finished } satisfies HistoryState);
+  console.log(
+    `ranking history: ${ids.length} ranked players · ${todo.length} checked · ${ids.length - finished.length} incomplete`,
+  );
 };

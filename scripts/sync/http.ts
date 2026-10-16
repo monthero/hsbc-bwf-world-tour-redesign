@@ -2,6 +2,7 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { gzipSync } from 'node:zlib';
 
 import { BWF_API, BWF_USER_AGENT } from '../../server/bwf-upstream.ts';
+import { DAY_MS } from './dates.ts';
 import { unzipJson, type Db } from './db.ts';
 
 const CONCURRENCY = 3;
@@ -9,6 +10,8 @@ const GAP_MS = 250;
 const RETRIES = 8;
 const THROTTLE_MS = 30_000;
 const TIMEOUT_MS = 30_000;
+const FAILURE_TTL = DAY_MS;
+const BROKEN = 500;
 
 export type Fresh = (fetchedAt: number) => boolean;
 
@@ -18,7 +21,7 @@ export const within =
   (at) =>
     Date.now() - at < ms;
 
-const stats = { network: 0, cached: 0, failed: 0 };
+const stats = { network: 0, cached: 0, failed: 0, skipped: 0 };
 export const httpStats = () => ({ ...stats });
 
 let active = 0;
@@ -37,6 +40,15 @@ const release = () => {
   if (next) next();
   else active--;
 };
+
+class HttpError extends Error {
+  status: number;
+
+  constructor(status: number, path: string) {
+    super(`${status} ${path}`);
+    this.status = status;
+  }
+}
 
 const RETRYABLE = new Set([403, 408, 425, 429, 500, 502, 503, 504]);
 
@@ -61,7 +73,7 @@ const download = async (path: string, retries: number): Promise<string | null> =
       if (res.ok && !text.trimStart().startsWith('<')) return text;
       if (res.status === 404) return null;
       if (res.status === 429) throttle(res);
-      if (!RETRYABLE.has(res.status) || attempt >= retries) throw new Error(`${res.status} ${path}`);
+      if (!RETRYABLE.has(res.status) || attempt >= retries) throw new HttpError(res.status, path);
     } catch (e) {
       if (attempt >= retries) throw e;
     } finally {
@@ -83,6 +95,15 @@ export const createClient = (db: Db, { offline = false } = {}) => {
     'INSERT INTO responses (path, fetched_at, body) VALUES (?, ?, ?) ON CONFLICT(path) DO UPDATE SET fetched_at = excluded.fetched_at, body = excluded.body',
   );
 
+  db.prepare('DELETE FROM failures WHERE failed_at < ?').run(Date.now() - FAILURE_TTL);
+  const readFailure = db.prepare('SELECT failed_at FROM failures WHERE path = ?');
+  const writeFailure = db.prepare(
+    'INSERT INTO failures (path, failed_at) VALUES (?, ?) ON CONFLICT(path) DO UPDATE SET failed_at = excluded.failed_at',
+  );
+  const clearFailure = db.prepare('DELETE FROM failures WHERE path = ?');
+
+  const failedAt = (path: string) => (readFailure.get(path) as { failed_at: number } | undefined)?.failed_at;
+
   const cachedRow = (path: string) => read.get(path) as { fetched_at: number; body: Uint8Array } | undefined;
 
   const fromRow = <T>(row: { fetched_at: number; body: Uint8Array }): Cached<T> => ({
@@ -97,23 +118,30 @@ export const createClient = (db: Db, { offline = false } = {}) => {
       return fromRow<T>(row);
     }
     if (offline) return null;
+    const failed = failedAt(path);
+    if (failed && Date.now() - failed < FAILURE_TTL && fresh(failed)) {
+      stats.skipped++;
+      return row ? fromRow<T>(row) : null;
+    }
     try {
       const text = await download(path, retries);
       stats.network++;
+      if (failed) clearFailure.run(path);
       if (text === null) return null;
       const fetchedAt = Date.now();
       write.run(path, fetchedAt, gzipSync(text));
       return { data: JSON.parse(text) as T, fetchedAt };
     } catch (e) {
       stats.failed++;
+      if (e instanceof HttpError && e.status === BROKEN) writeFailure.run(path, Date.now());
       if (row) return fromRow<T>(row);
       console.warn(`  ! ${(e as Error).message}`);
       return null;
     }
   };
 
-  const prune = (prefix: string, keep: string) =>
-    db.prepare('DELETE FROM responses WHERE path LIKE ? AND path != ?').run(`${prefix}%`, keep);
+  const pruneRange = db.prepare('DELETE FROM responses WHERE path >= ? AND path < ? AND path != ?');
+  const prune = (prefix: string, keep: string) => pruneRange.run(prefix, `${prefix}\uffff`, keep);
 
   return { get, prune };
 };

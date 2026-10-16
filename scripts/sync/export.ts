@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { EventCode, MonthKey, type EditionRef, type Retirement } from '../../src/api/schemas.ts';
 import { imageAssetPath, ImageKind } from '../../src/pages/admin/schema.ts';
-import { parseHeightCm, parsePlays, tidySpaces } from '../../src/utils/format.ts';
+import { parseHeightCm, parsePlays, tidySpaces } from '../../src/utils/parse.ts';
 import { dominantOffset, utcOffsetOf } from '../../src/utils/utc-offset.ts';
 import {
   historyPath,
@@ -447,7 +447,7 @@ export const exportData = async (
         });
       }
       ranksOf.set(id, ranks);
-      const weeks = await weeklyHistory(client, id, history, currentYear, worldPub.id);
+      const { rows: weeks } = await weeklyHistory(client, id, history, currentYear, worldPub.id);
       const firsts = pairFirsts(weeks);
       write(`rankings/${id}.json`, {
         id,
