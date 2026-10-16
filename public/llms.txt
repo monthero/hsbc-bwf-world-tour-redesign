@@ -2,17 +2,17 @@
 
 > An unofficial, non-commercial fan redesign of the HSBC BWF World Tour website: tournament calendar, results, draws, players, rankings and news for every World Tour season since 2018. It is not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. All tournament data, results, images and logos belong to BWF, the players and their rights holders.
 
-The site is a JavaScript single-page app, so pages render in the browser. The same data is published as static JSON under `/data/`, which is the easiest way to read it without running JavaScript. Players are identified by their BWF player id everywhere, in page URLs and data files alike. Events use the codes MS, WS, MD, WD and XD; tournament levels are 300, 500, 750, 1000 and Finals.
+The site is a JavaScript single-page app. Every page URL starts with a language prefix: `/en/` for English, or another language code such as `/zh/`, `/es/` or `/pt-br/` for a translated interface; tournament, player and news content stays in English. The pages listed in the sitemap are pre-rendered with their title, description, structured data and a short text summary, so they can be read without running JavaScript. The full data is published as static JSON under `/data/`, which is the easiest way to read it. Players are identified by their BWF player id everywhere, in page URLs and data files alike. Events use the codes MS, WS, MD, WD and XD; tournament levels are 300, 500, 750, 1000 and Finals.
 
 ## Pages
 
-- [Calendar](https://hsbc-bwf-world-tour-redesign.vercel.app/calendar): the current season's tournaments by month; past and next seasons at `/calendar?year={year}`
-- [Tournament](https://hsbc-bwf-world-tour-redesign.vercel.app/world-tour/2025/all-england-open): one page per edition at `/world-tour/{year}/{slug}`, with tabs selected by `?tab=overview|matches|draw|players|podium|media|news`
-- [Player](https://hsbc-bwf-world-tour-redesign.vercel.app/players/25831): one profile per player at `/players/{id}`, with tabs `?tab=overview|matches|results|rankings|media`
-- [Rankings](https://hsbc-bwf-world-tour-redesign.vercel.app/rankings): BWF World Rankings; the HSBC Race to Finals at `/rankings?kind=race`
-- [News](https://hsbc-bwf-world-tour-redesign.vercel.app/news): BWF news by month; single articles at `/news/{id}`
-- [About the Tour](https://hsbc-bwf-world-tour-redesign.vercel.app/about): the season map, how each level works and the race to the Finals
-- [Sitemap](https://hsbc-bwf-world-tour-redesign.vercel.app/sitemap.xml): every calendar, tournament, player and news page
+- [Calendar](https://hsbc-bwf-world-tour-redesign.vercel.app/en/calendar): the current season's tournaments by month; past and next seasons at `/en/calendar?year={year}`
+- [Tournament](https://hsbc-bwf-world-tour-redesign.vercel.app/en/world-tour/2025/all-england-open): one page per edition at `/en/world-tour/{year}/{slug}`, with tabs selected by `?tab=overview|matches|draw|players|podium|media|news`
+- [Player](https://hsbc-bwf-world-tour-redesign.vercel.app/en/players/25831): one profile per player at `/en/players/{id}`, with tabs `?tab=overview|matches|results|rankings|media`
+- [Rankings](https://hsbc-bwf-world-tour-redesign.vercel.app/en/rankings): BWF World Rankings; the HSBC Race to Finals at `/en/rankings?kind=race`
+- [News](https://hsbc-bwf-world-tour-redesign.vercel.app/en/news): BWF news by month; single articles at `/en/news/{id}`
+- [About the Tour](https://hsbc-bwf-world-tour-redesign.vercel.app/en/about): the season map, how each level works and the race to the Finals
+- [Sitemap](https://hsbc-bwf-world-tour-redesign.vercel.app/sitemap.xml): every calendar, tournament, player and news page, with `hreflang` links to the language versions that are pre-rendered
 
 ## Data
 

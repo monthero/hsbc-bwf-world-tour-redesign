@@ -16,5 +16,6 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", "api", "server", "scripts/**/*.ts"]
+  "include": ["vite.config.ts", "api", "server", "scripts/**/*.ts"],
+  "exclude": ["scripts/prerender/render"]
 }

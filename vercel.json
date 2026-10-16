@@ -3,12 +3,31 @@
   "framework": "vite",
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
+  "trailingSlash": false,
   "git": { "deploymentEnabled": false },
   "functions": {
     "api/youtube.ts": { "maxDuration": 30, "includeFiles": "{public/data/calendar-*.json,data/media/*.json}" }
   },
   "rewrites": [
     { "source": "/yt-api/(.*)", "destination": "/api/youtube" },
+    {
+      "source": "/:locale([a-z]{2}(?:-[a-z]{2,4})?)/calendar",
+      "has": [{ "type": "query", "key": "year", "value": "(?<year>\\d{4})" }],
+      "destination": "/_pages/:locale/calendar/:year.html"
+    },
+    {
+      "source": "/:locale([a-z]{2}(?:-[a-z]{2,4})?)/calendar",
+      "destination": "/_pages/:locale/calendar.html"
+    },
+    {
+      "source": "/:locale([a-z]{2}(?:-[a-z]{2,4})?)/rankings",
+      "has": [{ "type": "query", "key": "kind", "value": "race" }],
+      "destination": "/_pages/:locale/rankings/race.html"
+    },
+    {
+      "source": "/:locale([a-z]{2}(?:-[a-z]{2,4})?)/rankings",
+      "destination": "/_pages/:locale/rankings.html"
+    },
     { "source": "/((?!data/|assets/|api/|bwf-api/|yt-api/|news-api/|admin-api/).*)", "destination": "/index.html" }
   ],
   "headers": [
@@ -23,6 +42,10 @@
     {
       "source": "/data/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=300, stale-while-revalidate=3600" }]
+    },
+    {
+      "source": "/_pages/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
     }
   ]
 }
