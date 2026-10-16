@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo } from 'react';
@@ -24,10 +25,18 @@ export const TourTicker = memo(() => {
       <span className={clsx(utils.container, classes.inner)}>
         <span className={classes.kind}>
           {live && <LiveDot pulse size={6} />}
-          {live ? 'Live' : 'Next'}
+          {live ? (
+            <Trans context="tournament status" comment="Ticker under the header: the tournament being played right now">
+              Live
+            </Trans>
+          ) : (
+            <Trans context="tournament" comment="Ticker under the header: the next upcoming tournament">
+              Next
+            </Trans>
+          )}
         </span>
         <LevelBadge level={t.level} size="sm" />
-        <span className={clsx(utils.ellipsis, classes.title)}>{t.heading}</span>
+        <span className={clsx(utils.ellipsis, utils.bidiAuto, classes.title)}>{t.heading}</span>
         <TournamentPlace tournament={t} cityOnly className={classes.place} />
         <TournamentStatusBadge tournament={t} variant="line" short className={classes.status} />
         <IconNext className={classes.arrow} />

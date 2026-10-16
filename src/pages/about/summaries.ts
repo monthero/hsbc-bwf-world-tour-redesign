@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+
 import { DRAW_SIZE, LEVEL_POINTS, QUALIFY_SPOTS } from '~/constants';
 import type { Player, RankRow, Tournament } from '~/types';
 import { compareText } from '~/utils/names';
@@ -6,14 +8,19 @@ import { formatPrizeShort, hasWinners, isHeld } from '~/utils/tournaments';
 import { TIER_LEVELS } from './constants';
 import type { TierSummary, TitlesSummary } from './types';
 
-const PRIZE_TBC = 'Prize TBC';
+const FINALS_DRAW = msg({
+  message: `Top ${QUALIFY_SPOTS} per discipline`,
+  comment:
+    'About page tier ladder: the World Tour Finals field is the top {QUALIFY_SPOTS} players or pairs of the Race to Finals in each discipline',
+});
 
-const FINALS_DRAW = `Top ${QUALIFY_SPOTS} per discipline`;
-
-const REGULAR_DRAW = `${DRAW_SIZE} per draw`;
+const REGULAR_DRAW = msg({
+  message: `${DRAW_SIZE} per draw`,
+  comment: 'About page tier ladder: number of players or pairs in each discipline’s main draw',
+});
 
 const prizeRange = (prizes: readonly number[]) => {
-  if (!prizes.length) return PRIZE_TBC;
+  if (!prizes.length) return null;
   const min = Math.min(...prizes);
   const max = Math.max(...prizes);
   return min === max ? formatPrizeShort(max) : `${formatPrizeShort(min)}–${formatPrizeShort(max).slice(1)}`;

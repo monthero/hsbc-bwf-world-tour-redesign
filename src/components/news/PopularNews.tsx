@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, type Ref } from 'react';
@@ -48,7 +49,9 @@ export const PopularNews = memo<{
 }>(({ stories, layout = 'strip', ref, className }) => {
   return (
     <section ref={ref} className={clsx(classes.section, className)} data-layout={layout}>
-      <SectionTitle icon={<IconFire className={classes.fire} />}>Most popular</SectionTitle>
+      <SectionTitle icon={<IconFire className={classes.fire} />}>
+        <Trans comment="Heading above the most-read news stories">Most popular</Trans>
+      </SectionTitle>
       <ol className={clsx(utils.noScrollbar, classes.strip)}>
         {stories
           ? stories.map((s) => <PopularItem key={s.item.id} story={s} />)

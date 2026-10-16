@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { HoverCard, type FloatingPosition } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -44,7 +45,9 @@ export const PodiumLink: FC<{ tournament: Pick<Tournament, 'year' | 'slug'> }> =
       search={{ tab: 'podium' }}
       className={classes.podium}
     >
-      Full podium
+      <Trans comment="Link to a tournament’s full list of medallists (winners, runners-up, semi-finalists)">
+        Full podium
+      </Trans>
       <IconNext size={13} />
     </Link>
   );

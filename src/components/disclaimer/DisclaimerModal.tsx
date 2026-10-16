@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { Button, Modal } from '@mantine/core';
 import { clsx } from 'clsx';
 import type { FC, ReactNode } from 'react';
@@ -35,24 +36,30 @@ const TITLE = (
     <span className={classes.badge}>
       <IconInfo size={18} />
     </span>
-    A quick note before you start
+    <Trans comment="Title of the one-time disclaimer shown on the first visit">A quick note before you start</Trans>
   </>
 );
 
 const MESSAGE = (
   <>
     <p className={classes.text}>
-      This website is an unofficial redesign concept for the{' '}
-      <ExternalLink href={WORLD_TOUR_URL}>HSBC BWF World Tour</ExternalLink> section of the BWF website. It is not
-      affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC.
+      <Trans>
+        This website is an unofficial redesign concept for the{' '}
+        <ExternalLink href={WORLD_TOUR_URL}>HSBC BWF World Tour</ExternalLink> section of the BWF website. It is not
+        affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC.
+      </Trans>
     </p>
     <p className={classes.text}>
-      All tournament data, results, rankings, images, logos and player information belong to BWF, the players and their
-      respective rights holders. Videos link to BWF&rsquo;s official YouTube channel.
+      <Trans>
+        All tournament data, results, rankings, images, logos and player information belong to BWF, the players and
+        their respective rights holders. Videos link to BWF’s official YouTube channel.
+      </Trans>
     </p>
     <p className={clsx(utils.inset, classes.note)}>
-      Data may be incomplete, delayed or inaccurate. For official information, please visit{' '}
-      <ExternalLink href={BWF_URL}>bwfbadminton.com</ExternalLink>.
+      <Trans>
+        Data may be incomplete, delayed or inaccurate. For official information, please visit{' '}
+        <ExternalLink href={BWF_URL}>bwfbadminton.com</ExternalLink>.
+      </Trans>
     </p>
   </>
 );
@@ -78,7 +85,7 @@ export const DisclaimerModal: FC = () => {
     >
       {MESSAGE}
       <Button data-autofocus size="md" radius="xl" className={classes.cta} onClick={acknowledge}>
-        I understand
+        <Trans comment="Button that dismisses the first-visit disclaimer">I understand</Trans>
       </Button>
     </Modal>
   );

@@ -28,15 +28,15 @@
   padding: 18px 20px 20px;
 
   &:first-child {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 
   &:last-child {
-    padding-right: 0;
+    padding-inline-end: 0;
   }
 
   & + .item {
-    border-left: 1px solid var(--bwf-line);
+    border-inline-start: 1px solid var(--bwf-line);
   }
 }
 
@@ -87,7 +87,8 @@
   .item:last-child {
     flex: none;
     width: 76%;
-    padding: 14px 16px 14px 14px;
+    padding-block: 14px;
+    padding-inline: 14px 16px;
     border-radius: 16px;
     border: 1px solid var(--bwf-border);
     background: var(--bwf-surface);

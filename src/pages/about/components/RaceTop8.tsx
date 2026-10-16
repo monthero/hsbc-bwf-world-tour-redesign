@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -14,9 +15,9 @@ import type { Champion, RankingTable, RankRow, Tournament } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
 import { formatNumber } from '~/utils/format';
 import { buildRankRows } from '~/utils/rankings';
-import { finalsCity, tournamentParams } from '~/utils/tournaments';
+import { knownFinalsCity, tournamentParams } from '~/utils/tournaments';
 
-import { ABOUT_SECTIONS, FINALS_CHAMPIONS, FINALS_RESULTS, QUALIFIED_FOR, RACE_LINE } from '../constants';
+import { ABOUT_SECTIONS, FINALS_CHAMPIONS, FINALS_RESULTS, RACE_LINE } from '../constants';
 import { raceTop } from '../summaries';
 import type { SeasonFocus } from '../types';
 import { crownedFinals, raceSettled } from '../utils';
@@ -31,8 +32,6 @@ interface RaceColumn {
   rows: RankRow[];
   cut: number;
 }
-
-const FALLBACK_TITLE = ABOUT_SECTIONS[1].title;
 
 const SKELETON = <Skeleton className={classes.skeleton} radius={16} />;
 
@@ -61,20 +60,23 @@ const RaceRow = memo<{ row: RankRow; out: boolean; settled: boolean }>(({ row, o
   </li>
 ));
 
-const RaceList: FC<{ column: RaceColumn; settled: boolean }> = ({ column, settled }) => (
-  <ol className={classes.list}>
-    {column.rows.map((r, i) => (
-      <Fragment key={r.key}>
-        <RaceRow row={r} out={i > column.cut} settled={settled} />
-        {i === column.cut && (
-          <li className={classes.line}>
-            <QualifyLine label={RACE_LINE} className={classes.lineLabel} />
-          </li>
-        )}
-      </Fragment>
-    ))}
-  </ol>
-);
+const RaceList: FC<{ column: RaceColumn; settled: boolean }> = ({ column, settled }) => {
+  const { i18n } = useLingui();
+  return (
+    <ol className={classes.list}>
+      {column.rows.map((r, i) => (
+        <Fragment key={r.key}>
+          <RaceRow row={r} out={i > column.cut} settled={settled} />
+          {i === column.cut && (
+            <li className={classes.line}>
+              <QualifyLine label={i18n._(RACE_LINE)} className={classes.lineLabel} />
+            </li>
+          )}
+        </Fragment>
+      ))}
+    </ol>
+  );
+};
 
 const DesktopColumn = memo<{ column: RaceColumn; settled: boolean }>(({ column, settled }) => (
   <div className={clsx(utils.card, classes.column)}>
@@ -104,16 +106,18 @@ const ChampionCard = memo<{ champion: Champion }>(({ champion: c }) => (
 
 const FinalsChampions: FC<{ finals: Tournament; className?: string }> = ({ finals: t, className }) => {
   const isMobile = useIsMobile();
+  const { i18n } = useLingui();
   const caption = `${t.heading} · ${t.place}`;
+  const title = i18n._(FINALS_CHAMPIONS);
   const aside = (
     <SectionLink link={{ to: '/world-tour/$year/$slug', params: tournamentParams(t), search: PODIUM_SEARCH }}>
-      {FINALS_RESULTS}
+      {i18n._(FINALS_RESULTS)}
     </SectionLink>
   );
   return (
-    <section className={className} aria-label={FINALS_CHAMPIONS}>
+    <section className={className} aria-label={title}>
       <SectionTitle count={isMobile ? undefined : caption} aside={aside}>
-        {FINALS_CHAMPIONS}
+        {title}
       </SectionTitle>
       <ol className={classes.champions}>
         {t.champions.map((c) => (
@@ -128,21 +132,47 @@ const FinalsChampions: FC<{ finals: Tournament; className?: string }> = ({ final
 const RaceStandings: FC<{ focus: SeasonFocus | undefined; className?: string }> = ({ focus, className }) => {
   const { data: table, isError } = useRankingTable('race');
   const isMobile = useIsMobile();
+  const { i18n, t } = useLingui();
   const [ev, setEv] = useState<EventCode>('MS');
   const published = table?.publication.date;
   const settled = !!focus && !!published && raceSettled(focus, published);
   const columns = useMemo(() => (table ? toColumns(table, settled) : undefined), [table, settled]);
   const onEv = useCallback((v: EventCode | null) => v && setEv(v), []);
   if (isError) return null;
-  const title = settled ? `${QUALIFIED_FOR} ${finalsCity(focus?.finals)}` : (table?.name ?? FALLBACK_TITLE);
+  const city = knownFinalsCity(focus?.finals);
+  const qualified = city
+    ? t({
+        message: `Qualified for ${city}`,
+        comment:
+          'About page heading once the Race to Finals is over: players who qualified for the World Tour Finals in {city}',
+      })
+    : t({
+        message: 'Qualified for the Finals',
+        comment:
+          'About page heading once the Race to Finals is over: players who qualified for the World Tour Finals (the season-ending tournament), when its host city is not known yet',
+      });
+  const title = settled ? qualified : (table?.name ?? i18n._(ABOUT_SECTIONS.race));
   const current = columns?.find((c) => c.ev === ev);
+  const day = published && formatDayMonth(published);
   const caption =
-    published &&
+    day &&
     (settled
-      ? `Final standings · ${formatDayMonth(published)}`
-      : `Top ${QUALIFY_SPOTS} qualify · as of ${formatDayMonth(published)}`);
+      ? t({
+          message: `Final standings · ${day}`,
+          comment:
+            'Caption on the About page Race to Finals table once qualification is settled; {day} is the publication date',
+        })
+      : t({
+          message: `Top ${QUALIFY_SPOTS} qualify · as of ${day}`,
+          comment:
+            'Caption on the About page Race to Finals table: the top {QUALIFY_SPOTS} per discipline qualify for the World Tour Finals; standings as published on {day}',
+        }));
   const ready = columns && focus;
-  const aside = <SectionLink link={{ to: '/rankings', search: standingsSearch(ev) }}>Full standings</SectionLink>;
+  const aside = (
+    <SectionLink link={{ to: '/rankings', search: standingsSearch(ev) }}>
+      <Trans comment="Link from the About page to the complete Race to Finals standings table">Full standings</Trans>
+    </SectionLink>
+  );
   return (
     <section className={className} aria-label={title}>
       <SectionTitle count={isMobile ? undefined : caption} aside={aside}>

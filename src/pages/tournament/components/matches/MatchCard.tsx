@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
@@ -12,7 +13,7 @@ import type { Match, Player, Side } from '~/types';
 import { nextLabel, type NextKind } from '~/utils/match-time';
 import { isDoubles, sideResult } from '~/utils/matches';
 
-import { matchTitle } from './utils';
+import { detailsLabel, matchTitle } from './utils';
 
 import classes from './MatchCard.module.css';
 import utils from '~/styles/utils.module.css';
@@ -43,7 +44,17 @@ const TeamRow: FC<{ match: Match; side: Side }> = ({ match: m, side }) => {
 const NextLabel = memo<{ match: Match; kind: NextKind }>(({ match, kind }) => {
   const start = useMatchTime(match);
   const now = useNow();
-  return <span className={classes.next}>{start ? nextLabel(start, kind, now) : 'Next'}</span>;
+  return (
+    <span className={classes.next}>
+      {start ? (
+        nextLabel(start, kind, now)
+      ) : (
+        <Trans context="court" comment="Match card tag: this is the next match on its court">
+          Next
+        </Trans>
+      )}
+    </span>
+  );
 });
 
 export const MatchCard = memo<{
@@ -54,19 +65,21 @@ export const MatchCard = memo<{
 }>(({ match: m, next, replay, onOpen }) => {
   const doubles = isDoubles(m.event);
   const done = m.status === 'F';
+  const { court } = m;
   return (
     <div className={clsx(utils.card, classes.card)} data-interactive data-doubles={doubles || undefined}>
-      <CardHit label={`Match details: ${matchTitle(m)}`} onClick={() => onOpen(m.id)} />
+      <CardHit label={detailsLabel(matchTitle(m))} onClick={() => onOpen(m.id)} />
       <div className={classes.head}>
         <span className={classes.when}>
           <span className={classes.time} data-up={m.status === 'N' || undefined}>
             <MatchTime match={m} />
           </span>
-          <span className={classes.court}>Court {m.court}</span>
+          <span className={classes.court}>
+            <Trans comment="The court a match is played on, e.g. “Court 2”">Court {court}</Trans>
+          </span>
         </span>
         <span className={classes.tags}>
           {next && <NextLabel match={m} kind={next} />}
-          {replay && <WatchButton item={replay} size="sm" />}
           {done && <Duration min={m.durationMin} size={12} className={classes.meta} />}
           <MatchNote match={m} />
           <EventTag event={m.event} />
@@ -76,6 +89,7 @@ export const MatchCard = memo<{
         <TeamRow match={m} side={0} />
         <TeamRow match={m} side={1} />
       </div>
+      {replay && <WatchButton item={replay} size="strip" className={classes.replay} />}
     </div>
   );
 });

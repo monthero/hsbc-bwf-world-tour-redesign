@@ -200,13 +200,13 @@
   position: relative;
   flex: none;
   display: inline-flex;
-  margin-right: 3px;
+  margin-inline-end: 3px;
 }
 
 .avatar > .avatarStar[data-box] {
   --box: 20px;
   position: absolute;
-  right: -6px;
+  inset-inline-end: -6px;
   bottom: -5px;
   box-shadow: 0 0 0 2px var(--bwf-surface-2);
 
@@ -221,7 +221,7 @@
   flex: none;
   width: 16px;
   height: 16px;
-  color: var(--bwf-green);
+  color: var(--bwf-green-mark);
 }
 
 .sbTags {
@@ -305,7 +305,7 @@
 
   &[data-side='b'] {
     flex-direction: row-reverse;
-    text-align: right;
+    text-align: end;
 
     &::before {
       background: var(--bwf-dim);
@@ -354,7 +354,7 @@
   color: var(--bwf-dim);
 
   &:last-child {
-    text-align: right;
+    text-align: end;
   }
 
   &[data-lead] {
@@ -459,7 +459,7 @@
 }
 
 .splitB {
-  background: var(--mantine-color-dark-4);
+  background: var(--bwf-border-hover);
 
   &[data-lead] {
     background: var(--bwf-dim);
@@ -478,7 +478,7 @@
   }
 
   & > span:last-child {
-    background: var(--mantine-color-dark-4);
+    background: var(--bwf-border-hover);
   }
 }
 

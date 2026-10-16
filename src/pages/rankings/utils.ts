@@ -1,3 +1,6 @@
+import type { I18n } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+
 import type { RankingTable, RankRow } from '~/types';
 import { formatDayMonthYear } from '~/utils/dates';
 
@@ -6,5 +9,10 @@ export const filterRows = (rows: RankRow[], tokens: readonly string[], cc: strin
   return rows.filter((r) => (!cc || r.countries.includes(cc)) && tokens.every((t) => r.text.includes(t)));
 };
 
-export const publicationLabel = (pub: RankingTable['publication']) =>
-  `Week ${Number.parseInt(pub.week.split('-')[1] ?? '', 10)} · ${formatDayMonthYear(pub.date)}`;
+export const publicationLabel = (i18n: I18n, pub: RankingTable['publication']) => {
+  const week = Number.parseInt(pub.week.split('-')[1] ?? '', 10);
+  const date = formatDayMonthYear(pub.date);
+  return i18n._(
+    msg({ message: `Week ${week} · ${date}`, comment: 'Ranking publication: week number of the year and its date' }),
+  );
+};

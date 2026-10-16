@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { Link } from '@tanstack/react-router';
 import { memo } from 'react';
 
@@ -44,7 +45,9 @@ export const EventDetails = memo<{ tournament: Tournament }>(({ tournament: t })
       )}
       {t.status !== 'done' && <TournamentStatusBadge tournament={t} variant="line" className={classes.status} />}
       <Link to="/world-tour/$year/$slug" params={tournamentParams(t)} className={classes.go}>
-        Go to tournament
+        <Trans comment="Link at the bottom of a tournament’s popover in the calendar season strip">
+          Go to tournament
+        </Trans>
         <IconNext size={14} />
       </Link>
     </>

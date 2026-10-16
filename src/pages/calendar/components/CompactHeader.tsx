@@ -1,3 +1,4 @@
+import { Plural, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
@@ -5,6 +6,7 @@ import type { SeasonSummary, Tournament } from '~/types';
 
 import { SeasonBar } from './SeasonBar';
 import { SeasonHeading } from './SeasonHeading';
+import { StopsDone } from './StopsDone';
 
 import classes from './CompactHeader.module.css';
 import utils from '~/styles/utils.module.css';
@@ -15,6 +17,8 @@ export const CompactHeader = memo<{
   season: SeasonSummary;
   isMobile: boolean;
 }>(({ visible, tournaments, season, isMobile }) => {
+  const { t } = useLingui();
+  const { done, total, liveCount } = season;
   return (
     <header
       className={clsx(utils.glass, classes.header)}
@@ -29,11 +33,18 @@ export const CompactHeader = memo<{
           </span>
           <span className={classes.meta}>
             {season.phase !== 'current' && `${season.year} · `}
-            <span className={classes.done}>{season.done}</span> of {season.total} stops
-            {season.liveCount > 0 && (
+            <StopsDone done={done} total={total} className={classes.done} />
+            {liveCount > 0 && (
               <>
                 {' · '}
-                <span className={classes.live}>{season.liveCount} live</span>
+                <span className={classes.live}>
+                  <Plural
+                    value={liveCount}
+                    one="# live"
+                    other="# live"
+                    comment="Compact calendar header: number of tournaments being played right now"
+                  />
+                </span>
               </>
             )}
           </span>
@@ -42,7 +53,11 @@ export const CompactHeader = memo<{
           tournaments={tournaments}
           size="sm"
           isMobile={isMobile}
-          label="Season stops"
+          label={t({
+            message: 'Season stops',
+            comment:
+              'Screen-reader label for the strip of dots, one per tournament of the season, in the calendar header',
+          })}
           className={classes.cells}
         />
       </div>

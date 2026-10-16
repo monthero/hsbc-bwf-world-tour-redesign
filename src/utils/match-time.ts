@@ -1,7 +1,10 @@
+import { msg, t } from '@lingui/core/macro';
+
+import { translate } from '~/i18n/lazy';
 import type { ClockMode, TimeZoneMode } from '~/stores/settings';
 import type { Match } from '~/types';
 
-import { dayjs, ISO_DAY, type Dayjs } from './dates';
+import { dayjs, formatWall, ISO_DAY, type Dayjs } from './dates';
 
 export interface ClockPrefs {
   timeZone: TimeZoneMode;
@@ -20,21 +23,38 @@ export interface ClockTime {
   zone: string;
   shift: number;
   alt: string;
+  clock: ClockMode;
 }
 
 export const NO_VENUE: VenueTime = { timeZone: null, utcOffset: null };
 
-const TIME_FORMATS: Record<ClockMode, string> = { '24h': 'HH:mm', '12h': 'h:mm A' };
-const HOUR_FORMATS: Record<ClockMode, string> = { '24h': 'HH:00', '12h': 'h A' };
-const WEEKDAY = 'ddd';
-const STAMP_DAY = 'ddd D MMM';
+const TIME_FORMATS: Record<ClockMode, Intl.DateTimeFormatOptions> = {
+  '24h': { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' },
+  '12h': { hour: 'numeric', minute: '2-digit', hourCycle: 'h12' },
+};
+const HOUR_FORMATS: Record<ClockMode, Intl.DateTimeFormatOptions> = {
+  '24h': TIME_FORMATS['24h'],
+  '12h': { hour: 'numeric', hourCycle: 'h12' },
+};
+const WEEKDAY = { weekday: 'short' } as const;
+const STAMP_DAY = { weekday: 'short', day: 'numeric', month: 'short' } as const;
 const ANY_DAY = '2000-01-01';
 const NOON = 12;
 const HOUR_MIN = 60;
 const OFFSET_LIKE = /^(GMT|UTC)/;
 const ZONE_LOCALES = [undefined, 'en-GB'];
-const VENUE_ALT = 'at the venue';
-const MINE_ALT = 'your time';
+const ALT_TIMES = {
+  venue: msg({
+    message: '{time} at the venue',
+    comment:
+      'Second clock under a match time shown in the visitor’s time zone: the same moment in the venue’s local time. {time} is e.g. "15:30" or "Wed 15:30"',
+  }),
+  mine: msg({
+    message: '{time} your time',
+    comment:
+      'Second clock under a match time shown in venue time: the same moment in the visitor’s own time zone. {time} is e.g. "09:30" or "Thu 09:30"',
+  }),
+};
 
 const zoneOffsets = new Map<string, number>();
 const zoneFormats = new Map<string, Intl.DateTimeFormat[]>();
@@ -89,11 +109,12 @@ const dayShift = (d: Dayjs, base: string) => (base ? dayjs.utc(d.format(ISO_DAY)
 
 const plain = (at: Dayjs, clock: ClockMode): ClockTime => ({
   at,
-  text: at.format(TIME_FORMATS[clock]),
-  hour: at.format(HOUR_FORMATS[clock]),
+  text: formatWall(at, TIME_FORMATS[clock]),
+  hour: formatWall(at.subtract(at.minute(), 'minute'), HOUR_FORMATS[clock]),
   zone: '',
   shift: 0,
   alt: '',
+  clock,
 });
 
 const zoned = (
@@ -109,12 +130,13 @@ const zoned = (
   const shown = mine ? local : venue;
   if (local.utcOffset() === offset) return plain(shown, clock);
   const other = mine ? venue : local;
-  const otherDay = other.format(ISO_DAY) === shown.format(ISO_DAY) ? '' : `${other.format(WEEKDAY)} `;
+  const sameDay = other.format(ISO_DAY) === shown.format(ISO_DAY);
+  const time = formatWall(other, sameDay ? TIME_FORMATS[clock] : { ...WEEKDAY, ...TIME_FORMATS[clock] });
   return {
     ...plain(shown, clock),
     zone: mine ? zoneLabel(local, local.utcOffset(), undefined) : venueLabel(venue, offset, timeZone),
     shift: dayShift(shown, base),
-    alt: `${otherDay}${other.format(TIME_FORMATS[clock])} ${mine ? VENUE_ALT : MINE_ALT}`,
+    alt: translate(ALT_TIMES[mine ? 'venue' : 'mine'], { time }),
   };
 };
 
@@ -144,12 +166,23 @@ const SOON_MIN = 60;
 export const nextLabel = (start: ClockTime, kind: NextKind, now: Dayjs) => {
   const today = now.utcOffset(start.at.utcOffset()).format(ISO_DAY);
   const days = dayjs.utc(start.at.format(ISO_DAY)).diff(dayjs.utc(today), 'day');
-  if (days === 1) return 'Tomorrow';
-  if (days > 1) return start.at.format(WEEKDAY);
-  if (kind === 'later' || days < 0) return 'Next';
-  return start.at.diff(now, 'minute') <= SOON_MIN ? 'Soon' : 'In a few hours';
+  if (days === 1)
+    return t({ message: 'Tomorrow', comment: 'When a player’s next match is: it is scheduled for tomorrow' });
+  if (days > 1) return formatWall(start.at, WEEKDAY);
+  if (kind === 'later' || days < 0)
+    return t({
+      message: 'Next',
+      context: 'next match',
+      comment: 'Label for a player’s next scheduled match, when its exact day is not shown',
+    });
+  return start.at.diff(now, 'minute') <= SOON_MIN
+    ? t({ message: 'Soon', comment: 'When a player’s next match is: it starts within the hour' })
+    : t({ message: 'In a few hours', comment: 'When a player’s next match is: later today, more than an hour away' });
 };
 
 export const dayMark = (shift: number) => (shift > 0 ? `+${shift}` : `−${-shift}`);
 
-export const formatStamp = (c: ClockTime) => `${c.at.format(STAMP_DAY)}, ${c.text}${c.zone ? ` ${c.zone}` : ''}`;
+export const formatStamp = (c: ClockTime) => {
+  const stamp = formatWall(c.at, { ...STAMP_DAY, ...TIME_FORMATS[c.clock] });
+  return c.zone ? `${stamp} ${c.zone}` : stamp;
+};

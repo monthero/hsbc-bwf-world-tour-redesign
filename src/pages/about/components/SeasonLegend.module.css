@@ -51,7 +51,7 @@
 }
 
 .item[data-dot][data-key='done']::before {
-  background: color-mix(in srgb, var(--bwf-text) 30%, var(--bwf-bg-sunken));
+  background: light-dark(var(--bwf-faint), color-mix(in srgb, var(--bwf-text) 30%, var(--bwf-bg-sunken)));
 }
 
 .marker {

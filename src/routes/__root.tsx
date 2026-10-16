@@ -9,11 +9,13 @@ import { PageNotFound, SiteLayout } from '~/components/layout';
 import { PlayerHoverCard } from '~/components/player';
 import { PlayerHoverContext, type RenderPlayerHover } from '~/contexts';
 import { useStoreSync } from '~/hooks/useStoreSync';
+import { useThemeColorMeta } from '~/hooks/useThemeColorMeta';
 
 const renderPlayerHover: RenderPlayerHover = (id, anchor) => <PlayerHoverCard id={id}>{anchor}</PlayerHoverCard>;
 
 const RootLayout: FC = () => {
   useStoreSync();
+  useThemeColorMeta();
   return (
     <>
       <SiteLayout>

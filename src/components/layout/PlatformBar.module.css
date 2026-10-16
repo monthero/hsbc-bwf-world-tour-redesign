@@ -12,7 +12,7 @@
 
 .bwf {
   height: 12px;
-  margin-right: 8px;
+  margin-inline-end: 8px;
   color: var(--bwf-on-brand);
 }
 
@@ -66,7 +66,7 @@
 .chevron {
   width: 12px;
   height: 12px;
-  margin-left: 4px;
+  margin-inline-start: 4px;
   transition: transform 0.2s var(--bwf-ease);
 
   [aria-expanded='true'] > & {
@@ -79,7 +79,7 @@
   align-items: center;
   gap: 5px;
   height: 28px;
-  margin-left: -8px;
+  margin-inline-start: -8px;
   padding: 0 8px;
   border: 0;
   border-radius: 8px;
@@ -100,8 +100,8 @@
 }
 
 .social {
-  margin-left: auto;
-  margin-right: -6px;
+  margin-inline-start: auto;
+  margin-inline-end: -6px;
 }
 
 .menu {

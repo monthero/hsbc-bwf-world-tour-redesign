@@ -29,23 +29,29 @@
 }
 
 .track {
+  --to-end: 90deg;
   position: relative;
   height: 8px;
   border-radius: 4px;
   background: var(--bwf-surface-3);
 
+  &:dir(rtl) {
+    --to-end: -90deg;
+  }
+
   &::after {
     content: '';
     position: absolute;
-    inset: 0 auto 0 0;
+    inset-block: 0;
+    inset-inline-start: 0;
     width: var(--w);
     border-radius: inherit;
-    background: linear-gradient(90deg, var(--bwf-red), var(--bwf-red-text));
+    background: linear-gradient(var(--to-end), var(--bwf-red), var(--bwf-red-text));
   }
 }
 
 .n {
-  text-align: right;
+  text-align: end;
   font-weight: 600;
 }
 

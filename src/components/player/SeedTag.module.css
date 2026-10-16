@@ -2,7 +2,7 @@
   position: relative;
   z-index: 1;
   flex: none;
-  color: var(--bwf-green);
+  color: light-dark(var(--bwf-text-3), var(--bwf-green));
   font-size: 11px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
@@ -11,6 +11,6 @@
   &[data-variant='pill'] {
     padding: 2px 8px;
     border-radius: 999px;
-    background: alpha(var(--bwf-green), 0.14);
+    background: light-dark(var(--bwf-raised), alpha(var(--bwf-green), 0.14));
   }
 }

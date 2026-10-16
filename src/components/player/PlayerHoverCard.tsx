@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { HoverCard, Skeleton, type PopoverProps } from '@mantine/core';
 import { clsx } from 'clsx';
 import { useMemo, type FC, type ReactNode } from 'react';
@@ -10,6 +11,7 @@ import { PlayerHoverContext } from '~/contexts';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerProfile } from '~/hooks/useSeason';
 import type { PlayerMatch } from '~/types';
+import { isolate } from '~/utils/format';
 import { byMatchTime, opposite, roundName } from '~/utils/matches';
 
 import { BioStat, FactTile } from './BioFacts';
@@ -66,23 +68,29 @@ export const PlayerHoverCard: FC<{ id: string; children: ReactNode }> = ({ id, c
 const PlayerCard: FC<{ id: string }> = ({ id }) => {
   const { status, player, record, bio, ranks, seed, matches, week, retired } = usePlayerProfile(id);
   const runs = useMemo(() => matches.filter((pm) => pm.tournament.status === 'live').sort(byTime), [matches]);
+  const { t } = useLingui();
   if (!player)
     return status === 'missing' ? (
-      <p className={classes.empty}>No profile data for this player.</p>
+      <p className={classes.empty}>
+        <Trans>No profile data for this player.</Trans>
+      </p>
     ) : (
       <div className={classes.loading}>
         <Skeleton height={60} circle />
         <Skeleton height={14} width="60%" />
       </div>
     );
+  const profileLabel = t`See full profile`;
+  const weekNo = week.split('-')[1];
+  const ambition = bio.ambition && isolate(bio.ambition);
   return (
     <>
       <div className={classes.header}>
         <div className={classes.actions}>
           <PlayerFollow player={player} name={player.name} variant="outline" box="md" />
           <IconButton
-            label="See full profile"
-            tip="See full profile"
+            label={profileLabel}
+            tip={profileLabel}
             shape="rounded"
             link={{ to: '/players/$id', params: { id } }}
           >
@@ -108,7 +116,11 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
       )}
       {ranks.length > 0 && (
         <div className={classes.section}>
-          <Eyebrow>BWF World Ranking · week {week.split('-')[1]}</Eyebrow>
+          <Eyebrow>
+            <Trans comment="Heading above a player’s world rankings; {weekNo} is the ranking week number of the year">
+              BWF World Ranking · week {weekNo}
+            </Trans>
+          </Eyebrow>
           {ranks.map((k) => (
             <RankCard key={k.ev} rank={k} />
           ))}
@@ -117,7 +129,7 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
       {bio.details.length > 0 && (
         <div className={clsx(classes.section, classes.grid)}>
           {bio.details.map((f) => (
-            <FactTile key={f.key} id={f.key} label={f.label} value={f.value} size="sm" />
+            <FactTile key={f.key} id={f.key} label={f.label} value={f.value} lang={f.lang} size="sm" />
           ))}
         </div>
       )}
@@ -128,18 +140,30 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
       )}
       {bio.ambition && (
         <div className={classes.section}>
-          <FactTile label="Ambition" value={`“${bio.ambition}”`} size="sm" tone="tile" />
+          <FactTile
+            label={t({ message: 'Ambition', comment: 'Player profile fact: the player’s stated ambition, quoted' })}
+            value={t({ message: `“${ambition}”`, comment: 'A quotation; use your language’s quotation marks' })}
+            size="sm"
+            tone="tile"
+            lang="en"
+          />
         </div>
       )}
       {runs.length > 0 && (
         <div className={clsx(classes.section, classes.runs)}>
-          <Eyebrow>This week</Eyebrow>
+          <Eyebrow>
+            <Trans comment="Heading above the player’s matches at the tournament being played this week">
+              This week
+            </Trans>
+          </Eyebrow>
           {runs.map((pm) => (
             <div key={pm.key} className={clsx(utils.inset, classes.run)}>
               <OutcomeBadge outcome={pm.outcome} label={<OutcomeLabel pm={pm} />} />
               <span className={classes.runText}>
                 <span className={clsx(utils.ellipsis, classes.runOpp)}>
-                  vs <TeamLabel players={pm.match.teams[opposite(pm.side)].players} />
+                  <Trans comment="Before the opponent’s name, short for “versus”">
+                    vs <TeamLabel players={pm.match.teams[opposite(pm.side)].players} />
+                  </Trans>
                 </span>
                 <span className={classes.runMeta}>
                   {roundName(pm.match.round)} · {pm.match.event}

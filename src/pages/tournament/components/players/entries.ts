@@ -1,6 +1,9 @@
+import { msg } from '@lingui/core/macro';
+
 import { Continent, EntryStage, EventCode } from '~/api/schemas';
 import { EVENT_NAMES } from '~/constants';
 import type { PlayerDirectory } from '~/hooks/usePlayers';
+import { lazyRecord } from '~/i18n/lazy';
 import type { DrawSlot, EntryListing, Match, Side, SideResult, Team } from '~/types';
 import { continentOf, countryName } from '~/utils/countries';
 import { isDoubles, isMainDraw, latestByTeam, sideStatus, teamEventKey, teamMatchesQuery } from '~/utils/matches';
@@ -58,19 +61,37 @@ export const disciplineId = (event: EventCode) => `entries-${event}`;
 
 const NO_MATCHES: Match[] = [];
 
-const STAGE_LABELS: Record<EntryStage, string> = {
-  main: 'Main draw',
-  qual: 'Qualifying',
-  reserve: 'Alternate',
-  withdrawn: 'Withdrawn',
-};
+const MAIN_DRAW = msg({
+  message: 'Main draw',
+  comment: 'Entry status: in the main draw, the knockout bracket proper (as opposed to qualifying)',
+});
 
-const STAGE_GROUPS: Record<EntryStage, string> = {
-  main: 'Main draw',
-  qual: 'Qualifying',
-  reserve: 'Alternates',
-  withdrawn: 'Withdrawn',
-};
+const QUALIFYING = msg({
+  message: 'Qualifying',
+  comment: 'Entry status: plays the qualifying rounds, played before the main draw to fill its last places',
+});
+
+const WITHDRAWN = msg({ message: 'Withdrawn', comment: 'Entry status: pulled out of the tournament before playing' });
+
+const STAGE_LABELS: Readonly<Record<EntryStage, string>> = lazyRecord({
+  main: MAIN_DRAW,
+  qual: QUALIFYING,
+  reserve: msg({
+    message: 'Alternate',
+    comment: 'Entry status: a reserve player or pair who only gets in if someone withdraws',
+  }),
+  withdrawn: WITHDRAWN,
+});
+
+const STAGE_GROUPS: Readonly<Record<EntryStage, string>> = lazyRecord({
+  main: MAIN_DRAW,
+  qual: QUALIFYING,
+  reserve: msg({
+    message: 'Alternates',
+    comment: 'Players tab group heading: reserve players or pairs who only get in if someone withdraws',
+  }),
+  withdrawn: WITHDRAWN,
+});
 
 const STAGE_TONES: Record<EntryStage, SideResult> = { main: 'up', qual: 'up', reserve: 'lost', withdrawn: 'lost' };
 

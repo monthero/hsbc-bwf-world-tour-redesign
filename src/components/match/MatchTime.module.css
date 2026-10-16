@@ -10,23 +10,23 @@
 }
 
 .shift {
-  margin-left: 1px;
+  margin-inline-start: 1px;
   font-size: 0.68em;
   font-weight: 600;
   line-height: 0;
   vertical-align: super;
-  color: var(--bwf-gold);
+  color: var(--bwf-gold-accent);
 }
 
 .zone {
-  margin-left: 4px;
+  margin-inline-start: 4px;
   font-size: 0.78em;
   font-weight: 500;
   color: var(--bwf-faint);
 
   .time[data-stacked] & {
     display: block;
-    margin-left: 0;
+    margin-inline-start: 0;
     line-height: 1.3;
   }
 }

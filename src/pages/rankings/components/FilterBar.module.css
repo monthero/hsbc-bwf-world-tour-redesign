@@ -22,7 +22,7 @@
 }
 
 .count {
-  margin-left: auto;
+  margin-inline-start: auto;
   font-size: 13px;
   color: var(--bwf-muted);
   white-space: nowrap;

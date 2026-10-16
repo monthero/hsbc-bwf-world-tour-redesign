@@ -7,12 +7,16 @@ import { useShallow } from 'zustand/react/shallow';
 
 import {
   BottomSheet,
+  IconAppearance,
   IconButton,
   IconClock,
   IconClose,
+  IconDark,
+  IconLight,
   IconReset,
   IconRuler,
   IconSettings,
+  IconSystemScheme,
   IconTension,
   IconTranslate,
   Segmented,
@@ -28,6 +32,7 @@ import {
   useSettings,
   useSettingsChanged,
   type ClockMode,
+  type ColorScheme,
   type HeightUnit,
   type SettingsData,
   type TensionUnit,
@@ -42,6 +47,10 @@ type PanelVariant = 'popover' | 'sheet';
 
 const LABEL = msg`Settings`;
 const LANGUAGE = msg`Language`;
+const APPEARANCE = msg({
+  message: 'Theme',
+  comment: 'Settings label: choose a light, dark or system colour theme for the site',
+});
 const CLOCK = msg({ message: 'Clock', comment: 'Settings label: choose a 12-hour or 24-hour clock' });
 const HEIGHTS = msg`Player heights`;
 const TENSIONS = msg({
@@ -78,6 +87,26 @@ const TIME_ZONE_OPTIONS: LazyOption<TimeZoneMode>[] = [
     label: msg({ message: 'My time', comment: 'Settings option: show match times in the visitor’s own time zone' }),
   },
 ];
+const COLOR_SCHEME_OPTIONS: LazyOption<ColorScheme>[] = [
+  {
+    value: 'light',
+    label: msg({ message: 'Light', comment: 'Settings option: light colour theme' }),
+    icon: <IconLight size={14} />,
+  },
+  {
+    value: 'dark',
+    label: msg({ message: 'Dark', comment: 'Settings option: dark colour theme' }),
+    icon: <IconDark size={14} />,
+  },
+  {
+    value: 'auto',
+    label: msg({
+      message: 'System',
+      comment: 'Settings option: follow the light or dark theme set on the visitor’s device',
+    }),
+    icon: <IconSystemScheme size={14} />,
+  },
+];
 const CLOCK_MODES: { value: ClockMode; hourCycle: Intl.DateTimeFormatOptions['hourCycle']; name: ReactNode }[] = [
   { value: '24h', hourCycle: 'h23', name: <Trans>24-hour clock</Trans> },
   { value: '12h', hourCycle: 'h12', name: <Trans>12-hour clock</Trans> },
@@ -104,6 +133,7 @@ const heightOptions = (tag: string): SegmentedOption<HeightUnit>[] => {
 
 const patch = (p: Partial<SettingsData>) => useSettings.getState().set(p);
 const reset = () => useSettings.getState().reset();
+const onColorScheme = (v: ColorScheme | null) => v && patch({ colorScheme: v });
 const onTimeZone = (v: TimeZoneMode | null) => v && patch({ timeZone: v });
 const onClock = (v: ClockMode | null) => v && patch({ clock: v });
 const onHeight = (v: HeightUnit | null) => v && patch({ height: v });
@@ -138,8 +168,9 @@ const IconRow: FC<{ icon: ReactNode; label: string; children: ReactNode }> = ({ 
 };
 
 const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ variant, onClose }) => {
-  const { timeZone, clock, height, tension, showBlocked } = useSettings(
+  const { colorScheme, timeZone, clock, height, tension, showBlocked } = useSettings(
     useShallow((s) => ({
+      colorScheme: s.colorScheme,
       timeZone: s.timeZone,
       clock: s.clock,
       height: s.height,
@@ -150,6 +181,7 @@ const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ v
   const changed = useSettingsChanged();
   const { t, i18n } = useLingui();
   const tag = intlLocale(currentLocale());
+  const schemes = useLazyOptions(COLOR_SCHEME_OPTIONS);
   const timeZones = useLazyOptions(TIME_ZONE_OPTIONS);
   const clocks = useMemo(() => clockOptions(tag), [tag]);
   const heights = useMemo(() => heightOptions(tag), [tag]);
@@ -183,6 +215,15 @@ const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ v
             onChange={onLanguage}
             size={variant === 'sheet' ? 'md' : 'sm'}
             radius="md"
+            className={classes.grow}
+          />
+        </IconRow>
+        <IconRow icon={<IconAppearance size={size} />} label={i18n._(APPEARANCE)}>
+          <Segmented
+            options={schemes}
+            value={colorScheme}
+            onChange={onColorScheme}
+            height={h}
             className={classes.grow}
           />
         </IconRow>

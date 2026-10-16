@@ -19,3 +19,7 @@
 .error {
   margin-bottom: 96px;
 }
+
+.notice {
+  margin-block-end: 16px;
+}

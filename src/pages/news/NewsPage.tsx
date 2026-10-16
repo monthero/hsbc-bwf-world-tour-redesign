@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Button } from '@mantine/core';
 import { useElementSize, useMergedRef } from '@mantine/hooks';
 import { useQueryClient } from '@tanstack/react-query';
@@ -8,7 +10,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type FC } from 'reac
 
 import { newsMonthQuery, useFetchNewsMonths, useNewsIndex, useNewsMonths } from '~/api/news';
 import type { NewsIndex, NewsMonth, NewsMonthCount } from '~/api/schemas';
-import { PopularNews } from '~/components/news';
+import { EnglishOnlyNotice, PopularNews } from '~/components/news';
 import { PageHeader, RetryState } from '~/components/ui';
 import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { useIsMobile } from '~/hooks/useIsMobile';
@@ -40,7 +42,7 @@ import {
 } from './constants';
 import type { MonthGroup, NavItem, NewsSearch, Probe } from './types';
 import { useSectionSpy } from './useSectionSpy';
-import { buildArchive, buildRows, columnsFor, estimateRow } from './utils';
+import { buildArchive, buildRows, columnsFor, estimateRow, formatMonthName } from './utils';
 
 import classes from './NewsPage.module.css';
 import utils from '~/styles/utils.module.css';
@@ -75,22 +77,46 @@ interface Snapshot {
 
 let saved: Snapshot | null = null;
 
-const LEAD_NAV: readonly NavItem[] = [
-  { id: SECTION.latest, label: 'Latest', short: 'Latest' },
-  { id: SECTION.popular, label: 'Most popular', short: 'Popular' },
-];
+const LEAD_NAV = [
+  {
+    id: SECTION.latest,
+    short: msg({ message: 'Latest', comment: 'News page: heading of, and jump chip to, the newest stories section' }),
+  },
+  {
+    id: SECTION.popular,
+    short: msg({
+      message: 'Popular',
+      comment: 'News page on phones: short jump chip to the “most popular stories” section',
+    }),
+  },
+] as const;
 
 export const NewsPage: FC = () => {
   useDocumentMeta(NEWS_PAGE_META);
   const isMobile = useIsMobile();
   const { data, isError, refetch } = useNewsIndex();
   const retry = useCallback(() => void refetch(), [refetch]);
+  const { t, i18n } = useLingui();
   return (
     <div className={classes.page}>
-      <PageHeader kicker="News" title={NEWS_TITLE} meta={NEWS_META} />
+      <PageHeader
+        kicker={<Trans comment="Small label above the news page heading">News</Trans>}
+        title={i18n._(NEWS_TITLE)}
+        meta={i18n._(NEWS_META)}
+      />
+      <div className={utils.container}>
+        <EnglishOnlyNotice className={classes.notice} />
+      </div>
       {isError && !data ? (
         <div className={utils.container}>
-          <RetryState message="Couldn’t load the latest news." onRetry={retry} className={classes.error}>
+          <RetryState
+            message={t({
+              message: 'Couldn’t load the latest news.',
+              comment: 'Error message when the news feed fails to load',
+            })}
+            onRetry={retry}
+            className={classes.error}
+          >
             <Button
               component="a"
               href={OFFICIAL_NEWS_URL}
@@ -99,7 +125,9 @@ export const NewsPage: FC = () => {
               variant="subtle"
               radius="xl"
             >
-              Read on the official site
+              <Trans comment="Button linking to the official BWF World Tour news page when this site can’t load the news">
+                Read on the official site
+              </Trans>
             </Button>
           </RetryState>
         </div>
@@ -112,6 +140,7 @@ export const NewsPage: FC = () => {
 
 const Feed: FC<{ index: NewsIndex | undefined; isMobile: boolean }> = ({ index, isMobile }) => {
   const lookup = useTournamentLookup();
+  const { i18n } = useLingui();
   const queryClient = useQueryClient();
   const navigate = route.useNavigate();
   const linked = route.useSearch({ select: selectMonth });
@@ -147,7 +176,7 @@ const Feed: FC<{ index: NewsIndex | undefined; isMobile: boolean }> = ({ index, 
           key,
           order: i,
           id: monthSectionId(key),
-          name: month.format('MMMM'),
+          name: formatMonthName(key, 'long'),
           year: month.year(),
           total: months[i]?.count ?? 0,
           stories: st.page && storiesOf(st.page, lookup),
@@ -236,12 +265,15 @@ const Feed: FC<{ index: NewsIndex | undefined; isMobile: boolean }> = ({ index, 
       index &&
       groups.map((g) => {
         const sameYear = g.year === monthOf(currentKey).year();
-        const short = monthOf(g.key).format(sameYear ? 'MMM' : 'MMM YY');
-        return { id: g.id, label: sameYear ? g.name : `${g.name} ${g.year}`, short, count: g.total };
+        const short = formatMonthName(g.key, sameYear ? 'short' : 'shortYear');
+        return { id: g.id, short, count: g.total };
       }),
     [index, groups, currentKey],
   );
-  const chips = useMemo(() => [...LEAD_NAV, ...(monthNav ?? [])], [monthNav]);
+  const chips = useMemo<NavItem[]>(
+    () => [...LEAD_NAV.map((n) => ({ id: n.id, short: i18n._(n.short) })), ...(monthNav ?? [])],
+    [i18n, monthNav],
+  );
 
   const onPick = useCallback((key: string) => setTarget({ key, instant: false }), []);
   const onJump = useCallback(

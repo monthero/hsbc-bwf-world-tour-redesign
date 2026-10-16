@@ -4,12 +4,12 @@
   align-items: start;
   gap: 10px var(--gx);
   margin-top: 20px;
-  padding-left: var(--pl);
+  padding-inline-start: var(--pl);
 
   @mixin smaller-than $mantine-breakpoint-sm {
     grid-template-columns: minmax(0, 1fr);
     margin-top: 16px;
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 }
 
@@ -31,7 +31,7 @@
     font-weight: 600;
 
     svg {
-      color: var(--lv);
+      color: light-dark(var(--lv-text), var(--lv));
     }
   }
 }
@@ -86,7 +86,7 @@
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  color: alpha(var(--bwf-gold-text), 0.72);
+  color: light-dark(var(--bwf-gold-text), alpha(var(--bwf-gold-text), 0.72));
   -webkit-user-select: none;
   user-select: none;
 
@@ -98,12 +98,12 @@
 }
 
 .day[data-expected] .round {
-  color: alpha(var(--bwf-gold-text), 0.56);
+  color: light-dark(alpha(var(--bwf-gold-text), 0.9), alpha(var(--bwf-gold-text), 0.56));
   cursor: help;
 }
 
 .day[data-repeat] .round {
-  color: alpha(var(--bwf-gold-text), 0.4);
+  color: light-dark(alpha(var(--bwf-gold-text), 0.72), alpha(var(--bwf-gold-text), 0.4));
 }
 
 .day[data-state='done'] {
@@ -127,7 +127,7 @@
   }
 
   .round {
-    color: var(--bwf-gold-text);
+    color: light-dark(var(--mantine-color-gold-9), var(--bwf-gold-text));
   }
 }
 

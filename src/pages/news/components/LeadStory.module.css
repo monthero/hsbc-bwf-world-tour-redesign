@@ -7,11 +7,11 @@
   .tag {
     position: absolute;
     top: 16px;
-    left: 16px;
+    inset-inline-start: 16px;
 
     @mixin larger-than $mantine-breakpoint-sm {
       top: 18px;
-      left: 18px;
+      inset-inline-start: 18px;
     }
   }
 
@@ -36,15 +36,6 @@
 
 .media {
   aspect-ratio: 16 / 9;
-
-  @mixin larger-than $mantine-breakpoint-sm {
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 30%, alpha(var(--bwf-bg), 0.92));
-    }
-  }
 }
 
 .ghost {
@@ -64,7 +55,8 @@
 
   @mixin larger-than $mantine-breakpoint-sm {
     gap: 12px;
-    padding: 28px;
+    padding: 120px 28px 28px;
+    background: linear-gradient(180deg, transparent, alpha(var(--bwf-bg), 0.7) 45%, alpha(var(--bwf-bg), 0.94));
   }
 }
 
@@ -114,10 +106,10 @@
     flex: none;
     margin-inline-start: auto;
     font-size: 18px;
-    transition: translate 0.2s var(--bwf-ease-out);
+    transition: transform 0.2s var(--bwf-ease-out);
   }
 }
 
 .lead:hover .read {
-  translate: 4px 0;
+  transform: translateX(4px);
 }

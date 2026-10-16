@@ -18,7 +18,7 @@
 }
 
 .list {
-  padding-left: 1.3em;
+  padding-inline-start: 1.3em;
 
   li + li {
     margin-top: 0.4em;
@@ -70,8 +70,9 @@ h4.heading {
 .quote {
   position: relative;
   margin: 12px 0;
-  padding: 8px 0 8px 28px;
-  border-left: 3px solid var(--bwf-red);
+  padding-block: 8px;
+  padding-inline: 28px 0;
+  border-inline-start: 3px solid var(--bwf-red);
 
   blockquote {
     margin: 0;
@@ -97,7 +98,7 @@ h4.heading {
   }
 
   @mixin smaller-than $mantine-breakpoint-sm {
-    padding-left: 18px;
+    padding-inline-start: 18px;
   }
 }
 

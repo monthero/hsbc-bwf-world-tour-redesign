@@ -1,11 +1,22 @@
 .card {
+  --pad-x: clamp(12px, 1.6vw, 16px);
+  --pad-bottom: 14px;
+
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 12px;
   min-width: 0;
-  padding: 12px clamp(12px, 1.6vw, 16px) 14px;
+  padding: 12px var(--pad-x) var(--pad-bottom);
   border-radius: 14px;
+}
+
+.replay {
+  margin-block: 0 calc(-1 * var(--pad-bottom));
+  margin-inline: calc(-1 * var(--pad-x));
+  border-block-start: 1px solid var(--bwf-line);
+  border-end-start-radius: inherit;
+  border-end-end-radius: inherit;
 }
 
 .head {
@@ -49,9 +60,19 @@
 }
 
 .next {
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--mantine-color-amber-1);
   font-size: 11px;
   font-weight: 600;
-  color: var(--bwf-gold);
+  color: var(--bwf-gold-text);
+
+  @mixin dark {
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    color: var(--bwf-gold);
+  }
 }
 
 .meta {
@@ -117,6 +138,6 @@
   color: transparent;
 
   .team[data-result='won'] & {
-    color: var(--bwf-green);
+    color: var(--bwf-green-mark);
   }
 }

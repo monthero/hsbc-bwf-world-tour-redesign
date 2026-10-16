@@ -13,7 +13,7 @@
   flex: none;
   width: 0.85em;
   height: 0.85em;
-  margin-left: 4px;
+  margin-inline-start: 4px;
   vertical-align: -0.05em;
   color: var(--bwf-faint);
   transition: color 0.15s;

@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
@@ -6,7 +7,7 @@ import { CardHit } from '~/components/ui';
 import type { Player, Side } from '~/types';
 import { isScheduled, sideResult } from '~/utils/matches';
 
-import { matchTitle } from '../matches/utils';
+import { detailsLabel, matchTitle } from '../matches/utils';
 import type { BracketBox } from './bracket';
 
 import classes from './Draw.module.css';
@@ -20,6 +21,7 @@ const stateOf = (box: BracketBox, k: Side) => {
 };
 
 const BoxSide: FC<{ box: BracketBox; k: Side; large: boolean }> = ({ box, k, large }) => {
+  const { t } = useLingui();
   const team = box.teams[k];
   return (
     <span className={classes.side} data-state={stateOf(box, k)}>
@@ -28,7 +30,11 @@ const BoxSide: FC<{ box: BracketBox; k: Side; large: boolean }> = ({ box, k, lar
         seed={team?.seed}
         flag={large ? 'sm' : 'xs'}
         truncate
-        empty={box.bye ? '—' : 'TBD'}
+        empty={
+          box.bye
+            ? '—'
+            : t({ message: 'TBD', comment: 'Draw slot whose player or pair is not known yet (to be decided)' })
+        }
         className={classes.sidePlayers}
       />
       {box.match && (
@@ -52,7 +58,7 @@ export const DrawBox = memo<{
       data-tbd={(!m && !box.teams[0] && !box.teams[1]) || undefined}
       data-idle={!open || undefined}
     >
-      {open && <CardHit label={`Match details: ${matchTitle(m)}`} onClick={() => onOpen(m.id)} />}
+      {open && <CardHit label={detailsLabel(matchTitle(m))} onClick={() => onOpen(m.id)} />}
       <BoxSide box={box} k={0} large={large} />
       <BoxSide box={box} k={1} large={large} />
     </div>

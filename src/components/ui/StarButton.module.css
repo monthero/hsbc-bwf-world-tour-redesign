@@ -50,7 +50,7 @@
 
   &[data-variant='pill'] {
     border-color: var(--bwf-border-strong);
-    background: alpha(var(--mantine-color-white), 0.04);
+    background: light-dark(var(--bwf-surface-2), alpha(var(--mantine-color-white), 0.04));
     color: var(--bwf-text-3);
 
     &:hover {
@@ -67,7 +67,7 @@
 
   &[data-implied],
   &[data-active] {
-    color: var(--bwf-gold);
+    color: var(--bwf-star);
   }
 
   &[data-variant='outline'][data-active],

@@ -32,7 +32,7 @@
 }
 
 .count {
-  margin-left: auto;
+  margin-inline-start: auto;
   font-size: 13px;
   color: var(--bwf-muted);
   white-space: nowrap;
@@ -50,7 +50,7 @@
 
 .sort {
   width: 210px;
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 .chips {
@@ -68,6 +68,6 @@
   .activity,
   .sort {
     width: 100%;
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 }

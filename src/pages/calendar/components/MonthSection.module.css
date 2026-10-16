@@ -86,7 +86,8 @@
 
   @mixin smaller-than $mantine-breakpoint-sm {
     order: 1;
-    margin: 0 0 0 auto;
+    margin-block: 0;
+    margin-inline: auto 0;
     font-size: 12px;
   }
 }
@@ -96,7 +97,7 @@
   padding: 3px 9px;
   border-radius: 999px;
   background: alpha(var(--bwf-red), 0.14);
-  color: var(--bwf-red-text);
+  color: light-dark(var(--bwf-red-pale), var(--bwf-red-text));
   font-size: 12px;
   font-weight: 500;
 
@@ -123,7 +124,7 @@
   padding: 22px 20px;
   border-radius: 16px;
   font-size: 14px;
-  text-align: left;
+  text-align: start;
 
   @mixin smaller-than $mantine-breakpoint-sm {
     padding: 14px 16px;

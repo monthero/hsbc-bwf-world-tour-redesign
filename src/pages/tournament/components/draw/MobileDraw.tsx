@@ -20,7 +20,7 @@ export const MobileDraw: FC<{
   const { columns } = bracket;
   const index = Math.min(round, columns.length - 1);
   const col = columns[index];
-  const options = useMemo(() => columns.map((c, i) => ({ value: String(i), label: c.id, tip: c.label })), [columns]);
+  const options = useMemo(() => columns.map((c, i) => ({ value: String(i), label: c.short, tip: c.label })), [columns]);
   const select = useCallback((v: string | null) => v !== null && onRound(Number(v)), [onRound]);
 
   useSlideIn(ref, index, SLIDE_OPTS);

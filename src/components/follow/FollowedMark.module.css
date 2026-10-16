@@ -2,5 +2,16 @@
   flex: none;
   width: 12px;
   height: 12px;
-  color: var(--bwf-gold);
+  color: var(--bwf-star);
+
+  path {
+    stroke: var(--mantine-color-amber-7);
+    stroke-width: 10;
+  }
+
+  @mixin dark {
+    path {
+      stroke: none;
+    }
+  }
 }

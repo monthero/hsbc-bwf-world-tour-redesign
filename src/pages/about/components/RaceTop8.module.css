@@ -70,7 +70,7 @@ a.colHead:is(:hover, :focus-visible) {
 }
 
 .row[data-qualify='qualified'] .rank {
-  color: var(--bwf-gold);
+  color: var(--bwf-gold-accent);
 }
 
 .names {

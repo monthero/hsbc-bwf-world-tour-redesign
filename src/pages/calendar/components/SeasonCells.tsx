@@ -40,6 +40,7 @@ export const SeasonCells = memo<{
   return (
     <Tag
       className={classes.cells}
+      dir="ltr"
       data-size={size}
       style={{ '--n': tournaments.length } as CSSProperties}
       aria-label={label}

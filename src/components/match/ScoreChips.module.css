@@ -38,7 +38,7 @@
 }
 
 .chip[data-state='win'] {
-  background: alpha(var(--bwf-green), 0.1);
+  background: var(--bwf-win-tint);
 
   & .me {
     font-weight: 700;
@@ -59,20 +59,20 @@
   }
 
   & .opp {
-    color: var(--mantine-color-red-2);
+    color: var(--bwf-loss);
   }
 }
 
 .chip[data-state='live'] {
-  background: alpha(var(--bwf-blue), 0.16);
+  background: var(--bwf-blue-tint);
 
   & .me {
     font-weight: 700;
-    color: var(--mantine-color-blue-0);
+    color: light-dark(var(--bwf-text), var(--mantine-color-blue-0));
   }
 
   & .opp {
-    color: var(--mantine-color-blue-4);
+    color: light-dark(var(--bwf-blue), var(--mantine-color-blue-4));
   }
 }
 
@@ -101,7 +101,7 @@
 }
 
 .score {
-  text-align: right;
+  text-align: end;
   color: var(--bwf-faint);
 
   &[data-won] {
@@ -134,18 +134,24 @@
 
   & .current {
     width: 44px;
-    text-align: right;
+    text-align: end;
     font-size: 30px;
     font-weight: 700;
     letter-spacing: -0.04em;
     line-height: 1;
-    color: var(--mantine-color-white);
+    color: light-dark(var(--bwf-text), var(--mantine-color-white));
   }
 }
 
 .scores[data-variant='compact'] {
   gap: 4px;
   font-size: 11px;
+
+  & .score,
+  & .current {
+    min-width: 2ch;
+    text-align: end;
+  }
 
   & .score,
   & .score[data-won] {

@@ -2,7 +2,7 @@ import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 
 import type { NewsArticle } from '~/api/schemas';
-import { EVENT_NAMES } from '~/constants';
+import { EVENT_NAMES, SITE_ORIGIN } from '~/constants';
 import type { EventCode, Player, RankingKind, RankView, Tournament, TournamentStatus } from '~/types';
 
 import { countryName } from './countries';
@@ -204,6 +204,33 @@ export const playerMeta = (
 });
 
 const ARTICLE_IMAGE_WIDTH = 1200;
+
+export interface ResolvedDocumentMeta {
+  site: string;
+  page: string;
+  title: string;
+  description: string;
+  type: MetaType;
+  image?: string;
+}
+
+export const translateMetaText = (_: Translate, text: MetaText | undefined) =>
+  typeof text === 'object' ? _(text) : text;
+
+const absoluteUrl = (url: string | undefined) => (url?.startsWith('/') ? `${SITE_ORIGIN}${url}` : url);
+
+export const resolveDocumentMeta = (_: Translate, meta: DocumentMeta | undefined): ResolvedDocumentMeta => {
+  const site = _(SITE_NAME);
+  const page = translateMetaText(_, meta?.title) || site;
+  return {
+    site,
+    page,
+    title: page === site ? site : _({ ...PAGE_TITLE, values: { page, site } }),
+    description: translateMetaText(_, meta?.description) || _(SITE_DESCRIPTION),
+    type: meta?.type ?? 'website',
+    image: absoluteUrl(meta?.image),
+  };
+};
 
 export const articleMeta = (article: NewsArticle): DocumentMeta => ({
   title: article.title,

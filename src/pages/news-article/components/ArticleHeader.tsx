@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Skeleton, VisuallyHidden } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
@@ -17,8 +19,14 @@ import { ShareBar } from './ShareBar';
 import classes from './ArticleHeader.module.css';
 import utils from '~/styles/utils.module.css';
 
+const READ_TIME = msg({
+  message: '{minutes, plural, one {# min read} other {# min read}}',
+  comment: 'Estimated reading time of a news article, in minutes',
+});
+
 const ReadTime = memo<{ minutes: number }>(({ minutes }) => {
-  const label = `${minutes} min read`;
+  const { i18n } = useLingui();
+  const label = i18n._({ ...READ_TIME, values: { minutes } });
   return (
     <Tip label={label}>
       <span className={classes.readTime}>
@@ -43,7 +51,9 @@ const Players = memo<{ players: readonly FeaturedPlayer[] }>(({ players }) => {
   const hidden = expanded ? 0 : Math.max(0, players.length - MAX_PLAYERS);
   return (
     <div className={clsx(utils.noScrollbar, classes.players)} data-expanded={expanded || undefined}>
-      <Eyebrow>Featuring</Eyebrow>
+      <Eyebrow>
+        <Trans comment="Label before the avatars of players mentioned in a news article">Featuring</Trans>
+      </Eyebrow>
       {players.slice(0, players.length - hidden).map(({ player, photo }) => (
         <span key={player.id} className={classes.player}>
           <PlayerAvatar player={player} photo={photo} size={28} link />
@@ -52,7 +62,7 @@ const Players = memo<{ players: readonly FeaturedPlayer[] }>(({ players }) => {
       ))}
       {hidden > 0 && (
         <button type="button" className={classes.more} onClick={expand}>
-          +{hidden} more
+          <Trans comment="Button that reveals the remaining players mentioned in a news article">+{hidden} more</Trans>
         </button>
       )}
     </div>
@@ -65,19 +75,23 @@ export const ArticleHeader = memo<{
   minutes: number;
   players: readonly FeaturedPlayer[];
 }>(({ article, story, minutes, players }) => {
+  const { i18n } = useLingui();
+  const credit = article?.photoCredit;
   return (
     <header className={classes.header}>
       <div className={classes.intro}>
         <div className={classes.top}>
           <span className={classes.kicker}>
-            <BackPill link={BACK} label={BACK_LABEL} iconOnly />
+            <BackPill link={BACK} label={i18n._(BACK_LABEL)} iconOnly />
             {story?.tournament && <TournamentChip tournament={story.tournament} />}
             {story?.kind && <Eyebrow className={classes.kind}>{story.kind}</Eyebrow>}
           </span>
           {article && <ShareBar title={article.title} />}
         </div>
         {story ? (
-          <h1 className={clsx(classes.title, classes.measure)}>{story.title}</h1>
+          <h1 className={clsx(classes.title, classes.measure)} lang="en" dir="auto">
+            {story.title}
+          </h1>
         ) : (
           <>
             <Skeleton height={40} radius={8} className={classes.measure} />
@@ -102,14 +116,16 @@ export const ArticleHeader = memo<{
         ) : (
           <Skeleton className={classes.heroImage} radius={0} />
         )}
-        {(article?.image?.caption || article?.photoCredit) && (
+        {(article?.image?.caption || credit) && (
           <figcaption>
-            {article.image?.caption}
-            {article.photoCredit && (
+            {article?.image?.caption}
+            {credit && (
               <span className={classes.credit}>
                 <IconCamera />
-                <VisuallyHidden>Photo: </VisuallyHidden>
-                {article.photoCredit}
+                <Trans comment="Photo credit under a news article’s main image; the “Photo:” label is read by screen readers only">
+                  <VisuallyHidden>Photo: </VisuallyHidden>
+                  {credit}
+                </Trans>
               </span>
             )}
           </figcaption>

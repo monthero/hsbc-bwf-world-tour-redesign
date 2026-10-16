@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useCallback } from 'react';
 
@@ -24,7 +25,9 @@ export const LatestSection = memo<{
   const variant = isMobile ? 'row' : 'list';
   return (
     <section ref={ref} className={classes.section}>
-      <SectionTitle className={classes.heading}>Latest</SectionTitle>
+      <SectionTitle className={classes.heading}>
+        <Trans comment="News page: heading of, and jump chip to, the newest stories section">Latest</Trans>
+      </SectionTitle>
       <div className={classes.grid}>
         <LeadStory story={lead} isMobile={isMobile} />
         <div className={classes.side}>

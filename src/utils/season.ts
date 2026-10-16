@@ -1,4 +1,7 @@
+import { msg, t } from '@lingui/core/macro';
+
 import { ROUND_ORDER, SEASON_YEAR } from '~/constants';
+import { translate } from '~/i18n/lazy';
 import type {
   Match,
   MatchOutcome,
@@ -46,11 +49,36 @@ export const summarize = (list: Tournament[], year: number): SeasonSummary => {
   };
 };
 
-export const finalsCountdown = (t: Tournament) => {
-  if (t.status === 'live') return { value: 'Live', label: 'Finals in progress' };
-  if (t.status === 'done') return { value: '✓', label: 'Season complete' };
-  if (t.status === 'cancelled') return { value: '—', label: 'Cancelled' };
-  return { value: String(t.daysUntil), label: t.daysUntil === 1 ? 'day to go' : 'days to go' };
+const DAYS_TO_GO = msg({
+  message: '{count, plural, one {day to go} other {days to go}}',
+  comment:
+    'Countdown to the World Tour Finals, shown under a big number (the count is shown separately), e.g. "12" / "days to go"',
+});
+
+export const finalsCountdown = (tour: Tournament) => {
+  if (tour.status === 'live')
+    return {
+      value: t({
+        message: 'Live',
+        context: 'tournament status',
+        comment: 'Big status word: the Finals are being played now',
+      }),
+      label: t({
+        message: 'Finals in progress',
+        comment: 'The World Tour Finals, the season-ending tournament, are being played right now',
+      }),
+    };
+  if (tour.status === 'done')
+    return {
+      value: '✓',
+      label: t({ message: 'Season complete', comment: 'The World Tour season, including the Finals, has finished' }),
+    };
+  if (tour.status === 'cancelled')
+    return {
+      value: '—',
+      label: t({ message: 'Cancelled', context: 'tournament status', comment: 'The tournament will not take place' }),
+    };
+  return { value: String(tour.daysUntil), label: translate(DAYS_TO_GO, { count: tour.daysUntil }) };
 };
 
 const outcomeOf = (m: Match, side: Side): MatchOutcome => {

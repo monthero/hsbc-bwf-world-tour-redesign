@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { useDebouncedCallback } from '@mantine/hooks';
 import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -104,12 +105,18 @@ const Category: FC<{ table: RankingTable; ev: EventCode }> = ({ table, ev }) => 
     void navigate({ search: (s) => ({ ...s, q: undefined, cc: undefined }), ...STAY });
   }, [navigate, pushQuery]);
 
-  if (!rows.length)
+  if (!rows.length) {
+    const discipline = EVENT_NAMES[ev].toLowerCase();
     return (
       <div className={clsx(utils.container, classes.main)}>
-        <EmptyState>No {EVENT_NAMES[ev].toLowerCase()} ranking published yet</EmptyState>
+        <EmptyState>
+          <Trans comment="Empty rankings table; discipline is a lowercased discipline name, e.g. men’s doubles">
+            No {discipline} ranking published yet
+          </Trans>
+        </EmptyState>
       </div>
     );
+  }
 
   return (
     <>
@@ -137,10 +144,21 @@ const Category: FC<{ table: RankingTable; ev: EventCode }> = ({ table, ev }) => 
           />
         ) : (
           <EmptyState>
-            No {doubles ? 'pairs' : 'players'} match these filters.{' '}
-            <button type="button" className={classes.clear} onClick={onClear}>
-              Clear filters
-            </button>
+            {doubles ? (
+              <Trans comment="Empty doubles rankings after filtering; the button resets the search and country filter">
+                No pairs match these filters.{' '}
+                <button type="button" className={classes.clear} onClick={onClear}>
+                  Clear filters
+                </button>
+              </Trans>
+            ) : (
+              <Trans comment="Empty singles rankings after filtering; the button resets the search and country filter">
+                No players match these filters.{' '}
+                <button type="button" className={classes.clear} onClick={onClear}>
+                  Clear filters
+                </button>
+              </Trans>
+            )}
           </EmptyState>
         )}
       </main>

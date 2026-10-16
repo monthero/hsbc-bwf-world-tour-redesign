@@ -1,3 +1,6 @@
+import { msg } from '@lingui/core/macro';
+
+import { translate } from '~/i18n/lazy';
 import type { CurrentRank, EventCode } from '~/types';
 
 import { foldText } from './names';
@@ -74,7 +77,19 @@ export const byStanding = (a: PlayerStanding, b: PlayerStanding) =>
   (a.current?.rank ?? UNRANKED) - (b.current?.rank ?? UNRANKED) ||
   (a.high?.rank ?? UNRANKED) - (b.high?.rank ?? UNRANKED);
 
+const WORLD_RANK = msg({
+  message: 'WR #{rank} · {event}',
+  comment:
+    'Search result hint: the player’s current BWF world ranking and discipline code, e.g. "WR #3 · MS". WR is short for world ranking; keep it short',
+});
+
+const CAREER_HIGH = msg({
+  message: 'Career high #{rank} · {event}',
+  comment:
+    'Search result hint: the best world ranking the player ever reached, and the discipline code, e.g. "Career high #1 · WD"',
+});
+
 export const standingHint = ({ current, high }: PlayerStanding) => {
-  if (current) return `WR #${current.rank} · ${current.ev}`;
-  return high ? `Career high #${high.rank} · ${high.ev}` : null;
+  if (current) return translate(WORLD_RANK, { rank: current.rank, event: current.ev });
+  return high ? translate(CAREER_HIGH, { rank: high.rank, event: high.ev }) : null;
 };

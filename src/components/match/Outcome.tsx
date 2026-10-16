@@ -1,16 +1,16 @@
+import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, type ReactNode } from 'react';
 
 import { Tip } from '~/components/ui';
 import type { MatchOutcome, PlayerMatch } from '~/types';
 
+import { OUTCOME_LABELS, PILL_LABELS, TBD } from './labels';
 import { MatchTime } from './MatchTime';
 
 import classes from './Outcome.module.css';
 
 type OutcomeVariant = 'badge' | 'tile' | 'dot' | 'pill';
-
-const PILL_LABELS: Partial<Record<MatchOutcome, string>> = { W: 'WON', L: 'LOST' };
 
 export const OutcomeBadge = memo<{
   outcome: MatchOutcome;
@@ -20,8 +20,10 @@ export const OutcomeBadge = memo<{
   onClick?: () => void;
   className?: string;
 }>(({ outcome, label, variant = 'badge', tip, onClick, className }) => {
+  const { i18n } = useLingui();
   const props = { className: clsx(classes.badge, className), 'data-outcome': outcome, 'data-variant': variant };
-  const text = label ?? (variant === 'pill' ? (PILL_LABELS[outcome] ?? outcome) : outcome);
+  const pill = variant === 'pill' ? PILL_LABELS[outcome] : undefined;
+  const text = label ?? (outcome === 'up' ? outcome : i18n._(pill ?? OUTCOME_LABELS[outcome]));
   const el = onClick ? (
     <button type="button" {...props} onClick={onClick}>
       {text}
@@ -54,6 +56,11 @@ export const FormStrip = memo<{
   );
 });
 
-export const OutcomeLabel = memo<{ pm: PlayerMatch; zone?: boolean }>(({ pm, zone = false }) =>
-  pm.outcome === 'up' ? <MatchTime match={pm.match} zone={zone} fallback="TBD" /> : pm.outcome,
-);
+export const OutcomeLabel = memo<{ pm: PlayerMatch; zone?: boolean }>(({ pm, zone = false }) => {
+  const { i18n } = useLingui();
+  return pm.outcome === 'up' ? (
+    <MatchTime match={pm.match} zone={zone} fallback={i18n._(TBD)} />
+  ) : (
+    i18n._(OUTCOME_LABELS[pm.outcome])
+  );
+});

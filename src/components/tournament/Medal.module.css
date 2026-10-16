@@ -30,7 +30,7 @@
   border: 1px solid var(--bwf-surface-4);
   color: inherit;
   font: inherit;
-  text-align: left;
+  text-align: start;
   -webkit-user-select: none;
   user-select: none;
   transition:

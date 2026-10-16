@@ -1,9 +1,9 @@
+import { Plural } from '@lingui/react/macro';
 import { clsx } from 'clsx';
-import { memo } from 'react';
+import { memo, type FC } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
 import { FlagTipGroup } from '~/components/country';
-import { plural } from '~/utils/format';
 import type { NextKind } from '~/utils/match-time';
 
 import { CollapsibleSection } from './CollapsibleSection';
@@ -12,6 +12,15 @@ import type { MatchSection } from './utils';
 
 import classes from './MatchGroups.module.css';
 import utils from '~/styles/utils.module.css';
+
+const MatchCount: FC<{ count: number }> = ({ count }) => (
+  <Plural
+    value={count}
+    one="# match"
+    other="# matches"
+    comment="Number of matches in a start-time group of the match list"
+  />
+);
 
 export const MatchGroups = memo<{
   title: string;
@@ -36,7 +45,9 @@ export const MatchGroups = memo<{
             <div className={classes.groupHead}>
               <span className={clsx(classes.groupLabel, utils.ellipsis)}>{g.label}</span>
               <span className={classes.rule} />
-              <span className={classes.count}>{plural(g.items.length, 'match', 'matches')}</span>
+              <span className={classes.count}>
+                <MatchCount count={g.items.length} />
+              </span>
             </div>
             <div className={classes.grid}>
               {g.items.map((m) => (

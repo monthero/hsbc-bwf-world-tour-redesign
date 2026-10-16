@@ -1,6 +1,5 @@
 import type { NewsMonthCount } from '~/api/schemas';
-import { monthOf } from '~/utils/dates';
-import { plural } from '~/utils/format';
+import { formatMonth, formatWall, monthOf } from '~/utils/dates';
 
 import { CARD_MIN_WIDTH, CARD_RATIO, GRID_GAP, GRID_ROW_GAP, ROW_ESTIMATE } from './constants';
 import type { ArchiveRow, ArchiveYear, MonthGroup } from './types';
@@ -18,14 +17,24 @@ export const buildArchive = (months: readonly NewsMonthCount[]): ArchiveYear[] =
       years.set(year, entry);
     }
     entry.total += m.count;
-    entry.months[d.month()] = { key: m.month, label: d.format('MMMM YYYY'), short: d.format('MMM'), count: m.count };
+    entry.months[d.month()] = { key: m.month, label: formatMonth(m.month), count: m.count };
   }
   return [...years.values()].sort((a, b) => b.year - a.year);
 };
 
-export const MONTH_SHORT = Array.from({ length: MONTHS_IN_YEAR }, (_, i) => monthOf('2000-01').month(i).format('MMM'));
+const MONTH_FORMATS = {
+  long: { month: 'long' },
+  short: { month: 'short' },
+  shortYear: { month: 'short', year: '2-digit' },
+} as const;
 
-export const storiesLabel = (n: number) => plural(n, 'story', 'stories');
+export const formatMonthName = (key: string, style: keyof typeof MONTH_FORMATS) =>
+  formatWall(monthOf(key), MONTH_FORMATS[style]);
+
+const BASE_YEAR = '2000';
+
+export const monthShort = (index: number) =>
+  formatMonthName(`${BASE_YEAR}-${String(index + 1).padStart(2, '0')}`, 'short');
 
 export const columnsFor = (width: number) => Math.max(1, Math.floor((width + GRID_GAP) / (CARD_MIN_WIDTH + GRID_GAP)));
 

@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { useMemo, type FC } from 'react';
 
 import { MatchVideos } from '~/components/media';
@@ -23,6 +24,7 @@ export const MatchDetail: FC<{
   const live = match.status === 'P' && match.current ? match.games.length : -1;
   const lead = metaLead(match);
   const time = match.status !== 'N' && match.time;
+  const { t } = useLingui();
   return (
     <div className={classes.root}>
       <header className={classes.header}>
@@ -41,7 +43,10 @@ export const MatchDetail: FC<{
             {roundName(match.round)}
           </span>
         </div>
-        <IconButton label="Close" onClick={onClose}>
+        <IconButton
+          label={t({ message: 'Close', comment: 'Button that closes the match detail panel' })}
+          onClick={onClose}
+        >
           <IconClose size={15} />
         </IconButton>
       </header>

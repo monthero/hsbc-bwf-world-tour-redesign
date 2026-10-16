@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
@@ -5,6 +6,8 @@ import { Tip } from '~/components/ui';
 import { useMatchTime } from '~/hooks/useMatchClock';
 import type { Match, SideResult } from '~/types';
 import { dayMark } from '~/utils/match-time';
+
+import { TBD } from './labels';
 
 import classes from './MatchTime.module.css';
 
@@ -33,13 +36,15 @@ export const MatchTime = memo<{
 });
 
 export const TimedStatus = memo<{ match: Match | null | undefined; tone: SideResult; label: string }>(
-  ({ match, tone, label }) =>
-    tone === 'up' && match ? (
+  ({ match, tone, label }) => {
+    const { i18n } = useLingui();
+    return tone === 'up' && match ? (
       <>
-        <MatchTime match={match} fallback="TBD" />
+        <MatchTime match={match} fallback={i18n._(TBD)} />
         {label && ` · ${label}`}
       </>
     ) : (
       label
-    ),
+    );
+  },
 );

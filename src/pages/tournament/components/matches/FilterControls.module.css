@@ -74,7 +74,7 @@
 .searchCompact {
   flex: 0 1 220px;
   min-width: 120px;
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 .searchSheet {
@@ -90,6 +90,11 @@
 
   &[data-fade] {
     height: 22px;
-    background: linear-gradient(180deg, transparent, alpha(var(--mantine-color-white), 0.14), transparent);
+    background: linear-gradient(
+      180deg,
+      transparent,
+      light-dark(alpha(var(--bwf-text), 0.18), alpha(var(--mantine-color-white), 0.14)),
+      transparent
+    );
   }
 }

@@ -25,7 +25,6 @@ export interface MonthGroup {
 
 export interface NavItem {
   id: string;
-  label: string;
   short: string;
   count?: number;
 }
@@ -33,7 +32,6 @@ export interface NavItem {
 export interface ArchiveMonth {
   key: string;
   label: string;
-  short: string;
   count: number;
 }
 

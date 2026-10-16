@@ -1,3 +1,6 @@
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type FC } from 'react';
@@ -19,10 +22,25 @@ import utils from '~/styles/utils.module.css';
 
 type Phase = 'after' | 'during' | 'preview';
 
-const PHASES: readonly { key: Phase; title: string }[] = [
-  { key: 'after', title: 'After the event' },
-  { key: 'during', title: 'During the event' },
-  { key: 'preview', title: 'Preview' },
+const PHASES: readonly { key: Phase; title: MessageDescriptor }[] = [
+  {
+    key: 'after',
+    title: msg({
+      message: 'After the event',
+      comment: 'News tab section: stories published after the tournament ended',
+    }),
+  },
+  {
+    key: 'during',
+    title: msg({
+      message: 'During the event',
+      comment: 'News tab section: stories published while the tournament ran',
+    }),
+  },
+  {
+    key: 'preview',
+    title: msg({ message: 'Preview', comment: 'News tab section: stories published before the tournament started' }),
+  },
 ];
 
 const SKELETON_COUNT = { card: 3, row: 4 } as const;
@@ -33,7 +51,7 @@ const NO_TOURNAMENTS = new Map<never, never>();
 
 interface NewsPhase {
   key: Phase;
-  title: string;
+  title: MessageDescriptor;
   stories: NewsStory[];
 }
 
@@ -52,12 +70,15 @@ const buildPhases = (items: readonly NewsItem[], t: Tournament): NewsPhase[] => 
   });
 };
 
-const PhaseSection = memo<{ phase: NewsPhase; variant: Variant }>(({ phase, variant }) => (
-  <section className={classes.section}>
-    <SectionTitle count={phase.stories.length}>{phase.title}</SectionTitle>
-    <NewsGrid stories={phase.stories} variant={variant} />
-  </section>
-));
+const PhaseSection = memo<{ phase: NewsPhase; variant: Variant }>(({ phase, variant }) => {
+  const { i18n } = useLingui();
+  return (
+    <section className={classes.section}>
+      <SectionTitle count={phase.stories.length}>{i18n._(phase.title)}</SectionTitle>
+      <NewsGrid stories={phase.stories} variant={variant} />
+    </section>
+  );
+});
 
 const LoadingSection = memo<{ variant: Variant }>(({ variant }) => (
   <section className={classes.section} aria-busy>
@@ -67,6 +88,7 @@ const LoadingSection = memo<{ variant: Variant }>(({ variant }) => (
 ));
 
 export const NewsTab: FC<TabProps> = ({ tournament }) => {
+  const { t } = useLingui();
   const isMobile = useIsMobile();
   const { data: items, isLoading, isError, refetch } = useTournamentNews(tournament);
   const phases = useMemo(() => (items ? buildPhases(items, tournament) : []), [items, tournament]);
@@ -76,9 +98,20 @@ export const NewsTab: FC<TabProps> = ({ tournament }) => {
     <div className={clsx(utils.container, page.tabSection, classes.tab)}>
       {isLoading && <LoadingSection variant={variant} />}
       {isError && !items && (
-        <RetryState message="Couldn’t load the news for this tournament." onRetry={retry} compact />
+        <RetryState
+          message={t({
+            message: 'Couldn’t load the news for this tournament.',
+            comment: 'News tab error message, shown with a Try again button',
+          })}
+          onRetry={retry}
+          compact
+        />
       )}
-      {items && !items.length && <EmptyState>No stories about this tournament yet.</EmptyState>}
+      {items && !items.length && (
+        <EmptyState>
+          <Trans comment="News tab empty state">No stories about this tournament yet.</Trans>
+        </EmptyState>
+      )}
       {phases.map((p) => (
         <PhaseSection key={p.key} phase={p} variant={variant} />
       ))}

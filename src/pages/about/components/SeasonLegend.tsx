@@ -1,4 +1,5 @@
-import { memo, type ReactNode } from 'react';
+import { useLingui } from '@lingui/react/macro';
+import { memo, useMemo, type ReactNode } from 'react';
 
 import { FilterChip } from '~/components/ui';
 import { LEVEL_META } from '~/constants';
@@ -56,16 +57,40 @@ export const SeasonLegend = memo<{
   status: SeasonStatus[] | undefined;
   onLevel: (level: Level) => void;
   onStatus: (status: SeasonStatus) => void;
-}>(({ compact, live, levels, status, onLevel, onStatus }) => (
-  <div className={classes.legend} data-compact={compact || undefined}>
-    <LegendGroup label="Levels" options={LEGEND_LEVELS} meta={LEVEL_META} picked={levels} onToggle={onLevel} />
-    <LegendGroup
-      label="Status"
-      options={SeasonStatus.options}
-      meta={STATUS_META}
-      picked={status}
-      markers={live ? MARKERS.live : MARKERS.next}
-      onToggle={onStatus}
-    />
-  </div>
-));
+}>(({ compact, live, levels, status, onLevel, onStatus }) => {
+  const { i18n, t } = useLingui();
+  const statusMeta = useMemo(
+    () =>
+      Object.fromEntries(
+        SeasonStatus.options.map((s) => [s, { label: i18n._(STATUS_META[s].label), color: STATUS_META[s].color }]),
+      ) as Record<SeasonStatus, { label: string; color: string }>,
+    [i18n],
+  );
+  return (
+    <div className={classes.legend} data-compact={compact || undefined}>
+      <LegendGroup
+        label={t({
+          message: 'Levels',
+          comment:
+            'Screen-reader label for the About page map filters by tournament level (Super 1000, 750, 500, 300, Finals)',
+        })}
+        options={LEGEND_LEVELS}
+        meta={LEVEL_META}
+        picked={levels}
+        onToggle={onLevel}
+      />
+      <LegendGroup
+        label={t({
+          message: 'Status',
+          comment:
+            'Screen-reader label for the About page map filters by tournament status (completed, upcoming, live or next)',
+        })}
+        options={SeasonStatus.options}
+        meta={statusMeta}
+        picked={status}
+        markers={live ? MARKERS.live : MARKERS.next}
+        onToggle={onStatus}
+      />
+    </div>
+  );
+});

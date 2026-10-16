@@ -15,6 +15,7 @@
   color: var(--bwf-bg);
   font: inherit;
   cursor: pointer;
+  scale: var(--pz-counter, 1);
   transition: opacity 0.15s;
 
   &:focus-visible {
@@ -33,10 +34,23 @@
   background: var(--lv);
   box-shadow: 0 0 0 2px var(--bwf-bg-sunken);
   transition: transform 0.18s var(--bwf-ease);
+
+  @mixin light {
+    box-shadow:
+      0 0 0 2px var(--bwf-bg-sunken),
+      0 0 0 3px alpha(var(--bwf-shadow-ink), 0.6);
+  }
 }
 
 .pin[data-status='done'] .dot {
-  background: color-mix(in srgb, var(--lv) 42%, var(--bwf-bg-sunken));
+  background: var(--lv-muted);
+
+  @mixin light {
+    box-shadow:
+      inset 0 0 0 2px var(--lv),
+      0 0 0 2px var(--bwf-bg-sunken),
+      0 0 0 3px alpha(var(--bwf-shadow-ink), 0.6);
+  }
 }
 
 .pin[data-status='cancelled'] .dot {
@@ -73,6 +87,21 @@
   .dot {
     --s: 7px;
     box-shadow: 0 0 0 1.5px var(--bwf-bg-sunken);
+
+    @mixin light {
+      box-shadow:
+        0 0 0 1.5px var(--bwf-bg-sunken),
+        0 0 0 2.5px alpha(var(--bwf-shadow-ink), 0.6);
+    }
+  }
+
+  &[data-status='done'] .dot {
+    @mixin light {
+      box-shadow:
+        inset 0 0 0 1.5px var(--lv),
+        0 0 0 1.5px var(--bwf-bg-sunken),
+        0 0 0 2.5px alpha(var(--bwf-shadow-ink), 0.6);
+    }
   }
 }
 

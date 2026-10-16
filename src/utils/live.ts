@@ -1,6 +1,10 @@
+import { msg, t } from '@lingui/core/macro';
+
 import type { LiveServer, MatchStats } from '~/api/bwf/normalize';
+import { lazyRecord, translate } from '~/i18n/lazy';
 import type { Game, Match, Side } from '~/types';
 
+import { labelValue } from './format';
 import { gameWon, opposite } from './matches';
 
 export type ChallengeOutcome = 'won' | 'lost' | 'void';
@@ -24,28 +28,73 @@ export interface LiveStats {
 
 export const STREAK_MIN = 3;
 
-export const CHALLENGE_LABELS: Record<ChallengeOutcome, string> = {
-  won: 'Challenge won',
-  lost: 'Challenge lost',
-  void: 'Challenge · no decision',
-};
+export const CHALLENGE_LABELS: Record<ChallengeOutcome, string> = lazyRecord({
+  won: msg({
+    message: 'Challenge won',
+    comment:
+      'Live match tag: the video review proved the player right. A challenge is a player’s request for a video review of a line call (Instant Review)',
+  }),
+  lost: msg({
+    message: 'Challenge lost',
+    comment:
+      'Live match tag: the video review proved the player wrong. A challenge is a player’s request for a video review of a line call (Instant Review)',
+  }),
+  void: msg({
+    message: 'Challenge · no decision',
+    comment:
+      'Live match tag: the video review could not decide the call. A challenge is a player’s request for a video review of a line call (Instant Review)',
+  }),
+});
 
 export const CHALLENGES_PER_GAME = 2;
 
 export const challengesLeft = (lost: number) => Math.max(0, CHALLENGES_PER_GAME - lost);
 
-export const CHALLENGE_RULE = 'This game · only unsuccessful challenges use one up';
+export const CHALLENGE_RULE = msg({
+  message: 'This game · only unsuccessful challenges use one up',
+  comment:
+    'Explains the challenge count: it resets each game, and a challenge is only used up when it fails. A challenge is a player’s request for a video review of a line call (Instant Review)',
+});
 
-export const challengeHeadline = (left: number) => `${left} of ${CHALLENGES_PER_GAME} challenges left`;
+const CHALLENGE_HEADLINE = msg({
+  message: '{left} of {total, plural, one {# challenge} other {# challenges}} left',
+  comment:
+    'Live match: how many challenges a side can still make in this game, e.g. "1 of 2 challenges left". A challenge is a player’s request for a video review of a line call (Instant Review)',
+});
+
+export const challengeHeadline = (left: number) => translate(CHALLENGE_HEADLINE, { left, total: CHALLENGES_PER_GAME });
 
 export const challengeRows = ({ challenges: c }: MatchStats[number]) => [
-  { label: 'Used this match', value: c.used },
-  { label: 'Won', value: c.won },
-  { label: 'Lost', value: c.lost },
+  {
+    label: t({
+      message: 'Used this match',
+      comment:
+        'Live match: number of challenges a side has made. A challenge is a player’s request for a video review of a line call (Instant Review)',
+    }),
+    value: c.used,
+  },
+  {
+    label: t({
+      message: 'Won',
+      context: 'challenges',
+      comment:
+        'Live match: number of successful challenges. A challenge is a player’s request for a video review of a line call (Instant Review)',
+    }),
+    value: c.won,
+  },
+  {
+    label: t({
+      message: 'Lost',
+      context: 'challenges',
+      comment:
+        'Live match: number of failed challenges. A challenge is a player’s request for a video review of a line call (Instant Review)',
+    }),
+    value: c.lost,
+  },
 ];
 
 export const challengeTip = (s: MatchStats[number], left: number) =>
-  [challengeHeadline(left), ...challengeRows(s).map((r) => `${r.label}: ${r.value}`)].join(' · ');
+  [challengeHeadline(left), ...challengeRows(s).map((r) => labelValue(r.label, r.value))].join(' · ');
 
 const SIDES: readonly Side[] = [0, 1];
 
@@ -79,11 +128,26 @@ const gamesWon = (m: Match, side: Side) => m.games.filter((g) => gameWon(g, side
 
 export const liveStatus = (m: Match): LiveStatus | null => {
   const phase = livePhase(m);
-  if (phase === 'over') return { label: 'Match over', tone: 'green' };
-  if (phase === 'between') return { label: 'Between games', tone: 'gold' };
+  if (phase === 'over')
+    return {
+      label: t({ message: 'Match over', comment: 'Live match status: the last rally has been played' }),
+      tone: 'green',
+    };
+  if (phase === 'between')
+    return {
+      label: t({ message: 'Between games', comment: 'Live match status: the break between two games of a match' }),
+      tone: 'gold',
+    };
   if (m.pause && reviewBy(m) === null) return { label: m.pause, tone: 'gold' };
   const deciding = m.games.length === 2 && gamesWon(m, 0) === 1 && gamesWon(m, 1) === 1;
-  return deciding ? { label: 'Deciding game', tone: 'blue' } : null;
+  if (!deciding) return null;
+  return {
+    label: t({
+      message: 'Deciding game',
+      comment: 'Live match status: the third game, played when each side has won one game; its winner wins the match',
+    }),
+    tone: 'blue',
+  };
 };
 
 export const servingPlayer = (m: Match, server: LiveServer | undefined) =>
@@ -123,5 +187,10 @@ const hasGamePoint = (own: number, opp: number) => own >= GAME_TO - 1 && (own > 
 export const pointCall = (m: Match, side: Side) => {
   const g = m.current;
   if (!g || gameDone(g) || !hasGamePoint(g[side], g[opposite(side)])) return null;
-  return m.games.some((x) => gameWon(x, side)) ? 'Match point' : 'Game point';
+  return m.games.some((x) => gameWon(x, side))
+    ? t({
+        message: 'Match point',
+        comment: 'Live match: this side wins the whole match if it wins the next rally',
+      })
+    : t({ message: 'Game point', comment: 'Live match: this side wins the current game if it wins the next rally' });
 };

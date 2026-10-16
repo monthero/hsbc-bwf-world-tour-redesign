@@ -39,6 +39,7 @@
 }
 
 .medalCard {
+  --hero-edge: alpha(var(--bwf-gold), 0.45);
   display: grid;
   grid-row: span 4;
   grid-template-rows: subgrid;
@@ -56,7 +57,9 @@
 
   &[data-decided] {
     border: 1px solid alpha(var(--bwf-gold), 0.24);
-    background: linear-gradient(160deg, alpha(var(--bwf-gold), 0.14) 0%, transparent 65%), var(--bwf-bg-sunken);
+    --glow: light-dark(alpha(var(--bwf-gold), 0.1), alpha(var(--bwf-gold), 0.14));
+    --glow-end: light-dark(alpha(var(--bwf-gold), 0.1), transparent);
+    background: linear-gradient(160deg, var(--glow) 0%, var(--glow-end) 65%), var(--bwf-bg-sunken);
   }
 
   &[data-photos] {
@@ -64,7 +67,7 @@
     overflow: hidden;
     isolation: isolate;
     min-height: 232px;
-    border-color: alpha(var(--bwf-gold), 0.45);
+    border-color: var(--hero-edge);
     background: var(--bwf-surface-4);
 
     :is(.heroTop, .heroWho) {
@@ -79,7 +82,7 @@
     }
 
     .heroTop {
-      color: var(--mantine-color-gold-4);
+      color: var(--bwf-gold-text);
     }
 
     .heroName {
@@ -156,7 +159,7 @@
   cursor: help;
 
   b {
-    margin-left: 2px;
+    margin-inline-start: 2px;
     font-weight: 650;
     font-variant-numeric: tabular-nums;
     color: var(--bwf-text);
@@ -192,7 +195,8 @@
       justify-self: start;
       align-self: start;
       z-index: 1;
-      margin: 19px 0 0 -5px;
+      margin-block: 19px 0;
+      margin-inline: -5px 0;
       padding: 1px;
       border-radius: 50%;
       background: var(--bwf-surface);

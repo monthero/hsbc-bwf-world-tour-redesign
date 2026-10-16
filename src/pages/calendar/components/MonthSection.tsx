@@ -1,10 +1,10 @@
+import { Plural, Trans } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useCallback, type CSSProperties } from 'react';
 
 import { EmptyState } from '~/components/ui';
 
 import type { AnchorRef, MonthGroup } from '../types';
-import { eventCountLabel } from '../utils';
 import { EventCard } from './EventCard';
 import { EventRow, LiveCard } from './EventRow';
 
@@ -22,6 +22,7 @@ export const MonthSection = memo<{
 }>(({ group, first, isMobile, nextCode, targetCode, anchorRef, register }) => {
   const ref = useCallback((el: HTMLElement | null) => register(group.month, el), [register, group.month]);
   const { items } = group;
+  const count = items.length;
   return (
     <section
       ref={ref}
@@ -36,8 +37,23 @@ export const MonthSection = memo<{
         <span className={classes.name} data-muted={group.muted || undefined}>
           {group.name}
         </span>
-        <span className={classes.count}>{eventCountLabel(items.length)}</span>
-        {group.tone === 'current' && <span className={classes.badge}>This month</span>}
+        <span className={classes.count}>
+          {count ? (
+            <Plural
+              value={count}
+              one="# event"
+              other="# events"
+              comment="Number of tournaments in a month of the season calendar"
+            />
+          ) : (
+            '—'
+          )}
+        </span>
+        {group.tone === 'current' && (
+          <span className={classes.badge}>
+            <Trans comment="Badge on the season calendar marking the current calendar month">This month</Trans>
+          </span>
+        )}
       </div>
       {items.length ? (
         <div className={clsx(timeline.body, classes.list)}>
@@ -51,7 +67,15 @@ export const MonthSection = memo<{
         </div>
       ) : (
         <EmptyState className={clsx(timeline.body, classes.empty)}>
-          {isMobile ? 'No World Tour events' : 'No World Tour events this month'}
+          {isMobile ? (
+            <Trans comment="Empty state on phones for a calendar month with no World Tour tournaments">
+              No World Tour events
+            </Trans>
+          ) : (
+            <Trans comment="Empty state for a calendar month with no World Tour tournaments">
+              No World Tour events this month
+            </Trans>
+          )}
         </EmptyState>
       )}
     </section>

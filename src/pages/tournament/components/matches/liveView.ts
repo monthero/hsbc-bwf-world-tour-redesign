@@ -1,3 +1,5 @@
+import { t } from '@lingui/core/macro';
+
 import type { LiveServer, MatchStats, SideStats } from '~/api/bwf/normalize';
 import { EVENT_NAMES } from '~/constants';
 import type { Game, Match, Side, Team } from '~/types';
@@ -47,7 +49,12 @@ export interface LiveView {
 
 const resultOf = (phase: LivePhase, gameNo: number) => {
   if (phase === 'play') return null;
-  return phase === 'over' ? 'Won the match' : `Won game ${gameNo}`;
+  return phase === 'over'
+    ? t({ message: 'Won the match', comment: 'Live score chip next to the side that just won the match' })
+    : t({
+        message: `Won game ${gameNo}`,
+        comment: 'Live score chip next to the side that just won a game. A badminton match is best of three games',
+      });
 };
 
 const leftOf = (side: Side, gameNo: number, stats: LiveStats | null, game: MatchStats | null) => {

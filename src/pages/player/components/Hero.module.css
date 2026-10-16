@@ -1,10 +1,14 @@
 .hero {
+  --to-end: 90deg;
   --pad: clamp(20px, 2.6cqi, 36px);
   --hairline: alpha(var(--mantine-color-white), 0.1);
   --glass-tint: linear-gradient(180deg, alpha(var(--bwf-red), 0.16), alpha(var(--bwf-red), 0.05));
   --glass-filter: blur(18px) saturate(1.1) brightness(0.55);
   --glass-edge: alpha(var(--bwf-red), 0.45);
   --glass-light: inset 0 1px 0 alpha(var(--mantine-color-white), 0.14);
+  --glass-base: alpha(var(--bwf-bg), 0.3);
+  --glass-base-strong: alpha(var(--bwf-bg), 0.38);
+  --glass-shadow: 0 10px 30px alpha(var(--mantine-color-black), 0.28);
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -19,6 +23,21 @@
   padding: var(--pad) var(--pad) 0;
   border-radius: 22px;
   background: var(--bwf-bg-sunken);
+
+  &:dir(rtl) {
+    --to-end: -90deg;
+  }
+
+  @mixin light {
+    --hairline: var(--bwf-border);
+    --glass-tint: none;
+    --glass-filter: blur(16px) saturate(1.05);
+    --glass-edge: var(--bwf-border);
+    --glass-light: inset 0 1px 0 alpha(var(--bwf-surface-2), 0.9);
+    --glass-base: alpha(var(--bwf-surface-2), 0.88);
+    --glass-base-strong: alpha(var(--bwf-surface-2), 0.9);
+    --glass-shadow: 0 10px 30px alpha(var(--bwf-shadow-ink), 0.28);
+  }
 
   &:is([data-image], [data-portrait]) {
     min-height: clamp(420px, 36cqi, 540px);
@@ -42,21 +61,36 @@
   &[data-image]::after {
     background:
       linear-gradient(
-        90deg,
+        var(--to-end),
         alpha(var(--bwf-bg-sunken), 0.92) 14%,
         alpha(var(--bwf-bg-sunken), 0.6) 44%,
         alpha(var(--bwf-bg-sunken), 0) 78%
       ),
       linear-gradient(0deg, alpha(var(--bwf-bg-sunken), 0.85) 0%, alpha(var(--bwf-bg-sunken), 0) 40%);
+
+    @mixin light {
+      background: linear-gradient(
+        var(--to-end),
+        alpha(var(--bwf-surface-2), 0.95) 0%,
+        alpha(var(--bwf-surface-2), 0.8) 34%,
+        transparent 58%
+      );
+    }
   }
 
   &:not([data-image])::before {
     --line: alpha(var(--mantine-color-white), 0.05);
+    --glow: alpha(var(--mantine-color-white), 0.04);
     background:
       linear-gradient(var(--line), var(--line)) 64% 0 / 2px 100% no-repeat,
       linear-gradient(var(--line), var(--line)) 92% 0 / 2px 100% no-repeat,
       linear-gradient(var(--line), var(--line)) 0 34% / 100% 2px no-repeat,
-      radial-gradient(circle at 82% 24%, alpha(var(--mantine-color-white), 0.04), transparent 58%);
+      radial-gradient(circle at 82% 24%, var(--glow), transparent 58%);
+
+    @mixin light {
+      --line: alpha(var(--bwf-surface-2), 0.85);
+      --glow: alpha(var(--bwf-surface-2), 0.7);
+    }
   }
 
   @container athlete (width < 640px) {
@@ -93,6 +127,16 @@
         alpha(var(--bwf-bg-sunken), 0.82) 220px,
         var(--bwf-bg-sunken) 340px
       );
+
+      @mixin light {
+        background: linear-gradient(
+          180deg,
+          transparent 0,
+          transparent 150px,
+          alpha(var(--bwf-bg-sunken), 0.85) 260px,
+          var(--bwf-bg-sunken) 340px
+        );
+      }
     }
   }
 }
@@ -106,7 +150,7 @@
   aspect-ratio: 4 / 5;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 24px 48px alpha(var(--mantine-color-black), 0.45);
+  box-shadow: 0 24px 48px alpha(var(--bwf-shadow-ink), 0.45);
 
   @container athlete (width < 640px) {
     justify-self: start;
@@ -182,11 +226,11 @@
   flex-direction: column;
   gap: 4px;
   padding-inline: 18px;
-  border-left: 1px solid var(--hairline);
+  border-inline-start: 1px solid var(--hairline);
 
   &:first-child {
-    padding-left: 0;
-    border-left: 0;
+    padding-inline-start: 0;
+    border-inline-start: 0;
   }
 
   @container athlete (width < 640px) {
@@ -225,10 +269,10 @@
   position: absolute;
   z-index: 1;
   top: var(--pad);
-  right: var(--pad);
+  inset-inline-end: var(--pad);
 
   button[data-variant] {
-    border-color: alpha(var(--mantine-color-white), 0.18);
+    border-color: light-dark(var(--bwf-border-strong), alpha(var(--mantine-color-white), 0.18));
     background: var(--bwf-glass-bg);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -281,12 +325,10 @@
   padding: 12px 14px;
   border: 1px solid var(--glass-edge);
   border-radius: 14px;
-  background: var(--glass-tint), alpha(var(--bwf-bg), 0.3);
+  background: var(--glass-tint), var(--glass-base);
   backdrop-filter: var(--glass-filter);
   -webkit-backdrop-filter: var(--glass-filter);
-  box-shadow:
-    var(--glass-light),
-    0 10px 30px alpha(var(--mantine-color-black), 0.28);
+  box-shadow: var(--glass-light), var(--glass-shadow);
   scroll-snap-align: start;
   transition:
     border-color 0.15s,
@@ -303,16 +345,19 @@
 
   &[data-active] {
     border-color: alpha(var(--event), 0.8);
-    background:
-      linear-gradient(180deg, alpha(var(--event), 0.26), alpha(var(--event), 0.08)), alpha(var(--bwf-bg), 0.3);
+    background: linear-gradient(180deg, alpha(var(--event), 0.26), alpha(var(--event), 0.08)), var(--glass-base);
     box-shadow:
       var(--glass-light),
       0 0 0 3px alpha(var(--event), 0.16),
-      0 10px 30px alpha(var(--mantine-color-black), 0.28);
+      var(--glass-shadow);
   }
 
   .ranks[data-picked] &:not([data-active]) {
     opacity: 0.6;
+  }
+
+  @mixin light {
+    --glass-tint: linear-gradient(alpha(var(--event), 0.07), alpha(var(--event), 0.07));
   }
 
   @container athlete (width < 640px) {
@@ -337,10 +382,10 @@
 }
 
 .rankHash {
-  margin-right: 2px;
+  margin-inline-end: 2px;
   font-size: 0.6em;
   vertical-align: 0.42em;
-  color: var(--event);
+  color: light-dark(var(--event-text), var(--event));
 }
 
 .rankKind {
@@ -402,11 +447,11 @@
   padding-inline: 8px;
 
   &:first-child {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 
   & + & {
-    border-left: 1px solid var(--hairline);
+    border-inline-start: 1px solid var(--hairline);
   }
 
   dt {
@@ -448,12 +493,16 @@
   grid-auto-columns: minmax(0, 1fr);
   align-items: stretch;
   margin: 0 calc(-1 * var(--pad));
-  padding-left: var(--pad);
+  padding-inline-start: var(--pad);
   border-top: 1px solid var(--glass-edge);
-  background: var(--glass-tint), alpha(var(--bwf-bg), 0.38);
+  background: var(--glass-tint), var(--glass-base-strong);
   backdrop-filter: var(--glass-filter);
   -webkit-backdrop-filter: var(--glass-filter);
   box-shadow: var(--glass-light);
+
+  @mixin light {
+    --glass-tint: linear-gradient(alpha(var(--bwf-red), 0.05), alpha(var(--bwf-red), 0.05));
+  }
 
   @container athlete (width < 640px) {
     grid-auto-flow: row;
@@ -482,7 +531,7 @@
   flex-direction: column;
   gap: 4px;
   padding: 16px var(--pad);
-  border-left: 1px solid var(--hairline);
+  border-inline-start: 1px solid var(--hairline);
 
   dd {
     margin: 0;
@@ -494,8 +543,8 @@
     padding: 10px 12px 12px;
 
     &:nth-child(3n + 2) {
-      padding-left: 0;
-      border-left: 0;
+      padding-inline-start: 0;
+      border-inline-start: 0;
     }
 
     &:nth-child(n + 5) {
@@ -514,10 +563,28 @@
 
 .statValue {
   font-size: 34px;
-  color: var(--bwf-text);
+  color: var(--stat-tone, var(--bwf-text));
 
   @container athlete (width < 640px) {
     font-size: 26px;
+  }
+}
+
+.stat[data-key='titles'] {
+  @mixin light {
+    --stat-tone: var(--bwf-gold-text);
+  }
+}
+
+.stat[data-key='finals'] {
+  @mixin light {
+    --stat-tone: var(--bwf-silver-text);
+  }
+}
+
+.stat[data-key='rate'] {
+  @mixin light {
+    --stat-tone: var(--bwf-win);
   }
 }
 
@@ -534,6 +601,6 @@
 
 .hero:not([data-image], [data-portrait]) .tags {
   @container athlete (width < 640px) {
-    padding-right: 120px;
+    padding-inline-end: 120px;
   }
 }

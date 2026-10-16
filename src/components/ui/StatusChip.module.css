@@ -1,0 +1,33 @@
+.chip {
+  &[data-tone='gold'] {
+    background: var(--mantine-color-amber-1);
+    color: var(--bwf-gold-text);
+  }
+
+  &[data-tone='green'] {
+    background: var(--bwf-win-tint);
+    color: var(--bwf-win);
+  }
+
+  &[data-tone='blue'] {
+    background: var(--bwf-blue-tint);
+    color: var(--bwf-blue);
+  }
+
+  &[data-tone='red'] {
+    background: var(--bwf-red);
+    color: var(--mantine-color-gray-0);
+  }
+
+  &[data-tone='silver'] {
+    background: var(--mantine-color-gray-3);
+    color: var(--mantine-color-gray-8);
+  }
+
+  &[data-tone] {
+    @mixin dark {
+      background: var(--badge-bg);
+      color: var(--badge-color);
+    }
+  }
+}

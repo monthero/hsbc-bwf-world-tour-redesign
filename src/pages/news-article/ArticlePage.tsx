@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -6,7 +8,7 @@ import { useCallback, useMemo, type FC } from 'react';
 import { isNotFound, useNewsArticle, useNewsIndex, useRelatedNews } from '~/api/news';
 import type { NewsArticle } from '~/api/schemas';
 import { NotFound, type NotFoundAction } from '~/components/layout';
-import { PopularNews, SubscribeCard } from '~/components/news';
+import { EnglishOnlyNotice, PopularNews, SubscribeCard } from '~/components/news';
 import { BackPill, IconExternal, RetryState } from '~/components/ui';
 import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { useIsMobile } from '~/hooks/useIsMobile';
@@ -27,13 +29,20 @@ import utils from '~/styles/utils.module.css';
 
 const route = getRouteApi('/news_/$id');
 
-const MISSING_TITLE = 'We couldn’t find that story';
-const MISSING_DESCRIPTION = 'It may have been taken down from the BWF newsroom, or the link is out of date.';
+const MISSING_TITLE = msg({
+  message: 'We couldn’t find that story',
+  comment: 'Heading on the not-found page for a news article that doesn’t exist',
+});
+const MISSING_DESCRIPTION = msg({
+  message: 'It may have been taken down from the BWF newsroom, or the link is out of date.',
+  comment: 'Explanation on the not-found page for a news article',
+});
 const MISSING_ACTION: NotFoundAction = { label: BACK_LABEL, link: BACK };
 const BODY_SKELETON = ['100%', '94%', '97%', '62%', '100%', '91%', '78%'] as const;
 
 export const ArticlePage: FC = () => {
   const { id } = route.useParams();
+  const { i18n, t } = useLingui();
   const { data: article, error, isError, refetch } = useNewsArticle(id);
   const missing = isNotFound(error);
   const failed = isError && !article;
@@ -45,13 +54,21 @@ export const ArticlePage: FC = () => {
   useDocumentMeta(meta);
   const retry = useCallback(() => void refetch(), [refetch]);
 
-  if (missing) return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={MISSING_ACTION} />;
+  if (missing)
+    return <NotFound title={i18n._(MISSING_TITLE)} description={i18n._(MISSING_DESCRIPTION)} action={MISSING_ACTION} />;
 
   if (failed)
     return (
       <div className={clsx(utils.container, classes.state)}>
-        <BackPill link={BACK} label={BACK_LABEL} iconOnly />
-        <RetryState message="Couldn’t load this story." onRetry={retry} className={classes.empty} />
+        <BackPill link={BACK} label={i18n._(BACK_LABEL)} iconOnly />
+        <RetryState
+          message={t({
+            message: 'Couldn’t load this story.',
+            comment: 'Error message when a news article fails to load',
+          })}
+          onRetry={retry}
+          className={classes.empty}
+        />
       </div>
     );
 
@@ -60,6 +77,7 @@ export const ArticlePage: FC = () => {
 
 const Article: FC<{ article: NewsArticle | undefined }> = ({ article }) => {
   const isMobile = useIsMobile();
+  const { t } = useLingui();
   const lookup = useTournamentLookup();
   const { data: directory } = usePlayerDirectory();
   const { data: index } = useNewsIndex();
@@ -75,13 +93,15 @@ const Article: FC<{ article: NewsArticle | undefined }> = ({ article }) => {
   const more = useMemo(() => toStories(related.tournament, lookup), [related.tournament, lookup]);
   const latest = useMemo(() => toStories(related.latest, lookup), [related.latest, lookup]);
   const loadingRelated = related.isLoading;
+  const tournamentName = story?.tournament?.name;
 
   return (
     <LookupContext value={lookup}>
       <div className={utils.container}>
+        <EnglishOnlyNotice className={classes.notice} />
         <ArticleHeader article={article} story={story} minutes={minutes} players={players} />
         <div className={classes.layout}>
-          <article className={classes.body}>
+          <article className={classes.body} lang="en" dir="auto">
             {article ? (
               article.blocks.map((b, i) => <Block key={i} block={b} />)
             ) : (
@@ -95,13 +115,17 @@ const Article: FC<{ article: NewsArticle | undefined }> = ({ article }) => {
               <footer className={classes.footer}>
                 {article.tags.length > 0 && (
                   <ul className={classes.tags}>
-                    {article.tags.map((t) => (
-                      <li key={t}>{t}</li>
+                    {article.tags.map((tag) => (
+                      <li key={tag}>{tag}</li>
                     ))}
                   </ul>
                 )}
                 <a href={article.url} target="_blank" rel="noreferrer" className={classes.source}>
-                  {`Read on ${OFFICIAL_HOST}`}
+                  {t({
+                    message: `Read on ${OFFICIAL_HOST}`,
+                    comment:
+                      'Link at the end of a news article to the original story on the BWF website; {OFFICIAL_HOST} is its domain',
+                  })}
                   <IconExternal />
                 </a>
               </footer>
@@ -112,15 +136,22 @@ const Article: FC<{ article: NewsArticle | undefined }> = ({ article }) => {
             <SubscribeCard compact />
           </aside>
         </div>
-        {story?.tournament && (loadingRelated || more.length > 0) && (
+        {tournamentName && (loadingRelated || more.length > 0) && (
           <RelatedSection
-            title={`More from ${story.tournament.name}`}
+            title={t({
+              message: `More from ${tournamentName}`,
+              comment: 'Heading below a news article listing other stories about the same tournament, {tournamentName}',
+            })}
             stories={loadingRelated ? undefined : more}
             isMobile={isMobile}
           />
         )}
         {(loadingRelated || latest.length > 0) && (
-          <RelatedSection title="Latest news" stories={loadingRelated ? undefined : latest} isMobile={isMobile} />
+          <RelatedSection
+            title={t({ message: 'Latest news', comment: 'Heading below a news article listing the newest stories' })}
+            stories={loadingRelated ? undefined : latest}
+            isMobile={isMobile}
+          />
         )}
       </div>
     </LookupContext>

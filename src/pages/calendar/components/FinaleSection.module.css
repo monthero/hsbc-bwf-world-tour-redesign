@@ -18,7 +18,7 @@
   height: 32px;
   border-radius: 50%;
   background: var(--bwf-gold);
-  color: var(--mantine-color-gold-9);
+  color: light-dark(var(--mantine-color-gold-0), var(--mantine-color-gold-9));
   box-shadow: 0 0 0 6px alpha(var(--bwf-gold), 0.14);
 
   @mixin smaller-than $mantine-breakpoint-sm {
@@ -32,7 +32,7 @@
   font-size: 20px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--bwf-gold);
+  color: var(--bwf-gold-accent);
 
   @mixin smaller-than $mantine-breakpoint-sm {
     display: block;

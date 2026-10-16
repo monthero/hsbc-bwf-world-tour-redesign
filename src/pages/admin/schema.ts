@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { EditionRef, EventCode, Focus, IsoDay, MonthKey, PhotoCrop } from '../../api/schemas.ts';
-import { parseHeightCm, parsePlays, parseTension, tidySpaces } from '../../utils/format.ts';
+import { parseHeightCm, parsePlays, parseTension, tidySpaces } from '../../utils/parse.ts';
 import { cleanName, nameIssue } from '../../utils/surname.ts';
 
 const BIO_KEYS = [

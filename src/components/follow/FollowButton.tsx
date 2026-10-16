@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { memo, useCallback, useMemo, type FC } from 'react';
 
 import { StarButton, Tip, type StarBox, type StarVariant } from '~/components/ui';
@@ -27,19 +28,53 @@ export interface FollowLook {
 
 type FollowButtonProps = FollowTarget & FollowLook;
 
-const View: FC<FollowLook & { active: boolean; implied?: boolean; fallback: string; onToggle: () => void }> = ({
-  active,
-  implied,
-  fallback,
-  onToggle,
-  name,
-  variant,
-  box,
-  iconSize,
-  className,
-}) => {
-  const who = name ?? fallback;
-  const label = active ? `Unfollow ${who}` : `Follow ${who}`;
+type FollowKind = 'player' | 'pair' | 'place' | 'tournament';
+
+const View: FC<
+  FollowLook & { active: boolean; implied?: boolean; kind: FollowKind; id?: string; onToggle: () => void }
+> = ({ active, implied, kind, id, onToggle, name, variant, box, iconSize, className }) => {
+  const { t } = useLingui();
+  const who = name ?? id;
+  const named = (): string => {
+    switch (kind) {
+      case 'player':
+        return active
+          ? t({ message: `Unfollow ${who}`, context: 'player', comment: 'Star button; {who} is a player name' })
+          : t({ message: `Follow ${who}`, context: 'player', comment: 'Star button; {who} is a player name' });
+      case 'pair':
+        return active
+          ? t({
+              message: `Unfollow ${who}`,
+              context: 'pair',
+              comment: 'Star button; {who} is a doubles pair, e.g. “Liang / Wang”',
+            })
+          : t({
+              message: `Follow ${who}`,
+              context: 'pair',
+              comment: 'Star button; {who} is a doubles pair, e.g. “Liang / Wang”',
+            });
+      case 'place':
+        return active
+          ? t({
+              message: `Unfollow ${who}`,
+              context: 'place',
+              comment: 'Star button; {who} is a country or continent name',
+            })
+          : t({
+              message: `Follow ${who}`,
+              context: 'place',
+              comment: 'Star button; {who} is a country or continent name',
+            });
+      default:
+        return active
+          ? t({ message: `Unfollow ${who}`, context: 'tournament', comment: 'Star button; {who} is a tournament name' })
+          : t({ message: `Follow ${who}`, context: 'tournament', comment: 'Star button; {who} is a tournament name' });
+    }
+  };
+  let label: string;
+  if (who) label = named();
+  else if (kind === 'pair') label = active ? t`Unfollow this pair` : t`Follow this pair`;
+  else label = active ? t`Unfollow player` : t`Follow player`;
   return (
     <Tip tap={false} label={label}>
       <StarButton
@@ -67,7 +102,7 @@ const PlayersFollow: FC<FollowLook & { players: readonly FavoritePlayerRef[] }> 
       {...look}
       active={active}
       implied={implied}
-      fallback={players.length > 1 ? 'this pair' : 'player'}
+      kind={players.length > 1 ? 'pair' : 'player'}
       onToggle={onToggle}
     />
   );
@@ -84,7 +119,8 @@ const EntityFollow: FC<FollowLook & { target: EntityTarget }> = ({ target, ...lo
     else if (target.kind === 'continent') toggle('continent', target.id);
     else toggle('country', target.id);
   }, [toggle, target]);
-  return <View {...look} active={active} implied={implied} fallback={target.id} onToggle={onToggle} />;
+  const kind = target.kind === 'tournament' ? 'tournament' : 'place';
+  return <View {...look} active={active} implied={implied} kind={kind} id={target.id} onToggle={onToggle} />;
 };
 
 export const FollowButton = memo<FollowButtonProps>((props) => {

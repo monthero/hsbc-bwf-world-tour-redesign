@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import type { FC } from 'react';
 
@@ -25,10 +26,18 @@ const StatusText: FC<{ tournament: Tournament; variant: StatusVariant; short?: b
 }) => {
   if (t.status !== 'live') return statusLabel(t);
   const total = short || (variant !== 'pill' && variant !== 'overlay');
+  const day = t.dayNumber;
+  const days = t.totalDays;
   return (
     <span>
-      Day {t.dayNumber}
-      {total && <span className={short ? classes.wide : undefined}> of {t.totalDays}</span>}
+      {total ? (
+        <Trans comment="Status of a tournament in progress, e.g. “Day 3 of 6”">
+          Day {day}
+          <span className={short ? classes.wide : undefined}> of {days}</span>
+        </Trans>
+      ) : (
+        <Trans comment="Status of a tournament in progress, e.g. “Day 3”">Day {day}</Trans>
+      )}
     </span>
   );
 };

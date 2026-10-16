@@ -1,3 +1,7 @@
+import { msg } from '@lingui/core/macro';
+
+import { translate } from '~/i18n/lazy';
+
 import { countryName } from './countries';
 import { formatNumber, plural } from './format';
 import { compareText, foldText } from './names';
@@ -8,8 +12,16 @@ export interface CountOption {
   count: number;
 }
 
+const SHOWN_OF = msg({
+  message: '{shown} of {total}',
+  comment:
+    'Filtered list count: how many items are shown out of all of them, e.g. "12 of 340 players". {total} already includes the noun',
+});
+
 export const shownLabel = (shown: number, total: number, unit: string) =>
-  `${shown === total ? '' : `${formatNumber(shown)} of `}${plural(total, unit)}`;
+  shown === total
+    ? plural(total, unit)
+    : translate(SHOWN_OF, { shown: formatNumber(shown), total: plural(total, unit) });
 
 export const toggleItem = <T>(list: readonly T[] | undefined, item: T): T[] | undefined => {
   const next = list?.includes(item) ? list.filter((x) => x !== item) : [...(list ?? []), item];

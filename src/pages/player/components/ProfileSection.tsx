@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Spoiler } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
@@ -19,10 +20,11 @@ const HIDE = <IconCollapse size={16} />;
 const SOCIAL_ICONS: Partial<Record<string, FC<IconProps>>> = { instagram: IconInstagram, facebook: IconFacebook };
 
 export const ProfileSection = memo<{ bio: BioView }>(({ bio }) => {
+  const { t } = useLingui();
   if (!hasProfile(bio)) return null;
   return (
     <Section
-      label="Profile"
+      label={<Trans comment="Section title: the player’s biography facts, quote and social links">Profile</Trans>}
       aside={
         bio.links.length > 0 && (
           <span className={classes.links}>
@@ -45,11 +47,13 @@ export const ProfileSection = memo<{ bio: BioView }>(({ bio }) => {
           maxHeight={AMBITION_HEIGHT}
           showLabel={SHOW}
           hideLabel={HIDE}
-          showAriaLabel="Read more"
-          hideAriaLabel="Show less"
+          showAriaLabel={t({ message: 'Read more', comment: 'Expands the player’s quote' })}
+          hideAriaLabel={t({ message: 'Show less', comment: 'Collapses the player’s quote' })}
           classNames={SPOILER}
         >
-          <p className={classes.quote}>“{bio.ambition}”</p>
+          <p className={classes.quote} lang="en" dir="auto">
+            “{bio.ambition}”
+          </p>
         </Spoiler>
       )}
       {bio.notes.length > 0 && (
@@ -69,7 +73,7 @@ const Fact = memo<{ item: FactItem }>(({ item: f }) => (
       <dt>
         <FactLabel id={f.key} label={f.label} size={14} />
       </dt>
-      <dd>{f.value}</dd>
+      <dd lang={f.lang}>{f.value}</dd>
     </div>
   </FactTip>
 ));

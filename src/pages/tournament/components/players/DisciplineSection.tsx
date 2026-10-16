@@ -1,15 +1,27 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
 import { TeamFollow } from '~/components/follow';
 import { EventTag, TeamPlayers } from '~/components/match';
-import { plural } from '~/utils/format';
 
 import { disciplineId, type Entry, type EventSection, type StageGroup } from './entries';
 import { EntryRank, EntryStatus } from './EntryRow';
 
 import classes from './Players.module.css';
 import utils from '~/styles/utils.module.css';
+
+const ENTRIES = msg({
+  message: '{count, plural, one {# entry} other {# entries}}',
+  comment: 'Players tab event heading: number of entries (players or pairs)',
+});
+
+const ENTRIES_AND_SEEDS = msg({
+  message: '{count, plural, one {# entry} other {# entries}} · {seeds, plural, one {# seed} other {# seeds}}',
+  comment:
+    'Players tab event heading: number of entries (players or pairs) and of seeds, the top-ranked entries placed apart in the draw',
+});
 
 const DisciplineRow = memo<{ entry: Entry }>(({ entry }) => {
   const { team, rank, stage } = entry;
@@ -53,14 +65,15 @@ const Group = memo<{ group: StageGroup }>(({ group: g }) => {
 });
 
 export const DisciplineSection = memo<{ section: EventSection }>(({ section: s }) => {
+  const { i18n } = useLingui();
+  const { count, seeds } = s;
   return (
     <section id={disciplineId(s.event)} className={clsx(utils.card, classes.discipline)}>
       <header className={classes.discHead}>
         <EventTag event={s.event} />
         <span className={classes.discName}>{s.name}</span>
         <span className={classes.discCount}>
-          {plural(s.count, 'entry', 'entries')}
-          {s.seeds > 0 && ` · ${plural(s.seeds, 'seed')}`}
+          {i18n._({ ...(seeds > 0 ? ENTRIES_AND_SEEDS : ENTRIES), values: { count, seeds } })}
         </span>
       </header>
       {s.groups.map((g) => (

@@ -7,7 +7,8 @@
   align-items: center;
   gap: 9px;
   height: 44px;
-  padding: 0 16px 0 14px;
+  padding-block: 0;
+  padding-inline: 14px 16px;
   border-radius: 999px;
   border: 1px solid var(--bwf-border-strong);
   background: alpha(var(--bwf-surface-4), 0.94);
@@ -18,7 +19,7 @@
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
-  box-shadow: 0 10px 30px alpha(var(--mantine-color-black), 0.45);
+  box-shadow: 0 10px 30px alpha(var(--bwf-shadow-ink), 0.45);
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;

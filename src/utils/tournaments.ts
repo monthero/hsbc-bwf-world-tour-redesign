@@ -1,7 +1,11 @@
+import { msg } from '@lingui/core/macro';
+
 import { LEVEL_META } from '~/constants';
+import { numberFormat } from '~/i18n/current';
+import { lazyRecord, translate } from '~/i18n/lazy';
 import type { CalendarEventDto, Tournament } from '~/types';
 
-import { countryCode } from './countries';
+import { countryCode, countryName } from './countries';
 import { date, formatDateRange, today, type Dayjs } from './dates';
 import { formatNumber } from './format';
 import { tournamentHeaderUrl, tournamentLogoUrl } from './images';
@@ -9,19 +13,16 @@ import { toPlayer } from './names';
 
 export const formatPrize = (n: number) => `$${formatNumber(n)}`;
 
-const SHORT_UNITS = [
-  [1e6, 'M'],
-  [1e3, 'K'],
-] as const;
+const COMPACT = { notation: 'compact', maximumFractionDigits: 2 } as const;
 
-export const formatPrizeShort = (n: number) => {
-  const unit = SHORT_UNITS.find(([v]) => n >= v);
-  return unit ? `$${Number((n / unit[0]).toFixed(2))}${unit[1]}` : formatPrize(n);
-};
+export const formatPrizeShort = (n: number) => `$${numberFormat(COMPACT).format(n)}`;
 
 const TBC = 'TBC';
 
-const FINALS_FALLBACK = 'the Finals';
+const TBC_LABEL = msg({
+  message: 'TBC',
+  comment: 'Short for "to be confirmed": the prize money is not announced yet. Keep it short',
+});
 
 const baseTitle = (e: CalendarEventDto) => {
   const sub = e.subtitle ?? '';
@@ -40,6 +41,7 @@ export const toTournament = (e: CalendarEventDto, index: number): Tournament => 
   const status = e.cancelled ? 'cancelled' : statusOf(start, end, now);
   const lv = LEVEL_META[e.level];
   const year = e.year;
+  const cc = countryCode(e.country);
   return {
     ...e,
     index,
@@ -50,10 +52,10 @@ export const toTournament = (e: CalendarEventDto, index: number): Tournament => 
     dayNumber: now.diff(start, 'day') + 1,
     totalDays: end.diff(start, 'day') + 1,
     dates: formatDateRange(start, end),
-    datesLong: `${formatDateRange(start, end, { long: true })} ${end.year()}`,
-    place: [e.city, e.country].filter(Boolean).join(', '),
-    cc: countryCode(e.country),
-    prizeLabel: e.prize ? formatPrize(e.prize) : TBC,
+    datesLong: formatDateRange(start, end, { long: true, year: true }),
+    place: [e.city, cc ? countryName(cc) : e.country].filter(Boolean).join(', '),
+    cc,
+    prizeLabel: e.prize ? formatPrize(e.prize) : translate(TBC_LABEL),
     levelLabel: lv.long,
     levelColor: lv.color,
     logo: tournamentLogoUrl(e.code, e.logoVersion),
@@ -65,17 +67,56 @@ export const toTournament = (e: CalendarEventDto, index: number): Tournament => 
   };
 };
 
+const LIVE_DAY = msg({
+  message: 'Live · Day {day}',
+  comment: 'Status of a tournament being played now, with which day of it today is, e.g. "Live · Day 3"',
+});
+
+const LIVE_DAY_OF = msg({
+  message: 'Live · Day {day} of {total}',
+  comment: 'Status of a tournament being played now: which day of how many, e.g. "Live · Day 3 of 6"',
+});
+
 export const liveDayLabel = (t: Pick<Tournament, 'dayNumber' | 'totalDays'>, withTotal = true) =>
-  `Live · Day ${t.dayNumber}${withTotal ? ` of ${t.totalDays}` : ''}`;
+  translate(withTotal ? LIVE_DAY_OF : LIVE_DAY, { day: t.dayNumber, total: t.totalDays });
+
+const COUNTDOWNS = {
+  short: {
+    one: msg({
+      message: 'Tmrw',
+      comment: 'Very short countdown tag: the tournament starts tomorrow. Abbreviate "Tomorrow" as much as possible',
+    }),
+    other: msg({
+      message: '{count}d',
+      comment: 'Very short countdown tag: the tournament starts in {count} days, e.g. "5d". Use your shortest form',
+    }),
+  },
+  in: {
+    one: msg({ message: 'Tomorrow', comment: 'Countdown: the tournament starts tomorrow' }),
+    other: msg({
+      message: '{count, plural, one {In # day} other {In # days}}',
+      comment: 'Countdown: the tournament starts in this many days, e.g. "In 5 days"',
+    }),
+  },
+  long: {
+    one: msg({ message: 'Starts tomorrow', comment: 'Countdown: the tournament starts tomorrow' }),
+    other: msg({
+      message: '{count, plural, one {Starts in # day} other {Starts in # days}}',
+      comment: 'Countdown: the tournament starts in this many days, e.g. "Starts in 5 days"',
+    }),
+  },
+} as const;
 
 export const countdownLabel = (t: Pick<Tournament, 'daysUntil'>, form: 'long' | 'in' | 'short' = 'long') => {
   const n = t.daysUntil;
-  if (form === 'short') return n === 1 ? 'Tmrw' : `${n}d`;
-  if (form === 'in') return n === 1 ? 'Tomorrow' : `In ${n} days`;
-  return n === 1 ? 'Starts tomorrow' : `Starts in ${n} days`;
+  const messages = COUNTDOWNS[form];
+  return translate(n === 1 ? messages.one : messages.other, { count: n });
 };
 
-const FIXED_LABELS: Partial<Record<Tournament['status'], string>> = { done: 'Completed', cancelled: 'Cancelled' };
+const FIXED_LABELS: Partial<Record<Tournament['status'], string>> = lazyRecord({
+  done: msg({ message: 'Completed', comment: 'Tournament status: it has finished' }),
+  cancelled: msg({ message: 'Cancelled', context: 'tournament status', comment: 'The tournament will not take place' }),
+});
 
 export const statusLabel = (t: Tournament) => {
   if (t.status === 'live') return liveDayLabel(t);
@@ -91,12 +132,36 @@ export const finalsOf = (list: readonly Tournament[] | undefined) => list?.find(
 
 export const knownFinalsCity = (t: Pick<Tournament, 'city'> | undefined) => (t?.city && t.city !== TBC ? t.city : null);
 
-export const finalsCity = (t: Pick<Tournament, 'city'> | undefined) => knownFinalsCity(t) ?? FINALS_FALLBACK;
+const QUALIFY_TIP = msg({
+  message: 'Qualifying for the World Tour Finals — top 8 in the race, max. 2 per country',
+  comment:
+    'Tooltip in the Race to Finals ranking (the season ranking that decides who plays the World Tour Finals): this player is on course to qualify. Only the top 8 qualify, with at most 2 per country',
+});
+
+const QUALIFY_TIP_IN = msg({
+  message: 'Qualifying for the World Tour Finals in {city} — top 8 in the race, max. 2 per country',
+  comment:
+    'Tooltip in the Race to Finals ranking: this player is on course to qualify for the World Tour Finals held in {city}. Only the top 8 qualify, with at most 2 per country',
+});
 
 export const qualifyTip = (city: string | null) =>
-  `Qualifying for the World Tour Finals${city ? ` in ${city}` : ''} — top 8 in the race, max. 2 per country`;
+  city ? translate(QUALIFY_TIP_IN, { city }) : translate(QUALIFY_TIP);
 
-export const roadTo = (t: Pick<Tournament, 'city'> | undefined) => `Road to ${finalsCity(t)}`;
+const ROAD_TO = msg({
+  message: 'Road to {city}',
+  comment:
+    'Heading for the season-long race to qualify for the World Tour Finals, named after the host city, e.g. "Road to Hangzhou"',
+});
+
+const ROAD_TO_FINALS = msg({
+  message: 'Road to the Finals',
+  comment: 'Heading for the season-long race to qualify for the World Tour Finals, when the host city is not known',
+});
+
+export const roadTo = (t: Pick<Tournament, 'city'> | undefined) => {
+  const city = knownFinalsCity(t);
+  return city ? translate(ROAD_TO, { city }) : translate(ROAD_TO_FINALS);
+};
 
 export const isHeld = (t: Pick<Tournament, 'cancelled'>) => !t.cancelled;
 
@@ -116,4 +181,10 @@ export const liveAndNext = (held: readonly Tournament[]) => ({
 export const tournamentLink = (t: Pick<Tournament, 'year' | 'slug'>) =>
   ({ to: '/world-tour/$year/$slug', params: tournamentParams(t) }) as const;
 
-export const liveOrNextLabel = (t: Tournament) => (isLive(t) ? liveDayLabel(t) : `Next · ${countdownLabel(t, 'in')}`);
+const NEXT_TOURNAMENT = msg({
+  message: 'Next · {when}',
+  comment: 'The next tournament on the calendar and when it starts, e.g. "Next · In 5 days" or "Next · Tomorrow"',
+});
+
+export const liveOrNextLabel = (t: Tournament) =>
+  isLive(t) ? liveDayLabel(t) : translate(NEXT_TOURNAMENT, { when: countdownLabel(t, 'in') });

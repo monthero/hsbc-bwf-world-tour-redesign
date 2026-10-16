@@ -59,7 +59,7 @@
   padding: 3px 9px;
   border-radius: 999px;
   background: alpha(var(--bwf-red), 0.14);
-  color: var(--bwf-red-text);
+  color: light-dark(var(--bwf-red-pale), var(--bwf-red-text));
   font-size: 12px;
   font-weight: 500;
 
@@ -70,7 +70,7 @@
 }
 
 .count {
-  margin-left: auto;
+  margin-inline-start: auto;
   font-size: 13px;
   color: var(--bwf-faint);
 
@@ -85,5 +85,5 @@
   justify-content: space-between;
   gap: 12px;
   padding: 18px 20px;
-  text-align: left;
+  text-align: start;
 }

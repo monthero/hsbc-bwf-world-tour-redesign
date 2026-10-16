@@ -4,18 +4,26 @@
   align-items: center;
   gap: 6px;
   border-radius: 999px;
-  color: var(--lv);
+  color: var(--lv-text);
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
 
   &[data-variant='tint'] {
     padding: 2px 9px;
-    background: alpha(var(--lv), 0.14);
+    background: var(--lv-tint);
 
     &[data-size='sm'] {
       padding: 1px 8px;
       font-size: 11px;
+    }
+  }
+
+  &[data-variant='glass'] {
+    background: color-mix(in srgb, var(--lv-tint) 90%, transparent);
+
+    @mixin dark {
+      background: var(--bwf-glass-bg);
     }
   }
 

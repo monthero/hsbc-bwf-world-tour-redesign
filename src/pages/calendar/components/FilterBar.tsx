@@ -4,6 +4,7 @@ import { memo, type Ref } from 'react';
 import { Level } from '~/api/schemas';
 import { FilterChip, IconLive, Segmented, StickyBar } from '~/components/ui';
 import { LEVEL_META } from '~/constants';
+import { useLazyOptions } from '~/i18n/useLazyOptions';
 
 import { STATUS_OPTIONS } from '../constants';
 import type { StatusFilter } from '../types';
@@ -23,6 +24,7 @@ export const FilterBar = memo<{
   onJump: () => void;
   isMobile: boolean;
 }>(({ ref, compact, levels, status, showStatus, onLevel, onStatus, jumpLabel, onJump, isMobile }) => {
+  const statusOptions = useLazyOptions(STATUS_OPTIONS);
   return (
     <StickyBar ref={ref} glass zIndex={5} top={compact ? 'var(--cal-compact-h)' : 0} className={classes.bar}>
       <div className={clsx(utils.container, classes.inner)}>
@@ -42,7 +44,7 @@ export const FilterBar = memo<{
         </div>
         {showStatus && (
           <div className={classes.status}>
-            <Segmented options={STATUS_OPTIONS} value={status} onChange={onStatus} height={isMobile ? 32 : 30} />
+            <Segmented options={statusOptions} value={status} onChange={onStatus} height={isMobile ? 32 : 30} />
           </div>
         )}
         {jumpLabel && (

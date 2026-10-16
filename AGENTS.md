@@ -19,10 +19,11 @@ pnpm typecheck          # tsc -b
 pnpm exec vp check      # Oxfmt + Oxlint + type-aware checks
 pnpm exec vp check --fix
 pnpm i18n:extract       # update the Lingui catalogs in src/locales
+pnpm i18n:check         # per-locale summary; fails on broken placeholders/plurals (--fail-on-missing for gaps)
 pnpm build
 ```
 
-A pre-commit hook (`.vite-hooks/pre-commit` → `vp staged`) runs `vp check --fix` on staged files. Pull requests run `pnpm typecheck` and `vp check` in CI. There are no tests; verify by running the checks and looking at the page on desktop and at 390px wide.
+A pre-commit hook (`.vite-hooks/pre-commit` → `vp staged`) runs `vp check --fix` on staged files. Pull requests run `pnpm typecheck`, `vp check`, a stale-catalog check (`pnpm i18n:extract` must leave `src/locales` unchanged) and `pnpm i18n:check` in CI. There are no tests; verify by running the checks and looking at the page on desktop and at 390px wide.
 
 ## Architecture
 
@@ -71,6 +72,7 @@ These are the maintainer's explicit rules. Follow them in every change.
   - Mantine plus CSS modules, with native nesting where it helps. No global CSS.
   - No hard-coded colours: use theme palettes, `--bwf-*` variables and `alpha(var(…), n)`.
   - Layouts are fluid, without a fixed page width.
+  - Prefer logical properties (`margin-inline-start`, `padding-inline`, `inset-inline-end`, `text-align: start`) over left/right, so a right-to-left locale can be added later. Each locale's direction is `localeDir` in `src/i18n/locales.ts`.
 - **Mobile first:** design and check every change at 390px as carefully as on desktop. That means tap targets, no horizontal overflow, and sensible sticky and scroll behaviour.
 - **Icons:**
   - Phosphor (`ph`) through `src/components/ui/icons.ts`. Badminton-specific icons are custom SVGs in `src/assets/icons` (`~icons/bwf/...`).
@@ -92,7 +94,8 @@ These are the maintainer's explicit rules. Follow them in every change.
   - All visible text goes through `Trans` or `useLingui` (`@lingui/react/macro`). Text defined at module level uses `msg` (`@lingui/core/macro`) and is translated at render.
   - Use templates with named placeholders and ICU plurals; never concatenate English fragments.
   - Add a translator `comment` to short or ambiguous strings.
-  - English is the source and has no URL prefix; other locales get one (`/zh/...`).
+  - Never put `plural()`/`select()` inside a `message:` property, alone or in a template literal: the build compiles it to the wrong id. Write the ICU string in `msg()` and pass the values at render time (`i18n._({ ...MESSAGE, values })`); `pnpm build` fails on ids missing from the catalog (`pnpm i18n:ids`).
+  - Every locale has a URL prefix, English included (`/en/...`, `/zh/...`). A URL without a prefix redirects to the saved locale, or to English.
   - Run `pnpm i18n:extract` after changing text.
 - **Dependencies:** free and open-source only, and ask before adding one. When one is added or removed, update the "Built with" list in the README, and CREDITS.md if its license asks for credit.
 - **Data:**

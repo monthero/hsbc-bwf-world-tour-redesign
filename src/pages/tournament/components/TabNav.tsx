@@ -1,3 +1,5 @@
+import type { I18n } from '@lingui/core';
+import { useLingui } from '@lingui/react/macro';
 import { useMergedRef } from '@mantine/hooks';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type Ref, type RefObject } from 'react';
@@ -18,14 +20,15 @@ const SENTINEL_OPTS = { offset: 0 };
 
 const LIVE_BADGE = <LiveDot pulse size={6} />;
 
-const tabItems = (available: TabAvailability | null, hasLive: boolean): TabItem<TournamentTab>[] =>
+const tabItems = (i18n: I18n, available: TabAvailability | null, hasLive: boolean): TabItem<TournamentTab>[] =>
   TournamentTab.options.map((id) => {
     const off = !!available && !available[id];
+    const tip = OFF_TIPS[id];
     return {
       value: id,
-      label: TAB_LABELS[id],
+      label: i18n._(TAB_LABELS[id]),
       disabled: off,
-      tip: off ? OFF_TIPS[id] : undefined,
+      tip: off && tip ? i18n._(tip) : undefined,
       badge: id === 'matches' && hasLive ? LIVE_BADGE : undefined,
     };
   });
@@ -37,12 +40,13 @@ export const TabNav = memo<{
   tab: TournamentTab;
   available: TabAvailability | null;
   hasLive: boolean;
-}>(({ ref, anchorRef, tournament: t, tab, available, hasLive }) => {
+}>(({ ref, anchorRef, tournament, tab, available, hasLive }) => {
+  const { t, i18n } = useLingui();
   const update = useUpdateSearch();
-  const back = useCalendarBack(t.year);
+  const back = useCalendarBack(tournament.year);
   const [sentinelRef, mini] = useScrolledPast<HTMLDivElement>(SENTINEL_OPTS);
   const anchor = useMergedRef(anchorRef, sentinelRef);
-  const items = useMemo(() => tabItems(available, hasLive), [available, hasLive]);
+  const items = useMemo(() => tabItems(i18n, available, hasLive), [i18n, available, hasLive]);
 
   const onSelect = useCallback((v: TournamentTab) => update({ tab: v }), [update]);
 
@@ -52,20 +56,25 @@ export const TabNav = memo<{
       <StickyBar ref={ref} glass zIndex={20} className={classes.bar} data-mini={mini || undefined}>
         <div className={classes.mini} inert={!mini}>
           <div className={clsx(utils.container, classes.miniRow)}>
-            <IconButton label="Back to calendar" link={back.link} shape="rounded" className={classes.miniBack}>
+            <IconButton
+              label={t({ message: 'Back to calendar', comment: 'Icon button in the condensed tournament bar' })}
+              link={back.link}
+              shape="rounded"
+              className={classes.miniBack}
+            >
               <IconBack size={18} />
             </IconButton>
-            <LogoTile src={t.logo} size={28} flat />
-            <span className={clsx(utils.ellipsis, classes.miniTitle)}>{t.heading}</span>
-            <LevelBadge level={t.level} size="sm" long />
-            <TournamentStatusBadge tournament={t} variant="inline" short className={classes.miniStatus} />
+            <LogoTile src={tournament.logo} size={28} flat />
+            <span className={clsx(utils.ellipsis, utils.bidiAuto, classes.miniTitle)}>{tournament.heading}</span>
+            <LevelBadge level={tournament.level} size="sm" long />
+            <TournamentStatusBadge tournament={tournament} variant="inline" short className={classes.miniStatus} />
           </div>
         </div>
         <TabBar
           items={items}
           value={tab}
           onChange={onSelect}
-          ariaLabel="Tournament sections"
+          ariaLabel={t({ message: 'Tournament sections', comment: 'Accessible name of the tournament tab bar' })}
           className={utils.container}
         />
       </StickyBar>

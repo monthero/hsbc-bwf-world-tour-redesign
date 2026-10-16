@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Link } from '@tanstack/react-router';
 import { memo, useCallback, useMemo, type KeyboardEvent } from 'react';
 
@@ -61,32 +62,43 @@ export const SeasonStrip = memo<{
   active: Tournament | undefined;
   onActive: OnActive;
 }>(({ tournaments, year, focus, active, onActive }) => {
+  const { t } = useLingui();
   const span = useMemo(() => yearSpan(year), [year]);
   const ticks = useMemo(() => monthTicks(span), [span]);
   const now = todayOffset(span);
   const month = now ? today().month() : -1;
   const nowStyle = useMemo(() => (now ? { left: now } : undefined), [now]);
   return (
-    <nav className={classes.strip} aria-label={`${year} season timeline`} data-active={active ? true : undefined}>
+    <nav
+      dir="ltr"
+      className={classes.strip}
+      aria-label={t({
+        message: `${year} season timeline`,
+        comment: 'Screen-reader label for the About page timeline of the {year} season, one mark per tournament',
+      })}
+      data-active={active ? true : undefined}
+    >
       {ticks.map((m) => (
         <span key={m.month} className={classes.tick} style={m.style} data-now={m.month === month || undefined}>
           <span>{m.label}</span>
         </span>
       ))}
-      {tournaments.map((t) => (
+      {tournaments.map((e) => (
         <StripMark
-          key={t.code}
-          tournament={t}
+          key={e.code}
+          tournament={e}
           span={span}
-          active={t === active}
-          isSpot={t === focus.spot}
-          isFinals={t === focus.finals}
+          active={e === active}
+          isSpot={e === focus.spot}
+          isFinals={e === focus.finals}
           onActive={onActive}
         />
       ))}
       {nowStyle && (
         <span className={classes.today} style={nowStyle}>
-          <span>Today</span>
+          <span>
+            <Trans comment="Marker for today’s date on the About page season timeline">Today</Trans>
+          </span>
         </span>
       )}
     </nav>

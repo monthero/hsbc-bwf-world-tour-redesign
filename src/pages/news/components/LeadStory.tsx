@@ -26,7 +26,11 @@ export const LeadStory = memo<{ story: NewsStory | undefined; isMobile: boolean 
       {story.tournament && <TournamentChip tournament={story.tournament} variant="glass" className={classes.tag} />}
       <div className={classes.body}>
         <NewsTitle story={story} as="h3" className={classes.title} />
-        {story.item.excerpt && <p className={classes.excerpt}>{story.item.excerpt}</p>}
+        {story.item.excerpt && (
+          <p className={classes.excerpt} lang="en" dir="auto">
+            {story.item.excerpt}
+          </p>
+        )}
         <span className={classes.foot}>
           <NewsMeta story={story} />
           <IconArrowRight className={classes.read} />

@@ -57,10 +57,10 @@
   position: absolute;
   z-index: 1;
   top: 12px;
-  right: 12px;
+  inset-inline-end: 12px;
 
   @mixin smaller-than $mantine-breakpoint-sm {
-    right: var(--bwf-gutter);
+    inset-inline-end: var(--bwf-gutter);
   }
 }
 
@@ -72,7 +72,7 @@
     'logo meta';
   align-items: start;
   gap: 8px var(--gx);
-  padding-left: var(--pl);
+  padding-inline-start: var(--pl);
 
   @mixin smaller-than $mantine-breakpoint-sm {
     position: relative;
@@ -83,7 +83,7 @@
       'title'
       'meta';
     margin-top: calc(-1 * var(--lift));
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 }
 
@@ -92,7 +92,7 @@
   position: relative;
   z-index: 1;
   margin-top: calc(-1 * clamp(28px, 3.4vw, 44px));
-  box-shadow: 0 10px 28px alpha(var(--mantine-color-black), 0.5);
+  box-shadow: 0 10px 28px alpha(var(--bwf-shadow-ink), 0.5);
 
   @mixin smaller-than $mantine-breakpoint-sm {
     margin-top: 0;
@@ -158,14 +158,18 @@
   align-items: baseline;
   gap: 6px;
   padding: 5px 8px;
-  background: var(--lv);
-  color: var(--bwf-bg);
+  background: light-dark(var(--lv-tint), var(--lv));
+  color: light-dark(var(--lv-text), var(--bwf-bg));
   font-weight: 700;
 }
 
 .series {
   font-weight: 500;
   opacity: 0.72;
+
+  @mixin light {
+    opacity: 1;
+  }
 }
 
 .prize {

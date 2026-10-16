@@ -51,7 +51,7 @@
 .status {
   margin-top: 14px;
   padding-top: 12px;
-  border-top: 1px solid var(--mantine-color-slate-4);
+  border-top: 1px solid light-dark(var(--bwf-border), var(--mantine-color-slate-4));
 }
 
 .go {
@@ -61,7 +61,8 @@
   gap: 8px;
   height: 36px;
   margin-top: 12px;
-  padding: 0 12px 0 14px;
+  padding-block: 0;
+  padding-inline: 14px 12px;
   border-radius: 10px;
   background: var(--bwf-raised);
   color: inherit;
@@ -72,6 +73,6 @@
 
   &:hover {
     background: var(--bwf-border-strong);
-    color: var(--mantine-color-white);
+    color: light-dark(var(--bwf-text), var(--mantine-color-white));
   }
 }

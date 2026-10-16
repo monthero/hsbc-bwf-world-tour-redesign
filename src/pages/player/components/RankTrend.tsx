@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState } from 'react';
@@ -9,7 +10,7 @@ import { formatNumber } from '~/utils/format';
 import { RESULT_TAGS } from '../constants';
 import type { BreakdownItem, HistoryView, ResultGroup } from '../types';
 import { resultLabel, resultTier, shareVars } from '../utils';
-import { ResultText, Section } from './parts';
+import { ResultText, Section, YearWeek } from './parts';
 
 import classes from './RankTrend.module.css';
 import shared from './shared.module.css';
@@ -36,10 +37,10 @@ export const RankTrend = memo<{ history: HistoryView | undefined; loading: boole
     if (!group) return null;
     return (
       <Section
-        label="Last 52 weeks"
+        label={<Trans comment="Section title: ranking points earned over the last 52 weeks">Last 52 weeks</Trans>}
         aside={
           <button type="button" className={shared.link} onClick={onResults}>
-            All results
+            <Trans comment="Link to the player’s Results tab">All results</Trans>
           </button>
         }
       >
@@ -56,13 +57,18 @@ const TrendBody = memo<{ group: ResultGroup }>(({ group }) => {
   const points = useMemo(() => group.items.reduce((s, t) => s + (t.counted ? t.points : 0), 0), [group.items]);
   const [key, setKey] = useState<string | null>(null);
   const active = ordered.find((t) => t.key === key) ?? ordered.at(-1);
+  const discipline = EVENT_NAMES[group.ev];
   return (
     <>
       <span className={classes.total}>
         <span className={shared.value}>{formatNumber(points)}</span>
-        <span className={shared.sub}>Ranking points per event · {EVENT_NAMES[group.ev]}</span>
+        <span className={shared.sub}>
+          <Trans comment="Caption under the ranking points total; each bar is one tournament (event); discipline is e.g. Men’s singles">
+            Ranking points per event · {discipline}
+          </Trans>
+        </span>
       </span>
-      <div className={classes.bars}>
+      <div className={classes.bars} dir="ltr">
         {ordered.map((t) => (
           <TrendBar key={t.key} item={t} max={max} active={t === active} onPick={setKey} />
         ))}
@@ -70,8 +76,10 @@ const TrendBody = memo<{ group: ResultGroup }>(({ group }) => {
       {active && (
         <div className={shared.row}>
           <span className={shared.rowMain}>
-            <span className={clsx(shared.rowTitle, utils.ellipsis)}>{active.name}</span>
-            <span className={shared.rowMeta}>{active.yearWeek}</span>
+            <span className={clsx(shared.rowTitle, utils.ellipsis, utils.bidiAuto)}>{active.name}</span>
+            <span className={shared.rowMeta}>
+              <YearWeek year={active.year} week={active.week} />
+            </span>
           </span>
           <span className={shared.rowSide}>
             <ResultText result={active.result} />
@@ -85,8 +93,10 @@ const TrendBody = memo<{ group: ResultGroup }>(({ group }) => {
 
 const TrendBar = memo<{ item: BreakdownItem; max: number; active: boolean; onPick: (key: string) => void }>(
   ({ item: t, max, active, onPick }) => {
+    const { i18n } = useLingui();
     const pick = useCallback(() => onPick(t.key), [onPick, t.key]);
-    const label = `${t.name} · ${resultLabel(t.result)} · ${formatNumber(t.points)}`;
+    const label = `${t.name} · ${resultLabel(i18n, t.result)} · ${formatNumber(t.points)}`;
+    const tag = RESULT_TAGS[t.result];
     return (
       <Tip label={label}>
         <button
@@ -98,7 +108,7 @@ const TrendBar = memo<{ item: BreakdownItem; max: number; active: boolean; onPic
           aria-label={label}
           onClick={pick}
         >
-          <span className={classes.tag}>{RESULT_TAGS[t.result]}</span>
+          <span className={classes.tag}>{tag && i18n._(tag)}</span>
           <span className={classes.fill} style={shareVars(t.points, max, 5)} />
         </button>
       </Tip>

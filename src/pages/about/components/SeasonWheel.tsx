@@ -2,9 +2,10 @@ import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, type Mo
 
 import { LEVEL_VARS } from '~/constants';
 import type { Tournament } from '~/types';
-import { date } from '~/utils/dates';
+import { date, formatWall } from '~/utils/dates';
 import { centerChild } from '~/utils/scroll';
 
+import { SHORT_MONTH } from '../constants';
 import type { OnActive, SeasonFocus } from '../types';
 import { SpotHalo } from './SpotHalo';
 
@@ -54,7 +55,7 @@ export const SeasonWheel = memo<{
       tournaments.map((t, i) => {
         const m = date(t.start).month();
         const prev = tournaments[i - 1];
-        return { t, month: !prev || date(prev.start).month() !== m ? date(t.start).format('MMM') : null };
+        return { t, month: !prev || date(prev.start).month() !== m ? formatWall(date(t.start), SHORT_MONTH) : null };
       }),
     [tournaments],
   );
@@ -105,7 +106,7 @@ export const SeasonWheel = memo<{
   }, []);
 
   return (
-    <div className={classes.wrap}>
+    <div className={classes.wrap} dir="ltr">
       <div ref={ref} className={classes.wheel}>
         {items.map(({ t, month }, i) => (
           <WheelItem

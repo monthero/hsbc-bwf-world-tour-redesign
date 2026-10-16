@@ -9,6 +9,12 @@
   color: var(--bwf-gold);
 }
 
+.strip {
+  --card-edge: alpha(var(--bwf-gold), 0.45);
+  --card-edge-past: var(--bwf-border);
+  --card-lift: alpha(var(--bwf-shadow-ink), 0.7);
+}
+
 .strip[data-past] {
   gap: 8px;
 
@@ -25,14 +31,14 @@
   border-radius: 16px;
   overflow: hidden;
   background: var(--bwf-surface);
-  border: 1px solid alpha(var(--bwf-gold), 0.45);
+  border: 1px solid var(--card-edge);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 
   &[data-past] {
     background: var(--bwf-bg-sunken);
-    border-color: var(--bwf-border);
+    border-color: var(--card-edge-past);
   }
 }
 
@@ -85,7 +91,7 @@
   position: absolute;
   z-index: 1;
   top: 10px;
-  left: 10px;
+  inset-inline-start: 10px;
   display: flex;
 }
 
@@ -112,7 +118,7 @@
   margin-top: 2px;
   font-size: 10px;
   line-height: 1.35;
-  color: var(--mantine-color-gold-4);
+  color: var(--bwf-gold-text);
   font-variant-numeric: tabular-nums;
   text-wrap: pretty;
 }
@@ -130,7 +136,7 @@
     box-shadow:
       0 0 0 1px alpha(var(--bwf-red), 0.3),
       0 0 24px -8px alpha(var(--bwf-red), 0.45),
-      0 12px 28px -14px alpha(var(--mantine-color-black), 0.7);
+      0 12px 28px -14px var(--card-lift);
     transition:
       transform 0.6s var(--bwf-ease-out),
       border-color 0.6s ease-out,

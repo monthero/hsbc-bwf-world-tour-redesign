@@ -7,7 +7,8 @@
   display: flex;
   align-items: center;
   gap: 4px 20px;
-  padding: 6px 8px 6px 20px;
+  padding-block: 6px;
+  padding-inline: 20px 8px;
 
   @container equipment (width < 640px) {
     flex-direction: column;
@@ -59,7 +60,7 @@
   align-items: center;
   gap: 12px;
   padding: 10px 16px;
-  border-left: 1px solid var(--bwf-line);
+  border-inline-start: 1px solid var(--bwf-line);
   scroll-snap-align: start;
 
   @container equipment (width < 640px) {
@@ -68,7 +69,7 @@
     padding: 10px 14px;
 
     &:nth-child(odd) {
-      border-left: 0;
+      border-inline-start: 0;
     }
 
     &:nth-child(n + 3) {
@@ -111,13 +112,13 @@
 }
 
 .brand {
-  margin-right: 5px;
+  margin-inline-end: 5px;
   font-weight: 400;
   color: var(--bwf-muted);
 }
 
 .unit {
-  margin-left: 4px;
+  margin-inline-start: 4px;
   font-weight: 400;
   color: var(--bwf-muted);
 }
@@ -167,7 +168,7 @@
   }
 
   .brand {
-    margin-right: 4px;
+    margin-inline-end: 4px;
   }
 
   .sub {

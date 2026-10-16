@@ -24,11 +24,25 @@
   }
 }
 
+.cards {
+  columns: 2 340px;
+  column-gap: 12px;
+
+  > * {
+    break-inside: avoid;
+    margin-block-end: 12px;
+  }
+}
+
 .group {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding-bottom: 20px;
+  padding: 16px 20px 8px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    padding-inline: 16px;
+  }
 }
 
 .groupHead {

@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vp dev",
-    "build": "tsc -b && vp build",
+    "build": "tsc -b && vp build && pnpm i18n:ids && pnpm prerender",
+    "prerender": "node --disable-warning=ExperimentalWarning scripts/prerender/index.ts",
     "preview": "vp preview",
     "typecheck": "tsc -b",
     "lint": "vp lint",
@@ -21,9 +22,12 @@
     "relay:dev": "wrangler dev --config workers/bwf-relay/wrangler.toml",
     "relay:deploy": "wrangler deploy --config workers/bwf-relay/wrangler.toml",
     "i18n:extract": "lingui extract --clean",
+    "i18n:check": "node --disable-warning=ExperimentalWarning scripts/i18n-check.ts",
+    "i18n:ids": "node --disable-warning=ExperimentalWarning scripts/i18n-ids-check.ts",
     "prepare": "vp config"
   },
   "dependencies": {
+    "@fontsource-variable/noto-sans-arabic": "5.3.0",
     "@fontsource-variable/noto-sans-devanagari": "^5.3.0",
     "@fontsource-variable/noto-sans-jp": "^5.3.1",
     "@fontsource-variable/noto-sans-kr": "^5.3.1",

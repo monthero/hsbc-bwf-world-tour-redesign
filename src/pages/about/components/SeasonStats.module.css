@@ -19,14 +19,14 @@
   padding: 14px 22px 13px;
 
   & + .stat {
-    border-left: 1px solid var(--bwf-border);
+    border-inline-start: 1px solid var(--bwf-border);
   }
 
   @mixin smaller-than $mantine-breakpoint-sm {
     padding: 12px 14px;
 
     &:nth-child(3) {
-      border-left: 0;
+      border-inline-start: 0;
     }
 
     &:nth-child(n + 3) {
@@ -52,7 +52,7 @@
   font-variant-numeric: tabular-nums;
 
   small {
-    margin-left: 1px;
+    margin-inline-start: 1px;
     font-size: 0.6em;
     color: var(--bwf-muted);
   }
@@ -63,5 +63,5 @@
 }
 
 .stat[data-gold] .value {
-  color: var(--bwf-gold);
+  color: var(--bwf-gold-accent);
 }

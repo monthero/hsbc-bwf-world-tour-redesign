@@ -37,3 +37,15 @@ jobs:
 
       - name: Format, lint and type-aware checks
         run: pnpm exec vp check
+
+      - name: Translation catalogs are up to date
+        run: |
+          pnpm i18n:extract
+          git add --intent-to-add -- src/locales
+          if ! git diff --exit-code -- src/locales; then
+            echo "::error title=Translation catalogs are out of date::Run pnpm i18n:extract and commit the updated files in src/locales."
+            exit 1
+          fi
+
+      - name: Translations
+        run: pnpm i18n:check --fail-on-missing

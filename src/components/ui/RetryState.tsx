@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { Button } from '@mantine/core';
 import { clsx } from 'clsx';
 import type { FC, ReactNode } from 'react';
@@ -17,7 +18,7 @@ export const RetryState: FC<{
     <p className={classes.message}>{message}</p>
     <span className={classes.actions}>
       <Button variant="default" radius="xl" size={compact ? 'xs' : undefined} onClick={onRetry}>
-        Try again
+        <Trans comment="Button that reloads data after a loading error">Try again</Trans>
       </Button>
       {children}
     </span>

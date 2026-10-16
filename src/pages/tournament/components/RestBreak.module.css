@@ -16,7 +16,7 @@
     content: '';
     flex: 1;
     min-height: 4px;
-    border-left: 1px dashed currentColor;
+    border-inline-start: 1px dashed currentColor;
   }
 
   &[data-active] {

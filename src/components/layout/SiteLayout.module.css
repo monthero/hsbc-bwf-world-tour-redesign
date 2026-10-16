@@ -4,11 +4,16 @@
   min-height: 100vh;
   min-height: 100dvh;
 
-  & > * {
+  & > *,
+  & > .chrome > * {
     flex: none;
   }
 
   & > .content {
     flex: 1 0 auto;
   }
+}
+
+.chrome {
+  display: contents;
 }

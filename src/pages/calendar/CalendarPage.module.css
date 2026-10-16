@@ -18,6 +18,6 @@
   color: var(--bwf-faint);
 
   @mixin smaller-than $mantine-breakpoint-sm {
-    padding-left: 24px;
+    padding-inline-start: 24px;
   }
 }

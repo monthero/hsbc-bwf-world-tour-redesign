@@ -1,3 +1,5 @@
+import { t } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { useDeferredValue, useMemo, type FC } from 'react';
 
@@ -23,8 +25,6 @@ import utils from '~/styles/utils.module.css';
 
 const NO_MATCHES: Match[] = [];
 
-const STALE_NOTE = 'Live scores are unavailable right now. Showing results that may be up to an hour old.';
-
 const byCourt = (a: Match, b: Match) => a.court - b.court;
 
 const emptyMessage = (
@@ -34,15 +34,34 @@ const emptyMessage = (
   following: boolean,
   followCount: number,
 ) => {
-  if (d?.isRest) return `${d.shortLabel} is a rest day with no matches.`;
-  if (future && d && !d.matches.length) return `The order of play for ${d.shortLabel} is published the evening before.`;
+  const day = d?.shortLabel ?? '';
+  if (d?.isRest)
+    return t({
+      message: `${day} is a rest day with no matches.`,
+      comment: 'Matches tab empty state. {day} is a short day label, e.g. "Wed 15"',
+    });
+  if (future && d && !d.matches.length)
+    return t({
+      message: `The order of play for ${day} is published the evening before.`,
+      comment:
+        'Matches tab empty state for a future day. The order of play is the daily match schedule. {day} is e.g. "Wed 15"',
+    });
   if (view.upcoming.count || view.results.count) return '';
-  if (view.liveIn) return 'Only live matches match these filters — see Live now above.';
-  if (following && !followCount) return 'Star a player, country or continent to follow them here.';
-  return 'No matches for these filters.';
+  if (view.liveIn)
+    return t({
+      message: 'Only live matches match these filters — see Live now above.',
+      comment: 'Matches tab empty state. Live now is the title of the live matches section above',
+    });
+  if (following && !followCount)
+    return t({
+      message: 'Star a player, country or continent to follow them here.',
+      comment: 'Matches tab empty state when the following filter is on but the visitor follows nobody',
+    });
+  return t({ message: 'No matches for these filters.', comment: 'Matches tab empty state' });
 };
 
 export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
+  const { t: tr } = useLingui();
   const { days, todayIndex, focusIndex } = schedule;
   const f = useMatchFilters(days.length, focusIndex);
   const openMatch = useOpenMatch();
@@ -73,7 +92,12 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
       <CondensedFilters filters={f} view={view} days={days} visible={filtersOut} />
       {schedule.stale && tournament.status === 'live' && (
         <div className={clsx(utils.container, classes.live)}>
-          <EmptyState variant="note">{STALE_NOTE}</EmptyState>
+          <EmptyState variant="note">
+            {tr({
+              message: 'Live scores are unavailable right now. Showing results that may be up to an hour old.',
+              comment: 'Note above the matches when the live score feed fails',
+            })}
+          </EmptyState>
         </div>
       )}
       {live.length > 0 && (
@@ -86,7 +110,11 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
         <InlineFilters ref={filtersRef} filters={f} view={view} />
         {view.upcoming.count > 0 && (
           <MatchGroups
-            title="Up next"
+            title={tr({
+              message: 'Up next',
+              context: 'matches',
+              comment: 'Matches tab section: matches not started yet',
+            })}
             storeKey="matches:up"
             defaultOpen
             section={view.upcoming}
@@ -96,7 +124,7 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
         )}
         {view.results.count > 0 && (
           <MatchGroups
-            title="Results"
+            title={tr({ message: 'Results', comment: 'Matches tab section: finished matches' })}
             storeKey={dayOver ? 'matches:results:done' : 'matches:results:live'}
             defaultOpen={dayOver}
             section={view.results}

@@ -15,7 +15,7 @@
     content: '';
     position: absolute;
     z-index: -1;
-    right: clamp(-220px, -10vw, -60px);
+    inset-inline-end: clamp(-220px, -10vw, -60px);
     bottom: clamp(-260px, -14vw, -80px);
     width: clamp(320px, 42vw, 640px);
     aspect-ratio: 1;
@@ -105,7 +105,8 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 12px 4px 4px;
+  padding-block: 4px;
+  padding-inline: 4px 12px;
   border-radius: 999px;
   border: 1px solid var(--bwf-red-edge);
   background: var(--bwf-red-tint);

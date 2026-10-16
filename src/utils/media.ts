@@ -1,10 +1,12 @@
+import { msg } from '@lingui/core/macro';
+
 import type { MediaItem } from '~/api/schemas';
+import { translate } from '~/i18n/lazy';
 import type { Match } from '~/types';
 
 import { weakCached } from './cache';
 import { dayjs } from './dates';
 import { foldWords } from './fold';
-import { plural } from './format';
 import { venueTimeOn } from './match-time';
 import { roundName } from './matches';
 import type { MatchMedia } from './media-link';
@@ -95,14 +97,13 @@ export const replayStream = (media: MatchMedia | undefined, court: MediaItem | u
 
 export const matchReplays = (
   byMatch: ReadonlyMap<string, MatchMedia>,
-  courts: ReadonlyMap<string, MediaItem>,
   matches: readonly Pick<Match, 'id' | 'status'>[],
 ) => {
   const out = new Map<string, MediaItem>();
   for (const m of matches) {
     if (m.status !== 'F') continue;
     const media = byMatch.get(m.id);
-    const item = media?.full ?? namedStream(media) ?? media?.highlights ?? courts.get(m.id);
+    const item = media?.full ?? namedStream(media) ?? media?.highlights;
     if (item) out.set(m.id, item);
   }
   return out;
@@ -134,8 +135,13 @@ export const visibleIn = <T extends MediaItem>(items: readonly T[], hideFor: str
   return out;
 };
 
-export const regionHiddenNote = (n: number) =>
-  `${plural(n, 'video')} not available in your region ${n === 1 ? 'is' : 'are'} hidden. You can show them in Settings.`;
+const REGION_HIDDEN = msg({
+  message:
+    '{count, plural, one {# video not available in your region is hidden. You can show it in Settings.} other {# videos not available in your region are hidden. You can show them in Settings.}}',
+  comment: 'Note under a video list: some YouTube videos are blocked in the visitor’s country and were left out',
+});
+
+export const regionHiddenNote = (n: number) => translate(REGION_HIDDEN, { count: n });
 
 const YEAR = /\b(?:19|20)\d{2}\b/;
 const DAY_SEGMENT = /^day \d+$/i;

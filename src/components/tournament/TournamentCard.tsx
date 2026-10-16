@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, type FC, type ReactNode } from 'react';
@@ -20,7 +21,7 @@ const CardStatus: FC<{ tournament: Tournament; isNext: boolean }> = ({ tournamen
   if (t.status === 'done')
     return (
       <span className={classes.results}>
-        Results
+        <Trans comment="Link on a finished tournament’s card to its results">Results</Trans>
         <IconNext size={14} />
       </span>
     );

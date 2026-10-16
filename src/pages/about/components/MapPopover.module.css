@@ -1,8 +1,8 @@
 .popover {
   position: absolute;
   z-index: 5;
-  left: calc(var(--fx) * 100%);
-  top: calc(var(--fy) * 100%);
+  left: calc((var(--fx) - var(--view-x, 0)) * var(--view-k, 1) * 100%);
+  top: calc((var(--fy) - var(--view-y, 0)) * var(--view-k, 1) * 100%);
   width: max-content;
   min-width: 220px;
   max-width: 320px;
@@ -12,9 +12,13 @@
   background: var(--bwf-glass-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 12px 32px alpha(var(--mantine-color-black), 0.45);
+  box-shadow: 0 12px 32px alpha(var(--bwf-shadow-ink), 0.45);
   transform: translate(20px, -50%);
   animation: in 0.16s var(--bwf-ease);
+
+  [data-moving] > & {
+    visibility: hidden;
+  }
 
   &[data-flip] {
     transform: translate(calc(-100% - 20px), -50%);

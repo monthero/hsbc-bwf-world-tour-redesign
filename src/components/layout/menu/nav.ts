@@ -1,3 +1,5 @@
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
 import type { FC } from 'react';
 import Calendar from '~icons/ph/calendar-blank';
 import CalendarDuotone from '~icons/ph/calendar-blank-duotone';
@@ -22,7 +24,7 @@ import { SITE_NAV, type InternalItem, type SiteItem } from '../links';
 export interface NavItem {
   item: InternalItem;
   index: string;
-  blurb: string;
+  blurb: MessageDescriptor;
   icon: FC<IconProps>;
   activeIcon: FC<IconProps>;
   glyph: FC<IconProps>;
@@ -31,27 +33,35 @@ export interface NavItem {
 const isInternal = (i: SiteItem): i is InternalItem => 'to' in i;
 
 const META: Record<InternalItem['to'], Omit<NavItem, 'item' | 'index'>> = {
-  '/': { blurb: 'Home', icon: icon(House), activeIcon: icon(HouseFill), glyph: icon(HouseDuotone) },
+  '/': {
+    blurb: msg({ message: 'Home', comment: 'Menu caption under the Home link' }),
+    icon: icon(House),
+    activeIcon: icon(HouseFill),
+    glyph: icon(HouseDuotone),
+  },
   '/about': {
-    blurb: 'How it works',
+    blurb: msg({ message: 'How it works', comment: 'Menu caption under the About link: how the World Tour works' }),
     icon: icon(Info),
     activeIcon: icon(InfoFill),
     glyph: icon(InfoDuotone),
   },
   '/calendar': {
-    blurb: 'Follow the tour',
+    blurb: msg({ message: 'Follow the tour', comment: 'Menu caption under the Calendar link' }),
     icon: icon(Calendar),
     activeIcon: icon(CalendarFill),
     glyph: icon(CalendarDuotone),
   },
   '/rankings': {
-    blurb: 'World & tour',
+    blurb: msg({
+      message: 'World & tour',
+      comment: 'Menu caption under the Rankings link: world rankings and World Tour race standings',
+    }),
     icon: icon(Ranking),
     activeIcon: icon(RankingFill),
     glyph: icon(RankingDuotone),
   },
   '/news': {
-    blurb: 'Latest stories',
+    blurb: msg({ message: 'Latest stories', comment: 'Menu caption under the News link' }),
     icon: icon(Newspaper),
     activeIcon: icon(NewspaperFill),
     glyph: icon(NewspaperDuotone),

@@ -34,7 +34,8 @@
   align-items: center;
   gap: 14px;
   margin-bottom: 14px;
-  padding: 18px 104px 14px 18px;
+  padding-block: 18px 14px;
+  padding-inline: 18px 104px;
   background: var(--bwf-surface-2);
   border-bottom: 1px solid var(--bwf-border);
 }
@@ -42,7 +43,7 @@
 .actions {
   position: absolute;
   top: 12px;
-  right: 12px;
+  inset-inline-end: 12px;
   display: flex;
   gap: 6px;
 }

@@ -137,6 +137,6 @@
 }
 
 .liveLevel {
-  color: var(--lv);
+  color: var(--lv-text);
   font-weight: 500;
 }

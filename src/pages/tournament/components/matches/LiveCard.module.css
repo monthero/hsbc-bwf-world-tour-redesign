@@ -86,7 +86,7 @@
 
 .nowHead {
   border-radius: 10px 10px 0 0;
-  background: alpha(var(--bwf-red), 0.2);
+  background: var(--bwf-live-column);
   color: var(--bwf-red-pale);
 }
 
@@ -136,25 +136,32 @@
   font-size: 12px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  color: var(--bwf-green);
+  --idle: light-dark(var(--bwf-muted), var(--bwf-green));
+  --idle-mark: light-dark(var(--bwf-muted), var(--bwf-green-mark));
+  color: var(--idle);
+  --mark: var(--idle-mark);
   cursor: help;
 
   &[data-left='1'] {
     color: var(--bwf-gold-text);
+    --mark: currentColor;
   }
 
   &[data-left='0'] {
-    color: var(--bwf-red-text);
+    color: var(--bwf-loss);
+    --mark: currentColor;
   }
 }
 
 .streak {
-  color: var(--mantine-color-orange-5);
+  color: var(--bwf-orange-text);
+  --mark: currentColor;
 }
 
 .challengeIcon {
   width: 15px;
   height: 15px;
+  color: var(--mark);
 }
 
 .serveCell {
@@ -185,7 +192,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: alpha(var(--bwf-red), 0.2);
+  background: var(--bwf-live-column);
   font-size: 30px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -219,12 +226,17 @@
 
 .footer {
   --foot-h: 32px;
+  --now-w: 58px;
   display: flex;
   align-items: center;
   gap: 8px 16px;
   min-height: calc(var(--foot-h) + 11px);
   padding-top: 10px;
   border-top: 1px solid alpha(var(--bwf-red), 0.2);
+
+  @container live-card (width < 380px) {
+    --now-w: 46px;
+  }
 
   @media (pointer: coarse) {
     --foot-h: 36px;
@@ -258,7 +270,7 @@
 }
 
 .watch {
-  margin-left: auto;
+  margin-inline: auto calc((var(--now-w) - var(--foot-h)) / 2);
 }
 
 @keyframes flash {

@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -9,7 +11,7 @@ import { LevelBadge, LogoTile } from '~/components/tournament';
 import { CardHit, EmptyState, Segmented, Tip, type SegmentedOption } from '~/components/ui';
 import type { PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
-import { plural } from '~/utils/format';
+import { formatRecord } from '~/utils/format';
 import { roundName } from '~/utils/matches';
 import { centerChild, scrollBehavior } from '~/utils/scroll';
 import { opponentsOf } from '~/utils/season';
@@ -32,6 +34,11 @@ interface MatchesProps {
   onOpenMatch: (pm: PlayerMatch) => void;
 }
 
+const TOURNAMENTS_PLAYED = msg({
+  message: '{played, plural, one {# tournament} other {# tournaments}}',
+  comment: 'Number of tournaments played in the selected season',
+});
+
 const sharedPartners = (groups: readonly TournamentRuns[]) => {
   const byEvent = new Map<string, Set<string>>();
   for (const run of groups.flatMap((g) => g.runs)) {
@@ -49,25 +56,27 @@ export const MatchesTab = memo<MatchesProps>(({ playerId, seasons, season, ready
   const mixed = useMemo(() => !!current && eventsOf(current.matches).length > 1, [current]);
   const varied = useMemo(() => sharedPartners(groups), [groups]);
   const played = useMemo(() => (current ? tournamentsOf(current) : 0), [current]);
+  const { i18n } = useLingui();
   if (!ready) return <Skeleton height={520} radius={18} />;
-  if (!current) return <EmptyState>No World Tour matches on record.</EmptyState>;
+  if (!current)
+    return (
+      <EmptyState>
+        <Trans>No World Tour matches on record.</Trans>
+      </EmptyState>
+    );
   return (
     <div className={classes.tab}>
       <div className={classes.bar}>
         {seasons.length > 1 && <SeasonPicker seasons={seasons} year={current.year} onSeason={onSeason} />}
         <span className={shared.sub}>
-          <b>
-            {current.wins}–{current.losses}
-          </b>{' '}
-          · {winRate(current.wins, current.losses)} · {plural(played, 'tournament')}
+          <b>{formatRecord(current.wins, current.losses)}</b> · {winRate(current.wins, current.losses)} ·{' '}
+          {i18n._({ ...TOURNAMENTS_PLAYED, values: { played } })}
         </span>
       </div>
-      <div className={clsx(utils.card, shared.section)}>
-        <div className={shared.columns}>
-          {groups.map((g) => (
-            <TournamentGroup key={g.key} group={g} self={playerId} mixed={mixed} varied={varied} onOpen={onOpenMatch} />
-          ))}
-        </div>
+      <div className={classes.cards}>
+        {groups.map((g) => (
+          <TournamentGroup key={g.key} group={g} self={playerId} mixed={mixed} varied={varied} onOpen={onOpenMatch} />
+        ))}
       </div>
     </div>
   );
@@ -110,7 +119,7 @@ const TournamentGroup = memo<{
   const t = group.tournament;
   const single = group.runs.length === 1 ? group.runs[0] : undefined;
   return (
-    <div className={classes.group}>
+    <div className={clsx(utils.card, classes.group)}>
       <div className={classes.groupHead}>
         <LogoTile src={t.logo} name={t.name} size={32} />
         <span className={shared.rowMain}>
@@ -166,10 +175,18 @@ const MatchRow = memo<{ pm: PlayerMatch; self: string | undefined; onOpen: (pm: 
     const { match } = pm;
     const open = useCallback(() => onOpen(pm), [onOpen, pm]);
     const partner = self === undefined ? null : teammateOf(pm, self);
+    const { t } = useLingui();
+    const round = roundName(match.round);
     return (
       <div className={shared.row} data-lead>
-        <CardHit label={`Open match details · ${roundName(match.round)}`} onClick={open} />
-        <Tip label={roundName(match.round)}>
+        <CardHit
+          label={t({
+            message: `Open match details · ${round}`,
+            comment: 'Accessible label for a match row: opens the match details; round is e.g. Quarter-final',
+          })}
+          onClick={open}
+        />
+        <Tip label={round}>
           <span className={classes.round}>{match.round}</span>
         </Tip>
         <span className={shared.rowMain}>

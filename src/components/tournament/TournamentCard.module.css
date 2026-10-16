@@ -35,17 +35,17 @@
 }
 
 .level {
-  right: 10px;
+  inset-inline-end: 10px;
 }
 
 .status {
-  left: 10px;
+  inset-inline-start: 10px;
 }
 
 .logo {
   position: absolute;
   z-index: 1;
-  left: 16px;
+  inset-inline-start: 16px;
   bottom: -22px;
 }
 

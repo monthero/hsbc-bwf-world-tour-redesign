@@ -1,10 +1,14 @@
+import type { I18n } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { VisuallyHidden } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 import { memo, useCallback, useMemo, useState, type ChangeEvent, type PointerEvent } from 'react';
 
 import { Partner } from '~/components/player';
-import { Segmented, type SegmentedOption } from '~/components/ui';
-import { dayjs, formatDayMonthYear } from '~/utils/dates';
+import { Segmented } from '~/components/ui';
+import { useLazyOptions, type LazyOption } from '~/i18n/useLazyOptions';
+import { dayjs, formatDayMonthYear, formatMonthYear } from '~/utils/dates';
 import { formatNumber, formatRank } from '~/utils/format';
 
 import type { RankPoint } from '../types';
@@ -41,9 +45,9 @@ const RANGE_MIN_MS = 3 * YEAR_MS;
 const YEAR_GAP = 44;
 const LABEL_EDGE = 56;
 
-const RANGE_OPTIONS: readonly SegmentedOption<Range>[] = [
-  { value: 'all', label: 'Career' },
-  { value: 'recent', label: 'Last 2 years' },
+const RANGE_OPTIONS: readonly LazyOption<Range>[] = [
+  { value: 'all', label: msg({ message: 'Career', comment: 'Ranking chart range: the player’s whole career' }) },
+  { value: 'recent', label: msg({ message: 'Last 2 years', comment: 'Ranking chart range: the last two years only' }) },
 ];
 
 const niceFloor = (n: number) => NICE.findLast((v) => v <= n) ?? 1;
@@ -61,7 +65,7 @@ const xTicksOf = (t0: number, t1: number, x: (t: number) => number, width: numbe
   const ticks: Tick[] = [];
   for (let d = dayjs.utc(t0).add(1, 'year').startOf('year'); d.valueOf() <= t1; d = d.add(1, 'year'))
     if (d.year() % step === 0) ticks.push({ key: `x${d.year()}`, pos: x(d.valueOf()), label: String(d.year()) });
-  return ticks.length ? ticks : [{ key: 'x0', pos: x(t0), label: dayjs.utc(t0).format('MMM YYYY') }];
+  return ticks.length ? ticks : [{ key: 'x0', pos: x(t0), label: formatMonthYear(dayjs.utc(t0).toISOString()) }];
 };
 
 const modelOf = (points: readonly RankPoint[], width: number, height: number): Model => {
@@ -108,12 +112,22 @@ const nearest = (xs: readonly number[], at: number) => {
   return lo > 0 && at - (xs[lo - 1] ?? 0) < (xs[lo] ?? 0) - at ? lo - 1 : lo;
 };
 
-const describe = (p: RankPoint) =>
-  `${formatDayMonthYear(p.date)}: ${formatRank(p.rank)}, ${formatNumber(p.points)} points`;
+const describe = (i18n: I18n, p: RankPoint) => {
+  const day = formatDayMonthYear(p.date);
+  const rank = formatRank(p.rank);
+  const points = formatNumber(p.points);
+  return i18n._(
+    msg({
+      message: `${day}: ${rank}, ${points} points`,
+      comment: 'Screen-reader value of the ranking history slider: date, world ranking (e.g. #3) and ranking points',
+    }),
+  );
+};
 
 export const RankChart = memo<{ points: readonly RankPoint[]; live: boolean }>(({ points, live }) => {
   const [range, setRange] = useState<Range>('all');
   const pick = useCallback((v: Range | null) => v && setRange(v), []);
+  const options = useLazyOptions(RANGE_OPTIONS);
   const long = (points.at(-1)?.time ?? 0) - (points[0]?.time ?? 0) > RANGE_MIN_MS;
   const shown = useMemo(() => {
     const end = points.at(-1)?.time ?? 0;
@@ -121,15 +135,14 @@ export const RankChart = memo<{ points: readonly RankPoint[]; live: boolean }>((
   }, [points, long, range]);
   return (
     <div className={classes.chart}>
-      {long && (
-        <Segmented options={RANGE_OPTIONS} value={range} onChange={pick} height={28} className={classes.range} />
-      )}
+      {long && <Segmented options={options} value={range} onChange={pick} height={28} className={classes.range} />}
       <ChartBody key={range} points={shown} live={live} />
     </div>
   );
 });
 
 const ChartBody = memo<{ points: readonly RankPoint[]; live: boolean }>(({ points, live }) => {
+  const { t, i18n } = useLingui();
   const { ref, width, height } = useElementSize<HTMLDivElement>();
   const model = useMemo(() => (width && height ? modelOf(points, width, height) : null), [points, width, height]);
   const [active, setActive] = useState<number | null>(null);
@@ -153,15 +166,18 @@ const ChartBody = memo<{ points: readonly RankPoint[]; live: boolean }>(({ point
   return (
     <>
       {point && <Readout point={point} />}
-      <div ref={ref} className={classes.frame}>
+      <div ref={ref} className={classes.frame} dir="ltr">
         <VisuallyHidden>
           <input
             type="range"
             min={0}
             max={last}
             value={shown}
-            aria-label="World ranking history"
-            aria-valuetext={point ? describe(point) : undefined}
+            aria-label={t({
+              message: 'World ranking history',
+              comment: 'Accessible label of the slider that steps through the ranking chart week by week',
+            })}
+            aria-valuetext={point ? describe(i18n, point) : undefined}
             onChange={slide}
           />
         </VisuallyHidden>
@@ -175,17 +191,17 @@ const ChartBody = memo<{ points: readonly RankPoint[]; live: boolean }>(({ point
             onPointerDown={move}
             onPointerLeave={leave}
           >
-            {model.yTicks.map((t) => (
-              <g key={t.key}>
-                <line className={classes.grid} x1={PAD.left} x2={model.right} y1={t.pos} y2={t.pos} />
-                <text className={classes.yLabel} x={PAD.left - 8} y={t.pos}>
-                  {t.label}
+            {model.yTicks.map((tick) => (
+              <g key={tick.key}>
+                <line className={classes.grid} x1={PAD.left} x2={model.right} y1={tick.pos} y2={tick.pos} />
+                <text className={classes.yLabel} x={PAD.left - 8} y={tick.pos}>
+                  {tick.label}
                 </text>
               </g>
             ))}
-            {model.xTicks.map((t) => (
-              <text key={t.key} className={classes.xLabel} x={t.pos} y={height - 6}>
-                {t.label}
+            {model.xTicks.map((tick) => (
+              <text key={tick.key} className={classes.xLabel} x={tick.pos} y={height - 6}>
+                {tick.label}
               </text>
             ))}
             <path className={classes.line} d={model.path} />
@@ -229,11 +245,16 @@ const ChartBody = memo<{ points: readonly RankPoint[]; live: boolean }>(({ point
   );
 });
 
-const Readout = memo<{ point: RankPoint }>(({ point: p }) => (
-  <div className={classes.readout}>
-    <span className={classes.when}>{formatDayMonthYear(p.date)}</span>
-    <b className={classes.rank}>{formatRank(p.rank)}</b>
-    <span className={classes.points}>{formatNumber(p.points)} pts</span>
-    {p.partner && <Partner player={p.partner} className={classes.with} />}
-  </div>
-));
+const Readout = memo<{ point: RankPoint }>(({ point: p }) => {
+  const points = formatNumber(p.points);
+  return (
+    <div className={classes.readout}>
+      <span className={classes.when}>{formatDayMonthYear(p.date)}</span>
+      <b className={classes.rank}>{formatRank(p.rank)}</b>
+      <span className={classes.points}>
+        <Trans comment="World ranking points at the chosen week; pts = points">{points} pts</Trans>
+      </span>
+      {p.partner && <Partner player={p.partner} className={classes.with} />}
+    </div>
+  );
+});

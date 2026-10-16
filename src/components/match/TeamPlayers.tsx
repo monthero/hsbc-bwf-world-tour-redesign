@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { Fragment, memo, type FC, type ReactNode } from 'react';
 
@@ -6,7 +7,10 @@ import { PlayerName } from '~/components/player/PlayerName';
 import { SeedTag } from '~/components/player/SeedTag';
 import type { Player } from '~/types';
 
+import { TBD } from './labels';
+
 import classes from './TeamPlayers.module.css';
+import utils from '~/styles/utils.module.css';
 
 const Wrap: FC<{ when?: boolean; className?: string; children: ReactNode }> = ({ when, className, children }) =>
   when ? <span className={className}>{children}</span> : children;
@@ -37,7 +41,7 @@ export const TeamPlayers = memo<{
     align = 'start',
     truncate,
     wrap,
-    empty = 'TBD',
+    empty,
     before,
     after,
     aside,
@@ -45,7 +49,9 @@ export const TeamPlayers = memo<{
     className,
     nameClassName,
   }) => {
+    const { i18n } = useLingui();
     const pairSeed = !!seed && layout === 'stack' && players.length > 1;
+    const blank = empty === undefined ? i18n._(TBD) : empty;
     return (
       <span
         className={clsx(classes.team, className)}
@@ -78,7 +84,7 @@ export const TeamPlayers = memo<{
                 </Wrap>
               </span>
             ))
-          : empty && <span className={classes.player}>{empty}</span>}
+          : blank && <span className={classes.player}>{blank}</span>}
         {pairSeed && <SeedTag seed={seed} className={classes.pairSeed} />}
         {aside && <span className={classes.aside}>{aside}</span>}
         {end && <span className={classes.end}>{end}</span>}
@@ -95,8 +101,9 @@ export const TeamLabel = memo<{
   className?: string;
 }>(({ players, sep = ' / ', link = true, fit, className }) => {
   const short = players.length > 1;
+  const { i18n } = useLingui();
   return (
-    <span className={className}>
+    <span className={clsx(utils.ltr, className)}>
       {players.length
         ? players.map((p, i) => (
             <Fragment key={p.id || p.name}>
@@ -104,7 +111,7 @@ export const TeamLabel = memo<{
               <PlayerName player={p} link={link} short={short} fit={fit && !short} />
             </Fragment>
           ))
-        : 'TBD'}
+        : i18n._(TBD)}
     </span>
   );
 });

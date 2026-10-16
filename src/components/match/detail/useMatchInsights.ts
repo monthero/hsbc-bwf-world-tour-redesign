@@ -1,3 +1,4 @@
+import { msg } from '@lingui/core/macro';
 import { useMemo } from 'react';
 
 import { SEASON_YEAR } from '~/constants';
@@ -11,7 +12,19 @@ import { recentForm, winLoss } from '~/utils/season';
 
 import { formItems, rankRow, toMeetings, wlRow, type CompareRow } from './utils';
 
-const SEASON_WL = `${SEASON_YEAR} W–L`;
+const SEASON_WL = msg({
+  message: `${SEASON_YEAR} W–L`,
+  comment: 'Head-to-head row: win–loss record this season; {SEASON_YEAR} is the year',
+});
+const CAREER_WL = msg({
+  message: 'World Tour W–L',
+  comment: 'Head-to-head row: career win–loss record on the World Tour',
+});
+const WORLD_RANKING = msg({ message: 'World ranking', comment: 'Head-to-head row: each side’s BWF world ranking' });
+const RACE = msg({
+  message: 'Race to Finals',
+  comment: 'Head-to-head row: standing in the season race to qualify for the World Tour Finals',
+});
 const FORM_LIMIT = 5;
 
 export const useMatchInsights = (match: Match, tournament: Tournament) => {
@@ -48,10 +61,10 @@ export const useMatchInsights = (match: Match, tournament: Tournament) => {
 
   const compare = useMemo(() => {
     const rows: CompareRow[] = [
-      rankRow('wr', 'World ranking', worldRank(dir, a.players, ev), worldRank(dir, b.players, ev)),
-      rankRow('race', 'Race to Finals', raceRank(race, a.players, ev), raceRank(race, b.players, ev)),
+      rankRow('wr', WORLD_RANKING, worldRank(dir, a.players, ev), worldRank(dir, b.players, ev)),
+      rankRow('race', RACE, raceRank(race, a.players, ev), raceRank(race, b.players, ev)),
     ];
-    if (record) rows.push(wlRow('career', 'World Tour W–L', record.careerA, record.careerB));
+    if (record) rows.push(wlRow('career', CAREER_WL, record.careerA, record.careerB));
     rows.push(wlRow('season', SEASON_WL, history.wlA, history.wlB));
     return rows;
   }, [dir, race, a, b, ev, record, history.wlA, history.wlB]);

@@ -1,13 +1,38 @@
+import { i18n } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+
 import type { DrawSlot, EventCode, Match, Side, Team, TournamentSchedule } from '~/types';
 import { date } from '~/utils/dates';
 import { isDoubles, roundName, winnerSide } from '~/utils/matches';
 
+import { DAY_ROUNDS } from '../../constants';
+
 const DRAW_ROUNDS = [
-  { id: 'R32', label: 'Round of 32', size: 16 },
-  { id: 'R16', label: 'Round of 16', size: 8 },
-  { id: 'QF', label: 'Quarter-finals', size: 4 },
-  { id: 'SF', label: 'Semi-finals', size: 2 },
-  { id: 'F', label: 'Final', size: 1 },
+  {
+    id: 'R32',
+    label: msg({ message: 'Round of 32', comment: 'Draw column heading: the knockout round with 32 players or pairs' }),
+    size: 16,
+  },
+  {
+    id: 'R16',
+    label: msg({ message: 'Round of 16', comment: 'Draw column heading: the knockout round with 16 players or pairs' }),
+    size: 8,
+  },
+  {
+    id: 'QF',
+    label: msg({ message: 'Quarter-finals', comment: 'Draw column heading: the round of the last eight' }),
+    size: 4,
+  },
+  {
+    id: 'SF',
+    label: msg({ message: 'Semi-finals', comment: 'Draw column heading: the round of the last four' }),
+    size: 2,
+  },
+  {
+    id: 'F',
+    label: msg({ message: 'Final', comment: 'Draw column heading: the last match of an event' }),
+    size: 1,
+  },
 ] as const;
 
 type DrawRound = (typeof DRAW_ROUNDS)[number];
@@ -36,6 +61,7 @@ interface BracketPath {
 interface BracketColumn {
   id: string;
   label: string;
+  short: string;
   day: string;
   active: boolean;
   boxes: BracketBox[];
@@ -188,9 +214,11 @@ export const buildBracket = (
     const bs = boxes[i] ?? [];
     const cy = ys[i] ?? [];
     const next = ys[i + 1];
+    const short = DAY_ROUNDS[r.id]?.short;
     return {
       id: r.id,
-      label: r.label,
+      label: i18n._(r.label),
+      short: short ? i18n._(short) : r.id,
       day: roundDay(schedule, ev, r.id),
       active: active === r.id,
       boxes: bs,

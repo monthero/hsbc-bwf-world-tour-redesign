@@ -61,7 +61,7 @@
 }
 
 .watch {
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 .tourName {
@@ -185,7 +185,7 @@
     inset: auto 0 0;
     height: var(--v);
     border-radius: inherit;
-    background: var(--bwf-raised);
+    background: light-dark(var(--mantine-color-gray-5), var(--bwf-raised));
     transition: background 0.15s;
   }
 

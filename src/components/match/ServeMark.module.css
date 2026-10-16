@@ -6,6 +6,10 @@
   svg {
     width: var(--serve);
     height: var(--serve);
-    fill: var(--bwf-gold);
+    fill: var(--bwf-serve);
+    stroke: var(--bwf-serve-edge);
+    stroke-width: 4;
+    stroke-linejoin: round;
+    paint-order: stroke;
   }
 }

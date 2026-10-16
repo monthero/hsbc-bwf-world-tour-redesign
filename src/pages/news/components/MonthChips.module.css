@@ -6,8 +6,9 @@
 
 .picker {
   flex: none;
-  padding: 7px 8px 7px var(--bwf-gutter);
-  border-right: 1px solid var(--bwf-border);
+  padding-block: 7px;
+  padding-inline: var(--bwf-gutter) 8px;
+  border-inline-end: 1px solid var(--bwf-border);
 }
 
 .row {
@@ -17,7 +18,8 @@
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding: 7px var(--bwf-gutter) 7px 8px;
+  padding-block: 7px;
+  padding-inline: 8px var(--bwf-gutter);
 }
 
 .chip {

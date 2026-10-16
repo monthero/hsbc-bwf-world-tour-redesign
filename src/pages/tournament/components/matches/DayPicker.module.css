@@ -13,6 +13,7 @@
 }
 
 .strip {
+  --to-end: 90deg;
   --fade-start: 0px;
   --fade-end: 0px;
   position: relative;
@@ -25,12 +26,16 @@
   padding-block: 4px;
   margin-block: -4px;
   mask-image: linear-gradient(
-    to right,
+    var(--to-end),
     transparent,
     var(--mantine-color-black) var(--fade-start),
     var(--mantine-color-black) calc(100% - var(--fade-end)),
     transparent
   );
+
+  &:dir(rtl) {
+    --to-end: -90deg;
+  }
 
   .root[data-start] & {
     --fade-start: var(--fade);
@@ -60,7 +65,7 @@
   border: 1px solid var(--bwf-border);
   background: var(--bwf-surface);
   color: var(--bwf-text);
-  text-align: left;
+  text-align: start;
   scroll-snap-align: center;
   cursor: pointer;
   -webkit-user-select: none;
@@ -86,6 +91,16 @@
     background: var(--bwf-text);
     border-color: var(--bwf-text);
     color: var(--bwf-bg);
+
+    @mixin light {
+      background: var(--bwf-live-surface);
+      border-color: var(--bwf-red-text);
+      color: var(--bwf-text);
+
+      .num {
+        color: var(--bwf-red-pale);
+      }
+    }
   }
 }
 
@@ -120,14 +135,14 @@
 .today {
   position: absolute;
   top: 6px;
-  right: 7px;
+  inset-inline-end: 7px;
 }
 
 .root .arrow {
   position: absolute;
   top: 50%;
   translate: 0 -50%;
-  box-shadow: 0 4px 14px alpha(var(--mantine-color-black), 0.45);
+  box-shadow: 0 4px 14px alpha(var(--bwf-shadow-ink), 0.45);
 
   @mixin smaller-than $mantine-breakpoint-sm {
     display: none;
@@ -135,11 +150,11 @@
 }
 
 .prev {
-  left: 6px;
+  inset-inline-start: 6px;
 }
 
 .next {
-  right: 6px;
+  inset-inline-end: 6px;
 }
 
 .root:not([data-start]) .prev,

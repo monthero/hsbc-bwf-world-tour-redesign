@@ -1,8 +1,13 @@
+import { msg } from '@lingui/core/macro';
+
 export const WORDS_PER_MINUTE = 220;
 export const MAX_PLAYERS = 6;
 export const OFFICIAL_HOST = 'bwfbadminton.com';
 export const BACK = { to: '/news' } as const;
-export const BACK_LABEL = 'Back to news';
+export const BACK_LABEL = msg({
+  message: 'Back to news',
+  comment: 'Back button on a news article, returning to the news page',
+});
 
 export const HERO_WIDTHS = [640, 960, 1280, 1920] as const;
 export const HERO_SIZES = '(max-width: 48em) 100vw, min(1520px, 92vw)';

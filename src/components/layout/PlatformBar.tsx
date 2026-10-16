@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { Menu } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -7,8 +8,10 @@ import { IconCheck, IconExpand, IconExternal, IconNext } from '~/components/ui';
 
 import { BwfMark } from './BwfMark';
 import {
+  BWF_WEBSITES,
   CURRENT_SITE,
   isGroup,
+  labelText,
   PLATFORM_MORE,
   PLATFORM_PRIMARY,
   SOCIAL_LINKS,
@@ -27,28 +30,34 @@ const MENU_CLASSES = {
   divider: classes.menuDivider,
 };
 
-const MenuLink: FC<{ item: ExternalItem }> = ({ item }) => (
-  <Menu.Item
-    component="a"
-    href={item.href}
-    target="_blank"
-    rel="noreferrer"
-    rightSection={<IconExternal className={classes.menuIcon} />}
-  >
-    {item.label}
-  </Menu.Item>
-);
+const MenuLink: FC<{ item: ExternalItem }> = ({ item }) => {
+  const { i18n } = useLingui();
+  return (
+    <Menu.Item
+      component="a"
+      href={item.href}
+      target="_blank"
+      rel="noreferrer"
+      rightSection={<IconExternal className={classes.menuIcon} />}
+    >
+      {labelText(i18n, item.label)}
+    </Menu.Item>
+  );
+};
 
 const MoreEntry: FC<{ entry: PlatformEntry }> = ({ entry }) => {
+  const { i18n } = useLingui();
   if (!isGroup(entry)) return <MenuLink item={entry} />;
   return (
     <Menu.Sub>
       <Menu.Sub.Target>
-        <Menu.Sub.Item rightSection={<IconNext className={classes.menuIcon} />}>{entry.label}</Menu.Sub.Item>
+        <Menu.Sub.Item rightSection={<IconNext className={classes.menuIcon} />}>
+          {labelText(i18n, entry.label)}
+        </Menu.Sub.Item>
       </Menu.Sub.Target>
       <Menu.Sub.Dropdown className={MENU_CLASSES.dropdown}>
         {entry.items.map((it) => (
-          <MenuLink key={it.label} item={it} />
+          <MenuLink key={labelText(i18n, it.label)} item={it} />
         ))}
       </Menu.Sub.Dropdown>
     </Menu.Sub>
@@ -56,12 +65,13 @@ const MoreEntry: FC<{ entry: PlatformEntry }> = ({ entry }) => {
 };
 
 const SwitcherEntry: FC<{ entry: PlatformEntry }> = ({ entry }) => {
+  const { i18n } = useLingui();
   if (!isGroup(entry)) return <MenuLink item={entry} />;
   return (
     <>
-      <Menu.Label>{entry.label}</Menu.Label>
+      <Menu.Label>{labelText(i18n, entry.label)}</Menu.Label>
       {entry.items.map((it) => (
-        <MenuLink key={it.label} item={it} />
+        <MenuLink key={labelText(i18n, it.label)} item={it} />
       ))}
     </>
   );
@@ -83,51 +93,60 @@ const Trigger: FC<ButtonHTMLAttributes<HTMLButtonElement> & { label: string; ref
   </button>
 );
 
-const FamilyLinks: FC = () => (
-  <nav className={classes.family} aria-label="BWF websites">
-    {PLATFORM_PRIMARY.map((it) => (
-      <ExternalLink key={it.href} item={it} className={classes.familyLink} />
-    ))}
-    <CurrentSite className={clsx(classes.familyLink, classes.current)} />
-    <Menu position="bottom-end" offset={6} classNames={MENU_CLASSES} width={260}>
+const FamilyLinks: FC = () => {
+  const { t, i18n } = useLingui();
+  return (
+    <nav className={classes.family} aria-label={i18n._(BWF_WEBSITES)}>
+      {PLATFORM_PRIMARY.map((it) => (
+        <ExternalLink key={it.href} item={it} className={classes.familyLink} />
+      ))}
+      <CurrentSite className={clsx(classes.familyLink, classes.current)} />
+      <Menu position="bottom-end" offset={6} classNames={MENU_CLASSES} width={260}>
+        <Menu.Target>
+          <Trigger
+            label={t({ message: 'More', comment: 'Top bar menu button listing more BWF websites' })}
+            className={classes.familyLink}
+          />
+        </Menu.Target>
+        <Menu.Dropdown>
+          {PLATFORM_MORE.map((e) => (
+            <MoreEntry key={labelText(i18n, e.label)} entry={e} />
+          ))}
+        </Menu.Dropdown>
+      </Menu>
+    </nav>
+  );
+};
+
+const FamilySwitcher: FC = () => {
+  const { i18n } = useLingui();
+  return (
+    <Menu position="bottom-start" offset={6} classNames={MENU_CLASSES} width={280}>
       <Menu.Target>
-        <Trigger label="More" className={classes.familyLink} />
+        <Trigger label={CURRENT_SITE} className={clsx(classes.switcher, classes.current)} />
       </Menu.Target>
       <Menu.Dropdown>
+        <Menu.Label>{i18n._(BWF_WEBSITES)}</Menu.Label>
+        <Menu.Item
+          component={Link}
+          to="/"
+          aria-current="page"
+          className={classes.current}
+          rightSection={<IconCheck className={classes.menuIcon} />}
+        >
+          {CURRENT_SITE}
+        </Menu.Item>
+        {PLATFORM_PRIMARY.map((it) => (
+          <MenuLink key={it.href} item={it} />
+        ))}
+        <Menu.Divider />
         {PLATFORM_MORE.map((e) => (
-          <MoreEntry key={e.label} entry={e} />
+          <SwitcherEntry key={labelText(i18n, e.label)} entry={e} />
         ))}
       </Menu.Dropdown>
     </Menu>
-  </nav>
-);
-
-const FamilySwitcher: FC = () => (
-  <Menu position="bottom-start" offset={6} classNames={MENU_CLASSES} width={280}>
-    <Menu.Target>
-      <Trigger label={CURRENT_SITE} className={clsx(classes.switcher, classes.current)} />
-    </Menu.Target>
-    <Menu.Dropdown>
-      <Menu.Label>BWF websites</Menu.Label>
-      <Menu.Item
-        component={Link}
-        to="/"
-        aria-current="page"
-        className={classes.current}
-        rightSection={<IconCheck className={classes.menuIcon} />}
-      >
-        {CURRENT_SITE}
-      </Menu.Item>
-      {PLATFORM_PRIMARY.map((it) => (
-        <MenuLink key={it.href} item={it} />
-      ))}
-      <Menu.Divider />
-      {PLATFORM_MORE.map((e) => (
-        <SwitcherEntry key={e.label} entry={e} />
-      ))}
-    </Menu.Dropdown>
-  </Menu>
-);
+  );
+};
 
 export const PlatformBar = memo(() => (
   <div className={clsx(utils.onBrand, classes.bar)}>

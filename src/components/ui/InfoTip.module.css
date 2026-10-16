@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 2px;
   padding-block: 2px;
-  text-align: left;
+  text-align: start;
 }
 
 .title {
@@ -37,7 +37,7 @@
     }
 
     dd {
-      text-align: right;
+      text-align: end;
       font-variant-numeric: tabular-nums;
       font-weight: 600;
     }

@@ -9,7 +9,8 @@
   gap: 3px;
   min-width: 44px;
   height: 30px;
-  padding: 0 10px 0 12px;
+  padding-block: 0;
+  padding-inline: 12px 10px;
   border-radius: 999px;
   border: 1px solid var(--bwf-border-strong);
   background: transparent;

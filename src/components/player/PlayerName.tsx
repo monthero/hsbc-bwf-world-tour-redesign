@@ -9,6 +9,7 @@ import type { Player } from '~/types';
 import { nameForms, type NameForm } from '~/utils/names';
 
 import classes from './PlayerName.module.css';
+import utils from '~/styles/utils.module.css';
 
 const stop = (e: MouseEvent) => e.stopPropagation();
 
@@ -73,7 +74,7 @@ export const PlayerName: FC<{
       <NameParts {...parts} form={forms[level] ?? player} />
     </>
   );
-  const cls = clsx(classes.playerName, className);
+  const cls = clsx(classes.playerName, utils.bidiAuto, className);
   const label = fitted && level > 0 ? player.name : undefined;
   const named =
     !link || !player.id ? (

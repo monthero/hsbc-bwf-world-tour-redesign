@@ -60,7 +60,7 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  margin-right: -6px;
+  margin-inline-end: -6px;
 }
 
 .row {

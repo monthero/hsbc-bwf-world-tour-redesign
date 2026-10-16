@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
@@ -30,6 +31,15 @@ export const RankValue: FC<{ value: number | null | undefined; className?: strin
   <span className={className}>{value || '—'}</span>
 );
 
+const QUALIFIER = (
+  <Trans
+    context="Race to Finals"
+    comment="One-letter mark for “qualifier”: a player in a qualifying spot for the World Tour Finals"
+  >
+    Q
+  </Trans>
+);
+
 const QualifiedBadge: FC<{ long?: boolean }> = ({ long }) => {
   const city = useFinalsCity();
   return (
@@ -37,12 +47,13 @@ const QualifiedBadge: FC<{ long?: boolean }> = ({ long }) => {
       <span className={classes.q}>
         {long ? (
           <>
-            Qualifies
+            <Trans comment="Badge: the player is in a qualifying spot for the World Tour Finals">Qualifies</Trans>
             <IconCheckCircle size={13} />
           </>
         ) : (
           <>
-            <IconCheck size={12} />Q
+            <IconCheck size={12} />
+            {QUALIFIER}
           </>
         )}
       </span>
@@ -55,11 +66,12 @@ export const QualifyMark: FC<{ qualified?: boolean; blocked?: boolean; long?: bo
   blocked,
   long,
 }) => {
+  const { i18n } = useLingui();
   if (qualified) return <QualifiedBadge long={long} />;
   if (blocked)
     return (
-      <Tip label={NOT_QUALIFY_TIP}>
-        <span className={classes.qOut}>Q</span>
+      <Tip label={i18n._(NOT_QUALIFY_TIP)}>
+        <span className={classes.qOut}>{QUALIFIER}</span>
       </Tip>
     );
   return null;
@@ -77,16 +89,24 @@ export const RankCard = memo<{ rank: RankView }>(({ rank: k }) => (
     </span>
     <div className={classes.split}>
       <div className={classes.cCol}>
-        <span className={classes.cKey}>Current</span>
+        <span className={classes.cKey}>
+          <Trans comment="Player’s world ranking this week, beside their career-high ranking">Current</Trans>
+        </span>
         <span className={classes.cLine}>
           <span className={classes.cNum}>{formatRank(k.rank)}</span>
           <RankChange value={k.change} />
         </span>
-        {!k.rank && <span className={classes.cWith}>Not ranked this week</span>}
+        {!k.rank && (
+          <span className={classes.cWith}>
+            <Trans>Not ranked this week</Trans>
+          </span>
+        )}
         {k.partner && <Partner player={k.partner} className={classes.cWith} />}
       </div>
       <div className={classes.cCol}>
-        <span className={classes.cKey}>Career high</span>
+        <span className={classes.cKey}>
+          <Trans comment="Player’s best ever world ranking">Career high</Trans>
+        </span>
         <span className={clsx(classes.cNum, classes.gold)}>{formatRank(k.highest)}</span>
         {k.highestPartner && <Partner player={k.highestPartner} className={classes.cWith} />}
       </div>

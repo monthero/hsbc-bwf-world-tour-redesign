@@ -1,3 +1,5 @@
+import { t } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Loader } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState, type FC } from 'react';
@@ -54,11 +56,21 @@ const SectionBlock = memo<{
 
 const tabMessage = (enabled: boolean, isError: boolean, hidden: number) => {
   if (hidden) return regionHiddenNote(hidden);
-  if (!enabled) return 'Videos appear on BWF TV once the tournament starts.';
-  return isError ? 'Couldn’t load videos from YouTube right now.' : 'No videos on BWF TV for this tournament yet.';
+  if (!enabled)
+    return t({
+      message: 'Videos appear on BWF TV once the tournament starts.',
+      comment: 'Media tab empty state before play starts. BWF TV is BWF’s YouTube channel',
+    });
+  return isError
+    ? t({ message: 'Couldn’t load videos from YouTube right now.', comment: 'Media tab error message' })
+    : t({
+        message: 'No videos on BWF TV for this tournament yet.',
+        comment: 'Media tab empty state. BWF TV is BWF’s YouTube channel',
+      });
 };
 
 export const MediaTab: FC<TabProps> = ({ tournament }) => {
+  const { t: tr } = useLingui();
   const { items, matchOf, isLoading, isError, enabled, hidden } = useTournamentMedia(tournament);
   const [q, setQ] = useState('');
   const [stage, setStage] = useState(ALL);
@@ -67,10 +79,14 @@ export const MediaTab: FC<TabProps> = ({ tournament }) => {
   const byStage = useMemo(() => Map.groupBy(searched, (i) => mediaRound(i, matchOf)), [searched, matchOf]);
   const options = useMemo(
     (): SegmentedOption<string>[] => [
-      { value: ALL, label: 'All', disabled: !searched.length },
+      {
+        value: ALL,
+        label: tr({ message: 'All', context: 'round', comment: 'Media tab round filter: videos from every round' }),
+        disabled: !searched.length,
+      },
       ...rounds.map((r) => ({ value: r, label: roundName(r), disabled: !byStage.has(r) })),
     ],
-    [rounds, searched, byStage],
+    [tr, rounds, searched, byStage],
   );
   const visible = useMemo(() => (stage === ALL ? searched : (byStage.get(stage) ?? [])), [stage, byStage, searched]);
   const sections = useMemo(() => buildMediaSections(visible, matchOf, tournament), [visible, matchOf, tournament]);
@@ -95,7 +111,13 @@ export const MediaTab: FC<TabProps> = ({ tournament }) => {
           </div>
         </div>
       )}
-      {items.length > 0 && !sections.length && <EmptyState>No videos match these filters.</EmptyState>}
+      {items.length > 0 && !sections.length && (
+        <EmptyState>
+          <Trans comment="Media tab empty state when the round filter or search hides every video">
+            No videos match these filters.
+          </Trans>
+        </EmptyState>
+      )}
       {sections.map((s) => (
         <SectionBlock
           key={s.key}

@@ -1,8 +1,9 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { clsx } from 'clsx';
 import { useMemo, type FC } from 'react';
 
-import { PageHeader, SectionTitle } from '~/components/ui';
+import { PageHeader } from '~/components/ui';
 import { SEASON_YEAR } from '~/constants';
 import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { useTournaments } from '~/hooks/useTournaments';
@@ -12,9 +13,10 @@ import { knownFinalsCity } from '~/utils/tournaments';
 import { HowItWorks } from './components/HowItWorks';
 import { RaceTop8 } from './components/RaceTop8';
 import { SeasonCard } from './components/SeasonCard';
+import { SeasonFrame } from './components/SeasonFrame';
 import { SeasonStats } from './components/SeasonStats';
 import { Spotlight } from './components/Spotlight';
-import { ABOUT_KICKER, ABOUT_META, ABOUT_TITLE, ROAD_TO } from './constants';
+import { ABOUT_KICKER, ABOUT_META, ABOUT_TITLE } from './constants';
 import { crownedFinals, seasonFocus, seasonLede, seasonStats } from './utils';
 
 import classes from './AboutPage.module.css';
@@ -23,31 +25,31 @@ import utils from '~/styles/utils.module.css';
 const STATS_SKELETON = <Skeleton className={classes.stats} radius={16} />;
 
 const SEASON_SKELETON = (
-  <section className={clsx(utils.card, classes.season)} aria-label={`${SEASON_YEAR} season map`}>
-    <SectionTitle>{`${SEASON_YEAR} season`}</SectionTitle>
+  <SeasonFrame year={SEASON_YEAR} className={classes.season}>
     <Skeleton className={classes.map} radius={12} />
     <Skeleton className={classes.strip} radius={8} />
-  </section>
+  </SeasonFrame>
 );
 
 export const AboutPage: FC = () => {
   useDocumentMeta(ABOUT_PAGE_META);
+  const { i18n } = useLingui();
   const { data } = useTournaments(SEASON_YEAR);
   const focus = useMemo(() => (data ? seasonFocus(data) : undefined), [data]);
   const stats = useMemo(() => (data && focus ? seasonStats(data, focus) : undefined), [data, focus]);
-  const lede = useMemo(() => (data ? seasonLede(data) : ABOUT_META), [data]);
+  const lede = useMemo(() => i18n._(data ? seasonLede(data) : ABOUT_META), [i18n, data]);
   const city = focus && !crownedFinals(focus) ? knownFinalsCity(focus.finals) : null;
   const title = city ? (
-    <>
-      {ROAD_TO} <span className={classes.city}>{city}</span>
-    </>
+    <Trans comment="About page heading during the season: the journey towards {city}, host city of the season-ending World Tour Finals">
+      The road to <span className={classes.city}>{city}</span>
+    </Trans>
   ) : (
     ABOUT_TITLE
   );
   return (
     <div className={classes.page}>
       <PageHeader
-        kicker={ABOUT_KICKER}
+        kicker={i18n._(ABOUT_KICKER)}
         title={title}
         meta={lede}
         aside={stats ? <SeasonStats stats={stats} /> : STATS_SKELETON}

@@ -1,6 +1,7 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useDisclosure } from '@mantine/hooks';
 import { clsx } from 'clsx';
-import { memo } from 'react';
+import { memo, type FC } from 'react';
 
 import { BottomSheet, FloatingPill, IconFilters } from '~/components/ui';
 import type { TournamentDay } from '~/types';
@@ -11,6 +12,14 @@ import type { MatchesView } from './utils';
 
 import classes from './FilterBars.module.css';
 import utils from '~/styles/utils.module.css';
+
+const PillDay: FC<{ day: TournamentDay }> = ({ day: { shortLabel: day, month } }) => (
+  <span>
+    <Trans comment="Selected day on the phone filters button, e.g. “Wed 15 Oct”. {day} is the weekday and day number, {month} the short month">
+      {day} {month}
+    </Trans>
+  </span>
+);
 
 interface BarProps {
   filters: MatchFilters;
@@ -70,31 +79,39 @@ export const CondensedFilters = memo<BarProps & { days: TournamentDay[]; visible
 
 export const MobileFilters = memo<BarProps & { days: TournamentDay[]; visible: boolean }>(
   ({ filters: f, view, days, visible }) => {
+    const { t } = useLingui();
     const [open, { open: show, close }] = useDisclosure(false);
     const d = days[f.day];
+    const filters = t({ message: 'Filters', comment: 'Button and sheet title for the match filters on phones' });
     return (
       <>
-        <FloatingPill visible={visible && !open} onClick={show} label="Filters" mobileOnly>
+        <FloatingPill visible={visible && !open} onClick={show} label={filters} mobileOnly>
           <IconFilters size={16} />
-          {d && <span>{`${d.shortLabel} ${d.month}`}</span>}
+          {d && <PillDay day={d} />}
           {f.count > 0 && <span className={classes.pillCount}>{f.count}</span>}
         </FloatingPill>
         <BottomSheet opened={open} onClose={close} handle bodyClassName={classes.sheetBody}>
           <div className={classes.sheetHead}>
-            <span className={classes.sheetTitle}>Filters</span>
+            <span className={classes.sheetTitle}>{filters}</span>
             {f.hasFilters && <ClearButton variant="sheet" onClick={f.clear} />}
           </div>
           <div className={classes.field}>
-            <span className={classes.label}>Day</span>
+            <span className={classes.label}>
+              <Trans comment="Match filters: label above the tournament day picker">Day</Trans>
+            </span>
             <DaySegment variant="sheet" days={days} day={f.day} onChange={f.setDay} />
           </div>
           <div className={classes.field}>
-            <span className={classes.label}>Category</span>
+            <span className={classes.label}>
+              <Trans comment="Match filters: label above the event chips (MS, WS, MD, WD, XD)">Category</Trans>
+            </span>
             <EventChips variant="sheet" chips={view.evChips} onToggle={f.toggleEvent} />
           </div>
           {view.courtChips.length > 0 && (
             <div className={classes.field}>
-              <span className={classes.label}>Court</span>
+              <span className={classes.label}>
+                <Trans comment="Match filters: label above the court number chips">Court</Trans>
+              </span>
               <CourtChips variant="sheet" chips={view.courtChips} onToggle={f.toggleCourt} />
             </div>
           )}
@@ -103,7 +120,7 @@ export const MobileFilters = memo<BarProps & { days: TournamentDay[]; visible: b
             <FollowToggle variant="sheet" active={f.following} onToggle={f.toggleFollowing} />
           </div>
           <button type="button" className={classes.done} onClick={close}>
-            Done
+            <Trans comment="Button that closes the match filters sheet">Done</Trans>
           </button>
         </BottomSheet>
       </>

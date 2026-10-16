@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { clamp } from '@mantine/hooks';
 import { useQuery } from '@tanstack/react-query';
 import { clsx } from 'clsx';
@@ -8,8 +10,8 @@ import { liveGameStatsQuery, liveMatchStatsQuery, liveServersQuery } from '~/api
 import { LiveDot, SectionTitle } from '~/components/ui';
 import { useMatchStream } from '~/hooks/useTournamentMedia';
 import type { Match, Tournament } from '~/types';
-import { plural } from '~/utils/format';
 
+import { LIVE_NOW } from '../../constants';
 import { LiveCard } from './LiveCard';
 
 import classes from './LiveSection.module.css';
@@ -17,6 +19,11 @@ import utils from '~/styles/utils.module.css';
 
 const LIVE_ICON = <LiveDot pulse size={8} />;
 const CHALLENGE_SHOW_MS = 60_000;
+
+const ON_COURT = msg({
+  message: '{n, plural, one {# match on court} other {# matches on court}}',
+  comment: 'Count next to the Live now title: matches being played right now',
+});
 
 const useLiveStats = (tmtId: number | null, m: Match) => {
   const enabled = !!tmtId && !!m.code;
@@ -58,13 +65,14 @@ export const LiveSection = memo<{
   tournament: Tournament;
   onOpen: (id: string) => void;
 }>(({ matches, tournament, onOpen }) => {
+  const { i18n } = useLingui();
   const n = matches.length;
   const tmtId = tournament.tmtId;
   const { data: servers } = useQuery({ ...liveServersQuery(tmtId ?? 0), enabled: !!tmtId });
   return (
     <section className={classes.root}>
-      <SectionTitle icon={LIVE_ICON} count={`${plural(n, 'match', 'matches')} on court`}>
-        Live now
+      <SectionTitle icon={LIVE_ICON} count={i18n._({ ...ON_COURT, values: { n } })}>
+        {i18n._(LIVE_NOW)}
       </SectionTitle>
       <div
         className={clsx(utils.snapRow, utils.noScrollbar, classes.grid)}

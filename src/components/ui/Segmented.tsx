@@ -12,6 +12,7 @@ export interface SegmentedOption<T extends string> {
   value: T;
   label: string;
   tip?: string;
+  icon?: ReactNode;
   badge?: ReactNode;
   muted?: boolean;
   disabled?: boolean;
@@ -66,6 +67,7 @@ export const Segmented = <T extends string>({
               aria-pressed={on}
               onClick={() => onChange(on && deselectable ? null : o.value)}
             >
+              {o.icon}
               {o.label}
               {o.badge}
             </button>

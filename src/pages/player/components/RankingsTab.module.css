@@ -93,7 +93,7 @@
 }
 
 .hash {
-  margin-right: 2px;
+  margin-inline-end: 2px;
   font-size: 0.6em;
   vertical-align: 0.42em;
   color: var(--bwf-red);
@@ -121,16 +121,16 @@
   flex-direction: column;
   gap: 3px;
   padding-inline: 16px;
-  border-left: 1px solid var(--bwf-line);
+  border-inline-start: 1px solid var(--bwf-line);
 
   &:first-child {
-    padding-left: 0;
-    border-left: 0;
+    padding-inline-start: 0;
+    border-inline-start: 0;
   }
 
   @container athlete (width < 640px) {
     padding-inline: 0;
-    border-left: 0;
+    border-inline-start: 0;
   }
 
   dd {
@@ -187,7 +187,7 @@
 
     .period {
       grid-row: 2;
-      padding-left: 26px;
+      padding-inline-start: 26px;
     }
   }
 }
@@ -254,7 +254,7 @@
   border: 0;
   background: none;
   font: inherit;
-  text-align: left;
+  text-align: start;
   color: inherit;
   cursor: pointer;
 

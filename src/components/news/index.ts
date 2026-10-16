@@ -7,3 +7,4 @@ export { PopularNews } from './PopularNews';
 export { SkeletonLines, StorySkeleton } from './StorySkeleton';
 export { SubscribeCard } from './SubscribeCard';
 export { TournamentChip } from './TournamentChip';
+export { EnglishOnlyNotice } from './EnglishOnlyNotice';

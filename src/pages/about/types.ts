@@ -1,3 +1,4 @@
+import type { MessageDescriptor } from '@lingui/core';
 import { z } from 'zod';
 
 import { LevelsParam, listParam, type MapPoint } from '~/api/schemas';
@@ -25,7 +26,7 @@ export interface SeasonStat {
   key: string;
   value: string;
   unit?: string;
-  label: string;
+  label: MessageDescriptor;
   gold?: boolean;
 }
 
@@ -40,10 +41,10 @@ export type OnActive = (code: string | null) => void;
 export interface TierSummary {
   level: Level;
   events: Tournament[];
-  prize: string;
+  prize: string | null;
   share: number;
   points: number;
-  draw: string;
+  draw: MessageDescriptor;
 }
 
 export interface NationTitles {

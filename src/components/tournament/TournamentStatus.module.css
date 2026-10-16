@@ -53,7 +53,7 @@
 }
 
 .status[data-status='done'] .mark {
-  color: var(--bwf-green);
+  color: var(--bwf-green-mark);
 }
 
 .status[data-variant='pill'] {

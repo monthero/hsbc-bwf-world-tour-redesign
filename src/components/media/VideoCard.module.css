@@ -47,11 +47,11 @@
 }
 
 .duration {
-  right: 8px;
+  inset-inline-end: 8px;
 }
 
 .live {
-  left: 8px;
+  inset-inline-start: 8px;
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -136,11 +136,11 @@
   }
 
   & .duration {
-    right: 5px;
+    inset-inline-end: 5px;
   }
 
   & .live {
-    left: 5px;
+    inset-inline-start: 5px;
   }
 
   & .body {
@@ -153,7 +153,7 @@
   }
 
   &:hover .title {
-    color: var(--mantine-color-white);
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
   }
 
   & .label {

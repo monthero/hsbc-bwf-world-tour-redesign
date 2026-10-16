@@ -1,4 +1,7 @@
+import { msg } from '@lingui/core/macro';
+
 import type { NewsBrief, NewsImage, NewsItem } from '~/api/schemas';
+import { translate } from '~/i18n/lazy';
 import type { Tournament } from '~/types';
 
 import { date, formatDayMonth, hoursSince } from './dates';
@@ -47,9 +50,16 @@ const splitPrefix = (title: string) => {
   return i > 0 ? { prefix: title.slice(0, i), rest: title.slice(i + 2) } : null;
 };
 
+const JUST_NOW = msg({ message: 'Just now', comment: 'When a news story was published: less than an hour ago' });
+
+const HOURS_AGO = msg({
+  message: '{hours, plural, one {#h ago} other {#h ago}}',
+  comment: 'When a news story was published: this many hours ago, in a short form, e.g. "3h ago"',
+});
+
 const timeLabel = (iso: string, hours: number) => {
-  if (hours < 1) return 'Just now';
-  if (hours < FRESH_HOURS) return `${Math.floor(hours)}h ago`;
+  if (hours < 1) return translate(JUST_NOW);
+  if (hours < FRESH_HOURS) return translate(HOURS_AGO, { hours: Math.floor(hours) });
   return formatDayMonth(iso);
 };
 

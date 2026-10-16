@@ -17,11 +17,11 @@
     border-radius: 999px;
 
     &[data-dir='up'] {
-      background: alpha(var(--bwf-green), 0.14);
+      background: var(--bwf-win-tint);
     }
 
     &[data-dir='down'] {
-      background: alpha(var(--bwf-red-text), 0.14);
+      background: light-dark(var(--bwf-loss-bg), alpha(var(--bwf-red-text), 0.14));
     }
   }
 }
@@ -103,7 +103,7 @@
 }
 
 .gold {
-  color: var(--bwf-gold);
+  color: var(--bwf-gold-accent);
 }
 
 .cWith {

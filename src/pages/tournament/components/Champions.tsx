@@ -1,9 +1,11 @@
+import { Trans } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
 import { EventTag, TeamPlayers } from '~/components/match';
 import { PlayerAvatar } from '~/components/player';
 import { IconTrophy, SectionTitle } from '~/components/ui';
+import { DARK_SCOPE_PROPS } from '~/theme';
 import type { Player, TournamentSchedule } from '~/types';
 
 import { buildChampions, type ChampionItem } from '../utils';
@@ -31,7 +33,7 @@ export const ChampionPhotos = memo<{ players: readonly Player[]; photos?: readon
 const ChampionCard = memo<{ item: ChampionItem; past?: boolean }>(({ item, past }) => {
   const { event, players, photos, score } = item;
   return (
-    <div className={classes.card} data-past={past || undefined}>
+    <div className={classes.card} data-past={past || undefined} {...DARK_SCOPE_PROPS}>
       <ChampionPhotos players={players} photos={photos} />
       <span className={classes.event}>
         <EventTag event={event} />
@@ -64,7 +66,9 @@ export const Champions = memo<{ schedule: TournamentSchedule }>(({ schedule }) =
   if (!items.length) return null;
   return (
     <section className={clsx(utils.container, classes.section)}>
-      <SectionTitle icon={<IconTrophy size={16} className={classes.trophy} />}>Champions</SectionTitle>
+      <SectionTitle icon={<IconTrophy size={16} className={classes.trophy} />}>
+        <Trans comment="Section title above the winners of this tournament’s five events">Champions</Trans>
+      </SectionTitle>
       <ChampionStrip items={items} />
     </section>
   );

@@ -7,7 +7,7 @@
   background: var(--bwf-surface-2);
   border: 1px solid var(--bwf-border-strong);
   border-bottom: 0;
-  box-shadow: 0 30px 80px alpha(var(--mantine-color-black), 0.6);
+  box-shadow: 0 30px 80px alpha(var(--bwf-shadow-ink), 0.6);
   color: var(--bwf-text);
 }
 

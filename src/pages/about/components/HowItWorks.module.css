@@ -46,7 +46,7 @@
 .figure {
   font-size: 32px;
   line-height: 0.9;
-  color: var(--bwf-gold);
+  color: var(--bwf-gold-accent);
 }
 
 .extra {

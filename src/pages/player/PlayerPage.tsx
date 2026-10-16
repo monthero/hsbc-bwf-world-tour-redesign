@@ -1,4 +1,6 @@
+import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react';
+import { Trans } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { getRouteApi, useCanGoBack, useNavigate, useRouter } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -32,9 +34,12 @@ import utils from '~/styles/utils.module.css';
 
 const route = getRouteApi('/players/$id');
 
-const MISSING_TITLE = 'We couldn’t find that player';
-const MISSING_DESCRIPTION = 'They may not have played on the World Tour yet, or the link is out of date.';
-const MISSING_ACTION: NotFoundAction = { label: 'Back to rankings', link: { to: '/rankings' } };
+const MISSING_TITLE = (
+  <Trans comment="Heading on the page shown when a player profile doesn’t exist">We couldn’t find that player</Trans>
+);
+const MISSING_DESCRIPTION = <Trans>They may not have played on the World Tour yet, or the link is out of date.</Trans>;
+const BACK_TO_RANKINGS = msg({ message: 'Back to rankings', comment: 'Button on the player-not-found page' });
+const BACK = msg({ message: 'Back', comment: 'Accessible label of the icon-only back button' });
 
 export const PlayerPage: FC = () => {
   const { id } = route.useParams();
@@ -48,11 +53,12 @@ export const Back = memo<{ from: string | undefined }>(({ from }) => {
   const byCode = useTournamentsByCode();
   const tournament = from ? byCode?.get(from) : undefined;
   const goBack = useCallback(() => router.history.back(), [router]);
+  const { _ } = useLingui();
   if (canGoBack)
     return tournament ? (
       <BackPill onClick={goBack}>{tournament.shortTitle}</BackPill>
     ) : (
-      <BackPill onClick={goBack} label="Back" iconOnly />
+      <BackPill onClick={goBack} label={_(BACK)} iconOnly />
     );
   if (tournament)
     return (
@@ -60,7 +66,11 @@ export const Back = memo<{ from: string | undefined }>(({ from }) => {
         {tournament.shortTitle}
       </BackPill>
     );
-  return <BackPill link={{ to: '/calendar' }}>Calendar</BackPill>;
+  return (
+    <BackPill link={{ to: '/calendar' }}>
+      <Trans comment="Back button to the tournament calendar">Calendar</Trans>
+    </BackPill>
+  );
 });
 
 export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, search }) => {
@@ -79,6 +89,7 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
     [_, player, ranks, matchEvents, hero, photo],
   );
   const missing = !player && profile.status === 'missing';
+  const missingAction = useMemo((): NotFoundAction => ({ label: _(BACK_TO_RANKINGS), link: { to: '/rankings' } }), [_]);
   useDocumentMeta(missing ? NOT_FOUND_META : meta);
   const rankEvents = useMemo(() => rankedEventsOf(history.view), [history.view]);
   const events = tab === 'rankings' ? rankEvents : matchEvents;
@@ -111,7 +122,7 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
   const openResults = useCallback(() => setTab('results'), [setTab]);
   const openMedia = useCallback(() => setTab('media'), [setTab]);
 
-  if (missing) return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={MISSING_ACTION} />;
+  if (missing) return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={missingAction} />;
 
   return (
     <section className={clsx(utils.container, classes.page)}>

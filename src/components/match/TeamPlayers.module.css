@@ -13,7 +13,7 @@
 
   &[data-align='end'] {
     align-items: flex-end;
-    text-align: right;
+    text-align: end;
   }
 
   &[data-pair-seed] {
@@ -134,7 +134,7 @@
   text-wrap: pretty;
 
   & > :not(:first-child) {
-    margin-left: 6px;
+    margin-inline-start: 6px;
   }
 }
 

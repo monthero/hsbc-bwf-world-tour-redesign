@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { memo } from 'react';
 
 import type { NewsBlock } from '~/api/schemas';
@@ -58,26 +59,46 @@ const Figure = memo<{ block: Of<'image'> }>(({ block }) => (
   </figure>
 ));
 
-const Video = memo<{ block: Of<'video'> }>(({ block }) => (
-  <a
-    href={watchUrl(block.id)}
-    target="_blank"
-    rel="noreferrer"
-    className={classes.video}
-    aria-label={`Watch on YouTube: ${block.title ?? 'highlights'}`}
-  >
-    <span className={classes.videoThumb}>
-      <img src={thumbUrl(block.id)} alt="" loading="lazy" />
-      <span className={classes.play}>
-        <IconYouTube />
+const Video = memo<{ block: Of<'video'> }>(({ block }) => {
+  const { t } = useLingui();
+  const { title } = block;
+  return (
+    <a
+      href={watchUrl(block.id)}
+      target="_blank"
+      rel="noreferrer"
+      className={classes.video}
+      aria-label={
+        title
+          ? t({
+              message: `Watch on YouTube: ${title}`,
+              comment: 'Screen-reader label for a video embedded in a news article; {title} is the video title',
+            })
+          : t({
+              message: 'Watch on YouTube: highlights',
+              comment: 'Screen-reader label for an untitled match highlights video embedded in a news article',
+            })
+      }
+    >
+      <span className={classes.videoThumb}>
+        <img src={thumbUrl(block.id)} alt="" loading="lazy" />
+        <span className={classes.play}>
+          <IconYouTube />
+        </span>
       </span>
-    </span>
-    <span className={classes.videoText}>
-      <span className={classes.videoTitle}>{block.title ?? 'Watch the highlights'}</span>
-      <IconExternal className={classes.videoCta} />
-    </span>
-  </a>
-));
+      <span className={classes.videoText}>
+        <span className={classes.videoTitle}>
+          {title ??
+            t({
+              message: 'Watch the highlights',
+              comment: 'Caption on an untitled match highlights video embedded in a news article',
+            })}
+        </span>
+        <IconExternal className={classes.videoCta} />
+      </span>
+    </a>
+  );
+});
 
 export const Block = memo<{ block: NewsBlock }>(({ block }) => {
   switch (block.type) {

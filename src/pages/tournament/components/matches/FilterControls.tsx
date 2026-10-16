@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useCallback, useLayoutEffect, useMemo, useRef, type FC } from 'react';
 
@@ -57,16 +58,16 @@ export const CourtChips = memo<ChipsProps & { chips: CourtChipModel[]; onToggle:
   ({ chips, onToggle, variant, className }) => {
     return (
       <div className={clsx(utils.noScrollbar, classes.chips, className)} data-variant={variant}>
-        {chips.map((c) => (
+        {chips.map(({ court, count, active, live }) => (
           <FilterChip
-            key={c.court}
+            key={court}
             size={SIZE[variant]}
-            active={c.active}
-            disabled={!c.count && !c.active}
-            onClick={() => onToggle(c.court)}
+            active={active}
+            disabled={!count && !active}
+            onClick={() => onToggle(court)}
           >
-            Court {c.court}
-            {c.live && <LiveDot pulse size={6} />}
+            <Trans comment="Match filter chip for one court of the venue, e.g. “Court 2”">Court {court}</Trans>
+            {live && <LiveDot pulse size={6} />}
           </FilterChip>
         ))}
       </div>
@@ -79,12 +80,16 @@ export const FollowToggle = memo<{
   onToggle: () => void;
   variant: FilterVariant;
 }>(({ active, onToggle, variant }) => {
+  const { t } = useLingui();
   return (
     <StarButton
       variant="outline"
       box={SIZE[variant]}
       active={active}
-      label="Show only players and countries you follow"
+      label={t({
+        message: 'Show only players and countries you follow',
+        comment: 'Star toggle in the match filters',
+      })}
       size={STAR_SIZE[variant]}
       onClick={onToggle}
     />
@@ -133,7 +138,7 @@ export const DaySegment = memo<{
 export const ClearButton: FC<{ onClick: () => void; variant: FilterVariant }> = ({ onClick, variant }) => {
   return (
     <button type="button" className={classes.clear} data-variant={variant} onClick={onClick}>
-      Clear
+      <Trans comment="Button that clears the event and court match filters">Clear</Trans>
     </button>
   );
 };
@@ -143,13 +148,18 @@ export const FilterSearch: FC<{
   onChange: (v: string) => void;
   variant: FilterVariant;
 }> = ({ value, onChange, variant }) => {
+  const { t } = useLingui();
   return (
     <SearchField
       size={SIZE[variant]}
       className={SEARCH_CLASS[variant]}
       value={value}
       onChange={onChange}
-      placeholder={variant === 'compact' ? 'Search' : undefined}
+      placeholder={
+        variant === 'compact'
+          ? t({ message: 'Search', comment: 'Short placeholder of the search field in the condensed filter bar' })
+          : undefined
+      }
     />
   );
 };

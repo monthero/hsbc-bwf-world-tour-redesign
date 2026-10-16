@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { createElement, type ComponentType, type FC, type SVGProps } from 'react';
 import Racket from '~icons/bwf/racket-linear';
 import Strings from '~icons/bwf/strings-linear';
@@ -14,8 +15,10 @@ import CaretRight from '~icons/ph/caret-right';
 import CaretUp from '~icons/ph/caret-up';
 import Check from '~icons/ph/check';
 import CheckCircle from '~icons/ph/check-circle';
+import CircleHalf from '~icons/ph/circle-half';
 import Clock from '~icons/ph/clock';
 import Coins from '~icons/ph/coins';
+import CrosshairSimple from '~icons/ph/crosshair-simple';
 import Detective from '~icons/ph/detective';
 import EnvelopeSimple from '~icons/ph/envelope-simple';
 import FireFill from '~icons/ph/fire-fill';
@@ -28,7 +31,11 @@ import List from '~icons/ph/list';
 import MagnifyingGlass from '~icons/ph/magnifying-glass';
 import MapPin from '~icons/ph/map-pin';
 import MedalFill from '~icons/ph/medal-fill';
+import Minus from '~icons/ph/minus';
 import MonitorPlay from '~icons/ph/monitor-play';
+import Moon from '~icons/ph/moon';
+import Palette from '~icons/ph/palette';
+import Plus from '~icons/ph/plus';
 import Ruler from '~icons/ph/ruler';
 import Scribble from '~icons/ph/scribble';
 import ShareNetwork from '~icons/ph/share-network';
@@ -36,6 +43,7 @@ import SlidersHorizontal from '~icons/ph/sliders-horizontal';
 import SneakerMove from '~icons/ph/sneaker-move';
 import Star from '~icons/ph/star';
 import StarFill from '~icons/ph/star-fill';
+import Sun from '~icons/ph/sun';
 import TargetBold from '~icons/ph/target-bold';
 import Timer from '~icons/ph/timer';
 import Translate from '~icons/ph/translate';
@@ -45,15 +53,25 @@ import User from '~icons/ph/user';
 import X from '~icons/ph/x';
 import YoutubeLogoFill from '~icons/ph/youtube-logo-fill';
 
+import utils from '~/styles/utils.module.css';
+
 export type IconProps = SVGProps<SVGSVGElement> & { size?: number | string };
 
 export const icon =
-  (svg: ComponentType<SVGProps<SVGSVGElement>>): FC<IconProps> =>
-  ({ size = '1em', ...props }) =>
-    createElement(svg, { width: size, height: size, 'aria-hidden': props['aria-label'] ? undefined : true, ...props });
+  (svg: ComponentType<SVGProps<SVGSVGElement>>, mirror = false): FC<IconProps> =>
+  ({ size = '1em', className, ...props }) =>
+    createElement(svg, {
+      width: size,
+      height: size,
+      'aria-hidden': props['aria-label'] ? undefined : true,
+      className: mirror ? clsx(utils.mirror, className) : className,
+      ...props,
+    });
 
-export const IconBack = icon(CaretLeft);
-export const IconNext = icon(CaretRight);
+export const directional = (svg: ComponentType<SVGProps<SVGSVGElement>>) => icon(svg, true);
+
+export const IconBack = directional(CaretLeft);
+export const IconNext = directional(CaretRight);
 export const IconExpand = icon(CaretDown);
 export const IconCollapse = icon(CaretUp);
 export const IconSearch = icon(MagnifyingGlass);
@@ -72,7 +90,7 @@ export const IconProfile = icon(User);
 export const IconFilters = icon(SlidersHorizontal);
 export const IconMedal = icon(MedalFill);
 export const IconFire = icon(FireFill);
-export const IconExternal = icon(ArrowUpRight);
+export const IconExternal = directional(ArrowUpRight);
 export const IconMenu = icon(List);
 export const IconNewsletter = icon(EnvelopeSimple);
 export const IconShare = icon(ShareNetwork);
@@ -80,7 +98,7 @@ export const IconLink = icon(LinkSimple);
 export const IconStream = icon(MonitorPlay);
 export const IconSettings = icon(GearSix);
 export const IconWatchFilled = icon(YoutubeLogoFill);
-export const IconArrowRight = icon(ArrowRight);
+export const IconArrowRight = directional(ArrowRight);
 export const IconReset = icon(ArrowCounterClockwise);
 export const IconClock = icon(Clock);
 export const IconCake = icon(Cake);
@@ -97,6 +115,13 @@ export const IconShoe = icon(SneakerMove);
 export const IconStrings = icon(Strings);
 export const IconTension = icon(Barbell);
 export const IconGitHub = icon(GithubLogo);
+export const IconZoomIn = icon(Plus);
+export const IconZoomOut = icon(Minus);
+export const IconRecenter = icon(CrosshairSimple);
+export const IconAppearance = icon(Palette);
+export const IconLight = icon(Sun);
+export const IconDark = icon(Moon);
+export const IconSystemScheme = icon(CircleHalf);
 
 const brand =
   (d: string): FC<SVGProps<SVGSVGElement>> =>

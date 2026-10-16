@@ -1,3 +1,5 @@
+import { t } from '@lingui/core/macro';
+
 import { EventCode } from '~/api/schemas';
 import type { useFavoritesMatcher } from '~/stores/favorites';
 import type { Match } from '~/types';
@@ -40,13 +42,21 @@ export interface MatchesView {
 
 export type PlayersMatcher = ReturnType<typeof useFavoritesMatcher>;
 
-export const matchTitle = (m: Match) => m.teams.map((t) => teamLabel(t)).join(' vs ');
+export const matchTitle = (m: Match) => {
+  const home = teamLabel(m.teams[0]);
+  const away = teamLabel(m.teams[1]);
+  return t({ message: `${home} vs ${away}`, comment: 'The two sides of a match, e.g. "Axelsen vs Shi"' });
+};
+
+export const detailsLabel = (title: string) =>
+  t({
+    message: `Match details: ${title}`,
+    comment: 'Accessible name of a card that opens the match details. {title} names the players, e.g. "Axelsen vs Shi"',
+  });
 
 export const parseEvents = (s: string) => (s ? (s.split(',') as EventCode[]) : []);
 
 export const parseCourts = (s: string) => (s ? s.split(',').map(Number) : []);
-
-const NO_TIME = 'Time to be announced';
 
 const isUpcoming = (m: Match) => m.status === 'N';
 
@@ -69,6 +79,28 @@ const slotsOf = (list: Match[], clock: MatchClock) => {
 
 const roundsOf = (items: readonly Match[]) => roundsLabel(items.map((m) => m.round));
 
+const slotLabel = (time: string, rounds: string, mixed: boolean) => {
+  if (!time)
+    return mixed
+      ? t({
+          message: `Time to be announced · ${rounds}`,
+          comment: 'Match list group heading for matches without a start time yet. {rounds} lists the rounds',
+        })
+      : t({
+          message: 'Time to be announced',
+          comment: 'Match list group heading for matches without a start time yet',
+        });
+  return mixed
+    ? t({
+        message: `From ${time} · ${rounds}`,
+        comment: 'Match list group heading: matches starting from this hour, e.g. "From 10:00 · Quarter-final"',
+      })
+    : t({
+        message: `From ${time}`,
+        comment: 'Match list group heading: matches starting from this hour, e.g. "From 10:00"',
+      });
+};
+
 const toSection = (list: Match[], clock: MatchClock): MatchSection => {
   const rounds = roundsOf(list);
   const slots = slotsOf(list, clock).map((s) => ({ ...s, rounds: roundsOf(s.items) }));
@@ -76,10 +108,7 @@ const toSection = (list: Match[], clock: MatchClock): MatchSection => {
   return {
     count: list.length,
     rounds: mixed ? '' : rounds,
-    groups: slots.map(({ key, items, rounds: r }) => {
-      const from = key ? `From ${key}` : NO_TIME;
-      return { key, items, label: mixed ? `${from} · ${r}` : from };
-    }),
+    groups: slots.map(({ key, items, rounds: r }) => ({ key, items, label: slotLabel(key, r, mixed) })),
   };
 };
 

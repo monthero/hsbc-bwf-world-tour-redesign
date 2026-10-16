@@ -30,23 +30,56 @@
   font: inherit;
   cursor: pointer;
 
+  @mixin light {
+    --tone: var(--mantine-color-gray-4);
+    --pale: var(--mantine-color-gray-2);
+    --edge: var(--mantine-color-gray-5);
+  }
+
   &[data-tier='gold'] {
-    --tone: var(--bwf-gold);
+    --tone: var(--bwf-medal-gold);
     --tag: var(--bwf-gold);
+
+    @mixin light {
+      --tone: var(--bwf-medal-gold);
+      --tag: var(--bwf-gold-text);
+      --pale: var(--bwf-gold-tint);
+      --edge: var(--bwf-gold-edge);
+    }
   }
 
   &[data-tier='silver'] {
     --tone: var(--bwf-silver);
     --tag: var(--bwf-silver);
+
+    @mixin light {
+      --tone: var(--bwf-silver);
+      --tag: var(--bwf-silver-text);
+      --pale: alpha(var(--bwf-silver), 0.22);
+      --edge: alpha(var(--bwf-silver), 0.6);
+    }
   }
 
   &[data-tier='bronze'] {
     --tone: var(--bwf-bronze);
     --tag: var(--bwf-bronze);
+
+    @mixin light {
+      --tone: var(--bwf-bronze);
+      --tag: var(--bwf-bronze-text);
+      --pale: alpha(var(--bwf-bronze), 0.2);
+      --edge: alpha(var(--bwf-bronze), 0.6);
+    }
   }
 
   &[data-dim] {
     opacity: 0.45;
+
+    @mixin light {
+      --tone: var(--pale);
+      --tag: var(--bwf-faint);
+      opacity: 1;
+    }
   }
 }
 
@@ -57,6 +90,7 @@
 }
 
 .fill {
+  --ring: 0 0 0 2px var(--bwf-surface), 0 0 0 3px var(--bwf-text-3);
   width: 100%;
   max-width: 40px;
   height: var(--v);
@@ -65,8 +99,20 @@
   transition: box-shadow 0.15s;
 
   .col[aria-pressed='true'] & {
+    box-shadow: var(--ring);
+  }
+}
+
+.col[data-dim] .fill {
+  @mixin light {
+    box-shadow: inset 0 0 0 1px var(--edge);
+  }
+}
+
+.col[data-dim][aria-pressed='true'] .fill {
+  @mixin light {
     box-shadow:
-      0 0 0 2px var(--bwf-surface),
-      0 0 0 3px var(--bwf-text-3);
+      inset 0 0 0 1px var(--edge),
+      var(--ring);
   }
 }

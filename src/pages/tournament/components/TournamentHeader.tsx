@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, type FC, type ReactNode } from 'react';
 
@@ -7,6 +8,7 @@ import { LEVEL_META, LEVEL_VARS } from '~/constants';
 import type { Tournament, TournamentSchedule } from '~/types';
 import { tournamentParams } from '~/utils/tournaments';
 
+import { PRIZE_MONEY } from '../constants';
 import { useCalendarBack } from '../hooks';
 import { DayTimeline } from './DayTimeline';
 import { IconLabel } from './IconLabel';
@@ -17,14 +19,30 @@ import utils from '~/styles/utils.module.css';
 const RoundButton: FC<{
   from: Tournament;
   target: Tournament | undefined;
-  dir: 'Previous' | 'Next';
+  dir: 'prev' | 'next';
   edge: string;
   children: ReactNode;
 }> = ({ from, target, dir, edge, children }) => {
+  const { t } = useLingui();
   const other = !!target && target.year !== from.year;
-  const label = target ? `${dir}: ${other ? target.heading : target.title}` : edge;
+  const name = other ? target.heading : (target?.title ?? '');
+  const prev = dir === 'prev';
+  let label = edge;
+  let kicker: string;
+  if (prev) {
+    if (target)
+      label = t({ message: `Previous: ${name}`, comment: 'Button to the previous tournament. {name} is its name' });
+    kicker = other
+      ? t({ message: 'Previous season', comment: 'Hover card kicker: the linked tournament is in the previous season' })
+      : t({ message: 'Previous event', comment: 'Hover card kicker: the linked tournament is the one before this' });
+  } else {
+    if (target) label = t({ message: `Next: ${name}`, comment: 'Button to the next tournament. {name} is its name' });
+    kicker = other
+      ? t({ message: 'Next season', comment: 'Hover card kicker: the linked tournament is in the next season' })
+      : t({ message: 'Next event', comment: 'Hover card kicker: the linked tournament is the one after this' });
+  }
   return (
-    <TournamentHoverCard tournament={target} kicker={other ? `${dir} season` : `${dir} event`}>
+    <TournamentHoverCard tournament={target} kicker={kicker}>
       <IconButton
         label={label}
         tip={target ? undefined : label}
@@ -42,45 +60,68 @@ export const TournamentHeader = memo<{
   prev: Tournament | undefined;
   next: Tournament | undefined;
   schedule: TournamentSchedule | undefined;
-}>(({ tournament: t, prev, next, schedule }) => {
-  const back = useCalendarBack(t.year);
+}>(({ tournament: tn, prev, next, schedule }) => {
+  const { t } = useLingui();
+  const back = useCalendarBack(tn.year);
   return (
-    <header className={clsx(utils.container, classes.header)} style={LEVEL_VARS[t.level]}>
+    <header className={clsx(utils.container, classes.header)} style={LEVEL_VARS[tn.level]}>
       <div className={classes.top}>
         <BackPill link={back.link}>{back.label}</BackPill>
-        <nav className={classes.rounds} aria-label="Other tournaments">
-          <RoundButton from={t} target={prev} dir="Previous" edge="First event on record">
+        <nav
+          className={classes.rounds}
+          aria-label={t({
+            message: 'Other tournaments',
+            comment: 'Accessible name of the previous and next tournament buttons',
+          })}
+        >
+          <RoundButton
+            from={tn}
+            target={prev}
+            dir="prev"
+            edge={t({
+              message: 'First event on record',
+              comment: 'Tooltip on the disabled previous-tournament button: there is no earlier tournament',
+            })}
+          >
             <IconBack size={16} />
           </RoundButton>
-          <RoundButton from={t} target={next} dir="Next" edge="Last event of the season">
+          <RoundButton
+            from={tn}
+            target={next}
+            dir="next"
+            edge={t({
+              message: 'Last event of the season',
+              comment: 'Tooltip on the disabled next-tournament button: there is no later tournament',
+            })}
+          >
             <IconNext size={16} />
           </RoundButton>
         </nav>
       </div>
-      <MediaCover src={t.header} position="center 40%" muted={t.cancelled} className={classes.banner}>
-        {t.cancelled && <TournamentStatusBadge tournament={t} variant="overlay" className={classes.cancelled} />}
+      <MediaCover src={tn.header} position="center 40%" muted={tn.cancelled} className={classes.banner}>
+        {tn.cancelled && <TournamentStatusBadge tournament={tn} variant="overlay" className={classes.cancelled} />}
       </MediaCover>
       <div className={classes.body}>
-        <LogoTile src={t.logo} size="var(--logo)" alt={t.name} flat className={classes.logo} />
+        <LogoTile src={tn.logo} size="var(--logo)" alt={tn.name} flat className={classes.logo} />
         <h1 className={classes.title}>
-          {t.heading} {t.subtitle && <span className={classes.subtitle}>{t.subtitle}</span>}
+          {tn.heading} {tn.subtitle && <span className={classes.subtitle}>{tn.subtitle}</span>}
         </h1>
         <div className={classes.meta}>
-          <span className={classes.dates}>{t.dates}</span>
-          <TournamentPlace tournament={t} />
-          {t.venue && <span className={classes.venue}>{t.venue}</span>}
+          <span className={classes.dates}>{tn.dates}</span>
+          <TournamentPlace tournament={tn} />
+          {tn.venue && <span className={classes.venue}>{tn.venue}</span>}
           <span className={classes.chip}>
             <b className={classes.level}>
-              {LEVEL_META[t.level].long}
-              {t.level !== 'Finals' && <span className={classes.series}>World Tour</span>}
+              {LEVEL_META[tn.level].long}
+              {tn.level !== 'Finals' && <span className={classes.series}>World Tour</span>}
             </b>
-            <IconLabel icon={IconCoins} label="Prize money" size={13} className={classes.prize}>
-              <strong>{t.prizeLabel}</strong>
+            <IconLabel icon={IconCoins} label={PRIZE_MONEY} size={13} className={classes.prize}>
+              <strong>{tn.prizeLabel}</strong>
             </IconLabel>
           </span>
         </div>
       </div>
-      {schedule && <DayTimeline tournament={t} schedule={schedule} />}
+      {schedule && <DayTimeline tournament={tn} schedule={schedule} />}
     </header>
   );
 });

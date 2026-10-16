@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, type FC, type ReactNode, type RefCallback } from 'react';
@@ -13,7 +14,11 @@ import { TournamentPlace } from './TournamentStatus';
 import classes from './FinaleCard.module.css';
 import utils from '~/styles/utils.module.css';
 
-const FINALS_TAGLINE = 'Final stop · Top 8 per discipline';
+const FINALS_TAGLINE = (
+  <Trans comment="Tagline on the World Tour Finals card: the season’s last event, for the top 8 players or pairs in each of the five events">
+    Final stop · Top 8 per discipline
+  </Trans>
+);
 
 const Countdown: FC<{ tournament: Tournament; className?: string }> = ({ tournament, className }) => {
   const cd = finalsCountdown(tournament);

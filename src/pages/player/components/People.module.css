@@ -14,23 +14,28 @@
   color: var(--bwf-text);
 
   .h2h[data-edge='ahead'] & {
-    color: var(--bwf-green);
+    color: var(--bwf-win);
   }
 
   .h2h[data-edge='behind'] & {
-    color: var(--bwf-red-text);
+    color: var(--bwf-loss);
   }
 }
 
 .bar {
+  --to-end: 90deg;
   width: 56px;
   height: 4px;
   border-radius: 2px;
   background: linear-gradient(
-    to right,
-    var(--bwf-green) calc(var(--won) * 100%),
-    alpha(var(--bwf-red-text), 0.45) calc(var(--won) * 100%)
+    var(--to-end),
+    var(--bwf-win) calc(var(--won) * 100%),
+    var(--bwf-loss-soft) calc(var(--won) * 100%)
   );
+
+  &:dir(rtl) {
+    --to-end: -90deg;
+  }
 }
 
 .nameLine {

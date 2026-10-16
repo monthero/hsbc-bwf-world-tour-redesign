@@ -24,11 +24,15 @@
   & + .column::before {
     content: '';
     position: absolute;
-    left: -14px;
+    inset-inline-start: -14px;
     top: 0;
     bottom: 0;
     width: 1px;
-    background: repeating-linear-gradient(180deg, alpha(var(--mantine-color-white), 0.045) 0 4px, transparent 4px 10px);
+    background: repeating-linear-gradient(
+      180deg,
+      light-dark(alpha(var(--bwf-text), 0.12), alpha(var(--mantine-color-white), 0.045)) 0 4px,
+      transparent 4px 10px
+    );
     pointer-events: none;
   }
 }
@@ -70,11 +74,15 @@
 
 .svg {
   position: absolute;
-  left: 100%;
+  inset-inline-start: 100%;
   top: 0;
   overflow: visible;
   pointer-events: none;
   fill: none;
+
+  &:dir(rtl) {
+    scale: -1 1;
+  }
 
   path {
     stroke: var(--bwf-border-strong);
@@ -82,7 +90,7 @@
     stroke-linejoin: round;
 
     &[data-win] {
-      stroke: alpha(var(--bwf-green), 0.9);
+      stroke: var(--bwf-win-line);
       stroke-width: 1.6;
     }
   }

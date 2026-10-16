@@ -1,7 +1,8 @@
+import { msg } from '@lingui/core/macro';
+
 import { Level } from '~/api/schemas';
 import type { SeasonPhase, SeasonSummary, Tournament } from '~/types';
-import { today } from '~/utils/dates';
-import { plural } from '~/utils/format';
+import { formatWall, today } from '~/utils/dates';
 import { isDone, isHeld, isLive } from '~/utils/tournaments';
 
 import type { MonthGroup, StatusFilter } from './types';
@@ -12,7 +13,9 @@ const CURRENT_MONTH = NOW.month();
 
 const monthIndexes = Array.from({ length: 12 }, (_, m) => m);
 
-export const monthName = (month: number) => NOW.month(month).format('MMMM');
+const LONG_MONTH = { month: 'long' } as const;
+
+export const monthName = (month: number) => formatWall(NOW.month(month), LONG_MONTH);
 
 const isRegular = (t: Tournament) => t.level !== 'Finals';
 const isOpen = (t: Tournament) => t.status === 'up' || isLive(t);
@@ -65,11 +68,23 @@ export const buildMonths = (
 export const finalsReached = (t: Tournament, phase: SeasonPhase) =>
   t.status !== 'up' || (phase === 'current' && CURRENT_MONTH >= t.month);
 
-export const eventCountLabel = (n: number) => (n ? plural(n, 'event') : '—');
-
 export const heroSubtitle = (finals: Tournament, phase: SeasonPhase, isMobile: boolean) => {
   const past = phase === 'past';
   const dates = past ? finals.datesLong : finals.dates;
-  if (isMobile) return `World Tour Finals · ${dates}`;
-  return `Every stop ${past ? 'led' : 'leads'} to the World Tour Finals, ${dates}`;
+  if (isMobile)
+    return msg({
+      message: `World Tour Finals · ${dates}`,
+      comment: 'Calendar header subtitle on phones: the season-ending World Tour Finals and its {dates}',
+    });
+  if (past)
+    return msg({
+      message: `Every stop led to the World Tour Finals, ${dates}`,
+      comment:
+        'Calendar header subtitle for a finished season: every tournament fed the race to the season-ending World Tour Finals, held on {dates}',
+    });
+  return msg({
+    message: `Every stop leads to the World Tour Finals, ${dates}`,
+    comment:
+      'Calendar header subtitle: every tournament of the season feeds the race to the season-ending World Tour Finals, held on {dates}',
+  });
 };

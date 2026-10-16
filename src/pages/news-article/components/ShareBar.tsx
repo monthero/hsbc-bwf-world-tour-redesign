@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { ActionIcon } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { memo, useCallback, type FC } from 'react';
@@ -31,10 +32,15 @@ const canShare = () => typeof navigator !== 'undefined' && typeof navigator.shar
 
 const pageUrl = () => window.location.href;
 
-const ShareLinks = memo<{ title: string }>(({ title }) => {
-  const url = pageUrl();
-  return SHARE_TARGETS.map(({ label, icon: Icon, href }) => (
-    <Tip tap={false} key={label} label={`Share on ${label}`}>
+const ShareLink = memo<{ target: ShareTarget; url: string; title: string }>(({ target, url, title }) => {
+  const { t } = useLingui();
+  const { label: network, icon: Icon, href } = target;
+  const label = t({
+    message: `Share on ${network}`,
+    comment: 'Button sharing a news article on a social network; {network} is its brand name (Weibo, Facebook, X)',
+  });
+  return (
+    <Tip tap={false} label={label}>
       <ActionIcon
         component="a"
         href={href(url, title)}
@@ -43,25 +49,40 @@ const ShareLinks = memo<{ title: string }>(({ title }) => {
         variant="soft"
         radius="xl"
         size={32}
-        aria-label={`Share on ${label}`}
+        aria-label={label}
         className={classes.icon}
       >
         <Icon />
       </ActionIcon>
     </Tip>
-  ));
+  );
+});
+
+const ShareLinks = memo<{ title: string }>(({ title }) => {
+  const url = pageUrl();
+  return SHARE_TARGETS.map((target) => <ShareLink key={target.label} target={target} url={url} title={title} />);
 });
 
 export const ShareBar = memo<{ title: string }>(({ title }) => {
   const isMobile = useIsMobile();
+  const { t } = useLingui();
   const clipboard = useClipboard({ timeout: COPIED_MS });
   const share = useCallback(() => void navigator.share({ title, url: pageUrl() }).catch(() => undefined), [title]);
   const copy = useCallback(() => clipboard.copy(pageUrl()), [clipboard]);
-  const copyLabel = clipboard.copied ? 'Link copied' : 'Copy link';
+  const copyLabel = clipboard.copied
+    ? t({ message: 'Link copied', comment: 'Confirmation after copying a news article’s link to the clipboard' })
+    : t({ message: 'Copy link', comment: 'Button that copies a news article’s link to the clipboard' });
 
   if (isMobile && canShare())
     return (
-      <ActionIcon variant="soft" radius="xl" size={32} onClick={share} aria-label="Share" className={classes.icon}>
+      <ActionIcon
+        variant="soft"
+        radius="xl"
+        size={32}
+        onClick={share}
+        aria-label={t({ message: 'Share', comment: 'Button opening the phone’s share sheet for a news article' })}
+        className={classes.icon}
+      >
         <IconShare />
       </ActionIcon>
     );

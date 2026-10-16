@@ -19,7 +19,7 @@
   &::before {
     content: '';
     position: absolute;
-    left: 5px;
+    inset-inline-start: 5px;
     top: 10px;
     bottom: 10px;
     width: 2px;
@@ -46,7 +46,7 @@
   font: inherit;
   font-size: 14px;
   font-weight: 500;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   transition: color 0.2s;
 
@@ -66,7 +66,7 @@
   }
 
   & > span {
-    margin-left: auto;
+    margin-inline-start: auto;
     font-size: 12px;
     color: var(--bwf-faint);
   }
@@ -93,7 +93,8 @@
   display: grid;
   grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
   gap: 6px;
-  padding: 2px 0 10px 26px;
+  padding-block: 2px 10px;
+  padding-inline: 26px 0;
 }
 
 .slot {

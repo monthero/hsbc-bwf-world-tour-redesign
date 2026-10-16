@@ -69,7 +69,7 @@
 }
 
 .follow {
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 .cards {
@@ -88,7 +88,8 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 10px 6px 6px;
+  padding-block: 6px;
+  padding-inline: 6px 10px;
 }
 
 .cardToggle {
@@ -98,12 +99,13 @@
   align-items: center;
   gap: 10px;
   min-height: 44px;
-  padding: 0 6px 0 10px;
+  padding-block: 0;
+  padding-inline: 10px 6px;
   border: 0;
   border-radius: 10px;
   background: none;
   color: var(--bwf-text);
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 
   &:disabled {
@@ -143,7 +145,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 11px 10px 11px 16px;
+  padding-block: 11px;
+  padding-inline: 16px 10px;
   border-top: 1px solid var(--bwf-line);
 }
 
@@ -159,7 +162,7 @@
 .rank {
   font-size: 11px;
   font-weight: 600;
-  color: var(--bwf-gold);
+  color: var(--bwf-gold-accent);
   cursor: help;
 }
 
@@ -308,13 +311,18 @@
   background: var(--bwf-surface-3);
   box-shadow: inset 2px 0 0 var(--bwf-gold-edge);
   border-bottom: 1px solid var(--bwf-border-strong);
+
+  &:dir(rtl) {
+    box-shadow: inset -2px 0 0 var(--bwf-gold-edge);
+  }
 }
 
 .row {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 10px 10px 16px;
+  padding-block: 10px;
+  padding-inline: 16px 10px;
   border-top: 1px solid var(--bwf-line);
   color: var(--bwf-text);
   font-size: 14px;
@@ -326,7 +334,8 @@
 
   @mixin larger-than $mantine-breakpoint-lg {
     gap: 6px;
-    padding: 8px 4px 8px 12px;
+    padding-block: 8px;
+    padding-inline: 12px 4px;
     font-size: 13px;
   }
 }

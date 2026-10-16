@@ -1,3 +1,4 @@
+import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react';
 import { Loader } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
@@ -35,7 +36,20 @@ import utils from '~/styles/utils.module.css';
 
 const route = getRouteApi('/world-tour/$year/$slug');
 
-const MISSING_TITLE = 'We couldn’t find that tournament';
+const MISSING_TITLE = msg({
+  message: 'We couldn’t find that tournament',
+  comment: 'Heading of the not-found page for a tournament link that matches nothing',
+});
+
+const MISSING_DESCRIPTION = msg({
+  message: 'There’s no “{slug}” on the {year} World Tour calendar.',
+  comment: 'Not-found page for a tournament. {slug} is the unknown name from the link, {year} the season',
+});
+
+const BACK_TO_CALENDAR = msg({
+  message: 'Back to the {year} calendar',
+  comment: 'Link on the tournament not-found page back to the season calendar. {year} is the season',
+});
 
 const TABS = {
   overview: OverviewTab,
@@ -79,6 +93,7 @@ const TournamentView: FC<{
   const search = route.useSearch();
   const { data: schedule } = useSchedule(tournament);
   useLiveStreamSync(tournament);
+  const { _ } = useLingui();
   const closeMatch = useCloseMatch();
   const rootRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
@@ -106,7 +121,7 @@ const TournamentView: FC<{
         <TournamentHeader tournament={tournament} prev={prev} next={next} schedule={schedule} />
         {tournament.cancelled ? (
           <section className={clsx(utils.container, classes.tabSection)}>
-            <EmptyState>{CANCELLED_NOTE}</EmptyState>
+            <EmptyState>{_(CANCELLED_NOTE)}</EmptyState>
           </section>
         ) : (
           <TabNav
@@ -145,13 +160,16 @@ export const TournamentPage: FC = () => {
   const { _ } = useLingui();
   const meta = useMemo(() => tournament && tournamentMeta(_, tournament), [_, tournament]);
   useDocumentMeta(missing ? NOT_FOUND_META : meta);
-  const action = useMemo(() => ({ label: `Back to the ${year} calendar`, link: back.link }), [year, back.link]);
+  const action = useMemo(
+    () => ({ label: _({ ...BACK_TO_CALENDAR, values: { year } }), link: back.link }),
+    [_, year, back.link],
+  );
   if (tournament) return <TournamentView key={tournament.code} tournament={tournament} prev={prev} next={next} />;
   if (missing)
     return (
       <NotFound
-        title={MISSING_TITLE}
-        description={`There’s no “${slug}” on the ${year} World Tour calendar.`}
+        title={_(MISSING_TITLE)}
+        description={_({ ...MISSING_DESCRIPTION, values: { slug, year } })}
         action={action}
       />
     );

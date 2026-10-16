@@ -41,7 +41,7 @@
   padding: 0 0 2px;
   border: 0;
   background: none;
-  color: var(--bwf-faint);
+  color: light-dark(var(--bwf-dim), var(--bwf-faint));
   font: inherit;
   font-size: 12px;
   scroll-snap-align: center;
@@ -59,7 +59,7 @@
   }
 
   &[data-status='done'] i {
-    background: color-mix(in srgb, var(--lv) 42%, var(--bwf-bg-sunken));
+    background: var(--lv-muted);
   }
 
   &[data-status='cancelled'] i {

@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, type RefObject } from 'react';
 
 import { MOTION_EASE } from '~/theme';
 import { prefersReducedMotion } from '~/utils/motion';
+import { inlineSign } from '~/utils/scroll';
 
 const DEFAULT_DISTANCE = () => 24;
 
@@ -20,7 +21,7 @@ export const useSlideIn = <T extends HTMLElement>(
     const delta = index - from;
     el.animate(
       [
-        { opacity: 0, transform: `translateX(${Math.sign(delta) * distance(delta)}px)` },
+        { opacity: 0, transform: `translateX(${inlineSign(el) * Math.sign(delta) * distance(delta)}px)` },
         { opacity: 1, transform: 'none' },
       ],
       { duration, easing: MOTION_EASE },

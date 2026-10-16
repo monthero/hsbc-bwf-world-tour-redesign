@@ -1,7 +1,9 @@
+import type { I18n } from '@lingui/core';
 import type { CSSProperties } from 'react';
 
 import { EventCode, Level } from '~/api/schemas';
 import { DOUBLES_EVENTS } from '~/constants';
+import { numberFormat } from '~/i18n/current';
 import type { BioView, Player, PlayerDirectory, PlayerMatch, RankingHistory, RankView, SeasonIndex } from '~/types';
 import { date, formatDayMonthYear } from '~/utils/dates';
 import { formatRank } from '~/utils/format';
@@ -33,7 +35,10 @@ import type {
 
 type HistoryEntry = RankingHistory['history'][number];
 
-export const resultLabel = (n: number) => RESULT_LABELS[n] ?? formatRank(n);
+export const resultLabel = (i18n: I18n, n: number) => {
+  const label = RESULT_LABELS[n];
+  return label ? i18n._(label) : formatRank(n);
+};
 
 export const resultTier = (n: number) => medalOfResult(n) ?? (n === 5 ? 'qf' : 'other');
 
@@ -115,7 +120,8 @@ export const buildHistory = (
       items: x.r.breakdown.map((t, j) => ({
         key: `${x.row.key}-${j}`,
         name: t.tournament.replaceAll('&amp;', '&'),
-        yearWeek: `${t.year} · wk ${t.week}`,
+        year: t.year,
+        week: t.week,
         result: t.result,
         points: t.points,
         counted: t.counted,
@@ -280,7 +286,7 @@ export const winShare = (wins: number, losses: number) => (wins + losses ? wins 
 
 export const winRate = (wins: number, losses: number) => {
   const share = winShare(wins, losses);
-  return share === null ? '—' : `${Math.round(share * 100)}%`;
+  return share === null ? '—' : numberFormat({ style: 'percent' }).format(Math.round(share * 100) / 100);
 };
 
 export const decided = (pm: PlayerMatch) => pm.outcome === 'W' || pm.outcome === 'L';

@@ -13,12 +13,12 @@
   }
 
   &[data-fallback] {
-    background: linear-gradient(130deg, var(--bwf-brand-deep), var(--bwf-bg-sunken) 80%);
+    background: linear-gradient(130deg, var(--bwf-brand-deep), var(--mantine-color-slate-9) 80%);
 
     &::before {
       content: '';
       position: absolute;
-      right: -18%;
+      inset-inline-end: -18%;
       bottom: -38%;
       width: 70%;
       aspect-ratio: 1;

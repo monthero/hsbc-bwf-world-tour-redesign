@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Badge, type MantineSize } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useMemo, type MouseEvent } from 'react';
@@ -13,9 +14,10 @@ const hold = (e: MouseEvent) => {
   e.stopPropagation();
 };
 
-const RetiredTip = memo<{ retired: Retirement }>(({ retired }) => (
-  <InfoTip title={RETIRED_FROM} subtitle={retirementSince(retired)} rows={retirementRows(retired)} />
-));
+const RetiredTip = memo<{ retired: Retirement }>(({ retired }) => {
+  const { i18n } = useLingui();
+  return <InfoTip title={i18n._(RETIRED_FROM)} subtitle={retirementSince(retired)} rows={retirementRows(retired)} />;
+});
 
 export const RetiredBadge = memo<{ retired: Retirement | undefined; size?: MantineSize; className?: string }>(
   ({ retired, size = 'sm', className }) => {
@@ -33,7 +35,12 @@ export const RetiredBadge = memo<{ retired: Retirement | undefined; size?: Manti
           onClick={hold}
           className={clsx(classes.badge, className)}
         >
-          Retired
+          <Trans
+            context="player status"
+            comment="Badge on a player who has retired from international badminton (not a match that ended by retirement)"
+          >
+            Retired
+          </Trans>
         </Badge>
       </Tip>
     );

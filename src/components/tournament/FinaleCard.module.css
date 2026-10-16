@@ -1,4 +1,6 @@
 .card {
+  --to-end: 90deg;
+  --start-x: 0%;
   position: relative;
   display: flex;
   align-items: flex-end;
@@ -7,15 +9,20 @@
   min-height: 280px;
   overflow: hidden;
   border-radius: 20px;
-  border: 1px solid alpha(var(--bwf-gold), 0.4);
+  border: 1px solid light-dark(var(--bwf-gold-edge), alpha(var(--bwf-gold), 0.4));
   transition:
     transform 0.35s var(--bwf-ease),
     box-shadow 0.35s var(--bwf-ease);
 
+  &:dir(rtl) {
+    --to-end: -90deg;
+    --start-x: 100%;
+  }
+
   &:hover {
     transform: translateY(-3px);
     box-shadow:
-      0 20px 50px alpha(var(--mantine-color-black), 0.45),
+      0 20px 50px alpha(var(--bwf-shadow-ink), 0.45),
       0 0 0 1px alpha(var(--bwf-gold), 0.5);
   }
 
@@ -23,14 +30,23 @@
     content: '';
     position: absolute;
     inset: 0;
-    background:
-      linear-gradient(
-        90deg,
-        alpha(var(--bwf-bg), 0.94) 0%,
-        alpha(var(--bwf-bg), 0.7) 45%,
-        alpha(var(--bwf-bg), 0.25) 100%
-      ),
-      radial-gradient(70% 90% at 0% 100%, alpha(var(--bwf-gold), 0.18), transparent 70%);
+    background: linear-gradient(
+      var(--to-end),
+      alpha(var(--bwf-surface-2), 0.95) 0%,
+      alpha(var(--bwf-surface-2), 0.82) 34%,
+      transparent 58%
+    );
+
+    @mixin dark {
+      background:
+        linear-gradient(
+          var(--to-end),
+          alpha(var(--bwf-bg), 0.94) 0%,
+          alpha(var(--bwf-bg), 0.7) 45%,
+          alpha(var(--bwf-bg), 0.25) 100%
+        ),
+        radial-gradient(70% 90% at var(--start-x) 100%, alpha(var(--bwf-gold), 0.18), transparent 70%);
+    }
   }
 }
 
@@ -63,7 +79,7 @@
   margin-top: 6px;
   font-size: 12px;
   font-weight: 600;
-  color: var(--bwf-gold);
+  color: var(--bwf-gold-accent);
 }
 
 .title {
@@ -79,7 +95,7 @@
   flex-wrap: wrap;
   gap: 8px;
   font-size: 14px;
-  color: var(--bwf-text-3);
+  color: light-dark(var(--bwf-text-2), var(--bwf-text-3));
 }
 
 .sep {
@@ -91,6 +107,23 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 2px;
+  padding: 10px 14px;
+  border: 1px solid alpha(var(--bwf-border-strong), 0.8);
+  border-radius: 14px;
+  background: alpha(var(--bwf-surface-2), 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px alpha(var(--bwf-shadow-ink), 0.3);
+
+  @mixin dark {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+  }
 }
 
 .days {
@@ -99,7 +132,7 @@
   line-height: 1;
   letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
-  color: var(--bwf-gold);
+  color: var(--bwf-gold-accent);
 }
 
 .daysLabel {
@@ -115,7 +148,7 @@
   text-decoration: none;
   overflow: hidden;
   border-radius: 16px;
-  border: 1px solid alpha(var(--bwf-gold), 0.4);
+  border: 1px solid light-dark(var(--bwf-gold-edge), alpha(var(--bwf-gold), 0.4));
 }
 
 .mMedia {
@@ -126,11 +159,26 @@
 .mCountdown {
   position: absolute;
   z-index: 1;
-  right: 14px;
+  inset-inline-end: 14px;
   bottom: 10px;
   display: flex;
   align-items: baseline;
   gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid alpha(var(--bwf-border-strong), 0.8);
+  border-radius: 10px;
+  background: alpha(var(--bwf-surface-2), 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  @mixin dark {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 
   & .days {
     font-size: 34px;

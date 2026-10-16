@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
@@ -7,14 +8,40 @@ import { CardHit, Tip } from '~/components/ui';
 import { formatRank } from '~/utils/format';
 import { isScheduled, teamLabel } from '~/utils/matches';
 
+import { detailsLabel } from '../matches/utils';
 import { entryStatus, type Entry, type LatestEntry } from './entries';
 
 import classes from './Players.module.css';
 import utils from '~/styles/utils.module.css';
 
+const RANK_TIP = (
+  <Trans comment="Tooltip on an entry’s world rank. Category means the event, e.g. men’s singles">
+    BWF World Ranking in this category
+  </Trans>
+);
+
+const QUALIFIER = (
+  <Tip
+    label={
+      <Trans comment="Tooltip on the Q badge of a player or pair who won through the qualifying rounds">
+        Came through qualifying
+      </Trans>
+    }
+  >
+    <span className={clsx(utils.raise, classes.qualifier)}>
+      <Trans
+        context="qualifier"
+        comment="Badge on a player or pair who won through the qualifying rounds into the main draw (abbreviation of Qualifier)"
+      >
+        Q
+      </Trans>
+    </span>
+  </Tip>
+);
+
 export const EntryRank: FC<{ rank: number; className?: string }> = ({ rank, className }) =>
   rank > 0 ? (
-    <Tip label="BWF World Ranking in this category">
+    <Tip label={RANK_TIP}>
       <span className={clsx(utils.raise, classes.rank, className)}>{formatRank(rank)}</span>
     </Tip>
   ) : null;
@@ -24,11 +51,7 @@ export const EntryStatus: FC<{ entry: LatestEntry; withStage?: boolean }> = ({ e
   if (!entry.match && !withStage && !entry.qualifier) return null;
   return (
     <span className={classes.status} data-tone={status.tone}>
-      {entry.qualifier && (
-        <Tip label="Came through qualifying">
-          <span className={clsx(utils.raise, classes.qualifier)}>Q</span>
-        </Tip>
-      )}
+      {entry.qualifier && QUALIFIER}
       {(entry.match || withStage) && <TimedStatus match={entry.match} tone={status.tone} label={status.label} />}
     </span>
   );
@@ -40,7 +63,7 @@ export const EntryRow = memo<{ entry: Entry; onOpen: (id: string) => void }>(({ 
   return (
     <div className={classes.entry}>
       {match && isScheduled(match) && (
-        <CardHit label={`Match details: ${teamLabel(team)}`} onClick={() => onOpen(match.id)} />
+        <CardHit label={detailsLabel(teamLabel(team))} onClick={() => onOpen(match.id)} />
       )}
       <span className={classes.entryMeta}>
         <EventTag event={event} />

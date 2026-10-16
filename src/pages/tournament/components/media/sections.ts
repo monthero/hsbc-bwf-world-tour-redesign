@@ -1,9 +1,14 @@
+import { i18n } from '@lingui/core';
+import { t } from '@lingui/core/macro';
+
 import type { MediaItem, MediaKind } from '~/api/schemas';
 import { ROUND_ORDER } from '~/constants';
 import type { Match, Tournament } from '~/types';
 import { date } from '~/utils/dates';
 import { matchesQuery, normQuery, roundName } from '~/utils/matches';
 import { foldText } from '~/utils/names';
+
+import { LIVE_NOW } from '../../constants';
 
 interface MediaGroup {
   key: string;
@@ -51,14 +56,21 @@ const byCourt = (a: MediaItem, b: MediaItem) => (a.court ?? NO_COURT) - (b.court
 
 const bySchedule = (a: MediaItem, b: MediaItem) => (a.scheduledAt ?? '').localeCompare(b.scheduledAt ?? '');
 
-const byDay = (items: readonly MediaItem[], t: Tournament) =>
+const dayLabel = (start: string, day: string) => {
+  const when = date(start)
+    .add(Number(day) - 1, 'day')
+    .format('ddd D MMM');
+  return t({
+    message: `Day ${day} · ${when}`,
+    comment: 'Media tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"',
+  });
+};
+
+const byDay = (items: readonly MediaItem[], tn: Tournament) =>
   groupBy(
     items.toSorted(byCourt),
     (i) => String(i.day ?? 0),
-    (k) =>
-      `Day ${k} · ${date(t.start)
-        .add(Number(k) - 1, 'day')
-        .format('ddd D MMM')}`,
+    (k) => dayLabel(tn.start, k),
     (a, b) => Number(a) - Number(b),
   );
 
@@ -74,20 +86,52 @@ const section = (key: string, title: string, groups: MediaGroup[]): MediaSection
 export const buildMediaSections = (
   items: readonly MediaItem[],
   matchOf: ReadonlyMap<string, Match>,
-  t: Tournament,
+  tn: Tournament,
 ): MediaSection[] => {
   const live = items.filter((i) => i.live === 'live').toSorted(byCourt);
   const upcoming = items.filter((i) => i.live === 'upcoming').toSorted(bySchedule);
   const rest = items.filter((i) => i.live === 'none');
   const of = (kind: MediaKind) => rest.filter((i) => i.kind === kind);
   return [
-    section('live', 'Live now', single(live)),
-    section('upcoming', 'Upcoming streams', single(upcoming)),
-    section('highlights', 'Highlights', byRound(of('highlights'), matchOf, 'More highlights')),
-    section('full', 'Full matches', byRound(of('full_match'), matchOf, 'More matches')),
-    section('top', 'Top plays', single(rest.filter((i) => TOP_PLAYS.has(i.kind)))),
-    section('courts', 'Court streams', byDay(of('court_stream'), t)),
-    section('more', 'More videos', single(rest.filter((i) => MORE.has(i.kind)))),
+    section('live', i18n._(LIVE_NOW), single(live)),
+    section(
+      'upcoming',
+      t({ message: 'Upcoming streams', comment: 'Media tab section: live streams that haven’t started yet' }),
+      single(upcoming),
+    ),
+    section(
+      'highlights',
+      t({ message: 'Highlights', comment: 'Media tab section: short highlight videos of matches' }),
+      byRound(
+        of('highlights'),
+        matchOf,
+        t({ message: 'More highlights', comment: 'Media tab group of highlight videos not linked to a round' }),
+      ),
+    ),
+    section(
+      'full',
+      t({ message: 'Full matches', comment: 'Media tab section: videos of whole matches' }),
+      byRound(
+        of('full_match'),
+        matchOf,
+        t({ message: 'More matches', comment: 'Media tab group of full-match videos not linked to a round' }),
+      ),
+    ),
+    section(
+      'top',
+      t({ message: 'Top plays', comment: 'Media tab section: best rallies and shots of the day' }),
+      single(rest.filter((i) => TOP_PLAYS.has(i.kind))),
+    ),
+    section(
+      'courts',
+      t({ message: 'Court streams', comment: 'Media tab section: full-day live streams of each court' }),
+      byDay(of('court_stream'), tn),
+    ),
+    section(
+      'more',
+      t({ message: 'More videos', comment: 'Media tab section: other videos such as shorts and promos' }),
+      single(rest.filter((i) => MORE.has(i.kind))),
+    ),
   ].filter((s) => s.count > 0);
 };
 

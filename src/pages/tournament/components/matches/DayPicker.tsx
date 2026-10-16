@@ -1,3 +1,6 @@
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useCallback, useLayoutEffect, useMemo, useRef, type FC, type KeyboardEvent } from 'react';
 
@@ -5,7 +8,7 @@ import { IconBack, IconButton, IconNext, LiveDot, type IconProps } from '~/compo
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useScrollEdges } from '~/hooks/useScrollEdges';
 import type { TournamentDay } from '~/types';
-import { centerChild, scrollBehavior } from '~/utils/scroll';
+import { centerChild, inlineSign, scrollBehavior } from '~/utils/scroll';
 
 import { daySlots } from '../../utils';
 import { RestBreak } from '../RestBreak';
@@ -20,12 +23,12 @@ const step = (days: readonly TournamentDay[], from: number, dir: number) => {
   return null;
 };
 
-const keyTarget = (key: string, days: readonly TournamentDay[], pos: number) => {
+const keyTarget = (key: string, days: readonly TournamentDay[], pos: number, sign: number) => {
   switch (key) {
     case 'ArrowLeft':
-      return step(days, pos, -1) ?? pos;
+      return step(days, pos, -sign) ?? pos;
     case 'ArrowRight':
-      return step(days, pos, 1) ?? pos;
+      return step(days, pos, sign) ?? pos;
     case 'Home':
       return step(days, -1, 1);
     case 'End':
@@ -39,28 +42,41 @@ const dayButton = (el: HTMLElement | null, index: number) =>
   el?.querySelector<HTMLElement>(`[data-day="${index}"]`) ?? null;
 
 const ARROWS = [
-  { dir: -1, label: 'Earlier days', Icon: IconBack, className: classes.prev },
-  { dir: 1, label: 'Later days', Icon: IconNext, className: classes.next },
+  {
+    dir: -1,
+    label: msg({ message: 'Earlier days', comment: 'Arrow button that scrolls the tournament day strip back' }),
+    Icon: IconBack,
+    className: classes.prev,
+  },
+  {
+    dir: 1,
+    label: msg({ message: 'Later days', comment: 'Arrow button that scrolls the tournament day strip forward' }),
+    Icon: IconNext,
+    className: classes.next,
+  },
 ] as const;
 
 const Arrow = memo<{
   dir: number;
-  label: string;
+  label: MessageDescriptor;
   Icon: FC<IconProps>;
   className: string | undefined;
   onPage: (dir: number) => void;
-}>(({ dir, label, Icon, className, onPage }) => (
-  <IconButton
-    label={label}
-    size="sm"
-    variant="filled"
-    tabIndex={-1}
-    className={clsx(classes.arrow, className)}
-    onClick={() => onPage(dir)}
-  >
-    <Icon size={14} />
-  </IconButton>
-));
+}>(({ dir, label, Icon, className, onPage }) => {
+  const { i18n } = useLingui();
+  return (
+    <IconButton
+      label={i18n._(label)}
+      size="sm"
+      variant="filled"
+      tabIndex={-1}
+      className={clsx(classes.arrow, className)}
+      onClick={() => onPage(dir)}
+    >
+      <Icon size={14} />
+    </IconButton>
+  );
+});
 
 const DayButton = memo<{
   d: TournamentDay;
@@ -94,6 +110,7 @@ export const DayPicker = memo<{
   day: number;
   onChange: (day: number) => void;
 }>(({ days, day, onChange }) => {
+  const { t } = useLingui();
   const short = useIsMobile();
   const ref = useRef<HTMLDivElement>(null);
   const shown = useRef(-1);
@@ -112,12 +129,13 @@ export const DayPicker = memo<{
 
   const onPage = useCallback((dir: number) => {
     const el = ref.current;
-    el?.scrollBy({ left: dir * el.clientWidth * PAGE_RATIO, behavior: scrollBehavior() });
+    if (!el) return;
+    el.scrollBy({ left: inlineSign(el) * dir * el.clientWidth * PAGE_RATIO, behavior: scrollBehavior() });
   }, []);
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
-      const next = keyTarget(e.key, days, pos);
+      const next = keyTarget(e.key, days, pos, inlineSign(e.currentTarget));
       const target = next === null ? undefined : days[next];
       if (!target || next === null) return;
       e.preventDefault();
@@ -133,7 +151,7 @@ export const DayPicker = memo<{
         ref={ref}
         role="toolbar"
         tabIndex={-1}
-        aria-label="Tournament days"
+        aria-label={t({ message: 'Tournament days', comment: 'Accessible name of the strip of day buttons' })}
         className={clsx(utils.snapRow, utils.noScrollbar, classes.strip)}
         onKeyDown={onKeyDown}
       >

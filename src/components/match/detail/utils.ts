@@ -1,6 +1,10 @@
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
+
+import { numberFormat } from '~/i18n/current';
 import type { Game, Match, PlayerMatch, Side } from '~/types';
 import { date, formatDayMonth, formatDayMonthYear } from '~/utils/dates';
-import { formatDuration, formatRank, joinDots } from '~/utils/format';
+import { formatDuration, formatNumber, formatRank, formatRecord, joinDots } from '~/utils/format';
 import type { WL } from '~/utils/h2h';
 import { gameDone } from '~/utils/live';
 import { courtLabel, gameWon, opposite, roundName } from '~/utils/matches';
@@ -9,7 +13,7 @@ import type { FormItem } from '../Outcome';
 
 export interface SplitRow {
   key: string;
-  label: string;
+  label: MessageDescriptor;
   a: number;
   b: number;
   fa?: string;
@@ -26,7 +30,7 @@ export interface StatView {
 
 export interface CompareRow {
   key: string;
-  label: string;
+  label: MessageDescriptor;
   a: string;
   b: string;
   aBetter: boolean;
@@ -49,17 +53,33 @@ const lead = (g: Game, s: Side) => g[s] - g[opposite(s)];
 
 const flipGames = (games: readonly Game[]) => games.map(([x, y]) => [y, x] as const);
 
-export const percent = (a: number, t: number, empty = '0%') => (t ? `${Math.round((a / t) * 100)}%` : empty);
+const PERCENT = { style: 'percent', maximumFractionDigits: 0 } as const;
+
+export const percent = (a: number, t: number) => numberFormat(PERCENT).format(t ? a / t : 0);
 
 export const shareOf = (a: number, b: number) => (a + b ? (a / (a + b)) * 100 : 50);
 
 export const metaLead = (m: Match) => joinDots([m.date && date(m.date).format('ddd'), courtLabel(m.court)]);
 
-const margin = (x: number) => (x > 0 ? `+${x}` : '—');
+const margin = (x: number) => (x > 0 ? `+${formatNumber(x)}` : '—');
+
+const POINTS_WON = msg({ message: 'Points won', comment: 'Match stats row: total rallies won by each side' });
+const GAMES_WON = msg({
+  message: 'Games won',
+  comment: 'Match stats row: games won by each side (a match is best of three games)',
+});
+const BIGGEST_MARGIN = msg({
+  message: 'Biggest game margin',
+  comment: 'Match stats row: the largest points lead each side won a game by',
+});
+const WINNING_MARGIN = msg({
+  message: 'Winning margin',
+  comment: 'Game stats row: how many points the game was won by',
+});
 
 const pointsRow = (a: number, b: number): SplitRow => ({
   key: 'p',
-  label: 'Points won',
+  label: POINTS_WON,
   a,
   b,
   sa: percent(a, a + b),
@@ -67,7 +87,7 @@ const pointsRow = (a: number, b: number): SplitRow => ({
   bar: true,
 });
 
-const marginRow = (label: string, a: number, b: number): SplitRow => ({
+const marginRow = (label: MessageDescriptor, a: number, b: number): SplitRow => ({
   key: 'm',
   label,
   a,
@@ -87,9 +107,9 @@ export const statView = (games: readonly Game[], tab: number): StatView => {
     const [mA, mB] = both((s) => Math.max(0, ...done.map((g) => lead(g, s))));
     return {
       rows: [
-        { key: 'g', label: 'Games won', a: gwA, b: gwB, bar: true },
+        { key: 'g', label: GAMES_WON, a: gwA, b: gwB, bar: true },
         pointsRow(pA, pB),
-        marginRow('Biggest game margin', mA, mB),
+        marginRow(BIGGEST_MARGIN, mA, mB),
       ],
       points: pA + pB,
     };
@@ -98,7 +118,7 @@ export const statView = (games: readonly Game[], tab: number): StatView => {
   if (!g) return NO_STATS;
   const [a, b] = g;
   const rows = [pointsRow(a, b)];
-  if (gameDone(g)) rows.push(marginRow('Winning margin', lead(g, 0), lead(g, 1)));
+  if (gameDone(g)) rows.push(marginRow(WINNING_MARGIN, lead(g, 0), lead(g, 1)));
   return { rows, points: a + b };
 };
 
@@ -117,7 +137,7 @@ export const toMeetings = (list: readonly PlayerMatch[], full: boolean): Meeting
     games: pm.side ? flipGames(pm.match.games) : pm.match.games,
   }));
 
-export const rankRow = (key: string, label: string, x: number, y: number): CompareRow => ({
+export const rankRow = (key: string, label: MessageDescriptor, x: number, y: number): CompareRow => ({
   key,
   label,
   a: formatRank(x),
@@ -126,8 +146,10 @@ export const rankRow = (key: string, label: string, x: number, y: number): Compa
   bBetter: x && y ? x > y : !x && !!y,
 });
 
-export const wlRow = (key: string, label: string, x: WL, y: WL): CompareRow => {
+const wl = ([w, l]: WL) => formatRecord(w, l);
+
+export const wlRow = (key: string, label: MessageDescriptor, x: WL, y: WL): CompareRow => {
   const ra = x[0] / Math.max(1, x[0] + x[1]);
   const rb = y[0] / Math.max(1, y[0] + y[1]);
-  return { key, label, a: `${x[0]}–${x[1]}`, b: `${y[0]}–${y[1]}`, aBetter: ra > rb, bBetter: rb > ra };
+  return { key, label, a: wl(x), b: wl(y), aBetter: ra > rb, bBetter: rb > ra };
 };

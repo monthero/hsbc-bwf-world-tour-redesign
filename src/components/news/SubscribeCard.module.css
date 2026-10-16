@@ -16,7 +16,7 @@
     content: '';
     position: absolute;
     z-index: -1;
-    right: -40px;
+    inset-inline-end: -40px;
     bottom: -70px;
     width: 220px;
     aspect-ratio: 1;

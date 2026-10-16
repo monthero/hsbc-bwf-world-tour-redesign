@@ -9,14 +9,14 @@
 
   &:hover {
     transform: translateY(-3px) translateZ(0);
-    box-shadow: 0 16px 36px alpha(var(--mantine-color-black), 0.4);
+    box-shadow: 0 16px 36px alpha(var(--bwf-shadow-ink), 0.4);
   }
 }
 
 .star {
   position: absolute;
   top: 60px;
-  right: 10px;
+  inset-inline-end: 10px;
   opacity: 0;
   transition: opacity 0.15s;
 

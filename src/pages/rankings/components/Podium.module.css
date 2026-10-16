@@ -21,7 +21,7 @@
 }
 
 .card {
-  --tone: var(--bwf-gold);
+  --tone: var(--bwf-medal-gold);
   --tone-text: var(--bwf-gold-text);
   min-width: 0;
   display: flex;
@@ -32,6 +32,12 @@
   border: 1px solid alpha(var(--tone), 0.24);
   background: linear-gradient(160deg, alpha(var(--tone), 0.13) 0%, transparent 60%), var(--bwf-bg-sunken);
   --avatar-ring: var(--bwf-bg-sunken);
+
+  @mixin light {
+    border-color: alpha(var(--tone), 0.45);
+    background: linear-gradient(160deg, alpha(var(--tone), 0.2) 0%, transparent 62%), var(--bwf-surface);
+    --avatar-ring: var(--bwf-surface);
+  }
 
   &[data-medal='silver'] {
     --tone: var(--bwf-silver);
@@ -93,12 +99,16 @@
   margin-top: auto;
   padding-top: 12px;
   border-top: 1px solid alpha(var(--tone), 0.16);
+
+  @mixin light {
+    border-top-color: alpha(var(--tone), 0.3);
+  }
   font-size: 12px;
   color: var(--bwf-muted);
 }
 
 .points {
-  margin-left: auto;
+  margin-inline-start: auto;
   font-size: 20px;
   font-weight: 650;
   letter-spacing: -0.02em;
@@ -106,7 +116,7 @@
 }
 
 .unit {
-  margin-left: 4px;
+  margin-inline-start: 4px;
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0;

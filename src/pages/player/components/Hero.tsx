@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react';
@@ -20,7 +22,7 @@ import { EVENT_NAMES } from '~/constants';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerPhoto } from '~/hooks/usePlayers';
 import type { BioView, EventCode, Focus, Player, RankView, Retirement, StatItem } from '~/types';
-import { formatRank, plural } from '~/utils/format';
+import { formatRank, formatRecord } from '~/utils/format';
 import { heroVars, playerHeroUrl } from '~/utils/images';
 
 import type { CareerHigh, CareerView } from '../types';
@@ -157,10 +159,17 @@ const Vital = memo<{ item: StatItem }>(({ item: s }) => (
   </FactTip>
 ));
 
-const WEEKS_AT_BEST_TIP =
-  'Total weeks spent at this ranking. They don’t have to be in a row: it can add up over several spells.';
+const WEEKS_AT_BEST = msg({
+  message: '{weeks, plural, one {for # week} other {for # weeks}}',
+  comment: 'Under the career-best ranking: how many weeks the player held it',
+});
 
-const MiniStat = memo<{ label: string; sub?: string; subTip?: string; children: ReactNode }>(
+const WEEKS_AT_BEST_TIP = msg({
+  message: 'Total weeks spent at this ranking. They don’t have to be in a row: it can add up over several spells.',
+  comment: 'Tooltip on “for N weeks” under the player’s career-best world ranking',
+});
+
+const MiniStat = memo<{ label: ReactNode; sub?: string; subTip?: string; children: ReactNode }>(
   ({ label, sub, subTip, children }) => (
     <div className={classes.mini}>
       <dt>{label}</dt>
@@ -185,7 +194,20 @@ const RankTile = memo<{
   active: boolean;
   onEvent?: (event: EventCode | undefined) => void;
 }>(({ rank: k, high, active, onEvent }) => {
+  const { t, i18n } = useLingui();
   const pick = useCallback(() => onEvent?.(active ? undefined : k.ev), [onEvent, active, k.ev]);
+  const eventName = EVENT_NAMES[k.ev];
+  const weeks = high?.weeks;
+  const focus = active
+    ? t({ message: 'Show all disciplines', comment: 'Action on a selected ranking tile: stop filtering by discipline' })
+    : t({
+        message: `Focus on ${eventName}`,
+        comment: 'Action on a ranking tile: filter the profile to one discipline',
+      });
+  const ranking = t({
+    message: 'World ranking',
+    comment: 'Icon label on a ranking tile: the number is the BWF world ranking',
+  });
   return (
     <div
       className={clsx(classes.rank, discipline.tone)}
@@ -194,12 +216,12 @@ const RankTile = memo<{
       data-active={active || undefined}
       data-switch={onEvent ? true : undefined}
     >
-      {onEvent && <CardHit label={active ? 'Show all disciplines' : `Focus on ${EVENT_NAMES[k.ev]}`} onClick={pick} />}
+      {onEvent && <CardHit label={focus} onClick={pick} />}
       <span className={classes.rankHead}>
-        <span className={classes.rankEvent}>{EVENT_NAMES[k.ev]}</span>
-        <Tip label="World ranking">
+        <span className={classes.rankEvent}>{eventName}</span>
+        <Tip label={ranking}>
           <span className={classes.rankKind}>
-            <RankingIcon aria-label="World ranking" />
+            <RankingIcon aria-label={ranking} />
           </span>
         </Tip>
       </span>
@@ -218,14 +240,25 @@ const RankTile = memo<{
         {k.change ? <RankChange value={k.change} /> : null}
       </span>
       <dl className={classes.minis}>
-        <MiniStat label="Race">
+        <MiniStat
+          label={
+            <Trans
+              context="ranking"
+              comment="Short label: the player’s position in the Race to Finals, the season standings that decide who qualifies for the World Tour Finals"
+            >
+              Race
+            </Trans>
+          }
+        >
           {formatRank(k.race?.rank)}
           {k.race && <RaceQualifier rank={k} long />}
         </MiniStat>
         <MiniStat
-          label="Career best"
-          sub={high?.weeks ? `for ${plural(high.weeks, 'week')}` : undefined}
-          subTip={high?.weeks && high.weeks > 1 ? WEEKS_AT_BEST_TIP : undefined}
+          label={
+            <Trans comment="Short label: the player’s highest ever world ranking in this discipline">Career best</Trans>
+          }
+          sub={weeks ? i18n._({ ...WEEKS_AT_BEST, values: { weeks } }) : undefined}
+          subTip={weeks && weeks > 1 ? i18n._(WEEKS_AT_BEST_TIP) : undefined}
         >
           {formatRank(high?.rank)}
         </MiniStat>
@@ -235,34 +268,59 @@ const RankTile = memo<{
 });
 
 const StatBar = memo<{ career: CareerView; prize: string; ready: boolean }>(({ career, prize, ready }) => {
+  const { t } = useLingui();
   const cells = useMemo((): Cell[] => {
     const first = career.seasons.at(-1)?.year;
     const last = career.seasons[0]?.year;
     const list: Cell[] = [];
     if (first && last)
       list.push(
-        { key: 'titles', label: 'Titles', value: career.counts.gold },
-        { key: 'finals', label: 'Finals', value: finalsOf(career) },
+        {
+          key: 'titles',
+          label: t({ message: 'Titles', comment: 'Career stat: number of tournaments won' }),
+          value: career.counts.gold,
+        },
+        {
+          key: 'finals',
+          label: t({
+            message: 'Finals',
+            context: 'stat',
+            comment: 'Career stat: number of tournament finals reached, won or lost',
+          }),
+          value: finalsOf(career),
+        },
         {
           key: 'rate',
-          label: 'Win rate',
+          label: t({ message: 'Win rate', comment: 'Stat label: share of matches won, as a percentage' }),
           value: winRate(career.wins, career.losses),
-          sub: `${career.wins}–${career.losses}`,
+          sub: formatRecord(career.wins, career.losses),
         },
-        { key: 'seasons', label: 'Seasons', value: career.seasons.length, sub: yearRange(first, last) },
+        {
+          key: 'seasons',
+          label: t({ message: 'Seasons', comment: 'Career stat: number of World Tour seasons played' }),
+          value: career.seasons.length,
+          sub: yearRange(first, last),
+        },
       );
-    if (prize) list.push({ key: 'prize', label: 'Prize money', value: prize });
+    if (prize)
+      list.push({
+        key: 'prize',
+        label: t({ message: 'Prize money', comment: 'Career stat: total prize money earned' }),
+        value: prize,
+      });
     return list;
-  }, [career, prize]);
+  }, [career, prize, t]);
   if (ready && !cells.length) return null;
   return (
     <dl className={classes.stats}>
-      <span className={clsx(shared.label, classes.statsLabel)}>Career</span>
+      <span className={clsx(shared.label, classes.statsLabel)}>
+        <Trans comment="Heading of the player’s career stats bar">Career</Trans>
+      </span>
       {!ready &&
         STAT_SKELETON.map((i) => <Skeleton key={i} height={58} radius={10} className={classes.statSkeleton} />)}
       {ready &&
         cells.map((c) => (
-          <div key={c.key} className={classes.stat}>
+          <div key={c.key} className={classes.stat} data-key={c.key}>
             <dt className={shared.label}>{c.label}</dt>
             <dd className={clsx(utils.figure, classes.statValue)}>{c.value}</dd>
             {c.sub && <dd className={classes.statSub}>{c.sub}</dd>}

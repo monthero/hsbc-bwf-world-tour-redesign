@@ -35,9 +35,10 @@ A pre-commit hook, installed automatically by `pnpm install`, formats and checks
 ```sh
 pnpm typecheck
 pnpm exec vp check
+pnpm i18n:check
 ```
 
-`vp check` ([Vite+](https://viteplus.dev)) runs Oxfmt, Oxlint and type-aware checks in one go. The same checks run on every pull request.
+`vp check` ([Vite+](https://viteplus.dev)) runs Oxfmt, Oxlint and type-aware checks in one go. The same checks run on every pull request, which also fails if the translation catalogs are out of date (see [Translations](#translations)).
 
 Then check your change in the browser, **on desktop and at phone width (390px)**. The site is designed phone-first, so a change that only works on desktop isn't finished.
 
@@ -66,7 +67,10 @@ In the pull request description, say what you changed and why. For visual change
 ## Translations
 
 - All visible text goes through [Lingui](https://lingui.dev): `Trans` and `useLingui` from `@lingui/react/macro`, and `msg` from `@lingui/core/macro` for text defined outside components.
-- After adding or changing text, run `pnpm i18n:extract` to update the catalogs in `src/locales`.
+- Never put `plural()`/`select()` inside a `message:` property, alone or in a template literal: the build compiles it to the wrong id. Write the ICU string in `msg()` and pass the values at render time (`i18n._({ ...MESSAGE, values })`); `pnpm build` fails on ids missing from the catalog (`pnpm i18n:ids`).
+- After adding or changing text, run `pnpm i18n:extract` to update the catalogs in `src/locales`, and commit them. Pull requests fail if running it would change them, so also run it after editing a catalog in a PO editor.
+- `pnpm i18n:check` lists, per language, how many messages are translated, and fails when a translation doesn't match the English text: invalid ICU syntax, a missing or unknown `{placeholder}`, a plural or select that is gone or has no `other` case, or different `<0>…</0>` tags.
+- Pull requests also fail when a translation is missing. Run `pnpm i18n:check --fail-on-missing` to list them. If you add or change English text and can't translate it, say so in the pull request and a maintainer will help.
 - When translating, check where each text appears on the site, so the translation fits its context.
 - If you're a native speaker and spot an awkward translation, a pull request that fixes it is very welcome.
 

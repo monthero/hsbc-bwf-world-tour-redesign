@@ -189,6 +189,7 @@ export interface StatItem {
   unit?: string;
   inline?: string;
   sub?: string;
+  date?: string;
 }
 
 export interface FactItem {
@@ -197,6 +198,7 @@ export interface FactItem {
   value: string;
   unit?: string;
   sub?: string;
+  lang?: 'en';
 }
 
 export interface BioView {

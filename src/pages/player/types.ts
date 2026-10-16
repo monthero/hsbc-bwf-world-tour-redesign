@@ -18,7 +18,8 @@ export type PlayerSearch = z.infer<typeof PlayerSearch>;
 export interface BreakdownItem {
   key: string;
   name: string;
-  yearWeek: string;
+  year: number;
+  week: number;
   result: number;
   points: number;
   counted: boolean;

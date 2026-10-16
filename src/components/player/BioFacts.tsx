@@ -6,8 +6,6 @@ import { FactLabel, FactTip } from './FactLabel';
 
 import classes from './BioFacts.module.css';
 
-const BORN_PREFIX = /^Born /;
-
 type TileSize = 'sm' | 'md';
 
 const Tile: FC<{ id?: string; label: string; size: TileSize; tone: 'plain' | 'tile'; children: ReactNode }> = ({
@@ -35,7 +33,7 @@ export const BioStat = memo<{ item: StatItem; size?: TileSize }>(({ item: s, siz
         {s.unit && <span className={classes.unit}>{s.unit}</span>}
         {s.inline && <span className={classes.inline}>{size === 'sm' ? `(${s.inline})` : s.inline}</span>}
       </span>
-      {s.sub && <span className={classes.sub}>{size === 'sm' ? s.sub.replace(BORN_PREFIX, '') : s.sub}</span>}
+      {s.sub && <span className={classes.sub}>{size === 'sm' ? (s.date ?? s.sub) : s.sub}</span>}
     </Tile>
   );
 });
@@ -46,10 +44,13 @@ export const FactTile = memo<{
   value: ReactNode;
   size?: TileSize;
   tone?: 'plain' | 'tile';
-}>(({ id, label, value, size = 'md', tone = 'tile' }) => {
+  lang?: 'en';
+}>(({ id, label, value, size = 'md', tone = 'tile', lang }) => {
   return (
     <Tile id={id} label={label} size={size} tone={tone}>
-      <span className={classes.value}>{value}</span>
+      <span className={classes.value} lang={lang}>
+        {value}
+      </span>
     </Tile>
   );
 });

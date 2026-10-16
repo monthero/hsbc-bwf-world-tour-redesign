@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
@@ -7,6 +9,7 @@ import { AvatarGroup, SeedTag } from '~/components/player';
 import { Medal } from '~/components/tournament';
 import { SectionTitle, Tip } from '~/components/ui';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
+import { DARK_SCOPE_PROPS } from '~/theme';
 import type { EventCode, PlayerDirectory, Team } from '~/types';
 import { formatRank } from '~/utils/format';
 import { playerPhoto } from '~/utils/players';
@@ -24,9 +27,19 @@ const LINE_AVATAR = 32;
 
 const LINE_CROP = 96;
 
-const MISSING_TIP = 'Withdrew, or their matches are missing from this data';
+const MISSING_TIP = msg({
+  message: 'Withdrew, or their matches are missing from this data',
+  comment: 'Tooltip on a seed with no matches in the How the seeds did card',
+});
 
-const RANK_TIP = 'Current BWF World Ranking in this category';
+const RANK_TIP = msg({
+  message: 'Current BWF World Ranking in this category',
+  comment: 'Tooltip on a medalist’s world rank. Category means the event, e.g. men’s singles',
+});
+
+const TBD = (
+  <Trans comment="Podium place whose winner isn’t known yet because the match hasn’t been played">To be decided</Trans>
+);
 
 interface PlaceProps {
   place: PodiumPlace;
@@ -35,12 +48,16 @@ interface PlaceProps {
 }
 
 const WorldRank: FC<{ team: Team; event: EventCode; dir: PlayerDirectory | undefined }> = ({ team, event, dir }) => {
+  const { i18n } = useLingui();
   const rank = worldRank(dir, team.players, event);
   if (!rank) return null;
+  const position = formatRank(rank);
   return (
-    <Tip label={RANK_TIP}>
+    <Tip label={i18n._(RANK_TIP)}>
       <span className={classes.rank}>
-        World rank <b>{formatRank(rank)}</b>
+        <Trans comment="A medalist’s current world ranking, e.g. “World rank #3”">
+          World rank <b>{position}</b>
+        </Trans>
       </span>
     </Tip>
   );
@@ -61,7 +78,12 @@ const ChampionBlock: FC<PlaceProps> = ({ place: p, event, dir }) => {
   const countries = team ? [...new Set(team.players.map((pl) => pl.cc))] : [];
   const photos = !!team?.players.some((pl) => playerPhoto(dir, pl.id).src);
   return (
-    <div className={classes.hero} data-decided={team ? true : undefined} data-photos={photos || undefined}>
+    <div
+      className={classes.hero}
+      data-decided={team ? true : undefined}
+      data-photos={photos || undefined}
+      {...(photos ? DARK_SCOPE_PROPS : undefined)}
+    >
       {photos && team && <ChampionPhotos players={team.players} />}
       <div className={classes.heroTop}>
         <span className={classes.heroLabel}>
@@ -90,7 +112,7 @@ const ChampionBlock: FC<PlaceProps> = ({ place: p, event, dir }) => {
           <WorldRank team={team} event={event} dir={dir} />
         </>
       ) : (
-        <span className={classes.tbd}>To be decided</span>
+        <span className={classes.tbd}>{TBD}</span>
       )}
     </div>
   );
@@ -114,7 +136,7 @@ const PlaceList: FC<PlaceProps> = ({ place: p, event, dir }) => {
       ) : (
         <div className={classes.line}>
           <PlaceMedal place={p} size={16} />
-          <span className={classes.tbd}>To be decided</span>
+          <span className={classes.tbd}>{TBD}</span>
           <span className={classes.linePrize}>{p.prize}</span>
         </div>
       )}
@@ -123,6 +145,7 @@ const PlaceList: FC<PlaceProps> = ({ place: p, event, dir }) => {
 };
 
 const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
+  const { i18n } = useLingui();
   return (
     <div className={classes.seed} data-tone={s.team ? s.tone : 'missing'}>
       <SeedTag seed={s.seed} className={classes.seedNum} />
@@ -136,20 +159,22 @@ const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
           </Tip>
         </>
       ) : (
-        <Tip label={MISSING_TIP}>
-          <span className={classes.missing}>Not in the data</span>
+        <Tip label={i18n._(MISSING_TIP)}>
+          <span className={classes.missing}>
+            <Trans comment="A seeded player or pair missing from the tournament data">Not in the data</Trans>
+          </span>
         </Tip>
       )}
     </div>
   );
 };
 
-const CardHead: FC<{ data: PodiumEvent; note: string }> = ({ data, note }) => {
+const CardHead: FC<{ data: PodiumEvent; note?: string }> = ({ data, note }) => {
   return (
     <div className={classes.head}>
       <EventTag event={data.event} tip={false} />
       <span className={classes.name}>{data.name}</span>
-      <span className={classes.note}>{note}</span>
+      {note && <span className={classes.note}>{note}</span>}
     </div>
   );
 };
@@ -161,7 +186,7 @@ const MedalCard = memo<{ data: PodiumEvent; dir: PlayerDirectory | undefined }>(
       <CardHead data={e} note={e.when} />
       {champion && <ChampionBlock place={champion} event={e.event} dir={dir} />}
       {rest.map((p) => (
-        <PlaceList key={p.label} place={p} event={e.event} dir={dir} />
+        <PlaceList key={p.medal} place={p} event={e.event} dir={dir} />
       ))}
     </div>
   );
@@ -177,7 +202,15 @@ const SeedCard = memo<{ data: PodiumEvent; hasMatches: boolean }>(({ data: e, ha
         ))}
         {!e.seeds.length && (
           <div className={classes.noSeeds}>
-            {hasMatches ? 'Not in today’s data' : 'Seeds appear once the draw is out'}
+            {hasMatches ? (
+              <Trans comment="How the seeds did card: none of this event’s seeds are in today’s match data">
+                Not in today’s data
+              </Trans>
+            ) : (
+              <Trans comment="How the seeds did card before the draw (bracket) is published. Seeds are the top-ranked entries, placed apart in the draw">
+                Seeds appear once the draw is out
+              </Trans>
+            )}
           </div>
         )}
       </div>
@@ -192,7 +225,11 @@ export const PodiumTab: FC<TabProps> = ({ tournament, schedule }) => {
   return (
     <div className={clsx(utils.container, page.tabSection, classes.tab)}>
       <section className={classes.section}>
-        <SectionTitle>Medalists</SectionTitle>
+        <SectionTitle>
+          <Trans comment="Podium tab section: the champion, runner-up and semi-finalists of each event">
+            Medalists
+          </Trans>
+        </SectionTitle>
         <div className={page.eventGridWrap}>
           <div className={page.eventGrid}>
             {events.map((e) => (
@@ -202,7 +239,11 @@ export const PodiumTab: FC<TabProps> = ({ tournament, schedule }) => {
         </div>
       </section>
       <section className={classes.section}>
-        <SectionTitle>How the seeds did</SectionTitle>
+        <SectionTitle>
+          <Trans comment="Podium tab section: how far each seeded (top-ranked) player or pair got in each event">
+            How the seeds did
+          </Trans>
+        </SectionTitle>
         <div className={page.eventGridWrap}>
           <div className={page.eventGrid}>
             {events.map((e) => (

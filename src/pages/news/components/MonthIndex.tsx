@@ -1,3 +1,5 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { memo, useCallback, useState } from 'react';
 
@@ -6,28 +8,41 @@ import { monthOf } from '~/utils/dates';
 
 import { SKELETON_COUNT } from '../constants';
 import type { ArchiveMonth, ArchiveYear, PickMonth } from '../types';
-import { MONTH_SHORT, storiesLabel } from '../utils';
+import { monthShort } from '../utils';
 
 import classes from './MonthIndex.module.css';
 import utils from '~/styles/utils.module.css';
 
 const SLOTS = Array.from({ length: SKELETON_COUNT.rail }, (_, i) => i);
 
+const MONTH_LABEL = msg({
+  message: '{count, plural, one {{label}, # story} other {{label}, # stories}}',
+  comment: 'Screen-reader label for a month in the news archive picker: {label} is a month and year',
+});
+
+const MONTH_TIP = msg({
+  message: '{count, plural, one {{label} · # story} other {{label} · # stories}}',
+  comment: 'Tooltip on a month in the news archive picker: {label} is a month and year',
+});
+
 const MonthCell = memo<{ month: ArchiveMonth | null; slot: number; active: boolean; onPick: PickMonth }>(
   ({ month, slot, active, onPick }) => {
+    const { i18n } = useLingui();
     const onClick = useCallback(() => month && onPick(month.key), [onPick, month]);
+    const label = month?.label;
+    const count = month?.count ?? 0;
     return (
       <FilterChip
         size="sm"
         active={active}
         disabled={!month}
         aria-current={active || undefined}
-        aria-label={month ? `${month.label}, ${storiesLabel(month.count)}` : undefined}
-        tip={month ? `${month.label} · ${storiesLabel(month.count)}` : undefined}
+        aria-label={month ? i18n._({ ...MONTH_LABEL, values: { count, label } }) : undefined}
+        tip={month ? i18n._({ ...MONTH_TIP, values: { count, label } }) : undefined}
         className={classes.month}
         onClick={onClick}
       >
-        {MONTH_SHORT[slot]}
+        {monthShort(slot)}
       </FilterChip>
     );
   },

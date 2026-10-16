@@ -42,7 +42,7 @@ const linksByItems = weakCached((items: readonly MediaItem[]) =>
       ...linked,
       courts: courtStreams(items),
       courtVods,
-      replays: matchReplays(linked.byMatch, courtVods, matches),
+      replays: matchReplays(linked.byMatch, matches),
     };
   }),
 );

@@ -8,17 +8,22 @@
 
 .eventTag {
   background: alpha(var(--event), 0.22);
+  box-shadow: 0 1px 2px alpha(var(--bwf-shadow-ink), 0.45);
   color: var(--event-text);
+
+  @mixin dark {
+    box-shadow: none;
+  }
 }
 
 .note {
   &[data-tone='violet'] {
-    background: alpha(var(--mantine-color-violet-5), 0.22);
-    color: var(--mantine-color-violet-2);
+    background: light-dark(var(--mantine-color-iris-1), alpha(var(--mantine-color-violet-5), 0.22));
+    color: light-dark(var(--mantine-color-iris-6), var(--mantine-color-violet-2));
   }
 
   &[data-tone='sky'] {
-    background: alpha(var(--mantine-color-sky-5), 0.2);
-    color: var(--mantine-color-sky-2);
+    background: light-dark(var(--bwf-blue-tint), alpha(var(--mantine-color-sky-5), 0.2));
+    color: light-dark(var(--bwf-blue), var(--mantine-color-sky-2));
   }
 }

@@ -1,7 +1,12 @@
+import { msg } from '@lingui/core/macro';
+
 import { OFFICIAL_URL } from '~/components/layout/links';
 
-export const NEWS_TITLE = 'World Tour News';
-export const NEWS_META = 'Match reports, previews and stats from every stop on the Tour';
+export const NEWS_TITLE = msg({ message: 'World Tour News', comment: 'Main heading of the news page' });
+export const NEWS_META = msg({
+  message: 'Match reports, previews and stats from every stop on the Tour',
+  comment: 'Subtitle under the news page heading; “stop” means a tournament on the World Tour',
+});
 export const OFFICIAL_NEWS_URL = `${OFFICIAL_URL}/news/`;
 
 export const LATEST_COUNT = 5;

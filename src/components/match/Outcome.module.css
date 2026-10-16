@@ -16,22 +16,22 @@
     transition: filter 0.15s;
 
     &:hover {
-      filter: brightness(1.3);
+      filter: light-dark(brightness(0.95), brightness(1.3));
     }
   }
 
   &[data-outcome='W'] {
-    background: alpha(var(--bwf-green), 0.14);
-    color: var(--bwf-green);
+    background: var(--bwf-win-tint);
+    color: var(--bwf-win);
   }
 
   &[data-outcome='L'] {
-    background: alpha(var(--bwf-red-text), 0.13);
-    color: var(--bwf-red-text);
+    background: var(--bwf-loss-bg);
+    color: var(--bwf-loss);
   }
 
   &[data-outcome='Live'] {
-    background: alpha(var(--bwf-blue), 0.16);
+    background: var(--bwf-blue-tint);
     color: var(--bwf-blue);
   }
 
@@ -54,14 +54,6 @@
     height: 20px;
     border-radius: 50%;
     font-size: 10px;
-
-    &[data-outcome='W'] {
-      background: alpha(var(--bwf-green), 0.18);
-    }
-
-    &[data-outcome='L'] {
-      background: alpha(var(--bwf-red-text), 0.16);
-    }
   }
 
   &[data-variant='pill'] {
@@ -69,12 +61,8 @@
     border-radius: 6px;
     font-size: 11px;
 
-    &[data-outcome='W'] {
-      background: alpha(var(--bwf-green), 0.16);
-    }
-
     &[data-outcome='L'] {
-      background: alpha(var(--mantine-color-white), 0.05);
+      background: light-dark(var(--bwf-raised), alpha(var(--mantine-color-white), 0.05));
       color: var(--bwf-faint);
     }
   }

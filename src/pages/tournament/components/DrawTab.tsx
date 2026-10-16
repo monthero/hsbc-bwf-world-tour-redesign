@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { useCallback, useMemo, type FC } from 'react';
@@ -28,6 +29,7 @@ export const DrawTab: FC<TabProps> = ({ tournament, schedule, draw }) => {
   const mobile = useIsMobile();
 
   const live = tournament.status === 'live';
+  const event = EVENT_NAMES[ev];
   const has = useMemo(() => hasDraw(schedule, draw, ev), [schedule, draw, ev]);
   const bracket = useMemo(() => (has ? buildBracket(schedule, draw, ev, live) : null), [has, schedule, draw, ev, live]);
 
@@ -38,7 +40,11 @@ export const DrawTab: FC<TabProps> = ({ tournament, schedule, draw }) => {
     <section className={clsx(utils.container, page.tabSection, classes.section)}>
       <Segmented options={EVENT_OPTIONS} value={ev} onChange={onEvent} maxWidth={420} center />
       {!bracket ? (
-        <EmptyState>{EVENT_NAMES[ev]} isn’t in today’s order of play data yet.</EmptyState>
+        <EmptyState>
+          <Trans comment="Draw tab empty state. {event} is an event name, e.g. Men’s singles. The order of play is the daily match schedule">
+            {event} isn’t in today’s order of play data yet.
+          </Trans>
+        </EmptyState>
       ) : (
         <FlagTipGroup>
           {mobile ? (

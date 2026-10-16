@@ -1,3 +1,4 @@
+import { useLingui } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { useMemo, type FC } from 'react';
 
@@ -29,6 +30,7 @@ const cardKicker = (live: boolean, upcoming: boolean) => {
 export const Spotlight: FC = () => {
   const { data } = useTournaments(SEASON_YEAR);
   const isMobile = useIsMobile();
+  const { i18n } = useLingui();
   const season = useMemo(() => (data ? summarize(data, SEASON_YEAR) : undefined), [data]);
   const titles = useMemo(() => (data ? titlesSummary(data, TITLES_TOP_N) : undefined), [data]);
   const opener = useSeasonEdge(SEASON_YEAR + 1, !!season && !season.target)?.[0];
@@ -40,7 +42,9 @@ export const Spotlight: FC = () => {
   const heading = season.done === season.total ? TITLES_HEADING.complete : TITLES_HEADING.running;
   return (
     <div className={classes.grid}>
-      {showCard && <TournamentCard tournament={card} isNext={!live} link kicker={cardKicker(!!live, !!target)} />}
+      {showCard && (
+        <TournamentCard tournament={card} isNext={!live} link kicker={i18n._(cardKicker(!!live, !!target))} />
+      )}
       {finals && <FinaleCard tournament={finals} compact className={classes.finale} />}
       {showTitles && <TitlesSoFar summary={titles} heading={heading} />}
     </div>

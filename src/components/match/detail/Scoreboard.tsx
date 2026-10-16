@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useQuery } from '@tanstack/react-query';
 import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react';
 
@@ -49,7 +50,9 @@ const Status: FC<{ match: Match }> = ({ match: m }) => {
       <>
         <span className={classes.sbLive}>
           <LiveDot pulse />
-          Live
+          <Trans context="match status" comment="Scoreboard status: the match is being played right now">
+            Live
+          </Trans>
         </span>
         {chip && <StatusChip tone={chip.tone}>{chip.label}</StatusChip>}
       </>
@@ -58,7 +61,11 @@ const Status: FC<{ match: Match }> = ({ match: m }) => {
   if (m.status === 'F')
     return (
       <>
-        <span className={classes.sbState}>Final</span>
+        <span className={classes.sbState}>
+          <Trans context="match status" comment="Scoreboard status: the match has finished and this is the final score">
+            Final
+          </Trans>
+        </span>
         <MatchNote match={m} form="long" />
       </>
     );
@@ -66,10 +73,12 @@ const Status: FC<{ match: Match }> = ({ match: m }) => {
     <span className={classes.sbState}>
       {m.time ? (
         <>
-          Not before <MatchTime match={m} className={classes.sbTime} />
+          <Trans comment="Scoreboard status for a scheduled match: it starts at this time or later, e.g. “Not before 14:30”">
+            Not before <MatchTime match={m} className={classes.sbTime} />
+          </Trans>
         </>
       ) : (
-        'Time to be announced'
+        <Trans>Time to be announced</Trans>
       )}
     </span>
   );
@@ -91,9 +100,20 @@ const SideRow = memo<{
   const leading = !!m.current && m.current[side] > m.current[opposite(side)];
   const before = useCallback((p: Player) => <SideAvatar player={p} size={avatar} />, [avatar]);
   const after = useCallback((p: Player) => p.id === server && <ServeMark />, [server]);
+  const { t } = useLingui();
   let aside = null;
   if (serving) aside = <ServeMark />;
-  else if (result === 'won') aside = <IconCheck className={classes.check} aria-label="Winner" />;
+  else if (result === 'won')
+    aside = (
+      <IconCheck
+        className={classes.check}
+        aria-label={t({
+          message: 'Winner',
+          context: 'match',
+          comment: 'Check mark beside the side that won the match',
+        })}
+      />
+    );
   return (
     <div className={classes.sbRow} data-side={side} data-result={result} data-lead={leading || undefined}>
       <div className={classes.sbSide}>
@@ -134,6 +154,7 @@ export const Scoreboard = memo<{ match: Match; tournament: Tournament; className
     const server = useServer(tournament, m);
     const games = useMemo(() => allGames(m), [m]);
     const now = m.status === 'P' && m.current ? m.games.length : -1;
+    const { t } = useLingui();
     const avatar = AVATARS[isDoubles(m.event) ? 'pair' : 'single'][mobile ? 0 : 1];
     const cols = useMemo(
       () =>
@@ -143,7 +164,10 @@ export const Scoreboard = memo<{ match: Match; tournament: Tournament; className
       [games, now],
     );
     return (
-      <section className={className} aria-label="Score">
+      <section
+        className={className}
+        aria-label={t({ message: 'Score', comment: 'Accessible name of the match scoreboard' })}
+      >
         <div className={classes.sbHead}>
           <span className={classes.sbStatus}>
             <Status match={m} />
@@ -154,11 +178,14 @@ export const Scoreboard = memo<{ match: Match; tournament: Tournament; className
           {games.length > 0 && (
             <div className={classes.sbRow} data-head>
               <span />
-              {games.map((_, i) => (
-                <span key={i} className={classes.sbColHead} data-now={i === now || undefined}>
-                  G{i + 1}
-                </span>
-              ))}
+              {games.map((_, i) => {
+                const game = i + 1;
+                return (
+                  <span key={i} className={classes.sbColHead} data-now={i === now || undefined}>
+                    {t({ message: `G${game}`, comment: 'Scoreboard column header: short for Game 1, Game 2, Game 3' })}
+                  </span>
+                );
+              })}
             </div>
           )}
           {SIDES.map((s) => (

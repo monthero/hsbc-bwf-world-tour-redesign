@@ -140,14 +140,14 @@
 }
 
 .high {
-  fill: var(--bwf-gold);
+  fill: var(--bwf-medal-gold);
 }
 
 .end {
   fill: var(--bwf-faint);
 
   &[data-high] {
-    fill: var(--bwf-gold);
+    fill: var(--bwf-medal-gold);
   }
 
   &[data-live] {

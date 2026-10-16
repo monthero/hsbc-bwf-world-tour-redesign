@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro';
 import { useMediaQuery } from '@mantine/hooks';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -6,6 +7,7 @@ import { memo, useCallback, useEffect, useLayoutEffect, useState, type CSSProper
 import { LogoTile } from '~/components/tournament';
 import { IconButton, IconNext, IconSettings, ShuttleIcon } from '~/components/ui';
 import { useLiveAndNext } from '~/hooks/useTournaments';
+import { DARK_SCOPE_PROPS } from '~/theme';
 import type { Tournament } from '~/types';
 import { isLive, tournamentLink } from '~/utils/tournaments';
 
@@ -61,6 +63,7 @@ const useTopBelowHeader = (open: boolean, triggerId: string, dialog: HTMLElement
 
 const Box = memo<{ entry: NavItem; index: number; onNavigate: () => void }>(({ entry, index, onNavigate }) => {
   const active = useSectionActive(entry.item);
+  const { i18n } = useLingui();
   const Glyph = entry.glyph;
   return (
     <Link
@@ -79,8 +82,8 @@ const Box = memo<{ entry: NavItem; index: number; onNavigate: () => void }>(({ e
           <span className={classes.index}>{entry.index}</span>
         </span>
       </span>
-      <span className={classes.label}>{entry.item.label}</span>
-      <span className={classes.blurb}>{entry.blurb}</span>
+      <span className={classes.label}>{i18n._(entry.item.label)}</span>
+      <span className={classes.blurb}>{i18n._(entry.blurb)}</span>
     </Link>
   );
 });
@@ -95,7 +98,7 @@ const NetCard = memo<{ tournament: Tournament; onNavigate: () => void }>(({ tour
     <LogoTile src={t.logo} size={36} name={t.name} className={classes.logo} />
     <span className={classes.cardBody}>
       <StatusKicker tournament={t} />
-      <span className={clsx(utils.ellipsis, classes.name)}>{t.heading}</span>
+      <span className={clsx(utils.ellipsis, utils.bidiAuto, classes.name)}>{t.heading}</span>
     </span>
     <IconNext size={18} className={classes.arrow} />
   </Link>
@@ -104,9 +107,13 @@ const NetCard = memo<{ tournament: Tournament; onNavigate: () => void }>(({ tour
 const Court = memo<{ onNavigate: () => void }>(({ onNavigate }) => {
   const { live, next } = useLiveAndNext();
   const spot = live ?? next;
+  const { t } = useLingui();
   return (
     <div className={classes.court}>
-      <nav aria-label="Main" className={classes.surface}>
+      <nav
+        aria-label={t({ message: 'Main', comment: 'Accessible name of the main site navigation' })}
+        className={classes.surface}
+      >
         {COURT_LINES.map((l) => (
           <span key={l.id} className={classes.line} data-dir={l.dir} style={l.style} />
         ))}
@@ -129,6 +136,7 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
     const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
     const [settings, setSettings] = useState(false);
     const desktop = useMediaQuery(DESKTOP_QUERY);
+    const { t } = useLingui();
     useScrollLock(modal && !contained && !desktop);
     useTopBelowHeader(open, triggerId, dialog);
 
@@ -142,7 +150,7 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
     }, [triggerId]);
 
     return (
-      <div ref={trap} className={classes.scope}>
+      <div ref={trap} className={classes.scope} {...DARK_SCOPE_PROPS}>
         <MenuButton
           id={triggerId}
           controls={id}
@@ -156,7 +164,7 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
           ref={setDialog}
           id={id}
           aria-modal={modal || undefined}
-          aria-label="Menu"
+          aria-label={t({ message: 'Menu', comment: 'Accessible name of the site navigation menu' })}
           className={classes.overlay}
           data-shown={open || undefined}
           data-contained={contained || undefined}
@@ -166,10 +174,12 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
             <Court onNavigate={close} />
             <div className={classes.foot}>
               <div className={classes.footHead}>
-                <span className={classes.footLabel}>Follow BWF</span>
+                <span className={classes.footLabel}>
+                  <Trans comment="Menu heading above BWF social media links">Follow BWF</Trans>
+                </span>
                 <span className={classes.footActions}>
                   <DevLinks variant="ghost" buttonClassName={classes.settings} onNavigate={close} />
-                  <IconButton label="Settings" className={classes.settings} onClick={openSettings}>
+                  <IconButton label={t`Settings`} className={classes.settings} onClick={openSettings}>
                     <IconSettings size={18} />
                   </IconButton>
                 </span>

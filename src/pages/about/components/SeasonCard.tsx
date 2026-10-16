@@ -1,15 +1,16 @@
+import { msg } from '@lingui/core/macro';
+import { useLingui } from '@lingui/react/macro';
 import { getRouteApi } from '@tanstack/react-router';
-import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState } from 'react';
 
-import { SectionTitle } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import type { Level, Tournament } from '~/types';
 import { isHeld } from '~/utils/tournaments';
 
 import { LEGEND_LEVELS } from '../constants';
 import { SeasonStatus, type SeasonFocus } from '../types';
-import { filterSeason, nearestShown, toggleShown } from '../utils';
+import { filterSeason, homeView, nearestShown, toggleShown } from '../utils';
+import { SeasonFrame } from './SeasonFrame';
 import { SeasonLegend } from './SeasonLegend';
 import { SeasonMap } from './SeasonMap';
 import { SeasonStrip } from './SeasonStrip';
@@ -17,18 +18,23 @@ import { SeasonWheel } from './SeasonWheel';
 import { SelectedEvent } from './SelectedEvent';
 
 import classes from './SeasonCard.module.css';
-import utils from '~/styles/utils.module.css';
 
 const route = getRouteApi('/about');
+
+const COMPLETED = msg({
+  message: '{total, plural, one {{done} of # completed} other {{done} of # completed}}',
+  comment: 'About page season card: {done} tournaments finished out of the season’s total',
+});
 
 export const SeasonCard = memo<{ tournaments: Tournament[]; year: number; focus: SeasonFocus }>(
   ({ tournaments, year, focus }) => {
     const isMobile = useIsMobile();
+    const { i18n } = useLingui();
     const { levels, status } = route.useSearch();
     const navigate = route.useNavigate();
     const [code, setCode] = useState<string | null>(null);
     const shown = useMemo(() => filterSeason(tournaments, focus, levels, status), [tournaments, focus, levels, status]);
-    const picked = code ? tournaments.find((t) => t.code === code) : undefined;
+    const picked = code ? tournaments.find((e) => e.code === code) : undefined;
     const hovered = picked && shown.includes(picked) ? picked : undefined;
     const selected = useMemo(
       () => (isMobile ? nearestShown(tournaments, shown, picked ?? focus.focus) : undefined),
@@ -36,7 +42,9 @@ export const SeasonCard = memo<{ tournaments: Tournament[]; year: number; focus:
     );
     const active = isMobile ? selected : hovered;
     const held = useMemo(() => tournaments.filter(isHeld), [tournaments]);
-    const done = held.filter((t) => t.status === 'done').length;
+    const home = useMemo(() => homeView(tournaments, focus), [tournaments, focus]);
+    const done = held.filter((e) => e.status === 'done').length;
+    const total = held.length;
     const onLevel = useCallback(
       (l: Level) =>
         void navigate({
@@ -64,10 +72,16 @@ export const SeasonCard = memo<{ tournaments: Tournament[]; year: number; focus:
       />
     );
     return (
-      <section className={clsx(utils.card, classes.card)} aria-label={`${year} season map`}>
-        <SectionTitle count={`${done} of ${held.length} completed`}>{`${year} season`}</SectionTitle>
+      <SeasonFrame year={year} className={classes.card} count={i18n._({ ...COMPLETED, values: { total, done } })}>
         <div className={classes.mapWrap}>
-          <SeasonMap tournaments={shown} focus={focus} active={active} interactive={!isMobile} onActive={setCode} />
+          <SeasonMap
+            tournaments={shown}
+            focus={focus}
+            home={home}
+            active={active}
+            interactive={!isMobile}
+            onActive={setCode}
+          />
           {!isMobile && legend}
         </div>
         {isMobile && legend}
@@ -79,7 +93,7 @@ export const SeasonCard = memo<{ tournaments: Tournament[]; year: number; focus:
         ) : (
           <SeasonStrip tournaments={shown} year={year} focus={focus} active={hovered} onActive={setCode} />
         )}
-      </section>
+      </SeasonFrame>
     );
   },
 );

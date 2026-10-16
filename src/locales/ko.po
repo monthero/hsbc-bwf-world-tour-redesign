@@ -7,49 +7,525 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ko\n"
 
+#. A quotation; use your language’s quotation marks
+#: src/components/player/PlayerHoverCard.tsx
+msgid "“{ambition}”"
+msgstr "“{ambition}”"
+
 #: src/components/layout/SiteFooter.tsx
+#: src/components/layout/SiteLink.tsx
 msgid "(opens in a new tab)"
-msgstr ""
+msgstr "(새 탭에서 열림)"
+
+#. Calendar header: number of this season’s tournaments that were cancelled
+#: src/pages/calendar/components/Hero.tsx
+msgid "{cancelled, plural, one {# cancelled} other {# cancelled}}"
+msgstr "{cancelled, plural, other {#개 취소}}"
+
+#. Tooltip on a month in the news archive picker: {label} is a month and year
+#: src/pages/news/components/MonthIndex.tsx
+msgid "{count, plural, one {{label} · # story} other {{label} · # stories}}"
+msgstr "{count, plural, other {{label} · 기사 #건}}"
+
+#. Screen-reader label for a month in the news archive picker: {label} is a month and year
+#: src/pages/news/components/MonthIndex.tsx
+msgid "{count, plural, one {{label}, # story} other {{label}, # stories}}"
+msgstr "{count, plural, other {{label}, 기사 #건}}"
+
+#. Screen-reader label for a tier card on the About page that opens the calendar filtered to that level; {name} is a tier such as “Super 1000”
+#: src/pages/about/components/TierLadder.tsx
+msgid "{count, plural, one {{name}: # event in the calendar} other {{name}: # events in the calendar}}"
+msgstr "{count, plural, other {{name}: 일정에 있는 대회 #개}}"
+
+#. Number of countries, e.g. "11 countries"
+#: src/utils/format.ts
+msgid "{count, plural, one {# country} other {# countries}}"
+msgstr "{count, plural, other {#개국}}"
+
+#. Number of players or pairs entered in a tournament draw, e.g. "32 entries"
+#. Players tab event heading: number of entries (players or pairs)
+#: src/pages/tournament/components/players/DisciplineSection.tsx
+#: src/utils/format.ts
+msgid "{count, plural, one {# entry} other {# entries}}"
+msgstr "{count, plural, other {엔트리 #개}}"
+
+#. Players tab event heading: number of entries (players or pairs) and of seeds, the top-ranked entries placed apart in the draw
+#: src/pages/tournament/components/players/DisciplineSection.tsx
+msgid "{count, plural, one {# entry} other {# entries}} · {seeds, plural, one {# seed} other {# seeds}}"
+msgstr "{count, plural, other {엔트리 #개}} · {seeds, plural, other {시드 #개}}"
+
+#. Number of tournaments in a month of the season calendar
+#. Number of tournaments on a calendar, e.g. "12 events"
+#: src/pages/calendar/components/MonthSection.tsx
+#: src/utils/format.ts
+msgid "{count, plural, one {# event} other {# events}}"
+msgstr "{count, plural, other {대회 #개}}"
+
+#. Calendar header: number of tournaments being played right now
+#: src/pages/calendar/components/Hero.tsx
+msgid "{count, plural, one {# live now} other {# live now}}"
+msgstr "{count, plural, other {#개 대회 진행 중}}"
+
+#. Calendar header on phones: number of tournaments being played right now
+#: src/pages/calendar/components/Hero.tsx
+msgid "{count, plural, one {# live} other {# live}}"
+msgstr "{count, plural, other {#개 진행 중}}"
+
+#. Number of badminton matches, e.g. "12 matches"
+#. Number of matches in a start-time group of the match list
+#: src/pages/tournament/components/matches/MatchGroups.tsx
+#: src/utils/format.ts
+msgid "{count, plural, one {# match} other {# matches}}"
+msgstr "{count, plural, other {#경기}}"
+
+#. Number of times two players or pairs have played each other, e.g. "5 meetings"
+#: src/utils/format.ts
+msgid "{count, plural, one {# meeting} other {# meetings}}"
+msgstr "{count, plural, other {맞대결 #회}}"
+
+#. Number of doubles pairs (two players playing together), e.g. "64 pairs"
+#: src/utils/format.ts
+msgid "{count, plural, one {# pair} other {# pairs}}"
+msgstr "{count, plural, other {#개 조}}"
+
+#. Number of players, e.g. "120 players"
+#: src/utils/format.ts
+msgid "{count, plural, one {# player} other {# players}}"
+msgstr "{count, plural, other {#명}}"
+
+#. Number of rallies (points) played in a badminton match, e.g. "84 points"
+#: src/utils/format.ts
+msgid "{count, plural, one {# point} other {# points}}"
+msgstr "{count, plural, other {#포인트}}"
+
+#. Number of seeded players or pairs, e.g. "8 seeds". A seed is a top-ranked entry placed in the draw so they cannot meet early
+#. Podium tab, How the seeds did card: number of seeded players or pairs in the event
+#: src/pages/tournament/utils.ts
+#: src/utils/format.ts
+msgid "{count, plural, one {# seed} other {# seeds}}"
+msgstr "{count, plural, other {시드 #개}}"
+
+#. Number of news stories published in a month of the news archive
+#. Number of news stories, e.g. "8 stories"
+#: src/pages/news/components/ArchiveRow.tsx
+#: src/utils/format.ts
+msgid "{count, plural, one {# story} other {# stories}}"
+msgstr "{count, plural, other {기사 #건}}"
+
+#. Number of tournament wins (titles), e.g. "3 titles"
+#: src/utils/format.ts
+msgid "{count, plural, one {# title} other {# titles}}"
+msgstr "{count, plural, other {우승 #회}}"
+
+#. Number of tournaments, e.g. "14 tournaments"
+#: src/utils/format.ts
+msgid "{count, plural, one {# tournament} other {# tournaments}}"
+msgstr "{count, plural, other {대회 #개}}"
+
+#. Note under a video list: some YouTube videos are blocked in the visitor’s country and were left out
+#: src/utils/media.ts
+msgid "{count, plural, one {# video not available in your region is hidden. You can show it in Settings.} other {# videos not available in your region are hidden. You can show them in Settings.}}"
+msgstr "{count, plural, other {내 지역에서 볼 수 없는 동영상 #개를 숨겼습니다. 설정에서 표시할 수 있습니다.}}"
+
+#. Number of YouTube videos, e.g. "3 videos"
+#: src/utils/format.ts
+msgid "{count, plural, one {# video} other {# videos}}"
+msgstr "{count, plural, other {동영상 #개}}"
+
+#. Number of weeks, e.g. how long a player held a ranking: "for 12 weeks"
+#: src/utils/format.ts
+msgid "{count, plural, one {# week} other {# weeks}}"
+msgstr "{count, plural, other {#주}}"
+
+#. Countdown to the World Tour Finals, shown under a big number (the count is shown separately), e.g. "12" / "days to go"
+#: src/utils/season.ts
+msgid "{count, plural, one {day to go} other {days to go}}"
+msgstr "{count, plural, other {일 남음}}"
+
+#. About page tier ladder: unit shown under the big number of tournaments at this level
+#: src/pages/about/components/TierLadder.tsx
+msgid "{count, plural, one {event} other {events}}"
+msgstr "{count, plural, other {대회}}"
+
+#. Countdown: the tournament starts in this many days, e.g. "In 5 days"
+#: src/utils/tournaments.ts
+msgid "{count, plural, one {In # day} other {In # days}}"
+msgstr "{count, plural, other {#일 후}}"
+
+#. Button that expands a list to reveal the hidden items
+#: src/components/ui/MoreButton.tsx
+msgid "{count, plural, one {Show # more} other {Show # more}}"
+msgstr "{count, plural, other {#개 더 보기}}"
+
+#. Countdown: the tournament starts in this many days, e.g. "Starts in 5 days"
+#: src/utils/tournaments.ts
+msgid "{count, plural, one {Starts in # day} other {Starts in # days}}"
+msgstr "{count, plural, other {#일 후 시작}}"
+
+#. Number of doubles pairs shown after filtering, out of the total in the ranking
+#: src/pages/rankings/components/FilterBar.tsx
+msgid "{count} of {total, plural, one {# pair} other {# pairs}}"
+msgstr "{total, plural, other {#개 조}} 중 {count}"
+
+#. Number of players shown after filtering, out of the total in the ranking
+#: src/pages/rankings/components/FilterBar.tsx
+msgid "{count} of {total, plural, one {# player} other {# players}}"
+msgstr "{total, plural, other {#명}} 중 {count}명"
+
+#. Very short countdown tag: the tournament starts in {count} days, e.g. "5d". Use your shortest form
+#: src/utils/tournaments.ts
+msgid "{count}d"
+msgstr "D-{count}"
+
+#. Past winners: when and where an earlier edition was held, e.g. "14–19 Oct · Odense, Denmark"
+#: src/pages/tournament/utils.ts
+msgid "{dates} · {city}, {country}"
+msgstr "{dates} · {city}, {country}"
+
+#. Selected day on the phone filters button, e.g. “Wed 15 Oct”. {day} is the weekday and day number, {month} the short month
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "{day} {month}"
+msgstr "{month} {day}"
+
+#. Matches tab empty state. {day} is a short day label, e.g. "Wed 15"
+#: src/pages/tournament/components/MatchesTab.tsx
+msgid "{day} is a rest day with no matches."
+msgstr "{day}에는 경기가 없습니다. 휴식일입니다."
+
+#. Screen-reader value of the ranking history slider: date, world ranking (e.g. #3) and ranking points
+#: src/pages/player/components/RankChart.tsx
+msgid "{day}: {rank}, {points} points"
+msgstr "{day}: {rank}, {points}점"
 
 #. One world ranking of a player, e.g. "Men’s singles world No. 1"
 #: src/utils/meta.ts
 msgid "{discipline} world No. {rank}"
-msgstr ""
+msgstr "{discipline} 세계 랭킹 {rank}위"
+
+#. About page tier ladder: number of players or pairs in each discipline’s main draw
+#: src/pages/about/summaries.ts
+msgid "{DRAW_SIZE} per draw"
+msgstr "{DRAW_SIZE}강 대진"
+
+#. Draw tab empty state. {event} is an event name, e.g. Men’s singles. The order of play is the daily match schedule
+#: src/pages/tournament/components/DrawTab.tsx
+msgid "{event} isn’t in today’s order of play data yet."
+msgstr "{event} 경기는 아직 오늘의 경기 일정 데이터에 없습니다."
+
+#. About page “titles so far” card: tournaments completed this season and titles (one per discipline) won in them
+#: src/pages/about/components/TitlesSoFar.tsx
+msgid "{events, plural, one {# event} other {# events}} · {titles, plural, one {# title} other {# titles}}"
+msgstr "{events, plural, other {대회 #개}} · {titles, plural, other {타이틀 #개}}"
+
+#. The two sides of a match, e.g. "Axelsen vs Shi"
+#. The two sides of a match, e.g. “Axelsen vs Shi”
+#: src/pages/tournament/components/matches/utils.ts
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "{home} vs {away}"
+msgstr "{home} vs {away}"
+
+#. When a news story was published: this many hours ago, in a short form, e.g. "3h ago"
+#: src/utils/news.ts
+msgid "{hours, plural, one {#h ago} other {#h ago}}"
+msgstr "{hours, plural, other {#시간 전}}"
+
+#. A label and its value in a one-line summary or tooltip, e.g. "Won: 1". Adjust the colon and spacing for your language
+#: src/utils/format.ts
+msgid "{label}: {value}"
+msgstr "{label}: {value}"
+
+#. Live match: how many challenges a side can still make in this game, e.g. "1 of 2 challenges left". A challenge is a player’s request for a video review of a line call (Instant Review)
+#: src/utils/live.ts
+msgid "{left} of {total, plural, one {# challenge} other {# challenges}} left"
+msgstr "{total, plural, other {챌린지 #회}} 중 {left}회 남음"
+
+#. Compact calendar header: number of tournaments being played right now
+#: src/pages/calendar/components/CompactHeader.tsx
+msgid "{liveCount, plural, one {# live} other {# live}}"
+msgstr "{liveCount, plural, other {#개 진행 중}}"
+
+#: src/pages/player/components/People.tsx
+msgid "{matches, plural, one {# match} other {# matches}}"
+msgstr "{matches, plural, other {#경기}}"
+
+#. Number of matches played against these opponents
+#: src/pages/player/components/People.tsx
+msgid "{meetings, plural, one {# meeting} other {# meetings}}"
+msgstr "{meetings, plural, other {맞대결 #회}}"
+
+#. Tooltip on a match duration, e.g. 42′
+#: src/components/ui/Duration.tsx
+msgid "{min, plural, one {# minute} other {# minutes}}"
+msgstr "{min, plural, other {#분}}"
+
+#. Estimated reading time of a news article, in minutes
+#: src/pages/news-article/components/ArticleHeader.tsx
+msgid "{minutes, plural, one {# min read} other {# min read}}"
+msgstr "{minutes, plural, other {#분 분량}}"
+
+#. Hint over the About page season map when the reader scrolls over it: hold {MOD_KEY} (Ctrl or ⌘) while scrolling to zoom the map
+#: src/pages/about/components/SeasonMap.tsx
+msgid "{MOD_KEY} + scroll to zoom"
+msgstr "{MOD_KEY} + 스크롤로 확대/축소"
+
+#. Live score: points won in a row by one side without the opponent scoring
+#: src/pages/tournament/components/matches/LiveCard.tsx
+msgid "{n, plural, one {# in a row} other {# in a row}}"
+msgstr "{n, plural, other {#연속 득점}}"
+
+#. Count next to the Live now title: matches being played right now
+#: src/pages/tournament/components/matches/LiveSection.tsx
+msgid "{n, plural, one {# match on court} other {# matches on court}}"
+msgstr "{n, plural, other {코트에서 #경기 진행 중}}"
+
+#. Head-to-head summary
+#: src/components/match/detail/HeadToHead.tsx
+msgid "{n, plural, one {# meeting this season} other {# meetings this season}}"
+msgstr "{n, plural, other {이번 시즌 맞대결 #회}}"
+
+#. News archive month heading: {name} is the month name, {year} is shown in a lighter style
+#: src/pages/news/components/ArchiveRow.tsx
+msgid "{name} <0>{year}</0>"
+msgstr "<0>{year}년</0> {name}"
 
 #. Description of an unranked player. {name} e.g. "Kento Momota", {country} e.g. "Japan", {disciplines} e.g. "Men’s singles"
 #: src/utils/meta.ts
 msgid "{name} from {country}: {disciplines}. Profile, results, matches and ranking history."
-msgstr ""
+msgstr "{name}({country}): {disciplines}. 프로필, 성적, 경기, 랭킹 추이를 확인하세요."
 
 #. Description of a ranked player. {name} e.g. "Viktor Axelsen", {country} e.g. "Denmark", {rankings} e.g. "Men’s singles world No. 1"
 #: src/utils/meta.ts
 msgid "{name} from {country}: {rankings}. Profile, results, matches and ranking history."
-msgstr ""
+msgstr "{name}({country}): {rankings}. 프로필, 성적, 경기, 랭킹 추이를 확인하세요."
 
 #. Description of a player with no ranking or matches yet. {name} e.g. "Viktor Axelsen", {country} e.g. "Denmark"
 #: src/utils/meta.ts
 msgid "{name} from {country}. Profile, results, matches and ranking history."
-msgstr ""
+msgstr "{name}({country}). 프로필, 성적, 경기, 랭킹 추이를 확인하세요."
 
 #. Description of a cancelled tournament. {name} e.g. "VICTOR Denmark Open 2026", {level} e.g. "Super 750", {place} e.g. "Odense, Denmark", {dates} e.g. "13–18 October 2026"
 #: src/utils/meta.ts
 msgid "{name}, a {level} tournament in {place} planned for {dates}, was cancelled."
-msgstr ""
+msgstr "{name}: {dates} {place}에서 열릴 예정이던 {level} 대회로, 취소되었습니다."
 
 #. Description of a finished tournament. {name} e.g. "VICTOR Denmark Open 2026", {level} e.g. "Super 750", {place} e.g. "Odense, Denmark", {dates} e.g. "13–18 October 2026"
 #: src/utils/meta.ts
 msgid "{name}, a {level} tournament in {place}, {dates}. See the champions, results and draw."
-msgstr ""
+msgstr "{name}: {dates} {place}에서 열린 {level} 대회. 우승자, 결과, 대진표를 확인하세요."
 
 #. Description of an upcoming tournament. {name} e.g. "VICTOR Denmark Open 2026", {level} e.g. "Super 750", {place} e.g. "Odense, Denmark", {dates} e.g. "13–18 October 2026"
 #: src/utils/meta.ts
 msgid "{name}, a {level} tournament in {place}, {dates}. See the players, draw and schedule."
-msgstr ""
+msgstr "{name}: {dates} {place}에서 열리는 {level} 대회. 출전 선수, 대진표, 일정을 확인하세요."
+
+#. Players tab continent summary: how many countries and entries (players or pairs) it has
+#: src/pages/tournament/components/players/ContinentSection.tsx
+msgid "{nations, plural, one {# country} other {# countries}} · {count, plural, one {# entry} other {# entries}}"
+msgstr "{nations, plural, other {#개국}} · {count, plural, other {엔트리 #개}}"
+
+#. Past winners card: how the final ended, who lost it and the game scores, e.g. "Retired · vs. Axelsen · 21–15, 3–1". {note} is Walkover or Retired
+#: src/pages/tournament/utils.ts
+msgid "{note} · vs. {losers} · {games}"
+msgstr "{note} · vs {losers} · {games}"
 
 #. Browser tab title. {page} is the page name (a tournament, player or section), {site} is the site name
 #: src/utils/meta.ts
 msgid "{page} · {site}"
-msgstr ""
+msgstr "{page} · {site}"
+
+#. Number of tournaments played in the selected season
+#: src/pages/player/components/MatchesTab.tsx
+msgid "{played, plural, one {# tournament} other {# tournaments}}"
+msgstr "{played, plural, other {대회 #개}}"
+
+#. Match stats footer for a game still in progress
+#: src/components/match/detail/StatsPanel.tsx
+msgid "{points, plural, one {# point played so far} other {# points played so far}}"
+msgstr "{points, plural, other {지금까지 #포인트 진행}}"
+
+#. Match stats footer
+#: src/components/match/detail/StatsPanel.tsx
+msgid "{points, plural, one {# point played} other {# points played}}"
+msgstr "{points, plural, other {총 #포인트}}"
+
+#. World ranking points at the chosen week; pts = points
+#: src/pages/player/components/RankChart.tsx
+msgid "{points} pts"
+msgstr "{points}점"
+
+#. Head-to-head row: win–loss record this season; {SEASON_YEAR} is the year
+#: src/components/match/detail/useMatchInsights.ts
+msgid "{SEASON_YEAR} W–L"
+msgstr "{SEASON_YEAR} 승패"
+
+#. Filtered list count: how many items are shown out of all of them, e.g. "12 of 340 players". {total} already includes the noun
+#: src/utils/filter.ts
+msgid "{shown} of {total}"
+msgstr "{total} 중 {shown}"
+
+#: src/pages/player/components/MediaTab.tsx
+msgid "{storyCount, plural, one {# story} other {# stories}}"
+msgstr "{storyCount, plural, other {기사 #건}}"
+
+#. Second clock under a match time shown in the visitor’s time zone: the same moment in the venue’s local time. {time} is e.g. "15:30" or "Wed 15:30"
+#: src/utils/match-time.ts
+msgid "{time} at the venue"
+msgstr "경기장 시간 {time}"
+
+#. Second clock under a match time shown in venue time: the same moment in the visitor’s own time zone. {time} is e.g. "09:30" or "Thu 09:30"
+#: src/utils/match-time.ts
+msgid "{time} your time"
+msgstr "내 시간 {time}"
+
+#: src/pages/player/components/People.tsx
+msgid "{titles, plural, one {# title} other {# titles}}"
+msgstr "{titles, plural, other {우승 #회}}"
+
+#. About page season card: {done} tournaments finished out of the season’s total
+#: src/pages/about/components/SeasonCard.tsx
+msgid "{total, plural, one {{done} of # completed} other {{done} of # completed}}"
+msgstr "{total, plural, other {#개 중 {done}개 완료}}"
+
+#. Head-to-head summary; {FIRST_SEASON} is the first season with data, e.g. 2018
+#: src/components/match/detail/HeadToHead.tsx
+msgid "{total, plural, one {# meeting on the World Tour since {FIRST_SEASON}} other {# meetings on the World Tour since {FIRST_SEASON}}}"
+msgstr "{total, plural, other {{FIRST_SEASON}년 이후 월드투어 맞대결 #회}}"
+
+#. Number of doubles pairs in the ranking list
+#: src/pages/rankings/components/FilterBar.tsx
+msgid "{total, plural, one {# pair} other {# pairs}}"
+msgstr "{total, plural, other {#개 조}}"
+
+#. Number of players in the ranking list
+#: src/pages/rankings/components/FilterBar.tsx
+msgid "{total, plural, one {# player} other {# players}}"
+msgstr "{total, plural, other {#명}}"
+
+#. Number of tournaments counted in the ranking
+#: src/pages/rankings/components/Podium.tsx
+msgid "{tournaments, plural, one {# tournament} other {# tournaments}}"
+msgstr "{tournaments, plural, other {대회 #개}}"
+
+#: src/pages/player/components/MediaTab.tsx
+msgid "{videoCount, plural, one {# video} other {# videos}}"
+msgstr "{videoCount, plural, other {동영상 #개}}"
+
+#. Overview schedule row on small screens: short date, e.g. “Wed, 15 Oct”. Reorder the weekday, day number and month as your language writes dates
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "{weekday}, {dayNum} {month}"
+msgstr "{month} {dayNum} ({weekday})"
+
+#. Overview schedule row: full date, e.g. “Wednesday, 15 October”. Reorder the weekday, day number and month as your language writes dates
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "{weekdayLong}, {dayNum} {monthLong}"
+msgstr "{monthLong} {dayNum} {weekdayLong}"
+
+#. Under the career-best ranking: how many weeks the player held it
+#: src/pages/player/components/Hero.tsx
+msgid "{weeks, plural, one {for # week} other {for # weeks}}"
+msgstr "{weeks, plural, other {#주 동안}}"
+
+#. Tooltip on a seeded player’s result: who won the match against whom
+#: src/pages/tournament/utils.ts
+msgid "{winner} beat {loser}"
+msgstr "{winner}, {loser} 상대로 승리"
+
+#. Accessible label for a won–lost record bar
+#: src/pages/player/components/People.tsx
+msgid "{wins, plural, one {# win} other {# wins}}, {losses, plural, one {# loss} other {# losses}}"
+msgstr "{wins, plural, other {#승}} {losses, plural, other {#패}}"
+
+#. When a ranking result was earned: year and ranking week number (wk = week)
+#: src/pages/player/components/parts.tsx
+msgid "{year} · wk {week}"
+msgstr "{year} · {week}주차"
+
+#. When a ranking result was earned (wk = week); not counted means its points don’t count toward the ranking
+#: src/pages/player/components/parts.tsx
+msgid "{year} · wk {week} · not counted"
+msgstr "{year} · {week}주차 · 미반영"
+
+#. Heading of the recent-form strip: Form means the player’s recent results, shown as the last N matches won or lost
+#: src/pages/player/components/OverviewTab.tsx
+msgid "{year} form · last {count}"
+msgstr "{year} 폼 · 최근 {count}경기"
+
+#. About page heading of the card mapping the {year} World Tour season
+#. Section title: the player’s stats for the current season
+#: src/pages/about/components/SeasonFrame.tsx
+#: src/pages/player/components/OverviewTab.tsx
+msgid "{year} season"
+msgstr "{year} 시즌"
+
+#. Screen-reader label for the About page card with a world map and timeline of the {year} World Tour season
+#: src/pages/about/components/SeasonFrame.tsx
+msgid "{year} season map"
+msgstr "{year} 시즌 지도"
+
+#. Screen-reader label for the About page timeline of the {year} season, one mark per tournament
+#: src/pages/about/components/SeasonStrip.tsx
+msgid "{year} season timeline"
+msgstr "{year} 시즌 타임라인"
+
+#. Footer copyright line; {YEAR} is the current year
+#: src/components/layout/SiteFooter.tsx
+msgid "© {YEAR} Tournament data, results, images and logos belong to the Badminton World Federation, the players and their respective rights holders."
+msgstr "© {YEAR} 대회 데이터, 결과, 이미지 및 로고의 권리는 세계배드민턴연맹(BWF), 선수 및 각 권리 보유자에게 있습니다."
+
+#. Button that reveals the remaining players mentioned in a news article
+#: src/pages/news-article/components/ArticleHeader.tsx
+msgid "+{hidden} more"
+msgstr "+{hidden}명 더"
+
+#. Player equipment, string tension note: the stringer pre-stretches the string by this percentage before tensioning it
+#: src/utils/players.ts
+msgid "+{percent}% pre-stretch"
+msgstr "프리스트레치 +{percent}%"
+
+#. About page “titles so far” card: a player is tied with others for the most titles (tournament wins) this season
+#: src/pages/about/components/TitlesSoFar.tsx
+msgid "<0/> and {others, plural, one {# other} other {# others}} lead with {most, plural, one {# title} other {# titles}} each"
+msgstr "<0/> 외 {others, plural, other {#명}}이 각각 {most, plural, other {#회}} 우승으로 공동 선두"
+
+#. About page “titles so far” card: the player with the most titles (tournament wins) this season
+#: src/pages/about/components/TitlesSoFar.tsx
+msgid "<0/> leads with {most, plural, one {# title} other {# titles}}"
+msgstr "<0/>, {most, plural, other {#회}} 우승으로 선두"
+
+#. Season progress in the calendar header: {done} tournaments (“stops”) played out of {total} on the World Tour this season
+#: src/pages/calendar/components/StopsDone.tsx
+msgid "<0>{done}</0> of {total, plural, one {# stop} other {# stops}}"
+msgstr "{total, plural, other {총 #개 대회 중}} <0>{done}</0>개 완료"
+
+#. Calendar header for a season that hasn’t started: number of tournaments (“stops”) scheduled
+#: src/pages/calendar/components/Hero.tsx
+msgid "<0>{total}</0> {total, plural, one {stop planned} other {stops planned}}"
+msgstr "<0>{total}</0>{total, plural, other {개 대회 예정}}"
+
+#. Race to Finals points; pts = points
+#: src/pages/player/components/RankingsTab.tsx
+msgid "<0>{total}</0> pts"
+msgstr "<0>{total}</0>점"
+
+#. Ranking summary for one discipline: total points (pts), titles won, finals lost (runner-up), semi-finals lost (SF)
+#: src/pages/player/components/ResultsTab.tsx
+msgid "<0>{total}</0> pts · {gold, plural, one {# title} other {# titles}} · {silver, plural, other {# runner-up}} · {bronze, plural, other {# SF}}"
+msgstr "<0>{total}</0>점 · {gold, plural, other {우승 #회}} · {silver, plural, other {준우승 #회}} · {bronze, plural, other {4강 #회}}"
+
+#. About page tier ladder: World Tour ranking points the champion of a tournament at this level earns
+#: src/pages/about/components/TierLadder.tsx
+msgid "<0>{value}</0> pts to the winner"
+msgstr "우승 시 <0>{value}</0>점"
+
+#. Floating pill that scrolls back to the tournament being played now; the label is read by screen readers only, before the tournament name
+#: src/pages/calendar/CalendarPage.tsx
+msgid "<0>Live now: </0>{targetName}"
+msgstr "<0>진행 중: </0>{targetName}"
+
+#. Photo credit under a news article’s main image; the “Photo:” label is read by screen readers only
+#: src/pages/news-article/components/ArticleHeader.tsx
+msgid "<0>Photo: </0>{credit}"
+msgstr "<0>사진: </0>{credit}"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "12-hour clock"
@@ -59,58 +535,1503 @@ msgstr "12시간제"
 msgid "24-hour clock"
 msgstr "24시간제"
 
+#. Tournament overview: there are five events, and {size} players or pairs in each event’s draw
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "5 events · {size} per draw"
+msgstr "5개 종목 · {size}강 대진"
+
+#. Title of the one-time disclaimer shown on the first visit
+#: src/components/disclaimer/DisclaimerModal.tsx
+msgid "A quick note before you start"
+msgstr "시작하기 전에 알려드립니다"
+
+#. Intro under the About page heading. “The Finals” and “World Tour Finals” are the season-ending event for the top 8 per discipline; “the race” is the Race to Finals points table that decides who qualifies
+#: src/pages/about/utils.ts
+msgid "A season-long circuit of {tournaments, plural, one {# tournament} other {# tournaments}} and the Finals across {countries, plural, one {# country} other {# countries}}, bringing the world’s best together in five disciplines. Every stop feeds the race to the World Tour Finals in December."
+msgstr "{countries, plural, other {#개국}}에서 열리는 {tournaments, plural, other {#개 대회}}와 파이널로 이어지는 시즌 투어로, 세계 최정상 선수들이 다섯 종목에서 겨룹니다. 모든 대회의 성적은 12월 World Tour Finals 진출 경쟁으로 이어집니다."
+
+#. Intro under the About page heading while season data loads. The World Tour Finals is the season-ending event for the top 8 per discipline
+#: src/pages/about/constants.ts
+msgid "A season-long circuit of the world’s best in singles and doubles, building to the World Tour Finals in December"
+msgstr "단식과 복식의 세계 최정상 선수들이 시즌 내내 겨루며 12월 World Tour Finals를 향해 가는 투어"
+
 #. Browser tab title for the page explaining how the World Tour works
+#. Main navigation link to the page about the World Tour
+#: src/components/layout/links.ts
 #: src/utils/meta.ts
 msgid "About"
-msgstr ""
+msgstr "소개"
+
+#. Small label above the heading of the page explaining how the HSBC BWF World Tour works
+#: src/pages/about/constants.ts
+msgid "About the Tour"
+msgstr "투어 소개"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "About this site"
+msgstr "사이트 소개"
+
+#. Continent name
+#: src/utils/countries.ts
+msgid "Africa"
+msgstr "아프리카"
+
+#. News tab section: stories published after the tournament ended
+#: src/pages/tournament/components/NewsTab.tsx
+msgid "After the event"
+msgstr "대회 후"
+
+#. Player profile stat: the player’s age in years
+#: src/utils/players.ts
+msgid "Age"
+msgstr "나이"
+
+#. Calendar status filter option that shows every tournament of the season
+#: src/pages/calendar/constants.ts
+msgid "All"
+msgstr "전체"
+
+#. Discipline filter option: show every discipline
+#: src/pages/player/components/EventPicker.tsx
+msgctxt "discipline"
+msgid "All"
+msgstr "전체"
+
+#. Media tab round filter: videos from every round
+#: src/pages/tournament/components/MediaTab.tsx
+msgctxt "round"
+msgid "All"
+msgstr "전체"
+
+#. Link to the Matches tab for this season
+#: src/pages/player/components/OverviewTab.tsx
+msgid "All {year} matches"
+msgstr "{year} 전체 경기"
+
+#. Country filter: no country selected
+#: src/pages/rankings/components/FilterBar.tsx
+msgid "All countries"
+msgstr "전체 국가"
+
+#. Link to the player’s Media tab
+#: src/pages/player/components/MediaTab.tsx
+msgid "All media"
+msgstr "전체 미디어"
+
+#: src/components/match/detail/HeadToHead.tsx
+msgid "All meetings"
+msgstr "전체 맞대결"
+
+#. Link to the player’s Results tab
+#: src/pages/player/components/RankTrend.tsx
+msgid "All results"
+msgstr "전체 성적"
+
+#. Head-to-head toggle: every World Tour meeting since 2018
+#: src/components/match/detail/HeadToHead.tsx
+msgid "All time"
+msgstr "전체 기간"
+
+#: src/components/disclaimer/DisclaimerModal.tsx
+msgid "All tournament data, results, rankings, images, logos and player information belong to BWF, the players and their respective rights holders. Videos link to BWF’s official YouTube channel."
+msgstr "모든 대회 데이터, 결과, 랭킹, 이미지, 로고 및 선수 정보의 권리는 BWF, 선수 및 각 권리 보유자에게 있습니다. 동영상은 BWF 공식 YouTube 채널로 연결됩니다."
+
+#. Entry status: a reserve player or pair who only gets in if someone withdraws
+#: src/pages/tournament/components/players/entries.ts
+msgid "Alternate"
+msgstr "예비"
+
+#. Players tab group heading: reserve players or pairs who only get in if someone withdraws
+#: src/pages/tournament/components/players/entries.ts
+msgid "Alternates"
+msgstr "예비 명단"
+
+#. Player profile fact: the player’s stated ambition, quoted
+#: src/components/player/PlayerHoverCard.tsx
+msgid "Ambition"
+msgstr "목표"
+
+#. Continent name: North, Central and South America together
+#: src/utils/countries.ts
+msgid "Americas"
+msgstr "아메리카"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "An unofficial redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
+msgstr "BWF 웹사이트의 HSBC BWF World Tour 섹션을 위한 비공식 리디자인 콘셉트입니다. 세계배드민턴연맹(BWF) 및 HSBC와 제휴하거나 그 승인을 받거나 그들이 운영하는 사이트가 아닙니다. 데이터는 불완전하거나 늦거나 부정확할 수 있습니다."
+
+#. Screen-reader label for the news page sidebar listing past months of stories
+#: src/pages/news/components/MonthRail.tsx
+msgid "Archive"
+msgstr "지난 기사"
+
+#. Continent name
+#: src/utils/countries.ts
+msgid "Asia"
+msgstr "아시아"
+
+#. Tooltip on the disabled Podium tab
+#: src/pages/tournament/constants.ts
+msgid "Available once play starts"
+msgstr "경기가 시작되면 볼 수 있습니다"
+
+#. Tooltip on the disabled Draw tab. The draw is the knockout bracket
+#: src/pages/tournament/constants.ts
+msgid "Available once the draw is out"
+msgstr "대진표가 나오면 볼 수 있습니다"
+
+#. Tooltip on the disabled Players tab
+#: src/pages/tournament/constants.ts
+msgid "Available once the entry list is out"
+msgstr "출전 명단이 나오면 볼 수 있습니다"
+
+#. Tooltip on the disabled Matches tab. The order of play is the published daily match schedule
+#: src/pages/tournament/constants.ts
+msgid "Available once the order of play is out"
+msgstr "경기 일정이 나오면 볼 수 있습니다"
+
+#. Average match duration this season; avg = average
+#: src/pages/player/components/OverviewTab.tsx
+msgid "avg <0/>"
+msgstr "평균 <0/>"
+
+#. Accessible label of the icon-only back button
+#: src/pages/player/PlayerPage.tsx
+msgid "Back"
+msgstr "뒤로"
+
+#. Icon button in the condensed tournament bar
+#: src/pages/tournament/components/TabNav.tsx
+msgid "Back to calendar"
+msgstr "일정으로 돌아가기"
+
+#. Back button on a news article, returning to the news page
+#: src/pages/news-article/constants.ts
+msgid "Back to news"
+msgstr "뉴스로 돌아가기"
+
+#. Button on the player-not-found page
+#: src/pages/player/PlayerPage.tsx
+msgid "Back to rankings"
+msgstr "랭킹으로 돌아가기"
+
+#. Link on the tournament not-found page back to the season calendar. {year} is the season
+#: src/pages/tournament/TournamentPage.tsx
+msgid "Back to the {year} calendar"
+msgstr "{year} 일정으로 돌아가기"
+
+#: src/components/layout/NotFound.tsx
+msgid "Back to the calendar"
+msgstr "일정으로 돌아가기"
+
+#. Best world ranking reached; rank is e.g. #3
+#: src/pages/player/components/RankingsTab.tsx
+msgid "best <0>{best}</0>"
+msgstr "최고 <0>{best}</0>"
+
+#. Season stat: the furthest the player got in any tournament this season, e.g. Winner or Semi-final
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Best run"
+msgstr "최고 성적"
+
+#. Live match status: the break between two games of a match
+#: src/utils/live.ts
+msgid "Between games"
+msgstr "게임 간 휴식"
+
+#. Match stats row: the largest points lead each side won a game by
+#: src/components/match/detail/utils.ts
+msgid "Biggest game margin"
+msgstr "최대 점수 차 게임"
+
+#. Player profile fact: the town or city the player was born in
+#: src/utils/players.ts
+msgid "Birthplace"
+msgstr "출생지"
+
+#. Player profile: date of birth under the age, e.g. "Born 4 Jan 1994"
+#: src/utils/players.ts
+msgid "Born {date}"
+msgstr "{date} 출생"
+
+#: src/components/layout/BwfMark.tsx
+msgid "BWF (opens in a new tab)"
+msgstr "BWF (새 탭에서 열림)"
+
+#: src/components/layout/links.ts
+msgid "BWF cookie policy"
+msgstr "BWF 쿠키 정책"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "BWF headquarters"
+msgstr "BWF 본부"
+
+#: src/components/news/SubscribeCard.tsx
+msgid "BWF newsletters"
+msgstr "BWF 뉴스레터"
+
+#. Accessible name of a social link, e.g. “BWF on Instagram”
+#: src/components/layout/SiteLink.tsx
+msgid "BWF on {site}"
+msgstr "BWF {site}"
+
+#: src/components/layout/links.ts
+msgid "BWF privacy policy"
+msgstr "BWF 개인정보 처리방침"
+
+#. Notice on the news pages when the site language isn’t English: BWF only publishes its articles in English, so they aren’t translated
+#: src/components/news/EnglishOnlyNotice.tsx
+msgid "BWF publishes its news in English only, so articles and headlines are shown in English."
+msgstr "BWF는 뉴스를 영어로만 발행하므로 기사와 제목이 영어로 표시됩니다."
+
+#: src/components/layout/links.ts
+msgid "BWF terms & conditions"
+msgstr "BWF 이용약관"
+
+#. Heading for a list of links to other official BWF websites
+#: src/components/layout/links.ts
+msgid "BWF websites"
+msgstr "BWF 웹사이트"
+
+#. Heading above a player’s world rankings; {weekNo} is the ranking week number of the year
+#: src/components/player/PlayerHoverCard.tsx
+msgid "BWF World Ranking · week {weekNo}"
+msgstr "BWF 세계 랭킹 · {weekNo}주차"
+
+#. Tooltip on an entry’s world rank. Category means the event, e.g. men’s singles
+#: src/pages/tournament/components/players/EntryRow.tsx
+msgid "BWF World Ranking in this category"
+msgstr "이 종목의 BWF 세계 랭킹"
+
+#. Tooltip of the World option in the rankings switch
+#: src/pages/rankings/constants.ts
+msgid "BWF World Rankings"
+msgstr "BWF 세계 랭킹"
 
 #. Page description for the BWF World Rankings page
 #: src/utils/meta.ts
 msgid "BWF World Rankings in men’s and women’s singles, men’s and women’s doubles and mixed doubles, with weekly movement."
-msgstr ""
+msgstr "남녀 단식, 남녀 복식, 혼합 복식의 BWF 세계 랭킹과 주간 순위 변동."
+
+#. Players tab view switch: group entries by country and continent
+#: src/pages/tournament/components/PlayersTab.tsx
+msgid "By country"
+msgstr "국가별"
+
+#. Players tab view switch: group entries by event (MS, WS, MD, WD, XD)
+#: src/pages/tournament/components/PlayersTab.tsx
+msgid "By discipline"
+msgstr "종목별"
+
+#. Back button to the tournament calendar
+#. Main navigation link to the tournament calendar
+#: src/components/layout/links.ts
+#: src/pages/player/PlayerPage.tsx
+msgid "Calendar"
+msgstr "일정"
 
 #. Browser tab title for a season calendar. {year} is the season, e.g. 2026
 #: src/utils/meta.ts
 msgid "Calendar {year}"
-msgstr ""
+msgstr "{year} 일정"
+
+#. Tooltip on the Q badge of a player or pair who won through the qualifying rounds
+#: src/pages/tournament/components/players/EntryRow.tsx
+msgid "Came through qualifying"
+msgstr "예선 통과"
+
+#. Small label or status for a tournament that was cancelled
+#: src/pages/about/constants.ts
+msgid "Cancelled"
+msgstr "취소"
+
+#. The tournament will not take place
+#. The tournament will not take place
+#: src/utils/season.ts
+#: src/utils/tournaments.ts
+msgctxt "tournament status"
+msgid "Cancelled"
+msgstr "취소"
+
+#. Heading of the player’s career stats bar
+#. Ranking chart range: the player’s whole career
+#: src/pages/player/components/Hero.tsx
+#: src/pages/player/components/RankChart.tsx
+msgid "Career"
+msgstr "통산"
+
+#. Short label: the player’s highest ever world ranking in this discipline
+#: src/pages/player/components/Hero.tsx
+msgid "Career best"
+msgstr "역대 최고"
+
+#. Player’s best ever world ranking
+#. Ranking stat: the best world ranking the player has ever reached in this discipline
+#: src/components/player/Rank.tsx
+#: src/pages/player/components/RankingsTab.tsx
+msgid "Career high"
+msgstr "최고 랭킹"
+
+#. Search result hint: the best world ranking the player ever reached, and the discipline code, e.g. "Career high #1 · WD"
+#: src/utils/search.ts
+msgid "Career high #{rank} · {event}"
+msgstr "최고 랭킹 #{rank} · {event}"
+
+#. Match filters: label above the event chips (MS, WS, MD, WD, XD)
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Category"
+msgstr "종목"
+
+#. Live match tag: the video review could not decide the call. A challenge is a player’s request for a video review of a line call (Instant Review)
+#: src/utils/live.ts
+msgid "Challenge · no decision"
+msgstr "챌린지 · 판정 불가"
+
+#. Live score chip: a player challenged a line call and the video review (Hawk-Eye) is in progress
+#: src/pages/tournament/components/matches/LiveCard.tsx
+msgid "Challenge · under review"
+msgstr "챌린지 · 판독 중"
+
+#. Live match tag: the video review proved the player wrong. A challenge is a player’s request for a video review of a line call (Instant Review)
+#: src/utils/live.ts
+msgid "Challenge lost"
+msgstr "챌린지 실패"
+
+#. Live match tag: the video review proved the player right. A challenge is a player’s request for a video review of a line call (Instant Review)
+#: src/utils/live.ts
+msgid "Challenge won"
+msgstr "챌린지 성공"
+
+#. Podium place: winner of the final (gold)
+#: src/pages/tournament/constants.ts
+msgid "Champion"
+msgstr "우승"
+
+#. Result tag on the winner of a tournament final
+#: src/utils/matches.ts
+msgctxt "result tag"
+msgid "Champion"
+msgstr "우승"
+
+#. Section title above the winners of this tournament’s five events
+#: src/pages/tournament/components/Champions.tsx
+msgid "Champions"
+msgstr "우승자"
+
+#. Rankings table column: places gained or lost since last week
+#: src/pages/rankings/components/RankingList.tsx
+msgid "Change since last week"
+msgstr "지난주 대비 변동"
+
+#. Team name used by BWF and in all international sport (IOC naming). Translate the official sports name, never as "Taiwan"
+#: src/utils/countries.ts
+msgid "Chinese Taipei"
+msgstr "차이니스 타이베이"
+
+#. Button that clears the event and court match filters
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Clear"
+msgstr "초기화"
+
+#: src/components/ui/SearchField.tsx
+msgid "Clear search"
+msgstr "검색어 지우기"
 
 #. Settings label: choose a 12-hour or 24-hour clock
 #: src/components/layout/SiteSettings.tsx
 msgid "Clock"
 msgstr "시간 표시 형식"
 
+#. Button that closes the match detail panel
+#: src/components/match/detail/MatchDetail.tsx
+msgid "Close"
+msgstr "닫기"
+
+#: src/components/layout/SiteSearch.tsx
+msgid "Close search"
+msgstr "검색 닫기"
+
 #: src/components/layout/SiteSettings.tsx
 msgid "Close settings"
 msgstr "설정 닫기"
 
+#. Player profile fact: the badminton club the player plays for
+#: src/utils/players.ts
+msgid "Club"
+msgstr "클럽"
+
+#. Player profile fact: the player’s coach
+#: src/utils/players.ts
+msgid "Coach"
+msgstr "코치"
+
+#. Small label above a tournament that has finished, on the About page season map
+#. Tournament header status: the tournament has finished
+#. Tournament status: it has finished
+#: src/pages/about/constants.ts
+#: src/pages/tournament/components/DayTimeline.tsx
+#: src/utils/tournaments.ts
+msgid "Completed"
+msgstr "종료"
+
+#. About page season map legend and filter: tournaments that have finished
+#. Calendar status filter option that shows only tournaments that have already finished
+#: src/pages/about/constants.ts
+#: src/pages/calendar/constants.ts
+msgctxt "filter"
+msgid "Completed"
+msgstr "종료"
+
+#. Small tag beside the site logo: this site is an unofficial redesign concept
+#: src/components/layout/Wordmark.tsx
+msgid "Concept"
+msgstr "콘셉트"
+
+#: src/components/layout/links.ts
+msgid "Contact BWF"
+msgstr "BWF 문의"
+
+#. Button that copies a news article’s link to the clipboard
+#: src/pages/news-article/components/ShareBar.tsx
+msgid "Copy link"
+msgstr "링크 복사"
+
+#. Error in the news archive when one month of stories fails to load; {month} is a month and year
+#: src/pages/news/components/ArchiveRow.tsx
+msgid "Couldn’t load {month}."
+msgstr "{month} 기사를 불러오지 못했습니다."
+
+#. Error message when the news feed fails to load
+#: src/pages/news/NewsPage.tsx
+msgid "Couldn’t load the latest news."
+msgstr "최신 뉴스를 불러오지 못했습니다."
+
+#. News tab error message, shown with a Try again button
+#: src/pages/tournament/components/NewsTab.tsx
+msgid "Couldn’t load the news for this tournament."
+msgstr "이 대회의 뉴스를 불러오지 못했습니다."
+
+#. Error message when a news article fails to load
+#: src/pages/news-article/ArticlePage.tsx
+msgid "Couldn’t load this story."
+msgstr "이 기사를 불러오지 못했습니다."
+
+#: src/pages/player/components/MediaTab.tsx
+msgid "Couldn’t load videos and news right now."
+msgstr "지금은 동영상과 뉴스를 불러올 수 없습니다."
+
+#. Media tab error message
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "Couldn’t load videos from YouTube right now."
+msgstr "지금은 YouTube 동영상을 불러올 수 없습니다."
+
+#. Match filters: label above the court number chips
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Court"
+msgstr "코트"
+
+#. Match filter chip for one court of the venue, e.g. “Court 2”
+#. The court a match is played on, e.g. “Court 2”
+#. The court a match is played on, e.g. “Court 2”
+#. The numbered court a badminton match is played on, e.g. "Court 3"
+#: src/pages/tournament/components/matches/FilterControls.tsx
+#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/pages/tournament/components/matches/MatchCard.tsx
+#: src/utils/matches.ts
+msgid "Court {court}"
+msgstr "코트 {court}"
+
+#. Where and what a followed match is: the court number and the event, e.g. “Court 2 · Men’s singles”
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "Court {court} · {event}"
+msgstr "코트 {court} · {event}"
+
+#. Media tab section: full-day live streams of each court
+#: src/pages/tournament/components/media/sections.ts
+msgid "Court streams"
+msgstr "코트별 중계"
+
+#. A partnership that is ranked right now
+#: src/pages/player/components/RankingsTab.tsx
+msgid "current"
+msgstr "현재"
+
+#. Badge next to a doubles partner the player still plays with this season
+#. Player’s world ranking this week, beside their career-high ranking
+#: src/components/player/Rank.tsx
+#: src/pages/player/components/People.tsx
+msgid "Current"
+msgstr "현재"
+
+#. Tooltip on a medalist’s world rank. Category means the event, e.g. men’s singles
+#: src/pages/tournament/components/PodiumTab.tsx
+msgid "Current BWF World Ranking in this category"
+msgstr "이 종목의 현재 BWF 세계 랭킹"
+
+#. Settings option: dark colour theme
+#: src/components/layout/SiteSettings.tsx
+msgid "Dark"
+msgstr "다크"
+
+#: src/components/disclaimer/DisclaimerModal.tsx
+msgid "Data may be incomplete, delayed or inaccurate. For official information, please visit <0>bwfbadminton.com</0>."
+msgstr "데이터는 불완전하거나 늦거나 부정확할 수 있습니다. 공식 정보는 <0>bwfbadminton.com</0>에서 확인하세요."
+
+#. Tournament overview: label for the tournament dates
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "Dates"
+msgstr "기간"
+
+#. Small print below the season calendar
+#: src/pages/calendar/CalendarPage.tsx
+msgid "Dates and prize money subject to change."
+msgstr "일정과 상금은 변경될 수 있습니다."
+
+#. Tooltip on the “Provisional” tag next to a future season’s year in the calendar header
+#: src/pages/calendar/constants.ts
+msgid "Dates and venues are provisional until BWF confirms them"
+msgstr "BWF가 확정하기 전까지 일정과 개최지는 잠정적입니다"
+
+#. Match filters: label above the tournament day picker
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Day"
+msgstr "날짜"
+
+#. Status of a tournament in progress, e.g. “Day 3”
+#: src/components/tournament/TournamentStatus.tsx
+msgid "Day {day}"
+msgstr "{day}일차"
+
+#. Media tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"
+#: src/pages/tournament/components/media/sections.ts
+msgid "Day {day} · {when}"
+msgstr "{day}일차 · {when}"
+
+#. Status of a tournament in progress, e.g. “Day 3 of 6”
+#: src/components/tournament/TournamentStatus.tsx
+msgid "Day {day}<0> of {days}</0>"
+msgstr "{day}일차<0> / 총 {days}일</0>"
+
+#. Tournament header status while it is being played, e.g. “Day 3 of 6”
+#: src/pages/tournament/components/DayTimeline.tsx
+msgid "Day {dayNumber} of {totalDays}"
+msgstr "{totalDays}일 중 {dayNumber}일차"
+
+#. About page headline stat: days left until the season-ending World Tour Finals start
+#: src/pages/about/utils.ts
+msgid "Days to the Finals"
+msgstr "파이널까지 남은 날"
+
+#. Live match status: the third game, played when each side has won one game; its winner wins the match
+#: src/utils/live.ts
+msgid "Deciding game"
+msgstr "최종 게임"
+
+#. Season stat: won–lost record in matches that went to a third, deciding game (badminton matches are best of three games)
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Deciding games"
+msgstr "최종 게임"
+
+#. Accessible name of the chips that jump to each event’s entries
+#: src/pages/tournament/components/PlayersTab.tsx
+msgid "Disciplines"
+msgstr "종목"
+
+#. Close button on a notice banner
+#: src/components/news/EnglishOnlyNotice.tsx
+msgid "Dismiss"
+msgstr "닫기"
+
+#. Button that closes the match filters sheet
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Done"
+msgstr "완료"
+
+#. Team name used by BWF and in international sport for the Democratic People’s Republic of Korea
+#: src/utils/countries.ts
+msgid "DPR Korea"
+msgstr "북한"
+
+#. Tournament page tab: the knockout bracket of each event
+#: src/pages/tournament/constants.ts
+msgid "Draw"
+msgstr "대진표"
+
+#. Tournament overview: label for the number of events and the size of each event’s draw (bracket)
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "Draws"
+msgstr "대진"
+
+#. News tab section: stories published while the tournament ran
+#: src/pages/tournament/components/NewsTab.tsx
+msgid "During the event"
+msgstr "대회 중"
+
+#. Arrow button that scrolls the tournament day strip back
+#: src/pages/tournament/components/matches/DayPicker.tsx
+msgid "Earlier days"
+msgstr "이전 날짜"
+
+#. Heading: the player’s earlier doubles partnerships in this discipline
+#: src/pages/player/components/RankingsTab.tsx
+msgid "Earlier partnerships"
+msgstr "이전 파트너"
+
+#: src/components/layout/NotFound.tsx
+msgid "Elsewhere on the site"
+msgstr "사이트 둘러보기"
+
+#. Country name: England, which competes on its own in badminton
+#: src/utils/countries.ts
+msgid "England"
+msgstr "잉글랜드"
+
+#. Player’s badminton gear: racket, string, tension, shoes
+#. Player’s badminton gear: racket, string, tension, shoes
+#: src/components/player/Equipment.tsx
+msgid "Equipment"
+msgstr "장비"
+
+#. Continent name
+#: src/utils/countries.ts
+msgid "Europe"
+msgstr "유럽"
+
+#. About page headline stat: number of this season’s tournaments that have finished
+#: src/pages/about/utils.ts
+msgid "Events completed"
+msgstr "종료된 대회"
+
+#. Calendar header subtitle: every tournament of the season feeds the race to the season-ending World Tour Finals, held on {dates}
+#: src/pages/calendar/utils.ts
+msgid "Every stop leads to the World Tour Finals, {dates}"
+msgstr "모든 대회는 {dates} World Tour Finals로 이어집니다"
+
+#. Calendar header subtitle for a finished season: every tournament fed the race to the season-ending World Tour Finals, held on {dates}
+#: src/pages/calendar/utils.ts
+msgid "Every stop led to the World Tour Finals, {dates}"
+msgstr "모든 대회가 {dates} World Tour Finals로 이어졌습니다"
+
+#. Tooltip on a day timeline round that is guessed, because the daily match schedule isn’t published yet
+#: src/pages/tournament/constants.ts
+msgid "Expected round · order of play not out yet"
+msgstr "예상 라운드 · 경기 일정 미발표"
+
+#. Footer heading above links to this site’s pages
+#: src/components/layout/links.ts
+msgid "Explore"
+msgstr "둘러보기"
+
+#. Very short day timeline label for finals day (abbreviation of Finals)
+#: src/pages/tournament/constants.ts
+msgid "F"
+msgstr "결승"
+
+#. Short tag on a ranking points bar: the player reached the final
+#: src/pages/player/constants.ts
+msgctxt "tournament result"
+msgid "F"
+msgstr "준"
+
+#. Label before the avatars of players mentioned in a news article
+#: src/pages/news-article/components/ArticleHeader.tsx
+msgid "Featuring"
+msgstr "등장 선수"
+
+#: src/pages/rankings/components/FilterBar.tsx
+msgid "Filter by country"
+msgstr "국가별 필터"
+
+#. Button and sheet title for the match filters on phones
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Filters"
+msgstr "필터"
+
+#. Draw column heading: the last match of an event
+#. Podium card heading: the final, the last match of an event
+#. Round name: the last match of a tournament draw, which decides the champion
+#: src/constants.ts
+#: src/pages/tournament/components/draw/bracket.ts
+#: src/pages/tournament/utils.ts
+msgid "Final"
+msgstr "결승"
+
+#. Scoreboard status: the match has finished and this is the final score
+#: src/components/match/detail/Scoreboard.tsx
+msgctxt "match status"
+msgid "Final"
+msgstr "경기 종료"
+
+#. Podium card heading: the day of the final, e.g. "Final · Sun 19". Final is the last match of an event
+#: src/pages/tournament/utils.ts
+msgid "Final · {day}"
+msgstr "결승 · {day}"
+
+#. Caption on the About page Race to Finals table once qualification is settled; {day} is the publication date
+#: src/pages/about/components/RaceTop8.tsx
+msgid "Final standings · {day}"
+msgstr "최종 순위 · {day}"
+
+#. Tagline on the World Tour Finals card: the season’s last event, for the top 8 players or pairs in each of the five events
+#: src/components/tournament/FinaleCard.tsx
+msgid "Final stop · Top 8 per discipline"
+msgstr "시즌 마지막 대회 · 종목별 상위 8"
+
+#. About page tier ladder: unit under the number 1 for the World Tour Finals, the single season-ending event
+#: src/pages/about/components/TierLadder.tsx
+msgid "finale"
+msgstr "파이널"
+
+#. Day timeline label: the last day, when the five finals are played
+#: src/pages/tournament/constants.ts
+msgid "Finals"
+msgstr "결승"
+
+#. Tournament tier: the HSBC BWF World Tour Finals, shown next to the record at that tier (other tiers show as S1000, S750…)
+#: src/pages/player/components/OverviewTab.tsx
+msgctxt "level"
+msgid "Finals"
+msgstr "파이널"
+
+#. Career stat: number of tournament finals reached, won or lost
+#: src/pages/player/components/Hero.tsx
+msgctxt "stat"
+msgid "Finals"
+msgstr "결승 진출"
+
+#. Small label above the World Tour Finals, the season-ending tournament, on the About page season map
+#: src/pages/about/constants.ts
+msgctxt "tournament"
+msgid "Finals"
+msgstr "파이널"
+
+#. Short name of the World Tour Finals, the season-ending tournament for the top 8 of the season ranking in each discipline
+#: src/constants.ts
+msgctxt "tournament level"
+msgid "Finals"
+msgstr "파이널"
+
+#. About page section heading: the winners of each discipline at this season’s World Tour Finals
+#: src/pages/about/constants.ts
+msgid "Finals champions"
+msgstr "파이널 우승자"
+
+#. The World Tour Finals, the season-ending tournament, are being played right now
+#: src/utils/season.ts
+msgid "Finals in progress"
+msgstr "파이널 진행 중"
+
+#. Link to the full results (podium) of this season’s World Tour Finals
+#: src/pages/about/constants.ts
+msgid "Finals results"
+msgstr "파이널 결과"
+
+#. Tooltip on the disabled previous-tournament button: there is no earlier tournament
+#: src/pages/tournament/components/TournamentHeader.tsx
+msgid "First event on record"
+msgstr "기록상 첫 대회입니다"
+
+#: src/components/match/detail/HeadToHead.tsx
+msgid "First meeting this season"
+msgstr "이번 시즌 첫 맞대결"
+
+#: src/components/match/detail/HeadToHead.tsx
+msgid "First World Tour meeting"
+msgstr "월드투어 첫 맞대결"
+
+#. Action on a ranking tile: filter the profile to one discipline
+#: src/pages/player/components/Hero.tsx
+msgid "Focus on {eventName}"
+msgstr "{eventName}만 보기"
+
+#. Star button; {who} is a doubles pair, e.g. “Liang / Wang”
+#: src/components/follow/FollowButton.tsx
+msgctxt "pair"
+msgid "Follow {who}"
+msgstr "{who} 팔로우"
+
+#. Star button; {who} is a country or continent name
+#: src/components/follow/FollowButton.tsx
+msgctxt "place"
+msgid "Follow {who}"
+msgstr "{who} 팔로우"
+
+#. Star button; {who} is a player name
+#: src/components/follow/FollowButton.tsx
+msgctxt "player"
+msgid "Follow {who}"
+msgstr "{who} 팔로우"
+
+#. Star button; {who} is a tournament name
+#: src/components/follow/FollowButton.tsx
+msgctxt "tournament"
+msgid "Follow {who}"
+msgstr "{who} 팔로우"
+
+#. Menu heading above BWF social media links
+#: src/components/layout/menu/CourtMenu.tsx
+msgid "Follow BWF"
+msgstr "BWF 팔로우"
+
+#: src/components/follow/FollowButton.tsx
+msgid "Follow player"
+msgstr "선수 팔로우"
+
+#. Menu caption under the Calendar link
+#: src/components/layout/menu/nav.ts
+msgid "Follow the tour"
+msgstr "투어 따라가기"
+
+#: src/components/follow/FollowButton.tsx
+msgid "Follow this pair"
+msgstr "이 조 팔로우"
+
+#. Star mark beside a player the visitor follows
+#: src/components/follow/FollowedMark.tsx
+msgid "Following"
+msgstr "팔로우 중"
+
+#. Tournament overview card: today’s remaining matches of the players and countries the visitor follows
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "Following today"
+msgstr "오늘 팔로우 경기"
+
+#. Head-to-head row: each side’s results in their last five matches
+#: src/components/match/detail/HeadToHead.tsx
+msgid "Form"
+msgstr "최근 폼"
+
+#: src/components/news/SubscribeCard.tsx
+msgid "Free updates, straight to your inbox"
+msgstr "무료 소식을 메일로 바로 받아보세요"
+
+#: src/components/news/SubscribeCard.tsx
+msgid "Free, personalised updates direct to your inbox."
+msgstr "맞춤형 소식을 무료로, 메일함으로 바로 받아보세요."
+
+#. Match list group heading: matches starting from this hour, e.g. "From 10:00"
+#: src/pages/tournament/components/matches/utils.ts
+msgid "From {time}"
+msgstr "{time}부터"
+
+#. Match list group heading: matches starting from this hour, e.g. "From 10:00 · Quarter-final"
+#: src/pages/tournament/components/matches/utils.ts
+msgid "From {time} · {rounds}"
+msgstr "{time}부터 · {rounds}"
+
+#. Link from the About page’s “How the Tour works” section to the full season calendar
+#: src/pages/about/components/HowItWorks.tsx
+msgid "Full calendar"
+msgstr "전체 일정"
+
+#. Label on a YouTube video of the entire match
+#. Video type label: the whole match
+#: src/components/media/MatchVideos.tsx
+#: src/pages/player/constants.ts
+msgid "Full match"
+msgstr "풀경기"
+
+#. Media tab section: videos of whole matches
+#: src/pages/tournament/components/media/sections.ts
+msgid "Full matches"
+msgstr "풀경기 영상"
+
+#. Link to a tournament’s full list of medallists (winners, runners-up, semi-finalists)
+#: src/components/tournament/Winners.tsx
+msgid "Full podium"
+msgstr "전체 입상자"
+
+#. Link from the About page to the complete Race to Finals standings table
+#: src/pages/about/components/RaceTop8.tsx
+msgid "Full standings"
+msgstr "전체 순위"
+
+#. Scoreboard column header: short for Game 1, Game 2, Game 3
+#: src/components/match/detail/Scoreboard.tsx
+msgid "G{game}"
+msgstr "{game}G"
+
+#. Live score column heading for a game, e.g. G1 = game 1. Keep it to about two characters
+#: src/pages/tournament/components/matches/LiveCard.tsx
+msgid "G{n}"
+msgstr "{n}G"
+
+#. Match stats tab for one game of the match, e.g. Game 2
+#: src/components/match/detail/StatsPanel.tsx
+msgid "Game {game}"
+msgstr "{game}게임"
+
+#. Live match: this side wins the current game if it wins the next rally
+#: src/utils/live.ts
+msgid "Game point"
+msgstr "게임 포인트"
+
+#. Match stats row: games won by each side (a match is best of three games)
+#: src/components/match/detail/utils.ts
+msgid "Games won"
+msgstr "이긴 게임"
+
+#. Link at the bottom of a tournament’s popover in the calendar season strip
+#: src/pages/calendar/components/EventDetails.tsx
+msgid "Go to tournament"
+msgstr "대회 페이지로"
+
+#. World Tour Finals match: its group and round inside the group, e.g. "Group A · Round 2"
+#: src/utils/matches.ts
+msgid "Group {group} · {round}"
+msgstr "{group}조 · {round}"
+
+#. Round name at the World Tour Finals, which starts with groups of four: first round of group matches
+#: src/constants.ts
+msgid "Group round 1"
+msgstr "조별리그 1라운드"
+
+#. Round name at the World Tour Finals: second round of group matches
+#: src/constants.ts
+msgid "Group round 2"
+msgstr "조별리그 2라운드"
+
+#. Round name at the World Tour Finals: third round of group matches
+#: src/constants.ts
+msgid "Group round 3"
+msgstr "조별리그 3라운드"
+
+#. Day timeline label: the round-robin group stage of the World Tour Finals
+#. World Tour Finals: the first phase, where players play round-robin groups of four before the knockouts
+#: src/constants.ts
+#: src/pages/tournament/constants.ts
+msgid "Group stage"
+msgstr "조별리그"
+
+#. Short day timeline label for the round-robin group stage
+#: src/pages/tournament/constants.ts
+msgid "Groups"
+msgstr "조별"
+
+#. Match detail section comparing the two sides’ records against each other
+#: src/components/match/detail/HeadToHead.tsx
+msgid "Head-to-head"
+msgstr "상대 전적"
+
+#. Player profile stat: how tall the player is
+#: src/utils/players.ts
+msgid "Height"
+msgstr "키"
+
+#. Label on a short YouTube highlights video of the match
+#. Media tab section: short highlight videos of matches
+#. Video type label: match highlights
+#: src/components/media/MatchVideos.tsx
+#: src/pages/player/constants.ts
+#: src/pages/tournament/components/media/sections.ts
+msgid "Highlights"
+msgstr "하이라이트"
+
+#. Menu caption under the Home link
+#: src/components/layout/menu/nav.ts
+msgid "Home"
+msgstr "홈"
+
+#. Team name used by BWF and in international sport for Hong Kong, China. Use the official sports name in your language
+#: src/utils/countries.ts
+msgid "Hong Kong China"
+msgstr "홍콩"
+
+#. About page headline stat: number of countries hosting a tournament
+#: src/pages/about/utils.ts
+msgid "Host countries"
+msgstr "개최국"
+
+#. Menu caption under the About link: how the World Tour works
+#: src/components/layout/menu/nav.ts
+msgid "How it works"
+msgstr "투어 안내"
+
 #. Page description for the About page
 #: src/utils/meta.ts
 msgid "How the HSBC BWF World Tour works: tournament levels, ranking points, the season so far and the race to the World Tour Finals."
-msgstr ""
+msgstr "HSBC BWF World Tour의 운영 방식: 대회 등급, 랭킹 포인트, 지금까지의 시즌, World Tour Finals 진출 경쟁."
+
+#. Podium tab section: how far each seeded (top-ranked) player or pair got in each event
+#: src/pages/tournament/components/PodiumTab.tsx
+msgid "How the seeds did"
+msgstr "시드 선수 성적"
+
+#. About page section heading explaining the tournament levels (Super 1000, 750, 500, 300) and ranking points
+#: src/pages/about/constants.ts
+msgid "How the Tour works"
+msgstr "투어 운영 방식"
 
 #. Site name in browser tabs and link previews; the official tour brand, usually kept in English
 #: src/utils/meta.ts
 msgid "HSBC BWF World Tour"
-msgstr ""
+msgstr "HSBC BWF World Tour"
+
+#. Accessible name of the site logo, which links to the home page. “Concept” means this is a redesign concept
+#: src/components/layout/Wordmark.tsx
+msgid "HSBC BWF World Tour concept, home"
+msgstr "HSBC BWF World Tour 콘셉트, 홈"
+
+#. Tooltip of the Race to Finals option in the rankings switch
+#: src/pages/rankings/constants.ts
+msgid "HSBC BWF World Tour Finals race"
+msgstr "HSBC BWF World Tour Finals 레이스"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "HSBC, World Tour title partner (opens in a new tab)"
+msgstr "HSBC, 월드투어 타이틀 파트너 (새 탭에서 열림)"
+
+#. Button that dismisses the first-visit disclaimer
+#: src/components/disclaimer/DisclaimerModal.tsx
+msgid "I understand"
+msgstr "확인"
+
+#. When a player’s next match is: later today, more than an hour away
+#: src/utils/match-time.ts
+msgid "In a few hours"
+msgstr "몇 시간 후"
+
+#. Tooltip in the Race to Finals ranking (the season ranking that decides who plays the World Tour Finals): the player is in the top 8 but at most 2 per country may qualify
+#: src/constants.ts
+msgid "In the top 8, but two players from the same country rank higher — not qualifying (max. 2 per country)"
+msgstr "상위 8위 안이지만 같은 국가 선수 2명이 더 높은 순위에 있어 출전권 없음 (국가당 최대 2명)"
+
+#. Shown instead of a country for a player competing without a national flag (neutral status)
+#: src/utils/countries.ts
+msgid "Individual Neutral Athlete"
+msgstr "개인 중립 선수"
+
+#. Player profile fact: when the player first competed internationally. "Intl." is short for international
+#: src/utils/players.ts
+msgid "Intl. debut"
+msgstr "국제대회 데뷔"
+
+#. Result tag on the winner of a semi-final: they reach the final
+#: src/utils/matches.ts
+msgid "Into final"
+msgstr "결승 진출"
+
+#. Result tag on the winner of a match: they go through to the next round
+#: src/utils/matches.ts
+msgid "Into next round"
+msgstr "다음 라운드 진출"
+
+#. Result tag on the winner of a round-of-16 match: they reach the quarter-finals (QF is the round code)
+#: src/utils/matches.ts
+msgid "Into QF"
+msgstr "8강 진출"
+
+#. Result tag on the winner of a round-of-32 match: they reach the round of 16 (R16 is the round code)
+#: src/utils/matches.ts
+msgid "Into R16"
+msgstr "16강 진출"
+
+#. Result tag on the winner of a quarter-final: they reach the semi-finals (SF is the round code)
+#: src/utils/matches.ts
+msgid "Into SF"
+msgstr "4강 진출"
+
+#. Explanation on the not-found page for a news article
+#: src/pages/news-article/ArticlePage.tsx
+msgid "It may have been taken down from the BWF newsroom, or the link is out of date."
+msgstr "BWF 뉴스룸에서 삭제되었거나 링크가 오래되었을 수 있습니다."
+
+#. News page sidebar heading above the list of years and months to jump to
+#: src/pages/news/components/MonthRail.tsx
+msgid "Jump to"
+msgstr "바로가기"
+
+#. Tooltip on a chip that scrolls to an event’s entries, e.g. “Jump to Men’s singles”
+#: src/pages/tournament/components/PlayersTab.tsx
+msgid "Jump to {name}"
+msgstr "{name} 바로가기"
+
+#. News page on phones: calendar button and sheet title for picking a past month of stories
+#. News page on phones: calendar button and sheet title for picking a past month of stories
+#: src/pages/news/components/MonthSheet.tsx
+msgid "Jump to month"
+msgstr "월 선택"
+
+#. When a news story was published: less than an hour ago
+#: src/utils/news.ts
+msgid "Just now"
+msgstr "방금 전"
+
+#. Team name used by BWF and in international sport for the Republic of Korea (South Korea)
+#: src/utils/countries.ts
+msgid "Korea"
+msgstr "대한민국"
+
+#. One-letter badge for a match the player lost
+#: src/components/match/labels.ts
+msgid "L"
+msgstr "패"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Language"
 msgstr "언어"
 
+#. Player profile fact: the languages the player speaks
+#: src/utils/players.ts
+msgid "Languages"
+msgstr "사용 언어"
+
+#. Ranking chart range: the last two years only
+#: src/pages/player/components/RankChart.tsx
+msgid "Last 2 years"
+msgstr "최근 2년"
+
+#. Section title: ranking points earned over the last 52 weeks
+#: src/pages/player/components/RankTrend.tsx
+msgid "Last 52 weeks"
+msgstr "최근 52주"
+
+#. Tooltip on the disabled next-tournament button: there is no later tournament
+#: src/pages/tournament/components/TournamentHeader.tsx
+msgid "Last event of the season"
+msgstr "시즌 마지막 대회입니다"
+
+#. Player overview card title: the player’s most recent finished match
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Last match"
+msgstr "최근 경기"
+
+#. Player overview card title for a retired player: the final match of their career
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Last match played"
+msgstr "마지막 경기"
+
+#. The last month the player appeared in this discipline’s world ranking; month is e.g. Mar 2019
+#: src/pages/player/components/RankingsTab.tsx
+msgid "Last ranked {month}"
+msgstr "마지막 랭킹 {month}"
+
+#. Section title: the player’s stats for the most recent season they played
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Last season played · {year}"
+msgstr "마지막 출전 시즌 · {year}"
+
+#. Retired player: the last World Tour tournament they played
+#: src/utils/retirement.ts
+msgid "Last tour event"
+msgstr "마지막 투어 대회"
+
+#. Retired player: the date of the last World Tour match they played
+#: src/utils/retirement.ts
+msgid "Last tour match"
+msgstr "마지막 투어 경기"
+
+#. Arrow button that scrolls the tournament day strip forward
+#: src/pages/tournament/components/matches/DayPicker.tsx
+msgid "Later days"
+msgstr "다음 날짜"
+
+#. News page: heading of, and jump chip to, the newest stories section
+#. News page: heading of, and jump chip to, the newest stories section
+#: src/pages/news/components/LatestSection.tsx
+#: src/pages/news/NewsPage.tsx
+msgid "Latest"
+msgstr "최신"
+
+#. Heading below a news article listing the newest stories
+#: src/pages/news-article/ArticlePage.tsx
+msgid "Latest news"
+msgstr "최신 뉴스"
+
+#. Section title: the newest videos of this player on BWF TV, BWF’s YouTube channel
+#: src/pages/player/components/MediaTab.tsx
+msgid "Latest on BWF TV"
+msgstr "BWF TV 최신 영상"
+
+#. Menu caption under the News link
+#: src/components/layout/menu/nav.ts
+msgid "Latest stories"
+msgstr "최신 기사"
+
+#. Player profile: the player holds the racket in the left hand (left-handed)
+#: src/utils/format.ts
+msgctxt "playing hand"
+msgid "Left"
+msgstr "왼손"
+
+#. Screen-reader label for the About page map filters by tournament level (Super 1000, 750, 500, 300, Finals)
+#: src/pages/about/components/SeasonLegend.tsx
+msgid "Levels"
+msgstr "등급"
+
+#. Settings option: light colour theme
+#: src/components/layout/SiteSettings.tsx
+msgid "Light"
+msgstr "라이트"
+
+#. Confirmation after copying a news article’s link to the clipboard
+#: src/pages/news-article/components/ShareBar.tsx
+msgid "Link copied"
+msgstr "링크를 복사했습니다"
+
+#. Badge for a match being played right now
+#. Scoreboard status: the match is being played right now
+#. Status tag: the match is being played right now
+#: src/components/match/detail/Scoreboard.tsx
+#: src/components/match/labels.ts
+#: src/utils/matches.ts
+msgctxt "match status"
+msgid "Live"
+msgstr "진행 중"
+
+#. Badge on a YouTube stream that is broadcasting now
+#: src/components/media/VideoCard.tsx
+msgctxt "stream"
+msgid "Live"
+msgstr "생중계"
+
+#. Big status word: the Finals are being played now
+#. Ticker under the header: the tournament being played right now
+#: src/components/layout/TourTicker.tsx
+#: src/utils/season.ts
+msgctxt "tournament status"
+msgid "Live"
+msgstr "진행 중"
+
+#. Status tag: the match is being played right now on this numbered court
+#: src/utils/matches.ts
+msgid "Live · Court {court}"
+msgstr "진행 중 · 코트 {court}"
+
+#. Status of a tournament being played now, with which day of it today is, e.g. "Live · Day 3"
+#: src/utils/tournaments.ts
+msgid "Live · Day {day}"
+msgstr "진행 중 · {day}일차"
+
+#. Status of a tournament being played now: which day of how many, e.g. "Live · Day 3 of 6"
+#: src/utils/tournaments.ts
+msgid "Live · Day {day} of {total}"
+msgstr "진행 중 · {total}일 중 {day}일차"
+
+#. About page season map legend and filter: the tournament being played now, or the next one to start
+#: src/pages/about/constants.ts
+msgid "Live / next"
+msgstr "진행 중 / 다음"
+
+#. Accessible name of a live score card that opens the match details. {title} names the players
+#: src/pages/tournament/components/matches/LiveCard.tsx
+msgid "Live match details: {title}"
+msgstr "진행 중인 경기 상세: {title}"
+
+#. Calendar filter-bar button that scrolls to the tournament being played right now
+#. Matches or streams being played right now
+#. Player overview card title: the match the player is playing right now
+#. Small label above a tournament that is being played right now
+#: src/pages/about/constants.ts
+#: src/pages/calendar/CalendarPage.tsx
+#: src/pages/player/components/OverviewTab.tsx
+#: src/pages/tournament/constants.ts
+msgid "Live now"
+msgstr "지금 진행 중"
+
 #. Description of a tournament being played right now. {name} e.g. "VICTOR Denmark Open 2026", {level} e.g. "Super 750", {place} e.g. "Odense, Denmark", {dates} e.g. "13–18 October 2026"
 #: src/utils/meta.ts
 msgid "Live now: {name}, a {level} tournament in {place}, {dates}. Follow live scores, the draw and results."
-msgstr ""
+msgstr "지금 진행 중: {name}, {dates} {place}에서 열리는 {level} 대회. 실시간 점수, 대진표, 결과를 확인하세요."
+
+#. Note above the matches when the live score feed fails
+#: src/pages/tournament/components/MatchesTab.tsx
+msgid "Live scores are unavailable right now. Showing results that may be up to an hour old."
+msgstr "지금은 실시간 점수를 불러올 수 없습니다. 최대 1시간 전 결과를 표시합니다."
 
 #. Default page description for search engines and link previews
 #: src/utils/meta.ts
 msgid "Live scores, draws, results, the season calendar, world rankings and news from the HSBC BWF World Tour, badminton’s top tournament circuit."
-msgstr ""
+msgstr "배드민턴 최정상 투어인 HSBC BWF World Tour의 실시간 점수, 대진표, 결과, 시즌 일정, 세계 랭킹, 뉴스."
+
+#. Player profile fact: the town or city the player lives in
+#: src/utils/players.ts
+msgid "Lives in"
+msgstr "거주지"
+
+#: src/components/match/detail/HeadToHead.tsx
+msgid "Loading season…"
+msgstr "시즌 불러오는 중…"
+
+#: src/components/match/detail/HeadToHead.tsx
+msgid "Loading World Tour history…"
+msgstr "월드투어 기록 불러오는 중…"
+
+#. Live score footer: the most points each side won in a row without the opponent scoring
+#: src/pages/tournament/components/matches/LiveCard.tsx
+msgid "Longest run"
+msgstr "최다 연속 득점"
+
+#. Outcome of the player’s last match: they lost it
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Lost"
+msgstr "패배"
+
+#. Live match: number of failed challenges. A challenge is a player’s request for a video review of a line call (Instant Review)
+#: src/utils/live.ts
+msgctxt "challenges"
+msgid "Lost"
+msgstr "실패"
+
+#. Uppercase badge on a head-to-head result the player lost
+#: src/components/match/labels.ts
+msgid "LOST"
+msgstr "패"
+
+#. Result tag on the loser of a World Tour Finals group match
+#: src/utils/matches.ts
+msgid "Lost · Group {group}"
+msgstr "패 · {group}조"
+
+#. Tooltip on a recent-form tile: match lost against these opponents at this tournament
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Lost vs {opponents} · {tournament}"
+msgstr "vs {opponents} 패 · {tournament}"
+
+#. Team name used by BWF and in international sport for Macau (Macao), China. Use the official sports name in your language
+#: src/utils/countries.ts
+msgid "Macau China"
+msgstr "마카오"
+
+#. Accessible name of the main site navigation
+#. Accessible name of the main site navigation
+#: src/components/layout/menu/CourtMenu.tsx
+#: src/components/layout/SiteHeader.tsx
+msgid "Main"
+msgstr "주 메뉴"
+
+#. Entry status: in the main draw, the knockout bracket proper (as opposed to qualifying)
+#: src/pages/tournament/components/players/entries.ts
+msgid "Main draw"
+msgstr "본선"
+
+#. Match stats tab: totals for the whole match, next to Game 1, Game 2…
+#: src/components/match/detail/StatsPanel.tsx
+msgid "Match"
+msgstr "전체"
+
+#. Accessible name of a card that opens the match details. {title} names the players, e.g. "Axelsen vs Shi"
+#: src/pages/tournament/components/matches/utils.ts
+msgid "Match details: {title}"
+msgstr "경기 상세: {title}"
+
+#. Live match status: the last rally has been played
+#: src/utils/live.ts
+msgid "Match over"
+msgstr "경기 종료"
+
+#. Live match: this side wins the whole match if it wins the next rally
+#: src/utils/live.ts
+msgid "Match point"
+msgstr "매치 포인트"
 
 #. Page description for the news index
 #: src/utils/meta.ts
 msgid "Match reports, previews and stats from every stop on the HSBC BWF World Tour."
-msgstr ""
+msgstr "HSBC BWF World Tour 모든 대회의 경기 리포트, 프리뷰, 기록."
+
+#. Subtitle under the news page heading; “stop” means a tournament on the World Tour
+#: src/pages/news/constants.ts
+msgid "Match reports, previews and stats from every stop on the Tour"
+msgstr "투어 모든 대회의 경기 리포트, 프리뷰, 기록"
+
+#: src/components/match/detail/StatsPanel.tsx
+msgid "Match statistics"
+msgstr "경기 통계"
+
+#: src/components/match/detail/StatsPanel.tsx
+msgid "Match stats"
+msgstr "경기 통계"
+
+#. Player profile tab: list of matches by season
+#. Tournament page tab: order of play, live scores and results
+#: src/pages/player/constants.ts
+#: src/pages/tournament/constants.ts
+msgid "Matches"
+msgstr "경기"
+
+#. Podium tab section: the champion, runner-up and semi-finalists of each event
+#: src/pages/tournament/components/PodiumTab.tsx
+msgid "Medalists"
+msgstr "입상자"
+
+#. Player profile tab: videos and news stories
+#. Tournament page tab: videos, highlights and streams
+#: src/pages/player/constants.ts
+#: src/pages/tournament/constants.ts
+msgid "Media"
+msgstr "미디어"
+
+#: src/components/match/detail/HeadToHead.tsx
+msgid "Meetings this season"
+msgstr "이번 시즌 맞대결"
+
+#. Top bar menu group: BWF sites for member associations and officials
+#: src/components/layout/links.ts
+msgid "Members & Officials"
+msgstr "회원 및 임원"
+
+#. Player profile: the player’s proudest results
+#: src/utils/players.ts
+msgid "Memorable achievements"
+msgstr "주요 성과"
+
+#. Badminton discipline (event): two men against two men
+#: src/constants.ts
+msgid "Men's doubles"
+msgstr "남자 복식"
+
+#. Badminton discipline (event): one man against one man
+#: src/constants.ts
+msgid "Men's singles"
+msgstr "남자 단식"
+
+#. Accessible name of the site navigation menu
+#. Accessible name of the site navigation menu
+#: src/components/layout/menu/CourtMenu.tsx
+#: src/components/layout/menu/MenuButton.tsx
+msgid "Menu"
+msgstr "메뉴"
+
+#. Badminton discipline (event): pairs of one man and one woman against each other
+#: src/constants.ts
+msgid "Mixed doubles"
+msgstr "혼합 복식"
+
+#. Top bar menu button listing more BWF websites
+#: src/components/layout/PlatformBar.tsx
+msgid "More"
+msgstr "더보기"
+
+#. Heading below a news article listing other stories about the same tournament, {tournamentName}
+#: src/pages/news-article/ArticlePage.tsx
+msgid "More from {tournamentName}"
+msgstr "{tournamentName} 기사 더 보기"
+
+#. Media tab group of highlight videos not linked to a round
+#: src/pages/tournament/components/media/sections.ts
+msgid "More highlights"
+msgstr "하이라이트 더 보기"
+
+#. Media tab group of full-match videos not linked to a round
+#: src/pages/tournament/components/media/sections.ts
+msgid "More matches"
+msgstr "경기 영상 더 보기"
+
+#. Media tab section: other videos such as shorts and promos
+#: src/pages/tournament/components/media/sections.ts
+msgid "More videos"
+msgstr "기타 영상"
+
+#. Section title: the opponents the player has faced most often
+#: src/pages/player/components/People.tsx
+msgid "Most played"
+msgstr "최다 맞대결"
+
+#. Heading above the most-read news stories
+#: src/components/news/PopularNews.tsx
+msgid "Most popular"
+msgstr "인기 기사"
 
 #. Settings option: show match times in the visitor’s own time zone
 #: src/components/layout/SiteSettings.tsx
@@ -121,42 +2042,1101 @@ msgstr "내 시간"
 msgid "My time uses your browser’s time zone ({zone})."
 msgstr "내 시간은 브라우저의 시간대({zone})를 사용합니다."
 
+#. Player profile fact: since when the player has been on their country’s national team
+#: src/utils/players.ts
+msgid "National team"
+msgstr "국가대표"
+
+#. Badge on a news story published in the last 24 hours
+#. Short tag in the ranking movement column: a new entry this week
+#: src/components/news/NewsMeta.tsx
+#: src/pages/rankings/components/Movement.tsx
+msgid "New"
+msgstr "NEW"
+
+#. Tooltip: the player or pair is in the ranking for the first time this week
+#: src/pages/rankings/components/Movement.tsx
+msgid "New entry"
+msgstr "신규 진입"
+
 #. Browser tab title for the news index
+#. Main navigation link to news stories
+#. Section title on the player Media tab
+#. Small label above the news page heading
+#. Tournament page tab: news stories about the tournament
+#: src/components/layout/links.ts
+#: src/pages/news/NewsPage.tsx
+#: src/pages/player/components/MediaTab.tsx
+#: src/pages/tournament/constants.ts
 #: src/utils/meta.ts
 msgid "News"
-msgstr ""
+msgstr "뉴스"
+
+#. Notice title on the news pages when the site language isn’t English
+#: src/components/news/EnglishOnlyNotice.tsx
+msgid "News stays in English"
+msgstr "뉴스는 영어로만 제공됩니다"
+
+#. Footer link to sign up for the BWF email newsletter
+#: src/components/layout/links.ts
+msgid "Newsletter"
+msgstr "뉴스레터"
+
+#. Social link to sign up for the BWF email newsletter
+#: src/components/layout/links.ts
+msgid "Newsletter signup"
+msgstr "뉴스레터 신청"
+
+#. Match card tag: this is the next match on its court
+#: src/pages/tournament/components/matches/MatchCard.tsx
+msgctxt "court"
+msgid "Next"
+msgstr "다음 경기"
+
+#. Label for a player’s next scheduled match, when its exact day is not shown
+#: src/utils/match-time.ts
+msgctxt "next match"
+msgid "Next"
+msgstr "다음 경기"
+
+#. Ticker under the header: the next upcoming tournament
+#: src/components/layout/TourTicker.tsx
+msgctxt "tournament"
+msgid "Next"
+msgstr "다음 대회"
+
+#. The next tournament on the calendar and when it starts, e.g. "Next · In 5 days" or "Next · Tomorrow"
+#: src/utils/tournaments.ts
+msgid "Next · {when}"
+msgstr "다음 · {when}"
+
+#. Hover card kicker: the linked tournament is the one after this
+#: src/pages/tournament/components/TournamentHeader.tsx
+msgid "Next event"
+msgstr "다음 대회"
+
+#. Hover card kicker: the linked tournament is in the next season
+#. Small label above the opening tournament of next year’s World Tour, shown once this season has no events left
+#: src/pages/about/constants.ts
+#: src/pages/tournament/components/TournamentHeader.tsx
+msgid "Next season"
+msgstr "다음 시즌"
+
+#. Small label above a tournament on the About page season map: the next tournament on the World Tour
+#: src/pages/about/constants.ts
+msgid "Next stop"
+msgstr "다음 대회"
+
+#. Button to the next tournament. {name} is its name
+#: src/pages/tournament/components/TournamentHeader.tsx
+msgid "Next: {name}"
+msgstr "다음: {name}"
+
+#. Player profile fact
+#: src/utils/players.ts
+msgid "Nickname"
+msgstr "별명"
+
+#. Empty rankings table; discipline is a lowercased discipline name, e.g. men’s doubles
+#: src/pages/rankings/RankingsPage.tsx
+msgid "No {discipline} ranking published yet"
+msgstr "아직 발표된 {discipline} 랭킹이 없습니다"
+
+#: src/pages/player/components/MediaTab.tsx
+msgid "No BWF TV videos or news stories mention this player yet."
+msgstr "이 선수가 나오는 BWF TV 영상이나 기사가 아직 없습니다."
+
+#. Tooltip: the ranking position is the same as last week
+#: src/pages/rankings/components/Movement.tsx
+msgid "No change"
+msgstr "변동 없음"
+
+#. Country filter: the search matched no country
+#: src/pages/rankings/components/FilterBar.tsx
+msgid "No country"
+msgstr "해당 국가 없음"
+
+#. Players tab: no entries pass the chosen filters
+#: src/pages/tournament/components/PlayersTab.tsx
+msgid "No entries match these filters."
+msgstr "필터와 일치하는 엔트리가 없습니다."
+
+#. Calendar empty state when the tier and status filters hide every tournament
+#: src/pages/calendar/CalendarPage.tsx
+msgid "No events match these filters"
+msgstr "필터와 일치하는 대회가 없습니다"
+
+#. Matches tab empty state
+#: src/pages/tournament/components/MatchesTab.tsx
+msgid "No matches for these filters."
+msgstr "필터와 일치하는 경기가 없습니다."
+
+#. Empty doubles rankings after filtering; the button resets the search and country filter
+#: src/pages/rankings/RankingsPage.tsx
+msgid "No pairs match these filters. <0>Clear filters</0>"
+msgstr "필터와 일치하는 조가 없습니다. <0>필터 초기화</0>"
+
+#. Players tab: the search {q} finds nobody with the chosen filters
+#: src/pages/tournament/components/PlayersTab.tsx
+msgid "No players match “{q}” with these filters."
+msgstr "현재 필터에서 “{q}”에 해당하는 선수가 없습니다."
+
+#. Players tab: the search {q} finds nobody
+#: src/pages/tournament/components/PlayersTab.tsx
+msgid "No players match “{q}”."
+msgstr "“{q}”에 해당하는 선수가 없습니다."
+
+#. Empty singles rankings after filtering; the button resets the search and country filter
+#: src/pages/rankings/RankingsPage.tsx
+msgid "No players match these filters. <0>Clear filters</0>"
+msgstr "필터와 일치하는 선수가 없습니다. <0>필터 초기화</0>"
+
+#: src/components/player/PlayerHoverCard.tsx
+msgid "No profile data for this player."
+msgstr "이 선수의 프로필 정보가 없습니다."
+
+#: src/pages/player/components/RankingsTab.tsx
+#: src/pages/player/components/ResultsTab.tsx
+msgid "No ranking history on record."
+msgstr "랭킹 기록이 없습니다."
+
+#. News tab empty state
+#: src/pages/tournament/components/NewsTab.tsx
+msgid "No stories about this tournament yet."
+msgstr "아직 이 대회 관련 기사가 없습니다."
+
+#. Media tab empty state when the round filter or search hides every video
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "No videos match these filters."
+msgstr "필터와 일치하는 동영상이 없습니다."
+
+#. Media tab empty state. BWF TV is BWF’s YouTube channel
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "No videos on BWF TV for this tournament yet."
+msgstr "아직 이 대회의 BWF TV 영상이 없습니다."
+
+#. Empty state on phones for a calendar month with no World Tour tournaments
+#: src/pages/calendar/components/MonthSection.tsx
+msgid "No World Tour events"
+msgstr "월드투어 대회 없음"
+
+#. Empty state for a calendar month with no World Tour tournaments
+#: src/pages/calendar/components/MonthSection.tsx
+msgid "No World Tour events this month"
+msgstr "이번 달에는 월드투어 대회가 없습니다"
+
+#: src/pages/player/components/OverviewTab.tsx
+msgid "No World Tour matches on record since 2018."
+msgstr "2018년 이후 월드투어 경기 기록이 없습니다."
+
+#: src/pages/player/components/MatchesTab.tsx
+msgid "No World Tour matches on record."
+msgstr "월드투어 경기 기록이 없습니다."
+
+#. Empty state of the Following today card on the tournament overview
+#: src/pages/tournament/constants.ts
+msgid "Nobody you follow has a match left today."
+msgstr "오늘 남은 팔로우 경기가 없습니다."
+
+#. Shown on a YouTube video that is geo-blocked for the visitor
+#: src/components/media/labels.ts
+msgid "Not available in your region"
+msgstr "내 지역에서 볼 수 없음"
+
+#. Scoreboard status for a scheduled match: it starts at this time or later, e.g. “Not before 14:30”
+#: src/components/match/detail/Scoreboard.tsx
+msgid "Not before <0/>"
+msgstr "<0/> 이후 시작"
+
+#. A seeded player or pair missing from the tournament data
+#: src/pages/tournament/components/PodiumTab.tsx
+msgid "Not in the data"
+msgstr "데이터 없음"
+
+#. How the seeds did card: none of this event’s seeds are in today’s match data
+#: src/pages/tournament/components/PodiumTab.tsx
+msgid "Not in today’s data"
+msgstr "오늘 데이터에 없음"
+
+#: src/components/player/Rank.tsx
+msgid "Not ranked this week"
+msgstr "이번 주 랭킹 없음"
+
+#. Site search empty state; {typed} is what the visitor typed
+#: src/components/layout/SiteSearch.tsx
+msgid "Nothing matches “{typed}”."
+msgstr "“{typed}”에 대한 결과가 없습니다."
+
+#. The partnership’s world ranking right now; rank is e.g. #3
+#: src/pages/player/components/RankingsTab.tsx
+msgid "now {rank}"
+msgstr "현재 {rank}"
+
+#. Continent name: Australia, New Zealand and the Pacific islands
+#: src/utils/countries.ts
+msgid "Oceania"
+msgstr "오세아니아"
+
+#. Hint under the recent-form strip: tiles run from oldest to newest match; tap one to open it
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Oldest → newest · tap for match"
+msgstr "오래된 순 → 최신 순 · 탭하면 경기 보기"
+
+#. Tooltip on the World top 10 filter chip in the Players tab
+#: src/pages/tournament/components/PlayersTab.tsx
+msgid "Only entries ranked in the world top 10 of their discipline"
+msgstr "종목별 세계 랭킹 10위 이내 엔트리만"
+
+#. Matches tab empty state. Live now is the title of the live matches section above
+#: src/pages/tournament/components/MatchesTab.tsx
+msgid "Only live matches match these filters — see Live now above."
+msgstr "필터와 일치하는 경기는 진행 중인 경기뿐입니다. 위의 ‘지금 진행 중’을 확인하세요."
+
+#. About page explainer. “The race” is the Race to Finals points table; the World Tour Finals is the season-ending event, held in {city} in {month}. The five disciplines are men’s and women’s singles and doubles, and mixed doubles
+#: src/pages/about/components/HowItWorks.tsx
+msgid "Only the top {QUALIFY_SPOTS} in each of the five disciplines of the race qualify for the <0>World Tour Finals</0> in {city} in {month}, with a maximum of {QUALIFY_PER_COUNTRY} per country."
+msgstr "레이스에서 다섯 종목별 상위 {QUALIFY_SPOTS}위만 {month} {city}에서 열리는 <0>World Tour Finals</0>에 진출하며, 국가당 최대 {QUALIFY_PER_COUNTRY}명(조)까지입니다."
+
+#. About page explainer. “The race” is the Race to Finals points table; the World Tour Finals is the season-ending event, held in {month} (host city not announced yet). The five disciplines are men’s and women’s singles and doubles, and mixed doubles
+#: src/pages/about/components/HowItWorks.tsx
+msgid "Only the top {QUALIFY_SPOTS} in each of the five disciplines of the race qualify for the <0>World Tour Finals</0> in {month}, with a maximum of {QUALIFY_PER_COUNTRY} per country."
+msgstr "레이스에서 다섯 종목별 상위 {QUALIFY_SPOTS}위만 {month}에 열리는 <0>World Tour Finals</0>에 진출하며, 국가당 최대 {QUALIFY_PER_COUNTRY}명(조)까지입니다."
+
+#. About page explainer. “The race” is the Race to Finals points table; the World Tour Finals is the season-ending event. The five disciplines are men’s and women’s singles and doubles, and mixed doubles
+#: src/pages/about/components/HowItWorks.tsx
+msgid "Only the top {QUALIFY_SPOTS} in each of the five disciplines of the race qualify for the <0>World Tour Finals</0>, with a maximum of {QUALIFY_PER_COUNTRY} per country."
+msgstr "레이스에서 다섯 종목별 상위 {QUALIFY_SPOTS}위만 <0>World Tour Finals</0>에 진출하며, 국가당 최대 {QUALIFY_PER_COUNTRY}명(조)까지입니다."
+
+#. Link that shows the tournament venue on a map
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "Open in Google Maps"
+msgstr "Google 지도에서 열기"
+
+#. Accessible label for a match row: opens the match details; round is e.g. Quarter-final
+#: src/pages/player/components/MatchesTab.tsx
+msgid "Open match details · {round}"
+msgstr "경기 상세 보기 · {round}"
+
+#. Accessible label for a match card: opens the match details for this tournament
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Open match details · {tournament}"
+msgstr "경기 상세 보기 · {tournament}"
 
 #. Footer link to the site’s source code on GitHub, inviting people to send feedback or contribute
 #: src/components/layout/SiteFooter.tsx
 msgid "Open source on GitHub. Feedback, ideas and contributions welcome"
-msgstr ""
+msgstr "GitHub에 공개된 오픈소스입니다. 의견, 아이디어, 기여를 환영합니다"
+
+#. Group for players whose country has no continent, e.g. neutral athletes
+#: src/utils/countries.ts
+msgctxt "continent"
+msgid "Other"
+msgstr "기타"
+
+#. Heading: the player’s other doubles partnerships in this discipline, besides the current one
+#: src/pages/player/components/RankingsTab.tsx
+msgid "Other partnerships"
+msgstr "다른 파트너"
+
+#. Accessible name of the previous and next tournament buttons
+#: src/pages/tournament/components/TournamentHeader.tsx
+msgid "Other tournaments"
+msgstr "다른 대회"
+
+#. Page-not-found badge beside 404, like a line judge calling the shuttle out
+#: src/components/layout/NotFound.tsx
+msgid "Out"
+msgstr "아웃"
+
+#. Result tag on the loser of a knockout match: knocked out in this round. {round} is a round code not covered by the other “Out ·” tags
+#: src/utils/matches.ts
+msgid "Out · {round}"
+msgstr "{round} 탈락"
+
+#. Result tag on the loser of a tournament final: beaten in the final
+#: src/utils/matches.ts
+msgid "Out · F"
+msgstr "준우승"
+
+#. Result tag on the loser of a qualifying final: knocked out of qualifying in its last round
+#: src/utils/matches.ts
+msgid "Out · Q-F"
+msgstr "예선 결승 탈락"
+
+#. Result tag on the loser of a qualifying quarter-final: knocked out of qualifying in this round
+#: src/utils/matches.ts
+msgid "Out · Q-QF"
+msgstr "예선 8강 탈락"
+
+#. Result tag on the loser of a qualifying round-of-16 match: knocked out of qualifying in this round
+#: src/utils/matches.ts
+msgid "Out · Q-R16"
+msgstr "예선 16강 탈락"
+
+#. Result tag on the loser of a qualifying round-of-32 match: knocked out of qualifying in this round
+#: src/utils/matches.ts
+msgid "Out · Q-R32"
+msgstr "예선 32강 탈락"
+
+#. Result tag on the loser of a qualifying semi-final: knocked out of qualifying in this round
+#: src/utils/matches.ts
+msgid "Out · Q-SF"
+msgstr "예선 4강 탈락"
+
+#. Result tag on the loser of a quarter-final: knocked out in this round
+#: src/utils/matches.ts
+msgid "Out · QF"
+msgstr "8강 탈락"
+
+#. Result tag on the loser of a round-of-16 match: knocked out in this round
+#: src/utils/matches.ts
+msgid "Out · R16"
+msgstr "16강 탈락"
+
+#. Result tag on the loser of a round-of-32 match: knocked out in this round
+#: src/utils/matches.ts
+msgid "Out · R32"
+msgstr "32강 탈락"
+
+#. Result tag on the loser of a round-of-64 match: knocked out in this round
+#: src/utils/matches.ts
+msgid "Out · R64"
+msgstr "64강 탈락"
+
+#. Result tag on the loser of a semi-final: knocked out in this round
+#: src/utils/matches.ts
+msgid "Out · SF"
+msgstr "4강 탈락"
+
+#. Player profile tab: summary of the player
+#. Tournament page tab: dates, venue, schedule and past winners
+#: src/pages/player/constants.ts
+#: src/pages/tournament/constants.ts
+msgid "Overview"
+msgstr "개요"
 
 #. Browser tab title for a missing page, tournament, player or story
 #: src/utils/meta.ts
 msgid "Page not found"
-msgstr ""
+msgstr "페이지를 찾을 수 없음"
+
+#. Rankings table column: the doubles pair
+#: src/pages/rankings/components/RankingList.tsx
+msgid "Pair"
+msgstr "조"
+
+#. Team name used by BWF and in international sport for Palestine
+#: src/utils/countries.ts
+msgid "Palestine"
+msgstr "팔레스타인"
+
+#. Section title: the player’s doubles partners
+#: src/pages/player/components/People.tsx
+msgid "Partners"
+msgstr "파트너"
+
+#. Tournament overview: champions of earlier editions of this tournament
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "Past winners"
+msgstr "역대 우승자"
+
+#. Rankings table column: the player
+#: src/pages/rankings/components/RankingList.tsx
+msgid "Player"
+msgstr "선수"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Player heights"
 msgstr "선수 키"
 
+#: src/pages/player/components/SubNav.tsx
+msgid "Player sections"
+msgstr "선수 메뉴"
+
+#. Tournament page tab: the entry list, by country or by discipline
+#: src/components/layout/SiteSearch.tsx
+#: src/pages/tournament/constants.ts
+msgid "Players"
+msgstr "선수"
+
+#. Tooltip on the player equipment heading (racket, strings, shoes)
+#: src/components/player/Equipment.tsx
+msgid "Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome on GitHub."
+msgstr "선수들은 취향이나 스폰서 사정으로 장비를 자주 바꾸므로 이 정보는 최신이 아닐 수 있습니다. 사이트 제작자가 직접 관리하며, 수정 제안은 GitHub에서 받습니다."
+
+#. Player profile stat: the hand the player holds the racket in (right or left)
+#: src/utils/players.ts
+msgid "Playing hand"
+msgstr "주 사용 손"
+
+#. Tournament page tab: medalists and how the seeded players did
+#: src/pages/tournament/constants.ts
+msgid "Podium"
+msgstr "시상대"
+
+#. Live score footer: total points won by each side in the match
+#: src/pages/tournament/components/matches/LiveCard.tsx
+msgctxt "rally"
+msgid "Points"
+msgstr "득점"
+
+#. Ranking stat: current world ranking points
+#. Rankings table column: ranking points
+#: src/pages/player/components/RankingsTab.tsx
+#: src/pages/rankings/components/RankingList.tsx
+msgctxt "ranking"
+msgid "Points"
+msgstr "포인트"
+
+#. Head-to-head: total points won by each side across all meetings
+#: src/components/match/detail/HeadToHead.tsx
+msgid "Points {pa} – {pb}"
+msgstr "포인트 {pa} – {pb}"
+
+#. Match stats row: total rallies won by each side
+#: src/components/match/detail/utils.ts
+msgid "Points won"
+msgstr "획득 포인트"
+
+#. News page on phones: short jump chip to the “most popular stories” section
+#: src/pages/news/NewsPage.tsx
+msgid "Popular"
+msgstr "인기"
+
+#. News tab section: stories published before the tournament started
+#: src/pages/tournament/components/NewsTab.tsx
+msgid "Preview"
+msgstr "프리뷰"
+
+#. Hover card kicker: the linked tournament is the one before this
+#: src/pages/tournament/components/TournamentHeader.tsx
+msgid "Previous event"
+msgstr "이전 대회"
+
+#. Hover card kicker: the linked tournament is in the previous season
+#: src/pages/tournament/components/TournamentHeader.tsx
+msgid "Previous season"
+msgstr "이전 시즌"
+
+#. Button to the previous tournament. {name} is its name
+#: src/pages/tournament/components/TournamentHeader.tsx
+msgid "Previous: {name}"
+msgstr "이전: {name}"
+
+#. Heading: disciplines the player was ranked in before but is not any more
+#: src/pages/player/components/RankingsTab.tsx
+msgid "Previously ranked"
+msgstr "이전 랭킹"
+
+#. About page headline stat: total prize money across the season
+#. Career stat: total prize money earned
+#. Label for a tournament’s total prize money
+#: src/pages/about/utils.ts
+#: src/pages/player/components/Hero.tsx
+#: src/pages/tournament/constants.ts
+msgid "Prize money"
+msgstr "상금"
+
+#. About page tier ladder: prize money for this tournament level is not announced yet (to be confirmed)
+#: src/pages/about/constants.ts
+msgid "Prize TBC"
+msgstr "상금 미정"
+
+#. Section title: the player’s biography facts, quote and social links
+#: src/pages/player/components/ProfileSection.tsx
+msgid "Profile"
+msgstr "프로필"
+
+#. Link to a player’s profile on the official BWF website, for players without a page on this site
+#: src/components/player/RankedNames.tsx
+msgid "Profile on bwfbadminton.com"
+msgstr "bwfbadminton.com 프로필"
+
+#. Tag next to a future season’s year in the calendar header: the schedule is not final yet and may change
+#: src/pages/calendar/components/Hero.tsx
+msgid "Provisional"
+msgstr "잠정"
+
+#. Unit after ranking points; short for points
+#: src/pages/rankings/components/Podium.tsx
+msgid "pts"
+msgstr "점"
+
+#. Very short day timeline label for the qualifying rounds (abbreviation of Qualifying)
+#: src/pages/tournament/constants.ts
+msgid "Q"
+msgstr "예선"
+
+#. Badge on a player or pair who won through the qualifying rounds into the main draw (abbreviation of Qualifier)
+#: src/pages/tournament/components/players/EntryRow.tsx
+msgctxt "qualifier"
+msgid "Q"
+msgstr "Q"
+
+#. One-letter mark for “qualifier”: a player in a qualifying spot for the World Tour Finals
+#: src/components/player/Rank.tsx
+msgctxt "Race to Finals"
+msgid "Q"
+msgstr "Q"
+
+#. Short day timeline label for the quarter-finals
+#: src/pages/tournament/constants.ts
+msgid "QF"
+msgstr "8강"
+
+#. Divider in the Race to Finals standings: players above it currently qualify for the World Tour Finals
+#: src/pages/about/constants.ts
+msgid "Qualification line"
+msgstr "진출선"
+
+#. Divider in the Race to Finals list: players above it qualify for the World Tour Finals
+#: src/pages/rankings/components/RankingList.tsx
+msgid "Qualification line · top {spots} to the Finals"
+msgstr "진출선 · 상위 {spots}위 파이널 진출"
+
+#. Divider in the Race to Finals list: players above it qualify for the World Tour Finals in this city
+#: src/pages/rankings/components/RankingList.tsx
+msgid "Qualification line · top {spots} to the Finals in {city}"
+msgstr "진출선 · 상위 {spots}위 {city} 파이널 진출"
+
+#. About page heading once the Race to Finals is over: players who qualified for the World Tour Finals in {city}
+#: src/pages/about/components/RaceTop8.tsx
+msgid "Qualified for {city}"
+msgstr "{city} 진출 확정"
+
+#. About page heading once the Race to Finals is over: players who qualified for the World Tour Finals (the season-ending tournament), when its host city is not known yet
+#: src/pages/about/components/RaceTop8.tsx
+msgid "Qualified for the Finals"
+msgstr "파이널 진출 확정"
+
+#. Badge: the player is in a qualifying spot for the World Tour Finals
+#: src/components/player/Rank.tsx
+msgid "Qualifies"
+msgstr "진출권"
+
+#. Day timeline label: the qualifying rounds, played before the main draw to fill its last places
+#. Entry status: plays the qualifying rounds, played before the main draw to fill its last places
+#: src/pages/tournament/components/players/entries.ts
+#: src/pages/tournament/constants.ts
+msgid "Qualifying"
+msgstr "예선"
+
+#. Round name: final of the qualifying draw. Qualifying is the preliminary draw played before the main draw; its winners join the main draw.
+#: src/constants.ts
+msgid "Qualifying final"
+msgstr "예선 결승"
+
+#. Tooltip in the Race to Finals ranking (the season ranking that decides who plays the World Tour Finals): this player is on course to qualify. Only the top 8 qualify, with at most 2 per country
+#: src/utils/tournaments.ts
+msgid "Qualifying for the World Tour Finals — top 8 in the race, max. 2 per country"
+msgstr "World Tour Finals 진출권 — 레이스 상위 8위, 국가당 최대 2명(조)"
+
+#. Tooltip in the Race to Finals ranking: this player is on course to qualify for the World Tour Finals held in {city}. Only the top 8 qualify, with at most 2 per country
+#: src/utils/tournaments.ts
+msgid "Qualifying for the World Tour Finals in {city} — top 8 in the race, max. 2 per country"
+msgstr "{city} World Tour Finals 진출권 — 레이스 상위 8위, 국가당 최대 2명(조)"
+
+#. Round name: qualifying quarter-final. Qualifying is the preliminary draw played before the main draw; its winners join the main draw.
+#: src/constants.ts
+msgid "Qualifying QF"
+msgstr "예선 8강"
+
+#. Round name: qualifying round of 16 players or pairs. Qualifying is the preliminary draw played before the main draw; its winners join the main draw.
+#: src/constants.ts
+msgid "Qualifying R16"
+msgstr "예선 16강"
+
+#. Round name: qualifying round of 32 players or pairs. Qualifying is the preliminary draw played before the main draw; its winners join the main draw.
+#: src/constants.ts
+msgid "Qualifying R32"
+msgstr "예선 32강"
+
+#. Round name: qualifying semi-final. Qualifying is the preliminary draw played before the main draw; its winners join the main draw.
+#: src/constants.ts
+msgid "Qualifying SF"
+msgstr "예선 4강"
+
+#. Round name: the round with 8 players or pairs left
+#: src/constants.ts
+msgid "Quarter-final"
+msgstr "8강"
+
+#. Best result at a tournament: lost in the quarter-finals
+#: src/pages/player/constants.ts
+msgctxt "best result"
+msgid "Quarter-final"
+msgstr "8강"
+
+#. Day timeline label: the day the quarter-finals are played
+#. Draw column heading: the round of the last eight
+#: src/pages/tournament/components/draw/bracket.ts
+#: src/pages/tournament/constants.ts
+msgid "Quarter-finals"
+msgstr "8강"
+
+#. Best result at a tournament, abbreviated: lost in the round of 128
+#: src/pages/player/constants.ts
+msgid "R128"
+msgstr "128강"
+
+#. Short day timeline label for the round of 16
+#: src/pages/tournament/constants.ts
+msgid "R16"
+msgstr "16강"
+
+#. Best result at a tournament, abbreviated: lost in the round of 16
+#: src/pages/player/constants.ts
+msgctxt "best result"
+msgid "R16"
+msgstr "16강"
+
+#. Short day timeline label for the round of 32
+#: src/pages/tournament/constants.ts
+msgid "R32"
+msgstr "32강"
+
+#. Best result at a tournament, abbreviated: lost in the round of 32
+#: src/pages/player/constants.ts
+msgctxt "best result"
+msgid "R32"
+msgstr "32강"
+
+#. Short day timeline label for the round of 64
+#: src/pages/tournament/constants.ts
+msgid "R64"
+msgstr "64강"
+
+#. Best result at a tournament, abbreviated: lost in the round of 64
+#: src/pages/player/constants.ts
+msgctxt "best result"
+msgid "R64"
+msgstr "64강"
+
+#. Short label: the player’s position in the Race to Finals, the season standings that decide who qualifies for the World Tour Finals
+#: src/pages/player/components/Hero.tsx
+msgctxt "ranking"
+msgid "Race"
+msgstr "레이스"
+
+#. Race to Finals: the season standings that decide who qualifies for the World Tour Finals, held in this city
+#: src/pages/player/components/RankingsTab.tsx
+msgid "Race to {city}"
+msgstr "{city}행 레이스"
+
 #. Browser tab title for the standings of the race to qualify for the World Tour Finals
+#. Head-to-head row: standing in the season race to qualify for the World Tour Finals
+#. Rankings switch option: the season standings that decide who qualifies for the HSBC BWF World Tour Finals
+#: src/components/match/detail/useMatchInsights.ts
+#: src/pages/rankings/constants.ts
 #: src/utils/meta.ts
 msgid "Race to Finals"
-msgstr ""
+msgstr "Race to Finals"
+
+#. About page section heading for the “Race to Finals” standings: a season-long points table whose top 8 per discipline qualify for the World Tour Finals
+#. The season standings that decide who qualifies for the HSBC BWF World Tour Finals
+#: src/pages/about/constants.ts
+#: src/pages/player/components/RankingsTab.tsx
+msgid "Race to the Finals"
+msgstr "Race to Finals"
 
 #. Page description for the Race to Finals standings
 #: src/utils/meta.ts
 msgid "Race to the HSBC BWF World Tour Finals: who is on course to qualify in each of the five disciplines this season."
-msgstr ""
+msgstr "HSBC BWF World Tour Finals 진출 레이스: 이번 시즌 다섯 종목에서 진출권에 다가선 선수를 확인하세요."
+
+#. Player equipment: the badminton racket model the player uses
+#: src/utils/players.ts
+msgid "Racket"
+msgstr "라켓"
+
+#. Rankings table column: ranking position
+#: src/pages/rankings/components/RankingList.tsx
+msgid "Rank"
+msgstr "순위"
+
+#. Accessible label of the podium medal: ranking position
+#: src/pages/rankings/components/Podium.tsx
+msgid "Rank {rank}"
+msgstr "{rank}위"
+
+#. Caption under the ranking points total; each bar is one tournament (event); discipline is e.g. Men’s singles
+#: src/pages/player/components/RankTrend.tsx
+msgid "Ranking points per event · {discipline}"
+msgstr "대회별 랭킹 포인트 · {discipline}"
+
+#. Kicker above the rankings page title
+#. Main navigation link to the player rankings
+#. Player profile tab: world ranking history
+#: src/components/layout/links.ts
+#: src/pages/player/constants.ts
+#: src/pages/rankings/components/Header.tsx
+msgid "Rankings"
+msgstr "랭킹"
+
+#. Expands the player’s quote
+#: src/pages/player/components/ProfileSection.tsx
+msgid "Read more"
+msgstr "더 보기"
+
+#. Link at the end of a news article to the original story on the BWF website; {OFFICIAL_HOST} is its domain
+#: src/pages/news-article/ArticlePage.tsx
+msgid "Read on {OFFICIAL_HOST}"
+msgstr "{OFFICIAL_HOST}에서 읽기"
+
+#. Button linking to the official BWF World Tour news page when this site can’t load the news
+#: src/pages/news/NewsPage.tsx
+msgid "Read on the official site"
+msgstr "공식 사이트에서 읽기"
+
+#. Season stat: matches won–lost, e.g. 24–7
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Record"
+msgstr "전적"
+
+#. Calendar status filter option that shows only tournaments still to be played this season (upcoming or in progress)
+#: src/pages/calendar/constants.ts
+msgid "Remaining"
+msgstr "남은 대회"
+
+#. Button on the About page season map that returns to the default view, framed on the live or next tournament
+#: src/pages/about/components/MapControls.tsx
+msgid "Reset map view"
+msgstr "지도 보기 초기화"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Reset to defaults"
 msgstr "기본값으로 재설정"
 
+#. Short marker in the day strip for a rest day, a day with no matches
+#: src/pages/tournament/components/RestBreak.tsx
+msgid "Rest"
+msgstr "휴식"
+
+#. A day during the tournament with no matches
+#. A tournament day with no matches scheduled
+#: src/constants.ts
+#: src/pages/tournament/constants.ts
+msgid "Rest day"
+msgstr "휴식일"
+
+#. Tooltip on a day without matches. {first} is a short day label, e.g. "Wed 15"
+#: src/pages/tournament/utils.ts
+msgid "Rest day · {first}"
+msgstr "휴식일 · {first}"
+
+#. Tooltip on a run of days without matches. {first} and {last} are short day labels, e.g. "Wed 15"
+#: src/pages/tournament/utils.ts
+msgid "Rest days · {first} – {last}"
+msgstr "휴식일 · {first} – {last}"
+
+#. Link on a finished tournament’s card to its results
+#. Matches tab section: finished matches
+#. Player profile tab: tournament results counting toward the ranking
+#. Short status beside a finished tournament on the About page season map; links to its results
+#: src/components/tournament/TournamentCard.tsx
+#: src/pages/about/utils.ts
+#: src/pages/player/constants.ts
+#: src/pages/tournament/components/MatchesTab.tsx
+msgid "Results"
+msgstr "결과"
+
+#. Tooltip on the discipline heading in the player Results tab
+#: src/pages/player/constants.ts
+msgid "Results counting toward the current world ranking"
+msgstr "현재 세계 랭킹에 반영되는 성적"
+
+#. Short tag for a retirement: a player stopped during the match (usually injured) and lost. Keep it very short
+#: src/constants.ts
+msgid "RET"
+msgstr "기권"
+
+#. A match ended early because one side stopped playing during it, usually through injury, and lost
+#: src/constants.ts
+msgctxt "match result"
+msgid "Retired"
+msgstr "기권"
+
+#. Badge on a player who has retired from international badminton (not a match that ended by retirement)
+#: src/components/player/RetiredBadge.tsx
+msgctxt "player status"
+msgid "Retired"
+msgstr "은퇴"
+
+#. Tooltip on a retirement: {team} (a player or pair) stopped playing during the match, usually injured, and lost
+#: src/utils/matches.ts
+msgid "Retired · {team} retired during the match"
+msgstr "기권 · {team} 경기 도중 기권"
+
+#. Player profile badge title: the player has ended their international career
+#: src/utils/retirement.ts
+msgid "Retired from international badminton"
+msgstr "국제 무대 은퇴"
+
+#. The player ended their international career in this month, e.g. "… since March 2024"
+#: src/utils/retirement.ts
+msgid "Retired from international badminton since {month}"
+msgstr "{month} 국제 무대 은퇴"
+
+#. Player profile: the player holds the racket in the right hand (right-handed)
+#: src/utils/format.ts
+msgctxt "playing hand"
+msgid "Right"
+msgstr "오른손"
+
+#. Heading for the season-long race to qualify for the World Tour Finals, named after the host city, e.g. "Road to Hangzhou"
+#: src/utils/tournaments.ts
+msgid "Road to {city}"
+msgstr "{city}까지의 여정"
+
+#. Calendar page heading: the season as a journey towards the host city of the World Tour Finals, e.g. “Road to Hangzhou”
+#: src/pages/calendar/components/SeasonHeading.tsx
+msgid "Road to <0>{city}</0>"
+msgstr "<0>{city}</0>까지의 여정"
+
+#. Calendar page heading: the season as a journey towards the World Tour Finals (the season-ending tournament), when its host city is not known yet
+#: src/pages/calendar/components/SeasonHeading.tsx
+msgid "Road to <0>the Finals</0>"
+msgstr "<0>파이널</0>까지의 여정"
+
+#. Heading for the season-long race to qualify for the World Tour Finals, when the host city is not known
+#: src/utils/tournaments.ts
+msgid "Road to the Finals"
+msgstr "파이널까지의 여정"
+
+#. World Tour Finals: first round of matches inside a group
+#: src/constants.ts
+msgid "Round 1"
+msgstr "1라운드"
+
+#. World Tour Finals: second round of matches inside a group
+#: src/constants.ts
+msgid "Round 2"
+msgstr "2라운드"
+
+#. World Tour Finals: third round of matches inside a group
+#: src/constants.ts
+msgid "Round 3"
+msgstr "3라운드"
+
+#. Day timeline label: the knockout round with 16 players or pairs
+#. Draw column heading: the knockout round with 16 players or pairs
+#. Round name: the main-draw round with 16 players or pairs left
+#: src/constants.ts
+#: src/pages/tournament/components/draw/bracket.ts
+#: src/pages/tournament/constants.ts
+msgid "Round of 16"
+msgstr "16강"
+
+#. Day timeline label: the knockout round with 32 players or pairs
+#. Draw column heading: the knockout round with 32 players or pairs
+#. Round name: the main-draw round with 32 players or pairs left
+#: src/constants.ts
+#: src/pages/tournament/components/draw/bracket.ts
+#: src/pages/tournament/constants.ts
+msgid "Round of 32"
+msgstr "32강"
+
+#. Day timeline label: the knockout round with 64 players or pairs
+#. Round name: the main-draw round with 64 players or pairs left
+#: src/constants.ts
+#: src/pages/tournament/constants.ts
+msgid "Round of 64"
+msgstr "64강"
+
+#. Best result at a tournament: lost the final
+#. Podium place: loser of the final (silver)
+#: src/pages/player/constants.ts
+#: src/pages/tournament/constants.ts
+msgid "Runner-up"
+msgstr "준우승"
+
+#. Tournament overview card listing each day and its rounds
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "Schedule"
+msgstr "일정"
+
+#. Accessible name of the match scoreboard
+#: src/components/match/detail/Scoreboard.tsx
+msgid "Score"
+msgstr "점수"
+
+#. Country name: Scotland, which competes on its own in badminton
+#: src/utils/countries.ts
+msgid "Scotland"
+msgstr "스코틀랜드"
+
+#. Button on the page-not-found screen that opens site search
+#. Short placeholder of the search field in the condensed filter bar
+#: src/components/layout/NotFound.tsx
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Search"
+msgstr "검색"
+
+#: src/components/ui/SearchField.tsx
+msgid "Search player or country"
+msgstr "선수 또는 국가 검색"
+
+#. Rankings search box: placeholder and accessible label
+#. Rankings search box: placeholder and accessible label
+#: src/pages/rankings/components/FilterBar.tsx
+msgid "Search players"
+msgstr "선수 검색"
+
+#: src/components/layout/SiteSearch.tsx
+msgid "Search players and tournaments"
+msgstr "선수 및 대회 검색"
+
+#. Search button accessible name with its keyboard shortcut; {MOD_KEY} is Ctrl or ⌘
+#: src/components/layout/SiteSearch.tsx
+msgid "Search players and tournaments ({MOD_KEY} K)"
+msgstr "선수 및 대회 검색 ({MOD_KEY} K)"
+
+#. Placeholder of the doubles rankings search box
+#: src/pages/rankings/components/FilterBar.tsx
+msgid "Search players or pairs"
+msgstr "선수 또는 조 검색"
+
+#: src/components/layout/SiteSearch.tsx
+msgid "Search results"
+msgstr "검색 결과"
+
+#. Screen-reader label for the calendar’s season picker button, showing the selected year
+#: src/pages/calendar/components/Hero.tsx
+msgid "Season {year}"
+msgstr "{year} 시즌"
+
+#. Section title: win rate for each season of the player’s career
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Season by season"
+msgstr "시즌별 성적"
+
+#. The World Tour season, including the Finals, has finished
+#: src/utils/season.ts
+msgid "Season complete"
+msgstr "시즌 종료"
+
+#. Screen-reader label for the strip of dots, one per tournament of the season, in the calendar header
+#: src/pages/calendar/components/CompactHeader.tsx
+msgid "Season stops"
+msgstr "시즌 대회"
+
+#. About page card heading once the season is over: titles won by each country across the season
+#: src/pages/about/constants.ts
+msgid "Season titles"
+msgstr "시즌 우승"
+
+#. Career stat: number of World Tour seasons played
+#: src/pages/player/components/Hero.tsx
+msgid "Seasons"
+msgstr "시즌"
+
+#. Accessible label for a season bar: open that season’s matches; record is won–lost, e.g. 24–7
+#: src/pages/player/components/OverviewTab.tsx
+msgid "See {year} matches, {record}"
+msgstr "{year} 경기 보기, {record}"
+
+#: src/components/player/PlayerHoverCard.tsx
+msgid "See full profile"
+msgstr "전체 프로필 보기"
+
+#. Badge with a player’s seed number in a tournament draw, e.g. Seed 3
+#: src/components/player/SeedTag.tsx
+msgid "Seed {seed}"
+msgstr "{seed}번 시드"
+
+#. Seed is the player’s seeding number in the tournament draw, followed by the tournament name
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Seed {seed} · {tournament}"
+msgstr "{seed}번 시드 · {tournament}"
+
+#. Tooltip on a seed number. In badminton draws, top-ranked players are “seeded”: numbered and spread apart so they can’t meet in early rounds
+#: src/components/player/SeedTag.tsx
+msgid "Seed {seed} · seeded by world ranking and placed apart in the draw so top entries can’t meet early"
+msgstr "{seed}번 시드 · 세계 랭킹에 따라 시드를 배정하고 대진표에서 떨어뜨려 배치해 상위 엔트리끼리 초반에 만나지 않습니다"
+
+#. How the seeds did card before the draw (bracket) is published. Seeds are the top-ranked entries, placed apart in the draw
+#: src/pages/tournament/components/PodiumTab.tsx
+msgid "Seeds appear once the draw is out"
+msgstr "대진표가 나오면 시드가 표시됩니다"
+
+#. Round name: the round with 4 players or pairs left
+#: src/constants.ts
+msgid "Semi-final"
+msgstr "4강"
+
+#. Best result at a tournament: lost in the semi-finals
+#: src/pages/player/constants.ts
+msgctxt "best result"
+msgid "Semi-final"
+msgstr "4강"
+
+#. Podium place: the two losing semi-finalists (bronze)
+#: src/pages/tournament/constants.ts
+msgid "Semi-finalists"
+msgstr "4강"
+
+#. Day timeline label: the day the semi-finals are played
+#. Draw column heading: the round of the last four
+#: src/pages/tournament/components/draw/bracket.ts
+#: src/pages/tournament/constants.ts
+msgid "Semi-finals"
+msgstr "4강"
+
+#. Tooltip on the shuttle icon marking which side is serving in a live match
+#: src/components/match/ServeMark.tsx
+msgid "Serving"
+msgstr "서브"
+
+#: src/components/layout/menu/CourtMenu.tsx
 #: src/components/layout/SiteSettings.tsx
 msgid "Settings"
 msgstr "설정"
+
+#. Short day timeline label for the semi-finals
+#: src/pages/tournament/constants.ts
+msgid "SF"
+msgstr "4강"
+
+#. Short tag on a ranking points bar: the player reached the semi-finals
+#: src/pages/player/constants.ts
+msgctxt "tournament result"
+msgid "SF"
+msgstr "4강"
+
+#. Button opening the phone’s share sheet for a news article
+#: src/pages/news-article/components/ShareBar.tsx
+msgid "Share"
+msgstr "공유"
+
+#. Button sharing a news article on a social network; {network} is its brand name (Weibo, Facebook, X)
+#: src/pages/news-article/components/ShareBar.tsx
+msgid "Share on {network}"
+msgstr "{network}에 공유"
+
+#. Player equipment: the badminton shoe model the player wears
+#: src/utils/players.ts
+msgid "Shoes"
+msgstr "신발"
+
+#. Action on a selected ranking tile: stop filtering by discipline
+#: src/pages/player/components/Hero.tsx
+msgid "Show all disciplines"
+msgstr "모든 종목 보기"
+
+#. Button that collapses an expanded list
+#: src/components/ui/MoreButton.tsx
+msgid "Show fewer"
+msgstr "접기"
+
+#. Collapses the player’s quote
+#: src/pages/player/components/ProfileSection.tsx
+msgid "Show less"
+msgstr "접기"
+
+#. Star toggle in the match filters
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Show only players and countries you follow"
+msgstr "팔로우한 선수와 국가만 보기"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Show streams not available in my region"
@@ -167,46 +3147,739 @@ msgstr "내 지역에서 볼 수 없는 중계도 표시"
 msgid "Show times in"
 msgstr "시간 기준"
 
+#. Start of a ranking spell; month is e.g. Mar 2019
+#: src/pages/player/components/RankingsTab.tsx
+msgid "since {month}"
+msgstr "{month}부터"
+
+#. Under "Retired from international badminton": since which month, e.g. "Since March 2024"
+#: src/utils/retirement.ts
+msgid "Since {month}"
+msgstr "{month}부터"
+
+#. Player profile, national team: when the player joined, e.g. "Since 2012"
+#: src/utils/players.ts
+msgid "Since {start}"
+msgstr "{start}부터"
+
 #. Browser tab title when a page fails to load
 #: src/utils/meta.ts
 msgid "Something went wrong"
-msgstr ""
+msgstr "문제가 발생했습니다"
+
+#. When a player’s next match is: it starts within the hour
+#: src/utils/match-time.ts
+msgid "Soon"
+msgstr "곧 시작"
+
+#. Top bar menu group: BWF programmes for grassroots badminton
+#: src/components/layout/links.ts
+msgid "Sport For All"
+msgstr "Sport For All"
+
+#. Player profile: the athlete the player looks up to
+#: src/utils/players.ts
+msgid "Sporting hero"
+msgstr "존경하는 선수"
+
+#. Hint in the Following today card when the visitor follows nobody. Players is the tab name
+#: src/pages/tournament/constants.ts
+msgid "Star a player or country in Players or on any match to see their next matches here."
+msgstr "‘선수’ 탭이나 경기에서 선수 또는 국가에 별표를 누르면 다음 경기가 여기에 표시됩니다."
+
+#. Matches tab empty state when the following filter is on but the visitor follows nobody
+#: src/pages/tournament/components/MatchesTab.tsx
+msgid "Star a player, country or continent to follow them here."
+msgstr "선수, 국가 또는 대륙에 별표를 눌러 팔로우하면 여기에 표시됩니다."
+
+#. Player profile: when or how the player started playing badminton competitively
+#: src/utils/players.ts
+msgid "Started competing"
+msgstr "선수 생활 시작"
+
+#. When a scheduled YouTube stream begins, e.g. “Starts Sat 14 Mar, 10:00 CET”
+#: src/components/media/VideoCard.tsx
+msgid "Starts {when}"
+msgstr "{when} 시작"
+
+#. Countdown: the tournament starts tomorrow
+#: src/utils/tournaments.ts
+msgid "Starts tomorrow"
+msgstr "내일 시작"
+
+#. Screen-reader label for the About page map filters by tournament status (completed, upcoming, live or next)
+#: src/pages/about/components/SeasonLegend.tsx
+msgid "Status"
+msgstr "상태"
+
+#. About page headline stat: number of tournaments (“stops”) this season, including the season-ending World Tour Finals
+#: src/pages/about/utils.ts
+msgid "Stops incl. Finals"
+msgstr "파이널 포함 대회 수"
+
+#. Tooltip on the disabled News tab
+#: src/pages/tournament/constants.ts
+msgid "Stories appear once BWF publishes coverage"
+msgstr "BWF가 기사를 게시하면 표시됩니다"
+
+#. Label on a recording of the court’s live stream, cued to this match
+#: src/components/media/MatchVideos.tsx
+msgid "Stream replay"
+msgstr "중계 다시보기"
+
+#. Player equipment: the racket string model the player uses
+#: src/utils/players.ts
+msgid "String"
+msgstr "스트링"
 
 #. Settings label: unit for badminton racket string tension (lbs or kg)
 #: src/components/layout/SiteSettings.tsx
 msgid "String tensions"
 msgstr "스트링 텐션"
 
+#. Button to sign up for the BWF email newsletter
+#: src/components/news/SubscribeCard.tsx
+msgid "Subscribe"
+msgstr "구독"
+
+#: src/components/news/SubscribeCard.tsx
+msgid "Subscribe to BWF newsletters"
+msgstr "BWF 뉴스레터 구독"
+
+#. Tournament tier (level) name, e.g. "Super 750". {tier} is 1000, 750, 500 or 300 (higher means more points and prize money). It is an official proper name, usually kept as is
+#: src/constants.ts
+msgid "Super {tier}"
+msgstr "Super {tier}"
+
+#. Settings option: follow the light or dark theme set on the visitor’s device
+#: src/components/layout/SiteSettings.tsx
+msgid "System"
+msgstr "시스템"
+
+#. Short for "to be confirmed": the prize money is not announced yet. Keep it short
+#: src/utils/tournaments.ts
+msgid "TBC"
+msgstr "미정"
+
+#. Draw slot whose player or pair is not known yet (to be decided)
+#. Short for “to be decided”: the player, team or match time isn’t known yet
+#: src/components/match/labels.ts
+#: src/pages/tournament/components/draw/DrawBox.tsx
+msgid "TBD"
+msgstr "미정"
+
+#. Player equipment: how tightly the racket strings are pulled, in pounds or kilograms, e.g. "28 lbs"
+#: src/utils/players.ts
+msgid "Tension"
+msgstr "텐션"
+
+#. Page-not-found heading, a badminton pun: the shuttle landed outside the court lines
+#: src/components/layout/NotFound.tsx
+msgid "That one landed out"
+msgstr "아웃! 라인 밖으로 나갔네요"
+
 #. Page description for a season calendar. {year} is the season, e.g. 2026
 #: src/utils/meta.ts
 msgid "The {year} HSBC BWF World Tour calendar: every tournament with its dates, host city, level and live status."
-msgstr ""
+msgstr "{year} HSBC BWF World Tour 일정: 모든 대회의 날짜, 개최 도시, 등급, 실시간 진행 상황."
+
+#. About page explainer. The BWF Tour Super 100 is the level below the World Tour; keep the name untranslated
+#: src/pages/about/components/HowItWorks.tsx
+msgid "The <0>BWF Tour Super 100</0> also awards ranking points. It isn’t part of the World Tour, but it is the pathway most players take to get there."
+msgstr "<0>BWF Tour Super 100</0>도 랭킹 포인트를 줍니다. 월드투어에 속하지는 않지만, 대부분의 선수가 월드투어로 올라가기 위해 거치는 단계입니다."
+
+#. Screen-reader label for the calendar section holding the season-ending World Tour Finals, in {month}
+#: src/pages/calendar/components/FinaleSection.tsx
+msgid "The finale, {month}"
+msgstr "시즌 피날레, {month}"
+
+#: src/components/layout/NotFound.tsx
+msgid "The link may be broken, or the page has moved somewhere else on the tour."
+msgstr "링크가 잘못되었거나 페이지가 다른 곳으로 옮겨졌을 수 있습니다."
+
+#. Matches tab empty state for a future day. The order of play is the daily match schedule. {day} is e.g. "Wed 15"
+#: src/pages/tournament/components/MatchesTab.tsx
+msgid "The order of play for {day} is published the evening before."
+msgstr "{day} 경기 일정은 전날 저녁에 발표됩니다."
+
+#. Note on the Super 100 tier in the About page ladder: lower-level events that award world ranking points but are not World Tour events
+#: src/pages/about/constants.ts
+msgid "The pathway into the Tour. Ranking points, but not part of the World Tour."
+msgstr "투어로 가는 관문. 랭킹 포인트는 주지만 월드투어에는 속하지 않습니다."
+
+#. About page heading during the season: the journey towards {city}, host city of the season-ending World Tour Finals
+#: src/pages/about/AboutPage.tsx
+msgid "The road to <0>{city}</0>"
+msgstr "<0>{city}</0>까지의 여정"
+
+#. Settings label: choose a light, dark or system colour theme for the site
+#: src/components/layout/SiteSettings.tsx
+msgid "Theme"
+msgstr "테마"
+
+#. Not-found page for a tournament. {slug} is the unknown name from the link, {year} the season
+#: src/pages/tournament/TournamentPage.tsx
+msgid "There’s no “{slug}” on the {year} World Tour calendar."
+msgstr "{year} 월드투어 일정에 “{slug}” 대회가 없습니다."
+
+#: src/pages/player/PlayerPage.tsx
+msgid "They may not have played on the World Tour yet, or the link is out of date."
+msgstr "아직 월드투어에 출전하지 않았거나 링크가 오래되었을 수 있습니다."
+
+#. Shown on the page of a cancelled tournament instead of the tabs
+#: src/pages/tournament/constants.ts
+msgid "This edition was cancelled, so no matches were played."
+msgstr "이번 대회는 취소되어 경기가 열리지 않았습니다."
+
+#. Explains the challenge count: it resets each game, and a challenge is only used up when it fails. A challenge is a player’s request for a video review of a line call (Instant Review)
+#: src/utils/live.ts
+msgid "This game · only unsuccessful challenges use one up"
+msgstr "이번 게임 · 실패한 챌린지만 차감됩니다"
+
+#. Badge on the news archive marking the current calendar month
+#. Badge on the season calendar marking the current calendar month
+#: src/pages/calendar/components/MonthSection.tsx
+#: src/pages/news/components/ArchiveRow.tsx
+msgid "This month"
+msgstr "이번 달"
 
 #. Shown, and used as the page description, when a page fails to load
 #: src/utils/meta.ts
 msgid "This page couldn’t be loaded right now."
-msgstr ""
+msgstr "지금은 이 페이지를 불러올 수 없습니다."
 
 #. Page description for a missing page
 #: src/utils/meta.ts
 msgid "This page isn’t on the HSBC BWF World Tour site. The link may be broken or out of date."
-msgstr ""
+msgstr "HSBC BWF World Tour 사이트에 없는 페이지입니다. 링크가 잘못되었거나 오래되었을 수 있습니다."
+
+#. Head-to-head toggle: only meetings this season
+#: src/components/match/detail/HeadToHead.tsx
+msgid "This season"
+msgstr "이번 시즌"
+
+#: src/components/disclaimer/DisclaimerModal.tsx
+msgid "This website is an unofficial redesign concept for the <0>HSBC BWF World Tour</0> section of the BWF website. It is not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC."
+msgstr "이 웹사이트는 BWF 웹사이트의 <0>HSBC BWF World Tour</0> 섹션을 위한 비공식 리디자인 콘셉트입니다. 세계배드민턴연맹(BWF) 및 HSBC와 제휴하거나 그 승인을 받거나 그들이 운영하는 사이트가 아닙니다."
+
+#. Heading above the player’s matches at the tournament being played this week
+#: src/components/player/PlayerHoverCard.tsx
+msgid "This week"
+msgstr "이번 주"
+
+#. Match list group heading for matches without a start time yet
+#: src/components/match/detail/Scoreboard.tsx
+#: src/pages/tournament/components/matches/utils.ts
+msgid "Time to be announced"
+msgstr "시간 미정"
+
+#. Match list group heading for matches without a start time yet. {rounds} lists the rounds
+#: src/pages/tournament/components/matches/utils.ts
+msgid "Time to be announced · {rounds}"
+msgstr "시간 미정 · {rounds}"
+
+#. Career stat: number of tournaments won
+#. Section title: tournaments the player has won
+#: src/pages/player/components/Hero.tsx
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Titles"
+msgstr "우승"
+
+#. About page card heading: titles won by each country in this season’s tournaments played so far
+#: src/pages/about/constants.ts
+msgid "Titles so far"
+msgstr "지금까지의 우승"
+
+#. Very short countdown tag: the tournament starts tomorrow. Abbreviate "Tomorrow" as much as possible
+#: src/utils/tournaments.ts
+msgid "Tmrw"
+msgstr "내일"
+
+#. Schedule: the rounds played on this tournament day are not published yet
+#: src/utils/matches.ts
+msgid "To be announced"
+msgstr "미정"
+
+#. Podium place whose winner isn’t known yet because the match hasn’t been played
+#: src/pages/tournament/components/PodiumTab.tsx
+msgid "To be decided"
+msgstr "미정"
+
+#. Badge on today’s row in the tournament schedule
+#. Marker for today’s date on the About page season timeline
+#: src/pages/about/components/SeasonStrip.tsx
+#: src/pages/tournament/components/OverviewTab.tsx
+msgid "Today"
+msgstr "오늘"
+
+#. Countdown: the tournament starts tomorrow
+#. When a player’s next match is: it is scheduled for tomorrow
+#: src/utils/match-time.ts
+#: src/utils/tournaments.ts
+msgid "Tomorrow"
+msgstr "내일"
+
+#. About page tier ladder: the World Tour Finals field is the top {QUALIFY_SPOTS} players or pairs of the Race to Finals in each discipline
+#: src/pages/about/summaries.ts
+msgid "Top {QUALIFY_SPOTS} per discipline"
+msgstr "종목별 상위 {QUALIFY_SPOTS}위"
+
+#. Caption on the About page Race to Finals table: the top {QUALIFY_SPOTS} per discipline qualify for the World Tour Finals; standings as published on {day}
+#: src/pages/about/components/RaceTop8.tsx
+msgid "Top {QUALIFY_SPOTS} qualify · as of {day}"
+msgstr "상위 {QUALIFY_SPOTS}위 진출 · {day} 기준"
+
+#. Race to Finals rule: the top N in each discipline qualify for the World Tour Finals; max. per country is the country quota, the most entries one country may send
+#: src/pages/rankings/components/Header.tsx
+msgid "Top {spots} qualify for the World Tour Finals · max. {quota} per country"
+msgstr "상위 {spots}위 World Tour Finals 진출 · 국가당 최대 {quota}"
+
+#. Race to Finals rule: the top N in each discipline qualify for the World Tour Finals in this city; max. per country is the country quota, the most entries one country may send
+#: src/pages/rankings/components/Header.tsx
+msgid "Top {spots} qualify for the World Tour Finals in {city} · max. {quota} per country"
+msgstr "상위 {spots}위 {city} World Tour Finals 진출 · 국가당 최대 {quota}"
+
+#. Accessible label of the podium of the top three ranked
+#: src/pages/rankings/components/Podium.tsx
+msgid "Top 3"
+msgstr "TOP 3"
+
+#. Media tab section: best rallies and shots of the day
+#: src/pages/tournament/components/media/sections.ts
+msgid "Top plays"
+msgstr "베스트 플레이"
+
+#. Tooltip on “for N weeks” under the player’s career-best world ranking
+#: src/pages/player/components/Hero.tsx
+msgid "Total weeks spent at this ranking. They don’t have to be in a row: it can add up over several spells."
+msgstr "이 랭킹에 머문 총 주 수입니다. 연속이 아니어도 되며, 여러 기간을 합산합니다."
+
+#. Accessible name of the strip of day buttons
+#: src/pages/tournament/components/matches/DayPicker.tsx
+msgid "Tournament days"
+msgstr "대회 날짜"
+
+#. Accessible name of the tournament tab bar
+#: src/pages/tournament/components/TabNav.tsx
+msgid "Tournament sections"
+msgstr "대회 메뉴"
+
+#. Rankings table column: number of tournaments played
+#. Season stat: number of tournaments played
+#: src/components/layout/SiteSearch.tsx
+#: src/pages/player/components/OverviewTab.tsx
+#: src/pages/rankings/components/RankingList.tsx
+msgid "Tournaments"
+msgstr "대회"
+
+#. About page explainer. Tournament levels are the World Tour tiers (Super 1000, 750, 500 and 300); keep “Super 1000” untranslated. Ranking points decide world rankings and qualification
+#: src/pages/about/components/HowItWorks.tsx
+msgid "Tournaments are graded in {levels, plural, =0 {no levels} =1 {one level} =2 {two levels} =3 {three levels} =4 {four levels} =5 {five levels} =6 {six levels} other {# levels}}. The higher the level, the bigger the prize money and the more <0>World Tour ranking points</0> on offer, with the Super 1000 events at the top."
+msgstr "대회는 {levels, plural, =0 {0개} =1 {한 개} =2 {두 개} =3 {세 개} =4 {네 개} =5 {다섯 개} =6 {여섯 개} other {#개}} 등급으로 나뉩니다. 등급이 높을수록 상금이 크고 <0>월드투어 랭킹 포인트</0>도 많이 걸려 있으며, 최상위는 Super 1000 대회입니다."
+
+#. Tooltip of the Tournaments column in the rankings table
+#: src/pages/rankings/components/RankingList.tsx
+msgid "Tournaments played"
+msgstr "출전 대회 수"
+
+#. Button that reloads data after a loading error
+#: src/components/ui/RetryState.tsx
+msgid "Try again"
+msgstr "다시 시도"
+
+#. Star button; {who} is a doubles pair, e.g. “Liang / Wang”
+#: src/components/follow/FollowButton.tsx
+msgctxt "pair"
+msgid "Unfollow {who}"
+msgstr "{who} 팔로우 취소"
+
+#. Star button; {who} is a country or continent name
+#: src/components/follow/FollowButton.tsx
+msgctxt "place"
+msgid "Unfollow {who}"
+msgstr "{who} 팔로우 취소"
+
+#. Star button; {who} is a player name
+#: src/components/follow/FollowButton.tsx
+msgctxt "player"
+msgid "Unfollow {who}"
+msgstr "{who} 팔로우 취소"
+
+#. Star button; {who} is a tournament name
+#: src/components/follow/FollowButton.tsx
+msgctxt "tournament"
+msgid "Unfollow {who}"
+msgstr "{who} 팔로우 취소"
+
+#: src/components/follow/FollowButton.tsx
+msgid "Unfollow player"
+msgstr "선수 팔로우 취소"
+
+#: src/components/follow/FollowButton.tsx
+msgid "Unfollow this pair"
+msgstr "이 조 팔로우 취소"
 
 #. Small print on the last row of the site footer, beside the GitHub source link
 #: src/components/layout/SiteFooter.tsx
 msgid "Unofficial and non-commercial. Built by a badminton fan, for badminton fans."
-msgstr ""
+msgstr "비공식, 비상업적 사이트입니다. 배드민턴 팬이 배드민턴 팬을 위해 만들었습니다."
+
+#. End of a ranking spell; month is e.g. Mar 2019
+#: src/pages/player/components/RankingsTab.tsx
+msgid "until {month}"
+msgstr "{month}까지"
+
+#. Matches tab section: matches not started yet
+#: src/pages/tournament/components/MatchesTab.tsx
+msgctxt "matches"
+msgid "Up next"
+msgstr "예정 경기"
+
+#. Player overview card title: the player’s next scheduled match
+#: src/pages/player/components/OverviewTab.tsx
+msgctxt "player"
+msgid "Up next"
+msgstr "다음 경기"
+
+#. Calendar filter-bar button that scrolls to the next World Tour tournament still to be played
+#. Small label above the next World Tour tournament still to be played, on the About page
+#: src/pages/about/constants.ts
+#: src/pages/calendar/CalendarPage.tsx
+msgctxt "tournament"
+msgid "Up next"
+msgstr "다음 대회"
+
+#. Floating pill that scrolls back to the next tournament still to be played; {targetName} is the tournament name
+#: src/pages/calendar/CalendarPage.tsx
+msgid "Up next · {targetName}"
+msgstr "다음 일정 · {targetName}"
+
+#. About page season map legend and filter: tournaments still to be played
+#: src/pages/about/constants.ts
+msgid "Upcoming"
+msgstr "예정"
+
+#. Badge on a scheduled YouTube stream that hasn’t started yet
+#: src/components/media/VideoCard.tsx
+msgctxt "stream"
+msgid "Upcoming"
+msgstr "중계 예정"
+
+#. Media tab section: live streams that haven’t started yet
+#: src/pages/tournament/components/media/sections.ts
+msgid "Upcoming streams"
+msgstr "예정된 중계"
+
+#. Live match: number of challenges a side has made. A challenge is a player’s request for a video review of a line call (Instant Review)
+#: src/utils/live.ts
+msgid "Used this match"
+msgstr "이번 경기 사용"
 
 #. Settings option: show match times in the tournament venue’s local time zone
 #: src/components/layout/SiteSettings.tsx
 msgid "Venue time"
 msgstr "경기장 시간"
 
+#. Section title on the player Media tab
+#: src/pages/player/components/MediaTab.tsx
+msgid "Videos"
+msgstr "동영상"
+
+#. Media tab empty state before play starts. BWF TV is BWF’s YouTube channel
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "Videos appear on BWF TV once the tournament starts."
+msgstr "대회가 시작되면 BWF TV에 동영상이 올라옵니다."
+
+#. Tooltip on the disabled Media tab
+#: src/pages/tournament/constants.ts
+msgid "Videos appear once play starts"
+msgstr "경기가 시작되면 동영상이 표시됩니다"
+
+#. Footer button linking to the official BWF World Tour website
+#: src/components/layout/links.ts
+msgid "View the official site"
+msgstr "공식 사이트 보기"
+
+#. Short for versus, shown before the opponents’ names
+#: src/pages/player/components/OverviewTab.tsx
+msgid "vs"
+msgstr "vs"
+
+#. Before the opponent’s name, short for “versus”
+#: src/components/player/PlayerHoverCard.tsx
+msgid "vs <0/>"
+msgstr "vs <0/>"
+
+#. Past winners card: who lost the final and its game scores, e.g. "vs. Axelsen · 21–15, 21–18"
+#: src/pages/tournament/utils.ts
+msgid "vs. {losers} · {games}"
+msgstr "vs {losers} · {games}"
+
+#. One-letter badge for a match the player won
+#: src/components/match/labels.ts
+msgid "W"
+msgstr "승"
+
+#. One-letter tag on a ranking points bar: the player won the tournament
+#: src/pages/player/constants.ts
+msgctxt "tournament result"
+msgid "W"
+msgstr "우"
+
+#. Country name: Wales, which competes on its own in badminton
+#: src/utils/countries.ts
+msgid "Wales"
+msgstr "웨일스"
+
+#. A match not played because one side withdrew before it started; the other side advances
+#: src/constants.ts
+msgid "Walkover"
+msgstr "부전승"
+
+#. Tooltip on a walkover: the match was not played because {team} (a player or pair) withdrew, so the other side advanced
+#: src/utils/matches.ts
+msgid "Walkover · {team} withdrew before the match"
+msgstr "부전승 · {team} 경기 전 기권"
+
+#: src/components/media/labels.ts
+msgid "Watch on YouTube"
+msgstr "YouTube에서 보기"
+
+#. Accessible name of a watch button; {title} is the video title
+#. Screen-reader label for a video embedded in a news article; {title} is the video title
+#: src/components/media/WatchButton.tsx
+#: src/pages/news-article/components/blocks/Blocks.tsx
+msgid "Watch on YouTube: {title}"
+msgstr "YouTube에서 보기: {title}"
+
+#. Screen-reader label for an untitled match highlights video embedded in a news article
+#: src/pages/news-article/components/blocks/Blocks.tsx
+msgid "Watch on YouTube: highlights"
+msgstr "YouTube에서 보기: 하이라이트"
+
+#. Link on a finished match card to the full-length video of the match on YouTube
+#: src/components/media/labels.ts
+msgid "Watch the full match"
+msgstr "경기 전체 보기"
+
+#. Caption on an untitled match highlights video embedded in a news article
+#. Link on a finished match card to the highlights video of the match on YouTube
+#: src/components/media/labels.ts
+#: src/pages/news-article/components/blocks/Blocks.tsx
+msgid "Watch the highlights"
+msgstr "하이라이트 보기"
+
+#. Heading on the page shown when a player profile doesn’t exist
+#: src/pages/player/PlayerPage.tsx
+msgid "We couldn’t find that player"
+msgstr "선수를 찾을 수 없습니다"
+
+#. Heading on the not-found page for a news article that doesn’t exist
+#: src/pages/news-article/ArticlePage.tsx
+msgid "We couldn’t find that story"
+msgstr "기사를 찾을 수 없습니다"
+
+#. Heading of the not-found page for a tournament link that matches nothing
+#: src/pages/tournament/TournamentPage.tsx
+msgid "We couldn’t find that tournament"
+msgstr "대회를 찾을 수 없습니다"
+
+#. Ranking publication: week number of the year and its date
+#: src/pages/rankings/utils.ts
+msgid "Week {week} · {date}"
+msgstr "{week}주차 · {date}"
+
+#. Ranking stat: total weeks spent at the career-high world ranking; rank is e.g. #3
+#: src/pages/player/components/RankingsTab.tsx
+msgid "Weeks at {rank}"
+msgstr "{rank} 기록 주 수"
+
+#. Ranking stat: total number of weeks the player has appeared in the world ranking in this discipline
+#: src/pages/player/components/RankingsTab.tsx
+msgid "Weeks ranked"
+msgstr "랭킹 등재 주 수"
+
 #: src/components/layout/SiteSettings.tsx
 msgid "When on, they appear greyed out. When off, they’re hidden from video lists and Watch buttons."
 msgstr "켜면 회색으로 표시되고, 끄면 동영상 목록과 시청 버튼에서 숨겨집니다."
 
+#. Stat label: share of matches won, as a percentage
+#. Stat label: share of matches won, as a percentage
+#: src/pages/player/components/Hero.tsx
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Win rate"
+msgstr "승률"
+
+#. Best result at a tournament: won the title
+#: src/pages/player/constants.ts
+msgid "Winner"
+msgstr "우승"
+
+#. Check mark beside the side that won the match
+#: src/components/match/detail/Scoreboard.tsx
+msgctxt "match"
+msgid "Winner"
+msgstr "승리"
+
+#. Hint on a tournament preview card pointing to the side panel with the champions
+#: src/components/tournament/TournamentPreview.tsx
+msgid "Winners"
+msgstr "우승자"
+
+#. Game stats row: how many points the game was won by
+#: src/components/match/detail/utils.ts
+msgid "Winning margin"
+msgstr "점수 차"
+
+#. Head-to-head: number of wins each side has against the other
+#: src/components/match/detail/HeadToHead.tsx
+msgid "Wins"
+msgstr "승"
+
+#. Under the career-high ranking: the doubles partner at the time, by surname
+#: src/pages/player/components/RankingsTab.tsx
+msgid "with {surname}"
+msgstr "파트너: {surname}"
+
+#. Entry status: pulled out of the tournament before playing
+#: src/pages/tournament/components/players/entries.ts
+msgid "Withdrawn"
+msgstr "출전 취소"
+
+#. Tooltip on a seed with no matches in the How the seeds did card
+#: src/pages/tournament/components/PodiumTab.tsx
+msgid "Withdrew, or their matches are missing from this data"
+msgstr "기권했거나 이 데이터에 경기가 없습니다"
+
+#. Short tag for a walkover: the match was not played because one side withdrew, so the other side advances. Keep it very short
+#: src/constants.ts
+msgid "WO"
+msgstr "부전승"
+
+#. Badminton discipline (event): two women against two women
+#: src/constants.ts
+msgid "Women's doubles"
+msgstr "여자 복식"
+
+#. Badminton discipline (event): one woman against one woman
+#: src/constants.ts
+msgid "Women's singles"
+msgstr "여자 단식"
+
+#. Outcome of the player’s last match: they won it
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Won"
+msgstr "승리"
+
+#. Live match: number of successful challenges. A challenge is a player’s request for a video review of a line call (Instant Review)
+#: src/utils/live.ts
+msgctxt "challenges"
+msgid "Won"
+msgstr "성공"
+
+#. Uppercase badge on a head-to-head result the player won
+#: src/components/match/labels.ts
+msgid "WON"
+msgstr "승"
+
+#. Result tag on the winner of a World Tour Finals group match
+#: src/utils/matches.ts
+msgid "Won · Group {group}"
+msgstr "승 · {group}조"
+
+#. Live score chip next to the side that just won a game. A badminton match is best of three games
+#: src/pages/tournament/components/matches/liveView.ts
+msgid "Won game {gameNo}"
+msgstr "{gameNo}게임 승리"
+
+#. Live score chip next to the side that just won the match
+#: src/pages/tournament/components/matches/liveView.ts
+msgid "Won the match"
+msgstr "경기 승리"
+
+#. Tooltip on a recent-form tile: match won against these opponents at this tournament
+#: src/pages/player/components/OverviewTab.tsx
+msgid "Won vs {opponents} · {tournament}"
+msgstr "vs {opponents} 승 · {tournament}"
+
+#. Column header: head-to-head or partnership record as matches won–lost (W–L), e.g. 5–2
+#: src/pages/player/components/People.tsx
+msgid "Won–lost"
+msgstr "승패"
+
+#. Rankings switch option: the BWF world ranking
+#: src/pages/rankings/constants.ts
+msgid "World"
+msgstr "세계"
+
+#. Menu caption under the Rankings link: world rankings and World Tour race standings
+#: src/components/layout/menu/nav.ts
+msgid "World & tour"
+msgstr "세계 · 투어"
+
+#. Label above the player’s current BWF world ranking in this discipline
+#: src/pages/player/components/RankingsTab.tsx
+msgid "World rank"
+msgstr "세계 랭킹"
+
+#. A medalist’s current world ranking, e.g. “World rank #3”
+#: src/pages/tournament/components/PodiumTab.tsx
+msgid "World rank <0>{position}</0>"
+msgstr "세계 랭킹 <0>{position}</0>"
+
+#. Head-to-head row: each side’s BWF world ranking
+#. Icon label on a ranking tile: the number is the BWF world ranking
+#: src/components/match/detail/useMatchInsights.ts
+#: src/pages/player/components/Hero.tsx
+msgid "World ranking"
+msgstr "세계 랭킹"
+
+#. Accessible label of the slider that steps through the ranking chart week by week
+#: src/pages/player/components/RankChart.tsx
+msgid "World ranking history"
+msgstr "세계 랭킹 추이"
+
 #. Browser tab title for the BWF World Rankings page
 #: src/utils/meta.ts
 msgid "World rankings"
-msgstr ""
+msgstr "세계 랭킹"
+
+#. Players tab filter chip: show only entries in the world ranking top 10
+#: src/pages/tournament/components/PlayersTab.tsx
+msgid "World top 10"
+msgstr "세계 TOP 10"
+
+#. The season-ending tournament for the top 8 of the season ranking in each discipline; an official name
+#: src/constants.ts
+msgid "World Tour Finals"
+msgstr "World Tour Finals"
+
+#. Calendar header subtitle on phones: the season-ending World Tour Finals and its {dates}
+#: src/pages/calendar/utils.ts
+msgid "World Tour Finals · {dates}"
+msgstr "World Tour Finals · {dates}"
+
+#. Main heading of the news page
+#: src/pages/news/constants.ts
+msgid "World Tour News"
+msgstr "월드투어 뉴스"
+
+#. Head-to-head row: career win–loss record on the World Tour
+#: src/components/match/detail/useMatchInsights.ts
+msgid "World Tour W–L"
+msgstr "월드투어 승패"
+
+#. Search result hint: the player’s current BWF world ranking and discipline code, e.g. "WR #3 · MS". WR is short for world ranking; keep it short
+#: src/utils/search.ts
+msgid "WR #{rank} · {event}"
+msgstr "세계 #{rank} · {event}"
+
+#. Button on the About page season map that zooms the map in
+#: src/pages/about/components/MapControls.tsx
+msgid "Zoom in"
+msgstr "확대"
+
+#. Button on the About page season map that zooms the map out
+#: src/pages/about/components/MapControls.tsx
+msgid "Zoom out"
+msgstr "축소"

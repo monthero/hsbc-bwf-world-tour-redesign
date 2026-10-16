@@ -10,8 +10,12 @@ export const NewsTitle = memo<{ story: BriefStory; as?: 'h2' | 'h3'; className?:
   ({ story, as: Tag = 'h3', className }) => {
     return (
       <>
-        {story.kind && <span className={classes.kind}>{story.kind}</span>}
-        <Tag className={clsx(classes.title, className)}>
+        {story.kind && (
+          <span className={classes.kind} lang="en" dir="auto">
+            {story.kind}
+          </span>
+        )}
+        <Tag className={clsx(classes.title, className)} lang="en" dir="auto">
           <Link to="/news/$id" params={{ id: story.item.id }} className={classes.link} title={story.item.title}>
             {story.title}
           </Link>

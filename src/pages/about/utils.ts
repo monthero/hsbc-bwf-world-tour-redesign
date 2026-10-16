@@ -1,17 +1,42 @@
+import type { I18n } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
 import type { CSSProperties } from 'react';
 
 import { LEVEL_META } from '~/constants';
+import type { PanZoomView } from '~/hooks/usePanZoom';
+import { numberFormat } from '~/i18n/current';
 import type { Level, Tournament } from '~/types';
-import { date, today } from '~/utils/dates';
-import { formatNumber, plural } from '~/utils/format';
+import { date, formatWall, today } from '~/utils/dates';
+import { formatNumber } from '~/utils/format';
 import { countdownLabel, finalsOf, hasWinners, isDone, isHeld, liveAndNext, liveDayLabel } from '~/utils/tournaments';
 
-import { FLIP_AT, KICKERS, MAP_SIZE, RELAX } from './constants';
+import { FLIP_AT, HOME_FRAME, KICKERS, MAP_SIZE, MAP_ZOOM, RELAX, SHORT_MONTH } from './constants';
 import type { MapPoint, PinSpot, SeasonFocus, SeasonStat, SeasonStatus } from './types';
 
 export const anchorVars = (p: MapPoint) => ({ '--fx': p.x / MAP_SIZE.w, '--fy': p.y / MAP_SIZE.h }) as CSSProperties;
 
-export const flipPopover = (p: MapPoint) => p.x / MAP_SIZE.w > FLIP_AT;
+export const flipPopover = (p: MapPoint, view: PanZoomView) => ((p.x - view.x) * view.k) / MAP_SIZE.w + 0.5 > FLIP_AT;
+
+const WORLD_VIEW: PanZoomView = { x: MAP_SIZE.w / 2, y: MAP_SIZE.h / 2, k: 1 };
+
+const fitView = (points: readonly MapPoint[], minSpan: number): PanZoomView => {
+  if (!points.length) return WORLD_VIEW;
+  const xs = points.map((p) => p.x);
+  const ys = points.map((p) => p.y);
+  const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  const w = Math.max((x1 - x0) * HOME_FRAME.pad, minSpan);
+  const h = Math.max((y1 - y0) * HOME_FRAME.pad, (minSpan * MAP_SIZE.h) / MAP_SIZE.w);
+  const k = Math.min(MAP_ZOOM.homeMax, Math.max(1, Math.min(MAP_SIZE.w / w, MAP_SIZE.h / h)));
+  return { x: (x0 + x1) / 2, y: (y0 + y1) / 2, k };
+};
+
+export const homeView = (list: readonly Tournament[], f: SeasonFocus): PanZoomView => {
+  const points = list.filter(isHeld).flatMap((t) => (t.map ? [t.map] : []));
+  const at = f.spot?.map;
+  if (!at) return fitView(points, 0);
+  const near = points.filter((p) => Math.hypot(p.x - at.x, p.y - at.y) <= HOME_FRAME.radius);
+  return fitView([at, ...near], HOME_FRAME.minSpan);
+};
 
 export const seasonFocus = (list: readonly Tournament[]): SeasonFocus => {
   const held = list.filter(isHeld);
@@ -128,8 +153,33 @@ export const routePaths = (list: readonly Tournament[]) => {
   });
 };
 
+const MILLIONS = { minimumFractionDigits: 1, maximumFractionDigits: 1 } as const;
+
 const compactMoney = (n: number) =>
-  n >= 1e6 ? { value: `$${(n / 1e6).toFixed(1)}`, unit: 'M' } : { value: `$${formatNumber(n)}`, unit: undefined };
+  n >= 1e6
+    ? { value: `$${numberFormat(MILLIONS).format(n / 1e6)}`, unit: 'M' }
+    : { value: `$${formatNumber(n)}`, unit: undefined };
+
+const STAT_LABELS = {
+  stops: msg({
+    message: 'Stops incl. Finals',
+    comment:
+      'About page headline stat: number of tournaments (“stops”) this season, including the season-ending World Tour Finals',
+  }),
+  countries: msg({
+    message: 'Host countries',
+    comment: 'About page headline stat: number of countries hosting a tournament',
+  }),
+  prize: msg({ message: 'Prize money', comment: 'About page headline stat: total prize money across the season' }),
+  finals: msg({
+    message: 'Days to the Finals',
+    comment: 'About page headline stat: days left until the season-ending World Tour Finals start',
+  }),
+  done: msg({
+    message: 'Events completed',
+    comment: 'About page headline stat: number of this season’s tournaments that have finished',
+  }),
+};
 
 export const seasonStats = (list: readonly Tournament[], f: SeasonFocus): SeasonStat[] => {
   const held = list.filter(isHeld);
@@ -138,20 +188,27 @@ export const seasonStats = (list: readonly Tournament[], f: SeasonFocus): Season
   const done = held.filter((t) => t.status === 'done').length;
   const finalsAhead = f.finals && f.finals.daysUntil > 0;
   return [
-    { key: 'stops', value: formatNumber(held.length), label: 'Stops incl. Finals' },
-    { key: 'countries', value: formatNumber(countries), label: 'Host countries' },
-    { key: 'prize', ...prize, label: 'Prize money' },
+    { key: 'stops', value: formatNumber(held.length), label: STAT_LABELS.stops },
+    { key: 'countries', value: formatNumber(countries), label: STAT_LABELS.countries },
+    { key: 'prize', ...prize, label: STAT_LABELS.prize },
     finalsAhead
-      ? { key: 'finals', value: formatNumber(f.finals?.daysUntil ?? 0), label: 'Days to the Finals', gold: true }
-      : { key: 'done', value: formatNumber(done), label: 'Events completed', gold: true },
+      ? { key: 'finals', value: formatNumber(f.finals?.daysUntil ?? 0), label: STAT_LABELS.finals, gold: true }
+      : { key: 'done', value: formatNumber(done), label: STAT_LABELS.done, gold: true },
   ];
 };
+
+const SEASON_LEDE = msg({
+  message:
+    'A season-long circuit of {tournaments, plural, one {# tournament} other {# tournaments}} and the Finals across {countries, plural, one {# country} other {# countries}}, bringing the world’s best together in five disciplines. Every stop feeds the race to the World Tour Finals in December.',
+  comment:
+    'Intro under the About page heading. “The Finals” and “World Tour Finals” are the season-ending event for the top 8 per discipline; “the race” is the Race to Finals points table that decides who qualifies',
+});
 
 export const seasonLede = (list: readonly Tournament[]) => {
   const held = list.filter(isHeld);
   const tournaments = held.filter((t) => t.level !== 'Finals').length;
   const countries = new Set(held.map((t) => t.country)).size;
-  return `A season-long circuit of ${plural(tournaments, 'tournament')} and the Finals across ${plural(countries, 'country', 'countries')}, bringing the world’s best together in five disciplines. Every stop feeds the race to the World Tour Finals in December.`;
+  return { ...SEASON_LEDE, values: { tournaments, countries } };
 };
 
 export const yearSpan = (year: number) => {
@@ -172,19 +229,28 @@ export const todayOffset = (span: ReturnType<typeof yearSpan>) => {
 export const monthTicks = (span: ReturnType<typeof yearSpan>) =>
   Array.from({ length: 12 }, (_, m) => {
     const d = span.start.add(m, 'month');
-    return { month: m, label: d.format('MMM'), style: { left: `${(d.diff(span.start, 'day') / span.days) * 100}%` } };
+    return {
+      month: m,
+      label: formatWall(d, SHORT_MONTH),
+      style: { left: `${(d.diff(span.start, 'day') / span.days) * 100}%` },
+    };
   });
 
-export const kickerOf = (t: Tournament, f: SeasonFocus) => {
-  if (t === f.finals) return KICKERS.finals;
-  if (t.status === 'live') return KICKERS.live;
-  if (t === f.next) return KICKERS.next;
-  if (t.status === 'done') return KICKERS.done;
-  return t.status === 'cancelled' ? KICKERS.cancelled : LEVEL_META[t.level].label;
+export const kickerOf = (i18n: I18n, t: Tournament, f: SeasonFocus) => {
+  if (t === f.finals) return i18n._(KICKERS.finals);
+  if (t.status === 'live') return i18n._(KICKERS.live);
+  if (t === f.next) return i18n._(KICKERS.next);
+  if (t.status === 'done') return i18n._(KICKERS.done);
+  return t.status === 'cancelled' ? i18n._(KICKERS.cancelled) : LEVEL_META[t.level].label;
 };
 
-export const shortStatus = (t: Tournament) => {
-  if (t.status === 'done') return 'Results';
-  if (t.status === 'cancelled') return KICKERS.cancelled;
+const RESULTS = msg({
+  message: 'Results',
+  comment: 'Short status beside a finished tournament on the About page season map; links to its results',
+});
+
+export const shortStatus = (i18n: I18n, t: Tournament) => {
+  if (t.status === 'done') return i18n._(RESULTS);
+  if (t.status === 'cancelled') return i18n._(KICKERS.cancelled);
   return t.status === 'live' ? liveDayLabel(t, false) : countdownLabel(t, 'in');
 };

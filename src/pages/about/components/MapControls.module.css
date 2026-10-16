@@ -1,0 +1,34 @@
+.controls {
+  position: absolute;
+  z-index: 4;
+  inset-block-start: 8px;
+  inset-inline-end: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .button {
+    background: var(--bwf-glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--bwf-text-2);
+
+    @mixin light {
+      border-color: var(--bwf-border-hover);
+      background: var(--bwf-surface-2);
+      box-shadow: 0 1px 4px alpha(var(--bwf-shadow-ink), 0.6);
+
+      &:hover:not([aria-disabled]) {
+        background: var(--bwf-surface-3);
+      }
+
+      &[aria-disabled] {
+        opacity: 0.55;
+      }
+    }
+  }
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 4px;
+  }
+}

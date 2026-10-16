@@ -1,4 +1,4 @@
-import { useLingui } from '@lingui/react';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { VisuallyHidden } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -39,8 +39,8 @@ let autoScrolled = false;
 export const CalendarPage: FC = () => {
   const year = route.useSearch({ select: (s) => s.year ?? SEASON_YEAR });
   const { data } = useTournaments(year);
-  const { _ } = useLingui();
-  const meta = useMemo(() => calendarMeta(_, year), [_, year]);
+  const { i18n } = useLingui();
+  const meta = useMemo(() => calendarMeta(i18n.t, year), [i18n, year]);
   useDocumentMeta(meta);
   return data ? <Calendar key={year} year={year} tournaments={data} /> : null;
 };
@@ -49,6 +49,7 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
   const isMobile = useIsMobile();
   const { levels, status: picked = 'all' } = route.useSearch();
   const navigate = route.useNavigate();
+  const { t } = useLingui();
 
   const season = useMemo(() => summarize(tournaments, year), [tournaments, year]);
   const held = useMemo(() => tournaments.filter(isHeld), [tournaments]);
@@ -133,7 +134,7 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
       }, ms),
     );
     return () => {
-      timers.forEach((t) => window.clearTimeout(t));
+      timers.forEach((id) => window.clearTimeout(id));
       USER_SCROLL_EVENTS.forEach((e) => window.removeEventListener(e, stop));
     };
   }, [target, scrollToTarget]);
@@ -163,7 +164,17 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
     [navigate],
   );
 
-  const jumpPrefix = live ? 'Live now' : 'Up next';
+  const jumpLabel = live
+    ? t({
+        message: 'Live now',
+        comment: 'Calendar filter-bar button that scrolls to the tournament being played right now',
+      })
+    : t({
+        message: 'Up next',
+        context: 'tournament',
+        comment: 'Calendar filter-bar button that scrolls to the next World Tour tournament still to be played',
+      });
+  const targetName = target?.name;
 
   return (
     <div className={classes.page} style={pageStyle}>
@@ -178,7 +189,7 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
         showStatus={showStatus}
         onLevel={onLevel}
         onStatus={onStatus}
-        jumpLabel={target ? jumpPrefix : null}
+        jumpLabel={target ? jumpLabel : null}
         onJump={onJump}
         isMobile={isMobile}
       />
@@ -204,20 +215,36 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
             register={registerMonth}
           />
         )}
-        {!months.length && !showFinals && <EmptyState>No events match these filters</EmptyState>}
-        {season.phase !== 'past' && <p className={classes.note}>Dates and prize money subject to change.</p>}
+        {!months.length && !showFinals && (
+          <EmptyState>
+            <Trans comment="Calendar empty state when the tier and status filters hide every tournament">
+              No events match these filters
+            </Trans>
+          </EmptyState>
+        )}
+        {season.phase !== 'past' && (
+          <p className={classes.note}>
+            <Trans comment="Small print below the season calendar">Dates and prize money subject to change.</Trans>
+          </p>
+        )}
       </main>
       {target && (
         <FloatingPill visible={jump !== null} onClick={onJump}>
           {live ? (
             <>
               <LiveDot pulse />
-              <VisuallyHidden>Live now: </VisuallyHidden>
+              <Trans comment="Floating pill that scrolls back to the tournament being played now; the label is read by screen readers only, before the tournament name">
+                <VisuallyHidden>Live now: </VisuallyHidden>
+                {targetName}
+              </Trans>
             </>
           ) : (
-            `${jumpPrefix} · `
+            t({
+              message: `Up next · ${targetName}`,
+              comment:
+                'Floating pill that scrolls back to the next tournament still to be played; {targetName} is the tournament name',
+            })
           )}
-          {target.name}
           {jump === 'up' ? <IconCollapse size={15} /> : <IconExpand size={15} />}
         </FloatingPill>
       )}

@@ -12,7 +12,7 @@ export const FilterChip: FC<
   ComponentPropsWithoutRef<'button'> & {
     active?: boolean;
     size?: 'sm' | 'md' | 'lg';
-    tone?: { color: string };
+    tone?: { color: string; text?: string };
     dot?: boolean;
     tip?: ReactNode;
     event?: EventCode;
@@ -28,7 +28,7 @@ export const FilterChip: FC<
       data-tone={tone ? true : undefined}
       data-dot={dot || undefined}
       aria-pressed={active}
-      style={tone ? ({ ...style, '--tone': tone.color } as CSSProperties) : style}
+      style={tone ? ({ ...style, '--tone': tone.color, '--tone-text': tone.text } as CSSProperties) : style}
       {...rest}
     />
   );

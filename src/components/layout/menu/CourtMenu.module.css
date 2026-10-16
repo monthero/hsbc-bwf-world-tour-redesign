@@ -286,7 +286,7 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--bwf-border);
-  box-shadow: 0 8px 22px alpha(var(--mantine-color-black), 0.45);
+  box-shadow: 0 8px 22px alpha(var(--bwf-shadow-ink), 0.45);
   color: var(--bwf-text);
   opacity: 0;
   transform: scale(0.94);
@@ -378,7 +378,7 @@
 .social {
   flex-wrap: wrap;
   gap: 2px;
-  margin-left: -8px;
+  margin-inline-start: -8px;
 
   & a {
     --size: 44px;

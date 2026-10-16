@@ -1,8 +1,13 @@
 .table {
+  --stripe: 3px;
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
+
+  &:dir(rtl) {
+    --stripe: -3px;
+  }
 
   @mixin smaller-than $mantine-breakpoint-sm {
     &,
@@ -19,7 +24,7 @@
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.06em;
-    text-align: left;
+    text-align: start;
     text-transform: uppercase;
     color: var(--bwf-dim);
     -webkit-user-select: none;
@@ -54,11 +59,21 @@
     }
 
     td:first-child {
-      box-shadow: inset 3px 0 0 var(--bwf-green);
+      box-shadow: inset var(--stripe) 0 0 var(--bwf-green);
     }
 
     &:hover td {
       background: alpha(var(--bwf-green), 0.09);
+    }
+
+    @mixin light {
+      td {
+        background: alpha(var(--bwf-green), 0.07);
+      }
+
+      &:hover td {
+        background: alpha(var(--bwf-green), 0.12);
+      }
     }
   }
 
@@ -118,7 +133,7 @@ td.rank {
 .head .points,
 td.played,
 td.points {
-  text-align: right;
+  text-align: end;
 }
 
 td.played {
@@ -170,8 +185,17 @@ td.points {
 
     &[data-qualify='qualified'] {
       background: alpha(var(--bwf-green), 0.045);
-      box-shadow: inset 3px 0 0 var(--bwf-green);
-      padding-left: 10px;
+      box-shadow: inset var(--stripe) 0 0 var(--bwf-green);
+      padding-inline-start: 10px;
+
+      @mixin light {
+        background: alpha(var(--bwf-green), 0.07);
+
+        td,
+        &:hover td {
+          background: none;
+        }
+      }
     }
 
     &[data-qualify='qualified'] td,

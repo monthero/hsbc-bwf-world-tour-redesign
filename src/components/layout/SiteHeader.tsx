@@ -1,10 +1,11 @@
+import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useLayoutEffect, useRef, type RefObject } from 'react';
 
 import { HEADER_VAR } from '~/utils/layout';
 
 import { DevLinks } from './DevLinks';
-import { SITE_NAV } from './links';
+import { itemKey, SITE_NAV } from './links';
 import { CourtMenu } from './menu/CourtMenu';
 import { PlatformBar } from './PlatformBar';
 import { SiteLink } from './SiteLink';
@@ -33,15 +34,19 @@ const usePublishHeight = (ref: RefObject<HTMLElement | null>) => {
 export const SiteHeader = memo(() => {
   const ref = useRef<HTMLElement>(null);
   usePublishHeight(ref);
+  const { t } = useLingui();
   return (
     <>
       <PlatformBar />
       <header ref={ref} className={clsx(utils.onBrand, classes.header)}>
         <div className={clsx(utils.container, classes.row)}>
           <Wordmark className={classes.wordmark} />
-          <nav aria-label="Main" className={classes.nav}>
+          <nav
+            aria-label={t({ message: 'Main', comment: 'Accessible name of the main site navigation' })}
+            className={classes.nav}
+          >
             {SITE_NAV.map((it) => (
-              <SiteLink key={it.label} item={it} className={classes.link} />
+              <SiteLink key={itemKey(it)} item={it} className={classes.link} />
             ))}
           </nav>
           <div className={classes.actions}>

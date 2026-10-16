@@ -6,7 +6,8 @@ const NONE: ScrollEdges = { start: false, end: false };
 
 const measure = (el: HTMLElement): ScrollEdges => {
   const max = el.scrollWidth - el.clientWidth;
-  return { start: el.scrollLeft > 1, end: el.scrollLeft < max - 1 };
+  const offset = Math.abs(el.scrollLeft);
+  return { start: offset > 1, end: offset < max - 1 };
 };
 
 export const useScrollEdges = (ref: RefObject<HTMLElement | null>) => {

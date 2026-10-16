@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro';
 import { HoverCard } from '@mantine/core';
 import type { FC, ReactElement } from 'react';
 
@@ -13,7 +14,7 @@ import classes from './TournamentPreview.module.css';
 const WINNERS_HINT = (
   <span className={classes.hint}>
     <IconBack size={14} />
-    Winners
+    <Trans comment="Hint on a tournament preview card pointing to the side panel with the champions">Winners</Trans>
   </span>
 );
 

@@ -58,6 +58,6 @@
   box-shadow: 0 0 0 2px var(--avatar-ring, var(--bwf-surface-2));
 
   & + .member {
-    margin-left: calc(var(--size) * -0.25);
+    margin-inline-start: calc(var(--size) * -0.25);
   }
 }

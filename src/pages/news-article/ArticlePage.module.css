@@ -106,3 +106,7 @@
 .empty {
   align-self: stretch;
 }
+
+.notice {
+  margin-block: 12px 4px;
+}
