@@ -11,7 +11,7 @@ const CHANNEL_ID = 'UChh-akEbUM8_6ghGVnJd6cQ';
 const UPLOADS_ID = `UU${CHANNEL_ID.slice(2)}`;
 const PAGE_SIZE = 50;
 const MAX_PLAYLIST_PAGES = 4;
-const MAX_UPLOAD_PAGES = 3;
+const MAX_UPLOAD_PAGES = 5;
 const UPLOADS_LOOKBACK_DAYS = 2;
 const REFRESH_MIN_AGE_MS = 60_000;
 const SETTLE_DAYS = 2;
@@ -225,6 +225,16 @@ const fetchTournamentMedia = async (key: string, e: MediaEvent): Promise<Tournam
 
 const isEventTitle = (e: MediaEvent, title: string) => playlistScore(e, title) > 0;
 
+const isEventTag = (code: string, tag: string) => {
+  const t = tag.toUpperCase();
+  return t === `T_${code}` || t.startsWith(`M_${code}_`);
+};
+
+const isEventVideo = (e: MediaEvent, v: Video) => {
+  const code = e.code.toUpperCase();
+  return isEventTitle(e, v.snippet.title) || !!v.snippet.tags?.some((tag) => isEventTag(code, tag));
+};
+
 const fetchTournamentStreams = async (
   key: string,
   e: MediaEvent,
@@ -241,11 +251,13 @@ const fetchTournamentStreams = async (
     MAX_UPLOAD_PAGES,
     (page) => (page.at(-1)?.snippet.publishedAt ?? '') < since,
   );
+  const streaming = new Set([...catalog.items, ...known].filter((i) => i.live !== 'none').map((i) => i.id));
   const ids = new Set([
-    ...uploads.filter((u) => isEventTitle(e, u.snippet.title)).map((u) => u.snippet.resourceId.videoId),
-    ...[...catalog.items, ...known].filter((i) => i.live !== 'none').map((i) => i.id),
+    ...uploads.filter((u) => u.snippet.publishedAt >= since).map((u) => u.snippet.resourceId.videoId),
+    ...streaming,
   ]);
-  return (await videosOf(key, [...ids])).map(toItem);
+  const videos = await videosOf(key, [...ids]);
+  return videos.filter((v) => streaming.has(v.id) || isEventVideo(e, v)).map(toItem);
 };
 
 const STAGE: Record<MediaItem['live'], number> = { upcoming: 0, live: 1, none: 2 };
@@ -317,24 +329,25 @@ export const createMediaService = ({ key, root, persist }: MediaServiceOptions) 
   const eventOf = async (code: string) =>
     (await readJson<{ events: MediaEvent[] }>(calendarFile()))?.events.find((e) => e.code === code) ?? null;
 
+  const live = async (e: MediaEvent, refresh: boolean): Promise<TournamentMedia> => {
+    const [base, fresh] = await Promise.all([catalog(e), streams(e, refresh)]);
+    const streamsNewer = (streamCache.get(e.code)?.at ?? 0) >= (catalogCache.get(e.code)?.at ?? 0);
+    const items = streamsNewer ? mergeItems(base.items, fresh) : mergeItems(fresh, base.items);
+    return { ...base, items };
+  };
+
   const settled = async (e: MediaEvent) => {
     const file = path.join(settledDir, `${e.code}.json`);
     const cached = settledCache.get(e.code) ?? (await readJson<TournamentMedia>(file));
     if (cached) return cached;
-    const media = await fetchTournamentMedia(key, e);
+    const media = await catalog(e);
+    if (!media.playlistId) return live(e, false);
     settledCache.set(e.code, media);
     if (persist) {
       await fs.mkdir(settledDir, { recursive: true });
       await fs.writeFile(file, JSON.stringify(media));
     }
     return media;
-  };
-
-  const live = async (e: MediaEvent, refresh: boolean): Promise<TournamentMedia> => {
-    const [base, fresh] = await Promise.all([catalog(e), streams(e, refresh)]);
-    const streamsNewer = (streamCache.get(e.code)?.at ?? 0) >= (catalogCache.get(e.code)?.at ?? 0);
-    const items = streamsNewer ? mergeItems(base.items, fresh) : mergeItems(fresh, base.items);
-    return { ...base, items };
   };
 
   return {

@@ -11,7 +11,7 @@ export const TAB_LABELS: Record<TournamentTab, MessageDescriptor> = {
   draw: msg({ message: 'Draw', comment: 'Tournament page tab: the knockout bracket of each event' }),
   players: msg({ message: 'Players', comment: 'Tournament page tab: the entry list, by country or by discipline' }),
   podium: msg({ message: 'Podium', comment: 'Tournament page tab: medalists and how the seeded players did' }),
-  media: msg({ message: 'Media', comment: 'Tournament page tab: videos, highlights and streams' }),
+  videos: msg({ message: 'Videos', comment: 'Tournament page tab: highlights, full matches and live streams' }),
   news: msg({ message: 'News', comment: 'Tournament page tab: news stories about the tournament' }),
 };
 
@@ -29,7 +29,7 @@ export const OFF_TIPS: Partial<Record<TournamentTab, MessageDescriptor>> = {
     comment: 'Tooltip on the disabled Players tab',
   }),
   podium: msg({ message: 'Available once play starts', comment: 'Tooltip on the disabled Podium tab' }),
-  media: msg({ message: 'Videos appear once play starts', comment: 'Tooltip on the disabled Media tab' }),
+  videos: msg({ message: 'Videos appear once play starts', comment: 'Tooltip on the disabled Videos tab' }),
   news: msg({
     message: 'Stories appear once BWF publishes coverage',
     comment: 'Tooltip on the disabled News tab',

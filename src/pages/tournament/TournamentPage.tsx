@@ -57,7 +57,7 @@ const TABS = {
   draw: DrawTab,
   players: PlayersTab,
   podium: PodiumTab,
-  media: MediaTab,
+  videos: MediaTab,
   news: NewsTab,
 };
 

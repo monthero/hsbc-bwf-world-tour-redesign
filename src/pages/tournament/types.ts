@@ -3,19 +3,26 @@ import { z } from 'zod';
 import { EventCode } from '~/api/schemas';
 import type { DrawSlot, EntryListing, Tournament, TournamentSchedule } from '~/types';
 
-export const TournamentTab = z.enum(['overview', 'matches', 'draw', 'players', 'podium', 'media', 'news']);
+export const TournamentTab = z.enum(['overview', 'matches', 'draw', 'players', 'podium', 'videos', 'news']);
 export type TournamentTab = z.infer<typeof TournamentTab>;
 
 export const PlayersView = z.enum(['country', 'discipline']);
 export type PlayersView = z.infer<typeof PlayersView>;
 
+export const MatchSort = z.enum(['time', 'court', 'event', 'round', 'following']);
+export type MatchSort = z.infer<typeof MatchSort>;
+
 export const TournamentSearch = z.object({
-  tab: TournamentTab.optional().catch(undefined),
+  tab: z
+    .preprocess((v) => (v === 'media' ? 'videos' : v), TournamentTab)
+    .optional()
+    .catch(undefined),
   day: z.number().int().min(0).optional().catch(undefined),
   events: z.array(EventCode).optional().catch(undefined),
   courts: z.array(z.number().int()).optional().catch(undefined),
   q: z.string().optional().catch(undefined),
   following: z.boolean().optional().catch(undefined),
+  sort: MatchSort.optional().catch(undefined),
   match: z.string().optional().catch(undefined),
   draw: EventCode.optional().catch(undefined),
   round: z.number().int().min(0).max(4).optional().catch(undefined),

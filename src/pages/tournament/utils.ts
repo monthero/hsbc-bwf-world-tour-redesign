@@ -80,7 +80,7 @@ export const tabAvailability = (
     draw: bracket,
     players: matches || bracket || !!entries?.length,
     podium: matches,
-    media: matches,
+    videos: matches,
     news: !!news?.length,
   };
 };
@@ -298,7 +298,6 @@ export interface SeedEntry {
 export interface PodiumEvent {
   event: EventCode;
   name: string;
-  when: string;
   places: PodiumPlace[];
   seedsNote?: string;
   seeds: SeedEntry[];
@@ -324,15 +323,6 @@ const seedTip = (m: Match) => {
     .join(' · ');
 };
 
-const finalWhen = (day: string | undefined) =>
-  day
-    ? t({
-        message: `Final · ${day}`,
-        comment:
-          'Podium card heading: the day of the final, e.g. "Final · Sun 19". Final is the last match of an event',
-      })
-    : t({ message: 'Final', comment: 'Podium card heading: the final, the last match of an event' });
-
 const SEEDS_IN_EVENT = msg({
   message: '{count, plural, one {# seed} other {# seeds}}',
   comment: 'Podium tab, How the seeds did card: number of seeded players or pairs in the event',
@@ -341,13 +331,11 @@ const SEEDS_IN_EVENT = msg({
 export const buildPodium = (tn: Tournament, schedule: TournamentSchedule): PodiumEvent[] => {
   const latest = [...latestByTeam(schedule.matches).values()];
   const scale = tn.prize / PRIZE_BASE;
-  const lastDay = schedule.days.at(-1);
   return EventCode.options.map((event) => {
     const prizes = isDoubles(event) ? PODIUM_PRIZES.doubles : PODIUM_PRIZES.singles;
     const fm = finalOf(schedule.matches, event);
     const fw = fm ? winnerSide(fm) : null;
     const semis = schedule.matches.filter((m) => m.event === event && m.round === 'SF' && winnerSide(m) !== null);
-    const day = (fm && schedule.days[fm.dayIndex]) ?? lastDay;
     const who = [
       fm && fw !== null ? [fm.teams[fw]] : null,
       fm && fw !== null ? [fm.teams[opposite(fw)]] : null,
@@ -386,7 +374,6 @@ export const buildPodium = (tn: Tournament, schedule: TournamentSchedule): Podiu
     return {
       event,
       name: EVENT_NAMES[event],
-      when: finalWhen(day?.shortLabel),
       places: PODIUM_PLACES.map((p, i) => ({
         label: i18n._(p.label),
         medal: p.medal,

@@ -1,5 +1,5 @@
-import { i18n } from '@lingui/core';
-import { t } from '@lingui/core/macro';
+import { i18n, type MessageDescriptor } from '@lingui/core';
+import { msg, t } from '@lingui/core/macro';
 
 import type { MediaItem, MediaKind } from '~/api/schemas';
 import { ROUND_ORDER } from '~/constants';
@@ -23,8 +23,46 @@ export interface MediaSection {
   groups: MediaGroup[];
 }
 
-const TOP_PLAYS: ReadonlySet<MediaKind> = new Set(['play_of_the_day', 'top_shots']);
-const MORE: ReadonlySet<MediaKind> = new Set(['short', 'promo', 'other']);
+export type MediaType = 'highlights' | 'full' | 'streams' | 'top' | 'more';
+
+const TYPE_ORDER: readonly MediaType[] = ['highlights', 'full', 'streams', 'top', 'more'];
+
+const KIND_TYPE: Record<MediaKind, MediaType> = {
+  highlights: 'highlights',
+  full_match: 'full',
+  court_stream: 'streams',
+  play_of_the_day: 'top',
+  top_shots: 'top',
+  short: 'more',
+  promo: 'more',
+  other: 'more',
+};
+
+export const mediaType = (item: MediaItem): MediaType => (item.live === 'none' ? KIND_TYPE[item.kind] : 'streams');
+
+export const mediaTypes = (items: readonly MediaItem[]) => {
+  const have = new Set(items.map((i) => mediaType(i)));
+  return TYPE_ORDER.filter((type) => have.has(type));
+};
+
+const HIGHLIGHTS = msg({ message: 'Highlights', comment: 'Videos tab section: short highlight videos of matches' });
+const FULL_MATCHES = msg({ message: 'Full matches', comment: 'Videos tab section: videos of whole matches' });
+const TOP_PLAYS = msg({ message: 'Top plays', comment: 'Videos tab section: best rallies and shots of the day' });
+
+export const TYPE_LABELS: Record<MediaType, MessageDescriptor> = {
+  highlights: HIGHLIGHTS,
+  full: FULL_MATCHES,
+  streams: msg({
+    message: 'Live streams',
+    comment: 'Videos tab type filter: live and recorded YouTube streams of the courts and matches',
+  }),
+  top: TOP_PLAYS,
+  more: msg({
+    message: 'Other videos',
+    comment: 'Videos tab type filter: shorts, promos and other videos that fit no other type',
+  }),
+};
+
 const UNLINKED = 'other';
 
 const groupBy = (
@@ -62,7 +100,7 @@ const dayLabel = (start: string, day: string) => {
     .format('ddd D MMM');
   return t({
     message: `Day ${day} · ${when}`,
-    comment: 'Media tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"',
+    comment: 'Videos tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"',
   });
 };
 
@@ -92,45 +130,42 @@ export const buildMediaSections = (
   const upcoming = items.filter((i) => i.live === 'upcoming').toSorted(bySchedule);
   const rest = items.filter((i) => i.live === 'none');
   const of = (kind: MediaKind) => rest.filter((i) => i.kind === kind);
+  const ofType = (type: MediaType) => rest.filter((i) => KIND_TYPE[i.kind] === type);
   return [
     section('live', i18n._(LIVE_NOW), single(live)),
     section(
       'upcoming',
-      t({ message: 'Upcoming streams', comment: 'Media tab section: live streams that haven’t started yet' }),
+      t({ message: 'Upcoming streams', comment: 'Videos tab section: live streams that haven’t started yet' }),
       single(upcoming),
     ),
     section(
       'highlights',
-      t({ message: 'Highlights', comment: 'Media tab section: short highlight videos of matches' }),
+      i18n._(HIGHLIGHTS),
       byRound(
         of('highlights'),
         matchOf,
-        t({ message: 'More highlights', comment: 'Media tab group of highlight videos not linked to a round' }),
+        t({ message: 'More highlights', comment: 'Videos tab group of highlight videos not linked to a round' }),
       ),
     ),
     section(
       'full',
-      t({ message: 'Full matches', comment: 'Media tab section: videos of whole matches' }),
+      i18n._(FULL_MATCHES),
       byRound(
         of('full_match'),
         matchOf,
-        t({ message: 'More matches', comment: 'Media tab group of full-match videos not linked to a round' }),
+        t({ message: 'More matches', comment: 'Videos tab group of full-match videos not linked to a round' }),
       ),
     ),
-    section(
-      'top',
-      t({ message: 'Top plays', comment: 'Media tab section: best rallies and shots of the day' }),
-      single(rest.filter((i) => TOP_PLAYS.has(i.kind))),
-    ),
+    section('top', i18n._(TOP_PLAYS), single(ofType('top'))),
     section(
       'courts',
-      t({ message: 'Court streams', comment: 'Media tab section: full-day live streams of each court' }),
+      t({ message: 'Court streams', comment: 'Videos tab section: full-day live streams of each court' }),
       byDay(of('court_stream'), tn),
     ),
     section(
       'more',
-      t({ message: 'More videos', comment: 'Media tab section: other videos such as shorts and promos' }),
-      single(rest.filter((i) => MORE.has(i.kind))),
+      t({ message: 'More videos', comment: 'Videos tab section: other videos such as shorts and promos' }),
+      single(ofType('more')),
     ),
   ].filter((s) => s.count > 0);
 };

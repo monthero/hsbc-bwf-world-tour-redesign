@@ -1,5 +1,6 @@
 import type { IncomingMessage } from 'node:http';
 
+import type { TournamentMedia } from '../src/api/schemas.ts';
 import { cdnCache, IMMUTABLE_CACHE } from './cache-control.ts';
 import type { Endpoint } from './endpoints.ts';
 import { sendJson } from './http.ts';
@@ -17,6 +18,9 @@ const PHASE_CACHE: Record<MediaPhase, string> = {
 const GEO_CACHE = 'private, max-age=3600';
 const COUNTRY_HEADER = 'x-vercel-ip-country';
 const COUNTRY = /^[A-Z]{2}$/;
+
+const cachePhase = (phase: MediaPhase, media: TournamentMedia): MediaPhase =>
+  phase === 'settled' && !media.playlistId ? 'live' : phase;
 
 const viewerCountry = (req: IncomingMessage) => {
   const value = req.headers[COUNTRY_HEADER];
@@ -36,7 +40,7 @@ export const youtubeEndpoint = ({ key, ...options }: Omit<MediaServiceOptions, '
       const event = code ? await service.eventOf(code) : null;
       if (!event) return sendJson(res, 404, { error: 'Unknown tournament' }, MISS_CACHE);
       const media = await service.media(event, url.searchParams.has(FRESH_PARAM));
-      return sendJson(res, 200, media, PHASE_CACHE[mediaPhase(event)]);
+      return sendJson(res, 200, media, PHASE_CACHE[cachePhase(mediaPhase(event), media)]);
     },
   };
 };
