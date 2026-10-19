@@ -72,8 +72,6 @@ msgid "{count, plural, one {# live} other {# live}}"
 msgstr "{count, plural, other {# trực tiếp}}"
 
 #. Number of badminton matches, e.g. "12 matches"
-#. Number of matches in a start-time group of the match list
-#: src/pages/tournament/components/matches/MatchGroups.tsx
 #: src/utils/format.ts
 msgid "{count, plural, one {# match} other {# matches}}"
 msgstr "{count, plural, other {# trận}}"
@@ -269,7 +267,7 @@ msgid "{MOD_KEY} + scroll to zoom"
 msgstr "{MOD_KEY} + cuộn để thu phóng"
 
 #. Live score: points won in a row by one side without the opponent scoring
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "{n, plural, one {# in a row} other {# in a row}}"
 msgstr "{n, plural, other {# điểm liên tiếp}}"
 
@@ -376,6 +374,11 @@ msgstr "{time} giờ địa phương"
 #: src/utils/match-time.ts
 msgid "{time} your time"
 msgstr "{time} giờ của bạn"
+
+#. Screen-reader label of a filter dropdown, e.g. “Round: Final”
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "{title}: {current}"
+msgstr "{title}: {current}"
 
 #: src/pages/player/components/People.tsx
 msgid "{titles, plural, one {# title} other {# titles}}"
@@ -597,12 +600,6 @@ msgctxt "discipline"
 msgid "All"
 msgstr "Tất cả"
 
-#. Media tab round filter: videos from every round
-#: src/pages/tournament/components/MediaTab.tsx
-msgctxt "round"
-msgid "All"
-msgstr "Tất cả"
-
 #. Link to the Matches tab for this season
 #: src/pages/player/components/OverviewTab.tsx
 msgid "All {year} matches"
@@ -627,14 +624,24 @@ msgstr "Tất cả các lần gặp"
 msgid "All results"
 msgstr "Tất cả kết quả"
 
+#. Videos tab round filter: videos from every round
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "All rounds"
+msgstr "Tất cả các vòng"
+
 #. Head-to-head toggle: every World Tour meeting since 2018
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "All time"
 msgstr "Mọi thời điểm"
 
 #: src/components/disclaimer/DisclaimerModal.tsx
 msgid "All tournament data, results, rankings, images, logos and player information belong to BWF, the players and their respective rights holders. Videos link to BWF’s official YouTube channel."
 msgstr "Toàn bộ dữ liệu giải đấu, kết quả, bảng xếp hạng, hình ảnh, logo và thông tin tay vợt thuộc về BWF, các tay vợt và các chủ sở hữu bản quyền liên quan. Video dẫn tới kênh YouTube chính thức của BWF."
+
+#. Videos tab type filter: every kind of video
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "All videos"
+msgstr "Tất cả video"
 
 #. Entry status: a reserve player or pair who only gets in if someone withdraws
 #: src/pages/tournament/components/players/entries.ts
@@ -753,6 +760,11 @@ msgstr "Nơi sinh"
 #: src/utils/players.ts
 msgid "Born {date}"
 msgstr "Sinh ngày {date}"
+
+#. Medal mark beside a side that lost a semi-final. There is no bronze play-off, so both get bronze
+#: src/components/match/medals.ts
+msgid "Bronze medal"
+msgstr "Huy chương đồng"
 
 #: src/components/layout/BwfMark.tsx
 msgid "BWF (opens in a new tab)"
@@ -878,6 +890,7 @@ msgid "Career high #{rank} · {event}"
 msgstr "Cao nhất #{rank} · {event}"
 
 #. Match filters: label above the event chips (MS, WS, MD, WD, XD)
+#. Match filters: label above the event chips (MS, WS, MD, WD, XD)
 #: src/pages/tournament/components/matches/FilterBars.tsx
 msgid "Category"
 msgstr "Nội dung"
@@ -888,7 +901,7 @@ msgid "Challenge · no decision"
 msgstr "Challenge · không có kết luận"
 
 #. Live score chip: a player challenged a line call and the video review (Hawk-Eye) is in progress
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "Challenge · under review"
 msgstr "Challenge · đang xem lại"
 
@@ -908,6 +921,8 @@ msgid "Champion"
 msgstr "Vô địch"
 
 #. Result tag on the winner of a tournament final
+#. Result tag on the winner of a tournament final
+#: src/components/match/medals.ts
 #: src/utils/matches.ts
 msgctxt "result tag"
 msgid "Champion"
@@ -928,7 +943,7 @@ msgstr "Thay đổi so với tuần trước"
 msgid "Chinese Taipei"
 msgstr "Đài Bắc Trung Hoa"
 
-#. Button that clears the event and court match filters
+#. Button that clears the active filters
 #: src/pages/tournament/components/matches/FilterControls.tsx
 msgid "Clear"
 msgstr "Xóa"
@@ -1020,11 +1035,12 @@ msgstr "Không tải được bài viết này."
 msgid "Couldn’t load videos and news right now."
 msgstr "Hiện không tải được video và tin tức."
 
-#. Media tab error message
+#. Videos tab error message
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "Couldn’t load videos from YouTube right now."
 msgstr "Hiện không tải được video từ YouTube."
 
+#. Match filters: label above the court number chips
 #. Match filters: label above the court number chips
 #: src/pages/tournament/components/matches/FilterBars.tsx
 msgid "Court"
@@ -1046,7 +1062,7 @@ msgstr "Sân {court}"
 msgid "Court {court} · {event}"
 msgstr "Sân {court} · {event}"
 
-#. Media tab section: full-day live streams of each court
+#. Videos tab section: full-day live streams of each court
 #: src/pages/tournament/components/media/sections.ts
 msgid "Court streams"
 msgstr "Trực tiếp từng sân"
@@ -1102,7 +1118,7 @@ msgstr "Ngày"
 msgid "Day {day}"
 msgstr "Ngày {day}"
 
-#. Media tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"
+#. Videos tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"
 #: src/pages/tournament/components/media/sections.ts
 msgid "Day {day} · {when}"
 msgstr "Ngày {day} · {when}"
@@ -1142,8 +1158,8 @@ msgstr "Nội dung"
 msgid "Dismiss"
 msgstr "Đóng"
 
-#. Button that closes the match filters sheet
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#. Button that closes the filters sheet
+#: src/components/ui/FilterSheet.tsx
 msgid "Done"
 msgstr "Xong"
 
@@ -1242,17 +1258,15 @@ msgstr "Nhắc đến"
 msgid "Filter by country"
 msgstr "Lọc theo quốc gia"
 
-#. Button and sheet title for the match filters on phones
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#. Button and sheet title for the filters on phones
+#: src/components/ui/FilterSheet.tsx
 msgid "Filters"
 msgstr "Bộ lọc"
 
 #. Draw column heading: the last match of an event
-#. Podium card heading: the final, the last match of an event
 #. Round name: the last match of a tournament draw, which decides the champion
 #: src/constants.ts
 #: src/pages/tournament/components/draw/bracket.ts
-#: src/pages/tournament/utils.ts
 msgid "Final"
 msgstr "Chung kết"
 
@@ -1262,10 +1276,10 @@ msgctxt "match status"
 msgid "Final"
 msgstr "Kết thúc"
 
-#. Podium card heading: the day of the final, e.g. "Final · Sun 19". Final is the last match of an event
-#: src/pages/tournament/utils.ts
-msgid "Final · {day}"
-msgstr "Chung kết · {day}"
+#. Label above the score of the last game once a match has finished
+#: src/pages/tournament/components/matches/liveView.ts
+msgid "Final score"
+msgstr "Tỉ số chung cuộc"
 
 #. Caption on the About page Race to Finals table once qualification is settled; {day} is the publication date
 #: src/pages/about/components/RaceTop8.tsx
@@ -1386,8 +1400,19 @@ msgstr "Theo dõi World Tour"
 msgid "Follow this pair"
 msgstr "Theo dõi cặp này"
 
+#. Match sort option: matches with players or countries the visitor follows come first
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Followed first"
+msgstr "Đang theo dõi trước"
+
 #. Star mark beside a player the visitor follows
 #: src/components/follow/FollowedMark.tsx
+msgid "Following"
+msgstr "Đang theo dõi"
+
+#. Match list group heading: matches with players or countries the visitor follows, listed first
+#: src/pages/tournament/components/matches/utils.ts
+msgctxt "matches"
 msgid "Following"
 msgstr "Đang theo dõi"
 
@@ -1397,7 +1422,7 @@ msgid "Following today"
 msgstr "Đang theo dõi hôm nay"
 
 #. Head-to-head row: each side’s results in their last five matches
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "Form"
 msgstr "Phong độ"
 
@@ -1431,7 +1456,7 @@ msgstr "Toàn bộ lịch thi đấu"
 msgid "Full match"
 msgstr "Cả trận"
 
-#. Media tab section: videos of whole matches
+#. Videos tab section: videos of whole matches
 #: src/pages/tournament/components/media/sections.ts
 msgid "Full matches"
 msgstr "Video cả trận"
@@ -1452,14 +1477,21 @@ msgid "G{game}"
 msgstr "V{game}"
 
 #. Live score column heading for a game, e.g. G1 = game 1. Keep it to about two characters
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "G{n}"
 msgstr "V{n}"
 
+#. Live score: the game being played, e.g. “Game 2”. A badminton match is best of three games
 #. Match stats tab for one game of the match, e.g. Game 2
 #: src/components/match/detail/StatsPanel.tsx
+#: src/pages/tournament/components/matches/liveView.ts
 msgid "Game {game}"
 msgstr "Ván {game}"
+
+#. Live score during the break between games: the game about to start, e.g. “Game 3 next”
+#: src/pages/tournament/components/matches/liveView.ts
+msgid "Game {next} next"
+msgstr "Tiếp theo: ván {next}"
 
 #. Live match: this side wins the current game if it wins the next rally
 #: src/utils/live.ts
@@ -1509,7 +1541,7 @@ msgid "Groups"
 msgstr "Vòng bảng"
 
 #. Match detail section comparing the two sides’ records against each other
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "Head-to-head"
 msgstr "Đối đầu"
 
@@ -1519,8 +1551,8 @@ msgid "Height"
 msgstr "Chiều cao"
 
 #. Label on a short YouTube highlights video of the match
-#. Media tab section: short highlight videos of matches
 #. Video type label: match highlights
+#. Videos tab section: short highlight videos of matches
 #: src/components/media/MatchVideos.tsx
 #: src/pages/player/constants.ts
 #: src/pages/tournament/components/media/sections.ts
@@ -1844,6 +1876,11 @@ msgstr "Tỷ số trực tiếp hiện không khả dụng. Kết quả hiển t
 msgid "Live scores, draws, results, the season calendar, world rankings and news from the HSBC BWF World Tour, badminton’s top tournament circuit."
 msgstr "Tỷ số trực tiếp, nhánh đấu, kết quả, lịch thi đấu mùa giải, bảng xếp hạng thế giới và tin tức từ HSBC BWF World Tour, hệ thống giải đấu hàng đầu của cầu lông."
 
+#. Videos tab type filter: live and recorded YouTube streams of the courts and matches
+#: src/pages/tournament/components/media/sections.ts
+msgid "Live streams"
+msgstr "Trực tiếp"
+
 #. Player profile fact: the town or city the player lives in
 #: src/utils/players.ts
 msgid "Lives in"
@@ -1858,7 +1895,7 @@ msgid "Loading World Tour history…"
 msgstr "Đang tải lịch sử World Tour…"
 
 #. Live score footer: the most points each side won in a row without the opponent scoring
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "Longest run"
 msgstr "Chuỗi điểm dài nhất"
 
@@ -1956,9 +1993,7 @@ msgid "Medalists"
 msgstr "Đoạt huy chương"
 
 #. Player profile tab: videos and news stories
-#. Tournament page tab: videos, highlights and streams
 #: src/pages/player/constants.ts
-#: src/pages/tournament/constants.ts
 msgid "Media"
 msgstr "Media"
 
@@ -2008,17 +2043,17 @@ msgstr "Thêm"
 msgid "More from {tournamentName}"
 msgstr "Thêm tin về {tournamentName}"
 
-#. Media tab group of highlight videos not linked to a round
+#. Videos tab group of highlight videos not linked to a round
 #: src/pages/tournament/components/media/sections.ts
 msgid "More highlights"
 msgstr "Thêm highlight"
 
-#. Media tab group of full-match videos not linked to a round
+#. Videos tab group of full-match videos not linked to a round
 #: src/pages/tournament/components/media/sections.ts
 msgid "More matches"
 msgstr "Thêm trận đấu"
 
-#. Media tab section: other videos such as shorts and promos
+#. Videos tab section: other videos such as shorts and promos
 #: src/pages/tournament/components/media/sections.ts
 msgid "More videos"
 msgstr "Video khác"
@@ -2205,12 +2240,12 @@ msgstr "Chưa có lịch sử xếp hạng."
 msgid "No stories about this tournament yet."
 msgstr "Chưa có bài viết nào về giải đấu này."
 
-#. Media tab empty state when the round filter or search hides every video
+#. Videos tab empty state when the round or type filter or search hides every video
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "No videos match these filters."
 msgstr "Không có video nào khớp với bộ lọc."
 
-#. Media tab empty state. BWF TV is BWF’s YouTube channel
+#. Videos tab empty state. BWF TV is BWF’s YouTube channel
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "No videos on BWF TV for this tournament yet."
 msgstr "Chưa có video BWF TV nào về giải đấu này."
@@ -2244,7 +2279,7 @@ msgid "Not available in your region"
 msgstr "Không xem được ở khu vực của bạn"
 
 #. Scoreboard status for a scheduled match: it starts at this time or later, e.g. “Not before 14:30”
-#: src/components/match/detail/Scoreboard.tsx
+#: src/components/match/MatchTime.tsx
 msgid "Not before <0/>"
 msgstr "Không sớm hơn <0/>"
 
@@ -2342,6 +2377,11 @@ msgstr "Các cặp đôi khác"
 #: src/pages/tournament/components/TournamentHeader.tsx
 msgid "Other tournaments"
 msgstr "Các giải đấu khác"
+
+#. Videos tab type filter: shorts, promos and other videos that fit no other type
+#: src/pages/tournament/components/media/sections.ts
+msgid "Other videos"
+msgstr "Video khác"
 
 #. Page-not-found badge beside 404, like a line judge calling the shuttle out
 #: src/components/layout/NotFound.tsx
@@ -2464,6 +2504,26 @@ msgstr "Tay vợt"
 msgid "Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome on GitHub."
 msgstr "Các tay vợt thường xuyên thay đổi dụng cụ, do sở thích cá nhân hoặc vì nhà tài trợ, nên thông tin này có thể đã cũ. Thông tin do tác giả trang web tự cập nhật thủ công. Mọi góp ý xin gửi qua GitHub."
 
+#. Short line on the live score of a semi-final: what the match decides. Keep it short, one line on a phone
+#: src/components/match/medals.ts
+msgid "Playing for a place in the final"
+msgstr "Tranh suất vào chung kết"
+
+#. What is at stake in a semi-final. World Tour events have no bronze play-off, so both semi-final losers get bronze
+#: src/components/match/medals.ts
+msgid "Playing for a place in the final. Both sides have already secured at least bronze."
+msgstr "Tranh suất vào chung kết. Cả hai bên đều đã chắc chắn ít nhất huy chương đồng."
+
+#. Short line on the live score of a tournament final: what the match decides. Keep it short, one line on a phone
+#: src/components/match/medals.ts
+msgid "Playing for gold"
+msgstr "Tranh huy chương vàng"
+
+#. What is at stake in a tournament final. World Tour events have no bronze play-off
+#: src/components/match/medals.ts
+msgid "Playing for gold. The runner-up takes silver."
+msgstr "Tranh huy chương vàng. Bên thua nhận huy chương bạc."
+
 #. Player profile stat: the hand the player holds the racket in (right or left)
 #: src/utils/players.ts
 msgid "Playing hand"
@@ -2475,7 +2535,7 @@ msgid "Podium"
 msgstr "Bục vinh quang"
 
 #. Live score footer: total points won by each side in the match
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgctxt "rally"
 msgid "Points"
 msgstr "Tổng điểm"
@@ -2903,6 +2963,13 @@ msgstr "Đường tới <0>Finals</0>"
 msgid "Road to the Finals"
 msgstr "Đường tới Finals"
 
+#. Match sort option: matches grouped by round of the draw, earliest first
+#. Videos tab: title of the round filter menu and sheet
+#: src/pages/tournament/components/matches/FilterBars.tsx
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "Round"
+msgstr "Vòng"
+
 #. World Tour Finals: first round of matches inside a group
 #: src/constants.ts
 msgid "Round 1"
@@ -3039,7 +3106,7 @@ msgstr "Xem các trận mùa {year}, {record}"
 msgid "See full profile"
 msgstr "Xem toàn bộ hồ sơ"
 
-#. Badge with a player’s seed number in a tournament draw, e.g. Seed 3
+#. A player’s seed number in a tournament draw, as a badge or after their world rank, e.g. Seed 3
 #: src/components/player/SeedTag.tsx
 msgid "Seed {seed}"
 msgstr "Hạt giống {seed}"
@@ -3147,6 +3214,11 @@ msgstr "Hiện các luồng trực tiếp không xem được ở khu vực củ
 msgid "Show times in"
 msgstr "Hiển thị giờ theo"
 
+#. Medal mark beside the side that lost a tournament final
+#: src/components/match/medals.ts
+msgid "Silver medal"
+msgstr "Huy chương bạc"
+
 #. Start of a ranking spell; month is e.g. Mar 2019
 #: src/pages/player/components/RankingsTab.tsx
 msgid "since {month}"
@@ -3172,6 +3244,11 @@ msgstr "Đã xảy ra lỗi"
 msgid "Soon"
 msgstr "Sắp đấu"
 
+#. Match list: icon button, menu and sheet title for choosing how matches are ordered and grouped
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Sort matches"
+msgstr "Sắp xếp trận đấu"
+
 #. Top bar menu group: BWF programmes for grassroots badminton
 #: src/components/layout/links.ts
 msgid "Sport For All"
@@ -3191,6 +3268,11 @@ msgstr "Gắn sao cho một tay vợt hoặc quốc gia trong mục Tay vợt ho
 #: src/pages/tournament/components/MatchesTab.tsx
 msgid "Star a player, country or continent to follow them here."
 msgstr "Gắn sao cho một tay vợt, quốc gia hoặc châu lục để theo dõi họ tại đây."
+
+#. Match sort option (default): matches in order of play, grouped by start hour
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Start time"
+msgstr "Giờ bắt đầu"
 
 #. Player profile: when or how the player started playing badminton competitively
 #: src/utils/players.ts
@@ -3354,7 +3436,7 @@ msgid "This page isn’t on the HSBC BWF World Tour site. The link may be broken
 msgstr "Trang này không có trên trang HSBC BWF World Tour. Liên kết có thể bị hỏng hoặc đã cũ."
 
 #. Head-to-head toggle: only meetings this season
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "This season"
 msgstr "Mùa này"
 
@@ -3368,7 +3450,7 @@ msgid "This week"
 msgstr "Tuần này"
 
 #. Match list group heading for matches without a start time yet
-#: src/components/match/detail/Scoreboard.tsx
+#: src/components/match/MatchTime.tsx
 #: src/pages/tournament/components/matches/utils.ts
 msgid "Time to be announced"
 msgstr "Giờ thi đấu sẽ công bố sau"
@@ -3413,8 +3495,6 @@ msgid "Today"
 msgstr "Hôm nay"
 
 #. Countdown: the tournament starts tomorrow
-#. When a player’s next match is: it is scheduled for tomorrow
-#: src/utils/match-time.ts
 #: src/utils/tournaments.ts
 msgid "Tomorrow"
 msgstr "Ngày mai"
@@ -3444,7 +3524,7 @@ msgstr "Top {spots} giành vé dự World Tour Finals tại {city} · tối đa 
 msgid "Top 3"
 msgstr "Top 3"
 
-#. Media tab section: best rallies and shots of the day
+#. Videos tab section: best rallies and shots of the day
 #: src/pages/tournament/components/media/sections.ts
 msgid "Top plays"
 msgstr "Pha cầu đẹp"
@@ -3565,7 +3645,7 @@ msgctxt "stream"
 msgid "Upcoming"
 msgstr "Sắp phát sóng"
 
-#. Media tab section: live streams that haven’t started yet
+#. Videos tab section: live streams that haven’t started yet
 #: src/pages/tournament/components/media/sections.ts
 msgid "Upcoming streams"
 msgstr "Trực tiếp sắp tới"
@@ -3580,17 +3660,24 @@ msgstr "Đã dùng trong trận"
 msgid "Venue time"
 msgstr "Giờ địa phương"
 
+#. Videos tab: title of the video type filter menu and sheet
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "Video type"
+msgstr "Loại video"
+
 #. Section title on the player Media tab
+#. Tournament page tab: highlights, full matches and live streams
 #: src/pages/player/components/MediaTab.tsx
+#: src/pages/tournament/constants.ts
 msgid "Videos"
 msgstr "Video"
 
-#. Media tab empty state before play starts. BWF TV is BWF’s YouTube channel
+#. Videos tab empty state before play starts. BWF TV is BWF’s YouTube channel
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "Videos appear on BWF TV once the tournament starts."
 msgstr "Video sẽ có trên BWF TV khi giải bắt đầu."
 
-#. Tooltip on the disabled Media tab
+#. Tooltip on the disabled Videos tab
 #: src/pages/tournament/constants.ts
 msgid "Videos appear once play starts"
 msgstr "Video sẽ có khi giải bắt đầu thi đấu"
@@ -3604,6 +3691,11 @@ msgstr "Xem trang chính thức"
 #: src/pages/player/components/OverviewTab.tsx
 msgid "vs"
 msgstr "gặp"
+
+#. Large “versus” mark between the two sides on the live score before a match starts and between games. Keep it very short
+#: src/pages/tournament/components/matches/Showdown.tsx
+msgid "VS"
+msgstr "VS"
 
 #. Before the opponent’s name, short for “versus”
 #: src/components/player/PlayerHoverCard.tsx

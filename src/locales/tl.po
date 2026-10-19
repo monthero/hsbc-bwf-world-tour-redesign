@@ -72,8 +72,6 @@ msgid "{count, plural, one {# live} other {# live}}"
 msgstr "{count, plural, one {# live} other {# live}}"
 
 #. Number of badminton matches, e.g. "12 matches"
-#. Number of matches in a start-time group of the match list
-#: src/pages/tournament/components/matches/MatchGroups.tsx
 #: src/utils/format.ts
 msgid "{count, plural, one {# match} other {# matches}}"
 msgstr "{count, plural, one {# laban} other {# laban}}"
@@ -269,7 +267,7 @@ msgid "{MOD_KEY} + scroll to zoom"
 msgstr "{MOD_KEY} + mag-scroll para mag-zoom"
 
 #. Live score: points won in a row by one side without the opponent scoring
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "{n, plural, one {# in a row} other {# in a row}}"
 msgstr "{n, plural, one {# sunod-sunod} other {# sunod-sunod}}"
 
@@ -376,6 +374,11 @@ msgstr "{time} sa venue"
 #: src/utils/match-time.ts
 msgid "{time} your time"
 msgstr "{time} sa oras mo"
+
+#. Screen-reader label of a filter dropdown, e.g. “Round: Final”
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "{title}: {current}"
+msgstr "{title}: {current}"
 
 #: src/pages/player/components/People.tsx
 msgid "{titles, plural, one {# title} other {# titles}}"
@@ -597,12 +600,6 @@ msgctxt "discipline"
 msgid "All"
 msgstr "Lahat"
 
-#. Media tab round filter: videos from every round
-#: src/pages/tournament/components/MediaTab.tsx
-msgctxt "round"
-msgid "All"
-msgstr "Lahat"
-
 #. Link to the Matches tab for this season
 #: src/pages/player/components/OverviewTab.tsx
 msgid "All {year} matches"
@@ -627,14 +624,24 @@ msgstr "Lahat ng paghaharap"
 msgid "All results"
 msgstr "Lahat ng resulta"
 
+#. Videos tab round filter: videos from every round
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "All rounds"
+msgstr "Lahat ng round"
+
 #. Head-to-head toggle: every World Tour meeting since 2018
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "All time"
 msgstr "Lahat ng panahon"
 
 #: src/components/disclaimer/DisclaimerModal.tsx
 msgid "All tournament data, results, rankings, images, logos and player information belong to BWF, the players and their respective rights holders. Videos link to BWF’s official YouTube channel."
 msgstr "Ang lahat ng datos ng torneo, resulta, ranking, larawan, logo at impormasyon ng player ay pag-aari ng BWF, ng mga player at ng kani-kanilang may-ari ng karapatan. Naka-link ang mga video sa opisyal na YouTube channel ng BWF."
+
+#. Videos tab type filter: every kind of video
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "All videos"
+msgstr "Lahat ng video"
 
 #. Entry status: a reserve player or pair who only gets in if someone withdraws
 #: src/pages/tournament/components/players/entries.ts
@@ -753,6 +760,11 @@ msgstr "Lugar ng kapanganakan"
 #: src/utils/players.ts
 msgid "Born {date}"
 msgstr "Ipinanganak noong {date}"
+
+#. Medal mark beside a side that lost a semi-final. There is no bronze play-off, so both get bronze
+#: src/components/match/medals.ts
+msgid "Bronze medal"
+msgstr "Bronze medal"
 
 #: src/components/layout/BwfMark.tsx
 msgid "BWF (opens in a new tab)"
@@ -878,6 +890,7 @@ msgid "Career high #{rank} · {event}"
 msgstr "Career high #{rank} · {event}"
 
 #. Match filters: label above the event chips (MS, WS, MD, WD, XD)
+#. Match filters: label above the event chips (MS, WS, MD, WD, XD)
 #: src/pages/tournament/components/matches/FilterBars.tsx
 msgid "Category"
 msgstr "Kategorya"
@@ -888,7 +901,7 @@ msgid "Challenge · no decision"
 msgstr "Challenge · walang desisyon"
 
 #. Live score chip: a player challenged a line call and the video review (Hawk-Eye) is in progress
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "Challenge · under review"
 msgstr "Challenge · sinusuri"
 
@@ -908,6 +921,8 @@ msgid "Champion"
 msgstr "Kampeon"
 
 #. Result tag on the winner of a tournament final
+#. Result tag on the winner of a tournament final
+#: src/components/match/medals.ts
 #: src/utils/matches.ts
 msgctxt "result tag"
 msgid "Champion"
@@ -928,7 +943,7 @@ msgstr "Pagbabago mula noong nakaraang linggo"
 msgid "Chinese Taipei"
 msgstr "Chinese Taipei"
 
-#. Button that clears the event and court match filters
+#. Button that clears the active filters
 #: src/pages/tournament/components/matches/FilterControls.tsx
 msgid "Clear"
 msgstr "I-clear"
@@ -1020,11 +1035,12 @@ msgstr "Hindi ma-load ang balitang ito."
 msgid "Couldn’t load videos and news right now."
 msgstr "Hindi ma-load ang mga video at balita sa ngayon."
 
-#. Media tab error message
+#. Videos tab error message
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "Couldn’t load videos from YouTube right now."
 msgstr "Hindi ma-load ang mga video mula sa YouTube sa ngayon."
 
+#. Match filters: label above the court number chips
 #. Match filters: label above the court number chips
 #: src/pages/tournament/components/matches/FilterBars.tsx
 msgid "Court"
@@ -1046,7 +1062,7 @@ msgstr "Court {court}"
 msgid "Court {court} · {event}"
 msgstr "Court {court} · {event}"
 
-#. Media tab section: full-day live streams of each court
+#. Videos tab section: full-day live streams of each court
 #: src/pages/tournament/components/media/sections.ts
 msgid "Court streams"
 msgstr "Stream ng mga court"
@@ -1102,7 +1118,7 @@ msgstr "Araw"
 msgid "Day {day}"
 msgstr "Araw {day}"
 
-#. Media tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"
+#. Videos tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"
 #: src/pages/tournament/components/media/sections.ts
 msgid "Day {day} · {when}"
 msgstr "Araw {day} · {when}"
@@ -1142,8 +1158,8 @@ msgstr "Mga disiplina"
 msgid "Dismiss"
 msgstr "Isara"
 
-#. Button that closes the match filters sheet
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#. Button that closes the filters sheet
+#: src/components/ui/FilterSheet.tsx
 msgid "Done"
 msgstr "Tapos"
 
@@ -1242,17 +1258,15 @@ msgstr "Tampok"
 msgid "Filter by country"
 msgstr "I-filter ayon sa bansa"
 
-#. Button and sheet title for the match filters on phones
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#. Button and sheet title for the filters on phones
+#: src/components/ui/FilterSheet.tsx
 msgid "Filters"
 msgstr "Mga filter"
 
 #. Draw column heading: the last match of an event
-#. Podium card heading: the final, the last match of an event
 #. Round name: the last match of a tournament draw, which decides the champion
 #: src/constants.ts
 #: src/pages/tournament/components/draw/bracket.ts
-#: src/pages/tournament/utils.ts
 msgid "Final"
 msgstr "Final"
 
@@ -1262,10 +1276,10 @@ msgctxt "match status"
 msgid "Final"
 msgstr "Tapos na"
 
-#. Podium card heading: the day of the final, e.g. "Final · Sun 19". Final is the last match of an event
-#: src/pages/tournament/utils.ts
-msgid "Final · {day}"
-msgstr "Final · {day}"
+#. Label above the score of the last game once a match has finished
+#: src/pages/tournament/components/matches/liveView.ts
+msgid "Final score"
+msgstr "Final na iskor"
 
 #. Caption on the About page Race to Finals table once qualification is settled; {day} is the publication date
 #: src/pages/about/components/RaceTop8.tsx
@@ -1386,8 +1400,19 @@ msgstr "Subaybayan ang tour"
 msgid "Follow this pair"
 msgstr "I-follow ang tambalang ito"
 
+#. Match sort option: matches with players or countries the visitor follows come first
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Followed first"
+msgstr "Naka-follow muna"
+
 #. Star mark beside a player the visitor follows
 #: src/components/follow/FollowedMark.tsx
+msgid "Following"
+msgstr "Naka-follow"
+
+#. Match list group heading: matches with players or countries the visitor follows, listed first
+#: src/pages/tournament/components/matches/utils.ts
+msgctxt "matches"
 msgid "Following"
 msgstr "Naka-follow"
 
@@ -1397,7 +1422,7 @@ msgid "Following today"
 msgstr "Mga naka-follow ngayon"
 
 #. Head-to-head row: each side’s results in their last five matches
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "Form"
 msgstr "Form"
 
@@ -1431,7 +1456,7 @@ msgstr "Buong kalendaryo"
 msgid "Full match"
 msgstr "Buong laban"
 
-#. Media tab section: videos of whole matches
+#. Videos tab section: videos of whole matches
 #: src/pages/tournament/components/media/sections.ts
 msgid "Full matches"
 msgstr "Mga buong laban"
@@ -1452,14 +1477,21 @@ msgid "G{game}"
 msgstr "G{game}"
 
 #. Live score column heading for a game, e.g. G1 = game 1. Keep it to about two characters
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "G{n}"
 msgstr "G{n}"
 
+#. Live score: the game being played, e.g. “Game 2”. A badminton match is best of three games
 #. Match stats tab for one game of the match, e.g. Game 2
 #: src/components/match/detail/StatsPanel.tsx
+#: src/pages/tournament/components/matches/liveView.ts
 msgid "Game {game}"
 msgstr "Game {game}"
+
+#. Live score during the break between games: the game about to start, e.g. “Game 3 next”
+#: src/pages/tournament/components/matches/liveView.ts
+msgid "Game {next} next"
+msgstr "Susunod: Game {next}"
 
 #. Live match: this side wins the current game if it wins the next rally
 #: src/utils/live.ts
@@ -1509,7 +1541,7 @@ msgid "Groups"
 msgstr "Grupo"
 
 #. Match detail section comparing the two sides’ records against each other
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "Head-to-head"
 msgstr "Head-to-head"
 
@@ -1519,8 +1551,8 @@ msgid "Height"
 msgstr "Taas"
 
 #. Label on a short YouTube highlights video of the match
-#. Media tab section: short highlight videos of matches
 #. Video type label: match highlights
+#. Videos tab section: short highlight videos of matches
 #: src/components/media/MatchVideos.tsx
 #: src/pages/player/constants.ts
 #: src/pages/tournament/components/media/sections.ts
@@ -1844,6 +1876,11 @@ msgstr "Hindi available ang live scores sa ngayon. Ipinapakita ang mga resultang
 msgid "Live scores, draws, results, the season calendar, world rankings and news from the HSBC BWF World Tour, badminton’s top tournament circuit."
 msgstr "Live scores, draw, resulta, kalendaryo ng season, world rankings at balita mula sa HSBC BWF World Tour, ang pangunahing circuit ng mga torneo sa badminton."
 
+#. Videos tab type filter: live and recorded YouTube streams of the courts and matches
+#: src/pages/tournament/components/media/sections.ts
+msgid "Live streams"
+msgstr "Mga live stream"
+
 #. Player profile fact: the town or city the player lives in
 #: src/utils/players.ts
 msgid "Lives in"
@@ -1858,7 +1895,7 @@ msgid "Loading World Tour history…"
 msgstr "Nilo-load ang kasaysayan sa World Tour…"
 
 #. Live score footer: the most points each side won in a row without the opponent scoring
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "Longest run"
 msgstr "Pinakamahabang sunod-sunod"
 
@@ -1956,9 +1993,7 @@ msgid "Medalists"
 msgstr "Mga medalist"
 
 #. Player profile tab: videos and news stories
-#. Tournament page tab: videos, highlights and streams
 #: src/pages/player/constants.ts
-#: src/pages/tournament/constants.ts
 msgid "Media"
 msgstr "Media"
 
@@ -2008,17 +2043,17 @@ msgstr "Iba pa"
 msgid "More from {tournamentName}"
 msgstr "Iba pa mula sa {tournamentName}"
 
-#. Media tab group of highlight videos not linked to a round
+#. Videos tab group of highlight videos not linked to a round
 #: src/pages/tournament/components/media/sections.ts
 msgid "More highlights"
 msgstr "Iba pang highlights"
 
-#. Media tab group of full-match videos not linked to a round
+#. Videos tab group of full-match videos not linked to a round
 #: src/pages/tournament/components/media/sections.ts
 msgid "More matches"
 msgstr "Iba pang laban"
 
-#. Media tab section: other videos such as shorts and promos
+#. Videos tab section: other videos such as shorts and promos
 #: src/pages/tournament/components/media/sections.ts
 msgid "More videos"
 msgstr "Iba pang video"
@@ -2205,12 +2240,12 @@ msgstr "Walang record ng kasaysayan ng ranking."
 msgid "No stories about this tournament yet."
 msgstr "Wala pang balita tungkol sa torneong ito."
 
-#. Media tab empty state when the round filter or search hides every video
+#. Videos tab empty state when the round or type filter or search hides every video
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "No videos match these filters."
 msgstr "Walang video na tugma sa mga filter na ito."
 
-#. Media tab empty state. BWF TV is BWF’s YouTube channel
+#. Videos tab empty state. BWF TV is BWF’s YouTube channel
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "No videos on BWF TV for this tournament yet."
 msgstr "Wala pang video sa BWF TV para sa torneong ito."
@@ -2244,7 +2279,7 @@ msgid "Not available in your region"
 msgstr "Hindi available sa iyong rehiyon"
 
 #. Scoreboard status for a scheduled match: it starts at this time or later, e.g. “Not before 14:30”
-#: src/components/match/detail/Scoreboard.tsx
+#: src/components/match/MatchTime.tsx
 msgid "Not before <0/>"
 msgstr "Hindi mas maaga sa <0/>"
 
@@ -2342,6 +2377,11 @@ msgstr "Iba pang partnership"
 #: src/pages/tournament/components/TournamentHeader.tsx
 msgid "Other tournaments"
 msgstr "Iba pang torneo"
+
+#. Videos tab type filter: shorts, promos and other videos that fit no other type
+#: src/pages/tournament/components/media/sections.ts
+msgid "Other videos"
+msgstr "Iba pang video"
 
 #. Page-not-found badge beside 404, like a line judge calling the shuttle out
 #: src/components/layout/NotFound.tsx
@@ -2464,6 +2504,26 @@ msgstr "Mga player"
 msgid "Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome on GitHub."
 msgstr "Madalas magpalit ng gamit ang mga player, dahil sa personal na gusto o dahil sa sponsorship, kaya maaaring luma na ito. Mano-manong ina-update ito ng gumawa ng site. Bukas kami sa mga mungkahi sa GitHub."
 
+#. Short line on the live score of a semi-final: what the match decides. Keep it short, one line on a phone
+#: src/components/match/medals.ts
+msgid "Playing for a place in the final"
+msgstr "Laban para sa puwesto sa final"
+
+#. What is at stake in a semi-final. World Tour events have no bronze play-off, so both semi-final losers get bronze
+#: src/components/match/medals.ts
+msgid "Playing for a place in the final. Both sides have already secured at least bronze."
+msgstr "Laban para sa puwesto sa final. Parehong panig ay sigurado na sa hindi bababa sa bronze."
+
+#. Short line on the live score of a tournament final: what the match decides. Keep it short, one line on a phone
+#: src/components/match/medals.ts
+msgid "Playing for gold"
+msgstr "Laban para sa gold"
+
+#. What is at stake in a tournament final. World Tour events have no bronze play-off
+#: src/components/match/medals.ts
+msgid "Playing for gold. The runner-up takes silver."
+msgstr "Laban para sa gold. Silver ang matatanggap ng matatalo."
+
 #. Player profile stat: the hand the player holds the racket in (right or left)
 #: src/utils/players.ts
 msgid "Playing hand"
@@ -2475,7 +2535,7 @@ msgid "Podium"
 msgstr "Podium"
 
 #. Live score footer: total points won by each side in the match
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgctxt "rally"
 msgid "Points"
 msgstr "Puntos"
@@ -2903,6 +2963,13 @@ msgstr "Daan patungong <0>Finals</0>"
 msgid "Road to the Finals"
 msgstr "Daan patungong Finals"
 
+#. Match sort option: matches grouped by round of the draw, earliest first
+#. Videos tab: title of the round filter menu and sheet
+#: src/pages/tournament/components/matches/FilterBars.tsx
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "Round"
+msgstr "Round"
+
 #. World Tour Finals: first round of matches inside a group
 #: src/constants.ts
 msgid "Round 1"
@@ -3039,7 +3106,7 @@ msgstr "Tingnan ang mga laban sa {year}, {record}"
 msgid "See full profile"
 msgstr "Tingnan ang buong profile"
 
-#. Badge with a player’s seed number in a tournament draw, e.g. Seed 3
+#. A player’s seed number in a tournament draw, as a badge or after their world rank, e.g. Seed 3
 #: src/components/player/SeedTag.tsx
 msgid "Seed {seed}"
 msgstr "Seed {seed}"
@@ -3147,6 +3214,11 @@ msgstr "Ipakita ang mga stream na hindi available sa rehiyon ko"
 msgid "Show times in"
 msgstr "Ipakita ang oras sa"
 
+#. Medal mark beside the side that lost a tournament final
+#: src/components/match/medals.ts
+msgid "Silver medal"
+msgstr "Silver medal"
+
 #. Start of a ranking spell; month is e.g. Mar 2019
 #: src/pages/player/components/RankingsTab.tsx
 msgid "since {month}"
@@ -3172,6 +3244,11 @@ msgstr "May nagkaproblema"
 msgid "Soon"
 msgstr "Malapit na"
 
+#. Match list: icon button, menu and sheet title for choosing how matches are ordered and grouped
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Sort matches"
+msgstr "Ayusin ang mga laban"
+
 #. Top bar menu group: BWF programmes for grassroots badminton
 #: src/components/layout/links.ts
 msgid "Sport For All"
@@ -3191,6 +3268,11 @@ msgstr "I-star ang isang player o bansa sa Mga player o sa anumang laban para ma
 #: src/pages/tournament/components/MatchesTab.tsx
 msgid "Star a player, country or continent to follow them here."
 msgstr "I-star ang isang player, bansa o kontinente para i-follow sila rito."
+
+#. Match sort option (default): matches in order of play, grouped by start hour
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Start time"
+msgstr "Oras ng simula"
 
 #. Player profile: when or how the player started playing badminton competitively
 #: src/utils/players.ts
@@ -3354,7 +3436,7 @@ msgid "This page isn’t on the HSBC BWF World Tour site. The link may be broken
 msgstr "Wala ang page na ito sa site ng HSBC BWF World Tour. Maaaring sira o luma na ang link."
 
 #. Head-to-head toggle: only meetings this season
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "This season"
 msgstr "Ngayong season"
 
@@ -3368,7 +3450,7 @@ msgid "This week"
 msgstr "Ngayong linggo"
 
 #. Match list group heading for matches without a start time yet
-#: src/components/match/detail/Scoreboard.tsx
+#: src/components/match/MatchTime.tsx
 #: src/pages/tournament/components/matches/utils.ts
 msgid "Time to be announced"
 msgstr "Iaanunsiyo pa ang oras"
@@ -3413,8 +3495,6 @@ msgid "Today"
 msgstr "Ngayon"
 
 #. Countdown: the tournament starts tomorrow
-#. When a player’s next match is: it is scheduled for tomorrow
-#: src/utils/match-time.ts
 #: src/utils/tournaments.ts
 msgid "Tomorrow"
 msgstr "Bukas"
@@ -3444,7 +3524,7 @@ msgstr "Pasok sa World Tour Finals sa {city} ang top {spots} · max. {quota} baw
 msgid "Top 3"
 msgstr "Top 3"
 
-#. Media tab section: best rallies and shots of the day
+#. Videos tab section: best rallies and shots of the day
 #: src/pages/tournament/components/media/sections.ts
 msgid "Top plays"
 msgstr "Top plays"
@@ -3565,7 +3645,7 @@ msgctxt "stream"
 msgid "Upcoming"
 msgstr "Paparating"
 
-#. Media tab section: live streams that haven’t started yet
+#. Videos tab section: live streams that haven’t started yet
 #: src/pages/tournament/components/media/sections.ts
 msgid "Upcoming streams"
 msgstr "Mga paparating na stream"
@@ -3580,17 +3660,24 @@ msgstr "Nagamit sa laban na ito"
 msgid "Venue time"
 msgstr "Oras sa venue"
 
+#. Videos tab: title of the video type filter menu and sheet
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "Video type"
+msgstr "Uri ng video"
+
 #. Section title on the player Media tab
+#. Tournament page tab: highlights, full matches and live streams
 #: src/pages/player/components/MediaTab.tsx
+#: src/pages/tournament/constants.ts
 msgid "Videos"
 msgstr "Mga video"
 
-#. Media tab empty state before play starts. BWF TV is BWF’s YouTube channel
+#. Videos tab empty state before play starts. BWF TV is BWF’s YouTube channel
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "Videos appear on BWF TV once the tournament starts."
 msgstr "Lalabas ang mga video sa BWF TV kapag nagsimula na ang torneo."
 
-#. Tooltip on the disabled Media tab
+#. Tooltip on the disabled Videos tab
 #: src/pages/tournament/constants.ts
 msgid "Videos appear once play starts"
 msgstr "Lalabas ang mga video kapag nagsimula na ang laro"
@@ -3604,6 +3691,11 @@ msgstr "Tingnan ang opisyal na site"
 #: src/pages/player/components/OverviewTab.tsx
 msgid "vs"
 msgstr "vs"
+
+#. Large “versus” mark between the two sides on the live score before a match starts and between games. Keep it very short
+#: src/pages/tournament/components/matches/Showdown.tsx
+msgid "VS"
+msgstr "VS"
 
 #. Before the opponent’s name, short for “versus”
 #: src/components/player/PlayerHoverCard.tsx

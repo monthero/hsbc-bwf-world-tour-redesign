@@ -72,8 +72,6 @@ msgid "{count, plural, one {# live} other {# live}}"
 msgstr "{count, plural, other {#개 진행 중}}"
 
 #. Number of badminton matches, e.g. "12 matches"
-#. Number of matches in a start-time group of the match list
-#: src/pages/tournament/components/matches/MatchGroups.tsx
 #: src/utils/format.ts
 msgid "{count, plural, one {# match} other {# matches}}"
 msgstr "{count, plural, other {#경기}}"
@@ -269,7 +267,7 @@ msgid "{MOD_KEY} + scroll to zoom"
 msgstr "{MOD_KEY} + 스크롤로 확대/축소"
 
 #. Live score: points won in a row by one side without the opponent scoring
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "{n, plural, one {# in a row} other {# in a row}}"
 msgstr "{n, plural, other {#연속 득점}}"
 
@@ -376,6 +374,11 @@ msgstr "경기장 시간 {time}"
 #: src/utils/match-time.ts
 msgid "{time} your time"
 msgstr "내 시간 {time}"
+
+#. Screen-reader label of a filter dropdown, e.g. “Round: Final”
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "{title}: {current}"
+msgstr "{title}: {current}"
 
 #: src/pages/player/components/People.tsx
 msgid "{titles, plural, one {# title} other {# titles}}"
@@ -597,12 +600,6 @@ msgctxt "discipline"
 msgid "All"
 msgstr "전체"
 
-#. Media tab round filter: videos from every round
-#: src/pages/tournament/components/MediaTab.tsx
-msgctxt "round"
-msgid "All"
-msgstr "전체"
-
 #. Link to the Matches tab for this season
 #: src/pages/player/components/OverviewTab.tsx
 msgid "All {year} matches"
@@ -627,14 +624,24 @@ msgstr "전체 맞대결"
 msgid "All results"
 msgstr "전체 성적"
 
+#. Videos tab round filter: videos from every round
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "All rounds"
+msgstr "전체 라운드"
+
 #. Head-to-head toggle: every World Tour meeting since 2018
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "All time"
 msgstr "전체 기간"
 
 #: src/components/disclaimer/DisclaimerModal.tsx
 msgid "All tournament data, results, rankings, images, logos and player information belong to BWF, the players and their respective rights holders. Videos link to BWF’s official YouTube channel."
 msgstr "모든 대회 데이터, 결과, 랭킹, 이미지, 로고 및 선수 정보의 권리는 BWF, 선수 및 각 권리 보유자에게 있습니다. 동영상은 BWF 공식 YouTube 채널로 연결됩니다."
+
+#. Videos tab type filter: every kind of video
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "All videos"
+msgstr "전체 동영상"
 
 #. Entry status: a reserve player or pair who only gets in if someone withdraws
 #: src/pages/tournament/components/players/entries.ts
@@ -753,6 +760,11 @@ msgstr "출생지"
 #: src/utils/players.ts
 msgid "Born {date}"
 msgstr "{date} 출생"
+
+#. Medal mark beside a side that lost a semi-final. There is no bronze play-off, so both get bronze
+#: src/components/match/medals.ts
+msgid "Bronze medal"
+msgstr "동메달"
 
 #: src/components/layout/BwfMark.tsx
 msgid "BWF (opens in a new tab)"
@@ -878,6 +890,7 @@ msgid "Career high #{rank} · {event}"
 msgstr "최고 랭킹 #{rank} · {event}"
 
 #. Match filters: label above the event chips (MS, WS, MD, WD, XD)
+#. Match filters: label above the event chips (MS, WS, MD, WD, XD)
 #: src/pages/tournament/components/matches/FilterBars.tsx
 msgid "Category"
 msgstr "종목"
@@ -888,7 +901,7 @@ msgid "Challenge · no decision"
 msgstr "챌린지 · 판정 불가"
 
 #. Live score chip: a player challenged a line call and the video review (Hawk-Eye) is in progress
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "Challenge · under review"
 msgstr "챌린지 · 판독 중"
 
@@ -908,6 +921,8 @@ msgid "Champion"
 msgstr "우승"
 
 #. Result tag on the winner of a tournament final
+#. Result tag on the winner of a tournament final
+#: src/components/match/medals.ts
 #: src/utils/matches.ts
 msgctxt "result tag"
 msgid "Champion"
@@ -928,7 +943,7 @@ msgstr "지난주 대비 변동"
 msgid "Chinese Taipei"
 msgstr "차이니스 타이베이"
 
-#. Button that clears the event and court match filters
+#. Button that clears the active filters
 #: src/pages/tournament/components/matches/FilterControls.tsx
 msgid "Clear"
 msgstr "초기화"
@@ -1020,11 +1035,12 @@ msgstr "이 기사를 불러오지 못했습니다."
 msgid "Couldn’t load videos and news right now."
 msgstr "지금은 동영상과 뉴스를 불러올 수 없습니다."
 
-#. Media tab error message
+#. Videos tab error message
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "Couldn’t load videos from YouTube right now."
 msgstr "지금은 YouTube 동영상을 불러올 수 없습니다."
 
+#. Match filters: label above the court number chips
 #. Match filters: label above the court number chips
 #: src/pages/tournament/components/matches/FilterBars.tsx
 msgid "Court"
@@ -1046,7 +1062,7 @@ msgstr "코트 {court}"
 msgid "Court {court} · {event}"
 msgstr "코트 {court} · {event}"
 
-#. Media tab section: full-day live streams of each court
+#. Videos tab section: full-day live streams of each court
 #: src/pages/tournament/components/media/sections.ts
 msgid "Court streams"
 msgstr "코트별 중계"
@@ -1102,7 +1118,7 @@ msgstr "날짜"
 msgid "Day {day}"
 msgstr "{day}일차"
 
-#. Media tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"
+#. Videos tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"
 #: src/pages/tournament/components/media/sections.ts
 msgid "Day {day} · {when}"
 msgstr "{day}일차 · {when}"
@@ -1142,8 +1158,8 @@ msgstr "종목"
 msgid "Dismiss"
 msgstr "닫기"
 
-#. Button that closes the match filters sheet
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#. Button that closes the filters sheet
+#: src/components/ui/FilterSheet.tsx
 msgid "Done"
 msgstr "완료"
 
@@ -1242,17 +1258,15 @@ msgstr "등장 선수"
 msgid "Filter by country"
 msgstr "국가별 필터"
 
-#. Button and sheet title for the match filters on phones
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#. Button and sheet title for the filters on phones
+#: src/components/ui/FilterSheet.tsx
 msgid "Filters"
 msgstr "필터"
 
 #. Draw column heading: the last match of an event
-#. Podium card heading: the final, the last match of an event
 #. Round name: the last match of a tournament draw, which decides the champion
 #: src/constants.ts
 #: src/pages/tournament/components/draw/bracket.ts
-#: src/pages/tournament/utils.ts
 msgid "Final"
 msgstr "결승"
 
@@ -1262,10 +1276,10 @@ msgctxt "match status"
 msgid "Final"
 msgstr "경기 종료"
 
-#. Podium card heading: the day of the final, e.g. "Final · Sun 19". Final is the last match of an event
-#: src/pages/tournament/utils.ts
-msgid "Final · {day}"
-msgstr "결승 · {day}"
+#. Label above the score of the last game once a match has finished
+#: src/pages/tournament/components/matches/liveView.ts
+msgid "Final score"
+msgstr "최종 스코어"
 
 #. Caption on the About page Race to Finals table once qualification is settled; {day} is the publication date
 #: src/pages/about/components/RaceTop8.tsx
@@ -1386,8 +1400,19 @@ msgstr "투어 따라가기"
 msgid "Follow this pair"
 msgstr "이 조 팔로우"
 
+#. Match sort option: matches with players or countries the visitor follows come first
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Followed first"
+msgstr "팔로우 먼저"
+
 #. Star mark beside a player the visitor follows
 #: src/components/follow/FollowedMark.tsx
+msgid "Following"
+msgstr "팔로우 중"
+
+#. Match list group heading: matches with players or countries the visitor follows, listed first
+#: src/pages/tournament/components/matches/utils.ts
+msgctxt "matches"
 msgid "Following"
 msgstr "팔로우 중"
 
@@ -1397,7 +1422,7 @@ msgid "Following today"
 msgstr "오늘 팔로우 경기"
 
 #. Head-to-head row: each side’s results in their last five matches
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "Form"
 msgstr "최근 폼"
 
@@ -1431,7 +1456,7 @@ msgstr "전체 일정"
 msgid "Full match"
 msgstr "풀경기"
 
-#. Media tab section: videos of whole matches
+#. Videos tab section: videos of whole matches
 #: src/pages/tournament/components/media/sections.ts
 msgid "Full matches"
 msgstr "풀경기 영상"
@@ -1452,14 +1477,21 @@ msgid "G{game}"
 msgstr "{game}G"
 
 #. Live score column heading for a game, e.g. G1 = game 1. Keep it to about two characters
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "G{n}"
 msgstr "{n}G"
 
+#. Live score: the game being played, e.g. “Game 2”. A badminton match is best of three games
 #. Match stats tab for one game of the match, e.g. Game 2
 #: src/components/match/detail/StatsPanel.tsx
+#: src/pages/tournament/components/matches/liveView.ts
 msgid "Game {game}"
 msgstr "{game}게임"
+
+#. Live score during the break between games: the game about to start, e.g. “Game 3 next”
+#: src/pages/tournament/components/matches/liveView.ts
+msgid "Game {next} next"
+msgstr "다음 {next}게임"
 
 #. Live match: this side wins the current game if it wins the next rally
 #: src/utils/live.ts
@@ -1509,7 +1541,7 @@ msgid "Groups"
 msgstr "조별"
 
 #. Match detail section comparing the two sides’ records against each other
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "Head-to-head"
 msgstr "상대 전적"
 
@@ -1519,8 +1551,8 @@ msgid "Height"
 msgstr "키"
 
 #. Label on a short YouTube highlights video of the match
-#. Media tab section: short highlight videos of matches
 #. Video type label: match highlights
+#. Videos tab section: short highlight videos of matches
 #: src/components/media/MatchVideos.tsx
 #: src/pages/player/constants.ts
 #: src/pages/tournament/components/media/sections.ts
@@ -1844,6 +1876,11 @@ msgstr "지금은 실시간 점수를 불러올 수 없습니다. 최대 1시간
 msgid "Live scores, draws, results, the season calendar, world rankings and news from the HSBC BWF World Tour, badminton’s top tournament circuit."
 msgstr "배드민턴 최정상 투어인 HSBC BWF World Tour의 실시간 점수, 대진표, 결과, 시즌 일정, 세계 랭킹, 뉴스."
 
+#. Videos tab type filter: live and recorded YouTube streams of the courts and matches
+#: src/pages/tournament/components/media/sections.ts
+msgid "Live streams"
+msgstr "생중계"
+
 #. Player profile fact: the town or city the player lives in
 #: src/utils/players.ts
 msgid "Lives in"
@@ -1858,7 +1895,7 @@ msgid "Loading World Tour history…"
 msgstr "월드투어 기록 불러오는 중…"
 
 #. Live score footer: the most points each side won in a row without the opponent scoring
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "Longest run"
 msgstr "최다 연속 득점"
 
@@ -1956,9 +1993,7 @@ msgid "Medalists"
 msgstr "입상자"
 
 #. Player profile tab: videos and news stories
-#. Tournament page tab: videos, highlights and streams
 #: src/pages/player/constants.ts
-#: src/pages/tournament/constants.ts
 msgid "Media"
 msgstr "미디어"
 
@@ -2008,17 +2043,17 @@ msgstr "더보기"
 msgid "More from {tournamentName}"
 msgstr "{tournamentName} 기사 더 보기"
 
-#. Media tab group of highlight videos not linked to a round
+#. Videos tab group of highlight videos not linked to a round
 #: src/pages/tournament/components/media/sections.ts
 msgid "More highlights"
 msgstr "하이라이트 더 보기"
 
-#. Media tab group of full-match videos not linked to a round
+#. Videos tab group of full-match videos not linked to a round
 #: src/pages/tournament/components/media/sections.ts
 msgid "More matches"
 msgstr "경기 영상 더 보기"
 
-#. Media tab section: other videos such as shorts and promos
+#. Videos tab section: other videos such as shorts and promos
 #: src/pages/tournament/components/media/sections.ts
 msgid "More videos"
 msgstr "기타 영상"
@@ -2205,12 +2240,12 @@ msgstr "랭킹 기록이 없습니다."
 msgid "No stories about this tournament yet."
 msgstr "아직 이 대회 관련 기사가 없습니다."
 
-#. Media tab empty state when the round filter or search hides every video
+#. Videos tab empty state when the round or type filter or search hides every video
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "No videos match these filters."
 msgstr "필터와 일치하는 동영상이 없습니다."
 
-#. Media tab empty state. BWF TV is BWF’s YouTube channel
+#. Videos tab empty state. BWF TV is BWF’s YouTube channel
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "No videos on BWF TV for this tournament yet."
 msgstr "아직 이 대회의 BWF TV 영상이 없습니다."
@@ -2244,7 +2279,7 @@ msgid "Not available in your region"
 msgstr "내 지역에서 볼 수 없음"
 
 #. Scoreboard status for a scheduled match: it starts at this time or later, e.g. “Not before 14:30”
-#: src/components/match/detail/Scoreboard.tsx
+#: src/components/match/MatchTime.tsx
 msgid "Not before <0/>"
 msgstr "<0/> 이후 시작"
 
@@ -2342,6 +2377,11 @@ msgstr "다른 파트너"
 #: src/pages/tournament/components/TournamentHeader.tsx
 msgid "Other tournaments"
 msgstr "다른 대회"
+
+#. Videos tab type filter: shorts, promos and other videos that fit no other type
+#: src/pages/tournament/components/media/sections.ts
+msgid "Other videos"
+msgstr "기타 영상"
 
 #. Page-not-found badge beside 404, like a line judge calling the shuttle out
 #: src/components/layout/NotFound.tsx
@@ -2464,6 +2504,26 @@ msgstr "선수"
 msgid "Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome on GitHub."
 msgstr "선수들은 취향이나 스폰서 사정으로 장비를 자주 바꾸므로 이 정보는 최신이 아닐 수 있습니다. 사이트 제작자가 직접 관리하며, 수정 제안은 GitHub에서 받습니다."
 
+#. Short line on the live score of a semi-final: what the match decides. Keep it short, one line on a phone
+#: src/components/match/medals.ts
+msgid "Playing for a place in the final"
+msgstr "결승 진출을 건 경기"
+
+#. What is at stake in a semi-final. World Tour events have no bronze play-off, so both semi-final losers get bronze
+#: src/components/match/medals.ts
+msgid "Playing for a place in the final. Both sides have already secured at least bronze."
+msgstr "결승 진출을 건 경기입니다. 양측 모두 동메달 이상을 확보했습니다."
+
+#. Short line on the live score of a tournament final: what the match decides. Keep it short, one line on a phone
+#: src/components/match/medals.ts
+msgid "Playing for gold"
+msgstr "금메달을 건 경기"
+
+#. What is at stake in a tournament final. World Tour events have no bronze play-off
+#: src/components/match/medals.ts
+msgid "Playing for gold. The runner-up takes silver."
+msgstr "금메달을 건 경기입니다. 패자는 은메달을 받습니다."
+
 #. Player profile stat: the hand the player holds the racket in (right or left)
 #: src/utils/players.ts
 msgid "Playing hand"
@@ -2475,7 +2535,7 @@ msgid "Podium"
 msgstr "시상대"
 
 #. Live score footer: total points won by each side in the match
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgctxt "rally"
 msgid "Points"
 msgstr "득점"
@@ -2903,6 +2963,13 @@ msgstr "<0>파이널</0>까지의 여정"
 msgid "Road to the Finals"
 msgstr "파이널까지의 여정"
 
+#. Match sort option: matches grouped by round of the draw, earliest first
+#. Videos tab: title of the round filter menu and sheet
+#: src/pages/tournament/components/matches/FilterBars.tsx
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "Round"
+msgstr "라운드"
+
 #. World Tour Finals: first round of matches inside a group
 #: src/constants.ts
 msgid "Round 1"
@@ -3039,7 +3106,7 @@ msgstr "{year} 경기 보기, {record}"
 msgid "See full profile"
 msgstr "전체 프로필 보기"
 
-#. Badge with a player’s seed number in a tournament draw, e.g. Seed 3
+#. A player’s seed number in a tournament draw, as a badge or after their world rank, e.g. Seed 3
 #: src/components/player/SeedTag.tsx
 msgid "Seed {seed}"
 msgstr "{seed}번 시드"
@@ -3147,6 +3214,11 @@ msgstr "내 지역에서 볼 수 없는 중계도 표시"
 msgid "Show times in"
 msgstr "시간 기준"
 
+#. Medal mark beside the side that lost a tournament final
+#: src/components/match/medals.ts
+msgid "Silver medal"
+msgstr "은메달"
+
 #. Start of a ranking spell; month is e.g. Mar 2019
 #: src/pages/player/components/RankingsTab.tsx
 msgid "since {month}"
@@ -3172,6 +3244,11 @@ msgstr "문제가 발생했습니다"
 msgid "Soon"
 msgstr "곧 시작"
 
+#. Match list: icon button, menu and sheet title for choosing how matches are ordered and grouped
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Sort matches"
+msgstr "경기 정렬"
+
 #. Top bar menu group: BWF programmes for grassroots badminton
 #: src/components/layout/links.ts
 msgid "Sport For All"
@@ -3191,6 +3268,11 @@ msgstr "‘선수’ 탭이나 경기에서 선수 또는 국가에 별표를 �
 #: src/pages/tournament/components/MatchesTab.tsx
 msgid "Star a player, country or continent to follow them here."
 msgstr "선수, 국가 또는 대륙에 별표를 눌러 팔로우하면 여기에 표시됩니다."
+
+#. Match sort option (default): matches in order of play, grouped by start hour
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Start time"
+msgstr "시작 시간"
 
 #. Player profile: when or how the player started playing badminton competitively
 #: src/utils/players.ts
@@ -3354,7 +3436,7 @@ msgid "This page isn’t on the HSBC BWF World Tour site. The link may be broken
 msgstr "HSBC BWF World Tour 사이트에 없는 페이지입니다. 링크가 잘못되었거나 오래되었을 수 있습니다."
 
 #. Head-to-head toggle: only meetings this season
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "This season"
 msgstr "이번 시즌"
 
@@ -3368,7 +3450,7 @@ msgid "This week"
 msgstr "이번 주"
 
 #. Match list group heading for matches without a start time yet
-#: src/components/match/detail/Scoreboard.tsx
+#: src/components/match/MatchTime.tsx
 #: src/pages/tournament/components/matches/utils.ts
 msgid "Time to be announced"
 msgstr "시간 미정"
@@ -3413,8 +3495,6 @@ msgid "Today"
 msgstr "오늘"
 
 #. Countdown: the tournament starts tomorrow
-#. When a player’s next match is: it is scheduled for tomorrow
-#: src/utils/match-time.ts
 #: src/utils/tournaments.ts
 msgid "Tomorrow"
 msgstr "내일"
@@ -3444,7 +3524,7 @@ msgstr "상위 {spots}위 {city} World Tour Finals 진출 · 국가당 최대 {q
 msgid "Top 3"
 msgstr "TOP 3"
 
-#. Media tab section: best rallies and shots of the day
+#. Videos tab section: best rallies and shots of the day
 #: src/pages/tournament/components/media/sections.ts
 msgid "Top plays"
 msgstr "베스트 플레이"
@@ -3565,7 +3645,7 @@ msgctxt "stream"
 msgid "Upcoming"
 msgstr "중계 예정"
 
-#. Media tab section: live streams that haven’t started yet
+#. Videos tab section: live streams that haven’t started yet
 #: src/pages/tournament/components/media/sections.ts
 msgid "Upcoming streams"
 msgstr "예정된 중계"
@@ -3580,17 +3660,24 @@ msgstr "이번 경기 사용"
 msgid "Venue time"
 msgstr "경기장 시간"
 
+#. Videos tab: title of the video type filter menu and sheet
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "Video type"
+msgstr "동영상 유형"
+
 #. Section title on the player Media tab
+#. Tournament page tab: highlights, full matches and live streams
 #: src/pages/player/components/MediaTab.tsx
+#: src/pages/tournament/constants.ts
 msgid "Videos"
 msgstr "동영상"
 
-#. Media tab empty state before play starts. BWF TV is BWF’s YouTube channel
+#. Videos tab empty state before play starts. BWF TV is BWF’s YouTube channel
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "Videos appear on BWF TV once the tournament starts."
 msgstr "대회가 시작되면 BWF TV에 동영상이 올라옵니다."
 
-#. Tooltip on the disabled Media tab
+#. Tooltip on the disabled Videos tab
 #: src/pages/tournament/constants.ts
 msgid "Videos appear once play starts"
 msgstr "경기가 시작되면 동영상이 표시됩니다"
@@ -3604,6 +3691,11 @@ msgstr "공식 사이트 보기"
 #: src/pages/player/components/OverviewTab.tsx
 msgid "vs"
 msgstr "vs"
+
+#. Large “versus” mark between the two sides on the live score before a match starts and between games. Keep it very short
+#: src/pages/tournament/components/matches/Showdown.tsx
+msgid "VS"
+msgstr "VS"
 
 #. Before the opponent’s name, short for “versus”
 #: src/components/player/PlayerHoverCard.tsx

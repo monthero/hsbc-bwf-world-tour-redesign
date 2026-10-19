@@ -72,8 +72,6 @@ msgid "{count, plural, one {# live} other {# live}}"
 msgstr "{count, plural, one {# लाइव} other {# लाइव}}"
 
 #. Number of badminton matches, e.g. "12 matches"
-#. Number of matches in a start-time group of the match list
-#: src/pages/tournament/components/matches/MatchGroups.tsx
 #: src/utils/format.ts
 msgid "{count, plural, one {# match} other {# matches}}"
 msgstr "{count, plural, one {# मैच} other {# मैच}}"
@@ -269,7 +267,7 @@ msgid "{MOD_KEY} + scroll to zoom"
 msgstr "ज़ूम करने के लिए {MOD_KEY} + स्क्रॉल करें"
 
 #. Live score: points won in a row by one side without the opponent scoring
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "{n, plural, one {# in a row} other {# in a row}}"
 msgstr "{n, plural, one {लगातार #} other {लगातार #}}"
 
@@ -376,6 +374,11 @@ msgstr "स्थल पर {time}"
 #: src/utils/match-time.ts
 msgid "{time} your time"
 msgstr "आपके यहाँ {time}"
+
+#. Screen-reader label of a filter dropdown, e.g. “Round: Final”
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "{title}: {current}"
+msgstr "{title}: {current}"
 
 #: src/pages/player/components/People.tsx
 msgid "{titles, plural, one {# title} other {# titles}}"
@@ -597,12 +600,6 @@ msgctxt "discipline"
 msgid "All"
 msgstr "सभी"
 
-#. Media tab round filter: videos from every round
-#: src/pages/tournament/components/MediaTab.tsx
-msgctxt "round"
-msgid "All"
-msgstr "सभी"
-
 #. Link to the Matches tab for this season
 #: src/pages/player/components/OverviewTab.tsx
 msgid "All {year} matches"
@@ -627,14 +624,24 @@ msgstr "सभी मुकाबले"
 msgid "All results"
 msgstr "सभी नतीजे"
 
+#. Videos tab round filter: videos from every round
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "All rounds"
+msgstr "सभी राउंड"
+
 #. Head-to-head toggle: every World Tour meeting since 2018
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "All time"
 msgstr "कुल"
 
 #: src/components/disclaimer/DisclaimerModal.tsx
 msgid "All tournament data, results, rankings, images, logos and player information belong to BWF, the players and their respective rights holders. Videos link to BWF’s official YouTube channel."
 msgstr "टूर्नामेंट का सारा डेटा, नतीजे, रैंकिंग, तस्वीरें, लोगो और खिलाड़ियों की जानकारी BWF, खिलाड़ियों और उनके संबंधित अधिकार-धारकों की है। वीडियो BWF के आधिकारिक YouTube चैनल से लिंक किए गए हैं।"
+
+#. Videos tab type filter: every kind of video
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "All videos"
+msgstr "सभी वीडियो"
 
 #. Entry status: a reserve player or pair who only gets in if someone withdraws
 #: src/pages/tournament/components/players/entries.ts
@@ -753,6 +760,11 @@ msgstr "जन्मस्थान"
 #: src/utils/players.ts
 msgid "Born {date}"
 msgstr "जन्म {date}"
+
+#. Medal mark beside a side that lost a semi-final. There is no bronze play-off, so both get bronze
+#: src/components/match/medals.ts
+msgid "Bronze medal"
+msgstr "कांस्य पदक"
 
 #: src/components/layout/BwfMark.tsx
 msgid "BWF (opens in a new tab)"
@@ -878,6 +890,7 @@ msgid "Career high #{rank} · {event}"
 msgstr "करियर बेस्ट #{rank} · {event}"
 
 #. Match filters: label above the event chips (MS, WS, MD, WD, XD)
+#. Match filters: label above the event chips (MS, WS, MD, WD, XD)
 #: src/pages/tournament/components/matches/FilterBars.tsx
 msgid "Category"
 msgstr "वर्ग"
@@ -888,7 +901,7 @@ msgid "Challenge · no decision"
 msgstr "चैलेंज · कोई फ़ैसला नहीं"
 
 #. Live score chip: a player challenged a line call and the video review (Hawk-Eye) is in progress
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "Challenge · under review"
 msgstr "चैलेंज · रिव्यू जारी"
 
@@ -908,6 +921,8 @@ msgid "Champion"
 msgstr "चैंपियन"
 
 #. Result tag on the winner of a tournament final
+#. Result tag on the winner of a tournament final
+#: src/components/match/medals.ts
 #: src/utils/matches.ts
 msgctxt "result tag"
 msgid "Champion"
@@ -928,7 +943,7 @@ msgstr "पिछले हफ़्ते से बदलाव"
 msgid "Chinese Taipei"
 msgstr "चीनी ताइपे"
 
-#. Button that clears the event and court match filters
+#. Button that clears the active filters
 #: src/pages/tournament/components/matches/FilterControls.tsx
 msgid "Clear"
 msgstr "हटाएँ"
@@ -1020,11 +1035,12 @@ msgstr "यह ख़बर लोड नहीं हो सकी।"
 msgid "Couldn’t load videos and news right now."
 msgstr "अभी वीडियो और ख़बरें लोड नहीं हो सकीं।"
 
-#. Media tab error message
+#. Videos tab error message
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "Couldn’t load videos from YouTube right now."
 msgstr "अभी YouTube से वीडियो लोड नहीं हो सके।"
 
+#. Match filters: label above the court number chips
 #. Match filters: label above the court number chips
 #: src/pages/tournament/components/matches/FilterBars.tsx
 msgid "Court"
@@ -1046,7 +1062,7 @@ msgstr "कोर्ट {court}"
 msgid "Court {court} · {event}"
 msgstr "कोर्ट {court} · {event}"
 
-#. Media tab section: full-day live streams of each court
+#. Videos tab section: full-day live streams of each court
 #: src/pages/tournament/components/media/sections.ts
 msgid "Court streams"
 msgstr "कोर्ट स्ट्रीम"
@@ -1102,7 +1118,7 @@ msgstr "दिन"
 msgid "Day {day}"
 msgstr "दिन {day}"
 
-#. Media tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"
+#. Videos tab group of court streams for one tournament day, e.g. "Day 2 · Wed 15 Oct"
 #: src/pages/tournament/components/media/sections.ts
 msgid "Day {day} · {when}"
 msgstr "दिन {day} · {when}"
@@ -1142,8 +1158,8 @@ msgstr "वर्ग"
 msgid "Dismiss"
 msgstr "बंद करें"
 
-#. Button that closes the match filters sheet
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#. Button that closes the filters sheet
+#: src/components/ui/FilterSheet.tsx
 msgid "Done"
 msgstr "हो गया"
 
@@ -1242,17 +1258,15 @@ msgstr "इनमें शामिल"
 msgid "Filter by country"
 msgstr "देश के अनुसार फ़िल्टर करें"
 
-#. Button and sheet title for the match filters on phones
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#. Button and sheet title for the filters on phones
+#: src/components/ui/FilterSheet.tsx
 msgid "Filters"
 msgstr "फ़िल्टर"
 
 #. Draw column heading: the last match of an event
-#. Podium card heading: the final, the last match of an event
 #. Round name: the last match of a tournament draw, which decides the champion
 #: src/constants.ts
 #: src/pages/tournament/components/draw/bracket.ts
-#: src/pages/tournament/utils.ts
 msgid "Final"
 msgstr "फ़ाइनल"
 
@@ -1262,10 +1276,10 @@ msgctxt "match status"
 msgid "Final"
 msgstr "समाप्त"
 
-#. Podium card heading: the day of the final, e.g. "Final · Sun 19". Final is the last match of an event
-#: src/pages/tournament/utils.ts
-msgid "Final · {day}"
-msgstr "फ़ाइनल · {day}"
+#. Label above the score of the last game once a match has finished
+#: src/pages/tournament/components/matches/liveView.ts
+msgid "Final score"
+msgstr "अंतिम स्कोर"
 
 #. Caption on the About page Race to Finals table once qualification is settled; {day} is the publication date
 #: src/pages/about/components/RaceTop8.tsx
@@ -1386,8 +1400,19 @@ msgstr "टूर को फ़ॉलो करें"
 msgid "Follow this pair"
 msgstr "इस जोड़ी को फ़ॉलो करें"
 
+#. Match sort option: matches with players or countries the visitor follows come first
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Followed first"
+msgstr "फ़ॉलो किए गए पहले"
+
 #. Star mark beside a player the visitor follows
 #: src/components/follow/FollowedMark.tsx
+msgid "Following"
+msgstr "फ़ॉलो कर रहे हैं"
+
+#. Match list group heading: matches with players or countries the visitor follows, listed first
+#: src/pages/tournament/components/matches/utils.ts
+msgctxt "matches"
 msgid "Following"
 msgstr "फ़ॉलो कर रहे हैं"
 
@@ -1397,7 +1422,7 @@ msgid "Following today"
 msgstr "आज के फ़ॉलो किए मैच"
 
 #. Head-to-head row: each side’s results in their last five matches
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "Form"
 msgstr "फ़ॉर्म"
 
@@ -1431,7 +1456,7 @@ msgstr "पूरा कैलेंडर"
 msgid "Full match"
 msgstr "पूरा मैच"
 
-#. Media tab section: videos of whole matches
+#. Videos tab section: videos of whole matches
 #: src/pages/tournament/components/media/sections.ts
 msgid "Full matches"
 msgstr "पूरे मैच"
@@ -1452,14 +1477,21 @@ msgid "G{game}"
 msgstr "G{game}"
 
 #. Live score column heading for a game, e.g. G1 = game 1. Keep it to about two characters
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "G{n}"
 msgstr "G{n}"
 
+#. Live score: the game being played, e.g. “Game 2”. A badminton match is best of three games
 #. Match stats tab for one game of the match, e.g. Game 2
 #: src/components/match/detail/StatsPanel.tsx
+#: src/pages/tournament/components/matches/liveView.ts
 msgid "Game {game}"
 msgstr "गेम {game}"
+
+#. Live score during the break between games: the game about to start, e.g. “Game 3 next”
+#: src/pages/tournament/components/matches/liveView.ts
+msgid "Game {next} next"
+msgstr "अगला: गेम {next}"
 
 #. Live match: this side wins the current game if it wins the next rally
 #: src/utils/live.ts
@@ -1509,7 +1541,7 @@ msgid "Groups"
 msgstr "ग्रुप"
 
 #. Match detail section comparing the two sides’ records against each other
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "Head-to-head"
 msgstr "हेड-टू-हेड"
 
@@ -1519,8 +1551,8 @@ msgid "Height"
 msgstr "लंबाई"
 
 #. Label on a short YouTube highlights video of the match
-#. Media tab section: short highlight videos of matches
 #. Video type label: match highlights
+#. Videos tab section: short highlight videos of matches
 #: src/components/media/MatchVideos.tsx
 #: src/pages/player/constants.ts
 #: src/pages/tournament/components/media/sections.ts
@@ -1844,6 +1876,11 @@ msgstr "लाइव स्कोर अभी उपलब्ध नहीं �
 msgid "Live scores, draws, results, the season calendar, world rankings and news from the HSBC BWF World Tour, badminton’s top tournament circuit."
 msgstr "बैडमिंटन के शीर्ष टूर्नामेंट सर्किट HSBC BWF World Tour के लाइव स्कोर, ड्रॉ, नतीजे, सीज़न कैलेंडर, विश्व रैंकिंग और ख़बरें।"
 
+#. Videos tab type filter: live and recorded YouTube streams of the courts and matches
+#: src/pages/tournament/components/media/sections.ts
+msgid "Live streams"
+msgstr "लाइव स्ट्रीम"
+
 #. Player profile fact: the town or city the player lives in
 #: src/utils/players.ts
 msgid "Lives in"
@@ -1858,7 +1895,7 @@ msgid "Loading World Tour history…"
 msgstr "World Tour का इतिहास लोड हो रहा है…"
 
 #. Live score footer: the most points each side won in a row without the opponent scoring
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgid "Longest run"
 msgstr "सबसे लंबा सिलसिला"
 
@@ -1956,9 +1993,7 @@ msgid "Medalists"
 msgstr "पदक विजेता"
 
 #. Player profile tab: videos and news stories
-#. Tournament page tab: videos, highlights and streams
 #: src/pages/player/constants.ts
-#: src/pages/tournament/constants.ts
 msgid "Media"
 msgstr "मीडिया"
 
@@ -2008,17 +2043,17 @@ msgstr "और"
 msgid "More from {tournamentName}"
 msgstr "{tournamentName} से और ख़बरें"
 
-#. Media tab group of highlight videos not linked to a round
+#. Videos tab group of highlight videos not linked to a round
 #: src/pages/tournament/components/media/sections.ts
 msgid "More highlights"
 msgstr "और हाइलाइट्स"
 
-#. Media tab group of full-match videos not linked to a round
+#. Videos tab group of full-match videos not linked to a round
 #: src/pages/tournament/components/media/sections.ts
 msgid "More matches"
 msgstr "और मैच"
 
-#. Media tab section: other videos such as shorts and promos
+#. Videos tab section: other videos such as shorts and promos
 #: src/pages/tournament/components/media/sections.ts
 msgid "More videos"
 msgstr "और वीडियो"
@@ -2205,12 +2240,12 @@ msgstr "रैंकिंग का कोई इतिहास दर्ज �
 msgid "No stories about this tournament yet."
 msgstr "इस टूर्नामेंट के बारे में अभी कोई ख़बर नहीं।"
 
-#. Media tab empty state when the round filter or search hides every video
+#. Videos tab empty state when the round or type filter or search hides every video
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "No videos match these filters."
 msgstr "इन फ़िल्टर से कोई वीडियो मेल नहीं खाता।"
 
-#. Media tab empty state. BWF TV is BWF’s YouTube channel
+#. Videos tab empty state. BWF TV is BWF’s YouTube channel
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "No videos on BWF TV for this tournament yet."
 msgstr "इस टूर्नामेंट के लिए BWF TV पर अभी कोई वीडियो नहीं।"
@@ -2244,7 +2279,7 @@ msgid "Not available in your region"
 msgstr "आपके क्षेत्र में उपलब्ध नहीं"
 
 #. Scoreboard status for a scheduled match: it starts at this time or later, e.g. “Not before 14:30”
-#: src/components/match/detail/Scoreboard.tsx
+#: src/components/match/MatchTime.tsx
 msgid "Not before <0/>"
 msgstr "<0/> से पहले नहीं"
 
@@ -2342,6 +2377,11 @@ msgstr "अन्य जोड़ियाँ"
 #: src/pages/tournament/components/TournamentHeader.tsx
 msgid "Other tournaments"
 msgstr "अन्य टूर्नामेंट"
+
+#. Videos tab type filter: shorts, promos and other videos that fit no other type
+#: src/pages/tournament/components/media/sections.ts
+msgid "Other videos"
+msgstr "अन्य वीडियो"
 
 #. Page-not-found badge beside 404, like a line judge calling the shuttle out
 #: src/components/layout/NotFound.tsx
@@ -2464,6 +2504,26 @@ msgstr "खिलाड़ी"
 msgid "Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome on GitHub."
 msgstr "खिलाड़ी अपनी पसंद या स्पॉन्सरशिप की वजह से अक्सर उपकरण बदलते रहते हैं, इसलिए यह जानकारी पुरानी हो सकती है। इसे साइट के लेखक हाथ से अपडेट करते हैं। सुझाव GitHub पर दिए जा सकते हैं।"
 
+#. Short line on the live score of a semi-final: what the match decides. Keep it short, one line on a phone
+#: src/components/match/medals.ts
+msgid "Playing for a place in the final"
+msgstr "फ़ाइनल में जगह के लिए मुक़ाबला"
+
+#. What is at stake in a semi-final. World Tour events have no bronze play-off, so both semi-final losers get bronze
+#: src/components/match/medals.ts
+msgid "Playing for a place in the final. Both sides have already secured at least bronze."
+msgstr "फ़ाइनल में जगह के लिए मुक़ाबला। दोनों पक्ष कम से कम कांस्य पक्का कर चुके हैं।"
+
+#. Short line on the live score of a tournament final: what the match decides. Keep it short, one line on a phone
+#: src/components/match/medals.ts
+msgid "Playing for gold"
+msgstr "स्वर्ण के लिए मुक़ाबला"
+
+#. What is at stake in a tournament final. World Tour events have no bronze play-off
+#: src/components/match/medals.ts
+msgid "Playing for gold. The runner-up takes silver."
+msgstr "स्वर्ण के लिए मुक़ाबला। उपविजेता को रजत मिलेगा।"
+
 #. Player profile stat: the hand the player holds the racket in (right or left)
 #: src/utils/players.ts
 msgid "Playing hand"
@@ -2475,7 +2535,7 @@ msgid "Podium"
 msgstr "पोडियम"
 
 #. Live score footer: total points won by each side in the match
-#: src/pages/tournament/components/matches/LiveCard.tsx
+#: src/utils/live.ts
 msgctxt "rally"
 msgid "Points"
 msgstr "अंक"
@@ -2903,6 +2963,13 @@ msgstr "<0>Finals</0> की राह"
 msgid "Road to the Finals"
 msgstr "Finals की राह"
 
+#. Match sort option: matches grouped by round of the draw, earliest first
+#. Videos tab: title of the round filter menu and sheet
+#: src/pages/tournament/components/matches/FilterBars.tsx
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "Round"
+msgstr "राउंड"
+
 #. World Tour Finals: first round of matches inside a group
 #: src/constants.ts
 msgid "Round 1"
@@ -3039,7 +3106,7 @@ msgstr "{year} के मैच देखें, {record}"
 msgid "See full profile"
 msgstr "पूरी प्रोफ़ाइल देखें"
 
-#. Badge with a player’s seed number in a tournament draw, e.g. Seed 3
+#. A player’s seed number in a tournament draw, as a badge or after their world rank, e.g. Seed 3
 #: src/components/player/SeedTag.tsx
 msgid "Seed {seed}"
 msgstr "वरीयता {seed}"
@@ -3147,6 +3214,11 @@ msgstr "मेरे क्षेत्र में अनुपलब्ध �
 msgid "Show times in"
 msgstr "समय दिखाएँ"
 
+#. Medal mark beside the side that lost a tournament final
+#: src/components/match/medals.ts
+msgid "Silver medal"
+msgstr "रजत पदक"
+
 #. Start of a ranking spell; month is e.g. Mar 2019
 #: src/pages/player/components/RankingsTab.tsx
 msgid "since {month}"
@@ -3172,6 +3244,11 @@ msgstr "कुछ गड़बड़ हो गई"
 msgid "Soon"
 msgstr "जल्द"
 
+#. Match list: icon button, menu and sheet title for choosing how matches are ordered and grouped
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Sort matches"
+msgstr "मैच क्रमबद्ध करें"
+
 #. Top bar menu group: BWF programmes for grassroots badminton
 #: src/components/layout/links.ts
 msgid "Sport For All"
@@ -3191,6 +3268,11 @@ msgstr "खिलाड़ी टैब में या किसी भी म
 #: src/pages/tournament/components/MatchesTab.tsx
 msgid "Star a player, country or continent to follow them here."
 msgstr "किसी खिलाड़ी, देश या महाद्वीप को स्टार करें, वे यहाँ फ़ॉलो में दिखेंगे।"
+
+#. Match sort option (default): matches in order of play, grouped by start hour
+#: src/pages/tournament/components/matches/FilterBars.tsx
+msgid "Start time"
+msgstr "शुरू होने का समय"
 
 #. Player profile: when or how the player started playing badminton competitively
 #: src/utils/players.ts
@@ -3354,7 +3436,7 @@ msgid "This page isn’t on the HSBC BWF World Tour site. The link may be broken
 msgstr "यह पेज HSBC BWF World Tour साइट पर नहीं है। लिंक टूटा हुआ या पुराना हो सकता है।"
 
 #. Head-to-head toggle: only meetings this season
-#: src/components/match/detail/HeadToHead.tsx
+#: src/components/match/detail/utils.ts
 msgid "This season"
 msgstr "इस सीज़न"
 
@@ -3368,7 +3450,7 @@ msgid "This week"
 msgstr "इस हफ़्ते"
 
 #. Match list group heading for matches without a start time yet
-#: src/components/match/detail/Scoreboard.tsx
+#: src/components/match/MatchTime.tsx
 #: src/pages/tournament/components/matches/utils.ts
 msgid "Time to be announced"
 msgstr "समय की घोषणा बाकी"
@@ -3413,8 +3495,6 @@ msgid "Today"
 msgstr "आज"
 
 #. Countdown: the tournament starts tomorrow
-#. When a player’s next match is: it is scheduled for tomorrow
-#: src/utils/match-time.ts
 #: src/utils/tournaments.ts
 msgid "Tomorrow"
 msgstr "कल"
@@ -3444,7 +3524,7 @@ msgstr "टॉप {spots} {city} में World Tour Finals के लिए �
 msgid "Top 3"
 msgstr "टॉप 3"
 
-#. Media tab section: best rallies and shots of the day
+#. Videos tab section: best rallies and shots of the day
 #: src/pages/tournament/components/media/sections.ts
 msgid "Top plays"
 msgstr "बेहतरीन शॉट"
@@ -3565,7 +3645,7 @@ msgctxt "stream"
 msgid "Upcoming"
 msgstr "आगामी"
 
-#. Media tab section: live streams that haven’t started yet
+#. Videos tab section: live streams that haven’t started yet
 #: src/pages/tournament/components/media/sections.ts
 msgid "Upcoming streams"
 msgstr "आगामी स्ट्रीम"
@@ -3580,17 +3660,24 @@ msgstr "इस मैच में इस्तेमाल"
 msgid "Venue time"
 msgstr "स्थल का समय"
 
+#. Videos tab: title of the video type filter menu and sheet
+#: src/pages/tournament/components/MediaTab.tsx
+msgid "Video type"
+msgstr "वीडियो का प्रकार"
+
 #. Section title on the player Media tab
+#. Tournament page tab: highlights, full matches and live streams
 #: src/pages/player/components/MediaTab.tsx
+#: src/pages/tournament/constants.ts
 msgid "Videos"
 msgstr "वीडियो"
 
-#. Media tab empty state before play starts. BWF TV is BWF’s YouTube channel
+#. Videos tab empty state before play starts. BWF TV is BWF’s YouTube channel
 #: src/pages/tournament/components/MediaTab.tsx
 msgid "Videos appear on BWF TV once the tournament starts."
 msgstr "टूर्नामेंट शुरू होने पर वीडियो BWF TV पर आएँगे।"
 
-#. Tooltip on the disabled Media tab
+#. Tooltip on the disabled Videos tab
 #: src/pages/tournament/constants.ts
 msgid "Videos appear once play starts"
 msgstr "खेल शुरू होने पर वीडियो दिखेंगे"
@@ -3604,6 +3691,11 @@ msgstr "आधिकारिक साइट देखें"
 #: src/pages/player/components/OverviewTab.tsx
 msgid "vs"
 msgstr "बनाम"
+
+#. Large “versus” mark between the two sides on the live score before a match starts and between games. Keep it very short
+#: src/pages/tournament/components/matches/Showdown.tsx
+msgid "VS"
+msgstr "VS"
 
 #. Before the opponent’s name, short for “versus”
 #: src/components/player/PlayerHoverCard.tsx
