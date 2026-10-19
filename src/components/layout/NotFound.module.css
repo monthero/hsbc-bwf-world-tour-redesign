@@ -42,7 +42,7 @@
 
 .court {
   display: block;
-  width: min(100%, 440px);
+  width: min(100%, 560px);
   margin-bottom: 8px;
   overflow: visible;
   transform: perspective(900px) rotateX(50deg);
@@ -55,7 +55,10 @@
 }
 
 .surface {
-  fill: var(--bwf-surface);
+  fill: light-dark(
+    color-mix(in srgb, var(--mantine-color-leaf-7) 58%, var(--mantine-color-gray-7)),
+    var(--bwf-surface-4)
+  );
 }
 
 .lines,
@@ -66,21 +69,24 @@
 }
 
 .lines {
-  stroke: var(--bwf-border-strong);
+  stroke: light-dark(alpha(var(--mantine-color-white), 0.9), var(--bwf-muted));
   stroke-width: 1.25;
 }
 
 .net {
-  stroke: var(--bwf-faint);
+  stroke: light-dark(var(--mantine-color-gray-9), var(--bwf-text-3));
   stroke-width: 2;
 }
 
 .flight {
-  stroke: var(--bwf-red-soft);
-  stroke-width: 1.25;
+  stroke: light-dark(alpha(var(--mantine-color-white), 0.95), var(--bwf-red-soft));
+  stroke-width: 1.5;
   stroke-dasharray: 2 5;
   stroke-linecap: round;
-  opacity: 0.55;
+
+  @mixin dark {
+    opacity: 0.55;
+  }
 }
 
 .shuttle {

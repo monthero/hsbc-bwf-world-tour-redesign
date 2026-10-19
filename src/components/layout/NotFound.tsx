@@ -5,7 +5,7 @@ import { Link, type LinkProps } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, type FC, type ReactNode } from 'react';
 
-import { IconBack, IconSearch } from '~/components/ui';
+import { CourtLines, IconBack, IconSearch } from '~/components/ui';
 import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { openSearch } from '~/stores/search';
 import { NOT_FOUND_META } from '~/utils/meta';
@@ -27,16 +27,13 @@ const DEFAULT_TITLE = msg({
 });
 const DEFAULT_DESCRIPTION = msg`The link may be broken, or the page has moved somewhere else on the tour.`;
 
-const COURT_LINES =
-  'M0 0H134V61H0Z M0 4.6H134 M0 56.4H134 M7.6 0V61 M126.4 0V61 M47.2 0V61 M86.8 0V61 M0 30.5H47.2 M86.8 30.5H134';
 const NAV = SITE_NAV.filter((it): it is InternalItem => 'to' in it);
 const FLIGHT = 'M24 44C60 6 112 2 140 15';
 
 const Court = memo(() => (
-  <svg viewBox="-6 -10 156 81" className={classes.court} aria-hidden>
+  <svg viewBox="-16 -10 166 81" className={classes.court} aria-hidden>
     <rect width="134" height="61" className={classes.surface} />
-    <path d={COURT_LINES} className={classes.lines} />
-    <path d="M67 -4V65" className={classes.net} />
+    <CourtLines className={classes.lines} netClassName={classes.net} />
     <path d={FLIGHT} className={classes.flight} />
     <circle cx="140" cy="15" r="2" className={classes.ring} />
     <circle cx="140" cy="15" r="1.6" className={classes.shuttle} />
