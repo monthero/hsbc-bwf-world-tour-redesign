@@ -667,6 +667,11 @@ msgstr "अमेरिका महाद्वीप"
 msgid "An unofficial redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
 msgstr "BWF वेबसाइट के HSBC BWF World Tour सेक्शन का एक अनौपचारिक रीडिज़ाइन कॉन्सेप्ट। यह बैडमिंटन वर्ल्ड फ़ेडरेशन (BWF) या HSBC से संबद्ध नहीं है, न ही उनके द्वारा समर्थित या संचालित है। डेटा अधूरा, देर से अपडेट या गलत हो सकता है।"
 
+#. Settings label above the button that installs the site as an app on the device
+#: src/components/layout/SiteSettings.tsx
+msgid "App"
+msgstr "ऐप"
+
 #. Screen-reader label for the news page sidebar listing past months of stories
 #: src/pages/news/components/MonthRail.tsx
 msgid "Archive"
@@ -1623,6 +1628,11 @@ msgstr "ठीक है, समझ लिया"
 msgid "In a few hours"
 msgstr "कुछ घंटों में"
 
+#. Hint under the install button on iPhone and iPad: the Share sheet opens and the visitor picks Add to Home Screen (use the exact name of that option in iOS in this language)
+#: src/components/layout/SiteSettings.tsx
+msgid "In the Share menu, choose “Add to Home Screen”."
+msgstr "शेयर मेन्यू में “होम स्क्रीन में जोड़ें” चुनें।"
+
 #. Tooltip in the Race to Finals ranking (the season ranking that decides who plays the World Tour Finals): the player is in the top 8 but at most 2 per country may qualify
 #: src/constants.ts
 msgid "In the top 8, but two players from the same country rank higher — not qualifying (max. 2 per country)"
@@ -1632,6 +1642,11 @@ msgstr "टॉप 8 में, लेकिन उसी देश के दो
 #: src/utils/countries.ts
 msgid "Individual Neutral Athlete"
 msgstr "व्यक्तिगत तटस्थ एथलीट"
+
+#. Settings button that installs the site as an app (Android/desktop) or opens the Share menu (iPhone)
+#: src/components/layout/SiteSettings.tsx
+msgid "Install app"
+msgstr "ऐप इंस्टॉल करें"
 
 #. Player profile fact: when the player first competed internationally. "Intl." is short for international
 #: src/utils/players.ts
@@ -2361,6 +2376,11 @@ msgstr "मैच का विवरण खोलें · {tournament}"
 #: src/components/layout/SiteFooter.tsx
 msgid "Open source on GitHub. Feedback, ideas and contributions welcome"
 msgstr "GitHub पर ओपन सोर्स। सुझाव, आइडिया और योगदान का स्वागत है"
+
+#. Hint under the install button on Android and desktop browsers
+#: src/components/layout/SiteSettings.tsx
+msgid "Opens the tour like an app, from your home screen."
+msgstr "टूर को अपनी होम स्क्रीन से ऐप की तरह खोलें।"
 
 #. Group for players whose country has no continent, e.g. neutral athletes
 #: src/utils/countries.ts

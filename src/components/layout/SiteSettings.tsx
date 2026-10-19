@@ -1,6 +1,6 @@
 import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { NativeSelect, Popover, Switch, VisuallyHidden } from '@mantine/core';
+import { Button, NativeSelect, Popover, Switch, VisuallyHidden } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useId, useMemo, useState, type ChangeEvent, type FC, type ReactNode } from 'react';
 import { useShallow } from 'zustand/react/shallow';
@@ -12,6 +12,7 @@ import {
   IconClock,
   IconClose,
   IconDark,
+  IconInstall,
   IconLight,
   IconReset,
   IconRuler,
@@ -23,6 +24,7 @@ import {
   Tip,
   type SegmentedOption,
 } from '~/components/ui';
+import { useInstallApp } from '~/hooks/useInstallApp';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { currentLocale } from '~/i18n/current';
 import { intlLocale, isLocale, LOCALE_META, LOCALES } from '~/i18n/locales';
@@ -167,6 +169,43 @@ const IconRow: FC<{ icon: ReactNode; label: string; children: ReactNode }> = ({ 
   );
 };
 
+const InstallSection = memo<{ variant: PanelVariant }>(({ variant }) => {
+  const { mode, install } = useInstallApp();
+  if (!mode) return null;
+  return (
+    <section className={classes.section}>
+      <Field
+        label={
+          <Trans comment="Settings label above the button that installs the site as an app on the device">App</Trans>
+        }
+        hint={
+          mode === 'share' ? (
+            <Trans comment="Hint under the install button on iPhone and iPad: the Share sheet opens and the visitor picks Add to Home Screen (use the exact name of that option in iOS in this language)">
+              In the Share menu, choose “Add to Home Screen”.
+            </Trans>
+          ) : (
+            <Trans comment="Hint under the install button on Android and desktop browsers">
+              Opens the tour like an app, from your home screen.
+            </Trans>
+          )
+        }
+      >
+        <Button
+          variant="default"
+          radius="xl"
+          size={variant === 'sheet' ? 'md' : 'sm'}
+          leftSection={<IconInstall size={16} />}
+          onClick={install}
+        >
+          <Trans comment="Settings button that installs the site as an app (Android/desktop) or opens the Share menu (iPhone)">
+            Install app
+          </Trans>
+        </Button>
+      </Field>
+    </section>
+  );
+});
+
 const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ variant, onClose }) => {
   const { colorScheme, timeZone, clock, height, tension, showBlocked } = useSettings(
     useShallow((s) => ({
@@ -260,6 +299,7 @@ const SettingsPanel = memo<{ variant: PanelVariant; onClose?: () => void }>(({ v
           classNames={SWITCH_CLASSES}
         />
       </section>
+      <InstallSection variant={variant} />
     </div>
   );
 });

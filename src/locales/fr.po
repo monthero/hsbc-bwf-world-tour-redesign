@@ -667,6 +667,11 @@ msgstr "Amériques"
 msgid "An unofficial redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
 msgstr "Concept de refonte non officiel de la section HSBC BWF World Tour du site de la BWF. Ni affilié à la Badminton World Federation (BWF) ou à HSBC, ni approuvé ou géré par elles. Les données peuvent être incomplètes, retardées ou inexactes."
 
+#. Settings label above the button that installs the site as an app on the device
+#: src/components/layout/SiteSettings.tsx
+msgid "App"
+msgstr "Application"
+
 #. Screen-reader label for the news page sidebar listing past months of stories
 #: src/pages/news/components/MonthRail.tsx
 msgid "Archive"
@@ -1623,6 +1628,11 @@ msgstr "J’ai compris"
 msgid "In a few hours"
 msgstr "Dans quelques heures"
 
+#. Hint under the install button on iPhone and iPad: the Share sheet opens and the visitor picks Add to Home Screen (use the exact name of that option in iOS in this language)
+#: src/components/layout/SiteSettings.tsx
+msgid "In the Share menu, choose “Add to Home Screen”."
+msgstr "Dans le menu Partager, choisissez « Sur l’écran d’accueil »."
+
 #. Tooltip in the Race to Finals ranking (the season ranking that decides who plays the World Tour Finals): the player is in the top 8 but at most 2 per country may qualify
 #: src/constants.ts
 msgid "In the top 8, but two players from the same country rank higher — not qualifying (max. 2 per country)"
@@ -1632,6 +1642,11 @@ msgstr "Dans le top 8, mais deux joueurs du même pays sont mieux classés : no
 #: src/utils/countries.ts
 msgid "Individual Neutral Athlete"
 msgstr "Athlète individuel neutre"
+
+#. Settings button that installs the site as an app (Android/desktop) or opens the Share menu (iPhone)
+#: src/components/layout/SiteSettings.tsx
+msgid "Install app"
+msgstr "Installer l’app"
 
 #. Player profile fact: when the player first competed internationally. "Intl." is short for international
 #: src/utils/players.ts
@@ -2361,6 +2376,11 @@ msgstr "Ouvrir les détails du match · {tournament}"
 #: src/components/layout/SiteFooter.tsx
 msgid "Open source on GitHub. Feedback, ideas and contributions welcome"
 msgstr "Open source sur GitHub. Avis, idées et contributions bienvenus"
+
+#. Hint under the install button on Android and desktop browsers
+#: src/components/layout/SiteSettings.tsx
+msgid "Opens the tour like an app, from your home screen."
+msgstr "Ouvrez le circuit comme une app, depuis votre écran d’accueil."
 
 #. Group for players whose country has no continent, e.g. neutral athletes
 #: src/utils/countries.ts

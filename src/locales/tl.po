@@ -667,6 +667,11 @@ msgstr "Amerika"
 msgid "An unofficial redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
 msgstr "Isang hindi opisyal na redesign concept para sa seksiyong HSBC BWF World Tour ng website ng BWF. Hindi ito kaugnay, ineendorso o pinapatakbo ng Badminton World Federation (BWF) o ng HSBC. Maaaring kulang, naantala o mali ang datos."
 
+#. Settings label above the button that installs the site as an app on the device
+#: src/components/layout/SiteSettings.tsx
+msgid "App"
+msgstr "App"
+
 #. Screen-reader label for the news page sidebar listing past months of stories
 #: src/pages/news/components/MonthRail.tsx
 msgid "Archive"
@@ -1623,6 +1628,11 @@ msgstr "Naiintindihan ko"
 msgid "In a few hours"
 msgstr "Sa loob ng ilang oras"
 
+#. Hint under the install button on iPhone and iPad: the Share sheet opens and the visitor picks Add to Home Screen (use the exact name of that option in iOS in this language)
+#: src/components/layout/SiteSettings.tsx
+msgid "In the Share menu, choose “Add to Home Screen”."
+msgstr "Sa Share menu, piliin ang “Add to Home Screen”."
+
 #. Tooltip in the Race to Finals ranking (the season ranking that decides who plays the World Tour Finals): the player is in the top 8 but at most 2 per country may qualify
 #: src/constants.ts
 msgid "In the top 8, but two players from the same country rank higher — not qualifying (max. 2 per country)"
@@ -1632,6 +1642,11 @@ msgstr "Nasa top 8, pero may dalawang player mula sa parehong bansa na mas mataa
 #: src/utils/countries.ts
 msgid "Individual Neutral Athlete"
 msgstr "Individual Neutral Athlete"
+
+#. Settings button that installs the site as an app (Android/desktop) or opens the Share menu (iPhone)
+#: src/components/layout/SiteSettings.tsx
+msgid "Install app"
+msgstr "I-install ang app"
 
 #. Player profile fact: when the player first competed internationally. "Intl." is short for international
 #: src/utils/players.ts
@@ -2361,6 +2376,11 @@ msgstr "Buksan ang detalye ng laban · {tournament}"
 #: src/components/layout/SiteFooter.tsx
 msgid "Open source on GitHub. Feedback, ideas and contributions welcome"
 msgstr "Open source sa GitHub. Malugod na tinatanggap ang feedback, ideya at kontribusyon"
+
+#. Hint under the install button on Android and desktop browsers
+#: src/components/layout/SiteSettings.tsx
+msgid "Opens the tour like an app, from your home screen."
+msgstr "Buksan ang tour na parang app, mula sa home screen mo."
 
 #. Group for players whose country has no continent, e.g. neutral athletes
 #: src/utils/countries.ts
