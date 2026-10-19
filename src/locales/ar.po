@@ -266,6 +266,16 @@ msgstr "{minutes, plural, one {قراءة في دقيقة} two {قراءة في 
 msgid "{MOD_KEY} + scroll to zoom"
 msgstr "{MOD_KEY} + التمرير للتكبير"
 
+#. About page “titles so far” card, at the end of the row when several players are tied for the most titles (tournaments) this season, shown next to their names
+#: src/pages/about/components/TitlesSoFar.tsx
+msgid "{most, plural, one {Lead with # title each} other {Lead with # titles each}}"
+msgstr "{most, plural, one {يتصدّرون بلقب واحد لكل منهم} two {يتصدّرون بلقبين لكل منهم} few {يتصدّرون بـ# ألقاب لكل منهم} many {يتصدّرون بـ# لقبًا لكل منهم} other {يتصدّرون بـ# لقب لكل منهم}}"
+
+#. About page “titles so far” card, at the end of the row with the player who has won the most titles (tournaments) this season, shown next to their name
+#: src/pages/about/components/TitlesSoFar.tsx
+msgid "{most, plural, one {Leads with # title} other {Leads with # titles}}"
+msgstr "{most, plural, one {يتصدّر بلقب واحد} two {يتصدّر بلقبين} few {يتصدّر بـ# ألقاب} many {يتصدّر بـ# لقبًا} other {يتصدّر بـ# لقب}}"
+
 #. Live score: points won in a row by one side without the opponent scoring
 #: src/utils/live.ts
 msgid "{n, plural, one {# in a row} other {# in a row}}"
@@ -485,15 +495,10 @@ msgstr "+{hidden} آخرين"
 msgid "+{percent}% pre-stretch"
 msgstr "شد مسبق +{percent}%"
 
-#. About page “titles so far” card: a player is tied with others for the most titles (tournament wins) this season
+#. About page “titles so far” card: the first of several players tied for the most titles this season, and how many others share it
 #: src/pages/about/components/TitlesSoFar.tsx
-msgid "<0/> and {others, plural, one {# other} other {# others}} lead with {most, plural, one {# title} other {# titles}} each"
-msgstr "يتقاسم <0/> و{others, plural, one {لاعب آخر} two {لاعبان آخران} few {# لاعبين آخرين} many {# لاعبًا آخر} other {# لاعب آخر}} الصدارة برصيد {most, plural, one {لقب واحد} two {لقبين} few {# ألقاب} many {# لقبًا} other {# لقب}} لكلٍّ منهم"
-
-#. About page “titles so far” card: the player with the most titles (tournament wins) this season
-#: src/pages/about/components/TitlesSoFar.tsx
-msgid "<0/> leads with {most, plural, one {# title} other {# titles}}"
-msgstr "<0/> يتصدر برصيد {most, plural, one {لقب واحد} two {لقبين} few {# ألقاب} many {# لقبًا} other {# لقب}}"
+msgid "<0/> and {others, plural, one {# other} other {# others}}"
+msgstr "<0/> و{others, plural, one {لاعب آخر} two {لاعبان آخران} few {# لاعبين آخرين} many {# لاعبًا آخر} other {# لاعب آخر}}"
 
 #. Season progress in the calendar header: {done} tournaments (“stops”) played out of {total} on the World Tour this season
 #: src/pages/calendar/components/StopsDone.tsx

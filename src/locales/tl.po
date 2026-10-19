@@ -266,6 +266,16 @@ msgstr "{minutes, plural, one {# minutong basa} other {# minutong basa}}"
 msgid "{MOD_KEY} + scroll to zoom"
 msgstr "{MOD_KEY} + mag-scroll para mag-zoom"
 
+#. About page “titles so far” card, at the end of the row when several players are tied for the most titles (tournaments) this season, shown next to their names
+#: src/pages/about/components/TitlesSoFar.tsx
+msgid "{most, plural, one {Lead with # title each} other {Lead with # titles each}}"
+msgstr "{most, plural, one {Nangunguna sa tig-# titulo} other {Nangunguna sa tig-# titulo}}"
+
+#. About page “titles so far” card, at the end of the row with the player who has won the most titles (tournaments) this season, shown next to their name
+#: src/pages/about/components/TitlesSoFar.tsx
+msgid "{most, plural, one {Leads with # title} other {Leads with # titles}}"
+msgstr "{most, plural, one {Nangunguna sa # titulo} other {Nangunguna sa # titulo}}"
+
 #. Live score: points won in a row by one side without the opponent scoring
 #: src/utils/live.ts
 msgid "{n, plural, one {# in a row} other {# in a row}}"
@@ -485,15 +495,10 @@ msgstr "+{hidden} pa"
 msgid "+{percent}% pre-stretch"
 msgstr "+{percent}% pre-stretch"
 
-#. About page “titles so far” card: a player is tied with others for the most titles (tournament wins) this season
+#. About page “titles so far” card: the first of several players tied for the most titles this season, and how many others share it
 #: src/pages/about/components/TitlesSoFar.tsx
-msgid "<0/> and {others, plural, one {# other} other {# others}} lead with {most, plural, one {# title} other {# titles}} each"
-msgstr "Nangunguna si <0/> at {others, plural, one {# iba pa} other {# iba pa}}, na may tig-{most, plural, one {# titulo} other {# titulo}}"
-
-#. About page “titles so far” card: the player with the most titles (tournament wins) this season
-#: src/pages/about/components/TitlesSoFar.tsx
-msgid "<0/> leads with {most, plural, one {# title} other {# titles}}"
-msgstr "Nangunguna si <0/> na may {most, plural, one {# titulo} other {# titulo}}"
+msgid "<0/> and {others, plural, one {# other} other {# others}}"
+msgstr "<0/> at {others, plural, one {# iba pa} other {# iba pa}}"
 
 #. Season progress in the calendar header: {done} tournaments (“stops”) played out of {total} on the World Tour this season
 #: src/pages/calendar/components/StopsDone.tsx

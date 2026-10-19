@@ -29,30 +29,42 @@ const NationBar = memo<{ nation: NationTitles }>(({ nation: n }) => (
   </li>
 ));
 
-const LeadText: FC<{ player: Player; others: number; most: number }> = ({ player, others, most }) =>
+const LEADS = msg({
+  message: '{most, plural, one {Leads with # title} other {Leads with # titles}}',
+  comment:
+    'About page “titles so far” card, at the end of the row with the player who has won the most titles (tournaments) this season, shown next to their name',
+});
+
+const LEAD_TIE = msg({
+  message: '{most, plural, one {Lead with # title each} other {Lead with # titles each}}',
+  comment:
+    'About page “titles so far” card, at the end of the row when several players are tied for the most titles (tournaments) this season, shown next to their names',
+});
+
+const LeadName: FC<{ player: Player; others: number }> = ({ player, others }) =>
   others ? (
-    <Trans comment="About page “titles so far” card: a player is tied with others for the most titles (tournament wins) this season">
+    <Trans comment="About page “titles so far” card: the first of several players tied for the most titles this season, and how many others share it">
       <PlayerName player={player} className={classes.leadName} /> and{' '}
-      <Plural value={others} one="# other" other="# others" /> lead with{' '}
-      <Plural value={most} one="# title" other="# titles" /> each
+      <Plural value={others} one="# other" other="# others" />
     </Trans>
   ) : (
-    <Trans comment="About page “titles so far” card: the player with the most titles (tournament wins) this season">
-      <PlayerName player={player} className={classes.leadName} /> leads with{' '}
-      <Plural value={most} one="# title" other="# titles" />
-    </Trans>
+    <PlayerName player={player} className={classes.leadName} />
   );
 
 const Leader: FC<{ leaders: Player[]; most: number }> = ({ leaders, most }) => {
+  const { i18n } = useLingui();
   const [p] = leaders;
   if (!p) return null;
   return (
     <p className={classes.leader}>
+      <Flag cc={p.cc} />
       <PlayerAvatar player={p} size={32} link />
       <span className={classes.leadText}>
-        <LeadText player={p} others={leaders.length - 1} most={most} />
+        <LeadName player={p} others={leaders.length - 1} />
       </span>
-      <Flag cc={p.cc} />
+      <span className={classes.leadCount}>
+        {i18n._({ ...(leaders.length > 1 ? LEAD_TIE : LEADS), values: { most } })}
+      </span>
     </p>
   );
 };

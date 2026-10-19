@@ -266,6 +266,16 @@ msgstr "{minutes, plural, other {阅读约需 # 分钟}}"
 msgid "{MOD_KEY} + scroll to zoom"
 msgstr "按住 {MOD_KEY} 并滚动以缩放"
 
+#. About page “titles so far” card, at the end of the row when several players are tied for the most titles (tournaments) this season, shown next to their names
+#: src/pages/about/components/TitlesSoFar.tsx
+msgid "{most, plural, one {Lead with # title each} other {Lead with # titles each}}"
+msgstr "{most, plural, other {各以 # 个冠军并列领跑}}"
+
+#. About page “titles so far” card, at the end of the row with the player who has won the most titles (tournaments) this season, shown next to their name
+#: src/pages/about/components/TitlesSoFar.tsx
+msgid "{most, plural, one {Leads with # title} other {Leads with # titles}}"
+msgstr "{most, plural, other {以 # 个冠军领跑}}"
+
 #. Live score: points won in a row by one side without the opponent scoring
 #: src/utils/live.ts
 msgid "{n, plural, one {# in a row} other {# in a row}}"
@@ -485,15 +495,10 @@ msgstr "+{hidden} 人"
 msgid "+{percent}% pre-stretch"
 msgstr "预拉 +{percent}%"
 
-#. About page “titles so far” card: a player is tied with others for the most titles (tournament wins) this season
+#. About page “titles so far” card: the first of several players tied for the most titles this season, and how many others share it
 #: src/pages/about/components/TitlesSoFar.tsx
-msgid "<0/> and {others, plural, one {# other} other {# others}} lead with {most, plural, one {# title} other {# titles}} each"
-msgstr "<0/> 和另外 {others, plural, other {# 人}}并列领先，各获 {most, plural, other {# 个冠军}}"
-
-#. About page “titles so far” card: the player with the most titles (tournament wins) this season
-#: src/pages/about/components/TitlesSoFar.tsx
-msgid "<0/> leads with {most, plural, one {# title} other {# titles}}"
-msgstr "<0/> 以 {most, plural, other {# 个冠军}}领先"
+msgid "<0/> and {others, plural, one {# other} other {# others}}"
+msgstr "<0/> 等 {others, plural, other {# 人}}"
 
 #. Season progress in the calendar header: {done} tournaments (“stops”) played out of {total} on the World Tour this season
 #: src/pages/calendar/components/StopsDone.tsx
