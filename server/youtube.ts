@@ -10,7 +10,7 @@ const API = 'https://www.googleapis.com/youtube/v3';
 const CHANNEL_ID = 'UChh-akEbUM8_6ghGVnJd6cQ';
 const UPLOADS_ID = `UU${CHANNEL_ID.slice(2)}`;
 const PAGE_SIZE = 50;
-const MAX_PLAYLIST_PAGES = 4;
+const MAX_PLAYLIST_PAGES = 10;
 const MAX_UPLOAD_PAGES = 5;
 const UPLOADS_LOOKBACK_DAYS = 2;
 const REFRESH_MIN_AGE_MS = 60_000;
@@ -18,6 +18,8 @@ const SETTLE_DAYS = 2;
 const FULL_MATCH_MIN_SEC = 25 * 60;
 const SHORT_MAX_SEC = 180;
 const ROUNDS = new Set(['R64', 'R32', 'R16', 'QF', 'SF', 'F']);
+const PLAYER_TAG = /^p_(\d+)$/i;
+const MATCH_TAG = /^m_[\da-f-]+_(\d+)$/i;
 
 export interface MediaEvent {
   code: string;
@@ -164,12 +166,17 @@ const classify = (v: Video, sec: number | null): MediaKind => {
   return 'other';
 };
 
+const tagPlayers = (tags: readonly string[]) => [...new Set(tags.flatMap((t) => PLAYER_TAG.exec(t)?.[1] ?? []))];
+
+const tagMatch = (tags: readonly string[]) => tags.map((t) => MATCH_TAG.exec(t)?.[1]).find(Boolean) ?? null;
+
 const liveOf = (v: Video): MediaItem['live'] => {
   const s = v.snippet.liveBroadcastContent;
   return s === 'live' || s === 'upcoming' ? s : 'none';
 };
 
 const toItem = (v: Video): MediaItem => {
+  const tags = v.snippet.tags ?? [];
   const sec = durationSec(v.contentDetails?.duration);
   const kind = classify(v, sec);
   const court = courtStream(v.snippet.title);
@@ -189,6 +196,8 @@ const toItem = (v: Video): MediaItem => {
     startedAt: v.liveStreamingDetails?.actualStartTime ?? null,
     endedAt: v.liveStreamingDetails?.actualEndTime ?? null,
     region: v.contentDetails?.regionRestriction ?? null,
+    players: tagPlayers(tags),
+    match: tagMatch(tags),
   };
 };
 
@@ -336,22 +345,33 @@ export const createMediaService = ({ key, root, persist }: MediaServiceOptions) 
     return { ...base, items };
   };
 
-  const settled = async (e: MediaEvent) => {
-    const file = path.join(settledDir, `${e.code}.json`);
-    const cached = settledCache.get(e.code) ?? (await readJson<TournamentMedia>(file));
-    if (cached) return cached;
+  const settledFile = (e: MediaEvent) => path.join(settledDir, `${e.code}.json`);
+
+  const archive = async (e: MediaEvent) => {
     const media = await catalog(e);
-    if (!media.playlistId) return live(e, false);
+    if (!media.playlistId) return null;
     settledCache.set(e.code, media);
     if (persist) {
       await fs.mkdir(settledDir, { recursive: true });
-      await fs.writeFile(file, JSON.stringify(media));
+      await fs.writeFile(settledFile(e), JSON.stringify(media));
     }
     return media;
   };
 
+  const settled = async (e: MediaEvent) =>
+    settledCache.get(e.code) ??
+    (await readJson<TournamentMedia>(settledFile(e))) ??
+    (await archive(e)) ??
+    live(e, false);
+
   return {
     eventOf,
+    archive,
+    isArchived: (e: MediaEvent) =>
+      fs.access(settledFile(e)).then(
+        () => true,
+        () => false,
+      ),
     media: async (e: MediaEvent, refresh = false) => {
       const phase = mediaPhase(e);
       if (phase === 'upcoming') return emptyMedia(e.code);

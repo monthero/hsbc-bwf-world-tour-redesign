@@ -30,7 +30,7 @@ interface DtoMatch extends LinkMatch {
 }
 
 const toTeam = (t: MatchDto['teams'][number]) => ({
-  players: t.players.map((p) => ({ name: p.name, surname: surnameOf(p.name) })),
+  players: t.players.map((p) => ({ id: p.id, name: p.name, surname: surnameOf(p.name) })),
 });
 
 const matchesOf = (file: string): DtoMatch[] => {
@@ -39,6 +39,7 @@ const matchesOf = (file: string): DtoMatch[] => {
   return Object.entries(parsed.data.days).flatMap(([day, list]) =>
     list.map((dto, i) => ({
       id: `${day}-${i}`,
+      code: dto.code ?? null,
       round: dto.round,
       teams: [toTeam(dto.teams[0]), toTeam(dto.teams[1])],
       dto,

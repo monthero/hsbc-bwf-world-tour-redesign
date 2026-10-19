@@ -336,6 +336,8 @@ export const MediaItem = z.object({
     .object({ allowed: z.array(z.string()).optional(), blocked: z.array(z.string()).optional() })
     .nullable()
     .default(null),
+  players: z.array(z.string()).default([]),
+  match: NullableString.default(null),
 });
 export type MediaItem = z.infer<typeof MediaItem>;
 

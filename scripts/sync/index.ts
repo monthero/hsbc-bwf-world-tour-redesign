@@ -18,10 +18,11 @@ import { syncMatches } from './steps/matches.ts';
 import { syncNews } from './steps/news.ts';
 import { syncPlayers } from './steps/players.ts';
 import { syncRankings } from './steps/rankings.ts';
+import { syncVideos } from './steps/videos.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const FIRST_SEASON = 2018;
-const STEPS = ['calendar', 'details', 'matches', 'players', 'rankings', 'news', 'images', 'export'] as const;
+const STEPS = ['calendar', 'details', 'matches', 'players', 'rankings', 'news', 'images', 'videos', 'export'] as const;
 
 const { values } = parseArgs({
   options: {
@@ -79,6 +80,7 @@ await step('news', () =>
   }),
 );
 await step('images', () => syncImages(ROOT, OVERRIDES, offline));
+await step('videos', () => syncVideos(db, ROOT, offline ? undefined : process.env.YOUTUBE_API_KEY));
 await step('export', async () => {
   const output = createOutput(OUT);
   await exportData(
