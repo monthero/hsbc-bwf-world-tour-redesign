@@ -1126,22 +1126,13 @@
       }
     },
     "58488": {
-      "hero": "https://instagram.fosl3-1.fna.fbcdn.net/v/t51.82787-15/651175754_18091701995140225_7505400078125135420_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=Mzg1Mzc2MTU2Njk2NTA4MjM5NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=74X1jw9jh9QQ7kNvwFQVgw1&_nc_oc=AdrOr_L7MEJ5zkVS_ozjzNeXhfymzCXbSnXoL5CtOrSZwGT4HcTrCODbBQjCiuikz7A&_nc_zt=23&_nc_ht=instagram.fosl3-1.fna&_nc_gid=5-ieGtuqP2DFSUK6q52Ryw&_nc_ss=78689&oh=00_AQOeDuoGOoP24ogCl-euOKJYZeon83sLrizyJ-HxAk0H0w&oe=6AD5E5B6",
-      "heroFocus": {
-        "x": 48,
-        "y": 50
-      },
       "bio": {
         "racket": "Kumpoo Ride the Wind 100"
       },
-      "source": "https://instagram.fosl3-1.fna.fbcdn.net/v/t51.82787-15/651175754_18091701995140225_7505400078125135420_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=Mzg1Mzc2MTU2Njk2NTA4MjM5NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=74X1jw9jh9QQ7kNvwFQVgw1&_nc_oc=AdrOr_L7MEJ5zkVS_ozjzNeXhfymzCXbSnXoL5CtOrSZwGT4HcTrCODbBQjCiuikz7A&_nc_zt=23&_nc_ht=instagram.fosl3-1.fna&_nc_gid=5-ieGtuqP2DFSUK6q52Ryw&_nc_ss=78689&oh=00_AQOeDuoGOoP24ogCl-euOKJYZeon83sLrizyJ-HxAk0H0w&oe=6AD5E5B6",
+      "source": "user",
       "asOf": "2026-10-15",
       "meta": {
         "bio.racket": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
-        "heroFocus": {
           "source": "user",
           "asOf": "2026-10-15"
         }
@@ -2176,11 +2167,6 @@
         }
       }
     },
-    "64729": {
-      "hero": "https://badmintoneurope.com/documents/20117/32245/cr_20260627_1518_USOpen2026_BPYL5875.jpg/bbaa9836-8e02-e7c7-a4a1-f0ca8fa027fd?version=1.0&t=1785494070979",
-      "source": "https://badmintoneurope.com/documents/20117/32245/cr_20260627_1518_USOpen2026_BPYL5875.jpg/bbaa9836-8e02-e7c7-a4a1-f0ca8fa027fd?version=1.0&t=1785494070979",
-      "asOf": "2026-10-15"
-    },
     "64944": {
       "bio": {
         "racket": "Yonex Astrox 88D Pro",
@@ -2286,7 +2272,6 @@
       }
     },
     "65674": {
-      "hero": "https://cms.bwfbadminton.com/wp-content/uploads/2026/07/20260522_1628_MalaysiaMasters2026_BPTE7346-scaled.jpg",
       "bio": {
         "height": 179,
         "plays": "L",
@@ -2314,10 +2299,6 @@
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
-        },
-        "hero": {
-          "source": "https://cms.bwfbadminton.com/wp-content/uploads/2026/07/20260522_1628_MalaysiaMasters2026_BPTE7346-scaled.jpg",
-          "asOf": "2026-10-19"
         }
       }
     },
@@ -4132,18 +4113,12 @@
       }
     },
     "79198": {
-      "photo": "https://cms.bwfbadminton.com/wp-content/uploads/2022/01/F_IO_Nuntakarn-Benyapa-Aimsaard-scaled.jpg",
       "hero": "https://upload.wikimedia.org/wikipedia/commons/8/80/Nuntakarn_Aimsaard_2024%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
       "heroFocus": {
         "x": 41,
         "y": 39
       },
-      "photoCrop": {
-        "x": 25.2,
-        "y": 27.1,
-        "zoom": 1.65
-      },
-      "source": "https://cms.bwfbadminton.com/wp-content/uploads/2022/01/F_IO_Nuntakarn-Benyapa-Aimsaard-scaled.jpg",
+      "source": "user",
       "asOf": "2026-10-14",
       "meta": {
         "hero": {
@@ -4151,10 +4126,6 @@
           "asOf": "2026-10-14"
         },
         "heroFocus": {
-          "source": "user",
-          "asOf": "2026-10-14"
-        },
-        "photoCrop": {
           "source": "user",
           "asOf": "2026-10-14"
         }
@@ -4390,14 +4361,13 @@
       }
     },
     "80871": {
-      "photo": "https://img.bwfbadminton.com/image/upload/t_96_player_profile/v1620708349/assets/players/thumbnail/80871.png",
       "hero": "https://cms.bwfbadminton.com/wp-content/uploads/2022/12/20221208_1505_WorldTourFinals2022_BPRS0466-scaled.jpg",
       "heroFocus": {
         "x": 82,
         "y": 54
       },
       "heroFlip": true,
-      "source": "https://img.bwfbadminton.com/image/upload/t_96_player_profile/v1620708349/assets/players/thumbnail/80871.png",
+      "source": "user",
       "asOf": "2026-10-14",
       "meta": {
         "hero": {
@@ -5784,11 +5754,6 @@
       }
     },
     "88405": {
-      "hero": "https://instagram.fein1-2.fna.fbcdn.net/v/t39.30808-6/719852598_1473062321523365_2423687201085681796_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ig_cache_key=MzkxNjIxMDMzOTkwMTgyMzAwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTYzOC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=TOW6fhT2qukQ7kNvwEITGRI&_nc_oc=Adr2EhccUt5Y7WXc6U7KDnFy5p9sNVuXK_vivJ2rgsNssI6Th_tBGiEBDFahT8YAdnU&_nc_zt=23&_nc_ht=instagram.fein1-2.fna&_nc_gid=6BgstpXmvv5wM0-7SeSCwg&_nc_ss=7b689&oh=00_AQPtDOW76ehI1eNxy5lrpGk9f9EImPXteG9NJkICltVo_Q&oe=6AD68226",
-      "heroFocus": {
-        "x": 49,
-        "y": 43
-      },
       "bio": {
         "birthplace": "Fukuoka Prefecture",
         "racket": "Victor DriveX 12 O",
@@ -5802,14 +5767,6 @@
           "asOf": "2026-10-12"
         },
         "bio.racket": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
-        "hero": {
-          "source": "https://instagram.fein1-2.fna.fbcdn.net/v/t39.30808-6/719852598_1473062321523365_2423687201085681796_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ig_cache_key=MzkxNjIxMDMzOTkwMTgyMzAwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTYzOC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=TOW6fhT2qukQ7kNvwEITGRI&_nc_oc=Adr2EhccUt5Y7WXc6U7KDnFy5p9sNVuXK_vivJ2rgsNssI6Th_tBGiEBDFahT8YAdnU&_nc_zt=23&_nc_ht=instagram.fein1-2.fna&_nc_gid=6BgstpXmvv5wM0-7SeSCwg&_nc_ss=7b689&oh=00_AQPtDOW76ehI1eNxy5lrpGk9f9EImPXteG9NJkICltVo_Q&oe=6AD68226",
-          "asOf": "2026-10-15"
-        },
-        "heroFocus": {
           "source": "user",
           "asOf": "2026-10-15"
         }
@@ -6069,17 +6026,12 @@
       }
     },
     "90735": {
-      "hero": "https://bwfworldtour.bwfbadminton.com/wp-content/uploads/2025/11/Yudai-Okimoto_KM25-980x550.jpg",
-      "heroFocus": {
-        "x": 25,
-        "y": 81
-      },
       "bio": {
         "club": "BIPROGY",
         "racket": "Yonex Astrox 77 Pro",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
-      "source": "https://bwfworldtour.bwfbadminton.com/wp-content/uploads/2025/11/Yudai-Okimoto_KM25-980x550.jpg",
+      "source": "user",
       "asOf": "2026-10-19",
       "meta": {
         "bio.club": {
@@ -6091,10 +6043,6 @@
           "asOf": "2026-10-19"
         },
         "bio.shoes": {
-          "source": "user",
-          "asOf": "2026-10-19"
-        },
-        "heroFocus": {
           "source": "user",
           "asOf": "2026-10-19"
         }
@@ -6311,16 +6259,10 @@
       "asOf": "2026-10-15"
     },
     "91554": {
-      "photo": "https://instagram.fein1-2.fna.fbcdn.net/v/t51.82787-15/658454540_18581717104030690_8324612915829334157_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=Mzg3NDk5MDcyNDA4NTMyODE1NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=32iWpx-uvtUQ7kNvwHlMGzu&_nc_oc=AdrAN1VyySyTn-fUBF3azCjv5DWW_aAbCaWv0WcEC08AY1LlleAu4dmhfJ7p933Gosg&_nc_zt=23&_nc_ht=instagram.fein1-2.fna&_nc_gid=XggNwJKAgga6yum9L8DKGw&_nc_ss=7b289&oh=00_AQOS3GQwIab1VeyfGY5ZJreSrsJtNvJC8tLRPYDNSy6J-Q&oe=6AD64495",
       "hero": "https://images.augustman.com/wp-content/uploads/sites/2/2025/08/21201020/snapins-ai_3634515570651543018-1-1.jpeg",
       "heroFocus": {
         "x": 56,
         "y": 93
-      },
-      "photoCrop": {
-        "x": 69,
-        "y": 0,
-        "zoom": 1.5
       },
       "bio": {
         "racket": "Victor Auraspeed 99",
@@ -6353,14 +6295,6 @@
           "asOf": "2026-10-15"
         },
         "heroFocus": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
-        "photo": {
-          "source": "https://instagram.fein1-2.fna.fbcdn.net/v/t51.82787-15/658454540_18581717104030690_8324612915829334157_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=Mzg3NDk5MDcyNDA4NTMyODE1NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=32iWpx-uvtUQ7kNvwHlMGzu&_nc_oc=AdrAN1VyySyTn-fUBF3azCjv5DWW_aAbCaWv0WcEC08AY1LlleAu4dmhfJ7p933Gosg&_nc_zt=23&_nc_ht=instagram.fein1-2.fna&_nc_gid=XggNwJKAgga6yum9L8DKGw&_nc_ss=7b289&oh=00_AQOS3GQwIab1VeyfGY5ZJreSrsJtNvJC8tLRPYDNSy6J-Q&oe=6AD64495",
-          "asOf": "2026-10-15"
-        },
-        "photoCrop": {
           "source": "user",
           "asOf": "2026-10-15"
         }
@@ -6892,11 +6826,6 @@
     },
     "96713": {
       "photo": "https://img.olympics.com/images/image/private/t_s_pog_staticContent_hero_lg_2x/f_auto/primary/cpd2q4nz9itaq7crasjr",
-      "hero": "https://cms.bwfbadminton.com/wp-content/uploads/2022/03/1AE_Nozomi-Okuhara-scaled.jpg",
-      "heroFocus": {
-        "x": 52,
-        "y": 6
-      },
       "photoCrop": {
         "x": 63,
         "y": 5,
@@ -6932,14 +6861,6 @@
           "source": "user",
           "asOf": "2026-10-19"
         },
-        "hero": {
-          "source": "https://cms.bwfbadminton.com/wp-content/uploads/2022/03/1AE_Nozomi-Okuhara-scaled.jpg",
-          "asOf": "2026-10-19"
-        },
-        "heroFocus": {
-          "source": "user",
-          "asOf": "2026-10-19"
-        },
         "photoCrop": {
           "source": "user",
           "asOf": "2026-10-19"
@@ -6962,19 +6883,13 @@
       }
     },
     "96877": {
-      "photo": "https://badmintoneurope.com/documents/20117/134771/cr_20251015_1012_DenmarkOpen2025_BPYL9325.jpg/7b0929eb-9c54-c40e-8378-c7cd1ddd3ba8?version=1.0&t=1778139060332",
       "hero": "https://sports.inquirer.net/files/2026/08/AFP__20250826__72G32XW__v1__HighRes__BadmintonWorldFra.jpg",
-      "photoCrop": {
-        "x": 39.7,
-        "y": 15.8,
-        "zoom": 1.6
-      },
       "bio": {
         "racket": "Yonex Astrox 100 ZZ",
         "racketNote": "Kurenai, 4U",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
-      "source": "https://badmintoneurope.com/documents/20117/134771/cr_20251015_1012_DenmarkOpen2025_BPYL9325.jpg/7b0929eb-9c54-c40e-8378-c7cd1ddd3ba8?version=1.0&t=1778139060332",
+      "source": "user",
       "asOf": "2026-10-19",
       "meta": {
         "bio.racket": {
@@ -6991,10 +6906,6 @@
         },
         "hero": {
           "source": "https://sports.inquirer.net/files/2026/08/AFP__20250826__72G32XW__v1__HighRes__BadmintonWorldFra.jpg",
-          "asOf": "2026-10-19"
-        },
-        "photoCrop": {
-          "source": "user",
           "asOf": "2026-10-19"
         }
       }
