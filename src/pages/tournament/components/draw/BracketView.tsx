@@ -1,14 +1,20 @@
-import type { CSSProperties, FC } from 'react';
+import { clsx } from 'clsx';
+import type { CSSProperties, FC, Ref } from 'react';
 
 import { GAP, type Bracket } from './bracket';
 import { DrawBox } from './DrawBox';
 
 import classes from './Draw.module.css';
 
-export const BracketView: FC<{ bracket: Bracket; onOpen: (id: string) => void }> = ({ bracket, onOpen }) => {
+export const BracketView: FC<{
+  bracket: Bracket;
+  onOpen: (id: string) => void;
+  snap?: boolean;
+  ref?: Ref<HTMLDivElement>;
+}> = ({ bracket, onOpen, snap, ref }) => {
   const { columns, height, boxHeight } = bracket;
   return (
-    <div className={classes.scroller}>
+    <div ref={ref} className={clsx(classes.scroller, snap && classes.snap)}>
       <div className={classes.grid} style={{ '--cols': columns.length } as CSSProperties}>
         {columns.map((col) => (
           <div key={col.id} className={classes.column}>

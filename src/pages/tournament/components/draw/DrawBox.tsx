@@ -1,8 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
-import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
-import { SideScores, TeamPlayers } from '~/components/match';
+import { SideMedal, SideScores, TeamPlayers } from '~/components/match';
 import { CardHit } from '~/components/ui';
 import type { Player, Side } from '~/types';
 import { isScheduled, sideResult } from '~/utils/matches';
@@ -20,7 +19,7 @@ const stateOf = (box: BracketBox, k: Side) => {
   return box.win === k ? 'won' : undefined;
 };
 
-const BoxSide: FC<{ box: BracketBox; k: Side; large: boolean }> = ({ box, k, large }) => {
+const BoxSide: FC<{ box: BracketBox; k: Side }> = ({ box, k }) => {
   const { t } = useLingui();
   const team = box.teams[k];
   return (
@@ -28,7 +27,7 @@ const BoxSide: FC<{ box: BracketBox; k: Side; large: boolean }> = ({ box, k, lar
       <TeamPlayers
         players={team?.players ?? NO_PLAYERS}
         seed={team?.seed}
-        flag={large ? 'sm' : 'xs'}
+        flag="xs"
         truncate
         empty={
           box.bye
@@ -40,27 +39,24 @@ const BoxSide: FC<{ box: BracketBox; k: Side; large: boolean }> = ({ box, k, lar
       {box.match && (
         <SideScores match={box.match} side={k} withCurrent variant="compact" className={classes.sideScore} />
       )}
+      {box.match && <SideMedal match={box.match} side={k} size={12} className={classes.medal} />}
     </span>
   );
 };
 
-export const DrawBox = memo<{
-  box: BracketBox;
-  large?: boolean;
-  onOpen: (id: string) => void;
-}>(({ box, large = false, onOpen }) => {
+export const DrawBox = memo<{ box: BracketBox; onOpen: (id: string) => void }>(({ box, onOpen }) => {
   const m = box.match;
   const open = !!m && isScheduled(m);
   return (
     <div
-      className={clsx(classes.box, large && classes.boxLarge)}
+      className={classes.box}
       data-live={m?.status === 'P' || undefined}
       data-tbd={(!m && !box.teams[0] && !box.teams[1]) || undefined}
       data-idle={!open || undefined}
     >
       {open && <CardHit label={detailsLabel(matchTitle(m))} onClick={() => onOpen(m.id)} />}
-      <BoxSide box={box} k={0} large={large} />
-      <BoxSide box={box} k={1} large={large} />
+      <BoxSide box={box} k={0} />
+      <BoxSide box={box} k={1} />
     </div>
   );
 });
