@@ -69,6 +69,8 @@ jobs:
       - name: Sync BWF data
         timeout-minutes: 300
         shell: bash
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: pnpm sync 2>&1 | tee sync.log
 
       - name: Save sync cache
@@ -93,3 +95,16 @@ jobs:
       - run: pnpm dlx $VERCEL_CLI build --prod --token=$VERCEL_TOKEN
 
       - run: pnpm dlx $VERCEL_CLI deploy --prebuilt --prod --archive=tgz --token=$VERCEL_TOKEN
+
+      - name: Remove older deployments
+        env:
+          KEEP: 2
+        run: |
+          api=https://api.vercel.com
+          auth="Authorization: Bearer $VERCEL_TOKEN"
+          curl -fsS -H "$auth" "$api/v6/deployments?projectId=$VERCEL_PROJECT_ID&teamId=$VERCEL_ORG_ID&limit=100" \
+            | jq -r --argjson keep "$KEEP" '.deployments | sort_by(-.created) | .[$keep:] | .[].uid' \
+            | while read -r id; do
+                curl -fsS -X DELETE -H "$auth" "$api/v13/deployments/$id?teamId=$VERCEL_ORG_ID" > /dev/null
+                echo "Removed $id"
+              done
