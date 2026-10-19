@@ -18,6 +18,7 @@ import { BWF_SITE, BWF_USER_AGENT } from './bwf-upstream.ts';
 import { readJson } from './http.ts';
 import { createArticleBuilder, decodeCommon } from './news-blocks.ts';
 import { NEWS_RANKED_TOP, withRanked, type PlayerName } from './news-players.ts';
+import { relayFetch } from './relay.ts';
 
 const CMS = 'https://cms.bwfbadminton.com/wp-json';
 const LIST = `${CMS}/newsapi/v1/category/world-tour`;
@@ -89,7 +90,7 @@ const request = async (
     let reason: string;
     let retryable = true;
     try {
-      const res = await fetch(url, {
+      const res = await relayFetch(url, {
         headers: { 'User-Agent': BWF_USER_AGENT, Accept: accept },
         signal: AbortSignal.timeout(timeoutMs),
       });

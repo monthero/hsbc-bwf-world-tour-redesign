@@ -59,6 +59,7 @@ jobs:
             data/bwf.sqlite*
             data/cache
             data/reports
+            public/assets/players
           key: bwf-sync-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: bwf-sync-
 
@@ -71,6 +72,7 @@ jobs:
         shell: bash
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          SYNC_RELAY_TOKEN: ${{ secrets.SYNC_RELAY_TOKEN }}
         run: pnpm sync 2>&1 | tee sync.log
 
       - name: Save sync cache
@@ -81,6 +83,7 @@ jobs:
             data/bwf.sqlite*
             data/cache
             data/reports
+            public/assets/players
           key: bwf-sync-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Check export
