@@ -1,4 +1,4 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { useLingui } from '@lingui/react/macro';
 import { useMediaQuery } from '@mantine/hooks';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
@@ -11,7 +11,6 @@ import { DARK_SCOPE_PROPS } from '~/theme';
 import type { Tournament } from '~/types';
 import { isLive, tournamentLink } from '~/utils/tournaments';
 
-import { DevLinks } from '../DevLinks';
 import { SOCIAL_LINKS } from '../links';
 import { SocialLinks } from '../SiteLink';
 import { SettingsSheet } from '../SiteSettings';
@@ -44,6 +43,36 @@ const useScrollLock = (locked: boolean) => {
       root.style.overflow = prev;
     };
   }, [locked]);
+};
+
+const TEXT_CHANGES: MutationObserverInit = { subtree: true, childList: true, characterData: true };
+
+const fitLabels = (surface: HTMLElement) => {
+  surface.style.setProperty('--fit', '1');
+  let ratio = 1;
+  for (const label of surface.querySelectorAll<HTMLElement>(`.${classes.label}`)) {
+    if (label.clientWidth > 0 && label.scrollWidth > label.clientWidth)
+      ratio = Math.min(ratio, label.clientWidth / label.scrollWidth);
+  }
+  surface.style.setProperty('--fit', String(Math.floor(ratio * 100) / 100));
+};
+
+const useFitLabels = (surface: HTMLElement | null) => {
+  useLayoutEffect(() => {
+    if (!surface) return;
+    const fit = () => fitLabels(surface);
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(surface);
+    const mo = new MutationObserver(fit);
+    mo.observe(surface, TEXT_CHANGES);
+    document.fonts.addEventListener('loadingdone', fit);
+    return () => {
+      ro.disconnect();
+      mo.disconnect();
+      document.fonts.removeEventListener('loadingdone', fit);
+    };
+  }, [surface]);
 };
 
 const useTopBelowHeader = (open: boolean, triggerId: string, dialog: HTMLElement | null) => {
@@ -108,9 +137,12 @@ const Court = memo<{ onNavigate: () => void }>(({ onNavigate }) => {
   const { live, next } = useLiveAndNext();
   const spot = live ?? next;
   const { t } = useLingui();
+  const [surface, setSurface] = useState<HTMLElement | null>(null);
+  useFitLabels(surface);
   return (
     <div className={classes.court}>
       <nav
+        ref={setSurface}
         aria-label={t({ message: 'Main', comment: 'Accessible name of the main site navigation' })}
         className={classes.surface}
       >
@@ -137,6 +169,7 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
     const [settings, setSettings] = useState(false);
     const desktop = useMediaQuery(DESKTOP_QUERY);
     const { t } = useLingui();
+    const settingsLabel = t`Settings`;
     useScrollLock(modal && !contained && !desktop);
     useTopBelowHeader(open, triggerId, dialog);
 
@@ -170,22 +203,24 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
           data-contained={contained || undefined}
           inert={!open}
         >
-          <div className={classes.panel}>
-            <Court onNavigate={close} />
-            <div className={classes.foot}>
-              <div className={classes.footHead}>
-                <span className={classes.footLabel}>
-                  <Trans comment="Menu heading above BWF social media links">Follow BWF</Trans>
-                </span>
-                <span className={classes.footActions}>
-                  <DevLinks variant="ghost" buttonClassName={classes.settings} onNavigate={close} />
-                  <IconButton label={t`Settings`} className={classes.settings} onClick={openSettings}>
-                    <IconSettings size={18} />
-                  </IconButton>
-                </span>
-              </div>
-              <SocialLinks items={SOCIAL_LINKS} className={classes.social} />
+          <div className={classes.panel} data-dev={import.meta.env.DEV || undefined}>
+            <div className={classes.bar}>
+              <SocialLinks
+                items={SOCIAL_LINKS}
+                label={t({ message: 'Follow BWF', comment: 'Menu heading above BWF social media links' })}
+                className={classes.social}
+              />
+              <IconButton
+                label={settingsLabel}
+                tip={settingsLabel}
+                className={classes.settings}
+                onClick={openSettings}
+                aria-haspopup="dialog"
+              >
+                <IconSettings size={18} />
+              </IconButton>
             </div>
+            <Court onNavigate={close} />
           </div>
         </dialog>
         <SettingsSheet opened={settings} onClose={closeSettings} />

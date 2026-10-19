@@ -61,40 +61,43 @@ const SiteLinkBody: FC<LinkProps<SiteItem>> = ({ item, ...rest }) => {
 
 export const SiteLink = memo(SiteLinkBody);
 
-export const SocialLinks = memo<{ items: readonly SocialItem[]; size?: 'sm' | 'md'; className?: string }>(
-  ({ items, size = 'sm', className }) => {
-    const { t, i18n } = useLingui();
-    return (
-      <ul className={clsx(classes.social, className)} data-size={size}>
-        {items.map(({ label, href, icon: Icon }) => {
-          const site = labelText(i18n, label);
-          const link = {
-            href,
-            target: '_blank',
-            rel: 'noreferrer',
-            'aria-label': t({
-              message: `BWF on ${site}`,
-              comment: 'Accessible name of a social link, e.g. “BWF on Instagram”',
-            }),
-          };
-          return (
-            <li key={href}>
-              {size === 'md' ? (
-                <ActionIcon component="a" {...link} variant="soft" color="red" radius="xl" size={36}>
-                  <Icon />
-                </ActionIcon>
-              ) : (
-                <a {...link} className={classes.socialLink}>
-                  <Icon />
-                </a>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  },
-);
+export const SocialLinks = memo<{
+  items: readonly SocialItem[];
+  size?: 'sm' | 'md';
+  label?: string;
+  className?: string;
+}>(({ items, size = 'sm', label: listLabel, className }) => {
+  const { t, i18n } = useLingui();
+  return (
+    <ul className={clsx(classes.social, className)} data-size={size} aria-label={listLabel}>
+      {items.map(({ label, href, icon: Icon }) => {
+        const site = labelText(i18n, label);
+        const link = {
+          href,
+          target: '_blank',
+          rel: 'noreferrer',
+          'aria-label': t({
+            message: `BWF on ${site}`,
+            comment: 'Accessible name of a social link, e.g. “BWF on Instagram”',
+          }),
+        };
+        return (
+          <li key={href}>
+            {size === 'md' ? (
+              <ActionIcon component="a" {...link} variant="soft" color="red" radius="xl" size={36}>
+                <Icon />
+              </ActionIcon>
+            ) : (
+              <a {...link} className={classes.socialLink}>
+                <Icon />
+              </a>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+});
 
 export const ExternalButton = memo<{ item: ExternalItem; className?: string }>(({ item, className }) => {
   const { i18n } = useLingui();
