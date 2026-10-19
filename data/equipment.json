@@ -181,6 +181,21 @@
   },
   {
     "kind": "racket",
+    "brand": "li-ning",
+    "model": "Halbertec Motor Pro"
+  },
+  {
+    "kind": "racket",
+    "brand": "mizuno",
+    "model": "Acroforce 100"
+  },
+  {
+    "kind": "racket",
+    "brand": "mizuno",
+    "model": "Mizuno Altius 01 FEEL"
+  },
+  {
+    "kind": "racket",
     "brand": "victor",
     "model": "Auraspeed 90K Metallic R"
   },
@@ -312,6 +327,11 @@
   {
     "kind": "racket",
     "brand": "yonex",
+    "model": "Nanoflare 700"
+  },
+  {
+    "kind": "racket",
+    "brand": "yonex",
     "model": "Nanoflare 700 Pro"
   },
   {
@@ -351,6 +371,16 @@
   },
   {
     "kind": "shoes",
+    "brand": "mizuno",
+    "model": "Wave Claw 4"
+  },
+  {
+    "kind": "shoes",
+    "brand": "mizuno",
+    "model": "Wave Claw Neo 3"
+  },
+  {
+    "kind": "shoes",
     "brand": "victor",
     "model": "A970ACE"
   },
@@ -377,6 +407,11 @@
   {
     "kind": "shoes",
     "brand": "yonex",
+    "model": "Power Cushion 88 Dial 3"
+  },
+  {
+    "kind": "shoes",
+    "brand": "yonex",
     "model": "Power Cushion Aerus Z2"
   },
   {
@@ -388,6 +423,11 @@
     "kind": "shoes",
     "brand": "yonex",
     "model": "Power Cushion Eclipsion Z3"
+  },
+  {
+    "kind": "shoes",
+    "brand": "yonex",
+    "model": "Power Cushion Infinity 2"
   },
   {
     "kind": "shoes",
@@ -518,6 +558,11 @@
     "kind": "string",
     "brand": "li-ning",
     "model": "No.5"
+  },
+  {
+    "kind": "string",
+    "brand": "mizuno",
+    "model": "M-Smooth 65R"
   },
   {
     "kind": "string",

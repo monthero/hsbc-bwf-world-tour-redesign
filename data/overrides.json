@@ -91,6 +91,15 @@
       }
     },
     "25831": {
+      "heroFocus": {
+        "x": 33,
+        "y": 78
+      },
+      "photoCrop": {
+        "x": 95.8,
+        "y": 27.2,
+        "zoom": 1.2
+      },
       "bio": {
         "racket": "Yonex Astrox 100 ZZ",
         "racketNote": "VA",
@@ -102,13 +111,13 @@
       "source": "user",
       "asOf": "2026-10-15",
       "meta": {
-        "bio.racket": {
+        "heroFocus": {
           "source": "user",
-          "asOf": "2026-10-15"
+          "asOf": "2026-10-18"
         },
-        "bio.racketNote": {
+        "photoCrop": {
           "source": "user",
-          "asOf": "2026-10-15"
+          "asOf": "2026-10-18"
         }
       }
     },
@@ -753,11 +762,21 @@
     "56203": {
       "bio": {
         "racket": "Yonex Arcsaber 11 Pro",
-        "string": "Yonex Exbolt 65"
+        "racketNote": "3u",
+        "string": "Yonex Exbolt 65",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
         "bio.string": {
           "source": "https://badmintonlabs.com/players/aaron-chia",
           "asOf": "2026-10-15"
@@ -913,6 +932,30 @@
         }
       }
     },
+    "57424": {
+      "hero": "https://img.ltn.com.tw/Upload/sports/page/800/2025/03/21/phpFwWtcg.jpg",
+      "bio": {
+        "racket": "Victor DriveX 10 Metallic B",
+        "instagram": "https://www.instagram.com/chih.09.20/",
+        "facebook": "https://www.facebook.com/p/%E6%9D%8E%E8%8A%B3%E8%87%B3-Lee-Fang-Chih-61558264833063/"
+      },
+      "source": "https://img.ltn.com.tw/Upload/sports/page/800/2025/03/21/phpFwWtcg.jpg",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.facebook": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.instagram": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        }
+      }
+    },
     "57791": {
       "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGhhVYf7KM5xFTNNvvExX20KV15dVCox-JwRpDuvXGAZjz_Ebs8yG9LHbD&s=10",
       "hero": "https://images.gofundme.com/A1bP25ELKdu8w3yJg8GNUhvTzqU=/1200x800/https://d2g8igdw686xgo.cloudfront.net/79156583_1712427105648836_r.jpeg",
@@ -1022,12 +1065,25 @@
     },
     "58180": {
       "retired": "2025-03",
+      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLsdlW4vvyvMRmAM3CmP6YphAsdQB50nLdChhKZW7QqwOS-j4rv1xKQjz7&s=10",
+      "bio": {
+        "racket": "Victor Auraspeed HS Plus C",
+        "shoes": "Victor P9200III"
+      },
       "source": "https://badmintoneurope.com/w/greg-and-jenny-mairs-announce-retirement-from-international-tournaments",
       "asOf": "2026-10-14",
       "meta": {
-        "retired": {
-          "source": "https://badmintoneurope.com/w/greg-and-jenny-mairs-announce-retirement-from-international-tournaments",
-          "asOf": "2026-10-14"
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-16"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-16"
+        },
+        "hero": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLsdlW4vvyvMRmAM3CmP6YphAsdQB50nLdChhKZW7QqwOS-j4rv1xKQjz7&s=10",
+          "asOf": "2026-10-17"
         }
       }
     },
@@ -1092,15 +1148,19 @@
       }
     },
     "58931": {
-      "hero": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Cheng_Xing_-_Indonesia_Open_2026.jpg",
-      "heroFocus": {
-        "x": 52,
-        "y": 6
+      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ3vzUqtCbr_Vwbv19WJsmrn7LE3m9InAFQKPNqIqvghib87uSGO0JY_s&s=10",
+      "hero": "https://www.xinhuanet.com/sports/20260904/59103125c5074ddc8fdd5d14e0cec3d5/2026090459103125c5074ddc8fdd5d14e0cec3d5_202609049fa1a24ffefa47e09f7cc8955330f641.jpg",
+      "photoCrop": {
+        "x": 17.6,
+        "y": 0,
+        "zoom": 2.4
       },
       "bio": {
         "height": 184,
         "plays": "R",
-        "birthplace": "Jiujiang Town"
+        "birthplace": "Jiujiang Town",
+        "racket": "Yonex Nanoflare 1000Z",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "https://commons.wikimedia.org/wiki/File:Cheng_Xing_-_Indonesia_Open_2026.jpg",
       "asOf": "2026-10-12",
@@ -1117,9 +1177,25 @@
           "source": "https://www.wikidata.org/wiki/Q115193907",
           "asOf": "2026-10-12"
         },
-        "heroFocus": {
+        "bio.racket": {
           "source": "user",
-          "asOf": "2026-10-12"
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "hero": {
+          "source": "https://www.xinhuanet.com/sports/20260904/59103125c5074ddc8fdd5d14e0cec3d5/2026090459103125c5074ddc8fdd5d14e0cec3d5_202609049fa1a24ffefa47e09f7cc8955330f641.jpg",
+          "asOf": "2026-10-19"
+        },
+        "photo": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ3vzUqtCbr_Vwbv19WJsmrn7LE3m9InAFQKPNqIqvghib87uSGO0JY_s&s=10",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -1407,6 +1483,7 @@
         "plays": "L",
         "birthplace": "Hyūga-shi",
         "coach": "Hajime Komiyama",
+        "racket": "Yonex Nanoflare 800 Pro",
         "achievements": "Asian Games 2026 – silver (Women's team); Asian Championships 2026 – bronze (Mixed doubles)"
       },
       "source": "https://bwfbadminton.com/news-single/2025/02/23/new-combinations-light-up-circuit/",
@@ -1431,6 +1508,10 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q126119505",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
         },
         "heroFlip": {
           "source": "user",
@@ -1476,6 +1557,9 @@
         "height": 170,
         "plays": "R",
         "birthplace": "Majalengka",
+        "racket": "Hundred Nitrix 70 Venom",
+        "racketNote": "4U",
+        "shoes": "Hundred Phenom",
         "achievements": "World Championships 2026 – bronze (Mixed doubles); Asian Games 2026 – silver (Mixed doubles); Asian Games 2026 – bronze (Women's team); Asia Team Championships 2022 – gold (Women's team); SEA Games 2025 – silver (Women's team)"
       },
       "source": "https://pbsi.id/2026/07/15/japan-open-2026-amri-nita-langsung-tersisih/",
@@ -1496,6 +1580,18 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q58680017",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -1728,10 +1824,17 @@
       }
     },
     "62713": {
+      "hero": "https://cdn.i-scmp.com/sites/default/files/styles/wide_landscape_style/public/d8/images/canvas/2026/03/08/b89a5763-b91c-4dc7-a770-693386007e1d_e3c9b32e.jpg?itok=j-JChkSn",
+      "photoCrop": {
+        "x": 50,
+        "y": 100,
+        "zoom": 1
+      },
       "bio": {
         "height": 163,
         "plays": "R",
         "birthplace": "Manila",
+        "racket": "Victor DriveX 12 O",
         "achievements": "Asian Games 2026 – bronze (Mixed doubles)"
       },
       "source": "https://www.wikidata.org/wiki/Q123191935",
@@ -1740,6 +1843,18 @@
         "bio.achievements": {
           "source": "https://en.wikipedia.org/wiki/Nicole_Gonzales_Chan",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "hero": {
+          "source": "https://cdn.i-scmp.com/sites/default/files/styles/wide_landscape_style/public/d8/images/canvas/2026/03/08/b89a5763-b91c-4dc7-a770-693386007e1d_e3c9b32e.jpg?itok=j-JChkSn",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -1818,6 +1933,7 @@
       "asOf": "2026-10-12"
     },
     "63029": {
+      "hero": "https://www.yonex.cz/files/photos/202507222347005.png",
       "bio": {
         "birthplace": "Guilin",
         "racket": "Yonex Astrox 88D Pro",
@@ -1853,6 +1969,10 @@
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://www.yonex.cz/files/photos/202507222347005.png",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -1914,6 +2034,46 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q123234695",
           "asOf": "2026-10-12"
+        }
+      }
+    },
+    "63571": {
+      "photo": "https://awsimages.detik.net.id/community/media/visual/2026/06/02/adnan-maulanaindah-cahya-sari-jamil-1780382604246_169.jpeg?w=1200&q=90",
+      "hero": "https://assetd.kompas.id/xj8mmXzaUdqoZUN4CnnzQP8-5Tc=/1980x1340/smart/filters:format(webp):quality(80)/https://asset.kgnewsroom.com/photo/pre/2026/01/21/068d34a9-7007-4b04-b72e-93a751079400_jpg.jpg",
+      "heroFocus": {
+        "x": 86,
+        "y": 11
+      },
+      "photoCrop": {
+        "x": 58.4,
+        "y": 4.7,
+        "zoom": 2.55
+      },
+      "bio": {
+        "racket": "Li-Ning Halbertec 9000"
+      },
+      "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgt23d6nsIk0YZTkrImtiPcqRvI3wahdSAGp_0RAe-rn42D2GCJ8ITkG8&s=10",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "hero": {
+          "source": "https://assetd.kompas.id/xj8mmXzaUdqoZUN4CnnzQP8-5Tc=/1980x1340/smart/filters:format(webp):quality(80)/https://asset.kgnewsroom.com/photo/pre/2026/01/21/068d34a9-7007-4b04-b72e-93a751079400_jpg.jpg",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "photo": {
+          "source": "https://awsimages.detik.net.id/community/media/visual/2026/06/02/adnan-maulanaindah-cahya-sari-jamil-1780382604246_169.jpeg?w=1200&q=90",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -2081,6 +2241,13 @@
         }
       }
     },
+    "65300": {
+      "bio": {
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "user",
+      "asOf": "2026-10-19"
+    },
     "65349": {
       "bio": {
         "height": 178,
@@ -2097,16 +2264,14 @@
       }
     },
     "65674": {
+      "hero": "https://cms.bwfbadminton.com/wp-content/uploads/2026/07/20260522_1628_MalaysiaMasters2026_BPTE7346-scaled.jpg",
       "bio": {
         "height": 179,
         "plays": "L",
         "nickname": "Omo",
         "birthplace": "Bangkok",
-        "racket": "Yonex Arcsaber 11 Pro",
-        "racketNote": "3U",
+        "racket": "Victor DriveX 12 O",
         "tension": "30",
-        "string": "Yonex Aerobite Boost",
-        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Asian Games 2026 – bronze (Men's team); Asia Mixed Team Championships 2023 – bronze (Mixed team); Asia Mixed Team Championships 2025 – bronze (Mixed team); World University Games 2021 – bronze (Mixed team); World University Games 2025 – bronze (Men's doubles); SEA Games 2021 – gold (Men's team); SEA Games 2023 – silver (Men's doubles); SEA Games 2023 – bronze (Mixed doubles); SEA Games 2023 – bronze (Men's team); SEA Games 2025 – bronze (Men's team)"
       },
       "source": "https://www.wikidata.org/wiki/Q124480162",
@@ -2124,21 +2289,13 @@
           "source": "user",
           "asOf": "2026-10-15"
         },
-        "bio.racketNote": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
-        "bio.shoes": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
-        "bio.string": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://cms.bwfbadminton.com/wp-content/uploads/2026/07/20260522_1628_MalaysiaMasters2026_BPTE7346-scaled.jpg",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -2162,6 +2319,9 @@
         "height": 170,
         "plays": "L",
         "birthplace": "Tangerang",
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "3rd generation",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Asian Championships 2025 – bronze (Mixed doubles); SEA Games 2025 – gold (Men's team); SEA Games 2025 – bronze (Mixed doubles)"
       },
       "source": "https://pbsi.id/2026/01/21/daihatsu-indonesia-masters-2026-lolos-ke-babak-kedua-jafar-felisha-sudah-ditunggu-dejan-bernadine/",
@@ -2182,6 +2342,18 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q114274850",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -2222,6 +2394,28 @@
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
+        }
+      }
+    },
+    "66794": {
+      "hero": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/%E5%B1%B1%E5%8C%97%E5%A5%88%E7%B7%92%E6%A6%AE%E7%8D%B22025%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E5%A5%B3%E9%9B%99%E4%BA%9E%E8%BB%8D.jpg/1280px-%E5%B1%B1%E5%8C%97%E5%A5%88%E7%B7%92%E6%A6%AE%E7%8D%B22025%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E5%A5%B3%E9%9B%99%E4%BA%9E%E8%BB%8D.jpg?utm_source=www.wikidata.org&utm_campaign=index&utm_content=thumbnail",
+      "heroFocus": {
+        "x": 40,
+        "y": 20
+      },
+      "bio": {
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/%E5%B1%B1%E5%8C%97%E5%A5%88%E7%B7%92%E6%A6%AE%E7%8D%B22025%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E5%A5%B3%E9%9B%99%E4%BA%9E%E8%BB%8D.jpg/1280px-%E5%B1%B1%E5%8C%97%E5%A5%88%E7%B7%92%E6%A6%AE%E7%8D%B22025%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E5%A5%B3%E9%9B%99%E4%BA%9E%E8%BB%8D.jpg?utm_source=www.wikidata.org&utm_campaign=index&utm_content=thumbnail",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -2526,9 +2720,14 @@
       }
     },
     "68628": {
+      "hero": "https://assets.hmetro.com.my/images/articles/spo-o-pea061125_HMfield_image_socialmedia.var_1762426955.jpg",
+      "heroFocus": {
+        "x": 36,
+        "y": 11
+      },
       "bio": {
-        "racket": "Yonex Nanoflare 700 Pro",
-        "racketNote": "4U",
+        "racket": "Yonex Nanoflare 700",
+        "racketNote": "(older modal), 4U",
         "tension": "28",
         "string": "Yonex BG66 Ultimax",
         "shoes": "Yonex Power Cushion Eclipsion Z3"
@@ -2551,6 +2750,14 @@
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://assets.hmetro.com.my/images/articles/spo-o-pea061125_HMfield_image_socialmedia.var_1762426955.jpg",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -2772,6 +2979,28 @@
         "bio.string": {
           "source": "user",
           "asOf": "2026-10-12"
+        }
+      }
+    },
+    "70231": {
+      "hero": "https://news-images.tvbs.com.tw/legacy/img/upload/2026/03/15/20260315203352-90830e34.jpg?w=400&h=225",
+      "heroFocus": {
+        "x": 83,
+        "y": 65
+      },
+      "bio": {
+        "racket": "Victor Auraspeed 90K Metallic R"
+      },
+      "source": "https://news-images.tvbs.com.tw/legacy/img/upload/2026/03/15/20260315203352-90830e34.jpg?w=400&h=225",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -3270,7 +3499,38 @@
         }
       }
     },
+    "73323": {
+      "photo": "https://dicodusport.fr/blog/wp-content/uploads/2026/03/La-paire-Julien-Maio-William-Villeger-echoue-en-finale-de-lOpen-dAllemagne-2.png",
+      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/643556028_18060434654673598_2472538030195589924_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ig_cache_key=Mzg0MjY3MjcxNzExMjExOTU4Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=lqLMK9XhFUIQ7kNvwGHltYB&_nc_oc=Adqc5FcNEwXEfYh9Ztg_FZROgUxWlPkLkKD8R44iQWn-1twi9e8GWUQWB_Tn-XUhhGkfq62bmhAms4ieLFaLkSDX&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=a98eI6KFzbTXlJKGZ415OA&_nc_ss=7b689&oh=00_AQNzjmZBSn78cZsvdwMj2YLz_be0H2ZCSw5y8yO3uI0huw&oe=6ADBCADF",
+      "photoCrop": {
+        "x": 72.6,
+        "y": 26.3,
+        "zoom": 2
+      },
+      "bio": {
+        "racketNote": "3U"
+      },
+      "source": "user",
+      "asOf": "2026-10-19",
+      "meta": {
+        "hero": {
+          "source": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/643556028_18060434654673598_2472538030195589924_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ig_cache_key=Mzg0MjY3MjcxNzExMjExOTU4Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=lqLMK9XhFUIQ7kNvwGHltYB&_nc_oc=Adqc5FcNEwXEfYh9Ztg_FZROgUxWlPkLkKD8R44iQWn-1twi9e8GWUQWB_Tn-XUhhGkfq62bmhAms4ieLFaLkSDX&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=a98eI6KFzbTXlJKGZ415OA&_nc_ss=7b689&oh=00_AQNzjmZBSn78cZsvdwMj2YLz_be0H2ZCSw5y8yO3uI0huw&oe=6ADBCADF",
+          "asOf": "2026-10-19"
+        },
+        "photo": {
+          "source": "https://dicodusport.fr/blog/wp-content/uploads/2026/03/La-paire-Julien-Maio-William-Villeger-echoue-en-finale-de-lOpen-dAllemagne-2.png",
+          "asOf": "2026-10-19"
+        }
+      }
+    },
     "73442": {
+      "photo": "https://asset.mediaindonesia.com/news/2024/04/d35a702ecb5908c8182c51e16a607e98.jpg",
+      "hero": "https://cdn.antaranews.com/cache/1200x800/2026/07/23/IMG-20260723-WA0256.jpg",
+      "photoCrop": {
+        "x": 48.7,
+        "y": 0,
+        "zoom": 1.75
+      },
       "bio": {
         "racket": "Victor Thruster Ryuga III CQ",
         "racketNote": "3U",
@@ -3296,6 +3556,18 @@
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://cdn.antaranews.com/cache/1200x800/2026/07/23/IMG-20260723-WA0256.jpg",
+          "asOf": "2026-10-19"
+        },
+        "photo": {
+          "source": "https://asset.mediaindonesia.com/news/2024/04/d35a702ecb5908c8182c51e16a607e98.jpg",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -3429,6 +3701,28 @@
         }
       }
     },
+    "75904": {
+      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/743496928_18445082326188897_1976127550230172047_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=MzkzODE2MDgwMTUxNDY2Njc1Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjg2OS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=6f_p_D4__EQQ7kNvwHFJxdo&_nc_oc=AdrPJ7MhczvU0jk6dbkYr_Kn6asJX655NaEjtvFmPULj8FB-623GtzZzz5CMM86j5OJkCGh1iD4GN1lhVS96943N&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=9y057qZmLHBlcivynN1O0g&_nc_ss=7b689&oh=00_AQOa2KlX0xOvRFJsX1RVtXSYEZcgefKcRgLVwtkkizfYkA&oe=6ADBBE4E",
+      "heroFocus": {
+        "x": 78,
+        "y": 25
+      },
+      "bio": {
+        "racket": "Victor DriveX 12 O"
+      },
+      "source": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/743496928_18445082326188897_1976127550230172047_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=MzkzODE2MDgwMTUxNDY2Njc1Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjg2OS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=6f_p_D4__EQQ7kNvwHFJxdo&_nc_oc=AdrPJ7MhczvU0jk6dbkYr_Kn6asJX655NaEjtvFmPULj8FB-623GtzZzz5CMM86j5OJkCGh1iD4GN1lhVS96943N&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=9y057qZmLHBlcivynN1O0g&_nc_ss=7b689&oh=00_AQOa2KlX0xOvRFJsX1RVtXSYEZcgefKcRgLVwtkkizfYkA&oe=6ADBBE4E",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        }
+      }
+    },
     "76115": {
       "bio": {
         "racket": "Li-Ning AXForce 90 MAX Dragon",
@@ -3532,6 +3826,8 @@
         "height": 174,
         "plays": "R",
         "birthplace": "Jakarta",
+        "racket": "Hundred Flareon 700",
+        "shoes": "Hundred Phenom",
         "achievements": "World Championships 2026 – bronze (XD); Asian Games 2026 – gold (men's team); Asian Games 2026 – silver (XD); SEA Games 2025 – gold (men's team)"
       },
       "source": "https://pbsi.id/2026/09/28/asian-games-2026-amri-nita-ke-semifinal/",
@@ -3552,6 +3848,34 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q51941882",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        }
+      }
+    },
+    "76295": {
+      "hero": "https://www.smash-net.tv/wp-content/uploads/2026/10/b_20261013_1507_DenmarkOpen2026_BPYN6742.jpg",
+      "photoCrop": {
+        "x": 59.5,
+        "y": 10.7,
+        "zoom": 1.35
+      },
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "user",
+      "asOf": "2026-10-19",
+      "meta": {
+        "hero": {
+          "source": "https://www.smash-net.tv/wp-content/uploads/2026/10/b_20261013_1507_DenmarkOpen2026_BPYN6742.jpg",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -3847,6 +4171,73 @@
         }
       }
     },
+    "79558": {
+      "photo": "https://www.yonex.com.tw/files/athletic/photos/864.jpg?v=3zeCUu8eLE6kR46GKF6rhQ",
+      "photoCrop": {
+        "x": 45.8,
+        "y": 10.3,
+        "zoom": 1.7
+      },
+      "bio": {
+        "birthplace": "Iwamizawa",
+        "residence": "Tokyo",
+        "racket": "Yonex Nanoflare 700 Pro",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "https://www.yonex.com.tw/files/athletic/photos/864.jpg?v=3zeCUu8eLE6kR46GKF6rhQ",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.birthplace": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.residence": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        }
+      }
+    },
+    "79658": {
+      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpU68V8pzFwRk1ULtFWg0PIUpXQg1k42s0p06vSjSlK_Y2VGzxNw-enyY&s=10",
+      "hero": "https://cdn-assets.jawapos.com/images/1/2025/03/08/ok-Bulu-copy-272624310.jpg",
+      "heroFocus": {
+        "x": 58,
+        "y": 73
+      },
+      "photoCrop": {
+        "x": 60.4,
+        "y": 6,
+        "zoom": 2.2
+      },
+      "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpU68V8pzFwRk1ULtFWg0PIUpXQg1k42s0p06vSjSlK_Y2VGzxNw-enyY&s=10",
+      "asOf": "2026-10-19",
+      "meta": {
+        "hero": {
+          "source": "https://cdn-assets.jawapos.com/images/1/2025/03/08/ok-Bulu-copy-272624310.jpg",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        }
+      }
+    },
     "79664": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Febriana_Dwipuji_Kusuma.jpg",
       "bio": {
@@ -4000,9 +4391,16 @@
       }
     },
     "81108": {
-      "hero": "https://upload.wikimedia.org/wikipedia/commons/5/5a/%E8%91%89%E5%AE%8F%E8%94%9A-2025%E5%85%A8%E5%9C%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8E%92%E5%90%8D%E8%B3%BD.jpg",
+      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t39.30808-6/461262102_946136947548840_8710072213623765654_n.jpg?stp=c0.0.2047.1364a_dst-jpg_e35_s2047x1364_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=MzQ2NjIwNjM3NTE2MzAyOTAwNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjA0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=eQ5OElQZDDgQ7kNvwHmuvDs&_nc_oc=Adqz0BQ4AII1tVWzEYBoijE6y5SQvTT2MUIIGVE83bohgqlBxDeIRTo0TwKB85rFxxH0NNB-Pd8hZKKDR1Eb-Rne&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=bkM1rPDd1IlLvhUXtHqQ4w&_nc_ss=7b689&oh=00_AQO1uOABUeCNOSPpaqL5FV3Od89dV7O2FJHyPkuHqDJOEQ&oe=6ADBD18F",
+      "heroFocus": {
+        "x": 44,
+        "y": 5
+      },
       "bio": {
         "birthplace": "Taichung",
+        "racket": "Mizuno Acroforce 100",
+        "string": "Mizuno M-Smooth 65R",
+        "shoes": "Mizuno Wave Claw Neo 3",
         "achievements": "Thomas Cup 2024 – bronze (men's team); Asian Games 2026 – bronze (XD); World University Games 2021 – gold (XD); World University Games 2021 – gold (mixed team)"
       },
       "source": "https://commons.wikimedia.org/wiki/File:%E8%91%89%E5%AE%8F%E8%94%9A-2025%E5%85%A8%E5%9C%8B%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8E%92%E5%90%8D%E8%B3%BD.jpg",
@@ -4015,6 +4413,53 @@
         "bio.birthplace": {
           "source": "https://www.wikidata.org/wiki/Q39112560",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "hero": {
+          "source": "https://instagram.fosl6-1.fna.fbcdn.net/v/t39.30808-6/461262102_946136947548840_8710072213623765654_n.jpg?stp=c0.0.2047.1364a_dst-jpg_e35_s2047x1364_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=MzQ2NjIwNjM3NTE2MzAyOTAwNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjA0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=eQ5OElQZDDgQ7kNvwHmuvDs&_nc_oc=Adqz0BQ4AII1tVWzEYBoijE6y5SQvTT2MUIIGVE83bohgqlBxDeIRTo0TwKB85rFxxH0NNB-Pd8hZKKDR1Eb-Rne&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=bkM1rPDd1IlLvhUXtHqQ4w&_nc_ss=7b689&oh=00_AQO1uOABUeCNOSPpaqL5FV3Od89dV7O2FJHyPkuHqDJOEQ&oe=6ADBD18F",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        }
+      }
+    },
+    "81458": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/a/a7/%E5%BE%B7%E6%8F%9A%C2%B7%E8%B2%BB%E8%BF%AA%E5%8D%97%E5%A4%8F2023%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
+      "heroFocus": {
+        "x": 54,
+        "y": 16
+      },
+      "bio": {
+        "racket": "Victor DriveX 12 O",
+        "string": "Victor VBS-68 Power"
+      },
+      "source": "https://upload.wikimedia.org/wikipedia/commons/a/a7/%E5%BE%B7%E6%8F%9A%C2%B7%E8%B2%BB%E8%BF%AA%E5%8D%97%E5%A4%8F2023%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.string": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -4397,6 +4842,30 @@
         }
       }
     },
+    "83699": {
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Indah_Cahya_Sari_Jamil%2C_German_Junior_2020.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
+      "hero": "https://pbsi.id/wp-content/uploads/2025/10/AdnanIndah6_R16_DenmarkOpen2025_PBSI_20251016-1024x683.jpg",
+      "photoCrop": {
+        "x": 23.8,
+        "y": 0.5,
+        "zoom": 1.7
+      },
+      "bio": {
+        "racket": "Li-Ning Halbertec Motor Pro"
+      },
+      "source": "user",
+      "asOf": "2026-10-19",
+      "meta": {
+        "hero": {
+          "source": "https://pbsi.id/wp-content/uploads/2025/10/AdnanIndah6_R16_DenmarkOpen2025_PBSI_20251016-1024x683.jpg",
+          "asOf": "2026-10-19"
+        },
+        "photo": {
+          "source": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Indah_Cahya_Sari_Jamil%2C_German_Junior_2020.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
+          "asOf": "2026-10-19"
+        }
+      }
+    },
     "83802": {
       "bio": {
         "racket": "Victor Auraspeed 100X Ultra G",
@@ -4469,10 +4938,17 @@
       "asOf": "2026-10-12"
     },
     "84159": {
+      "hero": "https://www.djarumbadminton.com/uploads/tx_amgallery/056_copy_02.jpg",
+      "heroFocus": {
+        "x": 64,
+        "y": 32
+      },
       "bio": {
         "height": 167,
         "plays": "R",
         "birthplace": "Takaoka",
+        "racket": "Yonex Nanoflare 800 Pro",
+        "shoes": "Yonex Power Cushion Aerus Z2",
         "achievements": "Asia Team Championships 2022 – bronze (Women's team)"
       },
       "source": "https://www.wikidata.org/wiki/Q78577952",
@@ -4481,6 +4957,22 @@
         "bio.achievements": {
           "source": "https://en.wikipedia.org/wiki/Rui_Hirokami",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "hero": {
+          "source": "https://www.djarumbadminton.com/uploads/tx_amgallery/056_copy_02.jpg",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -4531,9 +5023,26 @@
         "x": 41,
         "y": 0
       },
+      "bio": {
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "3rd generation",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
       "source": "https://rri-portal-app-assets.obs.ap-southeast-4.myhuaweicloud.com/upload/berita/image/english-news/1790576122311674_5ef8e12a3a_berita_english-news.webp",
       "asOf": "2026-10-12",
       "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
         "heroFocus": {
           "source": "user",
           "asOf": "2026-10-12"
@@ -4661,6 +5170,8 @@
         "height": 165,
         "plays": "R",
         "birthplace": "Guangdong",
+        "racket": "Yonex Astrox 100 ZZ",
+        "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "World Championships 2026 – bronze (Women's doubles); Uber Cup 2026 – silver (Women's team); Asian Championships 2026 – gold (Women's doubles); Asia Mixed Team Championships 2023 – gold (Mixed team)"
       },
       "source": "https://bwfbadminton.com/news-single/2026/03/15/swiss-open-stirring-comeback-by-li-wang/",
@@ -4682,6 +5193,14 @@
           "source": "https://www.wikidata.org/wiki/Q56651331",
           "asOf": "2026-10-12"
         },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
         "heroFlip": {
           "source": "user",
           "asOf": "2026-10-12"
@@ -4693,6 +5212,7 @@
       }
     },
     "85551": {
+      "hero": "https://static.promediateknologi.id/crop/0x0:0x0/1200x0/webp/photo/p3/163/2026/05/05/FotoJet-2026-05-05T154344198-2490810312.jpg",
       "bio": {
         "racket": "Yonex Arcsaber 7 Pro",
         "racketNote": "4U",
@@ -4718,6 +5238,10 @@
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://static.promediateknologi.id/crop/0x0:0x0/1200x0/webp/photo/p3/163/2026/05/05/FotoJet-2026-05-05T154344198-2490810312.jpg",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -5157,6 +5681,34 @@
         }
       }
     },
+    "88264": {
+      "photo": "https://dicodusport.fr/blog/wp-content/uploads/2026/03/La-paire-Julien-Maio-William-Villeger-echoue-en-finale-de-lOpen-dAllemagne-2-1000x600.png",
+      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/645716773_18060434705673598_3336471096883055396_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ig_cache_key=Mzg0MjY3Mjg0Nzg4MjExMDM1Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=GNrgC-v4rYQQ7kNvwFObCRZ&_nc_oc=Adp4aIJ-5_WOW8rMNnyphWzauG4YURd9teuKHnXcrhGaWvgTy7SYxUuitE9nTbxpxjQhH0GvFngueR8IJgo-XWjq&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=a98eI6KFzbTXlJKGZ415OA&_nc_ss=7b689&oh=00_AQPHlFGE0ruRna3WoyPj0ur2C8nF36BmH7boxtqTUZUZPA&oe=6ADBCBAA",
+      "photoCrop": {
+        "x": 35,
+        "y": 0,
+        "zoom": 1.85
+      },
+      "bio": {
+        "instagram": "https://www.instagram.com/william.villeger/"
+      },
+      "source": "https://dicodusport.fr/blog/wp-content/uploads/2026/03/La-paire-Julien-Maio-William-Villeger-echoue-en-finale-de-lOpen-dAllemagne-2-1000x600.png",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.instagram": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "hero": {
+          "source": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/645716773_18060434705673598_3336471096883055396_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ig_cache_key=Mzg0MjY3Mjg0Nzg4MjExMDM1Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=GNrgC-v4rYQQ7kNvwFObCRZ&_nc_oc=Adp4aIJ-5_WOW8rMNnyphWzauG4YURd9teuKHnXcrhGaWvgTy7SYxUuitE9nTbxpxjQhH0GvFngueR8IJgo-XWjq&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=a98eI6KFzbTXlJKGZ415OA&_nc_ss=7b689&oh=00_AQPHlFGE0ruRna3WoyPj0ur2C8nF36BmH7boxtqTUZUZPA&oe=6ADBCBAA",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        }
+      }
+    },
     "88322": {
       "hero": "https://storage.googleapis.com/origin-awsassets.nst.com.my/images/articles/9FCB377F73FB89E044A670467E20C4C9_low_11.jpg",
       "heroFocus": {
@@ -5229,15 +5781,22 @@
       }
     },
     "88450": {
-      "hero": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Zhang_Chi_-_Indonesia_Open_2026.jpg",
+      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/615563452_18446254384103496_5082007343469559050_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=MzgwOTY5Nzg4MjQwOTM3MTA5MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=2PcR9ngQHsAQ7kNvwHbOYI9&_nc_oc=Adr8LBfNXJvvKEc2xudWRXdNLx3blyby9Xj7uaEN8sflfOwBU4LPx7Lq2XxBcezTyDlIvxC5BosJhOwogDztD3R2&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=RmlplnJbDSI0_3jRRMbGcg&_nc_ss=7b689&oh=00_AQOnq4XzAWisk9fS2htNGUSOUVgXHSihlakSauTRBgU0lw&oe=6ADBB7A0",
       "heroFocus": {
-        "x": 0,
-        "y": 16
+        "x": 34,
+        "y": 26
+      },
+      "photoCrop": {
+        "x": 65,
+        "y": 27.4,
+        "zoom": 1.25
       },
       "bio": {
         "height": 170,
         "plays": "R",
-        "birthplace": "Hunan"
+        "birthplace": "Hunan",
+        "racket": "Yonex Nanoflare 700 Pro",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "https://commons.wikimedia.org/wiki/File:Zhang_Chi_-_Indonesia_Open_2026.jpg",
       "asOf": "2026-10-12",
@@ -5254,9 +5813,25 @@
           "source": "https://www.wikidata.org/wiki/Q117230585",
           "asOf": "2026-10-12"
         },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "hero": {
+          "source": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/615563452_18446254384103496_5082007343469559050_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=MzgwOTY5Nzg4MjQwOTM3MTA5MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=2PcR9ngQHsAQ7kNvwHbOYI9&_nc_oc=Adr8LBfNXJvvKEc2xudWRXdNLx3blyby9Xj7uaEN8sflfOwBU4LPx7Lq2XxBcezTyDlIvxC5BosJhOwogDztD3R2&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=RmlplnJbDSI0_3jRRMbGcg&_nc_ss=7b689&oh=00_AQOnq4XzAWisk9fS2htNGUSOUVgXHSihlakSauTRBgU0lw&oe=6ADBB7A0",
+          "asOf": "2026-10-19"
+        },
         "heroFocus": {
           "source": "user",
-          "asOf": "2026-10-12"
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -5281,10 +5856,11 @@
     },
     "88876": {
       "photo": "https://pbsi.id/wp-content/uploads/2026/07/FajarFikri13_SF_ChinaOpen2026_PBSI_20260725-scaled.jpg",
+      "hero": "https://cloud.jpnn.com/photo/arsip/normal/2025/07/27/selebrasi-fajar-alfian-kiri-bersama-muhammad-shohibul-fikri-lwuu.jpg",
       "photoCrop": {
-        "x": 33,
-        "y": 8.1,
-        "zoom": 2.75
+        "x": 29.9,
+        "y": 4,
+        "zoom": 2
       },
       "bio": {
         "racket": "Victor Auraspeed 100X",
@@ -5312,6 +5888,10 @@
           "source": "user",
           "asOf": "2026-10-15"
         },
+        "hero": {
+          "source": "https://cloud.jpnn.com/photo/arsip/normal/2025/07/27/selebrasi-fajar-alfian-kiri-bersama-muhammad-shohibul-fikri-lwuu.jpg",
+          "asOf": "2026-10-19"
+        },
         "photo": {
           "source": "https://pbsi.id/wp-content/uploads/2026/07/FajarFikri13_SF_ChinaOpen2026_PBSI_20260725-scaled.jpg",
           "asOf": "2026-10-15"
@@ -5324,12 +5904,35 @@
     },
     "89068": {
       "retired": "2025-03",
+      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNbgad2S8pZmsR7OoHvBsikxn6ls_GBUp2jxQxSCijWVFZh86dR88AFcXX&s=10",
+      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv42RtwJdvtsmXe53eVOtHDSYR1rzEnRCTbksjlA3D9bKEdWr3uZpjOLI&s=10",
+      "heroFocus": {
+        "x": 77,
+        "y": 1
+      },
+      "photoCrop": {
+        "x": 91.3,
+        "y": 17.5,
+        "zoom": 2.8
+      },
       "source": "https://badmintoneurope.com/w/greg-and-jenny-mairs-announce-retirement-from-international-tournaments",
       "asOf": "2026-10-14",
       "meta": {
-        "retired": {
-          "source": "https://badmintoneurope.com/w/greg-and-jenny-mairs-announce-retirement-from-international-tournaments",
-          "asOf": "2026-10-14"
+        "hero": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv42RtwJdvtsmXe53eVOtHDSYR1rzEnRCTbksjlA3D9bKEdWr3uZpjOLI&s=10",
+          "asOf": "2026-10-17"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-17"
+        },
+        "photo": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNbgad2S8pZmsR7OoHvBsikxn6ls_GBUp2jxQxSCijWVFZh86dR88AFcXX&s=10",
+          "asOf": "2026-10-17"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-17"
         }
       }
     },
@@ -5427,6 +6030,38 @@
         "retired": {
           "source": "https://the-ans.jp/news/216661/",
           "asOf": "2026-10-14"
+        }
+      }
+    },
+    "90735": {
+      "hero": "https://bwfworldtour.bwfbadminton.com/wp-content/uploads/2025/11/Yudai-Okimoto_KM25-980x550.jpg",
+      "heroFocus": {
+        "x": 25,
+        "y": 81
+      },
+      "bio": {
+        "club": "BIPROGY",
+        "racket": "Yonex Astrox 77 Pro",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "https://bwfworldtour.bwfbadminton.com/wp-content/uploads/2025/11/Yudai-Okimoto_KM25-980x550.jpg",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -5576,9 +6211,9 @@
       "photo": "https://pbsi.id/wp-content/uploads/2026/07/FajarFikri13_SF_ChinaOpen2026_PBSI_20260725-scaled.jpg",
       "hero": "https://www.yonex.co.uk/cdn/shop/files/TSC01084.jpg",
       "photoCrop": {
-        "x": 70.9,
-        "y": 8.1,
-        "zoom": 2.5
+        "x": 73.1,
+        "y": 4.8,
+        "zoom": 1.95
       },
       "bio": {
         "birthplace": "Bandung",
@@ -5644,13 +6279,13 @@
       "photo": "https://instagram.fein1-2.fna.fbcdn.net/v/t51.82787-15/658454540_18581717104030690_8324612915829334157_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=Mzg3NDk5MDcyNDA4NTMyODE1NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=32iWpx-uvtUQ7kNvwHlMGzu&_nc_oc=AdrAN1VyySyTn-fUBF3azCjv5DWW_aAbCaWv0WcEC08AY1LlleAu4dmhfJ7p933Gosg&_nc_zt=23&_nc_ht=instagram.fein1-2.fna&_nc_gid=XggNwJKAgga6yum9L8DKGw&_nc_ss=7b289&oh=00_AQOS3GQwIab1VeyfGY5ZJreSrsJtNvJC8tLRPYDNSy6J-Q&oe=6AD64495",
       "hero": "https://images.augustman.com/wp-content/uploads/sites/2/2025/08/21201020/snapins-ai_3634515570651543018-1-1.jpeg",
       "heroFocus": {
-        "x": 53,
-        "y": 70
+        "x": 56,
+        "y": 93
       },
       "photoCrop": {
-        "x": 64,
+        "x": 69,
         "y": 0,
-        "zoom": 1.95
+        "zoom": 1.5
       },
       "bio": {
         "racket": "Victor Auraspeed 99",
@@ -5750,7 +6385,9 @@
         "height": 189,
         "plays": "L",
         "birthplace": "Hsinchu City",
-        "coach": "Chen Hung-ling"
+        "coach": "Chen Hung-ling",
+        "racket": "Yonex Nanoflare 1000Z",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "https://commons.wikimedia.org/wiki/File:%E9%82%B1%E7%9B%B8%E6%A6%A4-2025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
       "asOf": "2026-10-12",
@@ -5770,6 +6407,14 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q116190437",
           "asOf": "2026-10-12"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
         },
         "heroFocus": {
           "source": "user",
@@ -5832,6 +6477,11 @@
       }
     },
     "93130": {
+      "hero": "https://campus-cdhk.oss-cn-hongkong.aliyuncs.com/attachments/image/2024/02/17/4986cd11-3a02-4145-be1a-ea2e4d11c419.jpg",
+      "heroFocus": {
+        "x": 67,
+        "y": 51
+      },
       "bio": {
         "height": 191,
         "plays": "R",
@@ -5869,6 +6519,14 @@
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://campus-cdhk.oss-cn-hongkong.aliyuncs.com/attachments/image/2024/02/17/4986cd11-3a02-4145-be1a-ea2e4d11c419.jpg",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -5880,6 +6538,38 @@
         "retired": {
           "source": "https://bwfbadminton.com/news-single/2024/08/20/former-world-champ-liu-calls-it-a-day",
           "asOf": "2026-10-14"
+        }
+      }
+    },
+    "93627": {
+      "bio": {
+        "racket": "Hundred Nitrix Pro",
+        "shoes": "Hundred Phenom"
+      },
+      "source": "user",
+      "asOf": "2026-10-19"
+    },
+    "94032": {
+      "hero": "https://cassette.sphdigital.com.sg/image/straitstimes/1cb69b7c741483b1bf842b77a3552996b7747cab599b8bbf3c1f5877e5881176",
+      "bio": {
+        "racket": "Yonex Arcsaber 11 Pro",
+        "racketNote": "4U",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "https://cassette.sphdigital.com.sg/image/straitstimes/1cb69b7c741483b1bf842b77a3552996b7747cab599b8bbf3c1f5877e5881176",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -5903,6 +6593,7 @@
       }
     },
     "94165": {
+      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP-IklpIWvejiEw_3VxlDdKyCWrPMyrUMEcXIsDCvYo2rOWx8g7lhDyj0&s=10",
       "bio": {
         "birthplace": "Dubai",
         "coach": "Pullela Gopichand Arun Vishnu Tan Kim Her Manu Attri",
@@ -5928,6 +6619,10 @@
         "bio.string": {
           "source": "https://badmintonlabs.com/players/tanisha-crasto",
           "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP-IklpIWvejiEw_3VxlDdKyCWrPMyrUMEcXIsDCvYo2rOWx8g7lhDyj0&s=10",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -5971,12 +6666,23 @@
       }
     },
     "94580": {
+      "photo": "https://stbadmintonacademy.my/wp-content/uploads/2025/11/Alex-Lanier-France-professional-badminton-player-mens-singles-champion-in-action.jpg",
+      "hero": "https://cassette.sphdigital.com.sg/image/straitstimes/48acb8886b10d88268af38c22c612525332039e9507aa6ec0866171a5764e634",
+      "heroFocus": {
+        "x": 44,
+        "y": 9
+      },
+      "photoCrop": {
+        "x": 100,
+        "y": 0,
+        "zoom": 1.1
+      },
       "bio": {
         "racket": "Yonex Astrox 99 Pro",
-        "racketNote": "3U",
+        "racketNote": "4U",
         "tension": "29.76",
         "string": "Yonex Aerobite",
-        "shoes": "Yonex Power Cushion 65 Z3"
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-12",
@@ -5996,6 +6702,22 @@
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://cassette.sphdigital.com.sg/image/straitstimes/48acb8886b10d88268af38c22c612525332039e9507aa6ec0866171a5764e634",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "photo": {
+          "source": "https://stbadmintonacademy.my/wp-content/uploads/2025/11/Alex-Lanier-France-professional-badminton-player-mens-singles-champion-in-action.jpg",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -6118,6 +6840,77 @@
         }
       }
     },
+    "96514": {
+      "heroFocus": {
+        "x": 56,
+        "y": 29
+      },
+      "bio": {
+        "racket": "Yonex Nanoflare 1000Z",
+        "racketNote": "3U",
+        "tension": "29/31",
+        "string": "Yonex BG80",
+        "shoes": "Yonex Power Cushion Infinity 2"
+      },
+      "source": "user",
+      "asOf": "2026-10-19"
+    },
+    "96713": {
+      "photo": "https://img.olympics.com/images/image/private/t_s_pog_staticContent_hero_lg_2x/f_auto/primary/cpd2q4nz9itaq7crasjr",
+      "hero": "https://cms.bwfbadminton.com/wp-content/uploads/2022/03/1AE_Nozomi-Okuhara-scaled.jpg",
+      "heroFocus": {
+        "x": 52,
+        "y": 6
+      },
+      "photoCrop": {
+        "x": 63,
+        "y": 5,
+        "zoom": 1.75
+      },
+      "bio": {
+        "height": 154,
+        "club": "Taiyo Holdings",
+        "racket": "Mizuno Mizuno Altius 01 FEEL",
+        "racketNote": "3.5U",
+        "shoes": "Mizuno Wave Claw 4"
+      },
+      "source": "https://img.olympics.com/images/image/private/t_s_pog_staticContent_hero_lg_2x/f_auto/primary/cpd2q4nz9itaq7crasjr",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.height": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "hero": {
+          "source": "https://cms.bwfbadminton.com/wp-content/uploads/2022/03/1AE_Nozomi-Okuhara-scaled.jpg",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        }
+      }
+    },
     "96725": {
       "bio": {
         "height": 169,
@@ -6130,6 +6923,44 @@
         "bio.achievements": {
           "source": "https://en.wikipedia.org/wiki/Lin_Hsiang-ti",
           "asOf": "2026-10-12"
+        }
+      }
+    },
+    "96877": {
+      "photo": "https://badmintoneurope.com/documents/20117/134771/cr_20251015_1012_DenmarkOpen2025_BPYL9325.jpg/7b0929eb-9c54-c40e-8378-c7cd1ddd3ba8?version=1.0&t=1778139060332",
+      "hero": "https://sports.inquirer.net/files/2026/08/AFP__20250826__72G32XW__v1__HighRes__BadmintonWorldFra.jpg",
+      "photoCrop": {
+        "x": 39.7,
+        "y": 15.8,
+        "zoom": 1.6
+      },
+      "bio": {
+        "racket": "Yonex Astrox 100 ZZ",
+        "racketNote": "Kurenai, 4U",
+        "shoes": "Yonex Power Cushion 65 Z4"
+      },
+      "source": "https://badmintoneurope.com/documents/20117/134771/cr_20251015_1012_DenmarkOpen2025_BPYL9325.jpg/7b0929eb-9c54-c40e-8378-c7cd1ddd3ba8?version=1.0&t=1778139060332",
+      "asOf": "2026-10-19",
+      "meta": {
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "hero": {
+          "source": "https://sports.inquirer.net/files/2026/08/AFP__20250826__72G32XW__v1__HighRes__BadmintonWorldFra.jpg",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -6190,10 +7021,25 @@
       }
     },
     "97174": {
+      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnXVOK9MFzxMsjpx2Ph4X_YO1RoLIvKqLcGVXag36yDfvHC1mbib3OQVAr&s=10",
+      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo434Xg-M2ntum3igZdlBjjUTcRRTcOqER3H9tlhU2Tt5Ti_HXqpzvNAh&s=10",
+      "heroFocus": {
+        "x": 63,
+        "y": 35
+      },
+      "photoCrop": {
+        "x": 56.9,
+        "y": 14.9,
+        "zoom": 4
+      },
       "bio": {
         "birthplace": "Koshigaya",
         "coach": "Sho Sasaki",
-        "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Asian Games 2022 – bronze (Men's team); Asia Team Championships 2026 – gold (Men's team); Asia Team Championships 2020 – bronze (Men's team); Asia Team Championships 2024 – bronze (Men's team)"
+        "club": "BIPROGY",
+        "racket": "Yonex Astrox 88D Pro",
+        "racketNote": "3rd generation",
+        "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Asian Games 2022 – bronze (Men's team); Asia Team Championships 2026 – gold (Men's team); Asia Team Championships 2020 – bronze (Men's team); Asia Team Championships 2024 – bronze (Men's team)",
+        "instagram": "https://www.instagram.com/watakou0123/"
       },
       "source": "https://www.wikidata.org/wiki/Q27893468",
       "asOf": "2026-10-12",
@@ -6202,9 +7048,41 @@
           "source": "https://en.wikipedia.org/wiki/Koki_Watanabe",
           "asOf": "2026-10-12"
         },
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
         "bio.coach": {
           "source": "https://en.wikipedia.org/wiki/Koki_Watanabe",
           "asOf": "2026-10-12"
+        },
+        "bio.instagram": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racket": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "bio.racketNote": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "hero": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo434Xg-M2ntum3igZdlBjjUTcRRTcOqER3H9tlhU2Tt5Ti_HXqpzvNAh&s=10",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "photo": {
+          "source": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnXVOK9MFzxMsjpx2Ph4X_YO1RoLIvKqLcGVXag36yDfvHC1mbib3OQVAr&s=10",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -6275,7 +7153,8 @@
       "bio": {
         "racket": "Yonex Astrox 88D Pro",
         "racketNote": "3rd generation",
-        "string": "Yonex Exbolt 65"
+        "string": "Yonex Exbolt 65",
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-12",
@@ -6283,6 +7162,10 @@
         "bio.racketNote": {
           "source": "user",
           "asOf": "2026-10-15"
+        },
+        "bio.shoes": {
+          "source": "user",
+          "asOf": "2026-10-19"
         },
         "bio.string": {
           "source": "https://badmintonlabs.com/players/soh-wooi-yik",
