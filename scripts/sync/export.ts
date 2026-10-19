@@ -148,6 +148,14 @@ const venueOf = (e: EditionRow) => {
   return v && v === v.toUpperCase() ? titleCase(v) : v;
 };
 
+const wordSet = (name: string) =>
+  name
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean)
+    .toSorted((a, b) => a.localeCompare(b))
+    .join(' ');
+
 const isCancelled = (e: EditionRow) => !!e.cancelled || (!!e.archived && e.match_count === 0);
 
 const tidyValues = (bio: Record<string, unknown>) =>
@@ -245,10 +253,20 @@ export const exportData = async (
     ),
   );
   const overrideImage = (id: string, kind: ImageKind) => overrideAssets.get(`${id}:${kind}`);
+  const matchNameOf = new Map(
+    all<{ player_id: string; name: string }>(
+      db,
+      'SELECT player_id, name FROM match_players GROUP BY player_id, name ORDER BY COUNT(*)',
+    ).map((r) => [r.player_id, r.name]),
+  );
+  const bwfNameOf = (p: PlayerRow) => {
+    const fromMatches = matchNameOf.get(p.id);
+    return fromMatches && wordSet(fromMatches) === wordSet(p.name) ? fromMatches : p.name;
+  };
   const players = all<PlayerRow>(db, 'SELECT id, name, cc, photo, hero, slug, bio FROM players').map((p) => ({
     ...p,
-    name: nameOverride(p.id) ?? p.name,
-    bwfName: p.name,
+    name: nameOverride(p.id) ?? bwfNameOf(p),
+    bwfName: bwfNameOf(p),
     photo: overrideImage(p.id, 'photo') ?? p.photo ?? null,
     hero: overrideImage(p.id, 'hero') ?? p.hero ?? null,
   }));
