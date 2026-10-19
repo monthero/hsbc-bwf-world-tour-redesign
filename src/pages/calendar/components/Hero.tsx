@@ -1,9 +1,8 @@
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
-import { Menu } from '@mantine/core';
 import { clsx } from 'clsx';
-import { memo, useCallback, type FC } from 'react';
+import { memo, useCallback, useMemo, type FC } from 'react';
 
-import { IconCheck, IconExpand, LiveDot, Tip } from '~/components/ui';
+import { IconExpand, LiveDot, OptionMenu, Tip } from '~/components/ui';
 import { useSeasons } from '~/hooks/useTournaments';
 import type { SeasonSummary, Tournament } from '~/types';
 
@@ -16,45 +15,28 @@ import { StopsDone } from './StopsDone';
 import classes from './Hero.module.css';
 import utils from '~/styles/utils.module.css';
 
-const MENU_CLASSES = { dropdown: clsx(utils.popover, classes.yearMenu), item: classes.yearItem };
-
-const YearItem = memo<{ year: number; active: boolean; onYear: (year: number) => void }>(({ year, active, onYear }) => {
-  const onClick = useCallback(() => onYear(year), [onYear, year]);
-  return (
-    <Menu.Item
-      data-active={active || undefined}
-      rightSection={active ? <IconCheck size={13} /> : null}
-      onClick={onClick}
-    >
-      {year}
-    </Menu.Item>
-  );
-});
-
 const YearMenu: FC<{ year: number; onYear: (year: number) => void }> = ({ year, onYear }) => {
   const { data } = useSeasons();
   const { t } = useLingui();
+  const options = useMemo(
+    () => (data?.seasons ?? []).map((s) => ({ value: String(s.year), label: String(s.year) })),
+    [data],
+  );
+  const pick = useCallback((v: string) => onYear(Number.parseInt(v, 10)), [onYear]);
   return (
-    <Menu position="bottom-start" offset={6} classNames={MENU_CLASSES}>
-      <Menu.Target>
-        <button
-          type="button"
-          className={classes.yearButton}
-          aria-label={t({
-            message: `Season ${year}`,
-            comment: 'Screen-reader label for the calendar’s season picker button, showing the selected year',
-          })}
-        >
-          {year}
-          <IconExpand size={13} />
-        </button>
-      </Menu.Target>
-      <Menu.Dropdown>
-        {(data?.seasons ?? []).map((s) => (
-          <YearItem key={s.year} year={s.year} active={s.year === year} onYear={onYear} />
-        ))}
-      </Menu.Dropdown>
-    </Menu>
+    <OptionMenu options={options} value={String(year)} onChange={pick}>
+      <button
+        type="button"
+        className={classes.yearButton}
+        aria-label={t({
+          message: `Season ${year}`,
+          comment: 'Screen-reader label for the calendar’s season picker button, showing the selected year',
+        })}
+      >
+        {year}
+        <IconExpand size={13} />
+      </button>
+    </OptionMenu>
   );
 };
 

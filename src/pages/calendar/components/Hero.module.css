@@ -82,36 +82,6 @@
   user-select: none;
 }
 
-.yearMenu {
-  min-width: 96px;
-  padding: 4px;
-  border-radius: 10px;
-}
-
-.yearItem {
-  height: 32px;
-  padding: 0 10px;
-  border-radius: 7px;
-  color: var(--bwf-muted);
-  font-size: 13px;
-  font-weight: 500;
-
-  &:hover,
-  &[data-hovered] {
-    background: var(--bwf-raised);
-  }
-
-  &[data-active] {
-    background: var(--bwf-raised);
-    color: var(--bwf-text);
-    font-weight: 600;
-  }
-
-  svg {
-    color: var(--bwf-red-text);
-  }
-}
-
 .title {
   margin: 12px 0 0;
   font-size: 48px;

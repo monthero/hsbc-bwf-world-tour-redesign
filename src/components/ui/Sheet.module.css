@@ -1,0 +1,18 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 14px var(--bwf-gutter) calc(20px + env(safe-area-inset-bottom));
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 30px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+}

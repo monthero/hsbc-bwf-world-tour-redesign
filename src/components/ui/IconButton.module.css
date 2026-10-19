@@ -64,6 +64,13 @@
     color: var(--bwf-on-brand);
   }
 
+  &[data-active],
+  &[data-active]:hover:not([aria-disabled]) {
+    background: var(--bwf-red-tint);
+    border-color: var(--bwf-red-edge);
+    color: var(--bwf-red-pale);
+  }
+
   &[aria-disabled] {
     opacity: 0.35;
     cursor: default;

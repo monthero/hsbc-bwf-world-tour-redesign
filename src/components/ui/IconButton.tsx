@@ -15,6 +15,7 @@ export const IconButton: FC<
     shape?: 'circle' | 'rounded';
     variant?: 'ghost' | 'outline' | 'filled' | 'brand';
     tip?: string;
+    active?: boolean;
     disabled?: boolean;
     className?: string;
     onClick?: () => void;
@@ -28,6 +29,7 @@ export const IconButton: FC<
   shape = 'circle',
   variant = 'outline',
   tip,
+  active,
   disabled,
   className,
   onClick,
@@ -41,6 +43,7 @@ export const IconButton: FC<
     'data-size': size,
     'data-shape': shape,
     'data-variant': variant,
+    'data-active': active || undefined,
     'aria-label': label,
   };
   const el =

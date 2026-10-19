@@ -26,39 +26,8 @@
   }
 }
 
-.sectionTitle > svg,
-.toggle > svg {
+.sectionTitle > svg {
   flex: none;
-}
-
-.toggle {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  min-width: 0;
-  min-height: 44px;
-  font: inherit;
-  letter-spacing: inherit;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.toggleEnd {
-  margin-inline-start: auto;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-}
-
-.chevron {
-  flex: none;
-  color: var(--bwf-dim);
-  transition: transform 0.25s var(--bwf-ease);
-
-  &[data-open] {
-    transform: rotate(180deg);
-  }
 }
 
 .sectionCount {

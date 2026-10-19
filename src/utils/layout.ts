@@ -8,8 +8,3 @@ const cssPx = (el: Element, name: string) => Number.parseFloat(getComputedStyle(
 export const headerOffset = () => cssPx(document.documentElement, HEADER_VAR);
 
 export const tabbarHeight = (el: Element) => cssPx(el, TABBAR_VAR) || TABBAR_FALLBACK;
-
-export const keepTopInView = (el: Element) => {
-  const top = el.getBoundingClientRect().top - headerOffset() - tabbarHeight(el);
-  if (top < 0) window.scrollTo({ top: window.scrollY + top, behavior: 'instant' });
-};
