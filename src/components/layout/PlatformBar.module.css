@@ -1,6 +1,10 @@
 .bar {
   background: var(--bwf-brand-deep);
   font-size: 12px;
+
+  @media (display-mode: fullscreen), (display-mode: standalone) {
+    display: none;
+  }
 }
 
 .inner {

@@ -67,7 +67,7 @@ const boot = async () => {
           <MantineProvider
             theme={theme}
             cssVariablesResolver={cssVariablesResolver}
-            defaultColorScheme="auto"
+            defaultColorScheme="dark"
             colorSchemeManager={colorSchemeManager}
           >
             <DatesProvider settings={{ firstDayOfWeek: 1, consistentWeeks: true }}>

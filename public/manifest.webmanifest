@@ -1,0 +1,43 @@
+{
+  "id": "/",
+  "name": "HSBC BWF World Tour · Concept",
+  "short_name": "BWF Tour",
+  "description": "Live scores, draws, results, the season calendar, world rankings and news from the HSBC BWF World Tour, badminton’s top tournament circuit. An unofficial fan-made redesign.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "any",
+  "theme_color": "#131315",
+  "background_color": "#131315",
+  "categories": ["sports", "news"],
+  "prefer_related_applications": false,
+  "launch_handler": { "client_mode": ["navigate-existing", "auto"] },
+  "icons": [
+    { "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/brand/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Calendar",
+      "short_name": "Calendar",
+      "url": "/calendar",
+      "icons": [{ "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Rankings",
+      "short_name": "Rankings",
+      "url": "/rankings",
+      "icons": [{ "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "News",
+      "short_name": "News",
+      "url": "/news",
+      "icons": [{ "src": "/assets/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

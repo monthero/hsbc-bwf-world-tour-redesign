@@ -26,7 +26,7 @@ export const TensionUnit = z.enum(TENSION_UNITS);
 export type TensionUnit = z.infer<typeof TensionUnit>;
 
 const SettingsData = z.object({
-  colorScheme: ColorScheme.catch('auto'),
+  colorScheme: ColorScheme.catch('dark'),
   timeZone: TimeZoneMode.catch('mine'),
   clock: ClockMode.catch('24h'),
   height: HeightUnit.catch('cm'),
@@ -94,6 +94,6 @@ export const settingsColorSchemeManager = (): MantineColorSchemeManager => {
       stop?.();
       stop = undefined;
     },
-    clear: () => useSettings.getState().set({ colorScheme: 'auto' }),
+    clear: () => useSettings.getState().set({ colorScheme: 'dark' }),
   };
 };

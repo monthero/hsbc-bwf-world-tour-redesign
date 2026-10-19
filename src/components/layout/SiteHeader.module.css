@@ -2,6 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
+  padding-top: env(safe-area-inset-top);
   background: linear-gradient(100deg, var(--bwf-brand) 30%, var(--bwf-brand-hi));
   border-bottom: 1px solid var(--bwf-on-brand-line);
   box-shadow: 0 6px 20px alpha(var(--mantine-color-black), 0.28);

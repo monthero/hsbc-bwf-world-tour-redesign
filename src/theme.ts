@@ -523,7 +523,7 @@ export const cssVariablesResolver: CSSVariablesResolver = () => ({
   variables: {
     '--bwf-ease': MOTION_EASE,
     '--bwf-ease-out': 'cubic-bezier(0.16, 1, 0.3, 1)',
-    '--bwf-gutter': 'clamp(16px, 3vw, 56px)',
+    '--bwf-gutter': 'max(clamp(16px, 3vw, 56px), env(safe-area-inset-left), env(safe-area-inset-right))',
     '--bwf-page-max': '1520px',
     '--bwf-footer-gap': '48px',
     '--bwf-card-radius': '18px',
