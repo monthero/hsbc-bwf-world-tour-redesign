@@ -1,11 +1,12 @@
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { memo, type CSSProperties, type ReactEventHandler } from 'react';
+import { memo, useState, type CSSProperties, type ReactEventHandler } from 'react';
 
+import { useFaceBox } from '~/hooks/useFaceBox';
 import { usePlayerLinkSearch } from '~/hooks/usePlayerLinkSearch';
 import { usePlayerPhoto } from '~/hooks/usePlayers';
 import type { PhotoCrop, Player } from '~/types';
-import { photoVars } from '~/utils/images';
+import { isFaceCroppable, photoVars, playerPortraitUrl } from '~/utils/images';
 import { initials } from '~/utils/names';
 
 import classes from './PlayerAvatar.module.css';
@@ -44,21 +45,25 @@ export const PlayerAvatar = memo<PlayerAvatarProps>((props) => {
   const { photo, size, crop, framing, ring, link, className } = props;
   const { src, crop: shown } = usePlayerPhoto(id, { photo, size: crop, framing });
   const search = usePlayerLinkSearch();
+  const [el, setEl] = useState<HTMLElement | null>(null);
+  const faced = !size && !crop && !shown && isFaceCroppable(src);
+  const box = useFaceBox(el, faced);
+  const shownSrc = faced ? box && playerPortraitUrl(src, box.width, box.height) : src;
   const cls = clsx(classes.avatar, className);
   const attrs = {
     'data-fill': size ? undefined : true,
     'data-ring': ring || undefined,
     style: size ? ({ '--size': `${size}px` } as CSSProperties) : undefined,
   };
-  const body = src ? <FramedPhoto src={src} framing={shown} /> : initials(name);
+  const body = src ? shownSrc && <FramedPhoto src={shownSrc} framing={shown} /> : initials(name);
   if (link && id)
     return (
-      <Link to="/players/$id" params={{ id }} search={search} className={cls} tabIndex={-1} {...attrs}>
+      <Link ref={setEl} to="/players/$id" params={{ id }} search={search} className={cls} tabIndex={-1} {...attrs}>
         {body}
       </Link>
     );
   return (
-    <span className={cls} {...attrs}>
+    <span ref={setEl} className={cls} {...attrs}>
       {body}
     </span>
   );

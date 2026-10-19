@@ -20,8 +20,15 @@ export const playerThumbUrl = (photo: string | undefined | null) => {
   return `${IMG}${ver}/assets/players/thumbnail/${file.replace(/\.tiff?$/i, '.jpg')}`;
 };
 
-export const playerSquareUrl = (thumbUrl: string, size = 420) =>
-  thumbUrl ? thumbUrl.replace('/image/upload/', `/image/upload/c_fill,g_face,z_0.75,w_${size},h_${size}/`) : '';
+export const isFaceCroppable = (url: string) => url.startsWith(IMG);
+
+export const playerFaceUrl = (thumbUrl: string, width: number, height: number) =>
+  thumbUrl ? thumbUrl.replace('/image/upload/', `/image/upload/c_fill,g_face,z_0.75,w_${width},h_${height}/`) : '';
+
+export const playerSquareUrl = (thumbUrl: string, size = 420) => playerFaceUrl(thumbUrl, size, size);
+
+export const playerPortraitUrl = (thumbUrl: string, width: number, height: number) =>
+  thumbUrl ? thumbUrl.replace('/image/upload/', `/image/upload/c_thumb,g_face,z_0.6,w_${width},h_${height}/`) : '';
 
 const HERO_CROP = { mobile: 'c_fill,w_780,h_700,g_face,z_0.75', desktop: 'c_fill,w_1000,h_480,g_face,z_0.7' };
 const HERO_FULL = { mobile: 'c_limit,w_1000', desktop: 'c_limit,w_2000' };
