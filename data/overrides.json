@@ -1632,7 +1632,17 @@
       }
     },
     "61444": {
-      "hero": "https://cdn.shopify.com/s/files/1/1037/9241/0965/files/news260115_830_02.webp",
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Kim_Won-ho.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
+      "hero": "https://www.yonex.com/media/wysiwyg/Athletes/Badminton/kim-won-ho810x540.jpg",
+      "heroFocus": {
+        "x": 62,
+        "y": 45
+      },
+      "photoCrop": {
+        "x": 100,
+        "y": 0,
+        "zoom": 1.15
+      },
       "bio": {
         "racket": "Yonex Nanoflare 700 Pro",
         "racketNote": "3U",
@@ -1665,8 +1675,20 @@
           "asOf": "2026-10-15"
         },
         "hero": {
-          "source": "https://www.yonex.co.uk/blogs/badminton/team-yonex-sweeps-all-five-titles-at-malaysia-open-2026",
-          "asOf": "2026-10-12"
+          "source": "https://www.yonex.com/media/wysiwyg/Athletes/Badminton/kim-won-ho810x540.jpg",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
+        },
+        "photo": {
+          "source": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Kim_Won-ho.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
+          "asOf": "2026-10-19"
+        },
+        "photoCrop": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
@@ -2369,6 +2391,11 @@
       }
     },
     "66513": {
+      "hero": "https://apicms.thestar.com.my/uploads/images/2025/03/18/3218523.webp",
+      "heroFocus": {
+        "x": 78,
+        "y": 1
+      },
       "bio": {
         "racket": "Yonex Nanoflare 700 Pro",
         "racketNote": "3U",
@@ -2394,6 +2421,14 @@
         "bio.tension": {
           "source": "user",
           "asOf": "2026-10-15"
+        },
+        "hero": {
+          "source": "https://apicms.thestar.com.my/uploads/images/2025/03/18/3218523.webp",
+          "asOf": "2026-10-19"
+        },
+        "heroFocus": {
+          "source": "user",
+          "asOf": "2026-10-19"
         }
       }
     },
