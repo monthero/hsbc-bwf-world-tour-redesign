@@ -21,6 +21,7 @@ import { CardHit, Tip } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerPhoto } from '~/hooks/usePlayers';
+import { DARK_SCOPE } from '~/theme';
 import type { BioView, EventCode, Focus, Player, RankView, Retirement, StatItem } from '~/types';
 import { formatRank, formatRecord } from '~/utils/format';
 import { heroVars, playerHeroUrl } from '~/utils/images';
@@ -63,7 +64,10 @@ export const Hero = memo<HeroProps>(
   ({ player, hero, focus, retired, bio, ranks, highs, career, ready, event, onEvent }) => {
     const isMobile = useIsMobile();
     const hasPhoto = !!usePlayerPhoto(player.id).src;
-    const style = hero ? heroVars(playerHeroUrl(player.id, hero, isMobile, !!focus), focus) : undefined;
+    const style = useMemo(
+      () => ({ ...DARK_SCOPE, ...(hero && heroVars(playerHeroUrl(player.id, hero, isMobile, !!focus), focus)) }),
+      [player.id, hero, isMobile, focus],
+    );
     const ranked = useMemo(() => ranks.filter((k) => k.rank).slice(0, RANK_LIMIT), [ranks]);
     const pairs = ranked.some((k) => k.partner);
     const switchable = ranked.length > 1 ? onEvent : undefined;
@@ -89,6 +93,7 @@ export const Hero = memo<HeroProps>(
         ref={heroRef}
         className={classes.hero}
         style={style}
+        data-mantine-color-scheme="dark"
         data-image={hero ? true : undefined}
         data-portrait={!hero && hasPhoto ? true : undefined}
       >
