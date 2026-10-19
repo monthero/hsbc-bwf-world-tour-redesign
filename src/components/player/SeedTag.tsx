@@ -8,7 +8,7 @@ import classes from './SeedTag.module.css';
 
 export const SeedTag: FC<{
   seed: number | null | undefined;
-  variant?: 'inline' | 'pill';
+  variant?: 'inline' | 'pill' | 'label';
   className?: string;
 }> = ({ seed, variant = 'inline', className }) => {
   const { t } = useLingui();
@@ -22,12 +22,12 @@ export const SeedTag: FC<{
       })}
     >
       <span className={clsx(classes.seed, className)} data-variant={variant}>
-        {variant === 'pill'
-          ? t({
+        {variant === 'inline'
+          ? `(${seed})`
+          : t({
               message: `Seed ${seed}`,
-              comment: 'Badge with a player’s seed number in a tournament draw, e.g. Seed 3',
-            })
-          : `(${seed})`}
+              comment: 'A player’s seed number in a tournament draw, as a badge or after their world rank, e.g. Seed 3',
+            })}
       </span>
     </Tip>
   );

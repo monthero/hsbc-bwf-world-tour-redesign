@@ -14,14 +14,12 @@ import page from '../TournamentPage.module.css';
 import classes from './Champions.module.css';
 import utils from '~/styles/utils.module.css';
 
-const PHOTO_CROP = 420;
-
 export const ChampionPhotos = memo<{ players: readonly Player[]; photos?: readonly (string | null)[] }>(
   ({ players, photos }) => (
     <>
       <div className={classes.photos}>
         {players.map((p, i) => (
-          <PlayerAvatar key={p.id} player={p} photo={photos?.[i]} crop={PHOTO_CROP} link className={classes.photo} />
+          <PlayerAvatar key={p.id} player={p} photo={photos?.[i]} link className={classes.photo} />
         ))}
       </div>
       {players.length > 1 && <span className={classes.divider} />}

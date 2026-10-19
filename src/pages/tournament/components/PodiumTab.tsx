@@ -3,7 +3,6 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
-import { Flag } from '~/components/country';
 import { EventTag, TeamPlayers, TimedStatus } from '~/components/match';
 import { AvatarGroup, SeedTag } from '~/components/player';
 import { Medal } from '~/components/tournament';
@@ -21,11 +20,14 @@ import { ChampionPhotos } from './Champions';
 
 import page from '../TournamentPage.module.css';
 import classes from './PodiumTab.module.css';
+import discipline from '~/styles/discipline.module.css';
 import utils from '~/styles/utils.module.css';
 
 const LINE_AVATAR = 32;
 
 const LINE_CROP = 96;
+
+const LINE_MEDAL = 18;
 
 const MISSING_TIP = msg({
   message: 'Withdrew, or their matches are missing from this data',
@@ -47,19 +49,30 @@ interface PlaceProps {
   dir: PlayerDirectory | undefined;
 }
 
-const WorldRank: FC<{ team: Team; event: EventCode; dir: PlayerDirectory | undefined }> = ({ team, event, dir }) => {
+const TeamStats: FC<{ team: Team; event: EventCode; dir: PlayerDirectory | undefined }> = ({ team, event, dir }) => {
   const { i18n } = useLingui();
   const rank = worldRank(dir, team.players, event);
-  if (!rank) return null;
+  const seeded = !!team.seed;
+  if (!rank && !seeded) return null;
   const position = formatRank(rank);
   return (
-    <Tip label={i18n._(RANK_TIP)}>
-      <span className={classes.rank}>
-        <Trans comment="A medalist’s current world ranking, e.g. “World rank #3”">
-          World rank <b>{position}</b>
-        </Trans>
-      </span>
-    </Tip>
+    <span className={classes.stats}>
+      {!!rank && (
+        <Tip label={i18n._(RANK_TIP)}>
+          <span className={classes.rank}>
+            <Trans comment="A medalist’s current world ranking, e.g. “World rank #3”">
+              World rank <b>{position}</b>
+            </Trans>
+          </span>
+        </Tip>
+      )}
+      {!!rank && seeded && (
+        <span className={classes.sep} aria-hidden>
+          ·
+        </span>
+      )}
+      <SeedTag seed={team.seed} variant="label" />
+    </span>
   );
 };
 
@@ -67,7 +80,7 @@ const PlaceMedal: FC<{ place: PodiumPlace; size: number }> = ({ place: p, size }
   return (
     <Tip label={p.label}>
       <span className={classes.medal}>
-        <Medal kind={p.medal} size={size} />
+        <Medal kind={p.medal} size={size} trophy />
       </span>
     </Tip>
   );
@@ -75,42 +88,28 @@ const PlaceMedal: FC<{ place: PodiumPlace; size: number }> = ({ place: p, size }
 
 const ChampionBlock: FC<PlaceProps> = ({ place: p, event, dir }) => {
   const team = p.teams?.[0];
-  const countries = team ? [...new Set(team.players.map((pl) => pl.cc))] : [];
   const photos = !!team?.players.some((pl) => playerPhoto(dir, pl.id).src);
   return (
     <div
       className={classes.hero}
       data-decided={team ? true : undefined}
       data-photos={photos || undefined}
+      data-pair={(team && team.players.length > 1) || undefined}
       {...(photos ? DARK_SCOPE_PROPS : undefined)}
     >
       {photos && team && <ChampionPhotos players={team.players} />}
       <div className={classes.heroTop}>
         <span className={classes.heroLabel}>
-          <Medal kind={p.medal} size={18} />
+          <Medal kind={p.medal} size={18} trophy />
           {p.label}
         </span>
         <span className={classes.heroPrize}>{p.prize}</span>
       </div>
       {team ? (
-        <>
-          <div className={classes.heroWho}>
-            <span className={classes.heroFlags}>
-              {countries.map((cc) => (
-                <Flag key={cc} cc={cc} size="xl" />
-              ))}
-            </span>
-            <TeamPlayers
-              players={team.players}
-              seed={team.seed}
-              flag={false}
-              wrap
-              className={classes.heroNames}
-              nameClassName={classes.heroName}
-            />
-          </div>
-          <WorldRank team={team} event={event} dir={dir} />
-        </>
+        <div className={classes.heroWho}>
+          <TeamPlayers players={team.players} truncate className={classes.heroNames} nameClassName={classes.heroName} />
+          <TeamStats team={team} event={event} dir={dir} />
+        </div>
       ) : (
         <span className={classes.tbd}>{TBD}</span>
       )}
@@ -124,19 +123,23 @@ const PlaceList: FC<PlaceProps> = ({ place: p, event, dir }) => {
       {p.teams ? (
         p.teams.map((team) => (
           <div key={team.key} className={classes.line}>
-            <PlaceMedal place={p} size={16} />
-            <AvatarGroup players={team.players} size={LINE_AVATAR} crop={LINE_CROP} className={classes.lineAvatars} />
-            <div className={classes.lineWho}>
-              <TeamPlayers players={team.players} seed={team.seed} wrap nameClassName={classes.lineName} />
-              <WorldRank team={team} event={event} dir={dir} />
-            </div>
+            <span className={classes.lineFace}>
+              <PlaceMedal place={p} size={LINE_MEDAL} />
+              <AvatarGroup players={team.players} size={LINE_AVATAR} crop={LINE_CROP} className={classes.lineAvatars} />
+            </span>
             <span className={classes.linePrize}>{p.prize}</span>
+            <div className={classes.lineWho}>
+              <TeamPlayers players={team.players} truncate nameClassName={classes.lineName} />
+              <TeamStats team={team} event={event} dir={dir} />
+            </div>
           </div>
         ))
       ) : (
         <div className={classes.line}>
-          <PlaceMedal place={p} size={16} />
-          <span className={classes.tbd}>{TBD}</span>
+          <span className={classes.lineFace}>
+            <PlaceMedal place={p} size={LINE_MEDAL} />
+            <span className={classes.tbd}>{TBD}</span>
+          </span>
           <span className={classes.linePrize}>{p.prize}</span>
         </div>
       )}
@@ -183,7 +186,9 @@ const MedalCard = memo<{ data: PodiumEvent; dir: PlayerDirectory | undefined }>(
   const [champion, ...rest] = e.places;
   return (
     <div className={clsx(utils.card, classes.card, classes.medalCard)}>
-      <CardHead data={e} note={e.when} />
+      <span className={clsx(classes.name, classes.eventName, discipline.tone)} data-event={e.event}>
+        {e.name}
+      </span>
       {champion && <ChampionBlock place={champion} event={e.event} dir={dir} />}
       {rest.map((p) => (
         <PlaceList key={p.medal} place={p} event={e.event} dir={dir} />
@@ -231,7 +236,7 @@ export const PodiumTab: FC<TabProps> = ({ tournament, schedule }) => {
           </Trans>
         </SectionTitle>
         <div className={page.eventGridWrap}>
-          <div className={page.eventGrid}>
+          <div className={clsx(page.eventGrid, classes.grid)}>
             {events.map((e) => (
               <MedalCard key={e.event} data={e} dir={dir} />
             ))}
@@ -245,7 +250,7 @@ export const PodiumTab: FC<TabProps> = ({ tournament, schedule }) => {
           </Trans>
         </SectionTitle>
         <div className={page.eventGridWrap}>
-          <div className={page.eventGrid}>
+          <div className={clsx(page.eventGrid, classes.grid)}>
             {events.map((e) => (
               <SeedCard key={e.event} data={e} hasMatches={hasMatches} />
             ))}
