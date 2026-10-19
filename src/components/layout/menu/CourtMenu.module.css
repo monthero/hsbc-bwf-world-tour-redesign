@@ -39,12 +39,6 @@
       display: none;
     }
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    --dur: 0.01ms;
-    --fast: 0.01ms;
-    --stagger: 0ms;
-  }
 }
 
 .panel {
