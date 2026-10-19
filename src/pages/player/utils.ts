@@ -23,6 +23,7 @@ import type {
   HistoryView,
   MedalCounts,
   PartnerRow,
+  PendingResult,
   RankPoint,
   ResultGroup,
   SeasonView,
@@ -117,6 +118,7 @@ export const buildHistory = (
       key: x.row.key,
       ev: x.ev,
       partner: x.row.partner,
+      since: x.r.date,
       items: x.r.breakdown.map((t, j) => ({
         key: `${x.row.key}-${j}`,
         name: t.tournament.replaceAll('&amp;', '&'),
@@ -224,6 +226,24 @@ export const tournamentRuns = (matches: readonly PlayerMatch[], self: string): T
     const runs = [...Map.groupBy(list, (pm) => pm.match.event)].map(([ev, xs]) => eventRun(ev, xs, self));
     return [{ key, tournament, runs }];
   });
+
+const samePartner = (group: ResultGroup, run: EventRun) =>
+  !group.partner || !run.partner || run.partner.id === group.partner.id;
+
+export const pendingResults = (group: ResultGroup, list: readonly TournamentRuns[]): PendingResult[] => {
+  const { since } = group;
+  if (!since) return [];
+  return list
+    .filter(({ tournament }) => tournament.end > since)
+    .toSorted((a, b) => b.tournament.end.localeCompare(a.tournament.end))
+    .flatMap(({ key, tournament, runs }) =>
+      runs.flatMap((run) =>
+        run.event === group.ev && run.result !== null && samePartner(group, run)
+          ? [{ key: `${key}-${run.event}`, name: tournament.title, year: tournament.year, result: run.result }]
+          : [],
+      ),
+    );
+};
 
 export const partnerHistory = (matches: readonly PlayerMatch[], self: string): PartnerRow[] => {
   const rows = new Map<string, PartnerRow>();

@@ -8,10 +8,6 @@ import type { PlayerTab } from './types';
 export const PLAYER_TAB_ITEMS: readonly { value: PlayerTab; label: MessageDescriptor }[] = [
   { value: 'overview', label: msg({ message: 'Overview', comment: 'Player profile tab: summary of the player' }) },
   { value: 'matches', label: msg({ message: 'Matches', comment: 'Player profile tab: list of matches by season' }) },
-  {
-    value: 'results',
-    label: msg({ message: 'Results', comment: 'Player profile tab: tournament results counting toward the ranking' }),
-  },
   { value: 'rankings', label: msg({ message: 'Rankings', comment: 'Player profile tab: world ranking history' }) },
   { value: 'media', label: msg({ message: 'Media', comment: 'Player profile tab: videos and news stories' }) },
 ];

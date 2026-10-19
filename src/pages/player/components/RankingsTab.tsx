@@ -11,13 +11,14 @@ import { Partner, PlayerAvatar, PlayerName, RaceQualifier, RankChange } from '~/
 import { EmptyState, IconExpand, MoreButton } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import { useFinalsCity } from '~/hooks/useTournaments';
-import type { Player, RankView } from '~/types';
+import type { Player, PlayerMatch, RankView } from '~/types';
 import { date, formatMonthYear } from '~/utils/dates';
 import { formatNumber, formatRank, joinDots } from '~/utils/format';
 
 import { PARTNER_LIMIT } from '../constants';
-import type { DisciplineView, HistoryRow, HistoryView } from '../types';
-import { disciplineOf, yearRange } from '../utils';
+import type { DisciplineView, HistoryRow, HistoryView, ResultGroup, TournamentRuns } from '../types';
+import { disciplineOf, tournamentRuns, yearRange } from '../utils';
+import { Breakdown } from './Breakdown';
 import { RankChart } from './RankChart';
 
 import classes from './RankingsTab.module.css';
@@ -127,28 +128,47 @@ const periodOf = (i18n: I18n, r: HistoryRow) => {
   return i18n._(msg({ message: `until ${month}`, comment: 'End of a ranking spell; month is e.g. Mar 2019' }));
 };
 
-export const RankingsTab = memo<{ ranks: RankView[]; history: HistoryView | undefined; loading: boolean }>(
-  ({ ranks, history, loading }) => {
-    const list = useMemo(() => (history?.groups ?? []).map(disciplineOf), [history]);
-    const active = useMemo(() => list.filter((d) => d.active), [list]);
-    const past = useMemo(() => list.filter((d) => !d.active), [list]);
-    if (loading) return <Skeleton height={360} radius={18} />;
-    if (!list.length)
-      return (
-        <EmptyState>
-          <Trans>No ranking history on record.</Trans>
-        </EmptyState>
-      );
+interface RankingsTabProps {
+  ranks: RankView[];
+  history: HistoryView | undefined;
+  loading: boolean;
+  playerId: string;
+  matches: readonly PlayerMatch[];
+}
+
+const NO_RESULTS: ResultGroup[] = [];
+
+export const RankingsTab = memo<RankingsTabProps>(({ ranks, history, loading, playerId, matches }) => {
+  const list = useMemo(() => (history?.groups ?? []).map(disciplineOf), [history]);
+  const results = useMemo(
+    () => Map.groupBy(history?.results.filter((g) => g.items.length > 0) ?? [], (g) => g.ev),
+    [history],
+  );
+  const runs = useMemo(() => tournamentRuns(matches, playerId), [matches, playerId]);
+  const active = useMemo(() => list.filter((d) => d.active), [list]);
+  const past = useMemo(() => list.filter((d) => !d.active), [list]);
+  if (loading) return <Skeleton height={360} radius={18} />;
+  if (!list.length)
     return (
-      <div className={classes.tab}>
-        {active.map((d) => (
-          <DisciplineCard key={d.ev} view={d} rank={ranks.find((k) => k.ev === d.ev)} />
-        ))}
-        {past.length > 0 && <PastList items={past} open={!active.length} />}
-      </div>
+      <EmptyState>
+        <Trans>No ranking history on record.</Trans>
+      </EmptyState>
     );
-  },
-);
+  return (
+    <div className={classes.tab}>
+      {active.map((d) => (
+        <DisciplineCard
+          key={d.ev}
+          view={d}
+          rank={ranks.find((k) => k.ev === d.ev)}
+          results={results.get(d.ev) ?? NO_RESULTS}
+          runs={runs}
+        />
+      ))}
+      {past.length > 0 && <PastList items={past} open={!active.length} />}
+    </div>
+  );
+});
 
 const Figure: FC<{ value: number | null | undefined; className?: string }> = ({ value, className }) => (
   <span className={clsx(utils.figure, className)}>
@@ -163,7 +183,14 @@ const Figure: FC<{ value: number | null | undefined; className?: string }> = ({ 
   </span>
 );
 
-const DisciplineCard = memo<{ view: DisciplineView; rank: RankView | undefined }>(({ view: d, rank }) => (
+interface DisciplineCardProps {
+  view: DisciplineView;
+  rank: RankView | undefined;
+  results: readonly ResultGroup[];
+  runs: readonly TournamentRuns[];
+}
+
+const DisciplineCard = memo<DisciplineCardProps>(({ view: d, rank, results, runs }) => (
   <section className={clsx(utils.card, classes.card)}>
     <header className={classes.head}>
       <h2 className={classes.title}>
@@ -185,7 +212,11 @@ const DisciplineCard = memo<{ view: DisciplineView; rank: RankView | undefined }
       <Stats view={d} />
       {rank?.race && <Race rank={rank} />}
     </div>
-    <Body view={d} />
+    <Body view={d}>
+      {results.map((g) => (
+        <Breakdown key={g.key} group={g} runs={runs} showPartner={results.length > 1} className={classes.breakdown} />
+      ))}
+    </Body>
   </section>
 ));
 
@@ -238,9 +269,10 @@ const Stats = memo<{ view: DisciplineView }>(({ view }) => {
   );
 });
 
-const Body = memo<{ view: DisciplineView }>(({ view: d }) => (
+const Body = memo<{ view: DisciplineView; children?: ReactNode }>(({ view: d, children }) => (
   <>
     {d.series.length > 1 && <RankChart points={d.series} live={d.active} />}
+    {children}
     {d.partners.length > 0 && <Partners rows={d.partners} label={d.active ? OTHER_PARTNERS : EARLIER_PARTNERS} />}
   </>
 ));

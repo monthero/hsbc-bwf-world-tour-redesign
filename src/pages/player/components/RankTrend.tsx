@@ -40,7 +40,7 @@ export const RankTrend = memo<{ history: HistoryView | undefined; loading: boole
         label={<Trans comment="Section title: ranking points earned over the last 52 weeks">Last 52 weeks</Trans>}
         aside={
           <button type="button" className={shared.link} onClick={onResults}>
-            <Trans comment="Link to the player’s Results tab">All results</Trans>
+            <Trans comment="Link to the points breakdown in the player’s Rankings tab">All results</Trans>
           </button>
         }
       >

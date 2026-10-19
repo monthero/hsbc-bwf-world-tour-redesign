@@ -3,11 +3,14 @@ import { z } from 'zod';
 import { EventCode, type Level } from '~/api/schemas';
 import type { MedalKind, Player, PlayerMatch, Tournament } from '~/types';
 
-export const PlayerTab = z.enum(['overview', 'matches', 'results', 'rankings', 'media']);
+export const PlayerTab = z.enum(['overview', 'matches', 'rankings', 'media']);
 export type PlayerTab = z.infer<typeof PlayerTab>;
 
 export const PlayerSearch = z.object({
-  tab: PlayerTab.optional().catch(undefined),
+  tab: z
+    .preprocess((v) => (v === 'results' ? 'rankings' : v), PlayerTab)
+    .optional()
+    .catch(undefined),
   from: z.string().optional().catch(undefined),
   season: z.number().int().optional().catch(undefined),
   event: EventCode.optional().catch(undefined),
@@ -29,7 +32,15 @@ export interface ResultGroup {
   key: string;
   ev: EventCode;
   partner: Player | null;
+  since: string | null;
   items: BreakdownItem[];
+}
+
+export interface PendingResult {
+  key: string;
+  name: string;
+  year: number;
+  result: number;
 }
 
 export interface HistoryRow {

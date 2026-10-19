@@ -23,7 +23,6 @@ import { MatchesTab } from './components/MatchesTab';
 import { MediaTab } from './components/MediaTab';
 import { OverviewTab } from './components/OverviewTab';
 import { RankingsTab } from './components/RankingsTab';
-import { ResultsTab } from './components/ResultsTab';
 import { Disciplines, SubNav } from './components/SubNav';
 import { usePlayerHistory, usePlayerMediaCount } from './hooks';
 import type { PlayerSearch, PlayerTab } from './types';
@@ -119,7 +118,7 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
     (y: number) => void navigate({ to: '.', search: (s) => ({ ...s, tab: 'matches', season: y }), resetScroll: false }),
     [navigate],
   );
-  const openResults = useCallback(() => setTab('results'), [setTab]);
+  const openResults = useCallback(() => setTab('rankings'), [setTab]);
   const openMedia = useCallback(() => setTab('media'), [setTab]);
 
   if (missing) return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={missingAction} />;
@@ -174,8 +173,9 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
               onOpenMatch={setSelected}
             />
           )}
-          {tab === 'results' && <ResultsTab history={view} loading={history.loading} />}
-          {tab === 'rankings' && <RankingsTab ranks={ranks} history={view} loading={history.loading} />}
+          {tab === 'rankings' && (
+            <RankingsTab ranks={ranks} history={view} loading={history.loading} playerId={id} matches={scoped} />
+          )}
           {tab === 'media' && <MediaTab playerId={id} matches={matches} />}
         </>
       )}

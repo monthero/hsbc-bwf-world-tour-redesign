@@ -448,6 +448,11 @@ msgstr "{winner} تغلّب على {loser}"
 msgid "{wins, plural, one {# win} other {# wins}}, {losses, plural, one {# loss} other {# losses}}"
 msgstr "{wins, plural, one {فوز واحد} two {فوزان} few {# انتصارات} many {# فوزًا} other {# فوز}}، {losses, plural, one {هزيمة واحدة} two {هزيمتان} few {# هزائم} many {# هزيمة} other {# هزيمة}}"
 
+#. Player Rankings tab, points breakdown: a finished tournament whose ranking points BWF hasn’t added yet. The world ranking is updated weekly
+#: src/pages/player/components/Breakdown.tsx
+msgid "{year} · awaiting ranking update"
+msgstr "{year} · بانتظار تحديث التصنيف"
+
 #. When a ranking result was earned: year and ranking week number (wk = week)
 #: src/pages/player/components/parts.tsx
 msgid "{year} · wk {week}"
@@ -516,7 +521,7 @@ msgid "<0>{total}</0> pts"
 msgstr "<0>{total}</0> نقطة"
 
 #. Ranking summary for one discipline: total points (pts), titles won, finals lost (runner-up), semi-finals lost (SF)
-#: src/pages/player/components/ResultsTab.tsx
+#: src/pages/player/components/Breakdown.tsx
 msgid "<0>{total}</0> pts · {gold, plural, one {# title} other {# titles}} · {silver, plural, other {# runner-up}} · {bronze, plural, other {# SF}}"
 msgstr "<0>{total}</0> نقطة · {gold, plural, one {لقب واحد} two {لقبان} few {# ألقاب} many {# لقبًا} other {# لقب}} · {silver, plural, other {# وصافة}} · {bronze, plural, other {# نصف نهائي}}"
 
@@ -624,7 +629,7 @@ msgstr "كل الوسائط"
 msgid "All meetings"
 msgstr "كل المواجهات"
 
-#. Link to the player’s Results tab
+#. Link to the points breakdown in the player’s Rankings tab
 #: src/pages/player/components/RankTrend.tsx
 msgid "All results"
 msgstr "كل النتائج"
@@ -2261,7 +2266,6 @@ msgid "No profile data for this player."
 msgstr "لا تتوفر بيانات عن هذا اللاعب."
 
 #: src/pages/player/components/RankingsTab.tsx
-#: src/pages/player/components/ResultsTab.tsx
 msgid "No ranking history on record."
 msgstr "لا يوجد سجل تصنيف."
 
@@ -2587,6 +2591,11 @@ msgstr "النقاط"
 #: src/components/match/detail/HeadToHead.tsx
 msgid "Points {pa} – {pb}"
 msgstr "النقاط {pa} – {pb}"
+
+#. Heading in the player Rankings tab: the tournament results whose points make up the current world ranking
+#: src/pages/player/components/Breakdown.tsx
+msgid "Points breakdown"
+msgstr "تفاصيل النقاط"
 
 #. Match stats row: total rallies won by each side
 #: src/components/match/detail/utils.ts
@@ -2926,11 +2935,9 @@ msgstr "أيام راحة · {first} – {last}"
 
 #. Link on a finished tournament’s card to its results
 #. Matches tab section: finished matches
-#. Player profile tab: tournament results counting toward the ranking
 #. Short status beside a finished tournament on the About page season map; links to its results
 #: src/components/tournament/TournamentCard.tsx
 #: src/pages/about/utils.ts
-#: src/pages/player/constants.ts
 #: src/pages/tournament/components/MatchesTab.tsx
 msgid "Results"
 msgstr "النتائج"

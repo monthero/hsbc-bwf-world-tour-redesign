@@ -448,6 +448,11 @@ msgstr "{winner}, {loser} 상대로 승리"
 msgid "{wins, plural, one {# win} other {# wins}}, {losses, plural, one {# loss} other {# losses}}"
 msgstr "{wins, plural, other {#승}} {losses, plural, other {#패}}"
 
+#. Player Rankings tab, points breakdown: a finished tournament whose ranking points BWF hasn’t added yet. The world ranking is updated weekly
+#: src/pages/player/components/Breakdown.tsx
+msgid "{year} · awaiting ranking update"
+msgstr "{year} · 랭킹 업데이트 대기 중"
+
 #. When a ranking result was earned: year and ranking week number (wk = week)
 #: src/pages/player/components/parts.tsx
 msgid "{year} · wk {week}"
@@ -516,7 +521,7 @@ msgid "<0>{total}</0> pts"
 msgstr "<0>{total}</0>점"
 
 #. Ranking summary for one discipline: total points (pts), titles won, finals lost (runner-up), semi-finals lost (SF)
-#: src/pages/player/components/ResultsTab.tsx
+#: src/pages/player/components/Breakdown.tsx
 msgid "<0>{total}</0> pts · {gold, plural, one {# title} other {# titles}} · {silver, plural, other {# runner-up}} · {bronze, plural, other {# SF}}"
 msgstr "<0>{total}</0>점 · {gold, plural, other {우승 #회}} · {silver, plural, other {준우승 #회}} · {bronze, plural, other {4강 #회}}"
 
@@ -624,7 +629,7 @@ msgstr "전체 미디어"
 msgid "All meetings"
 msgstr "전체 맞대결"
 
-#. Link to the player’s Results tab
+#. Link to the points breakdown in the player’s Rankings tab
 #: src/pages/player/components/RankTrend.tsx
 msgid "All results"
 msgstr "전체 성적"
@@ -2261,7 +2266,6 @@ msgid "No profile data for this player."
 msgstr "이 선수의 프로필 정보가 없습니다."
 
 #: src/pages/player/components/RankingsTab.tsx
-#: src/pages/player/components/ResultsTab.tsx
 msgid "No ranking history on record."
 msgstr "랭킹 기록이 없습니다."
 
@@ -2587,6 +2591,11 @@ msgstr "포인트"
 #: src/components/match/detail/HeadToHead.tsx
 msgid "Points {pa} – {pb}"
 msgstr "포인트 {pa} – {pb}"
+
+#. Heading in the player Rankings tab: the tournament results whose points make up the current world ranking
+#: src/pages/player/components/Breakdown.tsx
+msgid "Points breakdown"
+msgstr "포인트 내역"
 
 #. Match stats row: total rallies won by each side
 #: src/components/match/detail/utils.ts
@@ -2926,11 +2935,9 @@ msgstr "휴식일 · {first} – {last}"
 
 #. Link on a finished tournament’s card to its results
 #. Matches tab section: finished matches
-#. Player profile tab: tournament results counting toward the ranking
 #. Short status beside a finished tournament on the About page season map; links to its results
 #: src/components/tournament/TournamentCard.tsx
 #: src/pages/about/utils.ts
-#: src/pages/player/constants.ts
 #: src/pages/tournament/components/MatchesTab.tsx
 msgid "Results"
 msgstr "결과"

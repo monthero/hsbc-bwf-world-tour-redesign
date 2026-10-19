@@ -448,6 +448,11 @@ msgstr "{winner} ने {loser} को हराया"
 msgid "{wins, plural, one {# win} other {# wins}}, {losses, plural, one {# loss} other {# losses}}"
 msgstr "{wins, plural, one {# जीत} other {# जीत}}, {losses, plural, one {# हार} other {# हार}}"
 
+#. Player Rankings tab, points breakdown: a finished tournament whose ranking points BWF hasn’t added yet. The world ranking is updated weekly
+#: src/pages/player/components/Breakdown.tsx
+msgid "{year} · awaiting ranking update"
+msgstr "{year} · रैंकिंग अपडेट की प्रतीक्षा"
+
 #. When a ranking result was earned: year and ranking week number (wk = week)
 #: src/pages/player/components/parts.tsx
 msgid "{year} · wk {week}"
@@ -516,7 +521,7 @@ msgid "<0>{total}</0> pts"
 msgstr "<0>{total}</0> अंक"
 
 #. Ranking summary for one discipline: total points (pts), titles won, finals lost (runner-up), semi-finals lost (SF)
-#: src/pages/player/components/ResultsTab.tsx
+#: src/pages/player/components/Breakdown.tsx
 msgid "<0>{total}</0> pts · {gold, plural, one {# title} other {# titles}} · {silver, plural, other {# runner-up}} · {bronze, plural, other {# SF}}"
 msgstr "<0>{total}</0> अंक · {gold, plural, one {# ख़िताब} other {# ख़िताब}} · {silver, plural, other {# बार उपविजेता}} · {bronze, plural, other {# SF}}"
 
@@ -624,7 +629,7 @@ msgstr "सारा मीडिया"
 msgid "All meetings"
 msgstr "सभी मुकाबले"
 
-#. Link to the player’s Results tab
+#. Link to the points breakdown in the player’s Rankings tab
 #: src/pages/player/components/RankTrend.tsx
 msgid "All results"
 msgstr "सभी नतीजे"
@@ -2261,7 +2266,6 @@ msgid "No profile data for this player."
 msgstr "इस खिलाड़ी की प्रोफ़ाइल जानकारी उपलब्ध नहीं है।"
 
 #: src/pages/player/components/RankingsTab.tsx
-#: src/pages/player/components/ResultsTab.tsx
 msgid "No ranking history on record."
 msgstr "रैंकिंग का कोई इतिहास दर्ज नहीं है।"
 
@@ -2587,6 +2591,11 @@ msgstr "अंक"
 #: src/components/match/detail/HeadToHead.tsx
 msgid "Points {pa} – {pb}"
 msgstr "अंक {pa} – {pb}"
+
+#. Heading in the player Rankings tab: the tournament results whose points make up the current world ranking
+#: src/pages/player/components/Breakdown.tsx
+msgid "Points breakdown"
+msgstr "अंकों का ब्योरा"
 
 #. Match stats row: total rallies won by each side
 #: src/components/match/detail/utils.ts
@@ -2926,11 +2935,9 @@ msgstr "आराम के दिन · {first} – {last}"
 
 #. Link on a finished tournament’s card to its results
 #. Matches tab section: finished matches
-#. Player profile tab: tournament results counting toward the ranking
 #. Short status beside a finished tournament on the About page season map; links to its results
 #: src/components/tournament/TournamentCard.tsx
 #: src/pages/about/utils.ts
-#: src/pages/player/constants.ts
 #: src/pages/tournament/components/MatchesTab.tsx
 msgid "Results"
 msgstr "नतीजे"
