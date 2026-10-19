@@ -27,7 +27,7 @@
 }
 
 .banner {
-  height: clamp(88px, 10vw, 128px);
+  height: clamp(120px, 14vw, 240px);
   border-radius: clamp(14px, 1.6vw, 18px);
   overflow: hidden;
 

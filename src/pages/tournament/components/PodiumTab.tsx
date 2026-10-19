@@ -3,7 +3,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
-import { EventTag, TeamPlayers, TimedStatus } from '~/components/match';
+import { TeamPlayers, TimedStatus } from '~/components/match';
 import { AvatarGroup, SeedTag } from '~/components/player';
 import { Medal } from '~/components/tournament';
 import { SectionTitle, Tip } from '~/components/ui';
@@ -175,8 +175,9 @@ const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
 const CardHead: FC<{ data: PodiumEvent; note?: string }> = ({ data, note }) => {
   return (
     <div className={classes.head}>
-      <EventTag event={data.event} tip={false} />
-      <span className={classes.name}>{data.name}</span>
+      <span className={clsx(classes.name, classes.eventName, discipline.tone)} data-event={data.event}>
+        {data.name}
+      </span>
       {note && <span className={classes.note}>{note}</span>}
     </div>
   );
@@ -186,9 +187,7 @@ const MedalCard = memo<{ data: PodiumEvent; dir: PlayerDirectory | undefined }>(
   const [champion, ...rest] = e.places;
   return (
     <div className={clsx(utils.card, classes.card, classes.medalCard)}>
-      <span className={clsx(classes.name, classes.eventName, discipline.tone)} data-event={e.event}>
-        {e.name}
-      </span>
+      <CardHead data={e} />
       {champion && <ChampionBlock place={champion} event={e.event} dir={dir} />}
       {rest.map((p) => (
         <PlaceList key={p.medal} place={p} event={e.event} dir={dir} />
