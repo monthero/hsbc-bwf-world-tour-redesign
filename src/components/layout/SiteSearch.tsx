@@ -14,12 +14,14 @@ import {
   useState,
   type FocusEvent,
   type KeyboardEvent,
+  type Ref,
 } from 'react';
 
 import { Flag } from '~/components/country';
 import { PlayerAvatar, PlayerName, RetiredBadge } from '~/components/player';
 import { LevelBadge, LogoTile, TournamentStatusBadge } from '~/components/tournament';
-import { IconClose, IconSearch } from '~/components/ui';
+import { BottomSheet, IconClose, IconSearch, SearchField } from '~/components/ui';
+import { useIsMobile } from '~/hooks/useIsMobile';
 import type { PlayerSearchEntry } from '~/hooks/usePlayers';
 import { useSiteSearch, type SiteSearchResults } from '~/hooks/useSiteSearch';
 import { useSearchStore } from '~/stores/search';
@@ -38,6 +40,18 @@ const GROUP_CLASSES = { groupLabel: classes.group };
 const DROPDOWN_TRANSITION = { transition: 'pop-top-right', duration: 160 } as const;
 
 const hasHits = (r: SiteSearchResults) => r.players.length > 0 || r.tournaments.length > 0;
+
+const useOpenResult = () => {
+  const navigate = useNavigate();
+  return useCallback(
+    (value: string) => {
+      const [kind = '', a = '', b = ''] = value.split(SEP);
+      if (kind === 'p') void navigate({ to: '/players/$id', params: { id: a } });
+      else void navigate({ to: '/world-tour/$year/$slug', params: { year: a, slug: b } });
+    },
+    [navigate],
+  );
+};
 
 const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, standing, retired } }) => {
   const hint = standingHint(standing);
@@ -75,7 +89,131 @@ const TournamentOption = memo<{ tournament: Tournament }>(({ tournament: t }) =>
   </Combobox.Option>
 ));
 
-export const SiteSearch = memo<{ className?: string }>(({ className }) => {
+const Results = memo<{ results: SiteSearchResults; ready: boolean; typed: string }>(({ results, ready, typed }) => {
+  const { t } = useLingui();
+  return (
+    <>
+      <Combobox.Options aria-label={t`Search results`}>
+        {results.tournaments.length > 0 && (
+          <Combobox.Group label={t`Tournaments`} classNames={GROUP_CLASSES}>
+            {results.tournaments.map((e) => (
+              <TournamentOption key={e.tournament.code} tournament={e.tournament} />
+            ))}
+          </Combobox.Group>
+        )}
+        {results.players.length > 0 && (
+          <Combobox.Group label={t`Players`} classNames={GROUP_CLASSES}>
+            {results.players.map((e) => (
+              <PlayerOption key={e.player.id} entry={e} />
+            ))}
+          </Combobox.Group>
+        )}
+      </Combobox.Options>
+      {!ready && (
+        <div className={classes.hint}>
+          <Loader color="red" size="xs" />
+        </div>
+      )}
+      {ready && !hasHits(results) && (
+        <p className={classes.hint}>
+          <Trans comment="Site search empty state; {typed} is what the visitor typed">Nothing matches “{typed}”.</Trans>
+        </p>
+      )}
+    </>
+  );
+});
+
+const SearchTrigger = memo<{
+  ref?: Ref<HTMLButtonElement>;
+  expanded: boolean;
+  controls?: string;
+  hidden?: boolean;
+  onClick: () => void;
+}>(({ ref, expanded, controls, hidden, onClick }) => {
+  const { t } = useLingui();
+  return (
+    <button
+      ref={ref}
+      type="button"
+      className={classes.trigger}
+      onClick={onClick}
+      aria-label={t({
+        message: `Search players and tournaments (${MOD_KEY} K)`,
+        comment: 'Search button accessible name with its keyboard shortcut; {MOD_KEY} is Ctrl or ⌘',
+      })}
+      aria-expanded={expanded}
+      aria-controls={controls}
+      tabIndex={hidden ? -1 : undefined}
+    >
+      <IconSearch />
+    </button>
+  );
+});
+
+const SheetSearch = memo<{ onDone: () => void }>(({ onDone }) => {
+  const [query, setQuery] = useState('');
+  const deferred = useDeferredValue(query);
+  const { results, ready, searching } = useSiteSearch(deferred, true);
+  const combobox = useCombobox();
+  const { selectFirstOption } = combobox;
+  const openResult = useOpenResult();
+  const { i18n } = useLingui();
+  const label = i18n._(LABEL);
+
+  useEffect(() => {
+    if (hasHits(results)) selectFirstOption();
+  }, [results, selectFirstOption]);
+
+  const onSubmit = useCallback(
+    (value: string) => {
+      onDone();
+      openResult(value);
+    },
+    [onDone, openResult],
+  );
+
+  return (
+    <Combobox store={combobox} onOptionSubmit={onSubmit}>
+      <div className={classes.sheetHead}>
+        <Combobox.EventsTarget>
+          <SearchField
+            size="lg"
+            value={query}
+            onChange={setQuery}
+            placeholder={label}
+            aria-label={label}
+            enterKeyHint="go"
+            data-autofocus
+            className={classes.sheetField}
+          />
+        </Combobox.EventsTarget>
+      </div>
+      <div className={classes.sheetResults}>
+        {searching && <Results results={results} ready={ready} typed={deferred.trim()} />}
+      </div>
+    </Combobox>
+  );
+});
+
+const MobileSearch = memo<{ className?: string }>(({ className }) => {
+  const open = useSearchStore((s) => s.open);
+  const setOpen = useSearchStore((s) => s.setOpen);
+  const expand = useCallback(() => setOpen(true), [setOpen]);
+  const close = useCallback(() => setOpen(false), [setOpen]);
+
+  useHotkeys([['mod+K', expand]]);
+
+  return (
+    <div className={clsx(classes.search, className)}>
+      <SearchTrigger expanded={open} onClick={expand} />
+      <BottomSheet opened={open} onClose={close} handle bodyClassName={classes.sheetBody}>
+        <SheetSearch onDone={close} />
+      </BottomSheet>
+    </div>
+  );
+});
+
+const HeaderSearch = memo<{ className?: string }>(({ className }) => {
   const open = useSearchStore((s) => s.open);
   const setOpen = useSearchStore((s) => s.setOpen);
   const [query, setQuery] = useState('');
@@ -83,7 +221,7 @@ export const SiteSearch = memo<{ className?: string }>(({ className }) => {
   const { results, ready, searching } = useSiteSearch(deferred, open);
   const combobox = useCombobox({ opened: open && searching, loop: true });
   const { selectFirstOption } = combobox;
-  const navigate = useNavigate();
+  const openResult = useOpenResult();
   const fieldId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -147,35 +285,18 @@ export const SiteSearch = memo<{ className?: string }>(({ className }) => {
 
   const onSubmit = useCallback(
     (value: string) => {
-      const [kind = '', a = '', b = ''] = value.split(SEP);
       collapse(false);
       inputRef.current?.blur();
-      if (kind === 'p') void navigate({ to: '/players/$id', params: { id: a } });
-      else void navigate({ to: '/world-tour/$year/$slug', params: { year: a, slug: b } });
+      openResult(value);
     },
-    [navigate, collapse],
+    [collapse, openResult],
   );
 
   const onClose = useCallback(() => collapse(true), [collapse]);
-  const typed = deferred.trim();
 
   return (
     <div ref={rootRef} className={clsx(classes.search, className)} data-open={open || undefined} onBlur={onBlur}>
-      <button
-        ref={triggerRef}
-        type="button"
-        className={classes.trigger}
-        onClick={expand}
-        aria-label={t({
-          message: `Search players and tournaments (${MOD_KEY} K)`,
-          comment: 'Search button accessible name with its keyboard shortcut; {MOD_KEY} is Ctrl or ⌘',
-        })}
-        aria-expanded={open}
-        aria-controls={fieldId}
-        tabIndex={open ? -1 : undefined}
-      >
-        <IconSearch />
-      </button>
+      <SearchTrigger ref={triggerRef} expanded={open} controls={fieldId} hidden={open} onClick={expand} />
       <Combobox
         store={combobox}
         onOptionSubmit={onSubmit}
@@ -205,37 +326,14 @@ export const SiteSearch = memo<{ className?: string }>(({ className }) => {
         </Combobox.DropdownTarget>
         <Combobox.Dropdown ref={dropdownRef} className={clsx(utils.popover, classes.dropdown)}>
           <div className={classes.results}>
-            <Combobox.Options aria-label={t`Search results`}>
-              {results.tournaments.length > 0 && (
-                <Combobox.Group label={t`Tournaments`} classNames={GROUP_CLASSES}>
-                  {results.tournaments.map((e) => (
-                    <TournamentOption key={e.tournament.code} tournament={e.tournament} />
-                  ))}
-                </Combobox.Group>
-              )}
-              {results.players.length > 0 && (
-                <Combobox.Group label={t`Players`} classNames={GROUP_CLASSES}>
-                  {results.players.map((e) => (
-                    <PlayerOption key={e.player.id} entry={e} />
-                  ))}
-                </Combobox.Group>
-              )}
-            </Combobox.Options>
-            {!ready && (
-              <div className={classes.hint}>
-                <Loader color="red" size="xs" />
-              </div>
-            )}
-            {ready && !hasHits(results) && (
-              <p className={classes.hint}>
-                <Trans comment="Site search empty state; {typed} is what the visitor typed">
-                  Nothing matches “{typed}”.
-                </Trans>
-              </p>
-            )}
+            <Results results={results} ready={ready} typed={deferred.trim()} />
           </div>
         </Combobox.Dropdown>
       </Combobox>
     </div>
   );
 });
+
+export const SiteSearch = memo<{ className?: string }>(({ className }) =>
+  useIsMobile() ? <MobileSearch className={className} /> : <HeaderSearch className={className} />,
+);
