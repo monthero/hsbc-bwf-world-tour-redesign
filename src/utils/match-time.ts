@@ -166,9 +166,7 @@ const SOON_MIN = 60;
 export const nextLabel = (start: ClockTime, kind: NextKind, now: Dayjs) => {
   const today = now.utcOffset(start.at.utcOffset()).format(ISO_DAY);
   const days = dayjs.utc(start.at.format(ISO_DAY)).diff(dayjs.utc(today), 'day');
-  if (days === 1)
-    return t({ message: 'Tomorrow', comment: 'When a player’s next match is: it is scheduled for tomorrow' });
-  if (days > 1) return formatWall(start.at, WEEKDAY);
+  if (days > 0) return null;
   if (kind === 'later' || days < 0)
     return t({
       message: 'Next',

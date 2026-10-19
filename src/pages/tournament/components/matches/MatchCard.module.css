@@ -118,6 +118,10 @@
   min-width: 0;
 }
 
+.note[data-note='Walkover'] {
+  margin-inline-start: auto;
+}
+
 .players {
   min-width: 0;
   font-size: 15px;

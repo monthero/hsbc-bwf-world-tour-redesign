@@ -1,29 +1,24 @@
-import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react';
-import HandBold from '~icons/ph/hand-palm-fill';
 
-import type { LiveServer, MatchStats } from '~/api/bwf/normalize';
 import type { MediaItem } from '~/api/schemas';
-import { ServeMark, TeamPlayers } from '~/components/match';
+import { ChallengeStocks, medalStake, ServeMark, StreakMark, TeamPlayers } from '~/components/match';
 import { WatchButton } from '~/components/media';
 import { AvatarGroup } from '~/components/player';
-import { CardHit, Duration, IconFire, StatusChip, type StatusTone, InfoTip, Tip } from '~/components/ui';
+import { CardHit, Duration, StatusChip, type StatusTone } from '~/components/ui';
 import type { Game, Match, Player, Side } from '~/types';
 import {
   CHALLENGE_LABELS,
-  CHALLENGE_RULE,
-  challengeHeadline,
-  challengeRows,
-  challengeTip,
+  CHALLENGE_REVIEW,
+  GAME_SHORT,
+  LONGEST_RUN,
+  RALLY_POINTS,
   type ChallengeOutcome,
-  type ChallengeResult,
-  type LiveStats,
 } from '~/utils/live';
 import { gameWon } from '~/utils/matches';
 
-import { toLiveView, type LiveView, type SideView } from './liveView';
+import type { LiveView, SideView } from './liveView';
 import { matchTitle } from './utils';
 
 import classes from './LiveCard.module.css';
@@ -32,57 +27,20 @@ import utils from '~/styles/utils.module.css';
 const AVATAR = 34;
 const CHALLENGE_TONES: Record<ChallengeOutcome, StatusTone> = { won: 'green', lost: 'red', void: 'silver' };
 
-const STREAK = msg({
-  message: '{n, plural, one {# in a row} other {# in a row}}',
-  comment: 'Live score: points won in a row by one side without the opponent scoring',
-});
-
-const ChallengeCount: FC<{ side: SideView }> = ({ side: { stats, left } }) => {
+const Tags: FC<{ side: SideView }> = ({ side: s }) => {
   const { i18n } = useLingui();
-  if (!stats || left === null) return null;
-  const tip = challengeTip(stats, left);
-  const card = (
-    <InfoTip title={challengeHeadline(left)} subtitle={i18n._(CHALLENGE_RULE)} rows={challengeRows(stats)} inline />
-  );
+  const review = i18n._(CHALLENGE_REVIEW);
   return (
-    <Tip label={card}>
-      <span className={clsx(utils.raise, classes.challenge)} data-left={left} aria-label={tip}>
-        <HandBold className={classes.challengeIcon} aria-hidden />
-        {left}
-      </span>
-    </Tip>
+    <span className={classes.tags}>
+      <ChallengeStocks stats={s.stats} left={s.left} />
+      {s.result && <StatusChip tone="green">{s.result}</StatusChip>}
+      {s.call && <StatusChip tone="gold">{s.call}</StatusChip>}
+      {s.streak > 0 && <StreakMark n={s.streak} />}
+      {s.review && <StatusChip tone="blue">{review}</StatusChip>}
+      {s.recent && <StatusChip tone={CHALLENGE_TONES[s.recent]}>{CHALLENGE_LABELS[s.recent]}</StatusChip>}
+    </span>
   );
 };
-
-const Streak: FC<{ n: number }> = ({ n }) => {
-  const { i18n } = useLingui();
-  const label = i18n._({ ...STREAK, values: { n } });
-  return (
-    <Tip label={label}>
-      <span className={clsx(utils.raise, classes.challenge, classes.streak)} aria-label={label}>
-        <IconFire className={classes.challengeIcon} />
-        {n}
-      </span>
-    </Tip>
-  );
-};
-
-const REVIEW = (
-  <Trans comment="Live score chip: a player challenged a line call and the video review (Hawk-Eye) is in progress">
-    Challenge · under review
-  </Trans>
-);
-
-const Tags: FC<{ side: SideView }> = ({ side: s }) => (
-  <span className={classes.tags}>
-    <ChallengeCount side={s} />
-    {s.result && <StatusChip tone="green">{s.result}</StatusChip>}
-    {s.call && <StatusChip tone="gold">{s.call}</StatusChip>}
-    {s.streak > 0 && <Streak n={s.streak} />}
-    {s.review && <StatusChip tone="blue">{REVIEW}</StatusChip>}
-    {s.recent && <StatusChip tone={CHALLENGE_TONES[s.recent]}>{CHALLENGE_LABELS[s.recent]}</StatusChip>}
-  </span>
-);
 
 const GameScore: FC<{ game: Game; side: Side }> = ({ game, side }) => (
   <span className={classes.prev} data-won={gameWon(game, side) || undefined}>
@@ -126,13 +84,10 @@ const TeamRow: FC<{ view: LiveView; side: SideView }> = ({ view: v, side: s }) =
   );
 };
 
-const GameHead: FC<{ n: number; className: string | undefined }> = ({ n, className }) => (
-  <span className={className}>
-    <Trans comment="Live score column heading for a game, e.g. G1 = game 1. Keep it to about two characters">
-      G{n}
-    </Trans>
-  </span>
-);
+const GameHead: FC<{ n: number; className: string | undefined }> = ({ n, className }) => {
+  const { i18n } = useLingui();
+  return <span className={className}>{i18n._({ ...GAME_SHORT, values: { n } })}</span>;
+};
 
 const FootStat: FC<{ label: string; a: number; b: number }> = ({ label, a, b }) => (
   <span className={classes.foot}>
@@ -145,16 +100,12 @@ const FootStat: FC<{ label: string; a: number; b: number }> = ({ label, a, b }) 
 
 export const LiveCard = memo<{
   match: Match;
-  stats: LiveStats | null;
-  game: MatchStats | null;
-  challenge: ChallengeResult | null;
-  server?: LiveServer;
+  view: LiveView;
   stream?: MediaItem;
   onOpen: (id: string) => void;
   className?: string;
-}>(({ match: m, stats, game, challenge, server, stream, onOpen, className }) => {
-  const { t } = useLingui();
-  const v = useMemo(() => toLiveView(m, stats, game, challenge, server), [m, stats, game, challenge, server]);
+}>(({ match: m, view: v, stream, onOpen, className }) => {
+  const { t, i18n } = useLingui();
   const [a, b] = v.sides;
   const { court, gameNo } = v;
   const title = matchTitle(m);
@@ -166,7 +117,7 @@ export const LiveCard = memo<{
     [v.server, v.games.length],
   );
   return (
-    <div className={clsx(utils.live, classes.card, className)}>
+    <div className={clsx(utils.live, classes.card, className)} data-medal={!!medalStake(m.round) || undefined}>
       <CardHit
         label={t({
           message: `Live match details: ${title}`,
@@ -179,7 +130,11 @@ export const LiveCard = memo<{
           <span className={classes.court}>
             <Trans comment="The court a match is played on, e.g. “Court 2”">Court {court}</Trans>
           </span>
-          <span className={utils.ellipsis}>{v.where}</span>
+          <span className={classes.what}>
+            <span className={utils.ellipsis}>{v.event}</span>
+            <span aria-hidden>·</span>
+            <span className={classes.round}>{v.round}</span>
+          </span>
         </span>
         <span className={classes.headEnd}>
           {v.status && <StatusChip tone={v.status.tone}>{v.status.label}</StatusChip>}
@@ -200,25 +155,8 @@ export const LiveCard = memo<{
       </div>
       <div className={classes.footer}>
         <span className={classes.stats}>
-          <FootStat
-            label={t({
-              message: 'Points',
-              context: 'rally',
-              comment: 'Live score footer: total points won by each side in the match',
-            })}
-            a={a.points}
-            b={b.points}
-          />
-          {a.stats && b.stats && (
-            <FootStat
-              label={t({
-                message: 'Longest run',
-                comment: 'Live score footer: the most points each side won in a row without the opponent scoring',
-              })}
-              a={a.stats.longestRun}
-              b={b.stats.longestRun}
-            />
-          )}
+          <FootStat label={i18n._(RALLY_POINTS)} a={a.points} b={b.points} />
+          {a.stats && b.stats && <FootStat label={i18n._(LONGEST_RUN)} a={a.stats.longestRun} b={b.stats.longestRun} />}
         </span>
         {stream && <WatchButton item={stream} className={classes.watch} />}
       </div>

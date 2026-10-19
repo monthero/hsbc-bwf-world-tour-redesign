@@ -14,7 +14,7 @@ import { FormStrip, OutcomeBadge } from '../Outcome';
 import { CompareLine } from './CompareLine';
 import { SideNames } from './SideNames';
 import { useMatchInsights } from './useMatchInsights';
-import { shareOf, type Meeting } from './utils';
+import { ALL_TIME, FORM, HEAD_TO_HEAD, shareOf, THIS_SEASON, type Meeting } from './utils';
 
 import classes from './MatchDetail.module.css';
 import utils from '~/styles/utils.module.css';
@@ -24,11 +24,11 @@ type Scope = 'season' | 'all';
 const SCOPES: readonly LazyOption<Scope>[] = [
   {
     value: 'season',
-    label: msg({ message: 'This season', comment: 'Head-to-head toggle: only meetings this season' }),
+    label: THIS_SEASON,
   },
   {
     value: 'all',
-    label: msg({ message: 'All time', comment: 'Head-to-head toggle: every World Tour meeting since 2018' }),
+    label: ALL_TIME,
   },
 ];
 
@@ -132,7 +132,7 @@ export const HeadToHead = memo<{ match: Match; tournament: Tournament; className
           as="h3"
           aside={<Segmented className={classes.scope} options={scopes} value={scope} onChange={onScope} height={26} />}
         >
-          <Trans comment="Match detail section comparing the two sides’ records against each other">Head-to-head</Trans>
+          {i18n._(HEAD_TO_HEAD)}
         </SectionTitle>
         <SideNames teams={match.teams} className={classes.stickyNames} />
         <div className={classes.winsBlock}>
@@ -159,10 +159,7 @@ export const HeadToHead = memo<{ match: Match; tournament: Tournament; className
           ))}
           {hasForm && (
             <CompareLine
-              label={t({
-                message: 'Form',
-                comment: 'Head-to-head row: each side’s results in their last five matches',
-              })}
+              label={i18n._(FORM)}
               a={<FormStrip items={history.formA} variant="dot" />}
               b={<FormStrip items={history.formB} variant="dot" align="end" />}
             />

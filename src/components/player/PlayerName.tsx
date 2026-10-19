@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { use, useMemo, type FC, type MouseEvent } from 'react';
+import { use, useMemo, useState, type CSSProperties, type FC, type MouseEvent, type ReactNode } from 'react';
 
 import { PlayerHoverContext } from '~/contexts';
 import { useFitLevel } from '~/hooks/useFitLevel';
@@ -46,31 +46,36 @@ export const PlayerName: FC<{
   className?: string;
   firstClassName?: string;
   lastClassName?: string;
-}> = ({ player, link = true, layout = 'inline', short, fit, className, firstClassName, lastClassName }) => {
+  end?: ReactNode;
+}> = ({ player, link = true, layout = 'inline', short, fit, className, firstClassName, lastClassName, end }) => {
   const search = usePlayerLinkSearch();
   const renderHover = use(PlayerHoverContext);
   const forms = useMemo(
     () => (fit && !short && layout === 'inline' ? nameForms(player) : NO_FORMS),
     [fit, short, layout, player],
   );
-  const [sizer, level] = useFitLevel<HTMLSpanElement>();
+  const [trail, setTrail] = useState<HTMLSpanElement | null>(null);
+  const [sizer, level, reserve] = useFitLevel<HTMLSpanElement>(trail);
   const fitted = forms.length > 0;
+  const boxed = fitted && end !== undefined;
+  const inline = fitted && !boxed;
   const parts = { surnameFirst: player.surnameFirst, layout, firstClassName, lastClassName };
+  const measures = fitted && (
+    <span key={forms.length} ref={sizer} className={classes.sizer} aria-hidden>
+      {forms.map((form) => (
+        <span key={`${form.first} ${form.last}`} className={classes.measure}>
+          <NameParts {...parts} form={form} />
+        </span>
+      ))}
+    </span>
+  );
   const body = short ? (
     <span className={lastClassName} data-strong>
       {player.surname}
     </span>
   ) : (
     <>
-      {fitted && (
-        <span key={forms.length} ref={sizer} className={classes.sizer} aria-hidden>
-          {forms.map((form) => (
-            <span key={`${form.first} ${form.last}`} className={classes.measure}>
-              <NameParts {...parts} form={form} />
-            </span>
-          ))}
-        </span>
-      )}
+      {inline && measures}
       <NameParts {...parts} form={forms[level] ?? player} />
     </>
   );
@@ -78,7 +83,7 @@ export const PlayerName: FC<{
   const label = fitted && level > 0 ? player.name : undefined;
   const named =
     !link || !player.id ? (
-      <span className={cls} data-layout={layout} data-fit={fitted || undefined} aria-label={label} translate="no">
+      <span className={cls} data-layout={layout} data-fit={inline || undefined} aria-label={label} translate="no">
         {body}
       </span>
     ) : (
@@ -88,7 +93,7 @@ export const PlayerName: FC<{
         search={search}
         className={cls}
         data-layout={layout}
-        data-fit={fitted || undefined}
+        data-fit={inline || undefined}
         aria-label={label}
         translate="no"
         onClick={stop}
@@ -96,5 +101,24 @@ export const PlayerName: FC<{
         {body}
       </Link>
     );
-  return link && player.id && renderHover ? renderHover(player.id, named) : named;
+  const hovered = link && player.id && renderHover ? renderHover(player.id, named) : named;
+  if (end === undefined) return hovered;
+  if (!boxed)
+    return (
+      <>
+        {hovered}
+        {end}
+      </>
+    );
+  return (
+    <span className={classes.fit} style={{ '--fit-reserve': `${reserve}px` } as CSSProperties}>
+      {measures}
+      <span className={classes.line}>
+        {hovered}
+        <span ref={setTrail} className={classes.trail}>
+          {end}
+        </span>
+      </span>
+    </span>
+  );
 };

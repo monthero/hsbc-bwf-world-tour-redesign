@@ -9,10 +9,10 @@ import { Duration, IconCheck, LiveDot, StatusChip } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import type { Game, Match, Player, Side, Tournament } from '~/types';
 import { gameDone, livePhase, liveStatus, pointCall, servingPlayer } from '~/utils/live';
-import { allGames, gameWon, isDoubles, opposite, sideResult } from '~/utils/matches';
+import { allGames, gameWon, isDoubles, sideResult } from '~/utils/matches';
 
 import { MatchNote } from '../EventTag';
-import { MatchTime } from '../MatchTime';
+import { ScheduledStart } from '../MatchTime';
 import { ServeMark } from '../ServeMark';
 import { TeamPlayers } from '../TeamPlayers';
 
@@ -69,19 +69,7 @@ const Status: FC<{ match: Match }> = ({ match: m }) => {
         <MatchNote match={m} form="long" />
       </>
     );
-  return (
-    <span className={classes.sbState}>
-      {m.time ? (
-        <>
-          <Trans comment="Scoreboard status for a scheduled match: it starts at this time or later, e.g. “Not before 14:30”">
-            Not before <MatchTime match={m} className={classes.sbTime} />
-          </Trans>
-        </>
-      ) : (
-        <Trans>Time to be announced</Trans>
-      )}
-    </span>
-  );
+  return <ScheduledStart match={m} className={classes.sbState} timeClassName={classes.sbTime} />;
 };
 
 const SideRow = memo<{
@@ -97,7 +85,7 @@ const SideRow = memo<{
   const live = result === 'live';
   const serving = live && !server && livePhase(m) === 'play' && m.serve === side + 1;
   const call = live ? pointCall(m, side) : null;
-  const leading = !!m.current && m.current[side] > m.current[opposite(side)];
+  const leading = !!m.current && gameDone(m.current) && gameWon(m.current, side);
   const before = useCallback((p: Player) => <SideAvatar player={p} size={avatar} />, [avatar]);
   const after = useCallback((p: Player) => p.id === server && <ServeMark />, [server]);
   const { t } = useLingui();

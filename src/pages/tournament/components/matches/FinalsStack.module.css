@@ -1,0 +1,19 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-top: 24px;
+  padding-bottom: 72px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    gap: 24px;
+    padding-top: 14px;
+    padding-bottom: 96px;
+  }
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

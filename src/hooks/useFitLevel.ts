@@ -8,16 +8,27 @@ const shared = () =>
     new Set(entries.map((e) => callbacks.get(e.target))).forEach((cb) => cb?.());
   }));
 
-export const useFitLevel = <T extends HTMLElement>() => {
+const trailSpace = (trail: HTMLElement | null | undefined) => {
+  const width = trail?.getBoundingClientRect().width ?? 0;
+  const line = trail?.parentElement;
+  if (!width || !line) return 0;
+  return width + (Number.parseFloat(getComputedStyle(line).columnGap) || 0);
+};
+
+export const useFitLevel = <T extends HTMLElement>(trail?: HTMLElement | null) => {
   const [box, setBox] = useState<T | null>(null);
   const [level, setLevel] = useState(0);
+  const [reserve, setReserve] = useState(0);
   useLayoutEffect(() => {
     if (!box) return;
-    const els = [box, ...box.children];
+    const forms = [...box.children];
+    const els = trail ? [box, trail, ...forms] : [box, ...forms];
     const measure = () => {
-      const room = box.getBoundingClientRect().width;
-      const fit = els.slice(1).findIndex((el) => el.getBoundingClientRect().width <= room);
-      setLevel(fit < 0 ? els.length - 2 : fit);
+      const space = trailSpace(trail);
+      const room = box.getBoundingClientRect().width - space;
+      const fit = forms.findIndex((el) => el.getBoundingClientRect().width <= room);
+      setReserve(space);
+      setLevel(fit < 0 ? forms.length - 1 : fit);
     };
     measure();
     const ro = shared();
@@ -30,6 +41,6 @@ export const useFitLevel = <T extends HTMLElement>() => {
         callbacks.delete(el);
         ro.unobserve(el);
       });
-  }, [box]);
-  return [setBox, level] as const;
+  }, [box, trail]);
+  return [setBox, level, reserve] as const;
 };

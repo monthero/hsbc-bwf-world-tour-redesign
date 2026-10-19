@@ -1,8 +1,13 @@
-export { EventTag, MatchNote, NoteTag, type NoteTone } from './EventTag';
+export { ChallengeStocks } from './ChallengeStocks';
+export { EventTag, MatchNote, NoteTag, SideNote } from './EventTag';
 export { LiveMark } from './LiveMark';
 export { MatchDetailModal } from './MatchDetailModal';
-export { MatchTime, TimedStatus } from './MatchTime';
+export { ALL_TIME, CompareLine, FORM, HEAD_TO_HEAD, THIS_SEASON, useMatchInsights } from './detail';
+export { MedalMark, SideMedal } from './MedalMark';
+export { medalStake, sideMedal, type MedalStake } from './medals';
+export { MatchTime, ScheduledStart, TimedStatus } from './MatchTime';
 export { FormStrip, OutcomeBadge, OutcomeLabel } from './Outcome';
 export { ScoreChips, SideScores } from './ScoreChips';
 export { ServeMark } from './ServeMark';
+export { StreakMark } from './StreakMark';
 export { TeamLabel, TeamPlayers } from './TeamPlayers';

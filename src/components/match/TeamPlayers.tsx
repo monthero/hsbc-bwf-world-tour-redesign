@@ -64,26 +64,34 @@ export const TeamPlayers = memo<{
         data-slots={!!(aside || end) || undefined}
       >
         {players.length
-          ? players.map((p, i) => (
-              <span key={p.id || p.name} className={classes.player}>
-                {before?.(p, i)}
-                {flag && (
-                  <Wrap when={wrap} className={classes.flagLine}>
-                    <Flag cc={p.cc} size={flag} />
-                  </Wrap>
-                )}
-                <Wrap when={wrap} className={classes.nameLine}>
-                  <PlayerName
-                    player={p}
-                    link={typeof link === 'function' ? link(p) : link}
-                    fit={!wrap}
-                    className={clsx(classes.name, nameClassName)}
-                  />
+          ? players.map((p, i) => {
+              const trail = (
+                <>
                   {i === 0 && !pairSeed && <SeedTag seed={seed} />}
                   {after?.(p, i)}
-                </Wrap>
-              </span>
-            ))
+                </>
+              );
+              return (
+                <span key={p.id || p.name} className={classes.player}>
+                  {before?.(p, i)}
+                  {flag && (
+                    <Wrap when={wrap} className={classes.flagLine}>
+                      <Flag cc={p.cc} size={flag} />
+                    </Wrap>
+                  )}
+                  <Wrap when={wrap} className={classes.nameLine}>
+                    <PlayerName
+                      player={p}
+                      link={typeof link === 'function' ? link(p) : link}
+                      fit={!wrap}
+                      end={wrap ? undefined : trail}
+                      className={clsx(classes.name, nameClassName)}
+                    />
+                    {wrap && trail}
+                  </Wrap>
+                </span>
+              );
+            })
           : blank && <span className={classes.player}>{blank}</span>}
         {pairSeed && <SeedTag seed={seed} className={classes.pairSeed} />}
         {aside && <span className={classes.aside}>{aside}</span>}

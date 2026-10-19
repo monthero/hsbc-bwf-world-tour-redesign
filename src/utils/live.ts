@@ -46,6 +46,32 @@ export const CHALLENGE_LABELS: Record<ChallengeOutcome, string> = lazyRecord({
   }),
 });
 
+export const CHALLENGE_REVIEW = msg({
+  message: 'Challenge · under review',
+  comment: 'Live score chip: a player challenged a line call and the video review (Hawk-Eye) is in progress',
+});
+
+export const RALLY_POINTS = msg({
+  message: 'Points',
+  context: 'rally',
+  comment: 'Live score footer: total points won by each side in the match',
+});
+
+export const LONGEST_RUN = msg({
+  message: 'Longest run',
+  comment: 'Live score footer: the most points each side won in a row without the opponent scoring',
+});
+
+export const STREAK_LABEL = msg({
+  message: '{n, plural, one {# in a row} other {# in a row}}',
+  comment: 'Live score: points won in a row by one side without the opponent scoring',
+});
+
+export const GAME_SHORT = msg({
+  message: 'G{n}',
+  comment: 'Live score column heading for a game, e.g. G1 = game 1. Keep it to about two characters',
+});
+
 export const CHALLENGES_PER_GAME = 2;
 
 export const challengesLeft = (lost: number) => Math.max(0, CHALLENGES_PER_GAME - lost);
@@ -184,10 +210,18 @@ export const trackLiveStats = (prev: LiveStats | null | undefined, sides: MatchS
 
 const hasGamePoint = (own: number, opp: number) => own >= GAME_TO - 1 && (own > opp || own === GAME_CAP - 1);
 
-export const pointCall = (m: Match, side: Side) => {
+export type CallKind = 'game' | 'match';
+
+export const pointCallKind = (m: Match, side: Side): CallKind | null => {
   const g = m.current;
   if (!g || gameDone(g) || !hasGamePoint(g[side], g[opposite(side)])) return null;
-  return m.games.some((x) => gameWon(x, side))
+  return m.games.some((x) => gameWon(x, side)) ? 'match' : 'game';
+};
+
+export const pointCall = (m: Match, side: Side) => {
+  const kind = pointCallKind(m, side);
+  if (!kind) return null;
+  return kind === 'match'
     ? t({
         message: 'Match point',
         comment: 'Live match: this side wins the whole match if it wins the next rally',

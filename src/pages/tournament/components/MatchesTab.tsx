@@ -14,10 +14,11 @@ import { useOpenMatch } from '../hooks';
 import type { TabProps } from '../types';
 import { DayPicker } from './matches/DayPicker';
 import { CondensedFilters, InlineFilters, MobileFilters } from './matches/FilterBars';
+import { FinalsStack } from './matches/FinalsStack';
 import { LiveSection } from './matches/LiveSection';
 import { MatchGroups } from './matches/MatchGroups';
 import { useMatchFilters } from './matches/useMatchFilters';
-import { buildView, filterBase, isSettled, type MatchesView } from './matches/utils';
+import { buildView, filterBase, followedBy, isFinalsDay, type MatchesView } from './matches/utils';
 
 import page from '../TournamentPage.module.css';
 import classes from './MatchesTab.module.css';
@@ -33,6 +34,7 @@ const emptyMessage = (
   view: MatchesView,
   following: boolean,
   followCount: number,
+  finals: boolean,
 ) => {
   const day = d?.shortLabel ?? '';
   if (d?.isRest)
@@ -46,8 +48,8 @@ const emptyMessage = (
       comment:
         'Matches tab empty state for a future day. The order of play is the daily match schedule. {day} is e.g. "Wed 15"',
     });
-  if (view.upcoming.count || view.results.count) return '';
-  if (view.liveIn)
+  if (finals ? view.ordered.length : view.upcoming.count || view.results.count) return '';
+  if (view.liveIn && !finals)
     return t({
       message: 'Only live matches match these filters — see Live now above.',
       comment: 'Matches tab empty state. Live now is the title of the live matches section above',
@@ -79,13 +81,17 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
     () => (days[todayIndex]?.matches ?? NO_MATCHES).filter((m) => m.status === 'P').sort(byCourt),
     [days, todayIndex],
   );
-  const base = useMemo(() => filterBase(dayMatches, q, f.following, matcher), [dayMatches, q, f.following, matcher]);
+  const followed = useMemo(() => followedBy(matcher), [matcher]);
+  const sorting = useMemo(() => ({ sort: f.sort, following: f.following, followed }), [f.sort, f.following, followed]);
+  const base = useMemo(() => filterBase(dayMatches, q, f.following, followed), [dayMatches, q, f.following, followed]);
   const view = useMemo(
-    () => buildView(dayMatches, base, f.events, f.courts, clock),
-    [dayMatches, base, f.events, f.courts, clock],
+    () => buildView(dayMatches, base, f.events, f.courts, sorting, clock),
+    [dayMatches, base, f.events, f.courts, sorting, clock],
   );
-  const dayOver = useMemo(() => dayMatches.every(isSettled), [dayMatches]);
-  const empty = emptyMessage(dayData, f.day > todayIndex, view, f.following, followCount);
+  const finals = isFinalsDay(dayData);
+  const finalsToday = finals && f.day === todayIndex;
+  const strips = finals && view.ordered.length > 0;
+  const empty = emptyMessage(dayData, f.day > todayIndex, view, f.following, followCount, finals);
 
   return (
     <div className={classes.root}>
@@ -100,33 +106,29 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
           </EmptyState>
         </div>
       )}
-      {live.length > 0 && (
-        <div className={clsx(utils.container, classes.live)}>
+      {live.length > 0 && !finalsToday && (
+        <div className={classes.live}>
           <LiveSection matches={live} tournament={tournament} onOpen={openMatch} />
         </div>
       )}
-      <section className={clsx(utils.container, page.tabSection, classes.section)}>
+      <section className={clsx(utils.container, page.tabSection, classes.section)} data-strips={strips || undefined}>
         <DayPicker days={days} day={f.day} onChange={f.setDay} />
         <InlineFilters ref={filtersRef} filters={f} view={view} />
-        {view.upcoming.count > 0 && (
+        {!finals && view.upcoming.count > 0 && (
           <MatchGroups
             title={tr({
               message: 'Up next',
               context: 'matches',
               comment: 'Matches tab section: matches not started yet',
             })}
-            storeKey="matches:up"
-            defaultOpen
             section={view.upcoming}
             next={view.next}
             onOpen={openMatch}
           />
         )}
-        {view.results.count > 0 && (
+        {!finals && view.results.count > 0 && (
           <MatchGroups
             title={tr({ message: 'Results', comment: 'Matches tab section: finished matches' })}
-            storeKey={dayOver ? 'matches:results:done' : 'matches:results:live'}
-            defaultOpen={dayOver}
             section={view.results}
             next={view.next}
             replays={replays}
@@ -135,6 +137,7 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
         )}
         {empty && <EmptyState>{empty}</EmptyState>}
       </section>
+      {strips && <FinalsStack matches={view.ordered} tournament={tournament} replays={replays} onOpen={openMatch} />}
       <MobileFilters filters={f} view={view} days={days} visible={filtersOut} />
     </div>
   );

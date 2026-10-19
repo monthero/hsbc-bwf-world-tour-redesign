@@ -1,0 +1,16 @@
+.h2h {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: min(100%, 560px);
+  margin-inline: auto;
+}
+
+.title {
+  align-self: center;
+}
+
+.tape {
+  display: flex;
+  flex-direction: column;
+}

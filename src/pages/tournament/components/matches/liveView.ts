@@ -1,23 +1,27 @@
 import { t } from '@lingui/core/macro';
 
 import type { LiveServer, MatchStats, SideStats } from '~/api/bwf/normalize';
+import { medalStake, type MedalStake } from '~/components/match/medals';
 import { EVENT_NAMES } from '~/constants';
 import type { Game, Match, Side, Team } from '~/types';
 import {
   challengesLeft,
+  gameDone,
   livePhase,
   liveStatus,
   pointCall,
+  pointCallKind,
   reviewBy,
   servingPlayer,
   STREAK_MIN,
   type ChallengeOutcome,
+  type CallKind,
   type ChallengeResult,
   type LivePhase,
   type LiveStats,
   type LiveStatus,
 } from '~/utils/live';
-import { gameWon, matchRoundName, opposite } from '~/utils/matches';
+import { allGames, gameWon, matchRoundName, noteLabel, opposite, winnerSide } from '~/utils/matches';
 
 export interface SideView {
   side: Side;
@@ -38,7 +42,8 @@ export interface SideView {
 
 export interface LiveView {
   court: number;
-  where: string;
+  event: string;
+  round: string;
   durationMin: number;
   games: readonly Game[];
   gameNo: number;
@@ -80,7 +85,7 @@ const sideView = (
     streak: stats?.streak?.side === side && stats.streak.count >= STREAK_MIN ? stats.streak.count : 0,
     serving: m.serve === side + 1,
     flash: m.lastPoint === side + 1,
-    leading: !!m.current && now > m.current[opposite(side)],
+    leading: !!m.current && gameDone(m.current) && gameWon(m.current, side),
     stats: stats?.sides[side] ?? null,
     left: leftOf(side, m.games.length + 1, stats, game),
     recent: challenge?.side === side ? challenge.outcome : null,
@@ -101,7 +106,8 @@ export const toLiveView = (
   const result = resultOf(phase, gameNo);
   return {
     court: m.court,
-    where: `${EVENT_NAMES[m.event]} · ${matchRoundName(m)}`,
+    event: EVENT_NAMES[m.event],
+    round: matchRoundName(m),
     durationMin: m.durationMin,
     games: m.games,
     gameNo,
@@ -110,3 +116,96 @@ export const toLiveView = (
     sides: [sideView(m, 0, stats, game, challenge, result), sideView(m, 1, stats, game, challenge, result)],
   };
 };
+
+export type ShowdownPhase = 'pre' | LivePhase;
+
+export interface ShowdownView {
+  match: Match;
+  live: LiveView;
+  phase: ShowdownPhase;
+  onCourt: boolean;
+  label: string | null;
+  note: string | null;
+  score: Game | null;
+  done: readonly Game[];
+  winner: Side | null;
+  stake: MedalStake | null;
+  status: LiveStatus | null;
+  calls: readonly [CallKind | null, CallKind | null];
+}
+
+const SIDES = [0, 1] as const;
+const GAMES_TO_WIN = 2;
+
+const waiting = (m: Match) => m.status === 'P' && !m.games.length && !m.current?.[0] && !m.current?.[1];
+
+const phaseOf = (m: Match): ShowdownPhase => {
+  if (m.status === 'N' || waiting(m)) return 'pre';
+  if (m.status === 'F') return 'over';
+  return livePhase(m);
+};
+
+const doneGames = (m: Match, phase: ShowdownPhase) => {
+  if (phase === 'pre') return [];
+  return m.current && !gameDone(m.current) ? m.games : allGames(m);
+};
+
+const winnerOf = (m: Match, phase: ShowdownPhase, done: readonly Game[]): Side | null => {
+  if (phase !== 'over') return null;
+  if (m.status === 'F') return winnerSide(m);
+  return SIDES.find((s) => gamesWon(done, s) >= GAMES_TO_WIN) ?? null;
+};
+
+const hubLabel = (phase: ShowdownPhase, game: number, score: Game | null, note: string | null) => {
+  if (note) return noteLabel(note, 'long');
+  if (phase === 'play')
+    return t({
+      message: `Game ${game}`,
+      comment: 'Live score: the game being played, e.g. “Game 2”. A badminton match is best of three games',
+    });
+  if (phase === 'between') {
+    const next = game + 1;
+    return t({
+      message: `Game ${next} next`,
+      comment: 'Live score during the break between games: the game about to start, e.g. “Game 3 next”',
+    });
+  }
+  if (phase === 'over' && score)
+    return t({
+      message: 'Final score',
+      comment: 'Label above the score of the last game once a match has finished',
+    });
+  return null;
+};
+
+const gamesWon = (done: readonly Game[], side: Side) => done.filter((g) => gameWon(g, side)).length;
+
+const scoreOf = (m: Match, phase: ShowdownPhase, done: readonly Game[], note: string | null): Game | null => {
+  if (note) return null;
+  if (phase === 'play') return m.current;
+  return phase === 'over' && done.length ? [gamesWon(done, 0), gamesWon(done, 1)] : null;
+};
+
+export const toShowdownView = (m: Match, live: LiveView): ShowdownView => {
+  const phase = phaseOf(m);
+  const onCourt = m.status === 'P';
+  const done = doneGames(m, phase);
+  const note = phase === 'over' && noteLabel(m.note, 'short') ? m.note : null;
+  const score = scoreOf(m, phase, done, note);
+  return {
+    match: m,
+    live,
+    phase,
+    onCourt,
+    label: hubLabel(phase, live.gameNo, score, note),
+    note,
+    score,
+    done,
+    winner: winnerOf(m, phase, done),
+    stake: phase === 'over' ? null : medalStake(m.round),
+    status: onCourt && (phase === 'play' || phase === 'pre') ? live.status : null,
+    calls: [pointCallKind(m, 0), pointCallKind(m, 1)],
+  };
+};
+
+export const trailsIn = (score: Game | null, side: Side) => !!score && score[side] < score[opposite(side)];

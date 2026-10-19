@@ -138,7 +138,7 @@ export const DaySegment = memo<{
 export const ClearButton: FC<{ onClick: () => void; variant: FilterVariant }> = ({ onClick, variant }) => {
   return (
     <button type="button" className={classes.clear} data-variant={variant} onClick={onClick}>
-      <Trans comment="Button that clears the event and court match filters">Clear</Trans>
+      <Trans comment="Button that clears the active filters">Clear</Trans>
     </button>
   );
 };

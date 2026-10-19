@@ -30,7 +30,36 @@
   }
 }
 
+.fit {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, max-content);
+  flex-direction: inherit;
+  column-gap: inherit;
+}
+
+.line {
+  min-width: 0;
+  display: flex;
+  flex-direction: inherit;
+  align-items: center;
+  column-gap: inherit;
+}
+
+.trail {
+  flex: none;
+  display: flex;
+  flex-direction: inherit;
+  align-items: center;
+  column-gap: inherit;
+
+  &:empty {
+    display: none;
+  }
+}
+
 .sizer {
+  padding-inline-end: var(--fit-reserve, 0px);
   display: grid;
   grid-template-columns: minmax(0, max-content);
   height: 0;

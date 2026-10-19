@@ -1,12 +1,17 @@
 import type { FC } from 'react';
 
-import { IconMedal } from '~/components/ui';
+import { IconMedal, IconTrophy } from '~/components/ui';
 import type { MedalKind } from '~/types';
 
 import classes from './Medal.module.css';
 
-export const Medal: FC<{ kind: MedalKind; size?: number | string }> = ({ kind, size = 28 }) => {
-  return <IconMedal size={size} className={classes.medal} data-kind={kind} />;
+export const Medal: FC<{ kind: MedalKind; size?: number | string; trophy?: boolean }> = ({
+  kind,
+  size = 28,
+  trophy,
+}) => {
+  const Icon = trophy && kind === 'gold' ? IconTrophy : IconMedal;
+  return <Icon size={size} className={classes.medal} data-kind={kind} />;
 };
 
 export const MedalCount: FC<{

@@ -1,9 +1,35 @@
-.count {
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 10px;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    margin-top: 0;
+  }
+}
+
+.root > .head {
+  @mixin smaller-than $mantine-breakpoint-sm {
+    position: sticky;
+    top: calc(var(--bwf-header-h) + var(--bwf-tabbar-h));
+    z-index: 5;
+    flex-wrap: nowrap;
+    min-height: 44px;
+    margin-inline: calc(-1 * var(--bwf-gutter));
+    padding-inline: var(--bwf-gutter);
+
+    > h3 {
+      flex: none;
+    }
+  }
+}
+
+.rounds {
   font-size: 12px;
   font-weight: 400;
   letter-spacing: 0;
   white-space: nowrap;
-  font-variant-numeric: tabular-nums;
   color: var(--bwf-faint);
 }
 

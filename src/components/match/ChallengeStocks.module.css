@@ -1,0 +1,28 @@
+.stocks {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--bwf-muted);
+  cursor: help;
+
+  &[data-left='0'] {
+    color: var(--bwf-loss);
+  }
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+  margin-inline-end: 2px;
+}
+
+.stock {
+  width: 12px;
+  height: 6px;
+  border-radius: 2px;
+  background: alpha(var(--bwf-text), 0.14);
+
+  &[data-on] {
+    background: var(--bwf-green-mark);
+  }
+}

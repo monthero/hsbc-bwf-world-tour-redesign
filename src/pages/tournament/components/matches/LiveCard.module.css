@@ -23,6 +23,11 @@
   min-height: calc(1.25rem * var(--mantine-scale));
   font-size: 12px;
   color: var(--bwf-text-3);
+
+  .card[data-medal] & {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
 }
 
 .where {
@@ -30,6 +35,22 @@
   align-items: center;
   gap: 8px;
   min-width: 0;
+}
+
+.what {
+  display: flex;
+  gap: 4px;
+  min-width: 0;
+}
+
+.round {
+  flex: none;
+  white-space: nowrap;
+
+  .card[data-medal] & {
+    font-weight: 600;
+    color: var(--bwf-text);
+  }
 }
 
 .court {
@@ -127,41 +148,6 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 4px 6px;
-}
-
-.challenge {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 12px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  --idle: light-dark(var(--bwf-muted), var(--bwf-green));
-  --idle-mark: light-dark(var(--bwf-muted), var(--bwf-green-mark));
-  color: var(--idle);
-  --mark: var(--idle-mark);
-  cursor: help;
-
-  &[data-left='1'] {
-    color: var(--bwf-gold-text);
-    --mark: currentColor;
-  }
-
-  &[data-left='0'] {
-    color: var(--bwf-loss);
-    --mark: currentColor;
-  }
-}
-
-.streak {
-  color: var(--bwf-orange-text);
-  --mark: currentColor;
-}
-
-.challengeIcon {
-  width: 15px;
-  height: 15px;
-  color: var(--mark);
 }
 
 .serveCell {

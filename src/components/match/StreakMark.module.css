@@ -1,0 +1,15 @@
+.streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--bwf-orange-text);
+  cursor: help;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+}

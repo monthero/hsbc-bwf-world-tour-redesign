@@ -14,4 +14,8 @@
   @mixin smaller-than $mantine-breakpoint-sm {
     padding-bottom: 96px;
   }
+
+  &[data-strips] {
+    padding-bottom: 0;
+  }
 }

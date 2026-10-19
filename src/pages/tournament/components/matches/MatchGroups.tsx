@@ -1,53 +1,42 @@
-import { Plural } from '@lingui/react/macro';
 import { clsx } from 'clsx';
-import { memo, type FC } from 'react';
+import { memo } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
 import { FlagTipGroup } from '~/components/country';
+import { SectionTitle } from '~/components/ui';
+import { useIsMobile } from '~/hooks/useIsMobile';
 import type { NextKind } from '~/utils/match-time';
 
-import { CollapsibleSection } from './CollapsibleSection';
 import { MatchCard } from './MatchCard';
 import type { MatchSection } from './utils';
 
 import classes from './MatchGroups.module.css';
 import utils from '~/styles/utils.module.css';
 
-const MatchCount: FC<{ count: number }> = ({ count }) => (
-  <Plural
-    value={count}
-    one="# match"
-    other="# matches"
-    comment="Number of matches in a start-time group of the match list"
-  />
-);
-
 export const MatchGroups = memo<{
   title: string;
-  storeKey: string;
-  defaultOpen: boolean;
   section: MatchSection;
   next: ReadonlyMap<string, NextKind>;
   replays?: ReadonlyMap<string, MediaItem>;
   onOpen: (id: string) => void;
-}>(({ title, storeKey, defaultOpen, section, next, replays, onOpen }) => {
+}>(({ title, section, next, replays, onOpen }) => {
+  const mobile = useIsMobile();
   return (
     <FlagTipGroup>
-      <CollapsibleSection
-        storeKey={storeKey}
-        title={title}
-        count={section.count}
-        aside={section.rounds && <span className={clsx(classes.count, utils.ellipsis)}>{section.rounds}</span>}
-        defaultOpen={defaultOpen}
-      >
+      <section className={classes.root}>
+        <SectionTitle
+          as="h3"
+          className={clsx(classes.head, mobile && utils.glass)}
+          count={section.count}
+          aside={section.rounds && <span className={clsx(classes.rounds, utils.ellipsis)}>{section.rounds}</span>}
+        >
+          {title}
+        </SectionTitle>
         {section.groups.map((g) => (
           <div key={g.key} className={classes.group}>
             <div className={classes.groupHead}>
               <span className={clsx(classes.groupLabel, utils.ellipsis)}>{g.label}</span>
               <span className={classes.rule} />
-              <span className={classes.count}>
-                <MatchCount count={g.items.length} />
-              </span>
             </div>
             <div className={classes.grid}>
               {g.items.map((m) => (
@@ -56,7 +45,7 @@ export const MatchGroups = memo<{
             </div>
           </div>
         ))}
-      </CollapsibleSection>
+      </section>
     </FlagTipGroup>
   );
 });

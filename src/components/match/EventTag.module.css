@@ -17,13 +17,6 @@
 }
 
 .note {
-  &[data-tone='violet'] {
-    background: light-dark(var(--mantine-color-iris-1), alpha(var(--mantine-color-violet-5), 0.22));
-    color: light-dark(var(--mantine-color-iris-6), var(--mantine-color-violet-2));
-  }
-
-  &[data-tone='sky'] {
-    background: light-dark(var(--bwf-blue-tint), alpha(var(--mantine-color-sky-5), 0.2));
-    color: light-dark(var(--bwf-blue), var(--mantine-color-sky-2));
-  }
+  background: light-dark(var(--bwf-blue-tint), alpha(var(--mantine-color-sky-5), 0.2));
+  color: light-dark(var(--bwf-blue), var(--mantine-color-sky-2));
 }

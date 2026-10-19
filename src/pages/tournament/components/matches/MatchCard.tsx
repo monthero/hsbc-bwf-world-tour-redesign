@@ -4,7 +4,7 @@ import { memo, type FC } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
 import { FollowedMark } from '~/components/follow';
-import { EventTag, MatchNote, MatchTime, SideScores, TeamPlayers } from '~/components/match';
+import { EventTag, MatchTime, MedalMark, SideMedal, SideNote, SideScores, TeamPlayers } from '~/components/match';
 import { WatchButton } from '~/components/media';
 import { CardHit, Duration, IconCheck } from '~/components/ui';
 import { useMatchTime } from '~/hooks/useMatchClock';
@@ -34,6 +34,8 @@ const TeamRow: FC<{ match: Match; side: Side }> = ({ match: m, side }) => {
           className={classes.players}
           nameClassName={classes.name}
         />
+        <SideMedal match={m} side={side} className={utils.raise} />
+        <SideNote match={m} side={side} className={clsx(utils.raise, classes.note)} />
       </div>
       <IconCheck className={classes.check} />
       <SideScores match={m} side={side} />
@@ -44,11 +46,11 @@ const TeamRow: FC<{ match: Match; side: Side }> = ({ match: m, side }) => {
 const NextLabel = memo<{ match: Match; kind: NextKind }>(({ match, kind }) => {
   const start = useMatchTime(match);
   const now = useNow();
+  const label = start ? nextLabel(start, kind, now) : undefined;
+  if (label === null) return null;
   return (
     <span className={classes.next}>
-      {start ? (
-        nextLabel(start, kind, now)
-      ) : (
+      {label ?? (
         <Trans context="court" comment="Match card tag: this is the next match on its court">
           Next
         </Trans>
@@ -81,7 +83,7 @@ export const MatchCard = memo<{
         <span className={classes.tags}>
           {next && <NextLabel match={m} kind={next} />}
           {done && <Duration min={m.durationMin} size={12} className={classes.meta} />}
-          <MatchNote match={m} />
+          {!done && <MedalMark round={m.round} className={utils.raise} />}
           <EventTag event={m.event} />
         </span>
       </div>

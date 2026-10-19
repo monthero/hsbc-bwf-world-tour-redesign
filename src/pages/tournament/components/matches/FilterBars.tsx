@@ -1,17 +1,35 @@
+import type { MessageDescriptor } from '@lingui/core';
+import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { useDisclosure } from '@mantine/hooks';
-import { clsx } from 'clsx';
-import { memo, type FC } from 'react';
+import { memo, useMemo, type FC } from 'react';
 
-import { BottomSheet, FloatingPill, IconFilters } from '~/components/ui';
+import {
+  CondensedBar,
+  FilterField,
+  FilterSheet,
+  IconButton,
+  IconSort,
+  OptionPicker,
+  type PickOption,
+  type SheetTriggerProps,
+} from '~/components/ui';
 import type { TournamentDay } from '~/types';
 
-import { ClearButton, CourtChips, DaySegment, Divider, EventChips, FilterSearch, FollowToggle } from './FilterControls';
+import type { MatchSort } from '../../types';
+import {
+  ClearButton,
+  CourtChips,
+  DaySegment,
+  Divider,
+  EventChips,
+  FilterSearch,
+  FollowToggle,
+  type FilterVariant,
+} from './FilterControls';
 import type { MatchFilters } from './useMatchFilters';
 import type { MatchesView } from './utils';
 
 import classes from './FilterBars.module.css';
-import utils from '~/styles/utils.module.css';
 
 const PillDay: FC<{ day: TournamentDay }> = ({ day: { shortLabel: day, month } }) => (
   <span>
@@ -20,6 +38,61 @@ const PillDay: FC<{ day: TournamentDay }> = ({ day: { shortLabel: day, month } }
     </Trans>
   </span>
 );
+
+const SORT_TITLE = msg({
+  message: 'Sort matches',
+  comment: 'Match list: icon button, menu and sheet title for choosing how matches are ordered and grouped',
+});
+
+const SORT_LABELS: Record<MatchSort, MessageDescriptor> = {
+  time: msg({
+    message: 'Start time',
+    comment: 'Match sort option (default): matches in order of play, grouped by start hour',
+  }),
+  court: msg({ message: 'Court', comment: 'Match filters: label above the court number chips' }),
+  event: msg({ message: 'Category', comment: 'Match filters: label above the event chips (MS, WS, MD, WD, XD)' }),
+  round: msg({ message: 'Round', comment: 'Match sort option: matches grouped by round of the draw, earliest first' }),
+  following: msg({
+    message: 'Followed first',
+    comment: 'Match sort option: matches with players or countries the visitor follows come first',
+  }),
+};
+
+const SORT_ICON: Record<Exclude<FilterVariant, 'sheet'>, number> = { inline: 16, compact: 14 };
+
+const SortControl = memo<{
+  sorts: MatchSort[];
+  sort: MatchSort;
+  onChange: (sort: MatchSort) => void;
+  variant: Exclude<FilterVariant, 'sheet'>;
+}>(({ sorts, sort, onChange, variant }) => {
+  const { i18n } = useLingui();
+  const options = useMemo(
+    (): PickOption<MatchSort>[] => sorts.map((value) => ({ value, label: i18n._(SORT_LABELS[value]) })),
+    [sorts, i18n],
+  );
+  const title = i18n._(SORT_TITLE);
+  return (
+    <OptionPicker
+      options={options}
+      value={sort}
+      onChange={onChange}
+      title={title}
+      position="bottom-end"
+      renderTrigger={(sheet?: SheetTriggerProps) => (
+        <IconButton
+          label={title}
+          tip={sheet ? undefined : title}
+          size={variant === 'compact' ? 'sm' : 'md'}
+          active={sort !== 'time'}
+          {...sheet}
+        >
+          <IconSort size={SORT_ICON[variant]} />
+        </IconButton>
+      )}
+    />
+  );
+});
 
 interface BarProps {
   filters: MatchFilters;
@@ -46,6 +119,9 @@ export const InlineFilters = memo<BarProps & { ref: (el: HTMLDivElement | null) 
         <div className={classes.searchWrap}>
           <FilterSearch variant="inline" value={f.q} onChange={f.setQ} />
           <FollowToggle variant="inline" active={f.following} onToggle={f.toggleFollowing} />
+          {view.sorts.length > 1 && (
+            <SortControl variant="inline" sorts={view.sorts} sort={view.sort} onChange={f.setSort} />
+          )}
         </div>
       </div>
     );
@@ -55,75 +131,55 @@ export const InlineFilters = memo<BarProps & { ref: (el: HTMLDivElement | null) 
 export const CondensedFilters = memo<BarProps & { days: TournamentDay[]; visible: boolean }>(
   ({ filters: f, view, days, visible }) => {
     return (
-      <div className={classes.anchor}>
-        <div className={clsx(utils.glass, classes.condensed)} data-visible={visible || undefined} inert={!visible}>
-          <div className={clsx(utils.container, classes.condensedRow)}>
-            <DaySegment variant="compact" days={days} day={f.day} onChange={f.setDay} />
-            <Divider />
-            <EventChips variant="compact" chips={view.evChips} onToggle={f.toggleEvent} />
-            {view.courtChips.length > 0 && (
-              <>
-                <Divider fade />
-                <CourtChips variant="compact" chips={view.courtChips} onToggle={f.toggleCourt} />
-              </>
-            )}
-            {f.hasFilters && <ClearButton variant="compact" onClick={f.clear} />}
-            <FilterSearch variant="compact" value={f.q} onChange={f.setQ} />
-            <FollowToggle variant="compact" active={f.following} onToggle={f.toggleFollowing} />
-          </div>
-        </div>
-      </div>
+      <CondensedBar visible={visible}>
+        <DaySegment variant="compact" days={days} day={f.day} onChange={f.setDay} />
+        <Divider />
+        <EventChips variant="compact" chips={view.evChips} onToggle={f.toggleEvent} />
+        {view.courtChips.length > 0 && (
+          <>
+            <Divider fade />
+            <CourtChips variant="compact" chips={view.courtChips} onToggle={f.toggleCourt} />
+          </>
+        )}
+        {f.hasFilters && <ClearButton variant="compact" onClick={f.clear} />}
+        <FilterSearch variant="compact" value={f.q} onChange={f.setQ} />
+        <FollowToggle variant="compact" active={f.following} onToggle={f.toggleFollowing} />
+        {view.sorts.length > 1 && (
+          <SortControl variant="compact" sorts={view.sorts} sort={view.sort} onChange={f.setSort} />
+        )}
+      </CondensedBar>
     );
   },
 );
 
 export const MobileFilters = memo<BarProps & { days: TournamentDay[]; visible: boolean }>(
   ({ filters: f, view, days, visible }) => {
-    const { t } = useLingui();
-    const [open, { open: show, close }] = useDisclosure(false);
     const d = days[f.day];
-    const filters = t({ message: 'Filters', comment: 'Button and sheet title for the match filters on phones' });
     return (
-      <>
-        <FloatingPill visible={visible && !open} onClick={show} label={filters} mobileOnly>
-          <IconFilters size={16} />
-          {d && <PillDay day={d} />}
-          {f.count > 0 && <span className={classes.pillCount}>{f.count}</span>}
-        </FloatingPill>
-        <BottomSheet opened={open} onClose={close} handle bodyClassName={classes.sheetBody}>
-          <div className={classes.sheetHead}>
-            <span className={classes.sheetTitle}>{filters}</span>
-            {f.hasFilters && <ClearButton variant="sheet" onClick={f.clear} />}
-          </div>
-          <div className={classes.field}>
-            <span className={classes.label}>
-              <Trans comment="Match filters: label above the tournament day picker">Day</Trans>
-            </span>
-            <DaySegment variant="sheet" days={days} day={f.day} onChange={f.setDay} />
-          </div>
-          <div className={classes.field}>
-            <span className={classes.label}>
-              <Trans comment="Match filters: label above the event chips (MS, WS, MD, WD, XD)">Category</Trans>
-            </span>
-            <EventChips variant="sheet" chips={view.evChips} onToggle={f.toggleEvent} />
-          </div>
-          {view.courtChips.length > 0 && (
-            <div className={classes.field}>
-              <span className={classes.label}>
-                <Trans comment="Match filters: label above the court number chips">Court</Trans>
-              </span>
-              <CourtChips variant="sheet" chips={view.courtChips} onToggle={f.toggleCourt} />
-            </div>
-          )}
-          <div className={classes.searchRow}>
-            <FilterSearch variant="sheet" value={f.q} onChange={f.setQ} />
-            <FollowToggle variant="sheet" active={f.following} onToggle={f.toggleFollowing} />
-          </div>
-          <button type="button" className={classes.done} onClick={close}>
-            <Trans comment="Button that closes the match filters sheet">Done</Trans>
-          </button>
-        </BottomSheet>
-      </>
+      <FilterSheet
+        visible={visible}
+        count={f.count}
+        summary={d ? <PillDay day={d} /> : null}
+        clear={f.hasFilters && <ClearButton variant="sheet" onClick={f.clear} />}
+      >
+        <FilterField label={<Trans comment="Match filters: label above the tournament day picker">Day</Trans>}>
+          <DaySegment variant="sheet" days={days} day={f.day} onChange={f.setDay} />
+        </FilterField>
+        <FilterField
+          label={<Trans comment="Match filters: label above the event chips (MS, WS, MD, WD, XD)">Category</Trans>}
+        >
+          <EventChips variant="sheet" chips={view.evChips} onToggle={f.toggleEvent} />
+        </FilterField>
+        {view.courtChips.length > 0 && (
+          <FilterField label={<Trans comment="Match filters: label above the court number chips">Court</Trans>}>
+            <CourtChips variant="sheet" chips={view.courtChips} onToggle={f.toggleCourt} />
+          </FilterField>
+        )}
+        <div className={classes.searchRow}>
+          <FilterSearch variant="sheet" value={f.q} onChange={f.setQ} />
+          <FollowToggle variant="sheet" active={f.following} onToggle={f.toggleFollowing} />
+        </div>
+      </FilterSheet>
     );
   },
 );

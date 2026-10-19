@@ -1,0 +1,6 @@
+.mark {
+  flex: none;
+  display: inline-flex;
+  vertical-align: text-bottom;
+  cursor: help;
+}

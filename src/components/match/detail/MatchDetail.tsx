@@ -8,6 +8,7 @@ import type { Match, Tournament } from '~/types';
 import { allGames, roundName } from '~/utils/matches';
 
 import { MatchTime } from '../MatchTime';
+import { MedalMark } from '../MedalMark';
 import { HeadToHead } from './HeadToHead';
 import { Scoreboard } from './Scoreboard';
 import { StatsPanel } from './StatsPanel';
@@ -41,6 +42,7 @@ export const MatchDetail: FC<{
             )}
             {(lead || time) && ' · '}
             {roundName(match.round)}
+            {match.status !== 'F' && <MedalMark round={match.round} className={classes.medal} />}
           </span>
         </div>
         <IconButton

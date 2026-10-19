@@ -13,8 +13,9 @@ export const CompareLine = memo<{
   subA?: string;
   subB?: string;
   share?: number;
-}>(({ label, a, b, aBetter, bBetter, subA, subB, share }) => (
-  <div className={classes.cmpRow}>
+  size?: 'sm';
+}>(({ label, a, b, aBetter, bBetter, subA, subB, share, size }) => (
+  <div className={classes.cmpRow} data-size={size}>
     <div className={classes.cmpLine}>
       <span className={clsx(utils.num, classes.cmpValue)} data-better={aBetter || undefined}>
         {a}

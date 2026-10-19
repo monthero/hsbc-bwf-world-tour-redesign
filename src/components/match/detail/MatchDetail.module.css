@@ -53,6 +53,10 @@
   color: var(--bwf-muted);
 }
 
+.medal {
+  margin-inline-start: 5px;
+}
+
 .section {
   display: flex;
   flex-direction: column;
@@ -386,6 +390,19 @@
 
   &:last-child {
     border-bottom: 0;
+  }
+}
+
+.cmpRow[data-size='sm'] {
+  gap: 4px;
+  padding-block: 6px;
+
+  & .cmpValue {
+    font-size: 13px;
+  }
+
+  & .cmpLabel {
+    font-size: 10px;
   }
 }
 

@@ -63,6 +63,20 @@ export const metaLead = (m: Match) => joinDots([m.date && date(m.date).format('d
 
 const margin = (x: number) => (x > 0 ? `+${formatNumber(x)}` : '—');
 
+export const HEAD_TO_HEAD = msg({
+  message: 'Head-to-head',
+  comment: 'Match detail section comparing the two sides’ records against each other',
+});
+export const THIS_SEASON = msg({ message: 'This season', comment: 'Head-to-head toggle: only meetings this season' });
+export const ALL_TIME = msg({
+  message: 'All time',
+  comment: 'Head-to-head toggle: every World Tour meeting since 2018',
+});
+export const FORM = msg({
+  message: 'Form',
+  comment: 'Head-to-head row: each side’s results in their last five matches',
+});
+
 const POINTS_WON = msg({ message: 'Points won', comment: 'Match stats row: total rallies won by each side' });
 const GAMES_WON = msg({
   message: 'Games won',

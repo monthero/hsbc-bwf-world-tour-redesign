@@ -1,4 +1,4 @@
-import { useLingui } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
@@ -47,4 +47,18 @@ export const TimedStatus = memo<{ match: Match | null | undefined; tone: SideRes
       label
     );
   },
+);
+
+export const ScheduledStart = memo<{ match: Match; className?: string; timeClassName?: string }>(
+  ({ match, className, timeClassName }) => (
+    <span className={className}>
+      {match.time ? (
+        <Trans comment="Scoreboard status for a scheduled match: it starts at this time or later, e.g. “Not before 14:30”">
+          Not before <MatchTime match={match} className={timeClassName} />
+        </Trans>
+      ) : (
+        <Trans>Time to be announced</Trans>
+      )}
+    </span>
+  ),
 );
