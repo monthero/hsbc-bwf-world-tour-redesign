@@ -7,6 +7,6 @@ export const bwfProxy: Endpoint = {
   prefix: '/bwf-api',
   serve: async (url, res) => {
     const { status, body, cache } = await bwfReply(url);
-    sendJson(res, status, body, cache);
+    sendJson(res, status, body, cache.browser);
   },
 };

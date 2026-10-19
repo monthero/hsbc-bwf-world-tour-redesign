@@ -8,24 +8,47 @@ const BASE = import.meta.env.VITE_BWF_API_BASE || (import.meta.env.PROD ? BWF_RE
 const TIMEOUT_MS = 15_000;
 const BREAKER_LIMIT = 3;
 const UNAVAILABLE = 503;
+const OVER_QUOTA = 429;
 
 export const LIVE_COOLDOWN_MS = 5 * 60_000;
 
 let failures = 0;
 let openUntil = 0;
+let reopen: ReturnType<typeof setTimeout> | undefined;
+const listeners = new Set<() => void>();
 
-const liveBlocked = () => Date.now() < openUntil;
+const emit = () => {
+  for (const listener of listeners) listener();
+};
+
+export const livePaused = () => Date.now() < openUntil;
+
+export const subscribeLivePaused = (listener: () => void) => {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+};
+
+const trip = () => {
+  openUntil = Date.now() + LIVE_COOLDOWN_MS;
+  clearTimeout(reopen);
+  reopen = setTimeout(emit, LIVE_COOLDOWN_MS);
+  emit();
+};
 
 const settle = (ok: boolean) => {
   failures = ok ? 0 : failures + 1;
-  if (failures >= BREAKER_LIMIT) openUntil = Date.now() + LIVE_COOLDOWN_MS;
+  if (failures >= BREAKER_LIMIT) trip();
 };
 
-export const isRejected = (error: unknown) => error instanceof ApiError && error.status < 500;
+const overQuota = (error: unknown) => error instanceof ApiError && error.status === OVER_QUOTA;
 
-export const liveRetry = (count: number, error: unknown) => count < 1 && !liveBlocked() && !isRejected(error);
+export const isRejected = (error: unknown) => error instanceof ApiError && error.status < 500 && !overQuota(error);
 
-export const livePollMs = (ms: number) => (liveBlocked() ? LIVE_COOLDOWN_MS : ms);
+export const liveRetry = (count: number, error: unknown) => count < 1 && !livePaused() && !isRejected(error);
+
+export const livePollMs = (ms: number) => (livePaused() ? LIVE_COOLDOWN_MS : ms);
 
 const request = async (url: string, signal?: AbortSignal): Promise<unknown> => {
   const timeout = AbortSignal.timeout(TIMEOUT_MS);
@@ -39,7 +62,10 @@ const request = async (url: string, signal?: AbortSignal): Promise<unknown> => {
     settle(true);
     return body;
   } catch (e) {
-    if (!signal?.aborted && !isRejected(e)) settle(false);
+    if (overQuota(e)) {
+      failures = BREAKER_LIMIT;
+      trip();
+    } else if (!signal?.aborted && !isRejected(e)) settle(false);
     throw e;
   }
 };
@@ -52,6 +78,6 @@ export const bwfGet = async <S extends z.ZodType>(
 ): Promise<z.infer<S>> => {
   const query = new URLSearchParams(Object.entries(params).map(([k, v]) => [k, String(v)]));
   const url = `${BASE}/${path}?${query}`;
-  if (liveBlocked()) throw new ApiError(UNAVAILABLE, url);
+  if (livePaused()) throw new ApiError(UNAVAILABLE, url);
   return schema.parse(await request(url, signal));
 };

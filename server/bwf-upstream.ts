@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
 import { addDays, todayIso } from '../scripts/sync/dates.ts';
-import { cdnCache } from './cache-control.ts';
+import { LIVE_BROWSER_TTL_S, LIVE_TTL_S, SCHEDULE_TTL_S } from '../src/api/bwf/ttl.ts';
+import { browserCache, cdnCache } from './cache-control.ts';
 
 export const BWF_API = 'https://extranet-lv.bwfbadminton.com/api';
 export const BWF_SITE = 'https://bwfworldtour.bwfbadminton.com';
@@ -18,10 +19,20 @@ const BWF_HEADERS = {
 const TIMEOUT_MS = 10_000;
 const SETTLE_DAYS = 3;
 
-const LIVE_CACHE = cdnCache(15, 15);
-const SCHEDULE_CACHE = cdnCache(300, 600, 60);
-const SETTLED_CACHE = cdnCache(86_400, 604_800, 3600);
-const ERROR_CACHE = cdnCache(30, 0);
+export interface CachePolicy {
+  edge: string;
+  browser: string;
+}
+
+const shared = (header: string): CachePolicy => ({ edge: header, browser: header });
+
+const LIVE_CACHE: CachePolicy = {
+  edge: cdnCache(LIVE_TTL_S, LIVE_TTL_S),
+  browser: browserCache(LIVE_BROWSER_TTL_S),
+};
+const SCHEDULE_CACHE = shared(cdnCache(SCHEDULE_TTL_S, 600, 60));
+const SETTLED_CACHE = shared(cdnCache(86_400, 604_800, 3600));
+const ERROR_CACHE = shared(cdnCache(30, 0));
 
 const Id = z.string().regex(/^\d{1,10}$/);
 const Flag = z.enum(['0', '1', 'true', 'false']);
@@ -37,19 +48,19 @@ const dayCache = (day: string) => {
 interface BwfTarget {
   path: string;
   search: string;
-  cache: string;
+  cache: CachePolicy;
 }
 
 export interface BwfReply {
   status: number;
   body: unknown;
-  cache: string;
+  cache: CachePolicy;
 }
 
 type Route = (path: string, params: URLSearchParams) => BwfTarget | null;
 
 const route =
-  <S extends z.ZodType<Record<string, string>>>(schema: S, cache: (query: z.infer<S>) => string): Route =>
+  <S extends z.ZodType<Record<string, string>>>(schema: S, cache: (query: z.infer<S>) => CachePolicy): Route =>
   (path, params) => {
     const query = schema.safeParse(Object.fromEntries(params));
     return query.success

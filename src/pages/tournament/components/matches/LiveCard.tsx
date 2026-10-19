@@ -1,6 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
-import { memo, useCallback, useMemo, type CSSProperties, type FC } from 'react';
+import { memo, useCallback, useMemo, type CSSProperties, type FC, type Ref } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
 import { ChallengeStocks, medalStake, ServeMark, StreakMark, TeamPlayers } from '~/components/match';
@@ -104,7 +104,8 @@ export const LiveCard = memo<{
   stream?: MediaItem;
   onOpen: (id: string) => void;
   className?: string;
-}>(({ match: m, view: v, stream, onOpen, className }) => {
+  ref?: Ref<HTMLDivElement>;
+}>(({ match: m, view: v, stream, onOpen, className, ref }) => {
   const { t, i18n } = useLingui();
   const [a, b] = v.sides;
   const { court, gameNo } = v;
@@ -117,7 +118,11 @@ export const LiveCard = memo<{
     [v.server, v.games.length],
   );
   return (
-    <div className={clsx(utils.live, classes.card, className)} data-medal={!!medalStake(m.round) || undefined}>
+    <div
+      ref={ref}
+      className={clsx(utils.live, classes.card, className)}
+      data-medal={!!medalStake(m.round) || undefined}
+    >
       <CardHit
         label={t({
           message: `Live match details: ${title}`,

@@ -2,7 +2,7 @@ import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
 import { VisuallyHidden } from '@mantine/core';
 import { clsx } from 'clsx';
-import { memo, useCallback, useMemo, type FC, type ReactNode } from 'react';
+import { memo, useCallback, useMemo, type FC, type ReactNode, type Ref } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
 import { ChallengeStocks, ScheduledStart, ServeMark, SideMedal, StreakMark, TeamPlayers } from '~/components/match';
@@ -239,7 +239,8 @@ export const Showdown = memo<{
   stream?: MediaItem;
   onOpen: (id: string) => void;
   className?: string;
-}>(({ view: v, stream, onOpen, className }) => {
+  ref?: Ref<HTMLElement>;
+}>(({ view: v, stream, onOpen, className, ref }) => {
   const { i18n } = useLingui();
   const m = v.match;
   const [a, b] = v.live.sides;
@@ -248,6 +249,7 @@ export const Showdown = memo<{
   const duels = v.phase === 'play' || v.phase === 'between';
   return (
     <section
+      ref={ref}
       {...DARK_SCOPE_PROPS}
       className={clsx(classes.root, className)}
       data-live={v.onCourt || undefined}
@@ -310,12 +312,12 @@ export const MatchShowdown = memo<{
   h2h?: boolean;
   onOpen: (id: string) => void;
 }>(({ match: m, tournament, replay, h2h, onOpen }) => {
-  const live = useLiveView(tournament, m);
+  const [ref, live] = useLiveView<HTMLElement>(tournament, m);
   const view = useMemo(() => toShowdownView(m, live), [m, live]);
   const stream = useMatchStream(tournament, m);
   return (
     <>
-      <Showdown view={view} stream={replay ?? stream} onOpen={onOpen} />
+      <Showdown ref={ref} view={view} stream={replay ?? stream} onOpen={onOpen} />
       {h2h && (
         <div className={utils.container}>
           <LiveHeadToHead match={m} tournament={tournament} />

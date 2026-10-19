@@ -26,9 +26,9 @@ const ON_COURT = msg({
 
 const LiveItem = memo<{ match: Match; tournament: Tournament; onOpen: (id: string) => void }>(
   ({ match: m, tournament, onOpen }) => {
-    const view = useLiveView(tournament, m);
+    const [ref, view] = useLiveView<HTMLDivElement>(tournament, m);
     const stream = useMatchStream(tournament, m);
-    return <LiveCard match={m} view={view} stream={stream} onOpen={onOpen} className={classes.card} />;
+    return <LiveCard ref={ref} match={m} view={view} stream={stream} onOpen={onOpen} className={classes.card} />;
   },
 );
 

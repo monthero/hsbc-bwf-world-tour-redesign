@@ -1,4 +1,4 @@
-import { type BwfReply, bwfTarget, fetchBwf, UNKNOWN_ROUTE } from '../../../server/bwf-upstream.ts';
+import { type BwfReply, bwfTarget, type CachePolicy, fetchBwf, UNKNOWN_ROUTE } from '../../../server/bwf-upstream.ts';
 
 const ALLOWED_ORIGIN = /^(https:\/\/hsbc-bwf-world-tour-redesign(-[\da-z-]+)?\.vercel\.app|http:\/\/localhost(:\d+)?)$/;
 const ALLOWED_METHODS = 'GET, OPTIONS';
@@ -13,7 +13,7 @@ const corsHeaders = (origin: string | null) => {
 const jsonResponse = ({ status, body, cache }: BwfReply) =>
   new Response(JSON.stringify(body), {
     status,
-    headers: { 'content-type': 'application/json', 'cache-control': cache },
+    headers: { 'content-type': 'application/json', 'cache-control': cache.edge },
   });
 
 const withCors = (response: Response, origin: string | null, extra: Record<string, string> = {}) => {
@@ -21,6 +21,9 @@ const withCors = (response: Response, origin: string | null, extra: Record<strin
   for (const [key, value] of [...corsHeaders(origin), ...Object.entries(extra)]) out.headers.set(key, value);
   return out;
 };
+
+const browserCache = (response: Response, policy: CachePolicy): Record<string, string> =>
+  response.ok ? { 'cache-control': policy.browser } : {};
 
 const preflight = (origin: string | null) => {
   const headers = corsHeaders(origin);
@@ -41,9 +44,9 @@ export default {
     const key = new Request(`${url.origin}${target.path}?${target.search}`);
     const cache = caches.default;
     const hit = await cache.match(key);
-    if (hit) return withCors(hit, origin, { [CACHE_HEADER]: 'HIT' });
+    if (hit) return withCors(hit, origin, { [CACHE_HEADER]: 'HIT', ...browserCache(hit, target.cache) });
     const response = jsonResponse(await fetchBwf(target));
     ctx.waitUntil(cache.put(key, response.clone()));
-    return withCors(response, origin, { [CACHE_HEADER]: 'MISS' });
+    return withCors(response, origin, { [CACHE_HEADER]: 'MISS', ...browserCache(response, target.cache) });
   },
 } satisfies ExportedHandler;

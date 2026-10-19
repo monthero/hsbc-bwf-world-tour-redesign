@@ -35,6 +35,8 @@ export const useOpenMatch = () => {
   );
 };
 
+export const useMatchOpen = () => route.useSearch({ select: (s) => !!s.match });
+
 export const useCloseMatch = () => {
   const update = useUpdateSearch();
   return useCallback(() => update({ match: undefined }), [update]);

@@ -1,3 +1,5 @@
+import '@mantine/dates/styles.layer.css';
+import { DatesProvider } from '@mantine/dates';
 import { clsx } from 'clsx';
 import type { FC } from 'react';
 
@@ -9,6 +11,8 @@ import classes from './AdminPage.module.css';
 import utils from '~/styles/utils.module.css';
 
 const ADMIN_META = { title: 'Admin' };
+
+const DATES_SETTINGS = { firstDayOfWeek: 1, consistentWeeks: true } as const;
 
 const Console: FC = () => (
   <div className={classes.page}>
@@ -23,5 +27,9 @@ const Console: FC = () => (
 
 export const AdminPage: FC = () => {
   useDocumentMeta(ADMIN_META);
-  return <Console />;
+  return (
+    <DatesProvider settings={DATES_SETTINGS}>
+      <Console />
+    </DatesProvider>
+  );
 };

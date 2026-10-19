@@ -4,6 +4,7 @@ import { clsx } from 'clsx';
 import { useDeferredValue, useMemo, type FC } from 'react';
 
 import { EmptyState } from '~/components/ui';
+import { useLivePaused } from '~/hooks/useLivePaused';
 import { useMatchClock } from '~/hooks/useMatchClock';
 import { useScrolledPast } from '~/hooks/useScrolledPast';
 import { useMatchReplays } from '~/hooks/useTournamentMedia';
@@ -73,6 +74,7 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
   const [filtersRef, filtersOut] = useScrolledPast<HTMLDivElement>();
   const clock = useMatchClock();
   const replays = useMatchReplays(tournament);
+  const paused = useLivePaused();
 
   const dayData = days[f.day];
   const dayMatches = dayData?.matches ?? NO_MATCHES;
@@ -92,18 +94,26 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
   const finalsToday = finals && f.day === todayIndex;
   const strips = finals && view.ordered.length > 0;
   const empty = emptyMessage(dayData, f.day > todayIndex, view, f.following, followCount, finals);
+  const onAir = tournament.status === 'live';
+  let liveNote = '';
+  if (onAir && schedule.stale)
+    liveNote = tr({
+      message: 'Live scores are unavailable right now. Showing results that may be up to an hour old.',
+      comment: 'Note above the matches when the live score feed fails',
+    });
+  else if (onAir && paused)
+    liveNote = tr({
+      message: 'Live updates paused, retrying shortly.',
+      comment:
+        'Small note above the matches when live score updates are temporarily paused because the live feed is overloaded. The last scores stay on screen',
+    });
 
   return (
     <div className={classes.root}>
       <CondensedFilters filters={f} view={view} days={days} visible={filtersOut} />
-      {schedule.stale && tournament.status === 'live' && (
+      {liveNote && (
         <div className={clsx(utils.container, classes.live)}>
-          <EmptyState variant="note">
-            {tr({
-              message: 'Live scores are unavailable right now. Showing results that may be up to an hour old.',
-              comment: 'Note above the matches when the live score feed fails',
-            })}
-          </EmptyState>
+          <EmptyState variant="note">{liveNote}</EmptyState>
         </div>
       )}
       {live.length > 0 && !finalsToday && (

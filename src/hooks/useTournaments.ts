@@ -7,6 +7,7 @@ import {
   seriesQuery,
   tournamentDrawQuery,
   tournamentEntriesQuery,
+  tournamentMatchesGlance,
   tournamentMatchesQuery,
   type TournamentRef,
 } from '~/api/queries';
@@ -34,7 +35,7 @@ const useFinishedEarly = (list: readonly Tournament[] | undefined) => {
     },
     [live],
   );
-  return useQueries({ queries: live.map((t) => tournamentMatchesQuery(t)), combine });
+  return useQueries({ queries: live.map((t) => tournamentMatchesGlance(t)), combine });
 };
 
 const useResolved = (list: Tournament[] | undefined) => {

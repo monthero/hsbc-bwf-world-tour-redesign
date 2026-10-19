@@ -7,6 +7,7 @@ import { PlayerFollow } from '~/components/follow';
 import { PlayerAvatar } from '~/components/player/PlayerAvatar';
 import { Duration, IconCheck, LiveDot, StatusChip } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
+import { useLivePaused } from '~/hooks/useLivePaused';
 import type { Game, Match, Player, Side, Tournament } from '~/types';
 import { gameDone, livePhase, liveStatus, pointCall, servingPlayer } from '~/utils/live';
 import { allGames, gameWon, isDoubles, sideResult } from '~/utils/matches';
@@ -44,17 +45,25 @@ const SideAvatar = memo<{ player: Player; size: number }>(({ player, size }) => 
 ));
 
 const Status: FC<{ match: Match }> = ({ match: m }) => {
+  const paused = useLivePaused();
   if (m.status === 'P') {
     const chip = liveStatus(m);
     return (
       <>
         <span className={classes.sbLive}>
-          <LiveDot pulse />
+          <LiveDot pulse={!paused} />
           <Trans context="match status" comment="Scoreboard status: the match is being played right now">
             Live
           </Trans>
         </span>
         {chip && <StatusChip tone={chip.tone}>{chip.label}</StatusChip>}
+        {paused && (
+          <StatusChip tone="silver">
+            <Trans comment="Small chip on a live scoreboard when score updates are temporarily paused because the live feed is overloaded; the last score stays on screen">
+              Updates paused
+            </Trans>
+          </StatusChip>
+        )}
       </>
     );
   }

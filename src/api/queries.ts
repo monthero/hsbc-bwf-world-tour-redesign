@@ -16,6 +16,7 @@ import {
   fetchLiveServers,
   fetchMatchStats,
 } from './bwf/tournaments';
+import { LIVE_TTL_S, SCHEDULE_TTL_S } from './bwf/ttl';
 import { fetchJson, getJson, retryUnless, STATIC } from './client';
 import {
   Calendar,
@@ -51,8 +52,8 @@ export const calendarQuery = (year = SEASON_YEAR) => staticQuery(['calendar', ye
 
 export type TournamentRef = Pick<CalendarEventDto, 'code' | 'start' | 'end' | 'archived'>;
 
-const FRESH_MS = 15_000;
-const UPCOMING_MS = 5 * 60_000;
+const FRESH_MS = LIVE_TTL_S * 1000;
+const UPCOMING_MS = SCHEDULE_TTL_S * 1000;
 const POLL_ON_COURT_MS = 20_000;
 const POLL_IDLE_MS = 60_000;
 
@@ -69,8 +70,8 @@ const hasMatchOnCourt = (d: TournamentMatches | undefined) =>
 
 const livePoll = (t: TournamentRef) => (q: Query<TournamentMatches>) => {
   if (q.state.data?.stale) return LIVE_COOLDOWN_MS;
-  if (hasMatchOnCourt(q.state.data)) return POLL_ON_COURT_MS;
-  return finalDayOver(t.end, q.state.data) ? false : POLL_IDLE_MS;
+  if (hasMatchOnCourt(q.state.data)) return livePollMs(POLL_ON_COURT_MS);
+  return finalDayOver(t.end, q.state.data) ? false : livePollMs(POLL_IDLE_MS);
 };
 
 const matchesPolicy = (t: TournamentRef) => {
@@ -79,15 +80,22 @@ const matchesPolicy = (t: TournamentRef) => {
   return { staleTime: UPCOMING_MS };
 };
 
+type DayMatches = Awaited<ReturnType<typeof fetchDayMatches>>;
+
+const dayPlayed = (day: string) => (q: Query<DayMatches>) => {
+  const matches = q.state.data?.matches ?? [];
+  return day < todayIso() && matches.length > 0 && matches.every((m) => m.status === 'F') ? UPCOMING_MS : FRESH_MS;
+};
+
 const dayMatchesQuery = (code: string, day: string) =>
   queryOptions({
     queryKey: ['bwf', 'day-matches', code, day],
     queryFn: async ({ client, signal }) => fetchDayMatches(code, day, await directoryNames(client), signal),
     retry: liveRetry,
-    ...(isSettledDay(day) ? STATIC : { staleTime: FRESH_MS }),
+    ...(isSettledDay(day) ? STATIC : { staleTime: dayPlayed(day) }),
   });
 
-const STATS_POLL_MS = 10_000;
+const STATS_POLL_MS = FRESH_MS;
 
 export const liveMatchStatsQuery = (tmtId: number, matchCode: string) =>
   queryOptions({
@@ -96,7 +104,7 @@ export const liveMatchStatsQuery = (tmtId: number, matchCode: string) =>
       const sides = await fetchMatchStats(tmtId, matchCode, signal);
       return sides && trackLiveStats(client.getQueryData<LiveStats | null>(queryKey), sides, Date.now());
     },
-    staleTime: 5_000,
+    staleTime: STATS_POLL_MS,
     gcTime: 60_000,
     retry: liveRetry,
     refetchInterval: () => livePollMs(STATS_POLL_MS),
@@ -106,7 +114,7 @@ export const liveGameStatsQuery = (tmtId: number, matchCode: string, game: numbe
   queryOptions({
     queryKey: ['bwf', 'game-stats', tmtId, matchCode, game],
     queryFn: ({ signal }) => fetchGameStats(tmtId, matchCode, game, signal),
-    staleTime: 5_000,
+    staleTime: STATS_POLL_MS,
     gcTime: 60_000,
     retry: liveRetry,
     refetchInterval: () => livePollMs(STATS_POLL_MS),
@@ -116,7 +124,7 @@ export const liveServersQuery = (tmtId: number) =>
   queryOptions({
     queryKey: ['bwf', 'live-servers', tmtId],
     queryFn: ({ signal }) => fetchLiveServers(tmtId, signal),
-    staleTime: 5_000,
+    staleTime: STATS_POLL_MS,
     gcTime: 60_000,
     retry: liveRetry,
     refetchInterval: (q) => (isRejected(q.state.error) ? false : livePollMs(STATS_POLL_MS)),
@@ -152,12 +160,19 @@ const fetchFallback = (code: string, signal: AbortSignal): Promise<TournamentMat
 export const tournamentMatchesQuery = (t: TournamentRef) =>
   queryOptions({
     queryKey: ['tournament', t.code, 'matches'],
-    queryFn: ({ client, signal }) =>
+    queryFn: ({ client, queryKey, signal }) =>
       isSnapshotEvent(t)
         ? fetchSnapshot(t.code, signal)
-        : fetchLiveMatches(t, client).catch(() => fetchFallback(t.code, signal)),
+        : fetchLiveMatches(t, client).catch(
+            () => client.getQueryData<TournamentMatches>(queryKey) ?? fetchFallback(t.code, signal),
+          ),
     ...matchesPolicy(t),
   });
+
+export const tournamentMatchesGlance = (t: TournamentRef) => ({
+  ...tournamentMatchesQuery(t),
+  ...(isLiveEvent(t) && !isSnapshotEvent(t) ? { staleTime: UPCOMING_MS, refetchInterval: false as const } : {}),
+});
 
 export type LiveTournamentRef = TournamentRef & Pick<CalendarEventDto, 'tmtId' | 'cancelled'>;
 

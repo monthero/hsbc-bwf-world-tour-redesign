@@ -1,9 +1,7 @@
 import '@mantine/core/styles.layer.css';
-import '@mantine/dates/styles.layer.css';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
 import { DirectionProvider, MantineProvider } from '@mantine/core';
-import { DatesProvider } from '@mantine/dates';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { StrictMode } from 'react';
@@ -70,11 +68,9 @@ const boot = async () => {
             defaultColorScheme="dark"
             colorSchemeManager={colorSchemeManager}
           >
-            <DatesProvider settings={{ firstDayOfWeek: 1, consistentWeeks: true }}>
-              <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router} />
-              </QueryClientProvider>
-            </DatesProvider>
+            <QueryClientProvider client={queryClient}>
+              <RouterProvider router={router} />
+            </QueryClientProvider>
           </MantineProvider>
         </DirectionProvider>
       </I18nProvider>
