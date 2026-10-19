@@ -3,18 +3,42 @@ import { useComputedColorScheme } from '@mantine/core';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { usePanZoom, type PanZoomView } from '~/hooks/usePanZoom';
+import { useMapRoute, useSettings } from '~/stores/settings';
 import type { Tournament } from '~/types';
 import { MOD_KEY } from '~/utils/platform';
 
 import { CLOSE_DELAY, MAP_SIZE, MAP_ZOOM, PIN_GAP_PX, REVEAL_INSET, WHEEL_HINT_MS, WIDTH_STEP } from '../constants';
-import { drawLand, landRect, loadLand, placeRect, type DrawnLand, type LandGrids } from '../landDots';
+import {
+  drawLand,
+  landDetail,
+  landRect,
+  loadLand,
+  placeRect,
+  type DrawnLand,
+  type LandDetail,
+  type LandShapes,
+} from '../landLayer';
 import type { OnActive, SeasonFocus } from '../types';
 import { relaxPins, routePaths } from '../utils';
-import { MapControls } from './MapControls';
+import { MapControls, type MapTarget } from './MapControls';
 import { MapPin } from './MapPin';
 import { MapPopover } from './MapPopover';
+import { MapRoute } from './MapRoute';
 
 import classes from './SeasonMap.module.css';
+
+const mapTarget = (f: SeasonFocus): MapTarget | undefined => {
+  if (f.live) return 'live';
+  return f.next ? 'next' : undefined;
+};
+
+const toggleRoute = () => {
+  const s = useSettings.getState();
+  s.set({ mapRoute: !s.mapRoute });
+};
+
+const shapesFor = (have: Partial<Record<LandDetail, LandShapes>>, want: LandDetail) =>
+  have[want] ? want : (Object.keys(have) as LandDetail[]).at(0);
 
 export const SeasonMap = memo<{
   tournaments: Tournament[];
@@ -28,26 +52,30 @@ export const SeasonMap = memo<{
   const scheme = useComputedColorScheme('dark');
   const svg = useRef<SVGSVGElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
-  const land = useRef<LandGrids>([]);
+  const land = useRef<Partial<Record<LandDetail, LandShapes>>>({});
   const drawn = useRef<DrawnLand | null>(null);
-  const look = useRef('');
+  const tone = useRef(scheme);
   const timer = useRef(0);
   const hintTimer = useRef(0);
   const own = useRef<string | null>(null);
   const last = useRef(active?.code);
   const [hint, setHint] = useState(false);
+  const showRoute = useMapRoute();
 
   const paint = useCallback((v: PanZoomView, px: number) => {
-    const rect = landRect(v, px, look.current, drawn.current);
+    const used = shapesFor(land.current, landDetail(v, px));
+    const look = `${tone.current}-${used ?? ''}`;
+    const rect = landRect(v, px, look, drawn.current);
     const fresh = rect !== drawn.current?.rect;
     if (svg.current) {
       if (fresh) svg.current.setAttribute('viewBox', `${rect.x} ${rect.y} ${rect.w} ${rect.h}`);
+      if (px) svg.current.style.setProperty('--unit', `${MAP_SIZE.w / (px * v.k)}`);
       placeRect(svg.current, rect, v, px);
     }
     if (!canvas.current || !px) return;
-    if (fresh) drawLand(canvas.current, land.current, v, px, rect);
+    if (fresh) drawLand(canvas.current, used && land.current[used], v, px, rect);
     placeRect(canvas.current, rect, v, px);
-    drawn.current = { rect, k: v.k, px, look: look.current };
+    drawn.current = { rect, k: v.k, px, look };
   }, []);
 
   const showHint = useCallback(() => {
@@ -56,15 +84,29 @@ export const SeasonMap = memo<{
     hintTimer.current = window.setTimeout(() => setHint(false), WHEEL_HINT_MS);
   }, []);
 
-  const { ref, layerRef, counterRef, view, frameWidth, atHome, canZoomIn, canZoomOut, zoomBy, reset, reveal, refresh } =
-    usePanZoom<HTMLDivElement>({
-      width: MAP_SIZE.w,
-      height: MAP_SIZE.h,
-      maxZoom: MAP_ZOOM.max,
-      home,
-      onSettle: paint,
-      onBlockedWheel: interactive ? showHint : undefined,
-    });
+  const {
+    ref,
+    layerRef,
+    counterRef,
+    view,
+    frameWidth,
+    atHome,
+    atWorld,
+    canZoomIn,
+    canZoomOut,
+    zoomBy,
+    reset,
+    goHome,
+    reveal,
+    refresh,
+  } = usePanZoom<HTMLDivElement>({
+    width: MAP_SIZE.w,
+    height: MAP_SIZE.h,
+    maxZoom: MAP_ZOOM.max,
+    home,
+    onSettle: paint,
+    onBlockedWheel: interactive ? showHint : undefined,
+  });
 
   const width = frameWidth ? Math.max(WIDTH_STEP, Math.round(frameWidth / WIDTH_STEP) * WIDTH_STEP) : 0;
   const gapPx = interactive ? PIN_GAP_PX.desktop : PIN_GAP_PX.mobile;
@@ -72,6 +114,7 @@ export const SeasonMap = memo<{
   const spots = useMemo(() => (gap ? relaxPins(tournaments, gap) : []), [tournaments, gap]);
   const routes = useMemo(() => routePaths(tournaments), [tournaments]);
   const shown = active ? spots.find((s) => s.t === active) : undefined;
+  const target = mapTarget(focus);
 
   const zoomIn = useCallback(() => zoomBy(MAP_ZOOM.step), [zoomBy]);
   const zoomOut = useCallback(() => zoomBy(1 / MAP_ZOOM.step), [zoomBy]);
@@ -99,17 +142,20 @@ export const SeasonMap = memo<{
     reveal(active.map, interactive ? REVEAL_INSET.desktop : REVEAL_INSET.mobile);
   }, [active, interactive, reveal]);
 
+  const detail = frameWidth ? landDetail(view, frameWidth) : undefined;
+
   useEffect(() => {
-    let on = true;
-    void loadLand().then((grids) => {
-      if (!on) return;
-      land.current = grids;
-      look.current = `${scheme}-${grids.length}`;
+    if (!detail || land.current[detail]) return;
+    void loadLand(detail).then((shapes) => {
+      if (!shapes) return;
+      land.current[detail] = shapes;
       refresh();
     });
-    return () => {
-      on = false;
-    };
+  }, [detail, refresh]);
+
+  useEffect(() => {
+    tone.current = scheme;
+    refresh();
   }, [refresh, scheme]);
 
   useEffect(
@@ -126,11 +172,13 @@ export const SeasonMap = memo<{
         <div ref={layerRef} className={classes.world}>
           <canvas ref={canvas} className={classes.land} aria-hidden />
           <svg ref={svg} className={classes.surface} preserveAspectRatio="none" aria-hidden>
-            <g className={classes.routes}>
-              {routes.map((r) => (
-                <path key={r.key} d={r.d} data-done={r.done || undefined} />
-              ))}
-            </g>
+            {showRoute && (
+              <g className={classes.routes}>
+                {routes.map((r) => (
+                  <MapRoute key={r.key} leg={r} />
+                ))}
+              </g>
+            )}
             {spots.map(
               (s) =>
                 s.moved && (
@@ -160,10 +208,15 @@ export const SeasonMap = memo<{
       <MapControls
         canZoomIn={canZoomIn}
         canZoomOut={canZoomOut}
+        atWorld={atWorld}
         atHome={atHome}
+        target={target}
+        route={showRoute}
         onZoomIn={zoomIn}
         onZoomOut={zoomOut}
         onReset={reset}
+        onFocus={goHome}
+        onRoute={toggleRoute}
       />
       {interactive && (
         <span className={classes.hint} data-on={hint || undefined} aria-hidden>

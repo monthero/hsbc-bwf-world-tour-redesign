@@ -73,6 +73,7 @@ export const usePanZoom = <T extends HTMLElement, L extends HTMLElement = HTMLDi
     [width, height, maxZoom],
   );
   const start = useMemo(() => clamp(home), [clamp, home]);
+  const world = useMemo(() => clamp({ x: width / 2, y: height / 2, k: 1 }), [clamp, width, height]);
   const [view, setView] = useState(start);
   const [frameWidth, setFrameWidth] = useState(0);
   const live = useRef(start);
@@ -193,6 +194,11 @@ export const usePanZoom = <T extends HTMLElement, L extends HTMLElement = HTMLDi
   );
 
   const reset = useCallback(() => {
+    touched.current = true;
+    flyTo(world);
+  }, [flyTo, world]);
+
+  const goHome = useCallback(() => {
     touched.current = false;
     flyTo(latest.current.start);
   }, [flyTo]);
@@ -363,10 +369,12 @@ export const usePanZoom = <T extends HTMLElement, L extends HTMLElement = HTMLDi
     view,
     frameWidth,
     atHome: sameView(view, start),
+    atWorld: sameView(view, world),
     canZoomIn: view.k < maxZoom - SAME_K,
     canZoomOut: view.k > 1 + SAME_K,
     zoomBy,
     reset,
+    goHome,
     reveal,
     refresh,
   };

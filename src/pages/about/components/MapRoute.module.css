@@ -1,0 +1,50 @@
+.leg {
+  --route: var(--bwf-faint);
+  --route-casing: var(--bwf-bg-sunken);
+
+  &[data-done] {
+    --route: alpha(var(--bwf-red-text), 0.6);
+
+    @mixin light {
+      --route: alpha(var(--bwf-red), 0.7);
+    }
+  }
+
+  path {
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+.casing,
+.line {
+  fill: none;
+}
+
+.casing {
+  stroke: var(--route-casing);
+  stroke-width: 5;
+}
+
+.line {
+  stroke: var(--route);
+  stroke-width: 2;
+  stroke-dasharray: 4 5;
+}
+
+.leg[data-done] .line {
+  stroke-width: 2.25;
+  stroke-dasharray: none;
+}
+
+.arrow {
+  fill: var(--route);
+  stroke: var(--route-casing);
+  stroke-width: 1.5;
+  paint-order: stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(min(var(--unit, 1), var(--cap, 1)));
+  opacity: clamp(0, (var(--cap, 1) / var(--unit, 1) - 0.5) * 4, 1);
+}

@@ -25,7 +25,14 @@ export default defineConfig(({ mode }) => {
       singleQuote: true,
       trailingComma: 'all',
       sortImports: {},
-      ignorePatterns: ['.claude/**', 'data/**', 'public/data/**', 'src/routeTree.gen.ts', 'pnpm-lock.yaml'],
+      ignorePatterns: [
+        '.claude/**',
+        'data/**',
+        'public/data/**',
+        'public/assets/world-*.json',
+        'src/routeTree.gen.ts',
+        'pnpm-lock.yaml',
+      ],
     },
     lint: {
       plugins: ['react', 'typescript', 'unicorn', 'oxc', 'import', 'jsx-a11y'],

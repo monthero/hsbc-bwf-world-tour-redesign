@@ -8,18 +8,28 @@
   gap: 6px;
 
   .button {
-    background: var(--bwf-glass-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: var(--bwf-text-2);
+
+    &:not(:where([data-active])) {
+      background: var(--bwf-glass-bg);
+      color: var(--bwf-text-2);
+    }
+
+    @media (pointer: coarse) {
+      --size: 40px;
+    }
 
     @mixin light {
-      border-color: var(--bwf-border-hover);
-      background: var(--bwf-surface-2);
       box-shadow: 0 1px 4px alpha(var(--bwf-shadow-ink), 0.6);
 
-      &:hover:not([aria-disabled]) {
-        background: var(--bwf-surface-3);
+      &:not(:where([data-active])) {
+        border-color: var(--bwf-border-hover);
+        background: var(--bwf-surface-2);
+
+        &:hover:not([aria-disabled]) {
+          background: var(--bwf-surface-3);
+        }
       }
 
       &[aria-disabled] {
@@ -29,6 +39,13 @@
   }
 
   @mixin smaller-than $mantine-breakpoint-sm {
+    inset-block: auto 8px;
+    inset-inline: 8px auto;
+    flex-direction: row;
     gap: 4px;
+
+    .button {
+      --size: 40px;
+    }
   }
 }

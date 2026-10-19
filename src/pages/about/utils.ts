@@ -10,8 +10,18 @@ import { date, formatWall, today } from '~/utils/dates';
 import { formatNumber } from '~/utils/format';
 import { countdownLabel, finalsOf, hasWinners, isDone, isHeld, liveAndNext, liveDayLabel } from '~/utils/tournaments';
 
-import { FLIP_AT, HOME_FRAME, KICKERS, MAP_SIZE, MAP_ZOOM, RELAX, SHORT_MONTH } from './constants';
-import type { MapPoint, PinSpot, SeasonFocus, SeasonStat, SeasonStatus } from './types';
+import {
+  FLIP_AT,
+  HOME_FRAME,
+  KICKERS,
+  MAP_SIZE,
+  MAP_ZOOM,
+  RELAX,
+  ROUTE_ARC,
+  ROUTE_ARROW,
+  SHORT_MONTH,
+} from './constants';
+import type { MapPoint, PinSpot, RouteLeg, SeasonFocus, SeasonStat, SeasonStatus } from './types';
 
 export const anchorVars = (p: MapPoint) => ({ '--fx': p.x / MAP_SIZE.w, '--fy': p.y / MAP_SIZE.h }) as CSSProperties;
 
@@ -140,16 +150,39 @@ export const relaxPins = (list: readonly Tournament[], gap: number): PinSpot[] =
   }));
 };
 
-export const routePaths = (list: readonly Tournament[]) => {
+const isNear = (a: MapPoint, b: MapPoint) => Math.hypot(a.x - b.x, a.y - b.y) <= ROUTE_ARC.near;
+
+const round = (n: number, step = 10) => Math.round(n * step) / step;
+
+export const routePaths = (list: readonly Tournament[]): RouteLeg[] => {
   const points = list.filter(isHeld).flatMap((t) => {
     const p = t.map;
     return p ? [{ p, done: t.status === 'done' }] : [];
   });
+  const legs: { a: MapPoint; b: MapPoint }[] = [];
   return points.flatMap(({ p: b, done }, i) => {
     const a = points[i - 1]?.p;
-    if (!a) return [];
-    const lift = Math.hypot(b.x - a.x, b.y - a.y) * 0.2;
-    return [{ key: `${i}`, done, d: `M${a.x} ${a.y}Q${(a.x + b.x) / 2} ${(a.y + b.y) / 2 - lift} ${b.x} ${b.y}` }];
+    const dx = a ? b.x - a.x : 0;
+    const dy = a ? b.y - a.y : 0;
+    const len = Math.hypot(dx, dy);
+    if (!a || !len) return [];
+    const twins = legs.filter((l) => isNear(l.a, a) && isNear(l.b, b)).length;
+    legs.push({ a, b });
+    const bulge = len * (ROUTE_ARC.bend + twins * ROUTE_ARC.spread);
+    const nx = dy / len;
+    const ny = -dx / len;
+    const mx = (a.x + b.x) / 2;
+    const my = (a.y + b.y) / 2;
+    const angle = round((Math.atan2(dy, dx) * 180) / Math.PI);
+    return [
+      {
+        key: `${i}`,
+        done,
+        d: `M${a.x} ${a.y}Q${round(mx + nx * bulge)} ${round(my + ny * bulge)} ${b.x} ${b.y}`,
+        arrow: `translate(${round(mx + (nx * bulge) / 2)} ${round(my + (ny * bulge) / 2)}) rotate(${angle})`,
+        cap: round(len / (ROUTE_ARROW.span * ROUTE_ARROW.room), 100),
+      },
+    ];
   });
 };
 

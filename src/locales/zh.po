@@ -1555,6 +1555,11 @@ msgstr "交锋记录"
 msgid "Height"
 msgstr "身高"
 
+#. Tooltip on the About page season map toggle when the route is shown: hides the lines and arrows joining the tournaments in season order
+#: src/pages/about/components/MapControls.tsx
+msgid "Hide route"
+msgstr "隐藏路线"
+
 #. Label on a short YouTube highlights video of the match
 #. Video type label: match highlights
 #. Videos tab section: short highlight videos of matches
@@ -1895,6 +1900,11 @@ msgstr "HSBC BWF World Tour 实时比分、签表、成绩、赛历、世界排�
 #: src/pages/tournament/components/media/sections.ts
 msgid "Live streams"
 msgstr "直播"
+
+#. Small note above the matches when live score updates are temporarily paused because the live feed is overloaded. The last scores stay on screen
+#: src/pages/tournament/components/MatchesTab.tsx
+msgid "Live updates paused, retrying shortly."
+msgstr "实时更新已暂停，稍后将自动重试。"
 
 #. Player profile fact: the town or city the player lives in
 #: src/utils/players.ts
@@ -2878,7 +2888,7 @@ msgstr "战绩"
 msgid "Remaining"
 msgstr "未结束"
 
-#. Button on the About page season map that returns to the default view, framed on the live or next tournament
+#. Button on the About page season map that zooms all the way out to show the whole world map
 #: src/pages/about/components/MapControls.tsx
 msgid "Reset map view"
 msgstr "重置地图视图"
@@ -3224,6 +3234,11 @@ msgstr "收起"
 #: src/pages/tournament/components/matches/FilterControls.tsx
 msgid "Show only players and countries you follow"
 msgstr "只显示我关注的球员和国家/地区"
+
+#. Toggle button on the About page season map that shows or hides the lines and arrows joining the tournaments in season order
+#: src/pages/about/components/MapControls.tsx
+msgid "Show route"
+msgstr "显示路线"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Show streams not available in my region"
@@ -3670,6 +3685,11 @@ msgstr "即将直播"
 msgid "Upcoming streams"
 msgstr "即将开始的直播"
 
+#. Small chip on a live scoreboard when score updates are temporarily paused because the live feed is overloaded; the last score stays on screen
+#: src/components/match/detail/Scoreboard.tsx
+msgid "Updates paused"
+msgstr "更新已暂停"
+
 #. Live match: number of challenges a side has made. A challenge is a player’s request for a video review of a line call (Instant Review)
 #: src/utils/live.ts
 msgid "Used this match"
@@ -3995,3 +4015,13 @@ msgstr "放大"
 #: src/pages/about/components/MapControls.tsx
 msgid "Zoom out"
 msgstr "缩小"
+
+#. Button on the About page season map that zooms and pans to the tournament being played right now
+#: src/pages/about/components/MapControls.tsx
+msgid "Zoom to the live tournament"
+msgstr "缩放至正在进行的赛事"
+
+#. Button on the About page season map that zooms and pans to the next tournament of the season
+#: src/pages/about/components/MapControls.tsx
+msgid "Zoom to the next tournament"
+msgstr "缩放至下一站赛事"

@@ -2,7 +2,6 @@ import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 
 import type { Level } from '~/types';
-import { localAsset } from '~/utils/images';
 
 import type { SeasonStatus } from './types';
 
@@ -34,19 +33,20 @@ export const ABOUT_SECTIONS = {
 export const SPOTLIGHT = ['next', 'finale', 'titles'] as const;
 
 export const MAP_SIZE = { w: 1000, h: 401 } as const;
-export const MAP_ASSET = localAsset('/assets/world-dots.svg');
 export const PIN_GAP_PX = { desktop: 17, mobile: 10 } as const;
 export const WIDTH_STEP = 40;
 export const MAP_ZOOM = { max: 8, step: 2, homeMax: 6 } as const;
 export const HOME_FRAME = { radius: 100, minSpan: 180, pad: 1.3 } as const;
-export const LAND_CELL_PX = 7;
+export const LAND_FINE_PPU = 2.5;
+export const LAND_BORDER_PX = 0.75;
 export const LAND_OVERSCAN = 0.5;
 export const LAND_MAX_DPR = 2;
-export const LAND_TILE_PX = 32;
 export const REVEAL_INSET = { desktop: 0.1, mobile: 0.5 } as const;
 export const WHEEL_HINT_MS = 1400;
 export const RELAX = { iterations: 48, spring: 0.04, angle: 2.39996, leader: 0.25 } as const;
 export const FLIP_AT = 0.62;
+export const ROUTE_ARC = { bend: 0.18, spread: 0.14, near: 12 } as const;
+export const ROUTE_ARROW = { span: 9, room: 3 } as const;
 
 export const KICKERS = {
   next: msg({

@@ -2,55 +2,36 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { geoBounds, geoContains, geoEqualEarth } from 'd3-geo';
-import { feature } from 'topojson-client';
-import { presimplify, quantile, simplify } from 'topojson-simplify';
+import { geoEqualEarth, geoPath, type GeoPermissibleObjects } from 'd3-geo';
+import { feature, mesh } from 'topojson-client';
+import { filter, filterWeight, presimplify, simplify } from 'topojson-simplify';
 import type { GeometryCollection, Topology } from 'topojson-specification';
 
 import { writeAtomic } from '../../server/http.ts';
-import { LAND_DOT, LAND_LEVELS } from '../../src/pages/about/mapLevels.ts';
+import { LAND_DETAILS, type LandDetail } from '../../src/pages/about/landLevels.ts';
 import { formatBytes } from '../../src/utils/bytes.ts';
 import { prettyJson } from '../sync/util.ts';
 
-type Ring = [number, number][];
-type Polygon = Ring[];
+type World = Topology<{ countries: GeometryCollection; land: GeometryCollection }>;
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
-const SVG_OUT = path.join(ROOT, 'public/assets/world-dots.svg');
+const ASSETS = path.join(ROOT, 'public/assets');
 const MAP_OUT = path.join(ROOT, 'data/map.json');
 
 const WIDTH = 1000;
 const NORTH = 75;
 const SOUTH = -48;
 const ANTARCTICA = -60;
-const SIMPLIFY_QUANTILE = 0.3;
-const DASH = 0.01;
-
-const readLand = async (name: string) => {
-  const source = fileURLToPath(import.meta.resolve(`world-atlas/${name}`));
-  return JSON.parse(await fs.readFile(source, 'utf8')) as Topology<{ land: GeometryCollection }>;
+const EDGE = 2;
+const SOURCES: Record<LandDetail, { file: string; quantum: number; minWeight: number; minArea: number }> = {
+  coarse: { file: 'countries-110m.json', quantum: 10, minWeight: 0, minArea: 0 },
+  fine: { file: 'countries-50m.json', quantum: 20, minWeight: 1e-3, minArea: 1e-2 },
 };
 
-const polygonsOf = (topo: Topology<{ land: GeometryCollection }>) =>
-  feature(topo, topo.objects.land).features.flatMap((f) => {
-    const g = f.geometry;
-    if (g.type === 'Polygon') return [g.coordinates as Polygon];
-    if (g.type === 'MultiPolygon') return g.coordinates as Polygon[];
-    return [];
-  });
-
-const aboveAntarctica = ([outer = []]: Polygon) => Math.max(...outer.map(([, lat]) => lat)) > ANTARCTICA;
-
-const indexed = (polygons: Polygon[]) =>
-  polygons.filter(aboveAntarctica).map((coordinates) => {
-    const shape = { type: 'Polygon' as const, coordinates };
-    return { shape, bounds: geoBounds(shape) };
-  });
-
-const coarseTopo = await readLand('land-110m.json');
-const pre = presimplify(coarseTopo);
-const coarse = indexed(polygonsOf(simplify(pre, quantile(pre, SIMPLIFY_QUANTILE)) as typeof coarseTopo));
-const fine = indexed(polygonsOf(await readLand('land-50m.json')));
+const readWorld = async (name: string) => {
+  const source = fileURLToPath(import.meta.resolve(`world-atlas/${name}`));
+  return JSON.parse(await fs.readFile(source, 'utf8')) as World;
+};
 
 const projection = geoEqualEarth().fitWidth(WIDTH, { type: 'Sphere' });
 const project = (lng: number, lat: number) => projection([lng, lat]) ?? [0, 0];
@@ -58,48 +39,79 @@ const top = Math.floor(project(0, NORTH)[1]);
 const height = Math.ceil(project(0, SOUTH)[1]) - top;
 const [tx, ty] = projection.translate();
 projection.translate([tx, ty - top]);
+const [ox, oy] = projection.translate();
+const frame = { width: WIDTH, height, scale: projection.scale(), tx: ox, ty: oy };
+projection.clipExtent([
+  [-EDGE, -EDGE],
+  [WIDTH + EDGE, height + EDGE],
+]);
 
-const inBounds = ([lng, lat]: [number, number], [[w, s], [e, n]]: [[number, number], [number, number]]) =>
-  lat >= s && lat <= n && (w <= e ? lng >= w && lng <= e : lng >= w || lng <= e);
-
-const onLand = (land: ReturnType<typeof indexed>, at: [number, number]) =>
-  land.some((p) => inBounds(at, p.bounds) && geoContains(p.shape, at));
-
-const levelPath = (step: number, land: ReturnType<typeof indexed>) => {
-  const cols = Math.floor(WIDTH / step);
-  const rows = Math.floor(height / step);
+const pathWriter = (quantum: number) => {
   let d = '';
-  for (let j = 0; j < rows; j++) {
-    let end = -1;
-    let start = -1;
-    const flush = (i: number) => {
-      if (start < 0) return;
-      d += end < 0 ? `M${start} ${j}h${i - start}` : `m${start - end} 0h${i - start}`;
-      end = i;
-      start = -1;
-    };
-    for (let i = 0; i < cols; i++) {
-      const at = projection.invert?.([(i + 0.5) * step, (j + 0.5) * step]);
-      const hit = !!at && onLand(land, at);
-      if (hit && start < 0) start = i;
-      if (!hit) flush(i);
-    }
-    flush(cols);
-  }
-  return d;
+  let x = 0;
+  let y = 0;
+  let line = false;
+  const at = (n: number) => Math.round(n * quantum);
+  const pair = (a: number, b: number) => `${a}${b < 0 ? '' : ' '}${b}`;
+  return {
+    moveTo(px: number, py: number) {
+      x = at(px);
+      y = at(py);
+      d += `M${pair(x, y)}`;
+      line = false;
+    },
+    lineTo(px: number, py: number) {
+      const nx = at(px);
+      const ny = at(py);
+      if (nx === x && ny === y) return;
+      const step = pair(nx - x, ny - y);
+      const lead = nx - x < 0 ? '' : ' ';
+      d += line ? `${lead}${step}` : `l${step}`;
+      line = true;
+      x = nx;
+      y = ny;
+    },
+    closePath() {
+      d += 'z';
+      line = false;
+    },
+    arc() {},
+    beginPath() {},
+    result: () => d,
+  };
 };
 
-const paths = LAND_LEVELS.map(({ id, step }, i) => {
-  const d = levelPath(step, i ? fine : coarse);
-  return `<path id="${id}" transform="scale(${step}) translate(0 .5)" stroke-width="${+LAND_DOT.toFixed(3)}" stroke-dasharray="${DASH} ${1 - DASH}" stroke-dashoffset="${0.5 + DASH / 2}" stroke-linecap="round" d="${d}"/>`;
-});
+const draw = (geo: GeoPermissibleObjects, quantum: number) => {
+  const writer = pathWriter(quantum);
+  geoPath(projection, writer)(geo);
+  return writer.result();
+};
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${height}" fill="none" stroke="#000">${paths.join('')}</svg>\n`;
-const [ox, oy] = projection.translate();
-const map = { width: WIDTH, height, scale: projection.scale(), tx: ox, ty: oy };
+const reachesNorth = (polygon: number[][][]) => Math.max(...(polygon[0] ?? []).map(([, lat = 0]) => lat)) > ANTARCTICA;
 
-await writeAtomic(SVG_OUT, svg);
-await writeAtomic(MAP_OUT, prettyJson(map));
-console.log(
-  `world-dots.svg ${formatBytes(Buffer.byteLength(svg))}, viewBox 0 0 ${WIDTH} ${height}, levels ${LAND_LEVELS.map((l) => l.step).join(' / ')}`,
-);
+const level = async (detail: LandDetail) => {
+  const { file, quantum, minWeight, minArea } = SOURCES[detail];
+  const raw = await readWorld(file);
+  const kept = minArea ? (filter(raw, filterWeight(raw, minArea)) as World) : raw;
+  const topo = (minWeight ? simplify(presimplify(kept), minWeight) : kept) as World;
+  const land = feature(topo, topo.objects.land);
+  const shapes = ('features' in land ? land.features : [land]).flatMap((f) => {
+    const g = f.geometry;
+    if (g.type === 'Polygon') return reachesNorth(g.coordinates) ? [f] : [];
+    if (g.type !== 'MultiPolygon') return [f];
+    return [{ ...f, geometry: { ...g, coordinates: g.coordinates.filter(reachesNorth) } }];
+  });
+  const borders = mesh(topo, topo.objects.countries, (a, b) => a !== b);
+  const json = JSON.stringify({
+    quantum,
+    land: shapes.map((s) => draw(s, quantum)).join(''),
+    borders: draw(borders, quantum),
+  });
+  const out = path.join(ASSETS, LAND_DETAILS[detail]);
+  await writeAtomic(out, `${json}\n`);
+  return `${LAND_DETAILS[detail]} ${formatBytes(Buffer.byteLength(json))}`;
+};
+
+const written = [await level('coarse'), await level('fine')];
+await writeAtomic(MAP_OUT, prettyJson(frame));
+console.log(`${written.join(', ')}, map ${WIDTH} × ${height}`);

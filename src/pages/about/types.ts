@@ -13,6 +13,14 @@ export interface PinSpot extends MapPoint {
   moved: boolean;
 }
 
+export interface RouteLeg {
+  key: string;
+  done: boolean;
+  d: string;
+  arrow: string;
+  cap: number;
+}
+
 export interface SeasonFocus {
   live: Tournament | undefined;
   next: Tournament | undefined;

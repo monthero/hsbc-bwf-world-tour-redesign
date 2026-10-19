@@ -1555,6 +1555,11 @@ msgstr "Rekod pertemuan"
 msgid "Height"
 msgstr "Ketinggian"
 
+#. Tooltip on the About page season map toggle when the route is shown: hides the lines and arrows joining the tournaments in season order
+#: src/pages/about/components/MapControls.tsx
+msgid "Hide route"
+msgstr "Sembunyikan laluan"
+
 #. Label on a short YouTube highlights video of the match
 #. Video type label: match highlights
 #. Videos tab section: short highlight videos of matches
@@ -1895,6 +1900,11 @@ msgstr "Skor langsung, undian, keputusan, kalendar musim, ranking dunia dan beri
 #: src/pages/tournament/components/media/sections.ts
 msgid "Live streams"
 msgstr "Siaran langsung"
+
+#. Small note above the matches when live score updates are temporarily paused because the live feed is overloaded. The last scores stay on screen
+#: src/pages/tournament/components/MatchesTab.tsx
+msgid "Live updates paused, retrying shortly."
+msgstr "Kemas kini langsung dijeda, mencuba semula sebentar lagi."
 
 #. Player profile fact: the town or city the player lives in
 #: src/utils/players.ts
@@ -2878,7 +2888,7 @@ msgstr "Rekod"
 msgid "Remaining"
 msgstr "Berbaki"
 
-#. Button on the About page season map that returns to the default view, framed on the live or next tournament
+#. Button on the About page season map that zooms all the way out to show the whole world map
 #: src/pages/about/components/MapControls.tsx
 msgid "Reset map view"
 msgstr "Set semula paparan peta"
@@ -3224,6 +3234,11 @@ msgstr "Tunjuk kurang"
 #: src/pages/tournament/components/matches/FilterControls.tsx
 msgid "Show only players and countries you follow"
 msgstr "Tunjuk hanya pemain dan negara yang anda ikuti"
+
+#. Toggle button on the About page season map that shows or hides the lines and arrows joining the tournaments in season order
+#: src/pages/about/components/MapControls.tsx
+msgid "Show route"
+msgstr "Tunjukkan laluan"
 
 #: src/components/layout/SiteSettings.tsx
 msgid "Show streams not available in my region"
@@ -3670,6 +3685,11 @@ msgstr "Akan disiarkan"
 msgid "Upcoming streams"
 msgstr "Siaran akan datang"
 
+#. Small chip on a live scoreboard when score updates are temporarily paused because the live feed is overloaded; the last score stays on screen
+#: src/components/match/detail/Scoreboard.tsx
+msgid "Updates paused"
+msgstr "Kemas kini dijeda"
+
 #. Live match: number of challenges a side has made. A challenge is a player’s request for a video review of a line call (Instant Review)
 #: src/utils/live.ts
 msgid "Used this match"
@@ -3995,3 +4015,13 @@ msgstr "Zum masuk"
 #: src/pages/about/components/MapControls.tsx
 msgid "Zoom out"
 msgstr "Zum keluar"
+
+#. Button on the About page season map that zooms and pans to the tournament being played right now
+#: src/pages/about/components/MapControls.tsx
+msgid "Zoom to the live tournament"
+msgstr "Zum ke kejohanan yang sedang berlangsung"
+
+#. Button on the About page season map that zooms and pans to the next tournament of the season
+#: src/pages/about/components/MapControls.tsx
+msgid "Zoom to the next tournament"
+msgstr "Zum ke kejohanan seterusnya"

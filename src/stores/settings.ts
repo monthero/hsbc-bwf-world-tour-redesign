@@ -32,6 +32,7 @@ const SettingsData = z.object({
   height: HeightUnit.catch('cm'),
   tension: TensionUnit.catch('lbs'),
   showBlocked: z.boolean().catch(true),
+  mapRoute: z.boolean().catch(true),
 });
 export type SettingsData = z.infer<typeof SettingsData>;
 
@@ -53,13 +54,14 @@ export const useSettings = create<SettingsState>()(
       name: STORAGE_KEY,
       version: STORE_VERSION,
       storage: safeJSONStorage<SettingsData>(),
-      partialize: ({ colorScheme, timeZone, clock, height, tension, showBlocked }): SettingsData => ({
+      partialize: ({ colorScheme, timeZone, clock, height, tension, showBlocked, mapRoute }): SettingsData => ({
         colorScheme,
         timeZone,
         clock,
         height,
         tension,
         showBlocked,
+        mapRoute,
       }),
       migrate: () => DEFAULTS,
       merge: mergeParsed(SettingsData, () => DEFAULTS),
@@ -74,6 +76,8 @@ export const useHeightUnit = () => useSettings((s) => s.height);
 export const useTensionUnit = () => useSettings((s) => s.tension);
 
 export const useShowBlocked = () => useSettings((s) => s.showBlocked);
+
+export const useMapRoute = () => useSettings((s) => s.mapRoute);
 
 export const useSettingsChanged = () => useSettings((s) => SETTING_KEYS.some((k) => s[k] !== DEFAULTS[k]));
 
