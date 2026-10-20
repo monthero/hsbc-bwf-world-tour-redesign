@@ -37,6 +37,7 @@ const SPLIT_RETRIES = 1;
 const WEEKLY_FLOOR = 2008;
 const WEEKLY_GAP = 2;
 const HISTORY_STATE = 'rankings.history';
+const HISTORY_PER_RUN = 150;
 
 interface HistoryState {
   key: string;
@@ -205,7 +206,8 @@ export const syncRankings = async (ctx: Context) => {
   const key = `${world}:${ctx.currentYear}`;
   const state = readState<HistoryState | null>(db, HISTORY_STATE, null);
   const complete = new Set(state?.key === key ? state.done : []);
-  const todo = ids.filter((id) => !complete.has(id));
+  const pending = ids.filter((id) => !complete.has(id));
+  const todo = pending.slice(0, HISTORY_PER_RUN);
 
   let done = 0;
   await pool(todo, async (id) => {
@@ -221,6 +223,6 @@ export const syncRankings = async (ctx: Context) => {
   const finished = ids.filter((id) => complete.has(id));
   writeState(db, HISTORY_STATE, { key, done: finished } satisfies HistoryState);
   console.log(
-    `ranking history: ${ids.length} ranked players · ${todo.length} checked · ${ids.length - finished.length} incomplete`,
+    `ranking history: ${ids.length} ranked players · ${todo.length} checked · ${ids.length - finished.length} left for later runs`,
   );
 };
