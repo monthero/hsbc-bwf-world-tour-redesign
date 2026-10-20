@@ -346,16 +346,6 @@ msgstr "{page} · {site}"
 msgid "{played, plural, one {# tournament} other {# tournaments}}"
 msgstr "{played, plural, other {# 站賽事}}"
 
-#. Match stats footer for a game still in progress
-#: src/components/match/detail/StatsPanel.tsx
-msgid "{points, plural, one {# point played so far} other {# points played so far}}"
-msgstr "{points, plural, other {目前已打 # 分}}"
-
-#. Match stats footer
-#: src/components/match/detail/StatsPanel.tsx
-msgid "{points, plural, one {# point played} other {# points played}}"
-msgstr "{points, plural, other {共打 # 分}}"
-
 #. World ranking points at the chosen week; pts = points
 #: src/pages/player/components/RankChart.tsx
 msgid "{points} pts"
@@ -930,6 +920,16 @@ msgstr "挑戰失敗"
 msgid "Challenge won"
 msgstr "挑戰成功"
 
+#. Match stats row: how many line-call challenges (video reviews) each side asked for
+#: src/components/match/detail/utils.ts
+msgid "Challenges used"
+msgstr "挑戰次數"
+
+#. Match stats row: how many line-call challenges (video reviews) each side won
+#: src/components/match/detail/utils.ts
+msgid "Challenges won"
+msgstr "挑戰成功"
+
 #. Podium place: winner of the final (gold)
 #: src/pages/tournament/constants.ts
 msgid "Champion"
@@ -1292,7 +1292,7 @@ msgid "Final"
 msgstr "已結束"
 
 #. Label above the score of the last game once a match has finished
-#: src/pages/tournament/components/matches/liveView.ts
+#: src/components/match/showdown/liveView.ts
 msgid "Final score"
 msgstr "最終比分"
 
@@ -1486,11 +1486,6 @@ msgstr "完整頒獎台"
 msgid "Full standings"
 msgstr "完整排名"
 
-#. Scoreboard column header: short for Game 1, Game 2, Game 3
-#: src/components/match/detail/Scoreboard.tsx
-msgid "G{game}"
-msgstr "第{game}局"
-
 #. Live score column heading for a game, e.g. G1 = game 1. Keep it to about two characters
 #: src/utils/live.ts
 msgid "G{n}"
@@ -1499,12 +1494,12 @@ msgstr "{n}局"
 #. Live score: the game being played, e.g. “Game 2”. A badminton match is best of three games
 #. Match stats tab for one game of the match, e.g. Game 2
 #: src/components/match/detail/StatsPanel.tsx
-#: src/pages/tournament/components/matches/liveView.ts
+#: src/components/match/showdown/liveView.ts
 msgid "Game {game}"
 msgstr "第 {game} 局"
 
 #. Live score during the break between games: the game about to start, e.g. “Game 3 next”
-#: src/pages/tournament/components/matches/liveView.ts
+#: src/components/match/showdown/liveView.ts
 msgid "Game {next} next"
 msgstr "即將開始第 {next} 局"
 
@@ -1513,10 +1508,10 @@ msgstr "即將開始第 {next} 局"
 msgid "Game point"
 msgstr "局點"
 
-#. Match stats row: games won by each side (a match is best of three games)
+#. Match stats row: how many times each side was one point away from winning a game
 #: src/components/match/detail/utils.ts
-msgid "Games won"
-msgstr "勝局數"
+msgid "Game points"
+msgstr "局點"
 
 #. Link at the bottom of a tournament’s popover in the calendar season strip
 #: src/pages/calendar/components/EventDetails.tsx
@@ -3745,7 +3740,7 @@ msgid "vs"
 msgstr "vs"
 
 #. Large “versus” mark between the two sides on the live score before a match starts and between games. Keep it very short
-#: src/pages/tournament/components/matches/Showdown.tsx
+#: src/components/match/showdown/ShowdownCard.tsx
 msgid "VS"
 msgstr "VS"
 
@@ -3859,12 +3854,6 @@ msgstr "勝率"
 msgid "Winner"
 msgstr "冠軍"
 
-#. Check mark beside the side that won the match
-#: src/components/match/detail/Scoreboard.tsx
-msgctxt "match"
-msgid "Winner"
-msgstr "勝方"
-
 #. Hint on a tournament preview card pointing to the side panel with the champions
 #: src/components/tournament/TournamentPreview.tsx
 msgid "Winners"
@@ -3932,12 +3921,12 @@ msgid "Won · Group {group}"
 msgstr "獲勝 · {group} 組"
 
 #. Live score chip next to the side that just won a game. A badminton match is best of three games
-#: src/pages/tournament/components/matches/liveView.ts
+#: src/components/match/showdown/liveView.ts
 msgid "Won game {gameNo}"
 msgstr "拿下第 {gameNo} 局"
 
 #. Live score chip next to the side that just won the match
-#: src/pages/tournament/components/matches/liveView.ts
+#: src/components/match/showdown/liveView.ts
 msgid "Won the match"
 msgstr "贏得比賽"
 

@@ -94,6 +94,7 @@ export const toEntryDto = (event: EventCode, e: BwfEntry, names: NameOf): EntryD
 export interface SideStats {
   longestRun: number;
   ralliesWon: number;
+  gamePoints: number;
   challenges: { used: number; won: number; lost: number };
 }
 
@@ -102,6 +103,7 @@ export type MatchStats = [SideStats, SideStats];
 const sideStats = (r: NonNullable<BwfMatchStat['results']>, t: 'team1' | 'team2'): SideStats => ({
   longestRun: r[`${t}_consecutive_points`],
   ralliesWon: r[`${t}_rallies_won`],
+  gamePoints: r[`${t}_game_points`],
   challenges: { used: r[`${t}_challenge_used`], won: r[`${t}_challenge_won`], lost: r[`${t}_challenge_lost`] },
 });
 

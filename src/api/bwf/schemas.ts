@@ -96,6 +96,8 @@ export const BwfMatchStat = z.object({
       team2_challenge_won: Count,
       team1_challenge_lost: Count,
       team2_challenge_lost: Count,
+      team1_game_points: Count,
+      team2_game_points: Count,
     })
     .nullable(),
 });

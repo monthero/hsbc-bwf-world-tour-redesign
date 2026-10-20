@@ -1,8 +1,10 @@
 import type { I18n } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
-import { Plural, Trans, useLingui } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
+import { useQuery } from '@tanstack/react-query';
 import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
+import { liveGameStatsQuery, liveMatchStatsQuery } from '~/api/queries';
 import { LiveDot, SectionTitle, TabBar, type TabItem } from '~/components/ui';
 import type { Game, Team } from '~/types';
 
@@ -36,8 +38,8 @@ const StatRow: FC<{ row: SplitRow }> = ({ row: r }) => {
       label={i18n._(r.label)}
       a={r.fa ?? r.a}
       b={r.fb ?? r.b}
-      aBetter={r.a > r.b}
-      bBetter={r.b > r.a}
+      aBetter={!r.neutral && r.a > r.b}
+      bBetter={!r.neutral && r.b > r.a}
       subA={r.sa}
       subB={r.sb}
       share={r.bar ? shareOf(r.a, r.b) : undefined}
@@ -45,16 +47,28 @@ const StatRow: FC<{ row: SplitRow }> = ({ row: r }) => {
   );
 };
 
+const SETTLED = { refetchInterval: false, staleTime: Infinity } as const;
+
+const useTabStats = (tmtId: number, code: string, tab: number, live: number) => {
+  const ready = !!tmtId && !!code;
+  const poll = (tab ? tab - 1 === live : live >= 0) ? {} : SETTLED;
+  const match = useQuery({ ...liveMatchStatsQuery(tmtId, code), ...poll, enabled: ready && !tab });
+  const game = useQuery({ ...liveGameStatsQuery(tmtId, code, tab), ...poll, enabled: ready && tab > 0 });
+  return (tab ? game.data : match.data?.sides) ?? null;
+};
+
 export const StatsPanel = memo<{
   games: readonly Game[];
   teams: readonly [Team, Team];
   live: number;
+  tmtId: number;
+  code: string;
   className?: string;
-}>(({ games, teams, live, className }) => {
+}>(({ games, teams, live, tmtId, code, className }) => {
   const [tab, setTab] = useState(0);
   const active = Math.min(tab, games.length);
-  const view = useMemo(() => statView(games, active), [games, active]);
-  const { points } = view;
+  const stats = useTabStats(tmtId, code, active, live);
+  const view = useMemo(() => statView(games, active, stats), [games, active, stats]);
   const { t, i18n } = useLingui();
   const items = useMemo(() => tabsFor(i18n, games.length, live), [i18n, games.length, live]);
   const onTab = useCallback((v: string) => setTab(Number(v)), []);
@@ -77,18 +91,6 @@ export const StatsPanel = memo<{
           <StatRow key={r.key} row={r} />
         ))}
       </div>
-      <span className={classes.foot}>
-        {active - 1 === live ? (
-          <Plural
-            value={points}
-            one="# point played so far"
-            other="# points played so far"
-            comment="Match stats footer for a game still in progress"
-          />
-        ) : (
-          <Plural value={points} one="# point played" other="# points played" comment="Match stats footer" />
-        )}
-      </span>
     </section>
   );
 });

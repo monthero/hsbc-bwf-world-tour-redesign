@@ -1,13 +1,14 @@
 import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 
+import type { MatchStats } from '~/api/bwf/normalize';
 import { numberFormat } from '~/i18n/current';
 import type { Game, Match, PlayerMatch, Side } from '~/types';
 import { date, formatDayMonth, formatDayMonthYear } from '~/utils/dates';
 import { formatDuration, formatNumber, formatRank, formatRecord, joinDots } from '~/utils/format';
 import type { WL } from '~/utils/h2h';
-import { gameDone } from '~/utils/live';
-import { courtLabel, gameWon, opposite, roundName } from '~/utils/matches';
+import { gameDone, LONGEST_RUN } from '~/utils/live';
+import { courtLabel, opposite, roundName } from '~/utils/matches';
 
 import type { FormItem } from '../Outcome';
 
@@ -21,11 +22,11 @@ export interface SplitRow {
   sa?: string;
   sb?: string;
   bar?: boolean;
+  neutral?: boolean;
 }
 
 export interface StatView {
   rows: SplitRow[];
-  points: number;
 }
 
 export interface CompareRow {
@@ -77,11 +78,20 @@ export const FORM = msg({
   comment: 'Head-to-head row: each side’s results in their last five matches',
 });
 
-const POINTS_WON = msg({ message: 'Points won', comment: 'Match stats row: total rallies won by each side' });
-const GAMES_WON = msg({
-  message: 'Games won',
-  comment: 'Match stats row: games won by each side (a match is best of three games)',
+const GAME_POINTS = msg({
+  message: 'Game points',
+  comment: 'Match stats row: how many times each side was one point away from winning a game',
 });
+const CHALLENGES_USED = msg({
+  message: 'Challenges used',
+  comment: 'Match stats row: how many line-call challenges (video reviews) each side asked for',
+});
+const CHALLENGES_WON = msg({
+  message: 'Challenges won',
+  comment: 'Match stats row: how many line-call challenges (video reviews) each side won',
+});
+
+const POINTS_WON = msg({ message: 'Points won', comment: 'Match stats row: total rallies won by each side' });
 const BIGGEST_MARGIN = msg({
   message: 'Biggest game margin',
   comment: 'Match stats row: the largest points lead each side won a game by',
@@ -110,30 +120,35 @@ const marginRow = (label: MessageDescriptor, a: number, b: number): SplitRow => 
   fb: margin(b),
 });
 
-const NO_STATS: StatView = { rows: [], points: 0 };
+const NO_STATS: StatView = { rows: [] };
 
-export const statView = (games: readonly Game[], tab: number): StatView => {
+const apiRows = (stats: MatchStats | null): SplitRow[] => {
+  if (!stats) return [];
+  const [x, y] = stats;
+  return [
+    { key: 'run', label: LONGEST_RUN, a: x.longestRun, b: y.longestRun },
+    { key: 'gp', label: GAME_POINTS, a: x.gamePoints, b: y.gamePoints },
+    { key: 'cu', label: CHALLENGES_USED, a: x.challenges.used, b: y.challenges.used, neutral: true },
+    { key: 'cw', label: CHALLENGES_WON, a: x.challenges.won, b: y.challenges.won },
+  ];
+};
+
+export const statView = (games: readonly Game[], tab: number, stats: MatchStats | null): StatView => {
   if (!games.length) return NO_STATS;
   if (tab === 0) {
     const done = games.filter(gameDone);
-    const [gwA, gwB] = both((s) => done.filter((g) => gameWon(g, s)).length);
     const [pA, pB] = both((s) => games.reduce((x, g) => x + g[s], 0));
     const [mA, mB] = both((s) => Math.max(0, ...done.map((g) => lead(g, s))));
     return {
-      rows: [
-        { key: 'g', label: GAMES_WON, a: gwA, b: gwB, bar: true },
-        pointsRow(pA, pB),
-        marginRow(BIGGEST_MARGIN, mA, mB),
-      ],
-      points: pA + pB,
+      rows: [pointsRow(pA, pB), ...apiRows(stats), marginRow(BIGGEST_MARGIN, mA, mB)],
     };
   }
   const g = games[tab - 1];
   if (!g) return NO_STATS;
   const [a, b] = g;
-  const rows = [pointsRow(a, b)];
+  const rows = [pointsRow(a, b), ...apiRows(stats)];
   if (gameDone(g)) rows.push(marginRow(WINNING_MARGIN, lead(g, 0), lead(g, 1)));
-  return { rows, points: a + b };
+  return { rows };
 };
 
 export const formItems = (list: readonly PlayerMatch[]): FormItem[] =>

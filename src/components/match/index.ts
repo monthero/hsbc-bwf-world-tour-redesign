@@ -9,5 +9,14 @@ export { MatchTime, ScheduledStart, TimedStatus } from './MatchTime';
 export { FormStrip, OutcomeBadge, OutcomeLabel } from './Outcome';
 export { ScoreChips, SideScores } from './ScoreChips';
 export { ServeMark } from './ServeMark';
+export {
+  ShowdownCard,
+  StakePill,
+  toShowdownView,
+  useMatchLiveView,
+  type LiveView,
+  type ShowdownView,
+  type SideView,
+} from './showdown';
 export { StreakMark } from './StreakMark';
 export { TeamLabel, TeamPlayers } from './TeamPlayers';

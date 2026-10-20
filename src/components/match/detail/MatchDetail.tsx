@@ -52,8 +52,17 @@ export const MatchDetail: FC<{
           <IconClose size={15} />
         </IconButton>
       </header>
-      <Scoreboard match={match} tournament={tournament} className={classes.scoreboard} />
-      {games.length > 0 && <StatsPanel games={games} teams={match.teams} live={live} className={classes.section} />}
+      <Scoreboard match={match} tournament={tournament} />
+      {games.length > 0 && (
+        <StatsPanel
+          games={games}
+          teams={match.teams}
+          live={live}
+          tmtId={tournament.tmtId ?? 0}
+          code={match.code ?? ''}
+          className={classes.section}
+        />
+      )}
       <MatchVideos match={match} tournament={tournament} className={classes.section} />
       <HeadToHead match={match} tournament={tournament} className={classes.section} />
     </div>

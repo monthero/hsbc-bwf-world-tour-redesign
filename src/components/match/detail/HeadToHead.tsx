@@ -92,7 +92,8 @@ export const HeadToHead = memo<{ match: Match; tournament: Tournament; className
     const { record, history, allMeets, compare } = useMatchInsights(match, tournament);
     const { t, i18n } = useLingui();
     const scopes = useLazyOptions(SCOPES);
-    const all = scope === 'all';
+    const scoped = !!record && history.ready && record.a + record.b !== history.meets.length;
+    const all = scoped && scope === 'all';
 
     const summary = useMemo(() => {
       if (all) {
@@ -130,7 +131,11 @@ export const HeadToHead = memo<{ match: Match; tournament: Tournament; className
       <section className={className}>
         <SectionTitle
           as="h3"
-          aside={<Segmented className={classes.scope} options={scopes} value={scope} onChange={onScope} height={26} />}
+          aside={
+            scoped && (
+              <Segmented className={classes.scope} options={scopes} value={scope} onChange={onScope} height={26} />
+            )
+          }
         >
           {i18n._(HEAD_TO_HEAD)}
         </SectionTitle>
