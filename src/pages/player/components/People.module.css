@@ -12,14 +12,6 @@
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
   color: var(--bwf-text);
-
-  .h2h[data-edge='ahead'] & {
-    color: var(--bwf-win);
-  }
-
-  .h2h[data-edge='behind'] & {
-    color: var(--bwf-loss);
-  }
 }
 
 .bar {

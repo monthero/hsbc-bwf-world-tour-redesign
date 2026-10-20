@@ -27,6 +27,7 @@ import {
   hasProfile,
   lastMatchOf,
   nextMatchOf,
+  recordEdge,
   rivalsOf,
   seasonBreakdown,
   shareVars,
@@ -296,7 +297,9 @@ const SeasonSection = memo<{
           <span className={shared.sub}>
             <Trans comment="Season stat: matches won–lost, e.g. 24–7">Record</Trans>
           </span>
-          <span className={shared.value}>{formatRecord(season.wins, season.losses)}</span>
+          <span className={clsx(shared.value, shared.edge)} data-edge={recordEdge(season.wins, season.losses)}>
+            {formatRecord(season.wins, season.losses)}
+          </span>
           <span className={shared.track} style={shareVars(winShare(season.wins, season.losses) ?? 0, 1)} />
         </div>
         <Stat
@@ -314,6 +317,7 @@ const SeasonSection = memo<{
               'Season stat: won–lost record in matches that went to a third, deciding game (badminton matches are best of three games)',
           })}
           value={formatRecord(deciders.wins, deciders.losses)}
+          edge={recordEdge(deciders.wins, deciders.losses)}
         />
         <div className={classes.stat}>
           <span className={shared.sub}>
@@ -331,7 +335,10 @@ const SeasonSection = memo<{
           {breakdown.levels.map((l) => (
             <span key={l.level} className={shared.sub}>
               <LevelDot level={l.level} />
-              {l.level === 'Finals' ? FINALS_LEVEL : `S${l.level}`} <b>{formatRecord(l.wins, l.losses)}</b>
+              {l.level === 'Finals' ? FINALS_LEVEL : `S${l.level}`}{' '}
+              <b className={shared.edge} data-edge={recordEdge(l.wins, l.losses)}>
+                {formatRecord(l.wins, l.losses)}
+              </b>
             </span>
           ))}
           {breakdown.avgMin > 0 && (
@@ -362,10 +369,12 @@ const SeasonSection = memo<{
   );
 });
 
-const Stat = memo<{ label: string; value: number | string }>(({ label, value }) => (
+const Stat = memo<{ label: string; value: number | string; edge?: string }>(({ label, value, edge }) => (
   <div className={classes.stat}>
     <span className={shared.sub}>{label}</span>
-    <span className={shared.value}>{value}</span>
+    <span className={clsx(shared.value, edge && shared.edge)} data-edge={edge}>
+      {value}
+    </span>
   </div>
 ));
 

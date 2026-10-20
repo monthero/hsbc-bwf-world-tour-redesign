@@ -1,6 +1,7 @@
 import { msg } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useDisclosure } from '@mantine/hooks';
+import { clsx } from 'clsx';
 import { memo, useMemo, type CSSProperties } from 'react';
 
 import { EventTag, TeamPlayers } from '~/components/match';
@@ -11,7 +12,7 @@ import { formatRecord } from '~/utils/format';
 
 import { PARTNER_LIMIT } from '../constants';
 import type { PartnerRow, RivalRow } from '../types';
-import { yearRange } from '../utils';
+import { recordEdge, yearRange } from '../utils';
 import { Section } from './parts';
 
 import classes from './People.module.css';
@@ -23,11 +24,6 @@ const WON_LOST_LABEL = msg({
   message: '{wins, plural, one {# win} other {# wins}}, {losses, plural, one {# loss} other {# losses}}',
   comment: 'Accessible label for a won–lost record bar',
 });
-
-const edge = (wins: number, losses: number) => {
-  if (wins === losses) return 'even';
-  return wins > losses ? 'ahead' : 'behind';
-};
 
 const WON_LOST = (
   <span className={shared.sub}>
@@ -42,8 +38,10 @@ const HeadToHead = memo<{ wins: number; losses: number }>(({ wins, losses }) => 
   const style = useMemo(() => ({ '--won': wins / Math.max(1, wins + losses) }) as CSSProperties, [wins, losses]);
   const label = i18n._({ ...WON_LOST_LABEL, values: { wins, losses } });
   return (
-    <span className={classes.h2h} data-edge={edge(wins, losses)} aria-label={label}>
-      <span className={classes.record}>{formatRecord(wins, losses)}</span>
+    <span className={classes.h2h} aria-label={label}>
+      <span className={clsx(classes.record, shared.edge)} data-edge={recordEdge(wins, losses)}>
+        {formatRecord(wins, losses)}
+      </span>
       <span className={classes.bar} style={style} aria-hidden />
     </span>
   );

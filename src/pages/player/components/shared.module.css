@@ -78,11 +78,21 @@
   }
 }
 
+.edge {
+  &[data-edge='ahead'] {
+    color: var(--bwf-win);
+  }
+
+  &[data-edge='behind'] {
+    color: var(--bwf-loss);
+  }
+}
+
 .track {
   position: relative;
   height: 4px;
   border-radius: 2px;
-  background: var(--bwf-surface-4);
+  background: var(--bwf-loss-soft);
   overflow: hidden;
 
   &::after {
@@ -92,7 +102,7 @@
     inset-inline-start: 0;
     width: var(--v);
     border-radius: inherit;
-    background: light-dark(var(--bwf-win), var(--bwf-text-3));
+    background: var(--bwf-win);
   }
 }
 

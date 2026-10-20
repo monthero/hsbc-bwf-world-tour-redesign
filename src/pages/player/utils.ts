@@ -302,6 +302,11 @@ export const careerHighs = (ranks: readonly RankView[], view: HistoryView | unde
 
 export const yearRange = (first: number, last: number) => (first === last ? String(first) : `${first}–${last}`);
 
+export const recordEdge = (wins: number, losses: number) => {
+  if (wins === losses) return 'even';
+  return wins > losses ? 'ahead' : 'behind';
+};
+
 export const winShare = (wins: number, losses: number) => (wins + losses ? wins / (wins + losses) : null);
 
 export const winRate = (wins: number, losses: number) => {
