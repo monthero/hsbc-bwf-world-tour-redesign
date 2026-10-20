@@ -59,9 +59,15 @@ jobs:
             data/bwf.sqlite*
             data/cache
             data/reports
-            public/assets/players
           key: bwf-sync-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: bwf-sync-
+
+      - name: Restore player images
+        uses: actions/cache/restore@v5
+        with:
+          path: public/assets/players
+          key: bwf-images-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: bwf-images-
 
       - name: Note cold sync
         if: steps.restore.outputs.cache-matched-key == ''
@@ -83,8 +89,14 @@ jobs:
             data/bwf.sqlite*
             data/cache
             data/reports
-            public/assets/players
           key: bwf-sync-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Save player images
+        if: always()
+        uses: actions/cache/save@v5
+        with:
+          path: public/assets/players
+          key: bwf-images-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Check export
         run: |
