@@ -1,8 +1,7 @@
 import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
-import { clamp } from '@mantine/hooks';
 import { clsx } from 'clsx';
-import { memo, type CSSProperties } from 'react';
+import { memo } from 'react';
 
 import { medalStake } from '~/components/match';
 import { LiveDot, SectionTitle } from '~/components/ui';
@@ -59,7 +58,8 @@ export const LiveSection = memo<{
       <div
         className={clsx(utils.snapRow, utils.noScrollbar, classes.grid)}
         data-single={n === 1 || undefined}
-        style={{ '--cols': clamp(n, 2, 3) } as CSSProperties}
+        data-count={n}
+        data-many={n > 4 || undefined}
       >
         {matches.map((m) => (
           <LiveItem key={m.id} match={m} tournament={tournament} onOpen={onOpen} />

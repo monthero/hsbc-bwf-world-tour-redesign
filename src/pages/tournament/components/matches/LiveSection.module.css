@@ -1,16 +1,29 @@
 .root {
+  container: live / inline-size;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 .grid {
+  --cols: 2;
   display: grid;
   grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
   gap: 12px;
 
-  @mixin smaller-than $mantine-breakpoint-md {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  @container live (width >= 1060px) {
+    --cols: 3;
+
+    &[data-count='4'] {
+      --cols: 2;
+    }
+  }
+
+  @container live (width >= 1400px) {
+    &[data-count='4'],
+    &[data-many] {
+      --cols: 4;
+    }
   }
 
   @mixin smaller-than $mantine-breakpoint-sm {
