@@ -2,7 +2,6 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { gzipSync } from 'node:zlib';
 
 import { BWF_API, BWF_USER_AGENT } from '../../server/bwf-upstream.ts';
-import { relayFetch } from '../../server/relay.ts';
 import { DAY_MS } from './dates.ts';
 import { unzipJson, type Db } from './db.ts';
 
@@ -77,7 +76,7 @@ const download = async (path: string, retries: number): Promise<string | null> =
     try {
       const wait = pausedUntil - Date.now();
       if (wait > 0) await sleep(wait);
-      const res = await relayFetch(`${BWF_API}/${path}`, {
+      const res = await fetch(`${BWF_API}/${path}`, {
         headers: { 'User-Agent': BWF_USER_AGENT, Accept: 'application/json' },
         signal: AbortSignal.timeout(TIMEOUT_MS),
       });

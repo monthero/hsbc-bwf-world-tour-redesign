@@ -78,7 +78,6 @@ jobs:
         shell: bash
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-          SYNC_RELAY_TOKEN: ${{ secrets.SYNC_RELAY_TOKEN }}
         run: pnpm sync 2>&1 | tee sync.log
 
       - name: Save sync cache
