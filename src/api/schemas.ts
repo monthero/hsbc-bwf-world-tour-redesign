@@ -352,7 +352,7 @@ export type TournamentMedia = z.infer<typeof TournamentMedia>;
 export const ViewerGeo = z.object({ country: NullableString });
 export type ViewerGeo = z.infer<typeof ViewerGeo>;
 
-export const NewsSite = z.enum(['world-tour', 'world-tour-finals']);
+export const NewsSite = z.enum(['world-tour', 'world-tour-finals', 'fan-zone']);
 export type NewsSite = z.infer<typeof NewsSite>;
 
 export const NewsImage = z.object({

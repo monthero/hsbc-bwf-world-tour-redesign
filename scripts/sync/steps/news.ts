@@ -2,6 +2,7 @@ import { createArticleBuilder } from '../../../server/news-blocks.ts';
 import { NEWS_RANKED_TOP, withRanked, type PlayerName } from '../../../server/news-players.ts';
 import {
   createNewsLinker,
+  fetchCategoryPage,
   fetchNewsBySlug,
   fetchNewsPage,
   fetchPopularSlugs,
@@ -9,6 +10,7 @@ import {
   newsMonthOf,
   newsSlugOf,
   publishedMs,
+  seriesMatcher,
   type NewsRequest,
   type NewsSeries,
   type RawNews,
@@ -16,6 +18,7 @@ import {
 } from '../../../server/news.ts';
 import { WORLD } from '../bwf.ts';
 import type { Context } from '../context.ts';
+import { addDays } from '../dates.ts';
 import { all, readState, tx, unzipJson, writeState, zipJson, type Db } from '../db.ts';
 import { push, readJsonFile, readOverrides } from '../util.ts';
 
@@ -23,6 +26,10 @@ const PER_PAGE = 20;
 const MAX_PAGES = 40;
 const BUDGET_MS = 10 * 60_000;
 const CURSOR = 'news.archive';
+const CATEGORIES = 'news.categories';
+const CATEGORY_PAST_DAYS = 60;
+const CATEGORY_AHEAD_DAYS = 14;
+const FAN_ZONE = 'Fan Zone';
 const SYNC_REQUEST: NewsRequest = { timeoutMs: 90_000, retries: 2 };
 
 interface Stored {
@@ -111,6 +118,58 @@ const fetchArchive = async (db: Db, maxPages: number) => {
   return { written, pages, total: stored.size, cursor, stop };
 };
 
+const tournamentCategories = (db: Db, series: NewsSeries[]) => {
+  const seriesOf = seriesMatcher(series);
+  const out = new Map<string, string>();
+  for (const raw of readRaw(db))
+    for (const c of raw.category ?? []) {
+      const id = seriesOf(c.name);
+      if (id) out.set(c.slug, id);
+    }
+  return out;
+};
+
+const activeSeries = (db: Db, today: string) =>
+  new Set(
+    all<{ series_id: string }>(
+      db,
+      'SELECT DISTINCT series_id FROM editions WHERE end >= ? AND start <= ?',
+      addDays(today, -CATEGORY_PAST_DAYS),
+      addDays(today, CATEGORY_AHEAD_DAYS),
+    ).map((r) => r.series_id),
+  );
+
+const fetchCategories = async (db: Db, series: NewsSeries[], today: string) => {
+  const backfilled = readState<boolean>(db, CATEGORIES, false);
+  const active = activeSeries(db, today);
+  const slugs = [...tournamentCategories(db, series)]
+    .filter(([, id]) => !backfilled || active.has(id))
+    .map(([slug]) => slug);
+  const oldest = Math.min(...all<Stored>(db, 'SELECT published FROM news_raw').map((s) => s.published));
+  const upsert = db.prepare(
+    `INSERT INTO news_raw (id, published, fetched_at, body) VALUES (?, ?, ?, ?)
+     ON CONFLICT(id) DO UPDATE SET published = excluded.published, fetched_at = excluded.fetched_at, body = excluded.body`,
+  );
+  let added = 0;
+  let failed = 0;
+  for (const slug of slugs) {
+    try {
+      const page = await fetchCategoryPage(slug, PER_PAGE, SYNC_REQUEST);
+      const fresh = page.data.filter((r) => r.destination === FAN_ZONE && publishedMs(r) >= oldest);
+      const now = Date.now();
+      tx(db, () => {
+        for (const r of fresh) upsert.run(r.id, publishedMs(r), now, zipJson(r));
+      });
+      added += fresh.length;
+    } catch (e) {
+      failed++;
+      console.warn(`  ! news category ${slug}: ${(e as Error).message}`);
+    }
+  }
+  if (!failed && slugs.length) writeState(db, CATEGORIES, true);
+  return `${slugs.length} tournament categories, ${added} Fan Zone stories${failed ? `, ${failed} failed` : ''}`;
+};
+
 const lastPopular = (db: Db) =>
   all<{ slug: string }>(db, 'SELECT slug FROM news_popular ORDER BY rank').map((r) => r.slug);
 
@@ -187,8 +246,10 @@ const candidatesFrom = (db: Db, overridesFile: string) => {
   };
 };
 
+const readSeries = (catalogFile: string) => readJsonFile<{ series: NewsSeries[] }>(catalogFile).series;
+
 const derive = (db: Db, catalogFile: string, overridesFile: string) => {
-  const series = readJsonFile<{ series: NewsSeries[] }>(catalogFile).series;
+  const series = readSeries(catalogFile);
   const events = all<{ code: string; tmt_id: number; series_id: string; start: string }>(
     db,
     'SELECT code, tmt_id, series_id, start FROM editions',
@@ -225,7 +286,7 @@ const cursorNote = (c: Cursor | null) => {
 };
 
 export const syncNews = async (
-  { db }: Context,
+  { db, today }: Context,
   {
     offline,
     catalogFile,
@@ -237,8 +298,11 @@ export const syncNews = async (
   if (!offline) {
     const a = await fetchArchive(db, maxPages);
     if (a.stop) console.warn(`  ! news: ${a.stop}; kept ${a.total} stored, the next run resumes`);
+    const categories = a.stop
+      ? 'tournament categories skipped'
+      : await fetchCategories(db, readSeries(catalogFile), today);
     const popular = await fetchPopular(db);
-    note = `${a.pages} pages · ${a.written} refreshed · ${a.total} stored · ${cursorNote(a.cursor)} · ${popular}`;
+    note = `${a.pages} pages · ${a.written} refreshed · ${a.total} stored · ${cursorNote(a.cursor)} · ${categories} · ${popular}`;
   }
   const items = derive(db, catalogFile, overridesFile);
   console.log(

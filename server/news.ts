@@ -20,7 +20,9 @@ import { createArticleBuilder, decodeCommon } from './news-blocks.ts';
 import { NEWS_RANKED_TOP, withRanked, type PlayerName } from './news-players.ts';
 
 const CMS = 'https://cms.bwfbadminton.com/wp-json';
-const LIST = `${CMS}/newsapi/v1/category/world-tour`;
+const CATEGORY = `${CMS}/newsapi/v1/category`;
+const LIST = `${CATEGORY}/world-tour`;
+const FAN_ZONE = 'https://bwfbadminton.com';
 const RETRIES = 3;
 const TIMEOUT_MS = 30_000;
 const EXCERPT_MAX = 220;
@@ -30,7 +32,17 @@ export const NEWS_FREEZE_MS = 30 * DAY_MS;
 export const NEWS_LATEST = 12;
 const NEWS_POPULAR = 5;
 
-const SITES: Record<string, NewsSite> = { 'World Tour': 'world-tour', 'World Tour Finals': 'world-tour-finals' };
+const SITES: Record<string, NewsSite> = {
+  'World Tour': 'world-tour',
+  'World Tour Finals': 'world-tour-finals',
+  'Fan Zone': 'fan-zone',
+};
+
+const SITE_URL: Record<NewsSite, string> = {
+  'world-tour': BWF_SITE,
+  'world-tour-finals': BWF_SITE,
+  'fan-zone': FAN_ZONE,
+};
 
 export interface RawNews {
   id: number;
@@ -109,6 +121,11 @@ const request = async (
 export const fetchNewsPage = async (page: number, perPage: number, opts?: NewsRequest) =>
   JSON.parse(await request(`${LIST}?per_page=${perPage}&page=${page}`, 'application/json', opts)) as RawNewsPage;
 
+export const fetchCategoryPage = async (slug: string, perPage: number, opts?: NewsRequest) =>
+  JSON.parse(
+    await request(`${CATEGORY}/${encodeURIComponent(slug)}?per_page=${perPage}&page=1`, 'application/json', opts),
+  ) as RawNewsPage;
+
 const fetchNewsPost = async (id: number, opts?: NewsRequest) => {
   const posts = JSON.parse(await request(`${CMS}/newsapi/v1/post/${id}`, 'application/json', opts)) as RawNews[];
   return posts[0] ?? null;
@@ -177,17 +194,28 @@ const excerptOf = (content: string) => {
 const TOURNAMENT_LINK = /\/tournament\/(\d+)\//g;
 const PLAYER_LINK = /\/player\/(\d+)\//g;
 
+export const seriesMatcher = (series: NewsSeries[]) => {
+  const res = series.map((s) => ({ id: s.id, re: new RegExp(s.match, 'i') }));
+  return (name: string) => {
+    const folded = fold(name);
+    const hits = res.filter((s) => s.re.test(folded));
+    return hits.length === 1 ? (hits[0]?.id ?? null) : null;
+  };
+};
+
 export const createNewsLinker = (events: NewsEvent[], series: NewsSeries[]) => {
   const byTmt = new Map(events.filter((e) => e.tmtId).map((e) => [e.tmtId, e]));
-  const res = series.map((s) => ({ id: s.id, re: new RegExp(s.match, 'i') }));
+  const seriesOf = seriesMatcher(series);
   const bySeriesYear = groupBy(events, (e) => `${e.series}|${e.start.slice(0, 4)}`);
 
   const prefixSeries = (title: string) => {
     const i = title.indexOf(': ');
-    if (i <= 0) return null;
-    const prefix = fold(title.slice(0, i));
-    const hits = res.filter((s) => s.re.test(prefix));
-    return hits.length === 1 ? (hits[0]?.id ?? null) : null;
+    return i > 0 ? seriesOf(title.slice(0, i)) : null;
+  };
+
+  const categorySeries = (raw: RawNews) => {
+    const ids = uniq((raw.category ?? []).map((c) => seriesOf(c.name)).filter((id) => id !== null));
+    return ids.length === 1 ? (ids[0] ?? null) : null;
   };
 
   return (raw: RawNews): NewsItem | null => {
@@ -198,7 +226,7 @@ export const createNewsLinker = (events: NewsEvent[], series: NewsSeries[]) => {
     const linked = uniq([...raw.content.matchAll(TOURNAMENT_LINK)].map((m) => byTmt.get(Number(m[1]))))
       .filter((e) => e !== undefined)
       .map((e) => ({ code: e.code, series: e.series }));
-    const prefixed = prefixSeries(title);
+    const prefixed = prefixSeries(title) ?? categorySeries(raw);
     const sameYear = prefixed ? (bySeriesYear.get(`${prefixed}|${publishedAt.slice(0, 4)}`) ?? []) : [];
     const fallback = !linked.length && sameYear.length === 1 ? sameYear : [];
     const tournaments = linked.length ? linked : fallback;
@@ -209,7 +237,7 @@ export const createNewsLinker = (events: NewsEvent[], series: NewsSeries[]) => {
       slug,
       title,
       publishedAt,
-      url: `${BWF_SITE}/news-single/${raw.date.slice(0, 10).replaceAll('-', '/')}/${encodeURIComponent(slug)}/`,
+      url: `${SITE_URL[site]}/news-single/${raw.date.slice(0, 10).replaceAll('-', '/')}/${encodeURIComponent(slug)}/`,
       site,
       feature: raw.category?.some((c) => c.slug === 'feature-stories') ?? false,
       image: imageOf(raw),
