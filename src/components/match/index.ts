@@ -1,5 +1,5 @@
 export { ChallengeStocks } from './ChallengeStocks';
-export { EventTag, MatchNote, NoteTag, SideNote } from './EventTag';
+export { EventTag, MatchNote, NoteTag, RoundTag, SideNote } from './EventTag';
 export { LiveMark } from './LiveMark';
 export { MatchDetailModal } from './MatchDetailModal';
 export { ALL_TIME, CompareLine, FORM, HEAD_TO_HEAD, THIS_SEASON, useMatchInsights } from './detail';

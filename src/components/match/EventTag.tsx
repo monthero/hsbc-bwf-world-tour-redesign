@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { Tip } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import type { EventCode, Match, Side } from '~/types';
-import { noteLabel, noteTip, opposite, winnerSide } from '~/utils/matches';
+import { matchRoundName, noteLabel, noteTip, opposite, roundCode, winnerSide } from '~/utils/matches';
 
 import classes from './EventTag.module.css';
 import discipline from '~/styles/discipline.module.css';
@@ -29,6 +29,10 @@ export const EventTag = memo<{ event: EventCode; tip?: boolean; className?: stri
     />
   ),
 );
+
+export const RoundTag = memo<{ match: Pick<Match, 'round' | 'group'>; className?: string }>(({ match, className }) => (
+  <Tag label={roundCode(match)} tip={matchRoundName(match)} className={clsx(classes.round, className)} />
+));
 
 export const NoteTag = memo<{ label: string; tip: string; note?: string; className?: string }>(
   ({ label, tip, note, className }) => (

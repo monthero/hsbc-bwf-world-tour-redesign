@@ -39,18 +39,9 @@
 
 .what {
   display: flex;
-  gap: 4px;
+  align-items: center;
+  gap: 6px;
   min-width: 0;
-}
-
-.round {
-  flex: none;
-  white-space: nowrap;
-
-  .card[data-medal] & {
-    font-weight: 600;
-    color: var(--bwf-text);
-  }
 }
 
 .court {

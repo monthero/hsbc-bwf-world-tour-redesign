@@ -3,7 +3,15 @@ import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type CSSProperties, type FC, type Ref } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
-import { ChallengeStocks, medalStake, ServeMark, StreakMark, TeamPlayers } from '~/components/match';
+import {
+  ChallengeStocks,
+  EventTag,
+  medalStake,
+  RoundTag,
+  ServeMark,
+  StreakMark,
+  TeamPlayers,
+} from '~/components/match';
 import { WatchButton } from '~/components/media';
 import { AvatarGroup } from '~/components/player';
 import { CardHit, Duration, StatusChip, type StatusTone } from '~/components/ui';
@@ -136,9 +144,8 @@ export const LiveCard = memo<{
             <Trans comment="The court a match is played on, e.g. “Court 2”">Court {court}</Trans>
           </span>
           <span className={classes.what}>
-            <span className={utils.ellipsis}>{v.event}</span>
-            <span aria-hidden>·</span>
-            <span className={classes.round}>{v.round}</span>
+            <EventTag event={m.event} />
+            <RoundTag match={m} />
           </span>
         </span>
         <span className={classes.headEnd}>

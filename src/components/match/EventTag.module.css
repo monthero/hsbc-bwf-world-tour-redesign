@@ -16,6 +16,14 @@
   }
 }
 
+.round {
+  background: alpha(var(--bwf-gold), 0.18);
+  color: var(--bwf-gold-text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
 .note {
   background: light-dark(var(--bwf-blue-tint), alpha(var(--mantine-color-sky-5), 0.2));
   color: light-dark(var(--bwf-blue), var(--mantine-color-sky-2));

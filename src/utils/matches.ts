@@ -45,6 +45,11 @@ const byRoundOrder = (a: string, b: string) => (ROUND_ORDER[a] ?? 0) - (ROUND_OR
 export const roundsLabel = (rounds: readonly string[]) =>
   [...new Set([...rounds].sort(byRoundOrder).map(dayRoundName).filter(Boolean))].join(' · ');
 
+const QUALIFYING_CODES: Record<string, string> = { 'Q-R32': 'Q32', 'Q-R16': 'Q16', 'Q-QF': 'QQF' };
+
+export const roundCode = (m: Pick<Match, 'round' | 'group'>) =>
+  m.group ? `${m.group}·${m.round}` : (QUALIFYING_CODES[m.round] ?? m.round);
+
 export const matchRoundName = (m: Pick<Match, 'round' | 'group'>) => {
   if (!m.group) return roundName(m.round);
   const group = m.group;
