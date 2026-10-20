@@ -67,6 +67,10 @@ export interface Tournament extends CalendarEventDto {
   shortTitle: string;
   heading: string;
   champions: Champion[];
+  onCourt?: boolean;
+  firstMatch?: MatchTimeRef | null;
+  startsAt?: string;
+  startsSoon?: boolean;
 }
 
 export type MatchStatus = 'F' | 'P' | 'N';
@@ -105,6 +109,8 @@ export interface Match {
   lastPoint: number;
   review: boolean;
 }
+
+export type MatchTimeRef = Pick<Match, 'date' | 'time' | 'timeZone' | 'utcOffset'>;
 
 export interface DrawSlot {
   match: Match;

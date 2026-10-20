@@ -8,11 +8,10 @@ import { CardHit, Duration, StatusChip } from '~/components/ui';
 import { useMatchStream } from '~/hooks/useTournamentMedia';
 import type { Match, Tournament } from '~/types';
 import { joinDots } from '~/utils/format';
-import { courtLabel } from '~/utils/matches';
+import { courtLabel, detailsLabel, matchTitle } from '~/utils/matches';
 
 import { LiveHeadToHead } from './LiveHeadToHead';
 import { useLiveView } from './useLiveView';
-import { detailsLabel, matchTitle } from './utils';
 
 import classes from './Showdown.module.css';
 import utils from '~/styles/utils.module.css';

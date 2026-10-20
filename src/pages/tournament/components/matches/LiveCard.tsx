@@ -24,10 +24,9 @@ import {
   RALLY_POINTS,
   type ChallengeOutcome,
 } from '~/utils/live';
-import { gameWon } from '~/utils/matches';
+import { gameWon, matchTitle } from '~/utils/matches';
 
 import type { LiveView, SideView } from './liveView';
-import { matchTitle } from './utils';
 
 import classes from './LiveCard.module.css';
 import utils from '~/styles/utils.module.css';

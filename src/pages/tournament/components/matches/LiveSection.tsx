@@ -3,12 +3,11 @@ import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { medalStake } from '~/components/match';
+import { LIVE_NOW, medalStake } from '~/components/match';
 import { LiveDot, SectionTitle } from '~/components/ui';
 import { useMatchStream } from '~/hooks/useTournamentMedia';
 import type { Match, Tournament } from '~/types';
 
-import { LIVE_NOW } from '../../constants';
 import { LiveCard } from './LiveCard';
 import { MatchShowdown } from './Showdown';
 import { useLiveView } from './useLiveView';

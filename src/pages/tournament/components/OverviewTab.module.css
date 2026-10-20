@@ -162,46 +162,6 @@
   color: var(--bwf-faint);
 }
 
-.follow {
-  position: relative;
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  gap: 12px;
-  padding: 12px 20px;
-  border-top: 1px solid var(--bwf-line);
-  color: var(--bwf-text);
-  font-size: 14px;
-  transition: background 0.15s;
-
-  &:hover {
-    background: var(--bwf-surface-3);
-  }
-}
-
-.followTime {
-  font-variant-numeric: tabular-nums;
-  font-size: 13px;
-
-  &[data-live] {
-    color: var(--bwf-red-text);
-  }
-}
-
-.followBody {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.followMeta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: var(--bwf-muted);
-}
-
 .followEmpty {
   padding: 14px 20px 20px;
   border-top: 1px solid var(--bwf-line);

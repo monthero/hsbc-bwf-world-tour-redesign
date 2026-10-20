@@ -3,10 +3,9 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type FC, type ReactNode } from 'react';
 
-import { LiveMark, MatchTime, TeamLabel } from '~/components/match';
+import { FollowRow } from '~/components/match';
 import { LevelBadge, TournamentPlace } from '~/components/tournament';
 import {
-  CardHit,
   EmptyState,
   IconCalendar,
   IconCoins,
@@ -16,21 +15,20 @@ import {
   SectionTitle,
   Tip,
 } from '~/components/ui';
-import { DRAW_SIZE, EVENT_NAMES, QUALIFY_SPOTS } from '~/constants';
+import { DRAW_SIZE, QUALIFY_SPOTS } from '~/constants';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
 import { useSeries } from '~/hooks/useTournaments';
 import { FOLLOW_KINDS, useFavoriteCount, useFavoritesMatcher } from '~/stores/favorites';
-import type { Match, Tournament, TournamentDay } from '~/types';
+import type { Tournament, TournamentDay } from '~/types';
 import { teamPlayers } from '~/utils/matches';
 import { mapsUrl } from '~/utils/tournaments';
 
-import { FOLLOW_EMPTY, FOLLOW_HINT, LIVE_NOW, PRIZE_MONEY } from '../constants';
+import { FOLLOW_EMPTY, FOLLOW_HINT, PRIZE_MONEY } from '../constants';
 import { useOpenMatch, useUpdateSearch } from '../hooks';
 import type { TabProps } from '../types';
 import { buildPastWinners, type PastYear } from '../utils';
 import { Champions, ChampionStrip } from './Champions';
 import { IconLabel } from './IconLabel';
-import { detailsLabel, matchTitle } from './matches/utils';
 
 import page from '../TournamentPage.module.css';
 import classes from './OverviewTab.module.css';
@@ -114,36 +112,6 @@ const DayRow = memo<{
       </span>
       <span className={classes.dayCount}>{day.count || ''}</span>
     </button>
-  );
-});
-
-const FollowRow = memo<{ match: Match; onOpen: (id: string) => void }>(({ match: m, onOpen }) => {
-  const { i18n } = useLingui();
-  const live = m.status === 'P';
-  const home = <TeamLabel players={m.teams[0].players} sep=" & " />;
-  const away = <TeamLabel players={m.teams[1].players} sep=" & " />;
-  const { court } = m;
-  const event = EVENT_NAMES[m.event];
-  return (
-    <div className={classes.follow}>
-      <CardHit label={detailsLabel(matchTitle(m))} onClick={() => onOpen(m.id)} />
-      <span className={classes.followTime} data-live={live || undefined}>
-        <MatchTime match={m} stacked />
-      </span>
-      <span className={classes.followBody}>
-        <span className={utils.ellipsis}>
-          <Trans comment="The two sides of a match, e.g. “Axelsen vs Shi”">
-            {home} vs {away}
-          </Trans>
-        </span>
-        <span className={classes.followMeta}>
-          {live && <LiveMark label={i18n._(LIVE_NOW)} size={6} />}
-          <Trans comment="Where and what a followed match is: the court number and the event, e.g. “Court 2 · Men’s singles”">
-            Court {court} · {event}
-          </Trans>
-        </span>
-      </span>
-    </div>
   );
 });
 

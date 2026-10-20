@@ -54,6 +54,39 @@
   border-top: 1px solid light-dark(var(--bwf-border), var(--mantine-color-slate-4));
 }
 
+.following {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 12px;
+}
+
+.followHead {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--bwf-muted);
+}
+
+.star {
+  color: var(--bwf-gold);
+}
+
+.more {
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--bwf-red-text);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .go {
   display: flex;
   align-items: center;

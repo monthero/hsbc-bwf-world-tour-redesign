@@ -1,4 +1,4 @@
-import { useQueries, useQuery, type UseQueryResult } from '@tanstack/react-query';
+import { useQueries, useQuery, type QueryClient, type UseQueryResult } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
 
 import {
@@ -12,9 +12,22 @@ import {
   type TournamentRef,
 } from '~/api/queries';
 import type { Calendar, SeasonMatch, Tournament, TournamentMatches } from '~/types';
-import { todayIso } from '~/utils/dates';
-import { buildSchedule, finalDayOver, toDrawSlots, toEntryListings } from '~/utils/matches';
-import { isHeld, isLive, knownFinalsCity, liveAndNext, toTournament } from '~/utils/tournaments';
+import { dayjs, todayIso } from '~/utils/dates';
+import type { ClockPrefs } from '~/utils/match-time';
+import { buildSchedule, toDrawSlots, toEntryListings } from '~/utils/matches';
+import {
+  inStatusWindow,
+  isHeld,
+  isStartingSoon,
+  knownFinalsCity,
+  liveAndNext,
+  pickLive,
+  resolveTournament,
+  toTournament,
+  withStart,
+} from '~/utils/tournaments';
+
+import { useClockPrefs } from './useMatchClock';
 
 const NO_TOURNAMENT: TournamentRef = { code: '', start: '', end: '', archived: false };
 
@@ -24,26 +37,52 @@ const selectFinalsCity = (c: Calendar) => knownFinalsCity(c.events.find((e) => e
 
 const selectHeld = (c: Calendar) => selectTournaments(c).filter(isHeld);
 
-const NO_CODES: ReadonlySet<string> = new Set();
+type Glance = TournamentMatches | null | undefined;
 
-const useFinishedEarly = (list: readonly Tournament[] | undefined) => {
-  const live = useMemo(() => list?.filter(isLive) ?? [], [list]);
+const glanceOf = (r: UseQueryResult<TournamentMatches> | undefined): Glance =>
+  r?.data ?? (r?.isError ? null : undefined);
+
+const resolveList = (list: Tournament[], glances: ReadonlyMap<string, Glance>) =>
+  list.map((t) => (glances.has(t.code) ? resolveTournament(t, glances.get(t.code)) : t));
+
+const useGlances = (list: readonly Tournament[] | undefined) => {
+  const near = useMemo(() => list?.filter(inStatusWindow) ?? [], [list]);
   const combine = useCallback(
-    (results: UseQueryResult<TournamentMatches>[]) => {
-      const done = live.filter((t, i) => finalDayOver(t.end, results[i]?.data));
-      return done.length ? new Set(done.map((t) => t.code)) : NO_CODES;
-    },
-    [live],
+    (results: UseQueryResult<TournamentMatches>[]) =>
+      new Map(near.map((t, i): [string, Glance] => [t.code, glanceOf(results[i])])),
+    [near],
   );
-  return useQueries({ queries: live.map((t) => tournamentMatchesGlance(t)), combine });
+  return useQueries({ queries: near.map((t) => tournamentMatchesGlance(t)), combine });
+};
+
+const withStarts = (list: Tournament[], prefs: ClockPrefs) => {
+  const now = dayjs();
+  return list.map((t) => (t.firstMatch ? withStart(t, prefs, isStartingSoon(t, now)) : t));
 };
 
 const useResolved = (list: Tournament[] | undefined) => {
-  const done = useFinishedEarly(list);
+  const glances = useGlances(list);
+  const prefs = useClockPrefs();
   return useMemo(
-    () => (list && done.size ? list.map((t) => (done.has(t.code) ? { ...t, status: 'done' as const } : t)) : list),
-    [list, done],
+    () => (list && glances.size ? withStarts(resolveList(list, glances), prefs) : list),
+    [list, glances, prefs],
   );
+};
+
+const LANDING_WAIT_MS = 1500;
+
+const within = <T>(work: Promise<T>, ms: number) =>
+  Promise.race([work, new Promise<undefined>((done) => setTimeout(done, ms))]);
+
+export const findLiveTournament = async (client: QueryClient) => {
+  const calendar = await client.ensureQueryData(calendarQuery()).catch(() => undefined);
+  if (!calendar) return undefined;
+  const held = selectHeld(calendar);
+  const near = held.filter(inStatusWindow);
+  const work = Promise.all(near.map((t) => client.fetchQuery(tournamentMatchesGlance(t)).catch(() => null)));
+  const found = await within(work, LANDING_WAIT_MS);
+  const glances = new Map(near.map((t, i): [string, Glance] => [t.code, found?.[i]]));
+  return pickLive(resolveList(held, glances));
 };
 
 export const useTournaments = (year?: number) => {

@@ -3,12 +3,14 @@ import { msg } from '@lingui/core/macro';
 import { LEVEL_META } from '~/constants';
 import { numberFormat } from '~/i18n/current';
 import { lazyRecord, translate } from '~/i18n/lazy';
-import type { CalendarEventDto, Tournament } from '~/types';
+import type { CalendarEventDto, Level, Tournament, TournamentMatches } from '~/types';
 
 import { countryCode, countryName } from './countries';
-import { date, formatDateRange, today, type Dayjs } from './dates';
+import { date, dayjs, formatDateRange, ISO_DAY, today, type Dayjs } from './dates';
 import { formatNumber } from './format';
 import { tournamentHeaderUrl, tournamentLogoUrl } from './images';
+import { matchClock, matchInstant, SOON_MIN, type ClockPrefs } from './match-time';
+import { finalDayOver, firstMatchOf, hasMatchOnCourt, playHasBegun } from './matches';
 import { toPlayer } from './names';
 
 export const formatPrize = (n: number) => `$${formatNumber(n)}`;
@@ -107,7 +109,52 @@ const COUNTDOWNS = {
   },
 } as const;
 
-export const countdownLabel = (t: Pick<Tournament, 'daysUntil'>, form: 'long' | 'in' | 'short' = 'long') => {
+const STARTING_SOON = msg({
+  message: 'Starting soon',
+  comment: 'Countdown: the first match of the tournament is less than an hour away (or running a little late)',
+});
+
+const STARTS_TODAY = {
+  short: msg({
+    message: 'Today',
+    context: 'tournament start',
+    comment: 'Very short countdown tag: the tournament starts today. Use your shortest form',
+  }),
+  in: msg({ message: 'Today', context: 'tournament start', comment: 'Countdown: the tournament starts today' }),
+  long: msg({ message: 'Starts today', comment: 'Countdown: the tournament starts today' }),
+} as const;
+
+const STARTS_TODAY_AT = {
+  in: msg({
+    message: 'Today at {time}',
+    comment: 'Countdown: the tournament’s first match is today at {time}, e.g. "Today at 10:00"',
+  }),
+  long: msg({
+    message: 'Starts today at {time}',
+    comment: 'Countdown: the tournament’s first match is today at {time}, e.g. "Starts today at 10:00"',
+  }),
+} as const;
+
+const SOON_TAG = msg({
+  message: 'Soon',
+  context: 'tournament start',
+  comment: 'Very short countdown tag: the tournament’s first match is less than an hour away. Use your shortest form',
+});
+
+type CountdownForm = 'long' | 'in' | 'short';
+
+const startLabel = (t: Pick<Tournament, 'daysUntil' | 'startsAt' | 'startsSoon'>, form: CountdownForm) => {
+  if (t.startsSoon) return translate(form === 'short' ? SOON_TAG : STARTING_SOON);
+  if (t.startsAt && form !== 'short') return translate(STARTS_TODAY_AT[form], { time: t.startsAt });
+  return t.startsAt || t.daysUntil <= 0 ? translate(STARTS_TODAY[form]) : null;
+};
+
+export const countdownLabel = (
+  t: Pick<Tournament, 'daysUntil' | 'startsAt' | 'startsSoon'>,
+  form: CountdownForm = 'long',
+) => {
+  const starting = startLabel(t, form);
+  if (starting) return starting;
   const n = t.daysUntil;
   const messages = COUNTDOWNS[form];
   return translate(n === 1 ? messages.one : messages.other, { count: n });
@@ -173,10 +220,61 @@ export const hasStarted = (t: Pick<Tournament, 'status'>) => isDone(t) || isLive
 
 export const hasWinners = (t: Tournament) => isDone(t) && t.champions.length > 0;
 
+const LEVEL_RANK: Record<Level, number> = { Finals: 4, '1000': 3, '750': 2, '500': 1, '300': 0 };
+
+const byLivePriority = (a: Tournament, b: Tournament) =>
+  Number(!!b.onCourt) - Number(!!a.onCourt) || LEVEL_RANK[b.level] - LEVEL_RANK[a.level] || a.index - b.index;
+
+export const pickLive = (list: readonly Tournament[]) => list.filter(isLive).sort(byLivePriority)[0];
+
 export const liveAndNext = (held: readonly Tournament[]) => ({
-  live: held.find(isLive),
+  live: pickLive(held),
   next: held.find((t) => t.status === 'up'),
 });
+
+export const inStatusWindow = (t: Pick<Tournament, 'start' | 'end' | 'cancelled'>) => {
+  const now = today();
+  return (
+    !t.cancelled && t.start <= now.add(1, 'day').format(ISO_DAY) && t.end >= now.subtract(1, 'day').format(ISO_DAY)
+  );
+};
+
+const asLive = (t: Tournament, onCourt: boolean): Tournament => ({
+  ...t,
+  status: 'live',
+  dayNumber: Math.min(Math.max(t.dayNumber, 1), t.totalDays),
+  onCourt,
+});
+
+export const resolveTournament = (t: Tournament, data: TournamentMatches | null | undefined): Tournament => {
+  const opening = t.status === 'live' && t.dayNumber === 1;
+  if (data === undefined) return opening ? { ...t, status: 'up' } : t;
+  if (data === null || data.stale) return t;
+  const onCourt = hasMatchOnCourt(data);
+  if (t.status === 'done') return onCourt ? asLive(t, true) : t;
+  if (playHasBegun(data)) return finalDayOver(t.end, data) ? { ...t, status: 'done' } : asLive(t, onCourt);
+  if (t.status === 'live' && !opening) return t;
+  return { ...t, status: 'up', firstMatch: firstMatchOf(t, data) };
+};
+
+const firstMatchAt = (t: Tournament) => (t.status === 'up' && t.firstMatch ? matchInstant(t.firstMatch) : null);
+
+export const isStartingSoon = (t: Tournament, now: Dayjs) => {
+  const at = firstMatchAt(t);
+  return !!at && at.diff(now, 'minute') <= SOON_MIN;
+};
+
+export const withStart = (t: Tournament, prefs: ClockPrefs, soon: boolean): Tournament => {
+  const at = firstMatchAt(t);
+  const clock = t.firstMatch && matchClock(t.firstMatch, prefs);
+  if (!at || !clock) return t;
+  const sameDay = at.local().format(ISO_DAY) === dayjs().format(ISO_DAY);
+  return {
+    ...t,
+    startsSoon: soon,
+    startsAt: sameDay ? [clock.text, clock.zone].filter(Boolean).join(' ') : undefined,
+  };
+};
 
 export const tournamentLink = (t: Pick<Tournament, 'year' | 'slug'>) =>
   ({ to: '/world-tour/$year/$slug', params: tournamentParams(t) }) as const;

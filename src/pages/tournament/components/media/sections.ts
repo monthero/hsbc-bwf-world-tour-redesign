@@ -2,13 +2,12 @@ import { i18n, type MessageDescriptor } from '@lingui/core';
 import { msg, t } from '@lingui/core/macro';
 
 import type { MediaItem, MediaKind } from '~/api/schemas';
+import { LIVE_NOW } from '~/components/match/labels';
 import { ROUND_ORDER } from '~/constants';
 import type { Match, Tournament } from '~/types';
 import { date } from '~/utils/dates';
 import { matchesQuery, normQuery, roundName } from '~/utils/matches';
 import { foldText } from '~/utils/names';
-
-import { LIVE_NOW } from '../../constants';
 
 interface MediaGroup {
   key: string;

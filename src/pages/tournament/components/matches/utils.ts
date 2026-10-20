@@ -5,7 +5,7 @@ import { EVENT_NAMES, ROUND_ORDER } from '~/constants';
 import type { useFavoritesMatcher } from '~/stores/favorites';
 import type { Match, TournamentDay } from '~/types';
 import { dayMark, type ClockTime, type NextKind } from '~/utils/match-time';
-import { courtLabel, matchesQuery, roundsLabel, teamLabel, teamPlayers } from '~/utils/matches';
+import { courtLabel, matchesQuery, roundsLabel, teamPlayers } from '~/utils/matches';
 
 import { MatchSort } from '../../types';
 
@@ -47,18 +47,6 @@ export interface MatchesView {
 }
 
 export type PlayersMatcher = ReturnType<typeof useFavoritesMatcher>;
-
-export const matchTitle = (m: Match) => {
-  const home = teamLabel(m.teams[0]);
-  const away = teamLabel(m.teams[1]);
-  return t({ message: `${home} vs ${away}`, comment: 'The two sides of a match, e.g. "Axelsen vs Shi"' });
-};
-
-export const detailsLabel = (title: string) =>
-  t({
-    message: `Match details: ${title}`,
-    comment: 'Accessible name of a card that opens the match details. {title} names the players, e.g. "Axelsen vs Shi"',
-  });
 
 export const parseEvents = (s: string) => (s ? (s.split(',') as EventCode[]) : []);
 

@@ -81,6 +81,11 @@ msgstr "{count, plural, other {# 场比赛}}"
 msgid "{count, plural, one {# meeting} other {# meetings}}"
 msgstr "{count, plural, other {交手 # 次}}"
 
+#. Link under the followed matches in a tournament’s popover in the calendar season strip: how many more there are today. Opens the tournament’s matches filtered to followed players
+#: src/pages/calendar/components/EventDetails.tsx
+msgid "{count, plural, one {# more followed match} other {# more followed matches}}"
+msgstr "{count, plural, other {另有 # 场关注的比赛}}"
+
 #. Number of doubles pairs (two players playing together), e.g. "64 pairs"
 #: src/utils/format.ts
 msgid "{count, plural, one {# pair} other {# pairs}}"
@@ -217,8 +222,8 @@ msgstr "{events, plural, other {# 站赛事}} · {titles, plural, other {# 个�
 
 #. The two sides of a match, e.g. "Axelsen vs Shi"
 #. The two sides of a match, e.g. “Axelsen vs Shi”
-#: src/pages/tournament/components/matches/utils.ts
-#: src/pages/tournament/components/OverviewTab.tsx
+#: src/components/match/FollowRow.tsx
+#: src/utils/matches.ts
 msgid "{home} vs {away}"
 msgstr "{home} vs {away}"
 
@@ -1073,7 +1078,7 @@ msgid "Court {court}"
 msgstr "{court}号场"
 
 #. Where and what a followed match is: the court number and the event, e.g. “Court 2 · Men’s singles”
-#: src/pages/tournament/components/OverviewTab.tsx
+#: src/components/match/FollowRow.tsx
 msgid "Court {court} · {event}"
 msgstr "{court}号场 · {event}"
 
@@ -1431,7 +1436,9 @@ msgctxt "matches"
 msgid "Following"
 msgstr "已关注"
 
+#. Heading in a live tournament’s popover in the calendar season strip: today’s remaining matches of the players and countries the visitor follows
 #. Tournament overview card: today’s remaining matches of the players and countries the visitor follows
+#: src/pages/calendar/components/EventDetails.tsx
 #: src/pages/tournament/components/OverviewTab.tsx
 msgid "Following today"
 msgstr "今日关注"
@@ -1879,10 +1886,10 @@ msgstr "实时比赛详情：{title}"
 #. Matches or streams being played right now
 #. Player overview card title: the match the player is playing right now
 #. Small label above a tournament that is being played right now
+#: src/components/match/labels.ts
 #: src/pages/about/constants.ts
 #: src/pages/calendar/CalendarPage.tsx
 #: src/pages/player/components/OverviewTab.tsx
-#: src/pages/tournament/constants.ts
 msgid "Live now"
 msgstr "正在进行"
 
@@ -1978,7 +1985,7 @@ msgid "Match"
 msgstr "全场"
 
 #. Accessible name of a card that opens the match details. {title} names the players, e.g. "Axelsen vs Shi"
-#: src/pages/tournament/components/matches/utils.ts
+#: src/utils/matches.ts
 msgid "Match details: {title}"
 msgstr "比赛详情：{title}"
 
@@ -3286,6 +3293,12 @@ msgstr "出错了"
 msgid "Soon"
 msgstr "即将开始"
 
+#. Very short countdown tag: the tournament’s first match is less than an hour away. Use your shortest form
+#: src/utils/tournaments.ts
+msgctxt "tournament start"
+msgid "Soon"
+msgstr "即将"
+
 #. Match list: icon button, menu and sheet title for choosing how matches are ordered and grouped
 #: src/pages/tournament/components/matches/FilterBars.tsx
 msgid "Sort matches"
@@ -3321,10 +3334,25 @@ msgstr "开始时间"
 msgid "Started competing"
 msgstr "开始参赛"
 
+#. Countdown: the first match of the tournament is less than an hour away (or running a little late)
+#: src/utils/tournaments.ts
+msgid "Starting soon"
+msgstr "即将开始"
+
 #. When a scheduled YouTube stream begins, e.g. “Starts Sat 14 Mar, 10:00 CET”
 #: src/components/media/VideoCard.tsx
 msgid "Starts {when}"
 msgstr "{when} 开始"
+
+#. Countdown: the tournament starts today
+#: src/utils/tournaments.ts
+msgid "Starts today"
+msgstr "今天开始"
+
+#. Countdown: the tournament’s first match is today at {time}, e.g. "Starts today at 10:00"
+#: src/utils/tournaments.ts
+msgid "Starts today at {time}"
+msgstr "今天 {time} 开始"
 
 #. Countdown: the tournament starts tomorrow
 #: src/utils/tournaments.ts
@@ -3535,6 +3563,18 @@ msgstr "待定"
 #: src/pages/tournament/components/OverviewTab.tsx
 msgid "Today"
 msgstr "今天"
+
+#. Countdown: the tournament starts today
+#. Very short countdown tag: the tournament starts today. Use your shortest form
+#: src/utils/tournaments.ts
+msgctxt "tournament start"
+msgid "Today"
+msgstr "今天"
+
+#. Countdown: the tournament’s first match is today at {time}, e.g. "Today at 10:00"
+#: src/utils/tournaments.ts
+msgid "Today at {time}"
+msgstr "今天 {time}"
 
 #. Countdown: the tournament starts tomorrow
 #: src/utils/tournaments.ts

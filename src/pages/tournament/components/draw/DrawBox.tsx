@@ -4,9 +4,8 @@ import { memo, type FC } from 'react';
 import { SideMedal, SideScores, TeamPlayers } from '~/components/match';
 import { CardHit } from '~/components/ui';
 import type { Player, Side } from '~/types';
-import { isScheduled, sideResult } from '~/utils/matches';
+import { detailsLabel, isScheduled, matchTitle, sideResult } from '~/utils/matches';
 
-import { detailsLabel, matchTitle } from '../matches/utils';
 import type { BracketBox } from './bracket';
 
 import classes from './Draw.module.css';

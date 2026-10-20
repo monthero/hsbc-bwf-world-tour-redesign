@@ -160,6 +160,21 @@ export const finalDayOver = (end: string, data: TournamentMatches | undefined) =
   return last.length > 0 && last.every((m) => m.status === 'F');
 };
 
+const allMatches = (data: TournamentMatches | undefined) => Object.values(data?.days ?? {}).flat();
+
+export const hasMatchOnCourt = (data: TournamentMatches | undefined) => allMatches(data).some((m) => m.status === 'P');
+
+const wasPlayed = (m: MatchDto) => m.status === 'P' || (m.status === 'F' && m.games.length > 0);
+
+export const playHasBegun = (data: TournamentMatches | undefined) => allMatches(data).some(wasPlayed);
+
+export const firstMatchOf = (tour: Pick<Tournament, 'start' | 'timeZone'>, data: TournamentMatches) => {
+  const times = (data.days[tour.start] ?? []).map((m) => m.time).filter(Boolean);
+  if (!times.length) return null;
+  const venue = venueTimeOn(tour.timeZone, tour.start, data.utcOffsets?.[tour.start] ?? null);
+  return { date: tour.start, time: times.sort(compareText)[0] ?? '', ...venue };
+};
+
 export const buildSchedule = (tour: Tournament, data: TournamentMatches, todayIso: string): TournamentSchedule => {
   const settled = tour.status === 'done';
   const raw = isoRange(tour.start, tour.end).map((day, index) => {
@@ -354,6 +369,18 @@ export const noteTip = (m: Match) => {
   if (!long || winner === null || !tip) return long;
   return translate(tip, { team: teamLabel(m.teams[opposite(winner)], ' & ') });
 };
+
+export const matchTitle = (m: Match) => {
+  const home = teamLabel(m.teams[0]);
+  const away = teamLabel(m.teams[1]);
+  return t({ message: `${home} vs ${away}`, comment: 'The two sides of a match, e.g. "Axelsen vs Shi"' });
+};
+
+export const detailsLabel = (title: string) =>
+  t({
+    message: `Match details: ${title}`,
+    comment: 'Accessible name of a card that opens the match details. {title} names the players, e.g. "Axelsen vs Shi"',
+  });
 
 export const teamPlayers = (m: Match) => m.teams.flatMap((team) => team.players);
 

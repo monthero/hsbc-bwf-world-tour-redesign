@@ -6,9 +6,8 @@ import { TeamFollow } from '~/components/follow';
 import { EventTag, TeamPlayers, TimedStatus } from '~/components/match';
 import { CardHit, Tip } from '~/components/ui';
 import { formatRank } from '~/utils/format';
-import { isScheduled, teamLabel } from '~/utils/matches';
+import { detailsLabel, isScheduled, teamLabel } from '~/utils/matches';
 
-import { detailsLabel } from '../matches/utils';
 import { entryStatus, type Entry, type LatestEntry } from './entries';
 
 import classes from './Players.module.css';

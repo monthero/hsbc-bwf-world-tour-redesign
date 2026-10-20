@@ -2,7 +2,7 @@ import { msg, t } from '@lingui/core/macro';
 
 import { translate } from '~/i18n/lazy';
 import type { ClockMode, TimeZoneMode } from '~/stores/settings';
-import type { Match } from '~/types';
+import type { MatchTimeRef } from '~/types';
 
 import { dayjs, formatWall, ISO_DAY, type Dayjs } from './dates';
 
@@ -140,14 +140,16 @@ const zoned = (
   };
 };
 
-export const matchClock = (
-  m: Pick<Match, 'date' | 'time' | 'timeZone' | 'utcOffset'>,
-  prefs: ClockPrefs,
-): ClockTime | null => {
+const wallOf = (m: MatchTimeRef) => dayjs.utc(`${m.date || ANY_DAY}T${m.time}`);
+
+export const matchInstant = (m: MatchTimeRef) =>
+  m.time && m.date && m.utcOffset !== null ? wallOf(m).subtract(m.utcOffset, 'minute') : null;
+
+export const matchClock = (m: MatchTimeRef, prefs: ClockPrefs): ClockTime | null => {
   if (!m.time) return null;
-  const wall = dayjs.utc(`${m.date || ANY_DAY}T${m.time}`);
-  if (m.utcOffset === null || !m.date) return plain(wall, prefs.clock);
-  return zoned(wall.subtract(m.utcOffset, 'minute'), m.timeZone, m.utcOffset, m.date, prefs);
+  const instant = matchInstant(m);
+  if (!instant || m.utcOffset === null) return plain(wallOf(m), prefs.clock);
+  return zoned(instant, m.timeZone, m.utcOffset, m.date, prefs);
 };
 
 export const instantClock = (iso: string, venue: VenueTime, prefs: ClockPrefs): ClockTime => {
@@ -161,7 +163,7 @@ export const venueTimeAt = (timeZone: string | null, iso: string) =>
 
 export type NextKind = 'first' | 'later';
 
-const SOON_MIN = 60;
+export const SOON_MIN = 60;
 
 export const nextLabel = (start: ClockTime, kind: NextKind, now: Dayjs) => {
   const today = now.utcOffset(start.at.utcOffset()).format(ISO_DAY);

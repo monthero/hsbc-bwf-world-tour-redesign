@@ -4,7 +4,7 @@ import type { z } from 'zod';
 import { LIVE_DATA, SEASON_YEAR } from '~/constants';
 import { dayjs, ISO_DAY, isoRange, today, todayIso } from '~/utils/dates';
 import { trackLiveStats, type LiveStats } from '~/utils/live';
-import { finalDayOver } from '~/utils/matches';
+import { finalDayOver, hasMatchOnCourt, playHasBegun } from '~/utils/matches';
 
 import { isRejected, LIVE_COOLDOWN_MS, livePollMs, liveRetry } from './bwf/http';
 import type { NameOf } from './bwf/normalize';
@@ -64,9 +64,6 @@ const isSettledDay = (day: string) => day < dayOffset(-1);
 const isSnapshotEvent = (t: TournamentRef) => !LIVE_DATA || t.archived;
 
 const isLiveEvent = (t: TournamentRef) => t.start <= todayIso() && !isSettledDay(t.end);
-
-const hasMatchOnCourt = (d: TournamentMatches | undefined) =>
-  Object.values(d?.days ?? {}).some((ms) => ms.some((m) => m.status === 'P'));
 
 const livePoll = (t: TournamentRef) => (q: Query<TournamentMatches>) => {
   if (q.state.data?.stale) return LIVE_COOLDOWN_MS;
@@ -169,9 +166,11 @@ export const tournamentMatchesQuery = (t: TournamentRef) =>
     ...matchesPolicy(t),
   });
 
+const glanceInterval = (q: Query<TournamentMatches>) => (playHasBegun(q.state.data) ? false : UPCOMING_MS);
+
 export const tournamentMatchesGlance = (t: TournamentRef) => ({
   ...tournamentMatchesQuery(t),
-  ...(isLiveEvent(t) && !isSnapshotEvent(t) ? { staleTime: UPCOMING_MS, refetchInterval: false as const } : {}),
+  ...(isSnapshotEvent(t) || isSettledDay(t.end) ? {} : { staleTime: UPCOMING_MS, refetchInterval: glanceInterval }),
 });
 
 export type LiveTournamentRef = TournamentRef & Pick<CalendarEventDto, 'tmtId' | 'cancelled'>;

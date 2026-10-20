@@ -114,8 +114,6 @@ export const REST_DAY_LABEL = msg({
   comment: 'A day during the tournament with no matches',
 });
 
-export const LIVE_NOW = msg({ message: 'Live now', comment: 'Matches or streams being played right now' });
-
 export const PRIZE_MONEY = msg({ message: 'Prize money', comment: 'Label for a tournament’s total prize money' });
 
 export const PRIZE_BASE = 500000;

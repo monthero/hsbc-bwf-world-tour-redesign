@@ -11,9 +11,7 @@ import { useMatchTime } from '~/hooks/useMatchClock';
 import { useNow } from '~/hooks/useNow';
 import type { Match, Player, Side } from '~/types';
 import { nextLabel, type NextKind } from '~/utils/match-time';
-import { isDoubles, sideResult } from '~/utils/matches';
-
-import { detailsLabel, matchTitle } from './utils';
+import { detailsLabel, isDoubles, matchTitle, sideResult } from '~/utils/matches';
 
 import classes from './MatchCard.module.css';
 import utils from '~/styles/utils.module.css';

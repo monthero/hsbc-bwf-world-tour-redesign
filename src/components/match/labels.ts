@@ -8,6 +8,8 @@ export const TBD = msg({
   comment: 'Short for “to be decided”: the player, team or match time isn’t known yet',
 });
 
+export const LIVE_NOW = msg({ message: 'Live now', comment: 'Matches or streams being played right now' });
+
 export const OUTCOME_LABELS: Record<Exclude<MatchOutcome, 'up'>, MessageDescriptor> = {
   W: msg({ message: 'W', comment: 'One-letter badge for a match the player won' }),
   L: msg({ message: 'L', comment: 'One-letter badge for a match the player lost' }),
