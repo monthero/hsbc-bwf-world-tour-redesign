@@ -56,7 +56,7 @@ const syncTarget = (url: URL) => {
 };
 
 const syncFetch = async (request: Request, url: URL, token: string | undefined) => {
-  if (!token || request.headers.get(RELAY_TOKEN_HEADER) !== token) return new Response(null, { status: 403 });
+  if (!token || request.headers.get(RELAY_TOKEN_HEADER) !== token) return new Response(null, { status: 401 });
   const target = syncTarget(url);
   if (!target) return new Response(null, { status: 400 });
   const upstream = await fetch(target, { headers: pick(request.headers, FORWARDED_HEADERS), redirect: 'follow' });
