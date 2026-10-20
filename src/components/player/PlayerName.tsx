@@ -60,11 +60,14 @@ export const PlayerName: FC<{
   const boxed = fitted && end !== undefined;
   const inline = fitted && !boxed;
   const parts = { surnameFirst: player.surnameFirst, layout, firstClassName, lastClassName };
+  const cls = clsx(classes.playerName, utils.bidiAuto, className);
   const measures = fitted && (
     <span key={forms.length} ref={sizer} className={classes.sizer} aria-hidden>
       {forms.map((form) => (
         <span key={`${form.first} ${form.last}`} className={classes.measure}>
-          <NameParts {...parts} form={form} />
+          <span className={cls}>
+            <NameParts {...parts} form={form} />
+          </span>
         </span>
       ))}
     </span>
@@ -79,7 +82,6 @@ export const PlayerName: FC<{
       <NameParts {...parts} form={forms[level] ?? player} />
     </>
   );
-  const cls = clsx(classes.playerName, utils.bidiAuto, className);
   const label = fitted && level > 0 ? player.name : undefined;
   const named =
     !link || !player.id ? (

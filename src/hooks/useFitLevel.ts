@@ -3,6 +3,8 @@ import { useLayoutEffect, useState } from 'react';
 const callbacks = new WeakMap<Element, () => void>();
 let observer: ResizeObserver | null = null;
 
+const SUBPIXEL = 0.5;
+
 const shared = () =>
   (observer ??= new ResizeObserver((entries) => {
     new Set(entries.map((e) => callbacks.get(e.target))).forEach((cb) => cb?.());
@@ -25,7 +27,7 @@ export const useFitLevel = <T extends HTMLElement>(trail?: HTMLElement | null) =
     const els = trail ? [box, trail, ...forms] : [box, ...forms];
     const measure = () => {
       const space = trailSpace(trail);
-      const room = box.getBoundingClientRect().width - space;
+      const room = box.getBoundingClientRect().width - space + SUBPIXEL;
       const fit = forms.findIndex((el) => el.getBoundingClientRect().width <= room);
       setReserve(space);
       setLevel(fit < 0 ? forms.length - 1 : fit);
