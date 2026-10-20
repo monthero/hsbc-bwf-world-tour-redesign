@@ -2,6 +2,7 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { gzipSync } from 'node:zlib';
 
 import { BWF_API, BWF_USER_AGENT } from '../../server/bwf-upstream.ts';
+import { relayFetch } from '../../server/relay.ts';
 import { DAY_MS } from './dates.ts';
 import { unzipJson, type Db } from './db.ts';
 
@@ -12,6 +13,8 @@ const THROTTLE_MS = 30_000;
 const TIMEOUT_MS = 30_000;
 const FAILURE_TTL = DAY_MS;
 const BROKEN = 500;
+const REFUSED = 403;
+const BLOCKED_AFTER = 25;
 
 export type Fresh = (fetchedAt: number) => boolean;
 
@@ -53,6 +56,14 @@ class HttpError extends Error {
 const RETRYABLE = new Set([403, 408, 425, 429, 500, 502, 503, 504]);
 
 let pausedUntil = 0;
+let refusals = 0;
+let blocked = false;
+
+const refused = () => {
+  if (blocked || ++refusals < BLOCKED_AFTER) return;
+  blocked = true;
+  console.warn(`  ! BWF refused ${BLOCKED_AFTER} requests in a row, using stored data for the rest of this run`);
+};
 
 const throttle = (res: Response) => {
   const after = Number(res.headers.get('retry-after')) * 1000;
@@ -61,17 +72,22 @@ const throttle = (res: Response) => {
 
 const download = async (path: string, retries: number): Promise<string | null> => {
   for (let attempt = 0; ; attempt++) {
+    if (blocked) throw new HttpError(REFUSED, path);
     await acquire();
     try {
       const wait = pausedUntil - Date.now();
       if (wait > 0) await sleep(wait);
-      const res = await fetch(`${BWF_API}/${path}`, {
+      const res = await relayFetch(`${BWF_API}/${path}`, {
         headers: { 'User-Agent': BWF_USER_AGENT, Accept: 'application/json' },
         signal: AbortSignal.timeout(TIMEOUT_MS),
       });
       const text = await res.text();
-      if (res.ok && !text.trimStart().startsWith('<')) return text;
+      if (res.ok && !text.trimStart().startsWith('<')) {
+        refusals = 0;
+        return text;
+      }
       if (res.status === 404) return null;
+      if (res.status === REFUSED) refused();
       if (res.status === 429) throttle(res);
       if (!RETRYABLE.has(res.status) || attempt >= retries) throw new HttpError(res.status, path);
     } catch (e) {
@@ -135,7 +151,7 @@ export const createClient = (db: Db, { offline = false } = {}) => {
       stats.failed++;
       if (e instanceof HttpError && e.status === BROKEN) writeFailure.run(path, Date.now());
       if (row) return fromRow<T>(row);
-      console.warn(`  ! ${(e as Error).message}`);
+      if (!blocked) console.warn(`  ! ${(e as Error).message}`);
       return null;
     }
   };
