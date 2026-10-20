@@ -5,6 +5,7 @@
   --end: right;
   --pad-y: 14px;
   --pad-x: 18px;
+  --pulse: 2.8s;
   position: relative;
   isolation: isolate;
   container: showdown / inline-size;
@@ -27,6 +28,7 @@
 
   &[data-live] {
     background: var(--bwf-live-surface), var(--bwf-bg);
+    animation: backlight var(--pulse) ease-in-out infinite;
   }
 }
 
@@ -59,11 +61,21 @@
     inset: 0;
     background: var(--bwf-bg-sunken);
     pointer-events: none;
+  }
 
-    .root[data-live] & {
-      background:
-        radial-gradient(ellipse 46% 78% at 50% 100%, alpha(var(--bwf-red), 0.34), transparent 72%), var(--bwf-bg-sunken);
-    }
+  .root[data-live] &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 38% 40% at 50% 52%,
+      alpha(var(--bwf-red), 0.24),
+      alpha(var(--bwf-red), 0.08) 55%,
+      transparent
+    );
+    pointer-events: none;
+    animation: energy var(--pulse) ease-in-out infinite;
   }
 }
 
@@ -89,6 +101,10 @@
   --net: var(--bwf-red);
   --glow: drop-shadow(0 0 3px var(--halo)) drop-shadow(0 0 12px var(--halo));
   --fade: radial-gradient(ellipse 52% 85% at 50% 50%, var(--solid) 18%, alpha(var(--solid), 0.35) 45%, transparent);
+
+  .plane {
+    animation: court var(--pulse) ease-in-out infinite;
+  }
 }
 
 .plane {
@@ -775,5 +791,44 @@
 @keyframes review {
   50% {
     opacity: 0.72;
+  }
+}
+
+@keyframes energy {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.94);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes backlight {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px alpha(var(--bwf-red), 0.18),
+      0 0 18px alpha(var(--bwf-red), 0.1);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 1px alpha(var(--bwf-red), 0.55),
+      0 0 36px 4px alpha(var(--bwf-red), 0.32);
+  }
+}
+
+@keyframes court {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
   }
 }
