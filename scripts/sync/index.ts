@@ -27,6 +27,7 @@ const STEPS = ['calendar', 'details', 'matches', 'players', 'rankings', 'news', 
 const { values } = parseArgs({
   options: {
     only: { type: 'string' },
+    skip: { type: 'string' },
     from: { type: 'string' },
     offline: { type: 'boolean', default: false },
     db: { type: 'string' },
@@ -38,6 +39,7 @@ const today = todayIso();
 const currentYear = Number(today.slice(0, 4));
 const from = Number(values.from ?? FIRST_SEASON);
 const only = new Set(values.only?.split(',') ?? STEPS);
+const skip = new Set(values.skip?.split(',') ?? []);
 
 const OVERRIDES = path.join(ROOT, 'data/overrides.json');
 const CATALOG = path.join(ROOT, 'data/catalog.json');
@@ -56,8 +58,12 @@ const ctx: Context = {
 
 const started = Date.now();
 const timings: string[] = [];
+const hasRankings = () => !!db.prepare('SELECT 1 FROM rankings LIMIT 1').get();
+const skipped = (name: (typeof STEPS)[number]) =>
+  !only.has(name) || (skip.has(name) && !(name === 'rankings' && !hasRankings()));
+
 const step = async (name: (typeof STEPS)[number], run: () => unknown) => {
-  if (!only.has(name)) return;
+  if (skipped(name)) return;
   const at = Date.now();
   const before = httpStats();
   await run();

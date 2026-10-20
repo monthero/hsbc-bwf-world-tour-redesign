@@ -84,10 +84,10 @@ export interface NewsRequest {
 
 const CHALLENGE = /challenge-platform|cf-chl|Just a moment/;
 
-const failure = (res: Response, body: string) => {
-  const blocked = res.headers.has('cf-mitigated') || CHALLENGE.test(body);
-  return `HTTP ${res.status}${blocked ? ' (Cloudflare challenge, this IP is blocked)' : ''}`;
-};
+const isChallenge = (res: Response, body: string) => res.headers.has('cf-mitigated') || CHALLENGE.test(body);
+
+const failure = (res: Response, body: string) =>
+  `HTTP ${res.status}${isChallenge(res, body) ? ' (Cloudflare challenge, this IP is blocked)' : ''}`;
 
 const reasonOf = (e: unknown, timeoutMs: number) =>
   e instanceof Error && e.name === 'TimeoutError' ? `timed out after ${timeoutMs / 1000} s` : String(e);
@@ -108,7 +108,7 @@ const request = async (
       const text = await res.text();
       if (res.ok) return text;
       reason = failure(res, text);
-      retryable = res.status >= 500 || res.status === 403 || res.status === 429;
+      retryable = res.status >= 500 || res.status === 429 || (res.status === 403 && !isChallenge(res, text));
     } catch (e) {
       reason = reasonOf(e, timeoutMs);
     }

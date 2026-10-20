@@ -13,7 +13,7 @@ const TIMEOUT_MS = 30_000;
 const FAILURE_TTL = DAY_MS;
 const BROKEN = 500;
 const REFUSED = 403;
-const BLOCKED_AFTER = 25;
+const BLOCKED_AFTER = 5;
 
 export type Fresh = (fetchedAt: number) => boolean;
 
@@ -57,6 +57,8 @@ const RETRYABLE = new Set([403, 408, 425, 429, 500, 502, 503, 504]);
 let pausedUntil = 0;
 let refusals = 0;
 let blocked = false;
+
+export const isBlocked = () => blocked;
 
 const refused = () => {
   if (blocked || ++refusals < BLOCKED_AFTER) return;

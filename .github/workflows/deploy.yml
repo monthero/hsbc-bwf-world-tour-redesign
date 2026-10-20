@@ -17,9 +17,14 @@ on:
       - '!src/pages/admin/**'
       - src/pages/admin/schema.ts
   workflow_dispatch:
+    inputs:
+      rankings:
+        description: Also update the world rankings
+        type: boolean
+        default: false
   schedule:
-    - cron: '0 */3 * * *'
-    - cron: '0 1,2,4,5,7,8,10,11,13,14,16,17,19,20 * * *'
+    - cron: '17 3 * * *'
+    - cron: '17 12 * * 2'
 
 permissions:
   contents: read
@@ -78,7 +83,18 @@ jobs:
         shell: bash
         env:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
-        run: pnpm sync 2>&1 | tee sync.log
+          RANKINGS_ONLY: ${{ github.event.schedule == '17 12 * * 2' }}
+          RANKINGS_ASKED: ${{ inputs.rankings == true }}
+          SCHEDULED: ${{ github.event_name == 'schedule' }}
+        run: |
+          if [ "$RANKINGS_ONLY" = true ]; then
+            args='--only rankings,export'
+          elif [ "$RANKINGS_ASKED" = true ] || { [ "$SCHEDULED" = true ] && [ "$(date -u +%u)" = 3 ]; }; then
+            args=''
+          else
+            args='--skip rankings'
+          fi
+          pnpm sync $args 2>&1 | tee sync.log
 
       - name: Save sync cache
         if: always() && steps.restore.outcome == 'success'

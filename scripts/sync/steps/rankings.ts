@@ -1,4 +1,5 @@
 import { resolve } from 'node:path';
+import { setTimeout as sleep } from 'node:timers/promises';
 
 import {
   historyPath,
@@ -25,7 +26,7 @@ import {
 import type { Context } from '../context.ts';
 import { DAY_MS, HOUR_MS } from '../dates.ts';
 import { all, readState, tx, writeState } from '../db.ts';
-import { FOREVER, pool, within, type Cached, type Client } from '../http.ts';
+import { FOREVER, isBlocked, pool, within, type Cached, type Client } from '../http.ts';
 import { photoOf } from '../normalize.ts';
 import { collapseSpaces, readJsonFile } from '../util.ts';
 
@@ -37,7 +38,7 @@ const SPLIT_RETRIES = 1;
 const WEEKLY_FLOOR = 2008;
 const WEEKLY_GAP = 2;
 const HISTORY_STATE = 'rankings.history';
-const HISTORY_PER_RUN = 150;
+const HISTORY_GAP_MS = 1000;
 
 interface HistoryState {
   key: string;
@@ -206,11 +207,11 @@ export const syncRankings = async (ctx: Context) => {
   const key = `${world}:${ctx.currentYear}`;
   const state = readState<HistoryState | null>(db, HISTORY_STATE, null);
   const complete = new Set(state?.key === key ? state.done : []);
-  const pending = ids.filter((id) => !complete.has(id));
-  const todo = pending.slice(0, HISTORY_PER_RUN);
+  const todo = ids.filter((id) => !complete.has(id));
 
   let done = 0;
-  await pool(todo, async (id) => {
+  for (const id of todo) {
+    if (isBlocked()) break;
     const path = historyPath(id, world);
     const res = await client.get<ApiHistory>(path, FOREVER);
     client.prune(historyPrefix(id), path);
@@ -219,10 +220,11 @@ export const syncRankings = async (ctx: Context) => {
       : { complete: true };
     if (res && weekly.complete) complete.add(id);
     if (++done % 500 === 0) console.log(`  ranking history ${done}/${todo.length}`);
-  });
+    await sleep(HISTORY_GAP_MS);
+  }
   const finished = ids.filter((id) => complete.has(id));
   writeState(db, HISTORY_STATE, { key, done: finished } satisfies HistoryState);
   console.log(
-    `ranking history: ${ids.length} ranked players · ${todo.length} checked · ${ids.length - finished.length} left for later runs`,
+    `ranking history: ${ids.length} ranked players · ${todo.length} checked · ${ids.length - finished.length} incomplete`,
   );
 };
