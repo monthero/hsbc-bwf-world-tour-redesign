@@ -905,11 +905,6 @@ msgstr "Cao nhất #{rank} · {event}"
 msgid "Category"
 msgstr "Nội dung"
 
-#. Live match tag: the video review could not decide the call. A challenge is a player’s request for a video review of a line call (Instant Review)
-#: src/utils/live.ts
-msgid "Challenge · no decision"
-msgstr "Challenge · không có kết luận"
-
 #. Live score chip: a player challenged a line call and the video review (Hawk-Eye) is in progress
 #: src/utils/live.ts
 msgid "Challenge · under review"
@@ -1290,12 +1285,6 @@ msgstr "Bộ lọc"
 msgid "Final"
 msgstr "Chung kết"
 
-#. Scoreboard status: the match has finished and this is the final score
-#: src/components/match/detail/Scoreboard.tsx
-msgctxt "match status"
-msgid "Final"
-msgstr "Kết thúc"
-
 #. Label above the score of the last game once a match has finished
 #: src/components/match/showdown/liveView.ts
 msgid "Final score"
@@ -1359,6 +1348,12 @@ msgstr "Finals đang diễn ra"
 #: src/pages/about/constants.ts
 msgid "Finals results"
 msgstr "Kết quả Finals"
+
+#. Scoreboard status: the match is over. Avoid the word for the tournament’s final round, which would be confusing
+#: src/components/match/detail/Scoreboard.tsx
+msgctxt "match status"
+msgid "Finished"
+msgstr "Kết thúc"
 
 #. Tooltip on the disabled previous-tournament button: there is no earlier tournament
 #: src/pages/tournament/components/TournamentHeader.tsx
@@ -2894,6 +2889,11 @@ msgstr "Đọc trên {OFFICIAL_HOST}"
 msgid "Read on the official site"
 msgstr "Đọc trên trang chính thức"
 
+#. Tooltip on the icon marking which player receives the next serve in a live match
+#: src/components/match/ServeMark.tsx
+msgid "Receiving"
+msgstr "Đỡ giao cầu"
+
 #. Season stat: matches won–lost, e.g. 24–7
 #: src/pages/player/components/OverviewTab.tsx
 msgid "Record"
@@ -3649,6 +3649,11 @@ msgstr "Số giải đã đấu"
 msgid "Try again"
 msgstr "Thử lại"
 
+#. Live score banner with a camera icon: a player challenged a line call and the video review (Instant Review) is in progress. Keep it short
+#: src/components/match/showdown/ShowdownCard.tsx
+msgid "Under review"
+msgstr "Đang xem lại"
+
 #. Star button; {who} is a doubles pair, e.g. “Liang / Wang”
 #: src/components/follow/FollowButton.tsx
 msgctxt "pair"
@@ -3718,6 +3723,12 @@ msgstr "Sắp tới · {targetName}"
 
 #. About page season map legend and filter: tournaments still to be played
 #: src/pages/about/constants.ts
+msgid "Upcoming"
+msgstr "Sắp diễn ra"
+
+#. Scoreboard status: the match has not started yet
+#: src/components/match/detail/Scoreboard.tsx
+msgctxt "match status"
 msgid "Upcoming"
 msgstr "Sắp diễn ra"
 

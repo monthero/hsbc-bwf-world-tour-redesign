@@ -13,3 +13,16 @@
     paint-order: stroke;
   }
 }
+
+.receive {
+  flex: none;
+  display: inline-flex;
+  color: var(--bwf-serve);
+  filter: drop-shadow(0 1px 2px alpha(var(--bwf-bg-sunken), 0.9));
+  cursor: help;
+
+  svg {
+    width: var(--serve);
+    height: var(--serve);
+  }
+}

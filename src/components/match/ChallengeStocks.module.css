@@ -8,6 +8,15 @@
   &[data-left='0'] {
     color: var(--bwf-loss);
   }
+
+  &[data-mirror] {
+    flex-direction: row-reverse;
+  }
+}
+
+.stocks[data-mirror] .icon {
+  margin-inline: 2px 0;
+  transform: scaleX(-1);
 }
 
 .icon {

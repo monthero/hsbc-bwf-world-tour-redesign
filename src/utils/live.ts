@@ -7,7 +7,7 @@ import type { Game, Match, Side } from '~/types';
 import { labelValue } from './format';
 import { gameWon, opposite } from './matches';
 
-export type ChallengeOutcome = 'won' | 'lost' | 'void';
+export type ChallengeOutcome = 'won' | 'lost';
 
 export interface ChallengeResult {
   side: Side;
@@ -38,11 +38,6 @@ export const CHALLENGE_LABELS: Record<ChallengeOutcome, string> = lazyRecord({
     message: 'Challenge lost',
     comment:
       'Live match tag: the video review proved the player wrong. A challenge is a player’s request for a video review of a line call (Instant Review)',
-  }),
-  void: msg({
-    message: 'Challenge · no decision',
-    comment:
-      'Live match tag: the video review could not decide the call. A challenge is a player’s request for a video review of a line call (Instant Review)',
   }),
 });
 
@@ -179,6 +174,12 @@ export const liveStatus = (m: Match): LiveStatus | null => {
 export const servingPlayer = (m: Match, server: LiveServer | undefined) =>
   livePhase(m) === 'play' && server && m.serve === server.side + 1 ? server.id : null;
 
+export const receivingPlayer = (m: Match, server: LiveServer | undefined, receiver: string | null) => {
+  if (!receiver || !server || !servingPlayer(m, server)) return null;
+  const receiving = m.teams[server.side === 0 ? 1 : 0].players;
+  return receiving.some((p) => p.id === receiver) ? receiver : null;
+};
+
 const nextStreak = (prev: LiveStats, sides: MatchStats): Streak | null => {
   const a = sides[0].ralliesWon - prev.sides[0].ralliesWon;
   const b = sides[1].ralliesWon - prev.sides[1].ralliesWon;
@@ -188,17 +189,12 @@ const nextStreak = (prev: LiveStats, sides: MatchStats): Streak | null => {
   return { side, count: (prev.streak?.side === side ? prev.streak.count : 0) + a + b };
 };
 
-const outcomeOf = (won: number, lost: number): ChallengeOutcome => {
-  if (won > 0) return 'won';
-  return lost > 0 ? 'lost' : 'void';
-};
-
 const nextChallenge = (prev: LiveStats, sides: MatchStats, at: number): ChallengeResult | null => {
   for (const side of SIDES) {
     const p = prev.sides[side].challenges;
     const n = sides[side].challenges;
-    if (n.used > p.used || n.won > p.won || n.lost > p.lost)
-      return { side, outcome: outcomeOf(n.won - p.won, n.lost - p.lost), at };
+    if (n.won > p.won) return { side, outcome: 'won', at };
+    if (n.lost > p.lost) return { side, outcome: 'lost', at };
   }
   return prev.challenge;
 };

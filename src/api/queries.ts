@@ -15,6 +15,7 @@ import {
   fetchGameStats,
   fetchLiveServers,
   fetchMatchStats,
+  fetchReceiver,
 } from './bwf/tournaments';
 import { LIVE_TTL_S, SCHEDULE_TTL_S } from './bwf/ttl';
 import { fetchJson, getJson, retryUnless, STATIC } from './client';
@@ -115,6 +116,16 @@ export const liveGameStatsQuery = (tmtId: number, matchCode: string, game: numbe
     gcTime: 60_000,
     retry: liveRetry,
     refetchInterval: () => livePollMs(STATS_POLL_MS),
+  });
+
+export const liveReceiverQuery = (tmtId: number, matchCode: string) =>
+  queryOptions({
+    queryKey: ['bwf', 'receiver', tmtId, matchCode],
+    queryFn: ({ signal }) => fetchReceiver(tmtId, matchCode, signal),
+    staleTime: STATS_POLL_MS,
+    gcTime: 60_000,
+    retry: liveRetry,
+    refetchInterval: (q) => (isRejected(q.state.error) ? false : livePollMs(STATS_POLL_MS)),
   });
 
 export const liveServersQuery = (tmtId: number) =>

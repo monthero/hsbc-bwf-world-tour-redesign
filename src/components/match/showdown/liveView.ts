@@ -11,6 +11,7 @@ import {
   pointCall,
   pointCallKind,
   reviewBy,
+  receivingPlayer,
   servingPlayer,
   STREAK_MIN,
   type ChallengeOutcome,
@@ -50,6 +51,7 @@ export interface LiveView {
   gameNo: number;
   status: LiveStatus | null;
   server: string | null;
+  receiver: string | null;
   sides: readonly [SideView, SideView];
 }
 
@@ -101,6 +103,7 @@ export const toLiveView = (
   game: MatchStats | null,
   challenge: ChallengeResult | null,
   server: LiveServer | undefined,
+  receiver: string | null = null,
 ): LiveView => {
   const phase = livePhase(m);
   const gameNo = m.games.length + 1;
@@ -114,6 +117,7 @@ export const toLiveView = (
     gameNo,
     status: liveStatus(m),
     server: servingPlayer(m, server),
+    receiver: receivingPlayer(m, server, receiver),
     sides: [sideView(m, 0, stats, game, challenge, result), sideView(m, 1, stats, game, challenge, result)],
   };
 };

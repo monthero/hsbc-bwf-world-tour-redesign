@@ -905,11 +905,6 @@ msgstr "최고 랭킹 #{rank} · {event}"
 msgid "Category"
 msgstr "종목"
 
-#. Live match tag: the video review could not decide the call. A challenge is a player’s request for a video review of a line call (Instant Review)
-#: src/utils/live.ts
-msgid "Challenge · no decision"
-msgstr "챌린지 · 판정 불가"
-
 #. Live score chip: a player challenged a line call and the video review (Hawk-Eye) is in progress
 #: src/utils/live.ts
 msgid "Challenge · under review"
@@ -1290,12 +1285,6 @@ msgstr "필터"
 msgid "Final"
 msgstr "결승"
 
-#. Scoreboard status: the match has finished and this is the final score
-#: src/components/match/detail/Scoreboard.tsx
-msgctxt "match status"
-msgid "Final"
-msgstr "경기 종료"
-
 #. Label above the score of the last game once a match has finished
 #: src/components/match/showdown/liveView.ts
 msgid "Final score"
@@ -1359,6 +1348,12 @@ msgstr "파이널 진행 중"
 #: src/pages/about/constants.ts
 msgid "Finals results"
 msgstr "파이널 결과"
+
+#. Scoreboard status: the match is over. Avoid the word for the tournament’s final round, which would be confusing
+#: src/components/match/detail/Scoreboard.tsx
+msgctxt "match status"
+msgid "Finished"
+msgstr "종료"
 
 #. Tooltip on the disabled previous-tournament button: there is no earlier tournament
 #: src/pages/tournament/components/TournamentHeader.tsx
@@ -2894,6 +2889,11 @@ msgstr "{OFFICIAL_HOST}에서 읽기"
 msgid "Read on the official site"
 msgstr "공식 사이트에서 읽기"
 
+#. Tooltip on the icon marking which player receives the next serve in a live match
+#: src/components/match/ServeMark.tsx
+msgid "Receiving"
+msgstr "리시브"
+
 #. Season stat: matches won–lost, e.g. 24–7
 #: src/pages/player/components/OverviewTab.tsx
 msgid "Record"
@@ -3649,6 +3649,11 @@ msgstr "출전 대회 수"
 msgid "Try again"
 msgstr "다시 시도"
 
+#. Live score banner with a camera icon: a player challenged a line call and the video review (Instant Review) is in progress. Keep it short
+#: src/components/match/showdown/ShowdownCard.tsx
+msgid "Under review"
+msgstr "판독 중"
+
 #. Star button; {who} is a doubles pair, e.g. “Liang / Wang”
 #: src/components/follow/FollowButton.tsx
 msgctxt "pair"
@@ -3720,6 +3725,12 @@ msgstr "다음 일정 · {targetName}"
 #: src/pages/about/constants.ts
 msgid "Upcoming"
 msgstr "예정"
+
+#. Scoreboard status: the match has not started yet
+#: src/components/match/detail/Scoreboard.tsx
+msgctxt "match status"
+msgid "Upcoming"
+msgstr "경기 전"
 
 #. Badge on a scheduled YouTube stream that hasn’t started yet
 #: src/components/media/VideoCard.tsx

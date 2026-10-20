@@ -10,7 +10,7 @@ export { medalStake, sideMedal, type MedalStake } from './medals';
 export { MatchTime, ScheduledStart, TimedStatus } from './MatchTime';
 export { FormStrip, OutcomeBadge, OutcomeLabel } from './Outcome';
 export { ScoreChips, SideScores } from './ScoreChips';
-export { ServeMark } from './ServeMark';
+export { ReceiveMark, ServeMark } from './ServeMark';
 export {
   ShowdownCard,
   StakePill,

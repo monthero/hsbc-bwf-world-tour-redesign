@@ -32,16 +32,32 @@ const LiveStatus: FC<{ view: ShowdownView }> = ({ view: v }) => {
   );
 };
 
-const FINAL = (
+const UPCOMING = (
   <span className={classes.sbState}>
-    <Trans context="match status" comment="Scoreboard status: the match has finished and this is the final score">
-      Final
+    <Trans context="match status" comment="Scoreboard status: the match has not started yet">
+      Upcoming
     </Trans>
   </span>
 );
 
+const FINAL = (
+  <span className={classes.sbState}>
+    <Trans
+      context="match status"
+      comment="Scoreboard status: the match is over. Avoid the word for the tournament’s final round, which would be confusing"
+    >
+      Finished
+    </Trans>
+  </span>
+);
+
+const HeadStatus: FC<{ view: ShowdownView; status: Match['status'] }> = ({ view, status }) => {
+  if (status === 'P') return <LiveStatus view={view} />;
+  return status === 'N' ? UPCOMING : FINAL;
+};
+
 export const Scoreboard = memo<{ match: Match; tournament: Tournament }>(({ match: m, tournament }) => {
-  const [ref, live] = useMatchLiveView<HTMLElement>(tournament, m);
+  const [ref, live] = useMatchLiveView<HTMLElement>(tournament, m, false, true);
   const view = useMemo(() => toShowdownView(m, live), [m, live]);
   const { t } = useLingui();
   return (
@@ -52,12 +68,12 @@ export const Scoreboard = memo<{ match: Match; tournament: Tournament }>(({ matc
       follow
       totals={false}
     >
-      {m.status !== 'N' && (
-        <div className={classes.sbHead}>
-          <span className={classes.sbStatus}>{m.status === 'P' ? <LiveStatus view={view} /> : FINAL}</span>
-          <Duration min={m.durationMin} className={classes.sbDuration} />
-        </div>
-      )}
+      <div className={classes.sbHead}>
+        <span className={classes.sbStatus}>
+          <HeadStatus view={view} status={m.status} />
+        </span>
+        {m.status !== 'N' && <Duration min={m.durationMin} className={classes.sbDuration} />}
+      </div>
     </ShowdownCard>
   );
 });

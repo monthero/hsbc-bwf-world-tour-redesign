@@ -3,7 +3,16 @@ import { dominantOffset, utcOffsetOf, wallClock } from '~/utils/utc-offset';
 import { EventCode } from '../schemas';
 import { bwfGet } from './http';
 import { toDrawMatches, toEntryDto, toLiveServers, toMatchDto, toMatchStats, type NameOf } from './normalize';
-import { BwfDayMatches, BwfDrawData, BwfDraws, BwfEntries, BwfLiveMatches, BwfMatchStat, BwfOptions } from './schemas';
+import {
+  BwfDayMatches,
+  BwfDrawData,
+  BwfDraws,
+  BwfEntries,
+  BwfLiveMatches,
+  BwfLiveSingle,
+  BwfMatchStat,
+  BwfOptions,
+} from './schemas';
 
 const MAIN_DRAW = 0;
 
@@ -27,6 +36,19 @@ export const fetchGameStats = async (tmtId: number, matchCode: string, game: num
   toMatchStats(
     await bwfGet('match-center/vue-game-stat', { tmtId, matchId: matchCode, gameId: game }, BwfMatchStat, signal),
   );
+
+export const fetchReceiver = async (tmtId: number, matchCode: string, signal?: AbortSignal) => {
+  const { results } = await bwfGet(
+    'match-center/vue-live-single',
+    { tmtId, matchId: matchCode },
+    BwfLiveSingle,
+    signal,
+  );
+  const n = results?.receiver_player ?? 0;
+  if (!results || n < 1) return null;
+  const ids = [results.team1_player1_id, results.team1_player2_id, results.team2_player1_id, results.team2_player2_id];
+  return ids[n - 1] ?? null;
+};
 
 export const fetchLiveServers = async (tmtId: number, signal?: AbortSignal) =>
   toLiveServers(await bwfGet('match-center/vue-live-matches', { tmtId }, BwfLiveMatches, signal));

@@ -63,7 +63,7 @@ export const MatchShowdown = memo<{
   h2h?: boolean;
   onOpen: (id: string) => void;
 }>(({ match: m, tournament, replay, h2h, onOpen }) => {
-  const [ref, live] = useLiveView<HTMLElement>(tournament, m);
+  const [ref, live] = useLiveView<HTMLElement>(tournament, m, true);
   const view = useMemo(() => toShowdownView(m, live), [m, live]);
   const stream = useMatchStream(tournament, m);
   return (

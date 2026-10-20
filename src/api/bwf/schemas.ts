@@ -105,6 +105,20 @@ export type BwfMatchStat = z.infer<typeof BwfMatchStat>;
 
 const PlayerId = Idish.nullish().transform((id) => (id ? String(id) : null));
 
+export const BwfLiveSingle = z.object({
+  results: z
+    .object({
+      receiver_player: z.coerce.number().nullish(),
+      team1_player1_id: PlayerId,
+      team1_player2_id: PlayerId,
+      team2_player1_id: PlayerId,
+      team2_player2_id: PlayerId,
+    })
+    .nullish()
+    .catch(null),
+});
+export type BwfLiveSingle = z.infer<typeof BwfLiveSingle>;
+
 export const BwfLiveMatches = z.object({
   results: z
     .array(

@@ -6,9 +6,14 @@ import { Tip } from '~/components/ui';
 
 import classes from './SeedTag.module.css';
 
+const SHORT_FORMS: Partial<Record<string, (seed: number) => string>> = {
+  inline: (seed) => `(${seed})`,
+  circle: String,
+};
+
 export const SeedTag: FC<{
   seed: number | null | undefined;
-  variant?: 'inline' | 'pill' | 'label';
+  variant?: 'inline' | 'pill' | 'label' | 'circle';
   className?: string;
 }> = ({ seed, variant = 'inline', className }) => {
   const { t } = useLingui();
@@ -22,12 +27,11 @@ export const SeedTag: FC<{
       })}
     >
       <span className={clsx(classes.seed, className)} data-variant={variant}>
-        {variant === 'inline'
-          ? `(${seed})`
-          : t({
-              message: `Seed ${seed}`,
-              comment: 'A player’s seed number in a tournament draw, as a badge or after their world rank, e.g. Seed 3',
-            })}
+        {SHORT_FORMS[variant]?.(seed) ??
+          t({
+            message: `Seed ${seed}`,
+            comment: 'A player’s seed number in a tournament draw, as a badge or after their world rank, e.g. Seed 3',
+          })}
       </span>
     </Tip>
   );

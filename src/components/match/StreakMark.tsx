@@ -8,12 +8,16 @@ import { STREAK_LABEL } from '~/utils/live';
 import classes from './StreakMark.module.css';
 import utils from '~/styles/utils.module.css';
 
-export const StreakMark = memo<{ n: number; className?: string }>(({ n, className }) => {
+export const StreakMark = memo<{ n: number; mirror?: boolean; className?: string }>(({ n, mirror, className }) => {
   const { i18n } = useLingui();
   const label = i18n._({ ...STREAK_LABEL, values: { n } });
   return (
     <Tip label={label}>
-      <span className={clsx(utils.raise, classes.streak, className)} aria-label={label}>
+      <span
+        className={clsx(utils.raise, classes.streak, className)}
+        data-mirror={mirror || undefined}
+        aria-label={label}
+      >
         <IconFire className={classes.icon} />
         {n}
       </span>

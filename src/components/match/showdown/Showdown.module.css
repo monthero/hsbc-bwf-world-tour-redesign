@@ -34,6 +34,9 @@
 
 .stage {
   --hub-w: 236px;
+  --reach: calc(var(--hub-w) / -2 + 6px);
+  --reach-top: min(0px, calc(var(--hub-w) / -2 + 56px));
+  --lean: atan2(calc((100cqw + 2 * var(--pad-x)) * 0.1478 * tan(56deg)), 1000px);
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) var(--hub-w) minmax(0, 1fr);
@@ -43,8 +46,12 @@
     'a hub b'
     'a rail b'
     'a . b';
-  height: 380px;
+  height: 430px;
   margin-inline: calc(-1 * var(--pad-x));
+
+  &:not(:has(.split[data-pair])) {
+    height: 380px;
+  }
 
   &:first-child {
     margin-block-start: calc(-1 * var(--pad-y));
@@ -211,27 +218,175 @@
   }
 }
 
-.plate {
+.split {
   position: relative;
-  grid-area: 3 / 1;
+  grid-area: 1 / 1 / -1 / -1;
   min-width: 0;
+  min-height: 0;
+  display: flex;
+  pointer-events: none;
+}
+
+.splitCell {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
   display: flex;
   align-items: flex-end;
-  gap: 8px;
-  padding-block: 72px 16px;
+  position: relative;
+  isolation: isolate;
+  padding-block: 40px 16px;
   padding-inline: 18px 12px;
-  background: linear-gradient(
-    to top,
-    alpha(var(--bwf-bg-sunken), 0.97),
-    alpha(var(--bwf-bg-sunken), 0.88) 40%,
-    alpha(var(--bwf-bg-sunken), 0.5) 72%,
-    transparent
-  );
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      alpha(var(--bwf-bg-sunken), 0.95),
+      alpha(var(--bwf-bg-sunken), 0.78) 40px,
+      alpha(var(--bwf-bg-sunken), 0.4) 80px,
+      transparent 120px
+    );
+    mask-image: linear-gradient(to var(--inward), var(--mantine-color-black), alpha(var(--mantine-color-black), 0.15));
+    pointer-events: none;
+  }
 
   .corner[data-side='1'] & {
     flex-direction: row-reverse;
     padding-inline: 12px 18px;
   }
+
+  & > * {
+    pointer-events: auto;
+  }
+}
+
+.corner[data-side='0'] .splitCell:last-child > .names {
+  margin-inline-end: var(--reach);
+}
+
+.corner[data-side='1'] .splitCell:first-child > .names {
+  margin-inline-start: var(--reach);
+}
+
+.pills {
+  z-index: 1;
+  grid-area: 1 / 1 / -1 / -1;
+  align-self: center;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+
+  & .pill {
+    --h: 26px;
+    --pad: 12px;
+    --cut: calc(var(--h) * tan(var(--lean)));
+    --slivers: 10px;
+    --tail: calc(var(--slivers) + 2px);
+    position: relative;
+    isolation: isolate;
+    justify-content: flex-start;
+    gap: 8px;
+    height: var(--h);
+    padding-block: 0;
+    padding-inline: var(--pad) calc(var(--pad) + var(--cut) + var(--tail));
+    border: 0;
+    border-radius: 0;
+    background: none;
+    backdrop-filter: none;
+    font-family: 'Saira', var(--mantine-font-family);
+    font-stretch: 75%;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    & > span {
+      white-space: nowrap;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: var(--tone);
+      clip-path: polygon(0 0, calc(100% - var(--tail)) 0, calc(100% - var(--tail) - var(--cut)) 100%, 0 100%);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset-block: 0;
+      inset-inline: auto 0;
+      width: var(--slivers);
+      background: linear-gradient(
+        to right,
+        var(--tone) 0 5px,
+        transparent 5px 7px,
+        var(--tone) 7px 10px,
+        transparent 10px
+      );
+      mask-image: linear-gradient(to right, var(--mantine-color-black), alpha(var(--mantine-color-black), 0.2));
+      transform: skewX(calc(-1 * var(--lean)));
+      transform-origin: top;
+    }
+  }
+}
+
+.split:not([data-pair]) ~ .pills {
+  --above-name: 62px;
+  align-self: end;
+  margin-block-end: var(--above-name);
+}
+
+.corner[data-side='1'] .pills .pill {
+  justify-content: flex-end;
+  padding-inline: calc(var(--pad) + var(--cut) + var(--tail)) var(--pad);
+
+  &::before {
+    clip-path: polygon(var(--tail) 0, 100% 0, 100% 100%, calc(var(--tail) + var(--cut)) 100%);
+  }
+
+  &::after {
+    inset-inline: 0 auto;
+    background: linear-gradient(
+      to left,
+      var(--tone) 0 5px,
+      transparent 5px 7px,
+      var(--tone) 7px 10px,
+      transparent 10px
+    );
+    mask-image: linear-gradient(to left, var(--mantine-color-black), alpha(var(--mantine-color-black), 0.2));
+    transform: skewX(var(--lean));
+  }
+}
+
+.plate {
+  z-index: 1;
+  grid-area: 1 / 1 / -1 / -1;
+  align-self: start;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+
+  .corner[data-side='1'] & {
+    flex-direction: row-reverse;
+    justify-self: start;
+  }
+}
+
+.plateSeed {
+  font-size: 13px;
+  background: alpha(var(--bwf-bg-sunken), 0.75);
 }
 
 .names {
@@ -259,18 +414,6 @@
   }
 }
 
-.pills {
-  grid-area: 2 / 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  margin-block-end: -34px;
-  padding-inline: 12px;
-  pointer-events: none;
-}
-
 .pill {
   --edge: var(--bwf-border);
   max-width: 100%;
@@ -291,9 +434,7 @@
 
 .call {
   --tone: var(--bwf-muted);
-  --edge: var(--tone);
-  font-weight: 600;
-  color: var(--tone);
+  color: var(--ink, var(--bwf-on-brand));
 
   & > svg {
     flex: none;
@@ -303,7 +444,7 @@
   }
 
   &[data-tone='review'] {
-    --tone: var(--bwf-blue);
+    --tone: var(--mantine-color-indigo-6);
     animation: review 1.8s ease-in-out infinite;
 
     @media (prefers-reduced-motion: reduce) {
@@ -312,22 +453,18 @@
   }
 
   &[data-tone='won'] {
-    --tone: var(--bwf-win);
+    --tone: var(--mantine-color-teal-6);
+    --ink: var(--bwf-bg-sunken);
+  }
+
+  &[data-tone='game'],
+  &[data-tone='match'] {
+    --tone: var(--mantine-color-yellow-6);
+    --ink: var(--bwf-bg-sunken);
   }
 
   &[data-tone='lost'] {
-    --tone: var(--bwf-loss);
-  }
-
-  &[data-tone='game'] {
-    --tone: var(--bwf-gold-text);
-  }
-
-  &[data-tone='match'] {
-    --tone: var(--bwf-red);
-    background: var(--bwf-red);
-    backdrop-filter: none;
-    color: var(--bwf-on-brand);
+    --tone: var(--mantine-color-rose-8);
   }
 }
 
@@ -621,8 +758,29 @@
     }
   }
 
-  .follow[data-pair] {
+  .follow[data-pair],
+  .split[data-pair] {
     flex-direction: column;
+  }
+
+  .follow[data-pair] > .followCell:last-child {
+    padding-block-start: 24px;
+  }
+
+  .corner[data-side='0'] .splitCell:first-child > .names {
+    margin-inline-end: var(--reach-top);
+  }
+
+  .corner[data-side='0'] .splitCell:last-child > .names {
+    margin-inline-end: var(--reach);
+  }
+
+  .corner[data-side='1'] .splitCell:first-child > .names {
+    margin-inline-start: var(--reach-top);
+  }
+
+  .corner[data-side='1'] .splitCell:last-child > .names {
+    margin-inline-start: var(--reach);
   }
 
   .names {
@@ -641,11 +799,21 @@
 @container showdown (width < 600px) {
   .stage {
     --hub-w: 104px;
-    grid-template-rows: 256px auto;
+    --lean: atan2(calc((100cqw + 2 * var(--pad-x)) * 0.1478 * tan(52deg)), 600px);
+    grid-template-rows: 290px auto;
     grid-template-areas:
       'a hub b'
       'rail rail rail';
     height: auto;
+
+    &:not(:has(.split[data-pair])) {
+      grid-template-rows: 240px auto;
+      height: auto;
+    }
+  }
+
+  .split:not([data-pair]) ~ .pills {
+    --above-name: 44px;
   }
 
   .backdrop {
@@ -655,43 +823,36 @@
   }
 
   .portrait,
-  .follow {
+  .follow,
+  .split,
+  .pills,
+  .plate {
     grid-area: 1 / 1 / 3 / 2;
+  }
+
+  .corner[data-side] .pills .pill {
+    --h: 22px;
+    --pad: 8px;
+    gap: 6px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+  }
+
+  .splitCell,
+  .corner[data-side='1'] .splitCell {
+    padding: 24px 8px 9px;
   }
 
   .followCell {
     padding: 6px;
   }
 
-  .pills {
-    margin-block-end: 0;
-    padding-inline: 6px;
-
-    & > * + * {
-      display: none;
-    }
+  .pills > * + * {
+    display: none;
   }
 
-  .call {
-    gap: 5px;
-    padding-block: 3px;
-    padding-inline: 7px 9px;
-    font-size: 11px;
-  }
-
-  .plate,
-  .corner[data-side='1'] .plate {
-    align-items: center;
-    padding: 8px 10px 0;
-    background: none;
-  }
-
-  .corner[data-side='0'] .plate {
-    margin-inline-end: calc(var(--hub-w) / -2 + 4px);
-  }
-
-  .corner[data-side='1'] .plate {
-    margin-inline-start: calc(var(--hub-w) / -2 + 4px);
+  .plate {
+    padding: 6px;
   }
 
   .names {

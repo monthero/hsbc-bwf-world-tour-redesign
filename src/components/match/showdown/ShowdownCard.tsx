@@ -2,22 +2,33 @@ import { msg } from '@lingui/core/macro';
 import { useLingui } from '@lingui/react/macro';
 import { VisuallyHidden } from '@mantine/core';
 import { clsx } from 'clsx';
-import { memo, useCallback, type FC, type ReactNode, type Ref } from 'react';
+import { memo, useCallback, useMemo, type FC, type ReactNode, type Ref } from 'react';
 
 import { PlayerFollow } from '~/components/follow';
 import { PlayerAvatar } from '~/components/player/PlayerAvatar';
+import { SeedTag } from '~/components/player/SeedTag';
 import { Medal } from '~/components/tournament/Medal';
-import { COURT_VIEWBOX, CourtLines, IconHand, ShuttleIcon, StatusChip, Tip } from '~/components/ui';
+import {
+  COURT_VIEWBOX,
+  CourtLines,
+  IconEye,
+  IconCheck,
+  IconClose,
+  IconTrophy,
+  ShuttleIcon,
+  StatusChip,
+  Tip,
+} from '~/components/ui';
 import { DARK_SCOPE_PROPS } from '~/theme';
 import type { Game, Player, Side } from '~/types';
 import {
   CHALLENGE_LABELS,
-  CHALLENGE_REVIEW,
   GAME_SHORT,
   gameDone,
   LONGEST_RUN,
   RALLY_POINTS,
   type CallKind,
+  type ChallengeOutcome,
 } from '~/utils/live';
 import { formatGames, gameWon, noteLabel, noteTip, opposite } from '~/utils/matches';
 
@@ -25,7 +36,7 @@ import { ChallengeStocks } from '../ChallengeStocks';
 import { ScheduledStart } from '../MatchTime';
 import { SideMedal } from '../MedalMark';
 import type { MedalStake } from '../medals';
-import { ServeMark } from '../ServeMark';
+import { ReceiveMark, ServeMark } from '../ServeMark';
 import { StreakMark } from '../StreakMark';
 import { TeamPlayers } from '../TeamPlayers';
 import { trailsIn, type ShowdownView, type SideView } from './liveView';
@@ -33,8 +44,21 @@ import { trailsIn, type ShowdownView, type SideView } from './liveView';
 import classes from './Showdown.module.css';
 import utils from '~/styles/utils.module.css';
 
-const HAND = <IconHand />;
 const SHUTTLE = <ShuttleIcon />;
+
+const CHALLENGE_ICONS: Record<ChallengeOutcome | 'review', ReactNode> = {
+  review: <IconEye />,
+  won: <IconCheck />,
+  lost: <IconClose />,
+};
+
+const CALL_ICONS: Record<CallKind, ReactNode> = { game: SHUTTLE, match: <IconTrophy /> };
+
+const UNDER_REVIEW = msg({
+  message: 'Under review',
+  comment:
+    'Live score banner with a camera icon: a player challenged a line call and the video review (Instant Review) is in progress. Keep it short',
+});
 
 const VS = msg({
   message: 'VS',
@@ -53,13 +77,13 @@ const ChallengePill: FC<{ side: SideView }> = ({ side: s }) => {
   const { i18n } = useLingui();
   if (s.review)
     return (
-      <Pill tone="review" icon={HAND}>
-        {i18n._(CHALLENGE_REVIEW)}
+      <Pill tone="review" icon={CHALLENGE_ICONS.review}>
+        {i18n._(UNDER_REVIEW)}
       </Pill>
     );
   if (!s.recent) return null;
   return (
-    <Pill tone={s.recent} icon={HAND}>
+    <Pill tone={s.recent} icon={CHALLENGE_ICONS[s.recent]}>
       {CHALLENGE_LABELS[s.recent]}
     </Pill>
   );
@@ -71,7 +95,7 @@ const Pills = memo<{ side: SideView; kind: CallKind | null }>(({ side: s, kind }
     <span className={classes.pills}>
       <ChallengePill side={s} />
       {s.call && kind && (
-        <Pill tone={kind} icon={SHUTTLE}>
+        <Pill tone={kind} icon={CALL_ICONS[kind]}>
           {s.call}
         </Pill>
       )}
@@ -89,32 +113,56 @@ const Follows = memo<{ players: readonly Player[] }>(({ players }) => (
   </span>
 ));
 
+type AfterPlayer = (p: Player) => ReactNode;
+
+const SoloPlate = memo<{
+  player: Player;
+  side: Side;
+  mark?: AfterPlayer;
+}>(({ player, side, mark }) => {
+  const players = useMemo(() => [player], [player]);
+  return (
+    <span className={classes.splitCell}>
+      <TeamPlayers
+        players={players}
+        flag="sm"
+        align={side ? 'end' : 'start'}
+        after={mark}
+        className={classes.names}
+        nameClassName={classes.name}
+      />
+    </span>
+  );
+});
+
 const Corner = memo<{ view: ShowdownView; side: Side; follow?: boolean }>(({ view: v, side, follow }) => {
   const s = v.live.sides[side];
   const server = v.live.server;
+  const receiver = v.live.receiver;
   const after = useCallback(
-    (p: Player) => p.id === server && <ServeMark size={16} className={utils.raise} />,
-    [server],
+    (p: Player) => {
+      if (p.id === server) return <ServeMark size={16} className={utils.raise} />;
+      return p.id === receiver && <ReceiveMark size={16} className={utils.raise} />;
+    },
+    [server, receiver],
   );
   const teamServe = v.phase === 'play' && !server && s.serving;
+  const pair = s.team.players.length > 1 || undefined;
   return (
     <div className={classes.corner} data-side={side} data-out={(v.winner !== null && v.winner !== side) || undefined}>
-      <span className={classes.portrait} data-pair={s.team.players.length > 1 || undefined}>
+      <span className={classes.portrait} data-pair={pair}>
         {s.team.players.map((p) => (
           <PlayerAvatar key={p.id || p.name} player={p} className={classes.photo} />
         ))}
       </span>
+      <span className={classes.split} data-pair={pair}>
+        {s.team.players.map((p) => (
+          <SoloPlate key={p.id || p.name} player={p} side={side} mark={server || receiver ? after : undefined} />
+        ))}
+      </span>
       {follow && <Follows players={s.team.players} />}
       <div className={classes.plate}>
-        <TeamPlayers
-          players={s.team.players}
-          seed={s.team.seed}
-          flag="sm"
-          align={side ? 'end' : 'start'}
-          after={server ? after : undefined}
-          className={classes.names}
-          nameClassName={classes.name}
-        />
+        <SeedTag seed={s.team.seed} variant="circle" className={classes.plateSeed} />
         {teamServe && <ServeMark size={16} className={utils.raise} />}
         <SideMedal match={v.match} side={side} size={22} className={utils.raise} />
       </div>
@@ -219,9 +267,9 @@ const hasTags = (s: SideView) => (!!s.stats && s.left !== null) || !!s.result ||
 
 const Tags = memo<{ side: SideView }>(({ side: s }) => (
   <span className={classes.tags} data-side={s.side}>
-    <ChallengeStocks stats={s.stats} left={s.left} />
+    <ChallengeStocks stats={s.stats} left={s.left} mirror={s.side === 1} />
     {s.result && <StatusChip tone="green">{s.result}</StatusChip>}
-    {s.streak > 0 && <StreakMark n={s.streak} />}
+    {s.streak > 0 && <StreakMark n={s.streak} mirror={s.side === 1} />}
   </span>
 ));
 

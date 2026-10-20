@@ -32,7 +32,7 @@ import classes from './LiveCard.module.css';
 import utils from '~/styles/utils.module.css';
 
 const AVATAR = 34;
-const CHALLENGE_TONES: Record<ChallengeOutcome, StatusTone> = { won: 'green', lost: 'red', void: 'silver' };
+const CHALLENGE_TONES: Record<ChallengeOutcome, StatusTone> = { won: 'green', lost: 'red' };
 
 const Tags: FC<{ side: SideView }> = ({ side: s }) => {
   const { i18n } = useLingui();
