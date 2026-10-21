@@ -27,6 +27,7 @@ export const TeamPlayers = memo<{
   empty?: ReactNode;
   before?: (p: Player, i: number) => ReactNode;
   after?: (p: Player, i: number) => ReactNode;
+  mark?: (p: Player, i: number) => ReactNode;
   aside?: ReactNode;
   end?: ReactNode;
   className?: string;
@@ -44,6 +45,7 @@ export const TeamPlayers = memo<{
     empty,
     before,
     after,
+    mark,
     aside,
     end,
     className,
@@ -62,6 +64,7 @@ export const TeamPlayers = memo<{
         data-pair-seed={pairSeed || undefined}
         data-pair={players.length > 1 || undefined}
         data-slots={!!(aside || end) || undefined}
+        data-marks={!!mark || undefined}
       >
         {players.length
           ? players.map((p, i) => {
@@ -72,24 +75,27 @@ export const TeamPlayers = memo<{
                 </>
               );
               return (
-                <span key={p.id || p.name} className={classes.player}>
-                  {before?.(p, i)}
-                  {flag && (
-                    <Wrap when={wrap} className={classes.flagLine}>
-                      <Flag cc={p.cc} size={flag} />
+                <Fragment key={p.id || p.name}>
+                  <span className={classes.player}>
+                    {before?.(p, i)}
+                    {flag && (
+                      <Wrap when={wrap} className={classes.flagLine}>
+                        <Flag cc={p.cc} size={flag} />
+                      </Wrap>
+                    )}
+                    <Wrap when={wrap} className={classes.nameLine}>
+                      <PlayerName
+                        player={p}
+                        link={typeof link === 'function' ? link(p) : link}
+                        fit={!wrap}
+                        end={wrap ? undefined : trail}
+                        className={clsx(classes.name, nameClassName)}
+                      />
+                      {wrap && trail}
                     </Wrap>
-                  )}
-                  <Wrap when={wrap} className={classes.nameLine}>
-                    <PlayerName
-                      player={p}
-                      link={typeof link === 'function' ? link(p) : link}
-                      fit={!wrap}
-                      end={wrap ? undefined : trail}
-                      className={clsx(classes.name, nameClassName)}
-                    />
-                    {wrap && trail}
-                  </Wrap>
-                </span>
+                  </span>
+                  {mark && <span className={classes.mark}>{mark(p, i)}</span>}
+                </Fragment>
               );
             })
           : blank && <span className={classes.player}>{blank}</span>}

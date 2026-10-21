@@ -1420,11 +1420,6 @@ msgstr "Seguir a esta pareja"
 msgid "Followed first"
 msgstr "Seguidos primero"
 
-#. Star mark beside a player the visitor follows
-#: src/components/follow/FollowedMark.tsx
-msgid "Following"
-msgstr "Siguiendo"
-
 #. Match list group heading: matches with players or countries the visitor follows, listed first
 #: src/pages/tournament/components/matches/utils.ts
 msgctxt "matches"

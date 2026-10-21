@@ -3,6 +3,7 @@ import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type CSSProperties, type FC, type Ref } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
+import { FollowMark } from '~/components/follow';
 import {
   ChallengeStocks,
   EventTag,
@@ -57,8 +58,13 @@ const GameScore: FC<{ game: Game; side: Side }> = ({ game, side }) => (
 
 const TeamRow: FC<{ view: LiveView; side: SideView }> = ({ view: v, side: s }) => {
   const server = v.server;
-  const after = useCallback(
-    (p: Player) => p.id === server && <ServeMark size={13} className={utils.raise} />,
+  const mark = useCallback(
+    (p: Player) => (
+      <>
+        <FollowMark player={p} />
+        {p.id === server && <ServeMark size={13} className={utils.raise} />}
+      </>
+    ),
     [server],
   );
   return (
@@ -66,13 +72,7 @@ const TeamRow: FC<{ view: LiveView; side: SideView }> = ({ view: v, side: s }) =
       <div className={classes.team}>
         <AvatarGroup players={s.team.players} size={AVATAR} className={classes.avatars} />
         <div className={classes.who}>
-          <TeamPlayers
-            players={s.team.players}
-            seed={s.team.seed}
-            flag="sm"
-            after={server ? after : undefined}
-            className={classes.names}
-          />
+          <TeamPlayers players={s.team.players} seed={s.team.seed} flag="sm" mark={mark} className={classes.names} />
           <Tags side={s} />
         </div>
       </div>

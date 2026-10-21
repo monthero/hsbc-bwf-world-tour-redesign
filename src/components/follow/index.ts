@@ -1,3 +1,3 @@
 export { FollowButton, PlayerFollow } from './FollowButton';
-export { FollowedMark } from './FollowedMark';
+export { FollowMark } from './FollowMark';
 export { TeamFollow } from './TeamFollow';

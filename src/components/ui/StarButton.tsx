@@ -5,7 +5,7 @@ import { IconStar, IconStarFilled } from './icons';
 
 import classes from './StarButton.module.css';
 
-export type StarVariant = 'ghost' | 'outline' | 'pill' | 'glass';
+export type StarVariant = 'ghost' | 'outline' | 'pill' | 'glass' | 'mark';
 export type StarBox = 'xs' | 'sm' | 'md' | 'lg';
 
 export const StarButton: FC<{

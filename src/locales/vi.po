@@ -1420,11 +1420,6 @@ msgstr "Theo dõi cặp này"
 msgid "Followed first"
 msgstr "Đang theo dõi trước"
 
-#. Star mark beside a player the visitor follows
-#: src/components/follow/FollowedMark.tsx
-msgid "Following"
-msgstr "Đang theo dõi"
-
 #. Match list group heading: matches with players or countries the visitor follows, listed first
 #: src/pages/tournament/components/matches/utils.ts
 msgctxt "matches"

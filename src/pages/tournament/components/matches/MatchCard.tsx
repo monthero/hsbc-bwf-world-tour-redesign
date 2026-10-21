@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
-import { FollowedMark } from '~/components/follow';
+import { FollowMark } from '~/components/follow';
 import { EventTag, MatchTime, MedalMark, SideMedal, SideNote, SideScores, TeamPlayers } from '~/components/match';
 import { WatchButton } from '~/components/media';
 import { CardHit, Duration, IconCheck } from '~/components/ui';
@@ -16,7 +16,7 @@ import { detailsLabel, isDoubles, matchTitle, sideResult } from '~/utils/matches
 import classes from './MatchCard.module.css';
 import utils from '~/styles/utils.module.css';
 
-const followedMark = (p: Player) => <FollowedMark id={p.id} />;
+const followMark = (p: Player) => <FollowMark player={p} />;
 
 const TeamRow: FC<{ match: Match; side: Side }> = ({ match: m, side }) => {
   const result = sideResult(m, side);
@@ -28,7 +28,7 @@ const TeamRow: FC<{ match: Match; side: Side }> = ({ match: m, side }) => {
           seed={m.teams[side].seed}
           flag="sm"
           truncate
-          after={followedMark}
+          mark={followMark}
           className={classes.players}
           nameClassName={classes.name}
         />

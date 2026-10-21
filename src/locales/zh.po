@@ -1420,11 +1420,6 @@ msgstr "关注这对组合"
 msgid "Followed first"
 msgstr "关注优先"
 
-#. Star mark beside a player the visitor follows
-#: src/components/follow/FollowedMark.tsx
-msgid "Following"
-msgstr "已关注"
-
 #. Match list group heading: matches with players or countries the visitor follows, listed first
 #: src/pages/tournament/components/matches/utils.ts
 msgctxt "matches"

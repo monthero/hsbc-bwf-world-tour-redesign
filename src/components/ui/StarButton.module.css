@@ -65,6 +65,15 @@
     color: var(--bwf-text-3);
   }
 
+  &[data-variant='mark'] {
+    --box: 18px;
+    color: alpha(var(--bwf-text), 0.18);
+
+    &:not([data-active], [data-implied]):hover {
+      color: var(--bwf-text-3);
+    }
+  }
+
   &[data-implied],
   &[data-active] {
     color: var(--bwf-star);
