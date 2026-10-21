@@ -1,5 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { HoverCard, Skeleton, type PopoverProps } from '@mantine/core';
+import { Popover, Skeleton, type PopoverProps } from '@mantine/core';
 import { clsx } from 'clsx';
 import { useMemo, type FC, type ReactNode } from 'react';
 
@@ -8,6 +8,7 @@ import { PlayerFollow } from '~/components/follow';
 import { OutcomeBadge, OutcomeLabel, ScoreChips, TeamLabel } from '~/components/match';
 import { Eyebrow, IconButton, IconProfile } from '~/components/ui';
 import { PlayerHoverContext } from '~/contexts';
+import { useHoverHull } from '~/hooks/useHoverHull';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerProfile } from '~/hooks/useSeason';
 import type { PlayerMatch } from '~/types';
@@ -28,6 +29,9 @@ import utils from '~/styles/utils.module.css';
 const byTime = (a: PlayerMatch, b: PlayerMatch) => byMatchTime(a.match, b.match);
 
 const EDGE = 30;
+const MAX_HEIGHT = 400;
+const OPEN_DELAY = 300;
+const CLOSE_DELAY = 250;
 
 const MIDDLEWARES: PopoverProps['middlewares'] = {
   flip: { fallbackStrategy: 'bestFit', padding: EDGE },
@@ -35,33 +39,46 @@ const MIDDLEWARES: PopoverProps['middlewares'] = {
   size: {
     padding: EDGE,
     apply: ({ availableHeight, elements }) => {
-      elements.floating.style.maxHeight = `${availableHeight}px`;
+      elements.floating.style.maxHeight = `${Math.min(availableHeight, MAX_HEIGHT)}px`;
     },
   },
 };
 
 export const PlayerHoverCard: FC<{ id: string; children: ReactNode }> = ({ id, children }) => {
   const isMobile = useIsMobile();
+  const { opened, close, target, dropdown, onMouseEnter, onMouseLeave, onFocus, onBlur } = useHoverHull<
+    HTMLSpanElement,
+    HTMLDivElement
+  >(OPEN_DELAY, CLOSE_DELAY);
   if (isMobile) return children;
   return (
-    <HoverCard
-      openDelay={300}
-      closeDelay={160}
+    <Popover
+      opened={opened}
+      onDismiss={close}
       width={360}
       position="bottom-start"
       offset={6}
       middlewares={MIDDLEWARES}
       withinPortal
     >
-      <HoverCard.Target>
-        <span className={classes.target}>{children}</span>
-      </HoverCard.Target>
-      <HoverCard.Dropdown className={clsx(utils.popover, classes.dropdown)}>
+      <Popover.Target>
+        <span
+          ref={target}
+          className={classes.target}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          onFocus={onFocus}
+          onBlur={onBlur}
+        >
+          {children}
+        </span>
+      </Popover.Target>
+      <Popover.Dropdown ref={dropdown} className={clsx(utils.popover, classes.dropdown)}>
         <PlayerHoverContext value={null}>
           <PlayerCard id={id} />
         </PlayerHoverContext>
-      </HoverCard.Dropdown>
-    </HoverCard>
+      </Popover.Dropdown>
+    </Popover>
   );
 };
 
