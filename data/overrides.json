@@ -68,11 +68,16 @@
       "bio": {
         "racket": "Yonex Nanoflare 700 Pro",
         "racketNote": "4U",
-        "shoes": "Yonex Power Cushion 65 Z4"
+        "shoes": "Yonex Power Cushion 65 Z4",
+        "club": "BIPROGY"
       },
       "source": "user",
       "asOf": "2026-10-16",
       "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        },
         "hero": {
           "source": "https://img.ligaolahraga.com/public/images/news/2026/09/07/china-masters-gelar-perdana-sumire-nakade-miyu-takahashi-di-level-super-750.webp",
           "asOf": "2026-10-16"
@@ -2017,7 +2022,8 @@
         "height": 170,
         "plays": "R",
         "birthplace": "Kyoto Prefecture",
-        "achievements": "Asia Team Championships 2026 – gold (men's team); Asia Mixed Team Championships 2025 – bronze (mixed team)"
+        "achievements": "Asia Team Championships 2026 – gold (men's team); Asia Mixed Team Championships 2025 – bronze (mixed team)",
+        "club": "BIPROGY"
       },
       "source": "https://bwfbadminton.com/news-single/2026/02/08/badminton-asia-team-maiden-titles-for-korea-japan/",
       "asOf": "2026-10-12",
@@ -2029,6 +2035,10 @@
         "bio.birthplace": {
           "source": "https://www.wikidata.org/wiki/Q123234695",
           "asOf": "2026-10-12"
+        },
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
         },
         "bio.height": {
           "source": "https://www.wikidata.org/wiki/Q123234695",
@@ -3069,11 +3079,16 @@
       "bio": {
         "racket": "Yonex Astrox 100 ZZ",
         "racketNote": "Kurenai, 4U",
-        "shoes": "Yonex Power Cushion 65 Z4"
+        "shoes": "Yonex Power Cushion 65 Z4",
+        "club": "BIPROGY"
       },
       "source": "user",
       "asOf": "2026-10-16",
       "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        },
         "hero": {
           "source": "https://usabadminton.org/wp-content/uploads/2026/07/20260628_1546_USOpen2026_BPYL6293-scaled.jpg",
           "asOf": "2026-10-16"
@@ -4163,7 +4178,8 @@
         "birthplace": "Iwamizawa",
         "residence": "Tokyo",
         "racket": "Yonex Nanoflare 700 Pro",
-        "shoes": "Yonex Power Cushion 65 Z4"
+        "shoes": "Yonex Power Cushion 65 Z4",
+        "club": "BIPROGY"
       },
       "source": "https://www.yonex.com.tw/files/athletic/photos/864.jpg?v=3zeCUu8eLE6kR46GKF6rhQ",
       "asOf": "2026-10-19",
@@ -4171,6 +4187,10 @@
         "bio.birthplace": {
           "source": "user",
           "asOf": "2026-10-19"
+        },
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
         },
         "bio.racket": {
           "source": "user",
@@ -4279,7 +4299,8 @@
         "plays": "L",
         "birthplace": "Ōsaki-shi",
         "coach": "Lee Wan Wah Hiroyuki Endo",
-        "achievements": "Asia Team Championships 2026 – gold (Men's team)"
+        "achievements": "Asia Team Championships 2026 – gold (Men's team)",
+        "club": "BIPROGY"
       },
       "source": "https://www.wikidata.org/wiki/Q63997602",
       "asOf": "2026-10-12",
@@ -4287,6 +4308,10 @@
         "bio.achievements": {
           "source": "https://en.wikipedia.org/wiki/Kakeru_Kumagai",
           "asOf": "2026-10-12"
+        },
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
         },
         "bio.coach": {
           "source": "https://en.wikipedia.org/wiki/Kakeru_Kumagai",
@@ -5473,11 +5498,16 @@
       "bio": {
         "racket": "Victor Auraspeed 100X Ultra G",
         "racketNote": "4U",
-        "tension": "25/27"
+        "tension": "25/27",
+        "club": "BIPROGY"
       },
       "source": "user",
       "asOf": "2026-10-15",
       "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        },
         "bio.racket": {
           "source": "user",
           "asOf": "2026-10-15"
@@ -5635,11 +5665,16 @@
       "bio": {
         "racket": "Victor Auraspeed Fantôme",
         "racketNote": "4U",
-        "tension": "26/28"
+        "tension": "26/28",
+        "club": "BIPROGY"
       },
       "source": "user",
       "asOf": "2026-10-15",
       "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        },
         "bio.racket": {
           "source": "user",
           "asOf": "2026-10-15"
@@ -7158,6 +7193,84 @@
         "heroFocus": {
           "source": "user",
           "asOf": "2026-10-14"
+        }
+      }
+    },
+    "86479": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        }
+      }
+    },
+    "96604": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        }
+      }
+    },
+    "83883": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        }
+      }
+    },
+    "77870": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        }
+      }
+    },
+    "84746": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        }
+      }
+    },
+    "80532": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
         }
       }
     }

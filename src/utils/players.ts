@@ -126,24 +126,26 @@ export const buildBio = (bio: PlayerBio | undefined, units: BioUnits): BioView =
   const hand = handLabel(b.plays);
   if (hand) stats.push({ key: 'hand', label: LABELS.hand, value: hand });
   const natTeam = b.natTeam?.trim();
-  const details = facts(
-    [
-      { key: 'nickname', label: LABELS.nickname, value: b.nickname },
-      { key: 'birthplace', label: LABELS.birthplace, value: b.birthplace },
-      { key: 'residence', label: LABELS.residence, value: b.residence },
-      { key: 'languages', label: LABELS.languages, value: b.languages },
-      { key: 'debut', label: LABELS.debut, value: b.debut },
-      {
-        key: 'natTeam',
-        label: LABELS.natTeam,
-        value: natTeam && translate(SINCE, { start: natTeam.replace(LEADING_SINCE, '') }),
-        translated: true,
-      },
-      { key: 'coach', label: LABELS.coach, value: b.coach },
-      { key: 'club', label: LABELS.club, value: b.club },
-    ],
-    unshout,
-  );
+  const details = [
+    ...facts(
+      [
+        { key: 'nickname', label: LABELS.nickname, value: b.nickname },
+        { key: 'birthplace', label: LABELS.birthplace, value: b.birthplace },
+        { key: 'residence', label: LABELS.residence, value: b.residence },
+        { key: 'languages', label: LABELS.languages, value: b.languages },
+        { key: 'debut', label: LABELS.debut, value: b.debut },
+        {
+          key: 'natTeam',
+          label: LABELS.natTeam,
+          value: natTeam && translate(SINCE, { start: natTeam.replace(LEADING_SINCE, '') }),
+          translated: true,
+        },
+        { key: 'coach', label: LABELS.coach, value: b.coach },
+      ],
+      unshout,
+    ),
+    ...facts([{ key: 'club', label: LABELS.club, value: b.club }], keep),
+  ];
   const equipment = [
     ...facts([{ key: 'racket', label: LABELS.racket, value: b.racket, sub: b.racketNote }], keep),
     ...tensionFact(b, units.tension),
