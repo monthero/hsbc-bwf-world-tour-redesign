@@ -1042,17 +1042,12 @@
     "58089": {
       "bio": {
         "racket": "Yonex Astrox 88D Pro",
-        "racketNote": "3rd generation",
         "string": "Yonex Exbolt 65",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
-        "bio.racketNote": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-14"
@@ -1950,7 +1945,6 @@
       "bio": {
         "birthplace": "Guilin",
         "racket": "Yonex Astrox 88D Pro",
-        "racketNote": "3rd generation",
         "tension": "28/30",
         "string": "Yonex Aerobite",
         "shoes": "Yonex Power Cushion 65 Z4",
@@ -1966,10 +1960,6 @@
         "bio.birthplace": {
           "source": "https://www.wikidata.org/wiki/Q78577931",
           "asOf": "2026-10-12"
-        },
-        "bio.racketNote": {
-          "source": "user",
-          "asOf": "2026-10-15"
         },
         "bio.shoes": {
           "source": "user",
@@ -2323,7 +2313,6 @@
         "plays": "L",
         "birthplace": "Tangerang",
         "racket": "Yonex Astrox 88D Pro",
-        "racketNote": "3rd generation",
         "shoes": "Yonex Power Cushion 65 Z4",
         "achievements": "Asian Championships 2025 – bronze (Mixed doubles); SEA Games 2025 – gold (Men's team); SEA Games 2025 – bronze (Mixed doubles)"
       },
@@ -2347,10 +2336,6 @@
           "asOf": "2026-10-12"
         },
         "bio.racket": {
-          "source": "user",
-          "asOf": "2026-10-19"
-        },
-        "bio.racketNote": {
           "source": "user",
           "asOf": "2026-10-19"
         },
@@ -2504,7 +2489,6 @@
       },
       "bio": {
         "racket": "Yonex Astrox 88D Pro",
-        "racketNote": "3rd generation",
         "tension": "33/35",
         "string": "Yonex BG80",
         "shoes": "Yonex Power Cushion Aerus Z2"
@@ -2512,10 +2496,6 @@
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
-        "bio.racketNote": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-15"
@@ -3495,16 +3475,11 @@
       "photo": "https://img.olympics.com/images/image/private/t_1-1_300/f_auto/primary/ravhqy073xqoc25izxle",
       "hero": "https://media.telanganatoday.com/wp-content/uploads/2026/07/Pusarla-V-Sindhu-.jpg",
       "bio": {
-        "racket": "Yonex Astrox 99 Pro",
-        "racketNote": "3rd generation"
+        "racket": "Yonex Astrox 99 Pro"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
-        "bio.racketNote": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
         "hero": {
           "source": "https://media.telanganatoday.com/wp-content/uploads/2026/07/Pusarla-V-Sindhu-.jpg",
           "asOf": "2026-10-12"
@@ -5030,17 +5005,12 @@
       },
       "bio": {
         "racket": "Yonex Astrox 88D Pro",
-        "racketNote": "3rd generation",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "https://rri-portal-app-assets.obs.ap-southeast-4.myhuaweicloud.com/upload/berita/image/english-news/1790576122311674_5ef8e12a3a_berita_english-news.webp",
       "asOf": "2026-10-12",
       "meta": {
         "bio.racket": {
-          "source": "user",
-          "asOf": "2026-10-19"
-        },
-        "bio.racketNote": {
           "source": "user",
           "asOf": "2026-10-19"
         },
@@ -5337,7 +5307,6 @@
         "birthplace": "Fangliao Township",
         "residence": "Fangliao Township",
         "racket": "Yonex Astrox 88D Pro",
-        "racketNote": "3rd generation",
         "achievements": "Thomas Cup 2024 – bronze (men's team); World University Games 2021 – gold (mixed team)"
       },
       "source": "user",
@@ -5350,10 +5319,6 @@
         "bio.birthplace": {
           "source": "https://www.wikidata.org/wiki/Q39330972",
           "asOf": "2026-10-12"
-        },
-        "bio.racketNote": {
-          "source": "user",
-          "asOf": "2026-10-15"
         },
         "bio.residence": {
           "source": "https://www.wikidata.org/wiki/Q39330972",
@@ -5443,7 +5408,6 @@
         "birthplace": "Kikuchi",
         "club": "Japan national badminton team",
         "racket": "Yonex Astrox 99 Pro",
-        "racketNote": "3rd generation",
         "tension": "32/35",
         "string": "Yonex Aerobite",
         "shoes": "Yonex Power Cushion 65 Z4",
@@ -5471,10 +5435,6 @@
         "bio.plays": {
           "source": "https://www.wikidata.org/wiki/Q106485922",
           "asOf": "2026-10-12"
-        },
-        "bio.racketNote": {
-          "source": "user",
-          "asOf": "2026-10-15"
         },
         "bio.shoes": {
           "source": "user",
@@ -5961,17 +5921,12 @@
       "retired": "2024-05",
       "bio": {
         "racket": "Yonex Astrox 99 Pro",
-        "racketNote": "2nd generation",
         "string": "Yonex Aerobite"
       },
       "source": "https://scmp.com/sport/other-sport/article/3259434/four-years-after-car-crash-japans-former-world-no-1-kento-momota-retires-international-badminton-age",
       "asOf": "2026-10-14",
       "meta": {
         "bio.racket": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
-        "bio.racketNote": {
           "source": "user",
           "asOf": "2026-10-15"
         },
@@ -6692,8 +6647,7 @@
     },
     "94780": {
       "bio": {
-        "racket": "Yonex Astrox 99 Pro",
-        "racketNote": "3rd generation"
+        "racket": "Yonex Astrox 99 Pro"
       },
       "source": "user",
       "asOf": "2026-10-15"
@@ -6983,7 +6937,6 @@
         "coach": "Sho Sasaki",
         "club": "BIPROGY",
         "racket": "Yonex Astrox 88D Pro",
-        "racketNote": "3rd generation",
         "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Asian Games 2022 – bronze (Men's team); Asia Team Championships 2026 – gold (Men's team); Asia Team Championships 2020 – bronze (Men's team); Asia Team Championships 2024 – bronze (Men's team)",
         "instagram": "https://www.instagram.com/watakou0123/"
       },
@@ -7007,10 +6960,6 @@
           "asOf": "2026-10-19"
         },
         "bio.racket": {
-          "source": "user",
-          "asOf": "2026-10-19"
-        },
-        "bio.racketNote": {
           "source": "user",
           "asOf": "2026-10-19"
         },
@@ -7098,17 +7047,12 @@
     "99389": {
       "bio": {
         "racket": "Yonex Astrox 88D Pro",
-        "racketNote": "3rd generation",
         "string": "Yonex Exbolt 65",
         "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-12",
       "meta": {
-        "bio.racketNote": {
-          "source": "user",
-          "asOf": "2026-10-15"
-        },
         "bio.shoes": {
           "source": "user",
           "asOf": "2026-10-19"
