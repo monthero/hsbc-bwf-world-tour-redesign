@@ -66,10 +66,10 @@
         "zoom": 1
       },
       "bio": {
+        "club": "BIPROGY",
         "racket": "Yonex Nanoflare 700 Pro",
         "racketNote": "4U",
-        "shoes": "Yonex Power Cushion 65 Z4",
-        "club": "BIPROGY"
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-16",
@@ -2022,8 +2022,8 @@
         "height": 170,
         "plays": "R",
         "birthplace": "Kyoto Prefecture",
-        "achievements": "Asia Team Championships 2026 – gold (men's team); Asia Mixed Team Championships 2025 – bronze (mixed team)",
-        "club": "BIPROGY"
+        "club": "BIPROGY",
+        "achievements": "Asia Team Championships 2026 – gold (men's team); Asia Mixed Team Championships 2025 – bronze (mixed team)"
       },
       "source": "https://bwfbadminton.com/news-single/2026/02/08/badminton-asia-team-maiden-titles-for-korea-japan/",
       "asOf": "2026-10-12",
@@ -3077,10 +3077,10 @@
         "zoom": 1
       },
       "bio": {
+        "club": "BIPROGY",
         "racket": "Yonex Astrox 100 ZZ",
         "racketNote": "Kurenai, 4U",
-        "shoes": "Yonex Power Cushion 65 Z4",
-        "club": "BIPROGY"
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "user",
       "asOf": "2026-10-16",
@@ -4012,6 +4012,19 @@
         }
       }
     },
+    "77870": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        }
+      }
+    },
     "78409": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1639/v1765175861/wordpress_assets_test/20250528_2021_SingaporeOpen2025_BPYN4950/20250528_2021_SingaporeOpen2025_BPYN4950.jpg",
       "heroFlip": true,
@@ -4177,9 +4190,9 @@
       "bio": {
         "birthplace": "Iwamizawa",
         "residence": "Tokyo",
+        "club": "BIPROGY",
         "racket": "Yonex Nanoflare 700 Pro",
-        "shoes": "Yonex Power Cushion 65 Z4",
-        "club": "BIPROGY"
+        "shoes": "Yonex Power Cushion 65 Z4"
       },
       "source": "https://www.yonex.com.tw/files/athletic/photos/864.jpg?v=3zeCUu8eLE6kR46GKF6rhQ",
       "asOf": "2026-10-19",
@@ -4299,8 +4312,8 @@
         "plays": "L",
         "birthplace": "Ōsaki-shi",
         "coach": "Lee Wan Wah Hiroyuki Endo",
-        "achievements": "Asia Team Championships 2026 – gold (Men's team)",
-        "club": "BIPROGY"
+        "club": "BIPROGY",
+        "achievements": "Asia Team Championships 2026 – gold (Men's team)"
       },
       "source": "https://www.wikidata.org/wiki/Q63997602",
       "asOf": "2026-10-12",
@@ -4338,6 +4351,19 @@
         "retired": {
           "source": "https://www.badmintonplanet.com/badminton-news/minions-era-comes-to-a-close-as-kevin-sanjaya-retires-from-badminton.html",
           "asOf": "2026-10-14"
+        }
+      }
+    },
+    "80532": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
         }
       }
     },
@@ -4888,6 +4914,19 @@
         }
       }
     },
+    "83883": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        }
+      }
+    },
     "83950": {
       "bio": {
         "racket": "Victor Auraspeed HS Plus C",
@@ -5018,6 +5057,19 @@
         "retired": {
           "source": "https://www.siamsport.co.th/other-sports/badminton/71659/",
           "asOf": "2026-10-14"
+        }
+      }
+    },
+    "84746": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
         }
       }
     },
@@ -5367,8 +5419,8 @@
         "birthplace": "Blitar",
         "racket": "Victor Auraspeed HS Plus C",
         "tension": "31",
-        "string": "Felet BS 68",
-        "shoes": "Felet Flash Pro",
+        "string": "Victor VBS-68 Power",
+        "shoes": "Victor A970cADV",
         "achievements": "SEA Games 2025 – gold (Men's doubles); SEA Games 2025 – gold (Men's team)"
       },
       "source": "https://pbsi.id/2026/07/15/japan-open-2026-sabar-reza-menang-dengan-kondisi-cedera/",
@@ -5420,6 +5472,19 @@
       },
       "source": "user",
       "asOf": "2026-10-15"
+    },
+    "86479": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        }
+      }
     },
     "86532": {
       "photo": "data/uploads/86532.jpg",
@@ -5496,10 +5561,10 @@
     },
     "87428": {
       "bio": {
+        "club": "BIPROGY",
         "racket": "Victor Auraspeed 100X Ultra G",
         "racketNote": "4U",
-        "tension": "25/27",
-        "club": "BIPROGY"
+        "tension": "25/27"
       },
       "source": "user",
       "asOf": "2026-10-15",
@@ -5524,10 +5589,10 @@
         "height": 171,
         "plays": "R",
         "birthplace": "Sumedang",
-        "racket": "Felet Woven 999",
+        "racket": "Victor Auraspeed HS Plus C",
         "tension": "31/33",
-        "string": "Felet BS 68",
-        "shoes": "Felet Flash Pro",
+        "string": "Victor VBS-68 Power",
+        "shoes": "Victor A970cADV",
         "achievements": "Asia Mixed Team Championships 2019 – bronze (mixed team); SEA Games 2025 – gold (MD); SEA Games 2025 – gold (men's team)"
       },
       "source": "https://pbsi.id/2026/06/13/australian-open-2026-sabar-reza-ke-final-pertama-tahun-ini/",
@@ -5663,10 +5728,10 @@
     },
     "88135": {
       "bio": {
+        "club": "BIPROGY",
         "racket": "Victor Auraspeed Fantôme",
         "racketNote": "4U",
-        "tension": "26/28",
-        "club": "BIPROGY"
+        "tension": "26/28"
       },
       "source": "user",
       "asOf": "2026-10-15",
@@ -5843,7 +5908,7 @@
     },
     "88876": {
       "photo": "https://pbsi.id/wp-content/uploads/2026/07/FajarFikri13_SF_ChinaOpen2026_PBSI_20260725-scaled.jpg",
-      "hero": "https://cloud.jpnn.com/photo/arsip/normal/2025/07/27/selebrasi-fajar-alfian-kiri-bersama-muhammad-shohibul-fikri-lwuu.jpg",
+      "hero": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/854296165_1438708678424934_521922851256985994_n.jpg?stp=dst-jpg_tt6&cstp=mx1051x1051&ctp=s1051x1051&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=wXSIU9nRYJwQ7kNvwE5SDs9&_nc_oc=AdqtN8NEdNkP-lngHss2M65Ff54_DPDiAA76oJodhHJMz9nwDAFYjoluDPCyalJBRxn1L-s0JSk2WYoqdSaiAXT0&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=TBJo_zLqqBVuWgPGSC1bkA&_nc_ss=7b289&oh=00_AQO87FptB-UeYGzj8m3W2t1wiwXMf-oCHusObLz4As9oBQ&oe=6ADEC1CF",
       "photoCrop": {
         "x": 29.9,
         "y": 4,
@@ -5876,8 +5941,8 @@
           "asOf": "2026-10-15"
         },
         "hero": {
-          "source": "https://cloud.jpnn.com/photo/arsip/normal/2025/07/27/selebrasi-fajar-alfian-kiri-bersama-muhammad-shohibul-fikri-lwuu.jpg",
-          "asOf": "2026-10-19"
+          "source": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/854296165_1438708678424934_521922851256985994_n.jpg?stp=dst-jpg_tt6&cstp=mx1051x1051&ctp=s1051x1051&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=wXSIU9nRYJwQ7kNvwE5SDs9&_nc_oc=AdqtN8NEdNkP-lngHss2M65Ff54_DPDiAA76oJodhHJMz9nwDAFYjoluDPCyalJBRxn1L-s0JSk2WYoqdSaiAXT0&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=TBJo_zLqqBVuWgPGSC1bkA&_nc_ss=7b289&oh=00_AQO87FptB-UeYGzj8m3W2t1wiwXMf-oCHusObLz4As9oBQ&oe=6ADEC1CF",
+          "asOf": "2026-10-21"
         },
         "photo": {
           "source": "https://pbsi.id/wp-content/uploads/2026/07/FajarFikri13_SF_ChinaOpen2026_PBSI_20260725-scaled.jpg",
@@ -6813,6 +6878,19 @@
       "source": "user",
       "asOf": "2026-10-19"
     },
+    "96604": {
+      "bio": {
+        "club": "BIPROGY"
+      },
+      "source": "user",
+      "asOf": "2026-10-21",
+      "meta": {
+        "bio.club": {
+          "source": "user",
+          "asOf": "2026-10-21"
+        }
+      }
+    },
     "96713": {
       "photo": "https://img.olympics.com/images/image/private/t_s_pog_staticContent_hero_lg_2x/f_auto/primary/cpd2q4nz9itaq7crasjr",
       "photoCrop": {
@@ -7193,84 +7271,6 @@
         "heroFocus": {
           "source": "user",
           "asOf": "2026-10-14"
-        }
-      }
-    },
-    "86479": {
-      "bio": {
-        "club": "BIPROGY"
-      },
-      "source": "user",
-      "asOf": "2026-10-21",
-      "meta": {
-        "bio.club": {
-          "source": "user",
-          "asOf": "2026-10-21"
-        }
-      }
-    },
-    "96604": {
-      "bio": {
-        "club": "BIPROGY"
-      },
-      "source": "user",
-      "asOf": "2026-10-21",
-      "meta": {
-        "bio.club": {
-          "source": "user",
-          "asOf": "2026-10-21"
-        }
-      }
-    },
-    "83883": {
-      "bio": {
-        "club": "BIPROGY"
-      },
-      "source": "user",
-      "asOf": "2026-10-21",
-      "meta": {
-        "bio.club": {
-          "source": "user",
-          "asOf": "2026-10-21"
-        }
-      }
-    },
-    "77870": {
-      "bio": {
-        "club": "BIPROGY"
-      },
-      "source": "user",
-      "asOf": "2026-10-21",
-      "meta": {
-        "bio.club": {
-          "source": "user",
-          "asOf": "2026-10-21"
-        }
-      }
-    },
-    "84746": {
-      "bio": {
-        "club": "BIPROGY"
-      },
-      "source": "user",
-      "asOf": "2026-10-21",
-      "meta": {
-        "bio.club": {
-          "source": "user",
-          "asOf": "2026-10-21"
-        }
-      }
-    },
-    "80532": {
-      "bio": {
-        "club": "BIPROGY"
-      },
-      "source": "user",
-      "asOf": "2026-10-21",
-      "meta": {
-        "bio.club": {
-          "source": "user",
-          "asOf": "2026-10-21"
         }
       }
     }
