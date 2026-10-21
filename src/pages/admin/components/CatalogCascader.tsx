@@ -1,8 +1,17 @@
 import { Button, Cascader, Select, TextInput, type CascaderFormatValue } from '@mantine/core';
 import { memo, useCallback, useMemo, useState, type ChangeEvent, type FC } from 'react';
 
-import { useAddBrand, useAddEquipment, useAdminPlayers, useEquipment } from '../api';
-import { brandMatchers, byPopularity, catalogPath, catalogSearch, catalogTree, guessParts } from '../catalog';
+import { useAddBrand, useAddEquipment, useAdminPlayers, useCatalog } from '../api';
+import {
+  brandMatchers,
+  byPopularity,
+  catalogPath,
+  catalogSearch,
+  catalogTree,
+  guessParts,
+  optionsName,
+  type BrandMatcher,
+} from '../catalog';
 import { buildRows } from '../filters';
 import type { AdminPlayer, Brand, EquipmentKind, EquipmentRow } from '../schema';
 import { FLOATING_PROPS, INPUT_CLASSES } from './inputs';
@@ -12,11 +21,12 @@ import classes from './CatalogCascader.module.css';
 const NO_ROWS: readonly EquipmentRow[] = [];
 const NO_BRANDS: readonly Brand[] = [];
 const NO_PLAYERS: readonly AdminPlayer[] = [];
+const NO_MATCHERS: readonly BrandMatcher[] = [];
 const DROPDOWN_HEIGHT = 300;
 const COLUMN_WIDTH = 190;
 const COMBOBOX_PROPS = { ...FLOATING_PROPS, width: 'max-content' };
 
-const formatName: CascaderFormatValue = ({ value }) => value.at(-1) ?? '';
+const formatName: CascaderFormatValue = ({ options }) => optionsName(options);
 
 const NewBrand: FC<{ onAdded: (id: string) => void; onCancel: () => void }> = ({ onAdded, onCancel }) => {
   const [name, setName] = useState('');
@@ -47,7 +57,7 @@ const AddToCatalog: FC<{
   value: string;
   brands: readonly Brand[];
   order: readonly string[];
-  onAdded: (name: string) => void;
+  onAdded: (id: string) => void;
 }> = ({ kind, value, brands, order, onAdded }) => {
   const matchers = useMemo(() => brandMatchers(brands), [brands]);
   const brandOptions = useMemo(
@@ -69,7 +79,7 @@ const AddToCatalog: FC<{
       {
         onSuccess: ({ row }) => {
           setOpen(false);
-          onAdded(row.name);
+          onAdded(row.id);
         },
       },
     );
@@ -137,14 +147,16 @@ export const CatalogCascader = memo<{
   placeholder?: string;
   label: string;
 }>(({ kind, value, onChange, placeholder, label }) => {
-  const { data } = useEquipment(kind);
+  const { data } = useCatalog();
   const { data: admin } = useAdminPlayers();
-  const rows = data?.rows ?? NO_ROWS;
+  const all = data?.rows ?? NO_ROWS;
+  const rows = useMemo(() => all.filter((r) => r.kind === kind), [all, kind]);
   const brands = data?.brands ?? NO_BRANDS;
-  const matchers = useMemo(() => brandMatchers(brands), [brands]);
+  const matchers = data?.matchers ?? NO_MATCHERS;
+  const names = data?.names;
   const order = useMemo(
-    () => buildRows(admin?.players ?? NO_PLAYERS, matchers).brands.map((b) => b.value),
-    [admin, matchers],
+    () => buildRows(admin?.players ?? NO_PLAYERS, matchers, names).brands.map((b) => b.value),
+    [admin, matchers, names],
   );
   const tree = useMemo(() => catalogTree(rows, order), [rows, order]);
   const typed = value.trim();

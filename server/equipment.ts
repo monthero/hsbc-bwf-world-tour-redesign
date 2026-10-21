@@ -10,6 +10,7 @@ import {
   compactKey,
   EQUIPMENT_FILE,
   itemKey,
+  newItemId,
   queryCatalog,
   readCatalog,
   seedCatalog,
@@ -21,7 +22,6 @@ import {
 import {
   BrandInput,
   EquipmentInput,
-  EquipmentKind,
   type BrandAdded,
   type EquipmentAdded,
   type EquipmentList,
@@ -39,8 +39,8 @@ export const createEquipment = (ctx: EquipmentContext) => {
   const files = [path.join(ctx.dataDir, BRANDS_FILE), path.join(ctx.dataDir, EQUIPMENT_FILE)];
   const mtime = () => files.map((f) => (fs.existsSync(f) ? fs.statSync(f).mtimeMs : 0)).join(':');
 
-  const fromJson = (kind: EquipmentKind, catalog = readCatalog(ctx.dataDir)): EquipmentList => ({
-    rows: toRows(catalog).filter((r) => r.kind === kind) as EquipmentRow[],
+  const fromJson = (catalog = readCatalog(ctx.dataDir)): EquipmentList => ({
+    rows: toRows(catalog) as EquipmentRow[],
     brands: catalog.brands,
   });
 
@@ -51,25 +51,25 @@ export const createEquipment = (ctx: EquipmentContext) => {
     seededAt = mtime();
   };
 
-  const list = (kind: EquipmentKind): EquipmentList => {
-    if (!fs.existsSync(ctx.dbFile)) return fromJson(kind);
+  const list = (): EquipmentList => {
+    if (!fs.existsSync(ctx.dbFile)) return fromJson();
     try {
       if (mtime() !== seededAt) withDb(ctx.dbFile, false, (db) => reseed(db));
-      const found = withDb(ctx.dbFile, true, (db) => queryCatalog(db, kind)) as EquipmentList;
-      return found.rows.length ? found : fromJson(kind);
+      const found = withDb(ctx.dbFile, true, (db) => queryCatalog(db)) as EquipmentList;
+      return found.rows.length ? found : fromJson();
     } catch {
-      return fromJson(kind);
+      return fromJson();
     }
   };
 
-  const save = async (next: Catalog, kind: EquipmentKind) => {
+  const save = async (next: Catalog) => {
     const [brandsFile, itemsFile] = files as [string, string];
     await writeAtomic(brandsFile, serializeBrands(next.brands));
     await writeAtomic(itemsFile, serializeItems(next.items));
-    if (!fs.existsSync(ctx.dbFile)) return fromJson(kind, next);
+    if (!fs.existsSync(ctx.dbFile)) return fromJson(next);
     return withDb(ctx.dbFile, false, (db) => {
       reseed(db, next);
-      return queryCatalog(db, kind) as EquipmentList;
+      return queryCatalog(db) as EquipmentList;
     });
   };
 
@@ -79,12 +79,12 @@ export const createEquipment = (ctx: EquipmentContext) => {
       const catalog = readCatalog(ctx.dataDir);
       if (!catalog.brands.some((b) => b.id === input.brandId))
         throw new HttpError(400, `Unknown brand "${input.brandId}", add the brand first`);
-      const item = { kind: input.kind, brand: input.brandId, model: input.model };
+      const item = { id: newItemId(), kind: input.kind, brand: input.brandId, model: input.model };
       const existing = catalog.items.find((e) => itemKey(e) === itemKey(item));
       const next = existing ? catalog : { ...catalog, items: [...catalog.items, item] };
-      const saved = await save(next, input.kind);
-      const key = itemKey(existing ?? item);
-      const row = saved.rows.find((r) => itemKey({ ...r, brand: r.brandId }) === key);
+      const saved = await save(next);
+      const id = (existing ?? item).id;
+      const row = saved.rows.find((r) => r.id === id);
       if (!row) throw new Error('Catalog row missing after insert');
       return { ...saved, row, created: !existing };
     });
@@ -101,15 +101,14 @@ export const createEquipment = (ctx: EquipmentContext) => {
       if (!compactKey(id)) throw new HttpError(400, 'Brand name needs letters or digits');
       const brand = { id, name: input.name, aliases: input.aliases };
       const next = { ...catalog, brands: [...catalog.brands, brand] };
-      await save(next, 'racket');
+      await save(next);
       return { brands: next.brands, brand, created: true };
     });
   };
 
   return async (method: string, url: string, req: IncomingMessage): Promise<unknown> => {
-    const [pathname, query = ''] = url.split('?');
-    if (method === 'GET' && pathname === '/equipment')
-      return list(parseWith(EquipmentKind, new URLSearchParams(query).get('kind') ?? 'racket'));
+    const pathname = url.split('?')[0];
+    if (method === 'GET' && pathname === '/equipment') return list();
     if (method === 'POST' && pathname === '/equipment') return addItem(await readBody(req));
     if (method === 'POST' && pathname === '/brands') return addBrand(await readBody(req));
     return undefined;

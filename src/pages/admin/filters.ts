@@ -6,7 +6,7 @@ import { ISO_DAY, today } from '~/utils/dates';
 import { countBy, countryOptions, searchTokens, type CountOption } from '~/utils/filter';
 import { compareText, foldText } from '~/utils/names';
 
-import { compactKey, splitBrand, type BrandMatcher } from './catalog';
+import { compactKey, nameOf, splitBrand, type BrandMatcher, type CatalogNames } from './catalog';
 import {
   displayName,
   effectiveValue,
@@ -99,10 +99,11 @@ const isShouty = (s: string) => s === s.toUpperCase();
 const preferLabel = (labels: Map<string, number>) =>
   [...labels].sort(([a, x], [b, y]) => y - x || Number(isShouty(a)) - Number(isShouty(b)))[0]?.[0] ?? '';
 
-const equipmentOf = (p: AdminPlayer) => EQUIPMENT_FIELDS.map((f) => effectiveValue(p, f.key)).filter(Boolean);
+const equipmentOf = (p: AdminPlayer, names: CatalogNames) =>
+  EQUIPMENT_FIELDS.map((f) => nameOf(names, effectiveValue(p, f.key))).filter(Boolean);
 
-const brandIndex = (players: readonly AdminPlayer[], known: readonly BrandMatcher[]) => {
-  const values = new Map(players.map((p) => [p.id, equipmentOf(p)]));
+const brandIndex = (players: readonly AdminPlayer[], known: readonly BrandMatcher[], names: CatalogNames) => {
+  const values = new Map(players.map((p) => [p.id, equipmentOf(p, names)]));
   const singles = new Set([...values.values()].flat().map((v) => compactKey(leadWords(v)[0] ?? '')));
   const labels = new Map<string, Map<string, number>>();
   const catalogLabels = new Map(known.map((b) => [compactKey(b.name), b.name]));
@@ -139,8 +140,8 @@ const toRow = (player: AdminPlayer, brands: readonly string[], staleBefore: stri
   brands,
 });
 
-const computeRows = (players: readonly AdminPlayer[], knownBrands: readonly BrandMatcher[]) => {
-  const { labels, catalogLabels, brandsOf } = brandIndex(players, knownBrands);
+const computeRows = (players: readonly AdminPlayer[], knownBrands: readonly BrandMatcher[], names: CatalogNames) => {
+  const { labels, catalogLabels, brandsOf } = brandIndex(players, knownBrands, names);
   const staleBefore = ACTIVE_SINCE.year();
   const rows = players.map((p) => toRow(p, brandsOf.get(p.id) ?? [], staleBefore));
   const countries = countryOptions(rows, (r) => [r.player.cc]);
@@ -156,15 +157,23 @@ const computeRows = (players: readonly AdminPlayer[], knownBrands: readonly Bran
 
 type BuiltRows = ReturnType<typeof computeRows>;
 
-const builtCache = new WeakMap<readonly AdminPlayer[], Map<string, BuiltRows>>();
+const NO_NAMES: CatalogNames = new Map();
 
-export const buildRows = (players: readonly AdminPlayer[], knownBrands: readonly BrandMatcher[]): BuiltRows => {
-  const byBrands = builtCache.get(players) ?? new Map<string, BuiltRows>();
-  builtCache.set(players, byBrands);
+const builtCache = new WeakMap<readonly AdminPlayer[], WeakMap<CatalogNames, Map<string, BuiltRows>>>();
+
+export const buildRows = (
+  players: readonly AdminPlayer[],
+  knownBrands: readonly BrandMatcher[],
+  names = NO_NAMES,
+): BuiltRows => {
+  const byNames = builtCache.get(players) ?? new WeakMap<CatalogNames, Map<string, BuiltRows>>();
+  builtCache.set(players, byNames);
+  const byBrands = byNames.get(names) ?? new Map<string, BuiltRows>();
+  byNames.set(names, byBrands);
   const key = knownBrands.map((b) => b.keys.join('|')).join('\u0000');
   const hit = byBrands.get(key);
   if (hit) return hit;
-  const built = computeRows(players, knownBrands);
+  const built = computeRows(players, knownBrands, names);
   byBrands.set(key, built);
   return built;
 };

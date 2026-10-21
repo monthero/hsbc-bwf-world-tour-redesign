@@ -4,13 +4,12 @@ import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
 import { formatNumber, plural } from '~/utils/format';
 
-import { useImportOverrides } from '../api';
+import { useCatalog, useImportOverrides } from '../api';
 import { planImport } from '../csv';
-import { FIELD_BY_KEY, todayStamp } from '../fields';
-import { CSV_FIELDS, CSV_ID, DEFAULT_SOURCE, type AdminPlayer, type Provenance } from '../schema';
+import { FIELD_BY_KEY } from '../fields';
+import { CSV_FIELDS, CSV_ID, type AdminPlayer, type EquipmentRow } from '../schema';
 import { AdminModal } from './AdminModal';
 import { ChangePreview, PreviewSummary } from './ChangePreview';
-import { ProvenanceInputs } from './FieldInputs';
 import { exportedIn } from './inputs';
 import { SaveStatus } from './SaveStatus';
 
@@ -19,6 +18,7 @@ import parts from './ModalParts.module.css';
 import utils from '~/styles/utils.module.css';
 
 const ACCEPT = '.csv,text/csv';
+const NO_ROWS: readonly EquipmentRow[] = [];
 const COLUMNS_HINT = `Rows are matched by ${CSV_ID}. Known columns: ${Object.keys(CSV_FIELDS).join(', ')}. Empty cells and values a player already has are skipped.`;
 
 const skipped = (count: number, what: string) => (count ? [`${formatNumber(count)} ${what}`] : []);
@@ -30,7 +30,7 @@ const ImportFacts = memo<{ read: number; unknown: number; duplicates: number; in
         `${plural(read, 'player')} read`,
         ...skipped(unknown, 'unknown ids'),
         ...skipped(duplicates, 'duplicate rows'),
-        ...skipped(invalid, 'invalid values'),
+        ...skipped(invalid, 'values invalid or not in the catalog'),
       ].join(' · ')}
     </p>
   ),
@@ -42,9 +42,9 @@ export const ImportCsv: FC<{ opened: boolean; onClose: () => void; players: read
   players,
 }) => {
   const [file, setFile] = useState<{ name: string; text: string } | null>(null);
-  const [provenance, setProvenance] = useState<Provenance>(() => ({ source: DEFAULT_SOURCE, asOf: todayStamp() }));
   const { mutate, isPending, error, data, reset } = useImportOverrides();
-  const plan = useMemo(() => (file ? planImport(file.text, players) : null), [file, players]);
+  const catalog = useCatalog().data?.rows ?? NO_ROWS;
+  const plan = useMemo(() => (file ? planImport(file.text, players, catalog) : null), [file, players, catalog]);
   const active = useMemo(() => plan?.fields.filter((f) => f.changes.length) ?? [], [plan]);
 
   const onFile = useCallback(
@@ -62,8 +62,8 @@ export const ImportCsv: FC<{ opened: boolean; onClose: () => void; players: read
   }, [reset, onClose]);
   const onApply = useCallback(() => {
     if (!plan?.rows.length) return;
-    mutate({ rows: plan.rows, source: provenance.source.trim() || DEFAULT_SOURCE, asOf: provenance.asOf });
-  }, [mutate, plan, provenance]);
+    mutate({ rows: plan.rows });
+  }, [mutate, plan]);
 
   const count = plan?.rows.length ?? 0;
   return (
@@ -101,7 +101,6 @@ export const ImportCsv: FC<{ opened: boolean; onClose: () => void; players: read
           </FileButton>
           <p className={classes.hint}>{COLUMNS_HINT}</p>
         </div>
-        <ProvenanceInputs value={provenance} onChange={setProvenance} />
       </div>
       {plan?.error && <p className={classes.error}>{plan.error}</p>}
       {plan && !plan.error && (

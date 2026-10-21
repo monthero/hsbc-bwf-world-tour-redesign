@@ -6,6 +6,7 @@ import type { Connect, Plugin } from 'vite';
 
 import { WORLD, WORLD_CATEGORIES } from '../scripts/sync/bwf.ts';
 import { withDb } from '../scripts/sync/db.ts';
+import { equipmentIssues, itemsById, readCatalog } from '../scripts/sync/equipment.ts';
 import { prettyJson } from '../scripts/sync/util.ts';
 import { EventCode } from '../src/api/schemas.ts';
 import {
@@ -21,7 +22,6 @@ import {
   type AdminPlayer,
   type BulkResult,
   type ImportRow,
-  type Provenance,
   type ImageResult,
   type SaveResult,
 } from '../src/pages/admin/schema.ts';
@@ -119,8 +119,9 @@ const serialize = (file: OverridesFile) => {
 const tail = (text: string, lines = 12) => text.trim().split('\n').slice(-lines).join('\n');
 
 const createAdmin = (root: string) => {
-  const dbFile = path.join(root, 'data/bwf.sqlite');
-  const overridesFile = path.join(root, 'data/overrides.json');
+  const dataDir = path.join(root, 'data');
+  const dbFile = path.join(dataDir, 'bwf.sqlite');
+  const overridesFile = path.join(dataDir, 'overrides.json');
   const images = createImageStore(root);
   let queue: Promise<unknown> = Promise.resolve();
 
@@ -134,6 +135,12 @@ const createAdmin = (root: string) => {
     OverridesFile.parse(JSON.parse(await readText(overridesFile, () => '{}')));
 
   const writeOverrides = (file: OverridesFile) => writeAtomic(overridesFile, serialize(file));
+
+  const checkEquipment = (entries: Iterable<PlayerOverride | null>) => {
+    const items = itemsById(readCatalog(dataDir).items);
+    const issues = [...entries].flatMap((e) => equipmentIssues(e?.bio, items));
+    if (issues.length) throw new HttpError(400, [...new Set(issues)].join('\n'));
+  };
 
   const runExport = () =>
     new Promise<number>((resolve, reject) => {
@@ -179,43 +186,36 @@ const createAdmin = (root: string) => {
   const savePlayer = (id: string, body: unknown) => {
     const entry = canonicalOverride(parseWith(PlayerOverride, body));
     return serial(async (): Promise<SaveResult> => {
+      checkEquipment([entry]);
       await writeOverrides(setOverride(await readOverrides(), id, entry));
       return { entry, exportMs: await runExport() };
     });
   };
 
-  const applyRows = (rows: readonly ImportRow[], provenance: Provenance) =>
+  const applyRows = (rows: readonly ImportRow[]) =>
     serial(async (): Promise<BulkResult> => {
       let file = await readOverrides();
       const entries: BulkResult['entries'] = {};
       for (const { id, changes } of rows) {
         const before = canonicalOverride(file.players[id]);
-        const after = changes.reduce<PlayerOverride | null>(
-          (entry, c) => withField(entry, c.field, c.value, provenance),
-          before,
-        );
+        const after = changes.reduce<PlayerOverride | null>((entry, c) => withField(entry, c.field, c.value), before);
         if (sameOverride(before, after)) continue;
         entries[id] = after;
         file = setOverride(file, id, after);
       }
       const changed = Object.keys(entries).length;
       if (!changed) return { entries, changed, exportMs: 0 };
+      checkEquipment(Object.values(entries));
       await writeOverrides(file);
       return { entries, changed, exportMs: await runExport() };
     });
 
   const bulkUpdate = (body: unknown) => {
-    const { ids, changes, source, asOf } = parseWith(BulkRequest, body);
-    return applyRows(
-      [...new Set(ids)].map((id) => ({ id, changes })),
-      { source, asOf },
-    );
+    const { ids, changes } = parseWith(BulkRequest, body);
+    return applyRows([...new Set(ids)].map((id) => ({ id, changes })));
   };
 
-  const importRows = (body: unknown) => {
-    const { rows, source, asOf } = parseWith(ImportRequest, body);
-    return applyRows(rows, { source, asOf });
-  };
+  const importRows = (body: unknown) => applyRows(parseWith(ImportRequest, body).rows);
 
   const fetchImage = async (body: unknown): Promise<ImageResult> => {
     const { id, kind, url, flip } = parseWith(ImageRequest, body);
@@ -224,7 +224,7 @@ const createAdmin = (root: string) => {
     return image;
   };
 
-  const equipment = createEquipment({ dbFile, dataDir: path.join(root, 'data'), serial });
+  const equipment = createEquipment({ dbFile, dataDir, serial });
 
   const route = async (req: IncomingMessage, res: ServerResponse) => {
     const url = (req.url ?? '/').split('?')[0] ?? '/';

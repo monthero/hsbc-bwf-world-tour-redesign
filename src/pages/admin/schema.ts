@@ -23,6 +23,7 @@ const BIO_KEYS = [
   'tensionNote',
   'string',
   'shoes',
+  'shoesNote',
   'prize',
   'achievements',
   'ambition',
@@ -93,8 +94,6 @@ export type TopKey = (typeof TOP_KEYS)[number];
 export const FieldKey = z.union([z.enum(TOP_KEYS), ImageKind, FramingKey, BioFieldKey]);
 export type FieldKey = z.infer<typeof FieldKey>;
 
-export const DEFAULT_SOURCE = 'user';
-
 const PlayerId = z.string().regex(/^\d+$/);
 const Text = z.string().trim().min(1);
 const DisplayName = z
@@ -104,9 +103,6 @@ const DisplayName = z
     const issue = nameIssue(v);
     if (issue) ctx.addIssue({ code: 'custom', message: issue });
   });
-
-export const Provenance = z.object({ source: Text, asOf: IsoDay.optional() });
-export type Provenance = z.infer<typeof Provenance>;
 
 export const PlayerOverride = z.looseObject({
   name: DisplayName.optional(),
@@ -121,10 +117,7 @@ export const PlayerOverride = z.looseObject({
     .partialRecord(BioKey, z.union([z.string(), z.number()]))
     .transform(decodeAllBio)
     .optional(),
-  source: z.string().optional(),
-  asOf: z.string().optional(),
   notes: z.string().optional(),
-  meta: z.partialRecord(FieldKey, Provenance).optional(),
 });
 export type PlayerOverride = z.infer<typeof PlayerOverride>;
 
@@ -163,8 +156,6 @@ export type BulkFieldChange = z.infer<typeof BulkFieldChange>;
 export const BulkRequest = z.object({
   ids: z.array(PlayerId).min(1).max(10_000),
   changes: z.array(BulkFieldChange).min(1),
-  source: Text.default(DEFAULT_SOURCE),
-  asOf: IsoDay.optional(),
 });
 export type BulkRequest = z.input<typeof BulkRequest>;
 
@@ -173,8 +164,6 @@ export type ImportRow = z.infer<typeof ImportRow>;
 
 export const ImportRequest = z.object({
   rows: z.array(ImportRow).min(1).max(10_000),
-  source: Text.default(DEFAULT_SOURCE),
-  asOf: IsoDay.optional(),
 });
 export type ImportRequest = z.input<typeof ImportRequest>;
 
@@ -241,7 +230,7 @@ const EquipmentFields = z.object({
 export const EquipmentInput = EquipmentFields;
 export type EquipmentInput = z.input<typeof EquipmentInput>;
 
-export const EquipmentRow = EquipmentFields.extend({ id: z.number().nullable(), brand: z.string(), name: z.string() });
+export const EquipmentRow = EquipmentFields.extend({ id: z.uuidv4(), brand: z.string(), name: z.string() });
 export type EquipmentRow = z.infer<typeof EquipmentRow>;
 
 export const EquipmentList = z.object({ rows: z.array(EquipmentRow), brands: z.array(Brand) });
@@ -252,16 +241,7 @@ export type EquipmentAdded = z.infer<typeof EquipmentAdded>;
 
 const IMAGE_KEYS = ImageKind.options;
 const FRAMING_KEYS = FramingKey.options;
-const ENTRY_KEYS = new Set<string>([
-  ...TOP_KEYS,
-  ...IMAGE_KEYS,
-  ...FRAMING_KEYS,
-  'bio',
-  'source',
-  'asOf',
-  'notes',
-  'meta',
-]);
+const ENTRY_KEYS = new Set<string>([...TOP_KEYS, ...IMAGE_KEYS, ...FRAMING_KEYS, 'bio', 'notes']);
 const FLIP_ON = 'true';
 
 const byText = (a: string, b: string) => a.localeCompare(b);
@@ -318,17 +298,11 @@ export const decodeFraming = (key: FramingKey, value: string | null | undefined)
 
 export const bioKeyOf = (key: BioFieldKey) => key.slice(4) as BioKey;
 
-export const sameProvenance = (a: Provenance, b: Provenance) =>
-  a.source.trim() === b.source.trim() && (a.asOf || undefined) === (b.asOf || undefined);
-
 export const overrideValue = (e: PlayerOverride | null | undefined, key: FieldKey) => {
   if (isTopField(key) || isImageField(key)) return e?.[key] ?? '';
   if (isFramingField(key)) return encodeFraming(e, key);
   return encodeBio(e?.bio?.[bioKeyOf(key)]);
 };
-
-export const provenanceOf = (e: PlayerOverride | null | undefined, key: FieldKey): Provenance =>
-  e?.meta?.[key] ?? { source: e?.source || DEFAULT_SOURCE, asOf: e?.asOf };
 
 export const sameOverride = (a: PlayerOverride | null, b: PlayerOverride | null) =>
   JSON.stringify(a) === JSON.stringify(b);
@@ -347,11 +321,7 @@ export const canonicalOverride = (e: PlayerOverride | null | undefined): PlayerO
   const keys = overriddenKeys(e);
   const notes = e?.notes?.trim() ? e.notes : undefined;
   if (!e || (!keys.length && !notes)) return null;
-  const live = new Set<string>(keys);
   const bio = Object.entries(decodeAllBio(e.bio));
-  const meta = Object.entries(e.meta ?? {})
-    .filter(([k]) => live.has(k))
-    .sort(([a], [b]) => byText(a, b));
   const extra = Object.keys(e)
     .filter((k) => !ENTRY_KEYS.has(k))
     .sort(byText);
@@ -367,10 +337,7 @@ export const canonicalOverride = (e: PlayerOverride | null | undefined): PlayerO
       }),
     ),
     ...(bio.length && { bio: Object.fromEntries(bio) }),
-    ...(e.source !== undefined && { source: e.source }),
-    ...(e.asOf !== undefined && { asOf: e.asOf }),
     ...(notes && { notes }),
-    ...(meta.length && { meta: Object.fromEntries(meta) }),
     ...Object.fromEntries(extra.map((k) => [k, e[k]])),
   };
 };
@@ -379,12 +346,9 @@ export const withField = (
   e: PlayerOverride | null | undefined,
   key: FieldKey,
   value: string | null,
-  provenance: Provenance,
 ): PlayerOverride | null => {
   const next: PlayerOverride = { ...e };
   const bio = { ...e?.bio };
-  const meta = { ...e?.meta };
-  delete meta[key];
   if (isTopField(key) || isImageField(key)) next[key] = value ?? undefined;
   else if (isFramingField(key)) Object.assign(next, { [key]: decodeFraming(key, value) });
   else {
@@ -392,13 +356,7 @@ export const withField = (
     if (decoded === undefined) delete bio[bioKeyOf(key)];
     else bio[bioKeyOf(key)] = decoded;
   }
-  if (value !== null) {
-    const alone = overriddenKeys(e).every((k) => k === key);
-    if (next.source === undefined && alone) Object.assign(next, provenance);
-    else if (next.source === undefined || !sameProvenance(provenance, { source: next.source, asOf: next.asOf }))
-      meta[key] = provenance;
-  }
-  return canonicalOverride({ ...next, bio, meta });
+  return canonicalOverride({ ...next, bio });
 };
 
 export const setOverride = (file: OverridesFile, id: string, entry: PlayerOverride | null): OverridesFile => {

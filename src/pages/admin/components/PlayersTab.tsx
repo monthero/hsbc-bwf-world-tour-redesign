@@ -6,8 +6,8 @@ import { EmptyState } from '~/components/ui';
 import { downloadText } from '~/utils/download';
 import { STAY } from '~/utils/navigation';
 
-import { useAdminPlayers, useEquipment } from '../api';
-import { brandMatchers } from '../catalog';
+import { useAdminPlayers, useCatalog } from '../api';
+import { catalogNames, type BrandMatcher } from '../catalog';
 import { exportCsv } from '../csv';
 import { todayStamp } from '../fields';
 import { buildRows, DEFAULT_ACTIVITY, DEFAULT_SORT, filterRows, type Criteria } from '../filters';
@@ -28,6 +28,8 @@ const route = getRouteApi('/admin');
 const NO_FLAGS: readonly string[] = [];
 const NO_PLAYERS: readonly AdminPlayer[] = [];
 const NO_IDS: ReadonlySet<string> = new Set();
+const NO_MATCHERS: readonly BrandMatcher[] = [];
+const NO_NAMES = catalogNames([]);
 
 export const PlayersTab: FC = () => {
   const search = route.useSearch();
@@ -37,11 +39,12 @@ export const PlayersTab: FC = () => {
   const [bulkOpen, setBulkOpen] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
 
-  const { data: catalog } = useEquipment('racket');
-  const knownBrands = useMemo(() => brandMatchers(catalog?.brands ?? []), [catalog]);
+  const { data: catalog } = useCatalog();
+  const knownBrands = catalog?.matchers ?? NO_MATCHERS;
+  const names = catalog?.names ?? NO_NAMES;
   const { rows, countries, brands } = useMemo(
-    () => buildRows(data?.players ?? NO_PLAYERS, knownBrands),
-    [data, knownBrands],
+    () => buildRows(data?.players ?? NO_PLAYERS, knownBrands, names),
+    [data, knownBrands, names],
   );
   const criteria = useMemo<Criteria>(
     () => ({
@@ -97,8 +100,8 @@ export const PlayersTab: FC = () => {
     const players = selected.size
       ? (data?.players.filter((p) => selected.has(p.id)) ?? NO_PLAYERS)
       : filtered.map((r) => r.player);
-    downloadText(`bwf-players-${todayStamp()}.csv`, exportCsv(players, knownBrands));
-  }, [selected, data, filtered, knownBrands]);
+    downloadText(`bwf-players-${todayStamp()}.csv`, exportCsv(players, names));
+  }, [selected, data, filtered, names]);
 
   return (
     <>

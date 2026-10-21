@@ -152,7 +152,7 @@ export const buildBio = (bio: PlayerBio | undefined, units: BioUnits): BioView =
     ...facts(
       [
         { key: 'string', label: LABELS.string, value: b.string },
-        { key: 'shoes', label: LABELS.shoes, value: b.shoes },
+        { key: 'shoes', label: LABELS.shoes, value: b.shoes, sub: b.shoesNote },
       ],
       keep,
     ),

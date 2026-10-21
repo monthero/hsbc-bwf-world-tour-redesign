@@ -5,6 +5,7 @@ import type { z } from 'zod';
 import { getJson } from '~/api/client';
 import { playerQuery, playersQuery } from '~/api/queries';
 
+import { brandMatchers, catalogNames } from './catalog';
 import {
   AdminPlayers,
   ApiFailure,
@@ -18,7 +19,6 @@ import {
   type ImportRequest,
   type BrandInput,
   type EquipmentInput,
-  type EquipmentKind,
   type ImageRequest,
   type PlayerOverride,
 } from './schema';
@@ -106,22 +106,25 @@ export const useImportOverrides = () => {
 export const useFetchImage = () =>
   useMutation({ mutationFn: (req: ImageRequest) => send('/images', 'POST', req, ImageResult) });
 
-const EQUIPMENT_KEY = ['admin', 'equipment'] as const;
+const catalogQuery = queryOptions({
+  queryKey: ['admin', 'equipment'],
+  queryFn: ({ signal }) => getJson(`${ADMIN_API}/equipment`, EquipmentList, signal),
+  staleTime: Infinity,
+});
 
-const equipmentQuery = (kind: EquipmentKind) =>
-  queryOptions({
-    queryKey: [...EQUIPMENT_KEY, kind],
-    queryFn: ({ signal }) => getJson(`${ADMIN_API}/equipment?kind=${kind}`, EquipmentList, signal),
-    staleTime: Infinity,
-  });
+const selectCatalog = (list: EquipmentList) => ({
+  ...list,
+  names: catalogNames(list.rows),
+  matchers: brandMatchers(list.brands),
+});
 
-export const useEquipment = (kind: EquipmentKind) => useQuery(equipmentQuery(kind));
+export const useCatalog = () => useQuery({ ...catalogQuery, select: selectCatalog });
 
 export const useAddEquipment = () => {
   const client = useQueryClient();
   return useMutation({
     mutationFn: (input: EquipmentInput) => send('/equipment', 'POST', input, EquipmentAdded),
-    onSuccess: ({ rows, brands }, { kind }) => client.setQueryData(equipmentQuery(kind).queryKey, { rows, brands }),
+    onSuccess: ({ rows, brands }) => client.setQueryData(catalogQuery.queryKey, { rows, brands }),
   });
 };
 
@@ -129,6 +132,6 @@ export const useAddBrand = () => {
   const client = useQueryClient();
   return useMutation({
     mutationFn: (input: BrandInput) => send('/brands', 'POST', input, BrandAdded),
-    onSuccess: () => client.invalidateQueries({ queryKey: EQUIPMENT_KEY }),
+    onSuccess: () => client.invalidateQueries({ queryKey: catalogQuery.queryKey }),
   });
 };

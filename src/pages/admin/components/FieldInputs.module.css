@@ -56,21 +56,6 @@
   color: var(--bwf-green);
 }
 
-.provenance {
-  display: flex;
-  gap: 8px;
-}
-
-.source {
-  flex: 1;
-  min-width: 0;
-}
-
-.asOf {
-  flex: none;
-  width: 140px;
-}
-
 .name {
   display: flex;
   flex-direction: column;

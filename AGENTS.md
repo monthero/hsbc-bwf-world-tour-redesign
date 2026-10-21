@@ -20,10 +20,11 @@ pnpm exec vp check      # Oxfmt + Oxlint + type-aware checks
 pnpm exec vp check --fix
 pnpm i18n:extract       # update the Lingui catalogs in src/locales
 pnpm i18n:check         # per-locale summary; fails on broken placeholders/plurals (--fail-on-missing for gaps)
+pnpm data:check         # catalog ids are valid and every equipment override points at one
 pnpm build
 ```
 
-A pre-commit hook (`.vite-hooks/pre-commit` → `vp staged`) runs `vp check --fix` on staged files. Pull requests run `pnpm typecheck`, `vp check`, a stale-catalog check (`pnpm i18n:extract` must leave `src/locales` unchanged) and `pnpm i18n:check` in CI. There are no tests; verify by running the checks and looking at the page on desktop and at 390px wide.
+A pre-commit hook (`.vite-hooks/pre-commit` → `vp staged`) runs `vp check --fix` on staged files. Pull requests run `pnpm typecheck`, `vp check`, a curated-data check (`pnpm data:check`), a stale-catalog check (`pnpm i18n:extract` must leave `src/locales` unchanged) and `pnpm i18n:check` in CI. There are no tests; verify by running the checks and looking at the page on desktop and at 390px wide.
 
 ## Architecture
 
@@ -32,8 +33,8 @@ A pre-commit hook (`.vite-hooks/pre-commit` → `vp staged`) runs `vp check --fi
   - It then exports static JSON to `public/data`, also gitignored: `seasons.json`, `calendar-{year}.json`, `tournaments/{code}.json`, `players.json`, `players/{id}.json`, rankings, series and news.
   - It covers World Tour seasons since 2018.
 - **Curated data** (`data/*.json`, committed):
-  - `overrides.json` holds per-player overrides: bio, equipment, photos and names, each with `meta` provenance (`source`, `asOf`). Overrides always win over BWF data.
-  - `brands.json` and `equipment.json` form the equipment catalog.
+  - `overrides.json` holds per-player overrides: bio, equipment, photos and names. Overrides always win over BWF data.
+  - `brands.json` and `equipment.json` form the equipment catalog. Each product has a UUIDv4 `id`, and the racket, string and shoes overrides store that id. The export turns it into the product name and fails on an unknown id.
   - `catalog.json` holds the tournament series and city overrides.
 - **App** (`src`):
   - Data flow: files in `public/data` → zod schemas (`src/api/schemas.ts`) → TanStack Query (`src/api/queries.ts`, `src/hooks`) → pages.
@@ -99,8 +100,8 @@ These are the maintainer's explicit rules. Follow them in every change.
   - Run `pnpm i18n:extract` after changing text.
 - **Dependencies:** free and open-source only, and ask before adding one. When one is added or removed, update the "Built with" list in the README, and CREDITS.md if its license asks for credit.
 - **Data:**
-  - Curated values need a source URL, or `"source": "user"` for the maintainer's own knowledge.
-  - Equipment sources should be recent, because players change rackets often.
+  - Overrides don't record where a value came from.
+  - Equipment values come from the maintainer. Don't add them from other sites.
   - Never invent facts.
 - **Secrets:** never commit `.env.local`, never give a secret a `VITE_` prefix, and never print secret values.
 

@@ -137,6 +137,7 @@ export const PlayerBio = z.object({
   tensionNote: OptionalString,
   string: OptionalString,
   shoes: OptionalString,
+  shoesNote: OptionalString,
   debut: OptionalString,
   coach: OptionalString,
   club: OptionalString,

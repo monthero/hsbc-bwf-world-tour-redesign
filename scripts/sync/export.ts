@@ -17,7 +17,7 @@ import {
 } from './bwf.ts';
 import { dayjs } from './dates.ts';
 import { all, type Db } from './db.ts';
-import { brandKeys, compactKey, readCatalog } from './equipment.ts';
+import { dataIssues, readCatalog, resolveEquipment, toRows } from './equipment.ts';
 import { createMapPlacer } from './geo.ts';
 import { FOREVER, type Client } from './http.ts';
 import type { Output } from './output.ts';
@@ -161,12 +161,11 @@ const isCancelled = (e: EditionRow) => !!e.cancelled || (!!e.archived && e.match
 const tidyValues = (bio: Record<string, unknown>) =>
   Object.fromEntries(Object.entries(bio).map(([k, v]) => [k, typeof v === 'string' ? tidySpaces(v) : v]));
 
-const normalizeBio = (bio: Record<string, unknown>, brands: ReadonlySet<string>) => {
-  const { height, plays, racket, ...rest } = tidyValues(bio);
+const normalizeBio = (bio: Record<string, unknown>) => {
+  const { height, plays, ...rest } = tidyValues(bio);
   const cm = parseHeightCm(height);
   const hand = parsePlays(plays);
-  const model = typeof racket === 'string' && !brands.has(compactKey(racket)) ? racket : undefined;
-  return { ...rest, ...(cm && { height: cm }), ...(hand && { plays: hand }), ...(model && { racket: model }) };
+  return { ...rest, ...(cm && { height: cm }), ...(hand && { plays: hand }) };
 };
 
 const dayOffsets = (rows: readonly MatchRow[]) => {
@@ -238,7 +237,10 @@ export const exportData = async (
   const editionOf = new Map(editions.map((e) => [e.code, e]));
 
   const overrides = readOverrides(overridesFile);
-  const brandOnly = new Set(readCatalog(path.dirname(overridesFile)).brands.flatMap(brandKeys));
+  const catalog = readCatalog(path.dirname(overridesFile));
+  const issues = dataIssues(catalog, overrides);
+  if (issues.length) throw new Error(`Curated data has problems:\n${issues.join('\n')}`);
+  const equipmentNames = new Map(toRows(catalog).map((r) => [r.id, r.name]));
   const nameOverride = (id: string) => overrides[id]?.name?.trim() || undefined;
   const missingAssets: string[] = [];
   const overrideAssets = new Map(
@@ -273,7 +275,7 @@ export const exportData = async (
   const playerOf = new Map(players.map((p) => [p.id, p]));
   const bioOf = (p: PlayerRow) => {
     const { racket: _bwfRacket, ...bwf } = p.bio ? (JSON.parse(p.bio) as Record<string, unknown>) : {};
-    return normalizeBio({ ...bwf, ...overrides[p.id]?.bio }, brandOnly);
+    return normalizeBio({ ...bwf, ...resolveEquipment(overrides[p.id]?.bio, equipmentNames) });
   };
   const nameOf = (id: number | string | null | undefined, fallback: string | null = '') => {
     const key = id ? String(id) : '';

@@ -38,6 +38,9 @@ jobs:
       - name: Format, lint and type-aware checks
         run: pnpm exec vp check
 
+      - name: Curated data
+        run: pnpm data:check
+
       - name: Translation catalogs are up to date
         run: |
           pnpm i18n:extract

@@ -18,7 +18,7 @@ import {
   versioned,
   type FieldDef,
 } from '../fields';
-import type { ImageKind, ImageResult, Provenance } from '../schema';
+import type { ImageKind, ImageResult } from '../schema';
 import { CatalogCascader } from './CatalogCascader';
 import { DATE_FORMAT, FLOATING_PROPS, INPUT_CLASSES, MONTH_FORMAT } from './inputs';
 
@@ -227,30 +227,3 @@ export const ImageThumb: FC<{ kind: ImageKind; playerId: string; value: string }
   const src = imageUrl(kind, playerId, value);
   return src ? <img className={classes.preview} data-kind={kind} src={src} alt="" /> : null;
 };
-
-export const ProvenanceInputs: FC<{ value: Provenance; onChange: (value: Provenance) => void }> = ({
-  value,
-  onChange,
-}) => (
-  <div className={classes.provenance}>
-    <TextInput
-      size="xs"
-      label="Source"
-      value={value.source}
-      onChange={(e) => onChange({ ...value, source: e.currentTarget.value })}
-      classNames={INPUT_CLASSES}
-      className={classes.source}
-    />
-    <DateInput
-      size="xs"
-      label="As of"
-      value={value.asOf || null}
-      onChange={(asOf) => onChange({ ...value, asOf: asOf ?? undefined })}
-      valueFormat={DATE_FORMAT}
-      clearable
-      popoverProps={FLOATING_PROPS}
-      classNames={INPUT_CLASSES}
-      className={classes.asOf}
-    />
-  </div>
-);

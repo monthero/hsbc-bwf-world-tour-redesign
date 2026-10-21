@@ -6,11 +6,10 @@ import { IconButton, IconClose, Segmented, type SegmentedOption } from '~/compon
 import { plural } from '~/utils/format';
 
 import { useBulkOverride } from '../api';
-import { BIO_FIELDS, FIELD_BY_KEY, planBulk, todayStamp, type BulkChange } from '../fields';
-import { DEFAULT_SOURCE, type AdminPlayer, type BioFieldKey, type BulkFieldChange, type Provenance } from '../schema';
+import { BIO_FIELDS, FIELD_BY_KEY, planBulk, type BulkChange } from '../fields';
+import type { AdminPlayer, BioFieldKey, BulkFieldChange } from '../schema';
 import { AdminModal } from './AdminModal';
 import { ChangePreview, PreviewSummary } from './ChangePreview';
-import { ProvenanceInputs } from './FieldInputs';
 import { FIELD_INPUTS } from './inputMap';
 import { exportedIn, FLOATING_PROPS, INPUT_CLASSES } from './inputs';
 import { SaveStatus } from './SaveStatus';
@@ -119,7 +118,6 @@ export const BulkEditor: FC<{ opened: boolean; onClose: () => void; players: rea
   players,
 }) => {
   const [edits, setEdits] = useState<FieldEdit[]>(() => [newEdit(0, PREFERRED_FIELDS[0] ?? 'bio.racket')]);
-  const [provenance, setProvenance] = useState<Provenance>(() => ({ source: DEFAULT_SOURCE, asOf: todayStamp() }));
   const { mutate, isPending, error, data, reset } = useBulkOverride();
 
   const used = useMemo(() => new Set(edits.map((e) => e.field)), [edits]);
@@ -168,10 +166,8 @@ export const BulkEditor: FC<{ opened: boolean; onClose: () => void; players: rea
       mutate({
         ids,
         changes: active.map((p): BulkFieldChange => ({ field: p.edit.field, value: p.value })),
-        source: provenance.source.trim() || DEFAULT_SOURCE,
-        asOf: provenance.asOf,
       }),
-    [mutate, ids, active, provenance],
+    [mutate, ids, active],
   );
 
   return (
@@ -216,7 +212,6 @@ export const BulkEditor: FC<{ opened: boolean; onClose: () => void; players: rea
             </Button>
           )}
         </div>
-        <ProvenanceInputs value={provenance} onChange={setProvenance} />
       </div>
       <PreviewSummary players={ids.length} fields={active.length} />
       {plans.map((p) => (

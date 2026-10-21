@@ -2,7 +2,7 @@ import { countryName, flagEmoji } from '~/utils/countries';
 import { parseCsv, toCsv } from '~/utils/csv';
 import { parsePlays } from '~/utils/format';
 
-import { isBrandOnly, type BrandMatcher } from './catalog';
+import { catalogId, nameOf, type CatalogNames } from './catalog';
 import { bwfValue, displayName, effectiveValue, FIELD_BY_KEY, planBulk, type BulkChange } from './fields';
 import {
   bioKeyOf,
@@ -13,6 +13,7 @@ import {
   type AdminPlayer,
   type BioFieldKey,
   type CsvColumn,
+  type EquipmentRow,
   type ImportRow,
 } from './schema';
 
@@ -51,7 +52,16 @@ const nextValue = (player: AdminPlayer, key: BioFieldKey, change: BulkChange) =>
   return trusted && decodeBio(bioKey, bwfValue(player, key)) === decodeBio(bioKey, change.next) ? null : change.next;
 };
 
-export const planImport = (text: string, players: readonly AdminPlayer[]): ImportPlan => {
+const importValue = (key: BioFieldKey, value: string, catalog: readonly EquipmentRow[]) => {
+  const kind = FIELD_BY_KEY.get(key)?.catalog;
+  return kind ? catalogId(catalog, kind, value) : value;
+};
+
+export const planImport = (
+  text: string,
+  players: readonly AdminPlayer[],
+  catalog: readonly EquipmentRow[],
+): ImportPlan => {
   const [head = [], ...body] = parseCsv(text);
   const names = head.map((h) => h.trim().toLowerCase());
   const idAt = names.indexOf(CSV_ID);
@@ -77,9 +87,10 @@ export const planImport = (text: string, players: readonly AdminPlayer[]): Impor
     seen.add(id);
     const row: ImportRow = { id, changes: [] };
     for (const { at, key } of columns) {
-      const value = cells[at]?.trim();
-      if (!value) continue;
-      if (decodeBio(bioKeyOf(key), value) === undefined) {
+      const cell = cells[at]?.trim();
+      if (!cell) continue;
+      const value = importValue(key, cell, catalog);
+      if (value === undefined || decodeBio(bioKeyOf(key), value) === undefined) {
         plan.invalid++;
         continue;
       }
@@ -98,17 +109,17 @@ export const planImport = (text: string, players: readonly AdminPlayer[]): Impor
 const byCountryThenName = (a: AdminPlayer, b: AdminPlayer) =>
   countryName(a.cc).localeCompare(countryName(b.cc)) || displayName(a).localeCompare(displayName(b));
 
-const cellOf = (p: AdminPlayer, column: CsvColumn, brands: readonly BrandMatcher[]) => {
+const cellOf = (p: AdminPlayer, column: CsvColumn, names: CatalogNames) => {
   const key = CSV_FIELDS[column];
   const value = key === 'bio.racket' ? overrideValue(p.override, key) : effectiveValue(p, key);
   if (column === 'hand') return parsePlays(value) ?? '';
-  return column === 'racket' && isBrandOnly(value, brands) ? '' : value;
+  return nameOf(names, value);
 };
 
-export const exportCsv = (players: readonly AdminPlayer[], brands: readonly BrandMatcher[]) =>
+export const exportCsv = (players: readonly AdminPlayer[], names: CatalogNames) =>
   toCsv([
     ['country', CSV_ID, 'name', ...CSV_COLUMNS],
     ...[...players]
       .sort(byCountryThenName)
-      .map((p) => [flagEmoji(p.cc), p.id, displayName(p), ...CSV_COLUMNS.map((c) => cellOf(p, c, brands))]),
+      .map((p) => [flagEmoji(p.cc), p.id, displayName(p), ...CSV_COLUMNS.map((c) => cellOf(p, c, names))]),
   ]);

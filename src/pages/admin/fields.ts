@@ -4,14 +4,13 @@ import { localAsset, playerHeroUrl, playerThumbUrl } from '~/utils/images';
 import { titleCase } from '~/utils/names';
 import { nameIssue } from '~/utils/surname';
 
+import { nameOf, type CatalogNames } from './catalog';
 import {
   overrideValue,
-  provenanceOf,
   bioKeyOf,
   canonicalOverride,
   decodeBio,
   decodeFraming,
-  DEFAULT_SOURCE,
   encodeBio,
   FramingKey,
   imageAssetPath,
@@ -23,7 +22,6 @@ import {
   NAME_KEY,
   overriddenKeys,
   RETIRED_KEY,
-  sameProvenance,
   type AdminPlayer,
   type BioFieldKey,
   type BioKey,
@@ -33,7 +31,6 @@ import {
   type ImageKind,
   type ImageResult,
   type PlayerOverride,
-  type Provenance,
   type TopKey,
 } from './schema';
 
@@ -101,6 +98,7 @@ const FIELDS: readonly FieldDef[] = [
   bio('tensionNote', 'Tension note', EQUIPMENT, 'text', { trustBwf: false }),
   bio('string', 'String', EQUIPMENT, 'catalog', { catalog: 'string', trustBwf: false }),
   bio('shoes', 'Shoes', EQUIPMENT, 'catalog', { catalog: 'shoes', trustBwf: false }),
+  bio('shoesNote', 'Shoes extras', EQUIPMENT, 'text', { trustBwf: false }),
   bio('achievements', 'Memorable achievements', 'Story', 'long'),
   bio('ambition', 'Ambition', 'Story', 'long'),
   bio('idol', 'Sporting hero', 'Story'),
@@ -145,8 +143,11 @@ export const bwfValue = (p: AdminPlayer, key: FieldKey) => {
 
 export const effectiveValue = (p: AdminPlayer, key: FieldKey) => overrideValue(p.override, key) || bwfValue(p, key);
 
-export const formatField = (field: FieldDef | undefined, value: string) =>
-  value && field?.format ? field.format(value) : value;
+export const formatField = (field: FieldDef | undefined, value: string, names?: CatalogNames) => {
+  if (!value || !field) return value;
+  if (field.catalog) return nameOf(names, value);
+  return field.format ? field.format(value) : value;
+};
 
 export const displayName = (p: AdminPlayer) => titleCase(effectiveValue(p, NAME_KEY));
 
@@ -178,7 +179,7 @@ export const versioned = (src: string, version: number) => (src && version ? `${
 
 export const todayStamp = () => dayjs().format(ISO_DAY);
 
-export interface FieldDraft extends Provenance {
+export interface FieldDraft {
   value: string;
 }
 
@@ -189,27 +190,12 @@ export interface Draft {
   notes: string;
 }
 
-export const freshDraft = (value: string, source = DEFAULT_SOURCE): FieldDraft => ({
-  value,
-  source,
-  asOf: todayStamp(),
-});
-
-export const withValue = (draft: FieldDraft | undefined, value: string) => {
-  if (!value) return undefined;
-  return draft ? { ...draft, value } : freshDraft(value);
-};
+export const withValue = (value: string): FieldDraft | undefined => (value ? { value } : undefined);
 
 export const toDraft = (e: PlayerOverride | null): Draft => ({
-  fields: Object.fromEntries(overriddenKeys(e).map((k) => [k, { value: overrideValue(e, k), ...provenanceOf(e, k) }])),
+  fields: Object.fromEntries(overriddenKeys(e).map((k) => [k, { value: overrideValue(e, k) }])),
   notes: e?.notes ?? '',
 });
-
-const topProvenance = (base: PlayerOverride | null, first: FieldDraft | undefined): Provenance | null => {
-  if (base?.source !== undefined) return { source: base.source, asOf: base.asOf };
-  if (!first) return null;
-  return { source: first.source.trim() || DEFAULT_SOURCE, asOf: first.asOf || undefined };
-};
 
 const DRAFT_KEYS: readonly FieldKey[] = [...FIELDS.map((f) => f.key), ...FramingKey.options];
 
@@ -218,19 +204,15 @@ export const fromDraft = (draft: Draft, base: PlayerOverride | null): PlayerOver
     const d = draft.fields[key];
     return d?.value.trim() ? [{ key, d }] : [];
   });
-  const top = topProvenance(base, filled[0]?.d);
   const tops: Partial<Record<TopKey, string>> = {};
   const images: Partial<Record<ImageKind, string>> = {};
   const framing: Partial<Record<FramingKey, string>> = {};
   const bioValues: BioValues = {};
-  const meta: Partial<Record<FieldKey, Provenance>> = {};
   for (const { key, d } of filled) {
     if (isTopField(key)) tops[key] = d.value.trim();
     else if (isImageField(key)) images[key] = d.value.trim();
     else if (isFramingField(key)) framing[key] = d.value.trim();
     else bioValues[bioKeyOf(key)] = decodeBio(bioKeyOf(key), d.value);
-    if (top && !sameProvenance(d, top))
-      meta[key] = { source: d.source.trim() || DEFAULT_SOURCE, ...(d.asOf && { asOf: d.asOf }) };
   }
   return canonicalOverride({
     ...base,
@@ -240,10 +222,7 @@ export const fromDraft = (draft: Draft, base: PlayerOverride | null): PlayerOver
     hero: images.hero,
     ...Object.fromEntries(FramingKey.options.map((k) => [k, decodeFraming(k, framing[k])])),
     bio: bioValues,
-    source: top?.source,
-    asOf: top?.asOf,
     notes: draft.notes,
-    meta,
   });
 };
 

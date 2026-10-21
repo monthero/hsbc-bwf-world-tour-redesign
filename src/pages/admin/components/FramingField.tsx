@@ -23,9 +23,8 @@ import {
   type AdminPlayer,
   type Codec,
   type ImageKind,
-  type Provenance,
 } from '../schema';
-import { ImageStatus, ProvenanceInputs } from './FieldInputs';
+import { ImageStatus } from './FieldInputs';
 import { mirrored, type Framing, type FramingEditorProps } from './framing';
 import { HeroFraming } from './HeroFraming';
 import { PhotoFraming } from './PhotoFraming';
@@ -59,8 +58,8 @@ const useFraming = <F extends Focus>(
   const status = useMemo(() => <ImageStatus error={error} image={data} />, [error, data]);
 
   const setFocus = useCallback(
-    (next: F | null) => onChange(keys.focus, withValue(focus, codec.encode(next))),
-    [keys, focus, codec, onChange],
+    (next: F | null) => onChange(keys.focus, withValue(codec.encode(next))),
+    [keys, codec, onChange],
   );
   const onFraming = useCallback(
     (next: Framing<F>) => {
@@ -71,20 +70,13 @@ const useFraming = <F extends Focus>(
         {
           onSuccess: (img) => {
             onChange(kind, image, img);
-            onChange(keys.flip, withValue(flip, FlipCodec.encode(next.flip)));
+            onChange(keys.flip, withValue(FlipCodec.encode(next.flip)));
             setFocus(mirrored(next.focus));
           },
         },
       );
     },
-    [reset, flipped, setFocus, mutate, player.id, kind, own, onChange, image, keys, flip],
-  );
-  const onProvenance = useCallback(
-    (p: Provenance) => {
-      if (focus) onChange(keys.focus, { ...focus, ...p });
-      if (flip) onChange(keys.flip, { ...flip, ...p });
-    },
-    [focus, flip, keys, onChange],
+    [reset, flipped, setFocus, mutate, player.id, kind, own, onChange, image, keys],
   );
   const editor = useMemo(
     (): FramingEditorProps<F> => ({
@@ -97,28 +89,23 @@ const useFraming = <F extends Focus>(
     }),
     [point, flipped, local, kind, isPending, status, onFraming],
   );
-  return { own, value, src, editor, provenance: focus ?? flip, onProvenance };
+  return { own, value, src, editor, active: !!(focus ?? flip) };
 };
 
-const FramingCard: FC<{
-  provenance: FieldDraft | undefined;
-  onProvenance: (p: Provenance) => void;
-  children: ReactNode;
-}> = ({ provenance, onProvenance, children }) => (
-  <div className={classes.field} data-active={provenance ? true : undefined}>
+const FramingCard: FC<{ active: boolean; children: ReactNode }> = ({ active, children }) => (
+  <div className={classes.field} data-active={active || undefined}>
     {children}
-    {provenance && <ProvenanceInputs value={provenance} onChange={onProvenance} />}
   </div>
 );
 
 export const HeroFramingField = memo<FramingFieldProps>((props) => {
   const { player } = props;
-  const { own, value, src, editor, provenance, onProvenance } = useFraming('hero', FocusCodec, props);
+  const { own, value, src, editor, active } = useFraming('hero', FocusCodec, props);
   const heroPlayer = useMemo(() => toPlayer(effectiveValue(player, NAME_KEY), player.cc, player.id), [player]);
   if (!value) return null;
   const image = own ? playerHeroUrl(player.id, src, false) : playerHeroSourceUrl(player.id, value, THUMB_WIDTH);
   return (
-    <FramingCard provenance={provenance} onProvenance={onProvenance}>
+    <FramingCard active={active}>
       <HeroFraming player={heroPlayer} hero={src} image={image} prize={String(player.bio.prize ?? '')} {...editor} />
     </FramingCard>
   );
@@ -126,11 +113,11 @@ export const HeroFramingField = memo<FramingFieldProps>((props) => {
 
 export const PhotoFramingField = memo<FramingFieldProps>((props) => {
   const { player } = props;
-  const { src, editor, provenance, onProvenance } = useFraming('photo', CropCodec, props);
+  const { src, editor, active } = useFraming('photo', CropCodec, props);
   const image = playerThumbUrl(src);
   if (!image) return null;
   return (
-    <FramingCard provenance={provenance} onProvenance={onProvenance}>
+    <FramingCard active={active}>
       <PhotoFraming id={player.id} name={displayName(player)} photo={src} image={image} {...editor} />
     </FramingCard>
   );
