@@ -1,6 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
-import { memo, useCallback, useMemo, type CSSProperties, type FC, type Ref } from 'react';
+import { memo, useMemo, type CSSProperties, type FC, type Ref } from 'react';
 
 import type { MediaItem } from '~/api/schemas';
 import { FollowMark } from '~/components/follow';
@@ -56,29 +56,25 @@ const GameScore: FC<{ game: Game; side: Side }> = ({ game, side }) => (
   </span>
 );
 
+const followMark = (p: Player) => <FollowMark player={p} />;
+
 const TeamRow: FC<{ view: LiveView; side: SideView }> = ({ view: v, side: s }) => {
-  const server = v.server;
-  const mark = useCallback(
-    (p: Player) => (
-      <>
-        <FollowMark player={p} />
-        {p.id === server && <ServeMark size={13} className={utils.raise} />}
-      </>
-    ),
-    [server],
-  );
   return (
     <div className={classes.row} data-lead={s.leading || undefined}>
       <div className={classes.team}>
         <AvatarGroup players={s.team.players} size={AVATAR} className={classes.avatars} />
         <div className={classes.who}>
-          <TeamPlayers players={s.team.players} seed={s.team.seed} flag="sm" mark={mark} className={classes.names} />
+          <TeamPlayers
+            players={s.team.players}
+            seed={s.team.seed}
+            flag="sm"
+            mark={followMark}
+            className={classes.names}
+          />
           <Tags side={s} />
         </div>
       </div>
-      {!server && (
-        <span className={classes.serveCell}>{s.serving && <ServeMark size={15} className={utils.raise} />}</span>
-      )}
+      <span className={classes.serveCell}>{s.serving && <ServeMark size={15} className={utils.raise} />}</span>
       {v.games.map((g, i) => (
         <GameScore key={i} game={g} side={s.side} />
       ))}
@@ -120,9 +116,9 @@ export const LiveCard = memo<{
   const cols = useMemo(
     () =>
       ({
-        '--cols': `minmax(0, 1fr) ${v.server ? '' : 'auto '}${'var(--prev-w) '.repeat(v.games.length)}var(--now-w)`,
+        '--cols': `minmax(0, 1fr) auto ${'var(--prev-w) '.repeat(v.games.length)}var(--now-w)`,
       }) as CSSProperties,
-    [v.server, v.games.length],
+    [v.games.length],
   );
   return (
     <div
@@ -155,7 +151,7 @@ export const LiveCard = memo<{
       <div className={classes.board} style={cols}>
         <div className={classes.row} data-head>
           <span />
-          {!v.server && <span />}
+          <span />
           {v.games.map((_, i) => (
             <GameHead key={i} n={i + 1} className={classes.colHead} />
           ))}
