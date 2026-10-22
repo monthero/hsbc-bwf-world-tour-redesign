@@ -12,6 +12,12 @@
     "model": "Cross Court Pro"
   },
   {
+    "id": "e17437ff-db83-48c4-94a0-6b5ff7ab0aeb",
+    "kind": "racket",
+    "brand": "decathlon",
+    "model": "BR Sensation 990 Pro"
+  },
+  {
     "id": "d7011da7-5710-4eef-812e-268c6b0b24d0",
     "kind": "racket",
     "brand": "felet",
@@ -22,6 +28,12 @@
     "kind": "racket",
     "brand": "felet",
     "model": "Woven 999"
+  },
+  {
+    "id": "8599babb-49fd-49b8-b1ea-7f448be0856e",
+    "kind": "racket",
+    "brand": "felet",
+    "model": "Woven TJ Power V2 Pro"
   },
   {
     "id": "0559aef0-f868-43b0-8cea-314f947426b6",
@@ -52,6 +64,12 @@
     "kind": "racket",
     "brand": "gosen",
     "model": "Gravitas 8.5SX"
+  },
+  {
+    "id": "f27eb277-9ace-4ab9-b888-497eca39481f",
+    "kind": "racket",
+    "brand": "gosen",
+    "model": "Gravitas 9.5SX"
   },
   {
     "id": "aabe89ec-0784-4211-aa13-6cade5d99dfd",
@@ -234,6 +252,12 @@
     "model": "Altius 01 Feel"
   },
   {
+    "id": "bc6b47d5-3acd-4593-a97c-7c1857b8be13",
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Auraspeed 90F"
+  },
+  {
     "id": "0dfecd6d-9273-414e-b54b-2d1f0544437c",
     "kind": "racket",
     "brand": "victor",
@@ -310,6 +334,12 @@
     "kind": "racket",
     "brand": "victor",
     "model": "Thruster F Claw Ultra"
+  },
+  {
+    "id": "e74ef742-62cf-4d6c-90a0-14a1be023dd1",
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Thruster Ryuga II"
   },
   {
     "id": "5acde407-bbb3-4cc6-bf45-cbd52256de45",
@@ -442,6 +472,12 @@
     "kind": "shoes",
     "brand": "felet",
     "model": "Flying Pro V2"
+  },
+  {
+    "id": "aff4514c-1f33-4735-a7a6-93540cc1aa19",
+    "kind": "shoes",
+    "brand": "felet",
+    "model": "Soniz Pro"
   },
   {
     "id": "dcc93ae3-bdd9-454a-8b6e-1325e393b47d",
@@ -600,6 +636,12 @@
     "model": "Power Cushion Aerus Z2"
   },
   {
+    "id": "9031ab0a-a952-4903-86c9-6d6825d8b9f8",
+    "kind": "shoes",
+    "brand": "yonex",
+    "model": "Power Cushion Aerus Z3"
+  },
+  {
     "id": "e5ae4c99-9532-42a3-bce4-ec4eda34f2e6",
     "kind": "shoes",
     "brand": "yonex",
@@ -622,6 +664,12 @@
     "kind": "shoes",
     "brand": "yonex",
     "model": "Subaxia GT"
+  },
+  {
+    "id": "0e92fd8a-e7c1-4e15-9b70-b52177154ec6",
+    "kind": "string",
+    "brand": "felet",
+    "model": "Metacore 64"
   },
   {
     "id": "561b8feb-635c-4c97-af5c-bc9cfa7d54d3",
@@ -808,6 +856,12 @@
     "kind": "string",
     "brand": "mizuno",
     "model": "M-Smooth 65R"
+  },
+  {
+    "id": "16bb7c1f-5656-4974-99e6-858d66614728",
+    "kind": "string",
+    "brand": "victor",
+    "model": "VBS-58 Nano"
   },
   {
     "id": "1011944c-3d87-4c89-942f-aded622dae54",

@@ -14,6 +14,17 @@
     },
     "18228": {
       "retired": "2026-03",
+      "photo": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/202501_Marin_1.jpg?v=1741016411&width=1320",
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/202501_Marin_2.jpg?v=1741016409&width=1320",
+      "heroFocus": {
+        "x": 49,
+        "y": 9
+      },
+      "photoCrop": {
+        "x": 46.7,
+        "y": 49.9,
+        "zoom": 2.1
+      },
       "bio": {
         "racket": "38ecd0b6-e2b1-4464-9543-84a5a6affa81"
       }
@@ -62,6 +73,10 @@
       "retired": "2024-03"
     },
     "34810": {
+      "heroFocus": {
+        "x": 72,
+        "y": 66
+      },
       "bio": {
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d",
         "string": "538a1b0a-3c92-46fa-b161-06e5a1f72a8e"
@@ -119,6 +134,18 @@
         "tension": "30.86",
         "string": "538a1b0a-3c92-46fa-b161-06e5a1f72a8e",
         "shoes": "4427cbc7-3aad-4045-8e3f-3ca22559b24f"
+      }
+    },
+    "47007": {
+      "hero": "https://resizer-vortals.eco.astro.com.my/tr:w-auto,h-auto,q-80,f-webp/https://d3lmgsai2rsy7d.cloudfront.net/stadium/media/uploads/image/2026-10/pang%20ron%20pei%20jing.jpg",
+      "heroFocus": {
+        "x": 78,
+        "y": 15
+      },
+      "bio": {
+        "racket": "bc6b47d5-3acd-4593-a97c-7c1857b8be13",
+        "string": "16bb7c1f-5656-4974-99e6-858d66614728",
+        "shoes": "6b6a41fc-0527-44fb-b99a-80184a1222e0"
       }
     },
     "48528": {
@@ -222,6 +249,11 @@
     "54431": {
       "retired": "2020-10"
     },
+    "54805": {
+      "bio": {
+        "racket": "8599babb-49fd-49b8-b1ea-7f448be0856e"
+      }
+    },
     "55414": {
       "bio": {
         "racket": "399bf45c-56a6-4087-a303-c3401f124887",
@@ -256,6 +288,12 @@
         "birthplace": "Tangerang",
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f",
         "achievements": "Uber Cup 2026 – bronze (women's team); Asia Team Championships 2026 – bronze (women's team); SEA Games 2025 – silver (women's team); SEA Games 2025 – bronze (WD)"
+      }
+    },
+    "55493": {
+      "bio": {
+        "racket": "f27eb277-9ace-4ab9-b888-497eca39481f",
+        "string": "0b7ec51f-cd8c-4385-b80c-9dd8889bd8fb"
       }
     },
     "55669": {
@@ -370,6 +408,7 @@
       }
     },
     "58089": {
+      "hero": "https://us.yonex.com/cdn/shop/files/TSC04385.jpg?v=1773102812&width=3840",
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "string": "a2186ed4-9866-4d92-9cf7-218d152584a7",
@@ -489,6 +528,11 @@
       }
     },
     "59880": {
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSB00721.jpg?v=1773898237&width=1320",
+      "heroFocus": {
+        "x": 74,
+        "y": 0
+      },
       "bio": {
         "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "racketNote": "4U",
@@ -604,6 +648,7 @@
       }
     },
     "61731": {
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20260109_1651_MalaysiaOpen2026_BPTE6312.jpg?v=1773125394&width=1320",
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "racketNote": "4U",
@@ -621,7 +666,20 @@
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
+    "61882": {
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20260303_1630_AllEngland2026_BPYN8170.jpg?v=1779414691&width=1320",
+      "bio": {
+        "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
+        "racketNote": "4U",
+        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+      }
+    },
     "62063": {
+      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t39.30808-6/699997095_1304036661892137_9141286312397794393_n.jpg?stp=c0.0.2047.1638a_dst-jpg_e35_s2047x1638_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=Mzg5Njc4MjQyNTQ1MjYxMTg1NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjA0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=8BDvF7jW3t4Q7kNvwHjCjkm&_nc_oc=Adolf898WaqujqW8GXTM5w4dfarUUjF2otHYpysvUMKCN8_2BFOeak1ZuhBl6pU_5CgtU56fsfGopMbnDWNilBrU&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=SgAucqTbjY517HdusGlOEw&_nc_ss=7b689&oh=00_AQNnFPI5GpqkEkD3z87BI9xGb3c6aBzBTYu0ZRLR2h031w&oe=6ADFCB60",
+      "heroFocus": {
+        "x": 52,
+        "y": 67
+      },
       "bio": {
         "racket": "5acde407-bbb3-4cc6-bf45-cbd52256de45"
       }
@@ -632,6 +690,19 @@
         "racketNote": "4U",
         "tension": "27/29",
         "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5",
+        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+      }
+    },
+    "62618": {
+      "photo": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20260520_1549_MalaysiaMasters2026_BPTE6083.jpg?v=1779414096&width=1320",
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20260521_1038_MalaysiaMasters2026_BPTE2346_2.jpg?v=1779414061&width=1320",
+      "photoCrop": {
+        "x": 36.6,
+        "y": 17.8,
+        "zoom": 2.9
+      },
+      "bio": {
+        "racket": "4b9cafba-6606-49ec-bc5a-520c05e6f977",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
@@ -749,10 +820,17 @@
       }
     },
     "63739": {
-      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1784212577/wordpress_assets_test/20260716_1941_JapanOpen2026_BPJS9598/20260716_1941_JapanOpen2026_BPJS9598.jpg",
+      "hero": "https://us.yonex.com/cdn/shop/files/20260304_1304_AllEngland2026_BPLL8842.jpg?v=1779411870&width=3840",
+      "heroFocus": {
+        "x": 67,
+        "y": 2
+      },
       "bio": {
         "height": 182,
         "birthplace": "Albany",
+        "racket": "399bf45c-56a6-4087-a303-c3401f124887",
+        "string": "538a1b0a-3c92-46fa-b161-06e5a1f72a8e",
+        "shoes": "9031ab0a-a952-4903-86c9-6d6825d8b9f8",
         "achievements": "Pan American Championships 2024 – gold (MD); Pan American Championships 2024 – gold (XD); Pan American Championships 2025 – gold (MD); Pan American Championships 2026 – gold (MD); Pan American Championships 2026 – gold (XD); Pan American Championships 2023 – bronze (MD); Pan American Championships 2025 – bronze (XD); Pan American Championships team 2025 – silver (mixed team); Pan American Championships and Female team 2026 – silver (men's team)"
       }
     },
@@ -792,11 +870,12 @@
     },
     "65212": {
       "bio": {
-        "racket": "4b9cafba-6606-49ec-bc5a-520c05e6f977",
+        "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "string": "30212e30-7d1d-41f5-aff7-e92341bc80c3"
       }
     },
     "65267": {
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20260111_1516_MalaysiaOpen2026_BPYL5972.jpg?v=1773119314&width=1320",
       "bio": {
         "racket": "275dd589-06a3-4c38-8399-f3184c4dc585",
         "racketNote": "4U",
@@ -807,17 +886,29 @@
     },
     "65300": {
       "bio": {
+        "racket": "4b9cafba-6606-49ec-bc5a-520c05e6f977",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
     "65349": {
+      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t39.30808-6/700015065_1304036768558793_8621179559568070870_n.jpg?stp=c0.0.2047.1638a_dst-jpg_e35_s2047x1638_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=Mzg5Njc4MjQyNDcwNjA0MTYyMA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjA0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=vkLIPBkc8L0Q7kNvwFYwIF2&_nc_oc=AdpSucwhDXmDK5LlYZ1sy0tptrbZ2vLX6UJcnNUR03x75Zxnz_dS2pthxbFKW_SSXHFGox0Z4c6T8klWeiBSd626&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=SgAucqTbjY517HdusGlOEw&_nc_ss=7b689&oh=00_AQN2DvSF_lAETvU5_INx8BqbRj_3fhzRFFqSAn5jupDXjA&oe=6ADFC86A",
+      "photoCrop": {
+        "x": 56.3,
+        "y": 56.8,
+        "zoom": 1.2
+      },
       "bio": {
         "height": 178,
         "plays": "R",
+        "racket": "e74ef742-62cf-4d6c-90a0-14a1be023dd1",
+        "racketNote": "4U",
+        "string": "78506bc2-603c-4284-b74b-c3e56b94c0f7",
+        "shoes": "bf49e821-3e5b-419e-a281-c0e7bc60cfa1",
         "achievements": "Asia Team Championships 2026 – bronze (women's team); World University Games 2025 – silver (mixed team); World University Games 2025 – silver (WD)"
       }
     },
     "65674": {
+      "hero": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/699928377_1457649656402912_6255779572597430757_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=W7LYLCLKWVQQ7kNvwGudpDG&_nc_oc=Adrz_wlDM_a6k_S1YjgAEVDG5M4BvTxM8V8J7TozojLxINDiGasywbfqWrbEfOBYeLCgv2UGPNv9jmYetzXPp9Od&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=iItyfNazrksW0FZcerANmw&_nc_ss=7b289&oh=00_AQNQVVGl_FGZvqnKCyDu3jPF6_ro8MiY_RbuFCeGe6-xtQ&oe=6ADFC058",
       "bio": {
         "height": 179,
         "plays": "L",
@@ -829,8 +920,15 @@
       }
     },
     "65708": {
+      "hero": "https://cms.bwfbadminton.com/wp-content/uploads/2025/11/20250626_1833_USOpen2025_BPYL3695-1024x683.jpg",
+      "heroFocus": {
+        "x": 51,
+        "y": 69
+      },
       "bio": {
         "birthplace": "Fremont",
+        "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
+        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0",
         "achievements": "Pan American Championships 2024 – gold (Women's doubles); Pan American Championships 2024 – gold (Mixed doubles); Pan American Championships 2025 – gold (Women's doubles); Pan American Championships 2026 – gold (Women's doubles); Pan American Championships 2021 – silver (Women's doubles); Pan American Championships 2023 – silver (Women's doubles); Pan American Championships 2022 – bronze (Women's doubles); Pan Am Mixed Team Championships 2025 – silver (Mixed team); Pan Am Female Cup 2022 – gold (Women's team); Pan Am Female Cup 2020 – silver (Women's team); Pan Am Female Cup 2024 – silver (Women's team); Pan Am Female Cup 2026 – silver (Women's team)"
       }
     },
@@ -873,6 +971,13 @@
       }
     },
     "67158": {
+      "photo": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/797006412_18619944238048407_2656669180263247769_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ig_cache_key=Mzk4MDI3NjE0NTEyNzk0NzU2Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTY4MS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=jWH0PYMgqAMQ7kNvwFhFhsv&_nc_oc=Adqi_wpNzWbYRMIN2mCDoxGQ4V4EuhEviNg-ol8uCO44GRtc6tv4ePPf6xYEtEcmWD1gPA4uCRCFsiq-jUWI8hUg&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=vz9ooA6IJ1GtY358fgrq1A&_nc_ss=7b689&oh=00_AQNqRvqRmRmLSOmVckACwJ3VNukkJyxe7enf0d04K59R1g&oe=6ADFB895",
+      "hero": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/698494712_1457649476402930_2892307176698855027_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=peC0pQcRzgwQ7kNvwF4d4rQ&_nc_oc=Adr-qfOwcqQwmbgx6mOMm7_KvAdYJH2H7Apmf580umKS0-44jjQ3DfbSErgBvvgFxtJoYtakTVGJSAd3Nu7rPvEa&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=C4K4ARYq6TduZ6pzNmU7Bw&_nc_ss=7b289&oh=00_AQMaZQq6claMehDEfatGQhbNJco9goJh3RBQhW92mJk09g&oe=6ADFCA4D",
+      "photoCrop": {
+        "x": 44.2,
+        "y": 0,
+        "zoom": 2
+      },
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "racketNote": "3U",
@@ -985,10 +1090,10 @@
       }
     },
     "68628": {
-      "hero": "https://assets.hmetro.com.my/images/articles/spo-o-pea061125_HMfield_image_socialmedia.var_1762426955.jpg",
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20250118_1251_IndiaOpen2025_BPJS4875.jpg?v=1758523037&width=1320",
       "heroFocus": {
-        "x": 36,
-        "y": 11
+        "x": 57,
+        "y": 12
       },
       "bio": {
         "racket": "0babb235-86a5-4912-a4bc-911a3f7ad653",
@@ -1017,6 +1122,7 @@
       }
     },
     "68870": {
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSB01466.jpg?v=1771285559&width=1320",
       "bio": {
         "racket": "38ecd0b6-e2b1-4464-9543-84a5a6affa81",
         "racketNote": "3U",
@@ -1243,6 +1349,13 @@
         "shoes": "59300063-d8e5-4e73-a85a-3d026f11388a"
       }
     },
+    "72675": {
+      "bio": {
+        "racket": "43e1b756-2b7a-4b87-89e4-616bacacbb08",
+        "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
+        "shoes": "b710ee00-c9db-4e7c-ab58-614f9f6596d7"
+      }
+    },
     "72885": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1676/v1784522747/wordpress_assets_test/20260719_1439_JapanOpen2026_BPJS7657-1/20260719_1439_JapanOpen2026_BPJS7657-1.jpg",
       "bio": {
@@ -1267,6 +1380,7 @@
         "zoom": 2
       },
       "bio": {
+        "racket": "e17437ff-db83-48c4-94a0-6b5ff7ab0aeb",
         "racketNote": "3U"
       }
     },
@@ -1295,11 +1409,20 @@
     },
     "74561": {
       "bio": {
+        "racket": "43e1b756-2b7a-4b87-89e4-616bacacbb08",
+        "string": "5fd90db2-b5b4-4645-b3bf-ec60ffe04045",
+        "shoes": "59300063-d8e5-4e73-a85a-3d026f11388a",
         "achievements": "Asia Team Championships 2026 – bronze (Women's team); East Asian Games 2009 – silver (Women's team); Summer Universiade 2017 – gold (Women's doubles); Summer Universiade 2017 – gold (Mixed team); Summer Universiade 2017 – bronze (Mixed doubles)"
       }
     },
     "74980": {
+      "photo": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20251217_1354_WorldTourFinals2025_BPYL6637.jpg?v=1773125590&width=1320",
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1706/v1786354262/wordpress_assets_test/20260515_1912_ThailandOpen2026_BPYL9442/20260515_1912_ThailandOpen2026_BPYL9442.jpg",
+      "photoCrop": {
+        "x": 56.9,
+        "y": 7.5,
+        "zoom": 3.2
+      },
       "bio": {
         "nickname": "Fame",
         "birthplace": "Nakhon Pathom",
@@ -1410,6 +1533,9 @@
         "achievements": "World Championships 2025 – bronze (WS); Sudirman Cup 2025 – bronze (mixed team); Uber Cup 2026 – bronze (women's team); Asia Mixed Team Championships 2025 – gold (mixed team); Asia Team Championships 2022 – gold (women's team); Asia Team Championships 2024 – bronze (women's team); SEA Games 2021 – silver (women's team); SEA Games 2025 – silver (women's team); SEA Games 2021 – bronze (WS); SEA Games 2025 – bronze (WS)"
       }
     },
+    "77002": {
+      "retired": "2026-03"
+    },
     "77042": {
       "bio": {
         "racket": "38ecd0b6-e2b1-4464-9543-84a5a6affa81",
@@ -1429,6 +1555,9 @@
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f"
       }
     },
+    "77427": {
+      "retired": "2026-10"
+    },
     "77689": {
       "bio": {
         "racket": "1b0c28bd-7761-4793-954f-bd48228237e2",
@@ -1446,6 +1575,9 @@
         "club": "BIPROGY"
       }
     },
+    "78116": {
+      "retired": "2026-04"
+    },
     "78409": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1639/v1765175861/wordpress_assets_test/20250528_2021_SingaporeOpen2025_BPYN4950/20250528_2021_SingaporeOpen2025_BPYN4950.jpg",
       "heroFlip": true,
@@ -1459,6 +1591,13 @@
       }
     },
     "78778": {
+      "photo": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/498596678_1009102404761055_9086464734765975896_n.jpg?stp=dst-jpg_tt6&cstp=mx1365x2048&ctp=p526x296&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=l3kAF1p4pi8Q7kNvwGAqQWz&_nc_oc=Adr3cWOIjpKlYAI_A66PbYb4Cxc0sGbdR_vo_4iRq0yixlS7a3fm85LMwCfXXSMQqQIiaYq2Vi9v8l44iqmd0kI0&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=Z_fJsYoAV_l7cHwGIgYfyg&_nc_ss=7b289&oh=00_AQMCEVU2pSTqMm8c74wfyrRyB8GW4Q0gN7m_XpiF7mv2Ng&oe=6ADFB6DD",
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSC01235.jpg?v=1773910571&width=1320",
+      "photoCrop": {
+        "x": 56.9,
+        "y": 15,
+        "zoom": 1.9
+      },
       "bio": {
         "racket": "275dd589-06a3-4c38-8399-f3184c4dc585",
         "tension": "26/27",
@@ -1486,12 +1625,13 @@
       }
     },
     "79501": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/d/d1/%E9%9C%9C%E4%B8%8A%E9%9B%84%E4%B8%80-2025%E5%8F%B0%E5%8C%97%E5%85%AC%E9%96%8B%E8%B3%BD.jpg?utm_source=zh.wikipedia.org&utm_campaign=index&utm_content=original",
       "bio": {
         "height": 167,
         "plays": "R",
         "birthplace": "Kumamoto Prefecture",
         "coach": "Lee Wan Wah Harmono Yuwono (Hitachi)",
-        "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
+        "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "racketNote": "4U",
         "tension": "32/34",
         "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5",
@@ -1665,7 +1805,7 @@
         "racketNote": "4U",
         "tension": "30/32",
         "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5",
-        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0",
+        "shoes": "82caf749-ee15-4429-b905-273ad64747fa",
         "achievements": "World Championships 2025 – bronze (XD); Sudirman Cup 2025 – gold (mixed team)"
       }
     },
@@ -1717,17 +1857,26 @@
       "bio": {
         "birthplace": "Lowell",
         "coach": "Naoko Fukuman Tony Gunawan",
+        "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
+        "racketNote": "4U",
+        "shoes": "82caf749-ee15-4429-b905-273ad64747fa",
         "achievements": "Pan American Games 2023 – silver (Women's singles); Pan American Games 2023 – silver (Mixed doubles); Pan American Championships 2026 – gold (Mixed doubles); Pan American Championships 2024 – silver (Mixed doubles); Pan American Championships 2026 – silver (Women's doubles); Pan American Championships 2018 – bronze (Women's doubles); Pan American Championships 2019 – bronze (Women's singles); Pan American Championships 2025 – bronze (Mixed doubles); Pan Am Mixed Team Championships 2019 – silver (Mixed team); Pan Am Mixed Team Championships 2023 – silver (Mixed team); Pan Am Mixed Team Championships 2025 – silver (Mixed team); Pan Am Mixed Team Championships 2017 – bronze (Mixed team); Pan Am Female Cup 2022 – gold (Women's team); Pan Am Female Cup 2026 – silver (Women's team); Youth Olympic Games 2018 – gold (Mixed team)"
       }
     },
     "83419": {
-      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1627/v1740287370/wordpress_assets_test/Kim-Hye-Jeong-Kong-Hee-Yong_IO25/Kim-Hye-Jeong-Kong-Hee-Yong_IO25.jpg",
+      "photo": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20251018_1424_DenmarkOpen2025_BPLL7068.jpg?v=1773117917&width=1320",
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSB06972.jpg?v=1773117847&width=1320",
+      "photoCrop": {
+        "x": 0,
+        "y": 0,
+        "zoom": 1.45
+      },
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "racketNote": "4U",
         "tension": "28/30",
         "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5",
-        "shoes": "8d234e98-b425-435d-976d-710bca6b16a2"
+        "shoes": "9031ab0a-a952-4903-86c9-6d6825d8b9f8"
       }
     },
     "83699": {
@@ -1749,6 +1898,11 @@
         "tension": "30/31",
         "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
         "shoes": "b710ee00-c9db-4e7c-ab58-614f9f6596d7"
+      }
+    },
+    "83822": {
+      "bio": {
+        "racket": "1831f09c-122b-4b85-9cda-540296c6a24a"
       }
     },
     "83883": {
@@ -1828,6 +1982,20 @@
       "bio": {
         "racket": "38ecd0b6-e2b1-4464-9543-84a5a6affa81",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+      }
+    },
+    "84838": {
+      "photo": "https://www.badmintonplanet.com/wp-content/uploads/2026/02/2-12-2026-badminton-news-leong-jun-hao-all-england.jpg",
+      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/548327184_18120746218497508_8928773923959889934_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=MzcyMTE0Njc4NTI4NjE2NDM0OQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQzOS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=GUzDgBgxmhEQ7kNvwGBSFb4&_nc_oc=AdrRefLLycSWev0ORB5yHifSNvt-u6gnHDWOwMeekqKiJMtXiNVxVAOCZ7MW5j1v4pmTwJbdGlsp3S8LU_jXf1tZ&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=Nlujab4CzfEbhwWsjHTorQ&_nc_ss=7b689&oh=00_AQNO3D1DKfioaTTaCNvNaLdmrObACFEYDYf2J2bA7p_Aog&oe=6ADF8649",
+      "photoCrop": {
+        "x": 86.7,
+        "y": 4,
+        "zoom": 1.7
+      },
+      "bio": {
+        "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d",
+        "racketNote": "Kurenai",
+        "shoes": "9031ab0a-a952-4903-86c9-6d6825d8b9f8"
       }
     },
     "85129": {
@@ -2307,11 +2475,16 @@
       }
     },
     "92967": {
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSB07215_50.jpg?v=1759794327&width=1320",
+      "heroFocus": {
+        "x": 59,
+        "y": 16
+      },
       "bio": {
         "racket": "275dd589-06a3-4c38-8399-f3184c4dc585",
         "tension": "28/30",
         "string": "538a1b0a-3c92-46fa-b161-06e5a1f72a8e",
-        "shoes": "40e9f512-2595-4785-8220-1280b29a7046"
+        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
     "92980": {
@@ -2516,6 +2689,9 @@
       "bio": {
         "height": 167,
         "birthplace": "Kaohsiung",
+        "racket": "96afc7f5-4b0d-4703-bc9c-02aa72758292",
+        "racketNote": "4U",
+        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0",
         "achievements": "Asia Team Championships 2026 – bronze (women's team); World University Games 2025 – silver (mixed team); World University Games 2025 – silver (XD)"
       }
     },
@@ -2553,6 +2729,16 @@
         "instagram": "https://www.instagram.com/watakou0123/"
       }
     },
+    "99066": {
+      "bio": {
+        "racket": "0d3aa215-b0c7-4599-aebc-3779fb4ba2ab",
+        "racketNote": "3U",
+        "tension": "31/32",
+        "tensionNote": "+5% pre-stretch, 2 knots",
+        "string": "0e92fd8a-e7c1-4e15-9b70-b52177154ec6",
+        "shoes": "aff4514c-1f33-4735-a7a6-93540cc1aa19"
+      }
+    },
     "99069": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/7/75/Sim_Yu_Jin.jpg",
       "bio": {
@@ -2573,6 +2759,11 @@
       }
     },
     "99389": {
+      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSB00559.jpg?v=1756786213&width=1320",
+      "heroFocus": {
+        "x": 60,
+        "y": 11
+      },
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "string": "a2186ed4-9866-4d92-9cf7-218d152584a7",
