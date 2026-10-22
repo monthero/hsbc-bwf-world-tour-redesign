@@ -4,7 +4,6 @@ import { Hero } from '~/pages/player/components/Hero';
 import type { CareerHigh } from '~/pages/player/types';
 import { careerOf } from '~/pages/player/utils';
 import type { EventCode, Focus, Player, RankView } from '~/types';
-import { heroVars } from '~/utils/images';
 import { buildBio, DEFAULT_BIO_UNITS } from '~/utils/players';
 
 import { arrowNudge, clampPercent, useDrag, useFramingEditor, type FramingEditorProps } from './framing';
@@ -28,8 +27,8 @@ const pointAt = (e: PointerEvent<HTMLElement>): Focus => {
 
 const focusLabel = (focus: Focus | null) => (focus ? `Focus ${focus.x}% · ${focus.y}%` : 'Default framing');
 
-const HeroPreview = memo<{ player: Player; hero: string; prize: string; focus: Focus | null }>(
-  ({ player, hero, prize, focus }) => {
+const HeroPreview = memo<{ player: Player; hero: string; prize: string; focus: Focus | null; mobile: boolean }>(
+  ({ player, hero, prize, focus, mobile }) => {
     const bio = useMemo(() => ({ ...EMPTY_BIO, prize }), [prize]);
     return (
       <Hero
@@ -40,6 +39,7 @@ const HeroPreview = memo<{ player: Player; hero: string; prize: string; focus: F
         ranks={NO_RANKS}
         highs={NO_HIGHS}
         career={NO_CAREER}
+        mobile={mobile}
         ready
       />
     );
@@ -93,10 +93,14 @@ export const HeroFraming = memo<
     <div className={classes.framing}>
       <div className={classes.top}>
         <FocusPad image={image} focus={shown} onDrag={setDrag} onCommit={onCommit} />
-        <span className={classes.mobile} style={heroVars(image, shown)} />
+        <div className={classes.phone}>
+          <HeroPreview player={player} hero={hero} prize={prize} focus={shown} mobile />
+        </div>
         <FramingControls title="Hero framing" readout={focusLabel(shown)} {...controls} />
       </div>
-      <HeroPreview player={player} hero={hero} prize={prize} focus={shown} />
+      <div className={classes.desktop}>
+        <HeroPreview player={player} hero={hero} prize={prize} focus={shown} mobile={false} />
+      </div>
     </div>
   );
 });

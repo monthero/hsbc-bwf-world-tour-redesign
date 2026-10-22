@@ -81,18 +81,14 @@
   }
 }
 
-.mobile {
+.phone {
+  container: athlete / inline-size;
   flex: none;
-  width: 120px;
-  aspect-ratio: 39 / 42;
-  border-radius: 12px;
-  border: 1px solid var(--bwf-border);
-  background-color: var(--bwf-bg-sunken);
-  background-image: var(--hero);
-  background-size: cover;
-  background-position: var(--hero-pos, center 15%);
+  width: 390px;
+  max-width: 100%;
+}
 
-  @mixin smaller-than $mantine-breakpoint-sm {
-    width: 100px;
-  }
+.desktop {
+  container: athlete / inline-size;
+  min-width: 0;
 }

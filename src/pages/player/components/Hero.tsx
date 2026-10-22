@@ -44,6 +44,7 @@ interface HeroProps {
   highs: ReadonlyMap<EventCode, CareerHigh>;
   career: CareerView;
   ready: boolean;
+  mobile?: boolean;
   event?: EventCode;
   onEvent?: (event: EventCode | undefined) => void;
 }
@@ -61,8 +62,9 @@ const PORTRAIT_CROP = 520;
 const STAT_SKELETON = [0, 1, 2, 3];
 
 export const Hero = memo<HeroProps>(
-  ({ player, hero, focus, retired, bio, ranks, highs, career, ready, event, onEvent }) => {
-    const isMobile = useIsMobile();
+  ({ player, hero, focus, retired, bio, ranks, highs, career, ready, mobile, event, onEvent }) => {
+    const viewportMobile = useIsMobile();
+    const isMobile = mobile ?? viewportMobile;
     const hasPhoto = !!usePlayerPhoto(player.id).src;
     const style = useMemo(
       () => ({ ...DARK_SCOPE, ...(hero && heroVars(playerHeroUrl(player.id, hero, isMobile, !!focus), focus)) }),
