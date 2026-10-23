@@ -588,8 +588,12 @@
       "heroFlip": true,
       "bio": {
         "height": 187,
-        "racket": "2fea7a00-c923-4af7-870e-9a9085732d6a",
-        "achievements": "Thomas Cup 2026 – bronze (men's team); European Championships 2025 – bronze (MD); European Championships 2025 – bronze (XD); European Championships 2026 – bronze (MD); European Mixed Team Championships 2025 – gold (mixed team); European Team Championships 2024 – gold (men's team); European Team Championships 2026 – silver (men's team)"
+        "racket": "3e5da6f4-ccb1-4644-a0c3-003af71b2573",
+        "achievements": "Thomas Cup 2026 – bronze (men's team); European Championships 2025 – bronze (MD); European Championships 2025 – bronze (XD); European Championships 2026 – bronze (MD); European Mixed Team Championships 2025 – gold (mixed team); European Team Championships 2024 – gold (men's team); European Team Championships 2026 – silver (men's team)",
+        "racketNote": "4U",
+        "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
+        "tension": "31",
+        "shoes": "dceb8ad7-da91-4c41-a0d6-6d1bd1602d5a"
       }
     },
     "60838": {
@@ -1047,8 +1051,12 @@
         "height": 183,
         "plays": "R",
         "birthplace": "Hillerød",
-        "racket": "0559aef0-f868-43b0-8cea-314f947426b6",
-        "achievements": "Thomas Cup 2026 – bronze (Men's team); European Championships 2025 – bronze (Men's doubles); European Championships 2026 – bronze (Men's doubles); European Mixed Team Championships 2025 – gold (Mixed team); European Men's Team Championships 2024 – gold (Men's team); European Men's Team Championships 2026 – silver (Men's team)"
+        "racket": "66590a6a-8a13-48f4-9e57-f5938b4d048b",
+        "achievements": "Thomas Cup 2026 – bronze (Men's team); European Championships 2025 – bronze (Men's doubles); European Championships 2026 – bronze (Men's doubles); European Mixed Team Championships 2025 – gold (Mixed team); European Men's Team Championships 2024 – gold (Men's team); European Men's Team Championships 2026 – silver (Men's team)",
+        "racketNote": "5U",
+        "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
+        "tension": "33",
+        "shoes": "ed678178-793b-4b6b-8e57-6fbf93d52bbe"
       }
     },
     "68282": {
