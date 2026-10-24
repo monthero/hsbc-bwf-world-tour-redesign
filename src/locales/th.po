@@ -821,7 +821,7 @@ msgid "BWF World Ranking · week {weekNo}"
 msgstr "อันดับโลก BWF · สัปดาห์ที่ {weekNo}"
 
 #. Tooltip on an entry’s world rank. Category means the event, e.g. men’s singles
-#: src/pages/tournament/components/players/EntryRow.tsx
+#: src/components/player/RankMarks.tsx
 msgid "BWF World Ranking in this category"
 msgstr "อันดับโลก BWF ในประเภทนี้"
 
@@ -902,6 +902,7 @@ msgstr "อันดับสูงสุด #{rank} · {event}"
 #. Match filters: label above the event chips (MS, WS, MD, WD, XD)
 #. Match filters: label above the event chips (MS, WS, MD, WD, XD)
 #: src/pages/tournament/components/matches/FilterBars.tsx
+#: src/pages/tournament/constants.ts
 msgid "Category"
 msgstr "ประเภท"
 
@@ -1058,6 +1059,7 @@ msgstr "ขณะนี้โหลดวิดีโอจาก YouTube ไม
 #. Match filters: label above the court number chips
 #. Match filters: label above the court number chips
 #: src/pages/tournament/components/matches/FilterBars.tsx
+#: src/pages/tournament/constants.ts
 msgid "Court"
 msgstr "คอร์ต"
 
@@ -1093,11 +1095,6 @@ msgstr "ปัจจุบัน"
 #: src/pages/player/components/People.tsx
 msgid "Current"
 msgstr "ปัจจุบัน"
-
-#. Tooltip on a medalist’s world rank. Category means the event, e.g. men’s singles
-#: src/pages/tournament/components/PodiumTab.tsx
-msgid "Current BWF World Ranking in this category"
-msgstr "อันดับโลก BWF ปัจจุบันในประเภทนี้"
 
 #. Settings option: dark colour theme
 #: src/components/layout/SiteSettings.tsx
@@ -1416,7 +1413,7 @@ msgid "Follow this pair"
 msgstr "ติดตามคู่นี้"
 
 #. Match sort option: matches with players or countries the visitor follows come first
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#: src/pages/tournament/constants.ts
 msgid "Followed first"
 msgstr "ที่ติดตามก่อน"
 
@@ -3004,8 +3001,8 @@ msgstr "เส้นทางสู่ Finals"
 
 #. Match sort option: matches grouped by round of the draw, earliest first
 #. Videos tab: title of the round filter menu and sheet
-#: src/pages/tournament/components/matches/FilterBars.tsx
 #: src/pages/tournament/components/MediaTab.tsx
+#: src/pages/tournament/constants.ts
 msgid "Round"
 msgstr "รอบ"
 
@@ -3146,7 +3143,7 @@ msgid "See full profile"
 msgstr "ดูโปรไฟล์ทั้งหมด"
 
 #. A player’s seed number in a tournament draw, as a badge or after their world rank, e.g. Seed 3
-#: src/components/player/SeedTag.tsx
+#: src/components/player/RankMarks.tsx
 msgid "Seed {seed}"
 msgstr "มือวาง {seed}"
 
@@ -3156,7 +3153,7 @@ msgid "Seed {seed} · {tournament}"
 msgstr "มือวาง {seed} · {tournament}"
 
 #. Tooltip on a seed number. In badminton draws, top-ranked players are “seeded”: numbered and spread apart so they can’t meet in early rounds
-#: src/components/player/SeedTag.tsx
+#: src/components/player/RankMarks.tsx
 msgid "Seed {seed} · seeded by world ranking and placed apart in the draw so top entries can’t meet early"
 msgstr "มือวาง {seed} · จัดมือวางตามอันดับโลกและแยกสายกัน เพื่อไม่ให้ผู้เล่นอันดับต้นๆ พบกันเร็ว"
 
@@ -3295,7 +3292,7 @@ msgid "Soon"
 msgstr "เร็ว ๆ นี้"
 
 #. Match list: icon button, menu and sheet title for choosing how matches are ordered and grouped
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#: src/pages/tournament/constants.ts
 msgid "Sort matches"
 msgstr "เรียงแมตช์"
 
@@ -3320,7 +3317,7 @@ msgid "Star a player, country or continent to follow them here."
 msgstr "กดดาวที่ผู้เล่น ประเทศ หรือทวีป เพื่อติดตามที่นี่"
 
 #. Match sort option (default): matches in order of play, grouped by start hour
-#: src/pages/tournament/components/matches/FilterBars.tsx
+#: src/pages/tournament/constants.ts
 msgid "Start time"
 msgstr "เวลาเริ่ม"
 
@@ -4001,8 +3998,8 @@ msgstr "โลกและทัวร์"
 msgid "World rank"
 msgstr "อันดับโลก"
 
-#. A medalist’s current world ranking, e.g. “World rank #3”
-#: src/pages/tournament/components/PodiumTab.tsx
+#. A player’s current world ranking, e.g. “World rank #3”
+#: src/components/player/RankMarks.tsx
 msgid "World rank <0>{position}</0>"
 msgstr "อันดับโลก <0>{position}</0>"
 
@@ -4048,10 +4045,10 @@ msgstr "ข่าว World Tour"
 msgid "World Tour W–L"
 msgstr "ชนะ–แพ้ World Tour"
 
-#. Search result hint: the player’s current BWF world ranking and discipline code, e.g. "WR #3 · MS". WR is short for world ranking; keep it short
-#: src/utils/search.ts
-msgid "WR #{rank} · {event}"
-msgstr "อันดับ #{rank} · {event}"
+#. Compact world ranking mark after a player’s name on match cards, e.g. “WR6”. WR is short for world ranking; keep it as short as possible and keep the number inside the tags
+#: src/components/player/RankMarks.tsx
+msgid "WR<0>{rank}</0>"
+msgstr "อันดับ #<0>{rank}</0>"
 
 #. Button on the About page season map that zooms the map in
 #: src/pages/about/components/MapControls.tsx

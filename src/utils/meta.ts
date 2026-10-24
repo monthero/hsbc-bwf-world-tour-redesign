@@ -147,7 +147,7 @@ export const tournamentMeta = (_: Translate, t: Tournament): DocumentMeta => ({
   image: t.header,
 });
 
-const PLAYER_RANK = msg({
+export const PLAYER_RANK = msg({
   message: '{discipline} world No. {rank}',
   comment: 'One world ranking of a player, e.g. "Men’s singles world No. 1"',
 });

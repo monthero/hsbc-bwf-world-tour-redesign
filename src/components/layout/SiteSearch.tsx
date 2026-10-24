@@ -18,7 +18,7 @@ import {
 } from 'react';
 
 import { Flag } from '~/components/country';
-import { PlayerAvatar, PlayerName, RetiredBadge } from '~/components/player';
+import { PlayerAvatar, PlayerName, RetiredBadge, WorldRankTag } from '~/components/player';
 import { LevelBadge, LogoTile, TournamentStatusBadge } from '~/components/tournament';
 import { BottomSheet, IconClose, IconSearch, SearchField } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
@@ -27,7 +27,7 @@ import { useSiteSearch, type SiteSearchResults } from '~/hooks/useSiteSearch';
 import { useSearchStore } from '~/stores/search';
 import type { Tournament } from '~/types';
 import { MOD_KEY } from '~/utils/platform';
-import { standingHint } from '~/utils/search';
+import { careerHighHint } from '~/utils/search';
 
 import classes from './SiteSearch.module.css';
 import utils from '~/styles/utils.module.css';
@@ -54,7 +54,14 @@ const useOpenResult = () => {
 };
 
 const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, standing, retired } }) => {
-  const hint = standingHint(standing);
+  const { current } = standing;
+  const hint = current ? (
+    <>
+      <WorldRankTag rank={current.rank} variant="label" /> · {current.ev}
+    </>
+  ) : (
+    careerHighHint(standing)
+  );
   return (
     <Combobox.Option value={`p${SEP}${player.id}`} className={classes.option}>
       <PlayerAvatar player={player} size={34} />
@@ -67,7 +74,7 @@ const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, stan
         </span>
       </span>
       {hint && (
-        <span className={clsx(utils.num, classes.rank)} data-current={standing.current ? true : undefined}>
+        <span className={clsx(utils.num, classes.rank)} data-current={current ? true : undefined}>
           {hint}
         </span>
       )}

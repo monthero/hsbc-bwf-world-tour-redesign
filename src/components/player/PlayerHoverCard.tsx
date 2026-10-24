@@ -20,8 +20,8 @@ import { Equipment } from './Equipment';
 import { PlayerAvatar } from './PlayerAvatar';
 import { PlayerName } from './PlayerName';
 import { RankCard } from './Rank';
+import { SeedTag } from './RankMarks';
 import { RetiredBadge } from './RetiredBadge';
-import { SeedTag } from './SeedTag';
 
 import classes from './PlayerHoverCard.module.css';
 import utils from '~/styles/utils.module.css';

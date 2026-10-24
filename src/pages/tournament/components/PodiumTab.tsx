@@ -4,13 +4,12 @@ import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
 import { TeamPlayers, TimedStatus } from '~/components/match';
-import { AvatarGroup, SeedTag } from '~/components/player';
+import { AvatarGroup, SeedTag, WorldRankTag } from '~/components/player';
 import { Medal } from '~/components/tournament';
 import { SectionTitle, Tip } from '~/components/ui';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
 import { DARK_SCOPE_PROPS } from '~/theme';
 import type { EventCode, PlayerDirectory, Team } from '~/types';
-import { formatRank } from '~/utils/format';
 import { playerPhoto } from '~/utils/players';
 import { worldRank } from '~/utils/rankings';
 
@@ -34,11 +33,6 @@ const MISSING_TIP = msg({
   comment: 'Tooltip on a seed with no matches in the How the seeds did card',
 });
 
-const RANK_TIP = msg({
-  message: 'Current BWF World Ranking in this category',
-  comment: 'Tooltip on a medalist’s world rank. Category means the event, e.g. men’s singles',
-});
-
 const TBD = (
   <Trans comment="Podium place whose winner isn’t known yet because the match hasn’t been played">To be decided</Trans>
 );
@@ -50,27 +44,11 @@ interface PlaceProps {
 }
 
 const TeamStats: FC<{ team: Team; event: EventCode; dir: PlayerDirectory | undefined }> = ({ team, event, dir }) => {
-  const { i18n } = useLingui();
   const rank = worldRank(dir, team.players, event);
-  const seeded = !!team.seed;
-  if (!rank && !seeded) return null;
-  const position = formatRank(rank);
+  if (!rank && !team.seed) return null;
   return (
     <span className={classes.stats}>
-      {!!rank && (
-        <Tip label={i18n._(RANK_TIP)}>
-          <span className={classes.rank}>
-            <Trans comment="A medalist’s current world ranking, e.g. “World rank #3”">
-              World rank <b>{position}</b>
-            </Trans>
-          </span>
-        </Tip>
-      )}
-      {!!rank && seeded && (
-        <span className={classes.sep} aria-hidden>
-          ·
-        </span>
-      )}
+      <WorldRankTag rank={rank} variant="label" />
       <SeedTag seed={team.seed} variant="label" />
     </span>
   );

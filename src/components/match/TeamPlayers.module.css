@@ -90,6 +90,17 @@
   align-self: center;
 }
 
+.badge {
+  grid-column: seed;
+  grid-row: 1;
+  align-self: center;
+  display: flex;
+
+  .team[data-pair] > & {
+    grid-row: 1 / span 2;
+  }
+}
+
 .aside {
   grid-column: aside;
   grid-row: 1;

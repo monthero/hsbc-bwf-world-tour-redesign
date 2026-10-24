@@ -4,7 +4,7 @@ import { Fragment, memo, type FC, type ReactNode } from 'react';
 
 import { Flag, type FlagSize } from '~/components/country';
 import { PlayerName } from '~/components/player/PlayerName';
-import { SeedTag } from '~/components/player/SeedTag';
+import { SeedTag } from '~/components/player/RankMarks';
 import type { Player } from '~/types';
 
 import { TBD } from './labels';
@@ -30,6 +30,7 @@ export const TeamPlayers = memo<{
   mark?: (p: Player, i: number) => ReactNode;
   aside?: ReactNode;
   end?: ReactNode;
+  badge?: ReactNode;
   className?: string;
   nameClassName?: string;
 }>(
@@ -48,11 +49,12 @@ export const TeamPlayers = memo<{
     mark,
     aside,
     end,
+    badge,
     className,
     nameClassName,
   }) => {
     const { i18n } = useLingui();
-    const pairSeed = !!seed && layout === 'stack' && players.length > 1;
+    const pairSeed = !badge && !!seed && layout === 'stack' && players.length > 1;
     const blank = empty === undefined ? i18n._(TBD) : empty;
     return (
       <span
@@ -61,7 +63,7 @@ export const TeamPlayers = memo<{
         data-align={align}
         data-truncate={truncate || undefined}
         data-wrap={wrap || undefined}
-        data-pair-seed={pairSeed || undefined}
+        data-pair-seed={pairSeed || !!badge || undefined}
         data-pair={players.length > 1 || undefined}
         data-slots={!!(aside || end) || undefined}
         data-marks={!!mark || undefined}
@@ -70,7 +72,7 @@ export const TeamPlayers = memo<{
           ? players.map((p, i) => {
               const trail = (
                 <>
-                  {i === 0 && !pairSeed && <SeedTag seed={seed} />}
+                  {i === 0 && !pairSeed && !badge && <SeedTag seed={seed} />}
                   {after?.(p, i)}
                 </>
               );
@@ -100,6 +102,7 @@ export const TeamPlayers = memo<{
             })
           : blank && <span className={classes.player}>{blank}</span>}
         {pairSeed && <SeedTag seed={seed} className={classes.pairSeed} />}
+        {badge && <span className={classes.badge}>{badge}</span>}
         {aside && <span className={classes.aside}>{aside}</span>}
         {end && <span className={classes.end}>{end}</span>}
       </span>

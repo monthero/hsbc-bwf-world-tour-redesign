@@ -4,20 +4,14 @@ import { memo, type FC } from 'react';
 
 import { TeamFollow } from '~/components/follow';
 import { EventTag, TeamPlayers, TimedStatus } from '~/components/match';
+import { WorldRankTag } from '~/components/player';
 import { CardHit, Tip } from '~/components/ui';
-import { formatRank } from '~/utils/format';
 import { detailsLabel, isScheduled, teamLabel } from '~/utils/matches';
 
 import { entryStatus, type Entry, type LatestEntry } from './entries';
 
 import classes from './Players.module.css';
 import utils from '~/styles/utils.module.css';
-
-const RANK_TIP = (
-  <Trans comment="Tooltip on an entry’s world rank. Category means the event, e.g. men’s singles">
-    BWF World Ranking in this category
-  </Trans>
-);
 
 const QUALIFIER = (
   <Tip
@@ -38,12 +32,9 @@ const QUALIFIER = (
   </Tip>
 );
 
-export const EntryRank: FC<{ rank: number; className?: string }> = ({ rank, className }) =>
-  rank > 0 ? (
-    <Tip label={RANK_TIP}>
-      <span className={clsx(utils.raise, classes.rank, className)}>{formatRank(rank)}</span>
-    </Tip>
-  ) : null;
+export const EntryRank: FC<{ rank: number; className?: string }> = ({ rank, className }) => (
+  <WorldRankTag rank={rank} className={clsx(utils.raise, className)} />
+);
 
 export const EntryStatus: FC<{ entry: LatestEntry; withStage?: boolean }> = ({ entry, withStage = true }) => {
   const status = entryStatus(entry);

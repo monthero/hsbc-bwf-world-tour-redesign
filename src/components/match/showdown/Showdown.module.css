@@ -384,9 +384,11 @@
   }
 }
 
-.plateSeed {
-  font-size: 13px;
+.plate > .plateMarks {
+  padding: 5px 8px;
+  border-radius: 4px;
   background: alpha(var(--bwf-bg-sunken), 0.75);
+  font-size: 12px;
 }
 
 .names {

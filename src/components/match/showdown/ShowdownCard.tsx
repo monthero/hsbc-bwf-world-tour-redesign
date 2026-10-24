@@ -6,7 +6,7 @@ import { memo, useCallback, useMemo, type FC, type ReactNode, type Ref } from 'r
 
 import { PlayerFollow } from '~/components/follow';
 import { PlayerAvatar } from '~/components/player/PlayerAvatar';
-import { SeedTag } from '~/components/player/SeedTag';
+import { RankSeed } from '~/components/player/RankMarks';
 import { Medal } from '~/components/tournament/Medal';
 import {
   COURT_VIEWBOX,
@@ -19,6 +19,7 @@ import {
   StatusChip,
   Tip,
 } from '~/components/ui';
+import { usePlayerDirectory } from '~/hooks/usePlayers';
 import { DARK_SCOPE_PROPS } from '~/theme';
 import type { Game, Player, Side } from '~/types';
 import {
@@ -31,6 +32,7 @@ import {
   type ChallengeOutcome,
 } from '~/utils/live';
 import { formatGames, gameWon, noteLabel, noteTip, opposite } from '~/utils/matches';
+import { worldRank } from '~/utils/rankings';
 
 import { ChallengeStocks } from '../ChallengeStocks';
 import { ScheduledStart } from '../MatchTime';
@@ -137,8 +139,15 @@ const SoloPlate = memo<{
 
 const Corner = memo<{ view: ShowdownView; side: Side; follow?: boolean }>(({ view: v, side, follow }) => {
   const s = v.live.sides[side];
-  const server = v.live.server;
-  const receiver = v.live.receiver;
+  const { players } = s.team;
+  const { data: dir } = usePlayerDirectory();
+  const rank = worldRank(dir, players, v.match.event);
+  const pair = players.length > 1 || undefined;
+  const play = v.phase === 'play';
+  const serving = play && s.serving;
+  const solo = !pair && players.at(0)?.id;
+  const server = v.live.server ?? (serving ? solo : undefined);
+  const receiver = pair && v.live.receiver;
   const after = useCallback(
     (p: Player) => {
       if (p.id === server) return <ServeMark size={16} className={utils.raise} />;
@@ -146,23 +155,22 @@ const Corner = memo<{ view: ShowdownView; side: Side; follow?: boolean }>(({ vie
     },
     [server, receiver],
   );
-  const teamServe = v.phase === 'play' && !server && s.serving;
-  const pair = s.team.players.length > 1 || undefined;
+  const teamServe = serving && !server;
   return (
     <div className={classes.corner} data-side={side} data-out={(v.winner !== null && v.winner !== side) || undefined}>
       <span className={classes.portrait} data-pair={pair}>
-        {s.team.players.map((p) => (
+        {players.map((p) => (
           <PlayerAvatar key={p.id || p.name} player={p} className={classes.photo} />
         ))}
       </span>
       <span className={classes.split} data-pair={pair}>
-        {s.team.players.map((p) => (
+        {players.map((p) => (
           <SoloPlate key={p.id || p.name} player={p} side={side} mark={server || receiver ? after : undefined} />
         ))}
       </span>
-      {follow && <Follows players={s.team.players} />}
+      {follow && <Follows players={players} />}
       <div className={classes.plate}>
-        <SeedTag seed={s.team.seed} variant="circle" className={classes.plateSeed} />
+        <RankSeed rank={rank} seed={s.team.seed} event={v.match.event} className={classes.plateMarks} />
         {teamServe && <ServeMark size={16} className={utils.raise} />}
         <SideMedal match={v.match} side={side} size={22} className={utils.raise} />
       </div>

@@ -1,4 +1,4 @@
-.seed {
+.mark {
   position: relative;
   z-index: 1;
   flex: none;
@@ -6,31 +6,68 @@
   font-size: 11px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   cursor: help;
 
-  &[data-variant='pill'] {
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: light-dark(var(--bwf-raised), alpha(var(--bwf-green), 0.14));
+  &[data-kind='rank'] {
+    color: var(--bwf-gold-accent);
   }
 
-  &[data-variant='circle'] {
-    display: inline-grid;
-    place-items: center;
-    box-sizing: border-box;
-    width: 1.9em;
-    height: 1.9em;
-    padding: 0;
-    border: 1.5px solid currentColor;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 700;
+  &[data-variant='pill'] {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 999px;
     line-height: 1;
+    background: light-dark(var(--bwf-raised), alpha(var(--bwf-green), 0.14));
   }
 
   &[data-variant='label'] {
     font-size: inherit;
-    font-weight: inherit;
     color: inherit;
   }
+}
+
+.visual {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+}
+
+.icon {
+  flex: none;
+  font-size: 1.15em;
+}
+
+.rankSeed {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  white-space: nowrap;
+
+  gap: 6px;
+}
+
+.wr {
+  color: var(--bwf-faint);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: help;
+
+  b {
+    margin-inline-start: 1px;
+    color: var(--bwf-dim);
+    font-weight: 700;
+  }
+}
+
+.drawSeed {
+  color: light-dark(var(--bwf-text-3), var(--bwf-green));
+  cursor: help;
 }

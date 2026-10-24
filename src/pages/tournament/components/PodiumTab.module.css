@@ -107,14 +107,6 @@
     .stats {
       color: alpha(var(--mantine-color-white), 0.78);
     }
-
-    .rank b {
-      color: var(--mantine-color-white);
-    }
-
-    .sep {
-      color: alpha(var(--mantine-color-white), 0.45);
-    }
   }
 }
 
@@ -183,21 +175,6 @@
   font-weight: 500;
   line-height: 1.35;
   color: var(--bwf-text-3);
-}
-
-.rank {
-  cursor: help;
-
-  b {
-    margin-inline-start: 2px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    color: var(--bwf-text);
-  }
-}
-
-.sep {
-  color: var(--bwf-sep);
 }
 
 .list {
