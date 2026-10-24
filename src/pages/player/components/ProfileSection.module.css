@@ -1,31 +1,10 @@
-.links {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 4px;
+.follow {
   align-self: center;
-  margin-block: -8px;
-  margin-inline-end: -8px;
-}
-
-.social {
-  position: relative;
-  z-index: 1;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  color: var(--bwf-muted);
-  text-decoration: none;
-  transition:
-    color 0.15s,
-    background 0.15s;
-
-  &:hover {
-    color: var(--bwf-text);
-    background: var(--bwf-surface-3);
-  }
+  gap: 6px;
+  margin-block: -8px;
+  margin-inline-end: -8px;
 }
 
 .facts {

@@ -22,6 +22,7 @@ import { PlayerName } from './PlayerName';
 import { RankCard } from './Rank';
 import { SeedTag } from './RankMarks';
 import { RetiredBadge } from './RetiredBadge';
+import { SocialLinks } from './SocialLinks';
 
 import classes from './PlayerHoverCard.module.css';
 import utils from '~/styles/utils.module.css';
@@ -121,6 +122,7 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
             {player.cc && <CountryLabel cc={player.cc} flagSize="sm" />}
             <SeedTag seed={seed} variant="pill" />
             <RetiredBadge retired={retired} />
+            <SocialLinks links={bio.links} size="sm" className={classes.socials} />
           </span>
         </div>
       </div>

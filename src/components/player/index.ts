@@ -10,3 +10,4 @@ export { RankedNames } from './RankedNames';
 export { RetiredBadge } from './RetiredBadge';
 export { QualifyMark, RaceQualifier, RankChange, RankValue } from './Rank';
 export { RankSeed, SeedTag, WorldRankTag } from './RankMarks';
+export { SocialLinks } from './SocialLinks';

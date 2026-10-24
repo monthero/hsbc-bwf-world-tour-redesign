@@ -3275,6 +3275,12 @@ msgstr "{month}부터"
 msgid "Since {start}"
 msgstr "{start}부터"
 
+#. Label before a player’s Instagram and Facebook icon links, like “Socials”
+#: src/pages/player/components/ProfileSection.tsx
+msgctxt "social media"
+msgid "Socials"
+msgstr "SNS"
+
 #. Browser tab title when a page fails to load
 #: src/utils/meta.ts
 msgid "Something went wrong"

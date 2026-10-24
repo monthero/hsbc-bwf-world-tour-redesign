@@ -121,3 +121,8 @@
   font-size: 11px;
   color: var(--bwf-faint);
 }
+
+.socials {
+  margin-block: -5px;
+  margin-inline-start: -2px;
+}

@@ -1,0 +1,31 @@
+.links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.social {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  color: var(--bwf-muted);
+  text-decoration: none;
+  transition:
+    color 0.15s,
+    background 0.15s;
+
+  &:hover {
+    color: var(--bwf-text);
+    background: var(--bwf-surface-3);
+  }
+
+  &[data-size='sm'] {
+    min-width: 26px;
+    height: 26px;
+  }
+}

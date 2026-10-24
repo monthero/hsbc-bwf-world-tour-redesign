@@ -1,10 +1,10 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Spoiler } from '@mantine/core';
 import { clsx } from 'clsx';
-import { memo, type FC } from 'react';
+import { memo } from 'react';
 
-import { FactLabel, FactTip } from '~/components/player';
-import { IconCollapse, IconExpand, IconFacebook, IconInstagram, Tip, type IconProps } from '~/components/ui';
+import { FactLabel, FactTip, SocialLinks } from '~/components/player';
+import { IconCollapse, IconExpand } from '~/components/ui';
 import type { BioView, FactItem } from '~/types';
 
 import { hasProfile } from '../utils';
@@ -17,7 +17,6 @@ const AMBITION_HEIGHT = 88;
 const SPOILER = { control: clsx(shared.link, classes.toggle) };
 const SHOW = <IconExpand size={16} />;
 const HIDE = <IconCollapse size={16} />;
-const SOCIAL_ICONS: Partial<Record<string, FC<IconProps>>> = { instagram: IconInstagram, facebook: IconFacebook };
 
 export const ProfileSection = memo<{ bio: BioView }>(({ bio }) => {
   const { t } = useLingui();
@@ -27,10 +26,16 @@ export const ProfileSection = memo<{ bio: BioView }>(({ bio }) => {
       label={<Trans comment="Section title: the player’s biography facts, quote and social links">Profile</Trans>}
       aside={
         bio.links.length > 0 && (
-          <span className={classes.links}>
-            {bio.links.map((l) => (
-              <Social key={l.key} link={l} />
-            ))}
+          <span className={classes.follow}>
+            <span className={shared.label}>
+              <Trans
+                context="social media"
+                comment="Label before a player’s Instagram and Facebook icon links, like “Socials”"
+              >
+                Socials
+              </Trans>
+            </span>
+            <SocialLinks links={bio.links} />
           </span>
         )
       }
@@ -77,14 +82,3 @@ const Fact = memo<{ item: FactItem }>(({ item: f }) => (
     </div>
   </FactTip>
 ));
-
-const Social = memo<{ link: FactItem }>(({ link: l }) => {
-  const Icon = SOCIAL_ICONS[l.key];
-  return (
-    <Tip label={l.label} tap={false}>
-      <a href={l.value} target="_blank" rel="noreferrer" aria-label={l.label} className={classes.social}>
-        {Icon ? <Icon size={18} /> : l.label}
-      </a>
-    </Tip>
-  );
-});
