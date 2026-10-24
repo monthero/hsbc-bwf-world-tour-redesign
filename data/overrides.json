@@ -557,14 +557,11 @@
       }
     },
     "60321": {
-      "hero": "https://djarumbadminton.com/assets/_processed_/0/b/csm_2026_02_13-ubed_52079ac8a5.jpg",
-      "heroFocus": {
-        "x": 59,
-        "y": 33
-      },
+      "hero": "https://cdn1-production-images-kly.akamaized.net/uOuVFXh5o6H_WxpnqH2j7lCKUY4=/0x0:4160x2345/1200x675/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/5489915/original/053126100_1769947793-WhatsApp_Image_2026-02-01_at_18.50.32.jpeg",
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
-        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0",
+        "instagram": "https://www.instagram.com/popular/zaki-ubaidillah/"
       }
     },
     "60335": {
@@ -589,11 +586,11 @@
       "bio": {
         "height": 187,
         "racket": "3e5da6f4-ccb1-4644-a0c3-003af71b2573",
-        "achievements": "Thomas Cup 2026 – bronze (men's team); European Championships 2025 – bronze (MD); European Championships 2025 – bronze (XD); European Championships 2026 – bronze (MD); European Mixed Team Championships 2025 – gold (mixed team); European Team Championships 2024 – gold (men's team); European Team Championships 2026 – silver (men's team)",
         "racketNote": "4U",
-        "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
         "tension": "31",
-        "shoes": "dceb8ad7-da91-4c41-a0d6-6d1bd1602d5a"
+        "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
+        "shoes": "dceb8ad7-da91-4c41-a0d6-6d1bd1602d5a",
+        "achievements": "Thomas Cup 2026 – bronze (men's team); European Championships 2025 – bronze (MD); European Championships 2025 – bronze (XD); European Championships 2026 – bronze (MD); European Mixed Team Championships 2025 – gold (mixed team); European Team Championships 2024 – gold (men's team); European Team Championships 2026 – silver (men's team)"
       }
     },
     "60838": {
@@ -1052,11 +1049,11 @@
         "plays": "R",
         "birthplace": "Hillerød",
         "racket": "66590a6a-8a13-48f4-9e57-f5938b4d048b",
-        "achievements": "Thomas Cup 2026 – bronze (Men's team); European Championships 2025 – bronze (Men's doubles); European Championships 2026 – bronze (Men's doubles); European Mixed Team Championships 2025 – gold (Mixed team); European Men's Team Championships 2024 – gold (Men's team); European Men's Team Championships 2026 – silver (Men's team)",
         "racketNote": "5U",
-        "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
         "tension": "33",
-        "shoes": "ed678178-793b-4b6b-8e57-6fbf93d52bbe"
+        "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
+        "shoes": "ed678178-793b-4b6b-8e57-6fbf93d52bbe",
+        "achievements": "Thomas Cup 2026 – bronze (Men's team); European Championships 2025 – bronze (Men's doubles); European Championships 2026 – bronze (Men's doubles); European Mixed Team Championships 2025 – gold (Mixed team); European Men's Team Championships 2024 – gold (Men's team); European Men's Team Championships 2026 – silver (Men's team)"
       }
     },
     "68282": {
@@ -2072,6 +2069,7 @@
       }
     },
     "85914": {
+      "retired": "2026-10",
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1651/v1786444758/wordpress_assets_test/20260613_1710_AustralianOpen2026_BPPF4623/20260613_1710_AustralianOpen2026_BPPF4623.jpg",
       "heroFocus": {
         "x": 59,
@@ -2573,23 +2571,24 @@
       }
     },
     "94580": {
-      "photo": "https://stbadmintonacademy.my/wp-content/uploads/2025/11/Alex-Lanier-France-professional-badminton-player-mens-singles-champion-in-action.jpg",
-      "hero": "https://cassette.sphdigital.com.sg/image/straitstimes/48acb8886b10d88268af38c22c612525332039e9507aa6ec0866171a5764e634",
+      "photo": "https://images.indianexpress.com/2026/08/Lanier.jpg",
+      "hero": "https://www.radiofrance.fr/pikapi/images/6d44f118-dea3-4374-b214-178b70539616/2048",
       "heroFocus": {
-        "x": 44,
-        "y": 9
+        "x": 57,
+        "y": 56
       },
       "photoCrop": {
-        "x": 100,
-        "y": 0,
-        "zoom": 1.1
+        "x": 52.6,
+        "y": 17.7,
+        "zoom": 1.45
       },
       "bio": {
         "racket": "f46fd698-718f-4a78-ad2c-a6244df7c794",
         "racketNote": "4U",
         "tension": "29.76",
         "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5",
-        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0",
+        "instagram": "https://www.instagram.com/alexlanier.bad/"
       }
     },
     "94780": {
