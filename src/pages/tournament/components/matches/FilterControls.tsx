@@ -6,6 +6,8 @@ import { FilterChip, LiveDot, SearchField, Segmented, StarButton, type Segmented
 import type { TournamentDay } from '~/types';
 import { centerChild } from '~/utils/scroll';
 
+import { SORT_LABELS } from '../../constants';
+import type { MatchSort } from '../../types';
 import type { MatchFilters } from './useMatchFilters';
 import type { CourtChipModel, EventChipModel } from './utils';
 
@@ -32,6 +34,21 @@ interface ChipsProps {
   variant: FilterVariant;
   className?: string;
 }
+
+export const SortChips = memo<
+  ChipsProps & { sorts: MatchSort[]; sort: MatchSort; onChange: (sort: MatchSort) => void }
+>(({ sorts, sort, onChange, variant, className }) => {
+  const { i18n } = useLingui();
+  return (
+    <div className={clsx(utils.noScrollbar, classes.chips, className)} data-variant={variant}>
+      {sorts.map((s) => (
+        <FilterChip key={s} size={SIZE[variant]} active={s === sort} onClick={() => onChange(s)}>
+          {i18n._(SORT_LABELS[s])}
+        </FilterChip>
+      ))}
+    </div>
+  );
+});
 
 export const EventChips = memo<ChipsProps & { chips: EventChipModel[]; onToggle: MatchFilters['toggleEvent'] }>(
   ({ chips, onToggle, variant, className }) => {

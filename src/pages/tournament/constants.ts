@@ -3,7 +3,7 @@ import { msg } from '@lingui/core/macro';
 
 import type { MedalKind } from '~/types';
 
-import type { TournamentTab } from './types';
+import type { MatchSort, TournamentTab } from './types';
 
 export const TAB_LABELS: Record<TournamentTab, MessageDescriptor> = {
   overview: msg({ message: 'Overview', comment: 'Tournament page tab: dates, venue, schedule and past winners' }),
@@ -142,3 +142,22 @@ export const FOLLOW_HINT = msg({
   message: 'Star a player or country in Players or on any match to see their next matches here.',
   comment: 'Hint in the Following today card when the visitor follows nobody. Players is the tab name',
 });
+
+export const SORT_TITLE = msg({
+  message: 'Sort matches',
+  comment: 'Match list: icon button, menu and sheet title for choosing how matches are ordered and grouped',
+});
+
+export const SORT_LABELS: Record<MatchSort, MessageDescriptor> = {
+  time: msg({
+    message: 'Start time',
+    comment: 'Match sort option (default): matches in order of play, grouped by start hour',
+  }),
+  court: msg({ message: 'Court', comment: 'Match filters: label above the court number chips' }),
+  event: msg({ message: 'Category', comment: 'Match filters: label above the event chips (MS, WS, MD, WD, XD)' }),
+  round: msg({ message: 'Round', comment: 'Match sort option: matches grouped by round of the draw, earliest first' }),
+  following: msg({
+    message: 'Followed first',
+    comment: 'Match sort option: matches with players or countries the visitor follows come first',
+  }),
+};

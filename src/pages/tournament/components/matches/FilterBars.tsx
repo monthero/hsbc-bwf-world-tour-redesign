@@ -1,5 +1,3 @@
-import type { MessageDescriptor } from '@lingui/core';
-import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { memo, useMemo, type FC } from 'react';
 
@@ -15,6 +13,7 @@ import {
 } from '~/components/ui';
 import type { TournamentDay } from '~/types';
 
+import { SORT_LABELS, SORT_TITLE } from '../../constants';
 import type { MatchSort } from '../../types';
 import {
   ClearButton,
@@ -24,6 +23,7 @@ import {
   EventChips,
   FilterSearch,
   FollowToggle,
+  SortChips,
   type FilterVariant,
 } from './FilterControls';
 import type { MatchFilters } from './useMatchFilters';
@@ -38,25 +38,6 @@ const PillDay: FC<{ day: TournamentDay }> = ({ day: { shortLabel: day, month } }
     </Trans>
   </span>
 );
-
-const SORT_TITLE = msg({
-  message: 'Sort matches',
-  comment: 'Match list: icon button, menu and sheet title for choosing how matches are ordered and grouped',
-});
-
-const SORT_LABELS: Record<MatchSort, MessageDescriptor> = {
-  time: msg({
-    message: 'Start time',
-    comment: 'Match sort option (default): matches in order of play, grouped by start hour',
-  }),
-  court: msg({ message: 'Court', comment: 'Match filters: label above the court number chips' }),
-  event: msg({ message: 'Category', comment: 'Match filters: label above the event chips (MS, WS, MD, WD, XD)' }),
-  round: msg({ message: 'Round', comment: 'Match sort option: matches grouped by round of the draw, earliest first' }),
-  following: msg({
-    message: 'Followed first',
-    comment: 'Match sort option: matches with players or countries the visitor follows come first',
-  }),
-};
 
 const SORT_ICON: Record<Exclude<FilterVariant, 'sheet'>, number> = { inline: 16, compact: 14 };
 
@@ -154,6 +135,7 @@ export const CondensedFilters = memo<BarProps & { days: TournamentDay[]; visible
 
 export const MobileFilters = memo<BarProps & { days: TournamentDay[]; visible: boolean }>(
   ({ filters: f, view, days, visible }) => {
+    const { i18n } = useLingui();
     const d = days[f.day];
     return (
       <FilterSheet
@@ -173,6 +155,11 @@ export const MobileFilters = memo<BarProps & { days: TournamentDay[]; visible: b
         {view.courtChips.length > 0 && (
           <FilterField label={<Trans comment="Match filters: label above the court number chips">Court</Trans>}>
             <CourtChips variant="sheet" chips={view.courtChips} onToggle={f.toggleCourt} />
+          </FilterField>
+        )}
+        {view.sorts.length > 1 && (
+          <FilterField label={i18n._(SORT_TITLE)}>
+            <SortChips variant="sheet" sorts={view.sorts} sort={view.sort} onChange={f.setSort} />
           </FilterField>
         )}
         <div className={classes.searchRow}>
