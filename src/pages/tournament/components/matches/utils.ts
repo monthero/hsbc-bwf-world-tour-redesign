@@ -170,6 +170,12 @@ const toSection = (list: Match[], sort: MatchSort, c: SortContext): MatchSection
   };
 };
 
+const flatSection = (list: Match[]): MatchSection => ({
+  count: list.length,
+  rounds: roundsOf(list),
+  groups: [{ key: 'all', label: '', items: list }],
+});
+
 const distinct = (list: readonly Match[], keyOf: (m: Match) => unknown) => new Set(list.map(keyOf)).size;
 
 interface SortSupport {
@@ -236,7 +242,8 @@ export const buildView = (
   const sort = sorts.includes(sorting.sort) ? sorting.sort : 'time';
   const context = { clock, followed: sorting.followed };
   const upcoming = toSection(list.filter(isUpcoming), sort, context);
-  const results = toSection(list.filter(isSettled), sort, context);
+  const settled = list.filter(isSettled);
+  const results = sort === MatchSort.enum.time ? flatSection(settled) : toSection(settled, sort, context);
   return {
     evChips,
     courtChips,

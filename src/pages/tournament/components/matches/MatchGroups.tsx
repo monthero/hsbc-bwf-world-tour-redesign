@@ -34,10 +34,12 @@ export const MatchGroups = memo<{
         </SectionTitle>
         {section.groups.map((g) => (
           <div key={g.key} className={classes.group}>
-            <div className={classes.groupHead}>
-              <span className={clsx(classes.groupLabel, utils.ellipsis)}>{g.label}</span>
-              <span className={classes.rule} />
-            </div>
+            {g.label && (
+              <div className={classes.groupHead}>
+                <span className={clsx(classes.groupLabel, utils.ellipsis)}>{g.label}</span>
+                <span className={classes.rule} />
+              </div>
+            )}
             <div className={classes.grid}>
               {g.items.map((m) => (
                 <MatchCard key={m.id} match={m} next={next.get(m.id)} replay={replays?.get(m.id)} onOpen={onOpen} />
