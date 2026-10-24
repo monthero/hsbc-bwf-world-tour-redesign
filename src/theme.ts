@@ -146,16 +146,16 @@ const silver: MantineColorsTuple = [
   '#494a4e',
 ];
 const bronze: MantineColorsTuple = [
-  '#f8e8dc',
-  '#f2d7c3',
-  '#edc7aa',
-  '#e8b692',
-  '#e3a679',
-  '#c5916a',
-  '#a87b5b',
-  '#8a664c',
-  '#6c513d',
-  '#4f3b2f',
+  '#fbeadf',
+  '#f5d3be',
+  '#efbb9c',
+  '#e9a37b',
+  '#dc8550',
+  '#c46f3c',
+  '#a85c30',
+  '#8a4b27',
+  '#6c3b1f',
+  '#4f2c18',
 ];
 
 const gray: MantineColorsTuple = [
@@ -412,8 +412,8 @@ const LIGHT_MEDALS = {
   goldText: '#806000',
   silver: '#8e9aab',
   silverText: '#4b5767',
-  bronze: '#c27a43',
-  bronzeText: '#8f4a1c',
+  bronze: '#b8642d',
+  bronzeText: '#8a4114',
 };
 
 const LIGHT_NEUTRALS = {
