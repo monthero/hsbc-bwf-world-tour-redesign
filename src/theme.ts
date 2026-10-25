@@ -466,7 +466,7 @@ const LIGHT_COLORS: typeof DARK_COLORS = {
   '--bwf-win-line': c('leaf', 6),
   '--bwf-loss': mix(c('red', 6), c('red', 7), 40),
   '--bwf-loss-bg': c('red', 0),
-  '--bwf-loss-soft': mix(c('red', 6), c('gray', 1), 60),
+  '--bwf-loss-soft': c('red', 6),
   '--bwf-glass-bg': tint(LIGHT_NEUTRALS.surface, 86),
   '--bwf-sep': mix(c('gray', 5), c('gray', 6), 50),
   '--bwf-green': mix(c('leaf', 6), c('leaf', 7), 50),

@@ -78,16 +78,6 @@
   }
 }
 
-.edge {
-  &[data-edge='ahead'] {
-    color: var(--bwf-win);
-  }
-
-  &[data-edge='behind'] {
-    color: var(--bwf-loss);
-  }
-}
-
 .track {
   position: relative;
   height: 4px;

@@ -38,7 +38,7 @@
 }
 
 .chip[data-state='win'] {
-  background: var(--bwf-win-tint);
+  background: light-dark(alpha(var(--bwf-win), 0.2), var(--bwf-win-tint));
 
   & .me {
     font-weight: 700;
@@ -46,20 +46,20 @@
   }
 
   & .opp {
-    color: var(--bwf-faint);
+    color: light-dark(var(--bwf-muted), var(--bwf-faint));
   }
 }
 
 .chip[data-state='loss'] {
-  background: var(--bwf-loss-bg);
+  background: light-dark(alpha(var(--bwf-loss), 0.16), var(--bwf-loss-bg));
 
   & .me {
     font-weight: 500;
-    color: var(--bwf-dim);
+    color: light-dark(var(--bwf-muted), var(--bwf-dim));
   }
 
   & .opp {
-    color: var(--bwf-loss);
+    color: light-dark(var(--mantine-color-red-8), var(--bwf-loss));
   }
 }
 

@@ -1,7 +1,6 @@
 import { msg } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useDisclosure } from '@mantine/hooks';
-import { clsx } from 'clsx';
 import { memo, useMemo, type CSSProperties } from 'react';
 
 import { EventTag, TeamPlayers } from '~/components/match';
@@ -12,7 +11,7 @@ import { formatRecord } from '~/utils/format';
 
 import { PARTNER_LIMIT } from '../constants';
 import type { PartnerRow, RivalRow } from '../types';
-import { recordEdge, yearRange } from '../utils';
+import { yearRange } from '../utils';
 import { Section } from './parts';
 
 import classes from './People.module.css';
@@ -39,9 +38,7 @@ const HeadToHead = memo<{ wins: number; losses: number }>(({ wins, losses }) => 
   const label = i18n._({ ...WON_LOST_LABEL, values: { wins, losses } });
   return (
     <span className={classes.h2h} aria-label={label}>
-      <span className={clsx(classes.record, shared.edge)} data-edge={recordEdge(wins, losses)}>
-        {formatRecord(wins, losses)}
-      </span>
+      <span className={classes.record}>{formatRecord(wins, losses)}</span>
       <span className={classes.bar} style={style} aria-hidden />
     </span>
   );

@@ -21,13 +21,13 @@
   }
 
   &[data-outcome='W'] {
-    background: var(--bwf-win-tint);
-    color: var(--bwf-win);
+    background: light-dark(var(--bwf-win), var(--bwf-win-tint));
+    color: light-dark(var(--mantine-color-white), var(--bwf-win));
   }
 
   &[data-outcome='L'] {
-    background: var(--bwf-loss-bg);
-    color: var(--bwf-loss);
+    background: light-dark(var(--bwf-loss), var(--bwf-loss-bg));
+    color: light-dark(var(--mantine-color-white), var(--bwf-loss));
   }
 
   &[data-outcome='Live'] {
