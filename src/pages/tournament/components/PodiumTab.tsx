@@ -18,7 +18,6 @@ import { ChampionPhotos } from './Champions';
 
 import page from '../TournamentPage.module.css';
 import classes from './PodiumTab.module.css';
-import discipline from '~/styles/discipline.module.css';
 import utils from '~/styles/utils.module.css';
 
 const LINE_AVATAR = 32;
@@ -152,9 +151,7 @@ const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
 const CardHead: FC<{ data: PodiumEvent; note?: string }> = ({ data, note }) => {
   return (
     <div className={classes.head}>
-      <span className={clsx(classes.name, classes.eventName, discipline.tone)} data-event={data.event}>
-        {data.name}
-      </span>
+      <span className={classes.name}>{data.name}</span>
       {note && <span className={classes.note}>{note}</span>}
     </div>
   );
