@@ -103,8 +103,11 @@ export const entryStatus = (e: LatestEntry): { tone: SideResult; label: string }
 const qualifyingKeys = (matches: readonly Match[]) =>
   new Set(matches.filter((m) => !isMainDraw(m)).flatMap((m) => m.teams.map((t) => teamEventKey(m.event, t.key))));
 
-const drawnStage = (stage: EntryStage, drawn: boolean): EntryStage =>
-  drawn && (stage === 'qual' || stage === 'reserve') ? 'main' : stage;
+const listedStage = (stage: EntryStage, drawn: boolean, drawOut: boolean): EntryStage => {
+  if (drawn && (stage === 'qual' || stage === 'reserve')) return 'main';
+  if (!drawn && drawOut && stage === 'main') return 'withdrawn';
+  return stage;
+};
 
 export const latestEntries = (
   matches: readonly Match[],
@@ -112,6 +115,7 @@ export const latestEntries = (
   listed: readonly EntryListing[] | undefined,
 ): LatestEntry[] => {
   const drawn = latestByTeam(draw?.map((s) => s.match) ?? NO_MATCHES);
+  const drawnEvents = new Set([...drawn.values()].map((d) => d.match.event));
   const viaQual = qualifyingKeys(matches);
   const out = new Map<string, LatestEntry>();
   for (const { event, stage, rank, team } of listed ?? []) {
@@ -123,7 +127,7 @@ export const latestEntries = (
       team: d?.team ?? team,
       match: null,
       side: 0,
-      stage: drawnStage(stage, !!d),
+      stage: listedStage(stage, !!d, drawnEvents.has(event)),
       qualifier: !!d && stage === 'qual',
       listedRank: rank,
     });
