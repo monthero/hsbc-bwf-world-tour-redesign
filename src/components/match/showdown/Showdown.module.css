@@ -858,7 +858,12 @@
   }
 
   .names {
-    font-size: 15px;
+    font-size: clamp(13px, 4.2cqi, 15px);
+
+    img {
+      width: 1.1em;
+      height: auto;
+    }
   }
 
   .hub {
@@ -888,12 +893,29 @@
   }
 
   .rail {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
     padding: 10px 0 12px;
   }
 
+  .game {
+    grid-template-columns: auto auto auto;
+    gap: 2px;
+    padding: 2px;
+    border-radius: 8px;
+  }
+
   .gameValue {
-    padding: 2px 7px;
-    font-size: 16px;
+    padding: 2px 5px;
+    border-radius: 6px;
+    font-size: 15px;
+  }
+
+  .gameNo {
+    padding-inline: 3px;
+    font-size: 11px;
   }
 
   .stake {
@@ -915,12 +937,6 @@
   .duelLabel {
     font-size: 10px;
     letter-spacing: 0.1em;
-  }
-}
-
-@container showdown (width < 360px) {
-  .names {
-    font-size: 14px;
   }
 }
 
