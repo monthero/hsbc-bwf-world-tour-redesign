@@ -250,7 +250,9 @@ export const buildView = (
     upcoming,
     results,
     liveIn: list.length - upcoming.count - results.count,
-    ordered: GROUPERS[sort](list, context).flatMap((g) => g.items),
+    ordered: GROUPERS[sort](list, context)
+      .flatMap((g) => g.items)
+      .sort((a, b) => Number(b.status === 'P') - Number(a.status === 'P')),
     next: nextPerCourt(dayMatches),
     sort,
     sorts,
