@@ -1,3 +1,4 @@
+import type { TournamentRanks } from '~/api/schemas';
 import { QUALIFY_PER_COUNTRY, QUALIFY_SPOTS } from '~/constants';
 import type {
   CurrentRank,
@@ -22,14 +23,20 @@ export type Qualifiers = Partial<Record<EventCode, Set<number>>>;
 
 type RaceRows = RaceRankings['players'][string];
 
-export const worldRank = (dir: PlayerDirectory | undefined, players: readonly Player[], ev: EventCode) => {
+const bestRank = (players: readonly Player[], rankOf: (p: Player) => number) => {
   let best = 0;
   for (const p of players) {
-    const r = dir?.get(p.id)?.ranks?.find((c) => c.ev === ev)?.r ?? 0;
+    const r = rankOf(p);
     if (r > 0 && (!best || r < best)) best = r;
   }
   return best;
 };
+
+export const worldRank = (dir: PlayerDirectory | undefined, players: readonly Player[], ev: EventCode) =>
+  bestRank(players, (p) => dir?.get(p.id)?.ranks?.find((c) => c.ev === ev)?.r ?? 0);
+
+export const frozenRank = (ranks: TournamentRanks['ranks'], players: readonly Player[], ev: EventCode) =>
+  bestRank(players, (p) => ranks[p.id]?.[ev] ?? 0);
 
 export const raceRank = (race: RaceRankings | undefined, players: readonly Player[], ev: EventCode) => {
   for (const p of players) {

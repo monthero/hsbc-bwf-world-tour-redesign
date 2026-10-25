@@ -30,7 +30,7 @@ A pre-commit hook (`.vite-hooks/pre-commit` → `vp staged`) runs `vp check --fi
 
 - **Data sync** (`scripts/sync`, plain Node with `node:sqlite`, no dependencies):
   - It fetches BWF's API into `data/bwf.sqlite`, which is gitignored. Every raw response is stored, and tables are re-derived from them.
-  - It then exports static JSON to `public/data`, also gitignored: `seasons.json`, `calendar-{year}.json`, `tournaments/{code}.json`, `players.json`, `players/{id}.json`, rankings, series and news.
+  - It then exports static JSON to `public/data`, also gitignored: `seasons.json`, `calendar-{year}.json`, `tournaments/{code}.json`, `tournament-ranks/{code}.json` (world ranks frozen at the week a past tournament began), `players.json`, `players/{id}.json`, rankings, series and news.
   - It covers World Tour seasons since 2018.
 - **Curated data** (`data/*.json`, committed):
   - `overrides.json` holds per-player overrides: bio, equipment, photos and names. Overrides always win over BWF data.

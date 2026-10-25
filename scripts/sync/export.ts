@@ -7,16 +7,19 @@ import { parseHeightCm, parsePlays, tidySpaces } from '../../src/utils/parse.ts'
 import { dominantOffset, utcOffsetOf } from '../../src/utils/utc-offset.ts';
 import {
   historyPath,
+  publicationsPath,
   RACE,
   RACE_CATEGORIES,
   WORLD,
   WORLD_CATEGORIES,
   type ApiHistory,
   type ApiHistoryRow,
+  type ApiPublication,
+  type ApiRankingTable,
   type ApiWeeklyRow,
 } from './bwf.ts';
 import { dayjs } from './dates.ts';
-import { all, type Db } from './db.ts';
+import { all, unzipJson, type Db } from './db.ts';
 import { dataIssues, readCatalog, resolveEquipment, toRows } from './equipment.ts';
 import { createMapPlacer } from './geo.ts';
 import { FOREVER, type Client } from './http.ts';
@@ -431,6 +434,8 @@ export const exportData = async (
   const worldPub = pubs.get(WORLD);
 
   const ranksOf = new Map<string, CurrentRank[]>();
+  const weeklyRank = new Map<string, Map<string, number>>();
+  const rankWeeks = new Set<string>();
   if (worldPub) {
     const ranked = all<{ id: string }>(
       db,
@@ -469,11 +474,19 @@ export const exportData = async (
       ranksOf.set(id, ranks);
       const { rows: weeks } = await weeklyHistory(client, id, history, currentYear, worldPub.id);
       const firsts = pairFirsts(weeks);
+      const weekly = weeklySeries(weeks, id, worldPub.date);
+      const byWeek = new Map<string, number>();
+      for (const { ev, w } of weekly)
+        for (const [date, rank] of w) {
+          byWeek.set(`${ev}|${date}`, rank);
+          rankWeeks.add(date);
+        }
+      weeklyRank.set(id, byWeek);
       write(`rankings/${id}.json`, {
         id,
         name: nameOf(id),
         publicationId: worldPub.id,
-        weekly: weeklySeries(weeks, id, worldPub.date),
+        weekly,
         history: history.map((h) => ({
           event: WORLD_CATEGORIES[h.ranking_category_id] ?? null,
           publicationId: h.ranking_publication_id,
@@ -499,6 +512,48 @@ export const exportData = async (
         })),
       });
     }
+  }
+
+  const publicationOn = new Map(
+    ((await client.get<ApiPublication[]>(publicationsPath(WORLD), FOREVER))?.data ?? []).map((p) => [
+      p.date.slice(0, 10),
+      p.id,
+    ]),
+  );
+  const weeks = [...new Set([...rankWeeks, ...publicationOn.keys()])].sort((a, b) => a.localeCompare(b));
+  const tables = new Map<number, Map<string, number>>();
+  const tableOf = (publication: number) => {
+    const known = tables.get(publication);
+    if (known) return known;
+    const table = new Map<string, number>();
+    for (const { body } of all<{ body: Uint8Array }>(
+      db,
+      'SELECT body FROM responses WHERE path LIKE ?',
+      `vue-rankingtable?rankId=${WORLD}&catId=%&publicationId=${publication}&%`,
+    ))
+      for (const r of (unzipJson(body) as ApiRankingTable).results.data) {
+        const ev = WORLD_CATEGORIES[r.ranking_category_id];
+        if (ev)
+          for (const id of [r.player1_id, r.player2_id])
+            if (id) table.set(`${ev}|${id}`, Math.min(r.rank, table.get(`${ev}|${id}`) ?? r.rank));
+      }
+    tables.set(publication, table);
+    return table;
+  };
+  for (const [code, list] of byEdition) {
+    const e = editionOf.get(code);
+    const week = e && weeks.findLast((w) => w <= e.start);
+    if (!week || !worldPub || week >= worldPub.date) continue;
+    const publication = publicationOn.get(week);
+    const table = publication ? tableOf(publication) : undefined;
+    const ranks: Record<string, Record<string, number>> = {};
+    for (const { dto } of list)
+      for (const p of dto.teams.flatMap((t) => t.players)) {
+        const key = `${dto.event}|${p.id}`;
+        const r = table?.get(key) ?? weeklyRank.get(p.id)?.get(`${dto.event}|${week}`);
+        if (r) (ranks[p.id] ??= {})[dto.event] = r;
+      }
+    write(`tournament-ranks/${code}.json`, { code, week, ranks });
   }
 
   const race: Record<string, { ev: string; r: number; pr: number | null; n: string; w: string; pts: number }[]> = {};

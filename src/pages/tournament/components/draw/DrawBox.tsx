@@ -3,7 +3,7 @@ import { memo, type FC } from 'react';
 
 import { SideMedal, SideScores, TeamPlayers } from '~/components/match';
 import { CardHit } from '~/components/ui';
-import type { Player, Side } from '~/types';
+import type { EventCode, Player, Side } from '~/types';
 import { detailsLabel, isScheduled, matchTitle, sideResult } from '~/utils/matches';
 
 import type { BracketBox } from './bracket';
@@ -18,7 +18,7 @@ const stateOf = (box: BracketBox, k: Side) => {
   return box.win === k ? 'won' : undefined;
 };
 
-const BoxSide: FC<{ box: BracketBox; k: Side }> = ({ box, k }) => {
+const BoxSide: FC<{ box: BracketBox; k: Side; event: EventCode }> = ({ box, k, event }) => {
   const { t } = useLingui();
   const team = box.teams[k];
   return (
@@ -26,6 +26,7 @@ const BoxSide: FC<{ box: BracketBox; k: Side }> = ({ box, k }) => {
       <TeamPlayers
         players={team?.players ?? NO_PLAYERS}
         seed={team?.seed}
+        event={event}
         flag="xs"
         truncate
         empty={
@@ -43,19 +44,21 @@ const BoxSide: FC<{ box: BracketBox; k: Side }> = ({ box, k }) => {
   );
 };
 
-export const DrawBox = memo<{ box: BracketBox; onOpen: (id: string) => void }>(({ box, onOpen }) => {
-  const m = box.match;
-  const open = !!m && isScheduled(m);
-  return (
-    <div
-      className={classes.box}
-      data-live={m?.status === 'P' || undefined}
-      data-tbd={(!m && !box.teams[0] && !box.teams[1]) || undefined}
-      data-idle={!open || undefined}
-    >
-      {open && <CardHit label={detailsLabel(matchTitle(m))} onClick={() => onOpen(m.id)} />}
-      <BoxSide box={box} k={0} />
-      <BoxSide box={box} k={1} />
-    </div>
-  );
-});
+export const DrawBox = memo<{ box: BracketBox; event: EventCode; onOpen: (id: string) => void }>(
+  ({ box, event, onOpen }) => {
+    const m = box.match;
+    const open = !!m && isScheduled(m);
+    return (
+      <div
+        className={classes.box}
+        data-live={m?.status === 'P' || undefined}
+        data-tbd={(!m && !box.teams[0] && !box.teams[1]) || undefined}
+        data-idle={!open || undefined}
+      >
+        {open && <CardHit label={detailsLabel(matchTitle(m))} onClick={() => onOpen(m.id)} />}
+        <BoxSide box={box} k={0} event={event} />
+        <BoxSide box={box} k={1} event={event} />
+      </div>
+    );
+  },
+);

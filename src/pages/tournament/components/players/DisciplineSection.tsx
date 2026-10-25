@@ -7,7 +7,7 @@ import { TeamFollow } from '~/components/follow';
 import { EventTag, TeamPlayers } from '~/components/match';
 
 import { disciplineId, type Entry, type EventSection, type StageGroup } from './entries';
-import { EntryRank, EntryStatus } from './EntryRow';
+import { EntryStatus } from './EntryRow';
 
 import classes from './Players.module.css';
 import utils from '~/styles/utils.module.css';
@@ -24,14 +24,15 @@ const ENTRIES_AND_SEEDS = msg({
 });
 
 const DisciplineRow = memo<{ entry: Entry }>(({ entry }) => {
-  const { team, rank, stage } = entry;
+  const { event, team, rank, stage } = entry;
   return (
     <div className={classes.row} data-out={stage === 'reserve' || stage === 'withdrawn' || undefined}>
       <span className={classes.rowMain}>
         <TeamPlayers
           players={team.players}
           seed={team.seed}
-          aside={<EntryRank rank={rank} className={classes.rowRank} />}
+          event={event}
+          rank={rank}
           end={<TeamFollow players={team.players} iconSize={15} />}
           nameClassName={classes.rowName}
         />

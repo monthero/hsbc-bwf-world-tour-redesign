@@ -150,13 +150,9 @@
   border-top: 1px solid var(--bwf-line);
 }
 
-.entryMeta {
+.entryEvent {
   flex: none;
-  width: 34px;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  font-variant-numeric: tabular-nums;
+  min-width: 34px;
 }
 
 .entryBody {
@@ -348,8 +344,4 @@
 
 .rowName {
   overflow-wrap: break-word;
-}
-
-.rowRank {
-  font-variant-numeric: tabular-nums;
 }

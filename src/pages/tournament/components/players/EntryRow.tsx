@@ -4,7 +4,6 @@ import { memo, type FC } from 'react';
 
 import { TeamFollow } from '~/components/follow';
 import { EventTag, TeamPlayers, TimedStatus } from '~/components/match';
-import { WorldRankTag } from '~/components/player';
 import { CardHit, Tip } from '~/components/ui';
 import { detailsLabel, isScheduled, teamLabel } from '~/utils/matches';
 
@@ -32,10 +31,6 @@ const QUALIFIER = (
   </Tip>
 );
 
-export const EntryRank: FC<{ rank: number; className?: string }> = ({ rank, className }) => (
-  <WorldRankTag rank={rank} className={clsx(utils.raise, className)} />
-);
-
 export const EntryStatus: FC<{ entry: LatestEntry; withStage?: boolean }> = ({ entry, withStage = true }) => {
   const status = entryStatus(entry);
   if (!entry.match && !withStage && !entry.qualifier) return null;
@@ -55,14 +50,13 @@ export const EntryRow = memo<{ entry: Entry; onOpen: (id: string) => void }>(({ 
       {match && isScheduled(match) && (
         <CardHit label={detailsLabel(teamLabel(team))} onClick={() => onOpen(match.id)} />
       )}
-      <span className={classes.entryMeta}>
-        <EventTag event={event} />
-        <EntryRank rank={rank} />
-      </span>
+      <EventTag event={event} className={classes.entryEvent} />
       <div className={classes.entryBody}>
         <TeamPlayers
           players={team.players}
           seed={team.seed}
+          event={event}
+          rank={rank}
           flag={false}
           end={<TeamFollow players={team.players} iconSize={15} />}
           nameClassName={classes.entryName}

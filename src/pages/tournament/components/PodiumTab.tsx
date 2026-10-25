@@ -4,14 +4,13 @@ import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
 import { TeamPlayers, TimedStatus } from '~/components/match';
-import { AvatarGroup, SeedTag, WorldRankTag } from '~/components/player';
+import { AvatarGroup, SeedTag } from '~/components/player';
 import { Medal } from '~/components/tournament';
 import { SectionTitle, Tip } from '~/components/ui';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
 import { DARK_SCOPE_PROPS } from '~/theme';
-import type { EventCode, PlayerDirectory, Team } from '~/types';
+import type { EventCode, PlayerDirectory } from '~/types';
 import { playerPhoto } from '~/utils/players';
-import { worldRank } from '~/utils/rankings';
 
 import type { TabProps } from '../types';
 import { buildPodium, type PodiumEvent, type PodiumPlace, type SeedEntry } from '../utils';
@@ -42,17 +41,6 @@ interface PlaceProps {
   event: EventCode;
   dir: PlayerDirectory | undefined;
 }
-
-const TeamStats: FC<{ team: Team; event: EventCode; dir: PlayerDirectory | undefined }> = ({ team, event, dir }) => {
-  const rank = worldRank(dir, team.players, event);
-  if (!rank && !team.seed) return null;
-  return (
-    <span className={classes.stats}>
-      <WorldRankTag rank={rank} variant="label" />
-      <SeedTag seed={team.seed} variant="label" />
-    </span>
-  );
-};
 
 const PlaceMedal: FC<{ place: PodiumPlace; size: number }> = ({ place: p, size }) => {
   return (
@@ -85,8 +73,14 @@ const ChampionBlock: FC<PlaceProps> = ({ place: p, event, dir }) => {
       </div>
       {team ? (
         <div className={classes.heroWho}>
-          <TeamPlayers players={team.players} truncate className={classes.heroNames} nameClassName={classes.heroName} />
-          <TeamStats team={team} event={event} dir={dir} />
+          <TeamPlayers
+            players={team.players}
+            seed={team.seed}
+            event={event}
+            truncate
+            className={classes.heroNames}
+            nameClassName={classes.heroName}
+          />
         </div>
       ) : (
         <span className={classes.tbd}>{TBD}</span>
@@ -95,7 +89,7 @@ const ChampionBlock: FC<PlaceProps> = ({ place: p, event, dir }) => {
   );
 };
 
-const PlaceList: FC<PlaceProps> = ({ place: p, event, dir }) => {
+const PlaceList: FC<PlaceProps> = ({ place: p, event }) => {
   return (
     <div className={classes.list} data-medal={p.medal}>
       {p.teams ? (
@@ -107,8 +101,13 @@ const PlaceList: FC<PlaceProps> = ({ place: p, event, dir }) => {
             </span>
             <span className={classes.linePrize}>{p.prize}</span>
             <div className={classes.lineWho}>
-              <TeamPlayers players={team.players} truncate nameClassName={classes.lineName} />
-              <TeamStats team={team} event={event} dir={dir} />
+              <TeamPlayers
+                players={team.players}
+                seed={team.seed}
+                event={event}
+                truncate
+                nameClassName={classes.lineName}
+              />
             </div>
           </div>
         ))

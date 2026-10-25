@@ -2,12 +2,11 @@ import { msg } from '@lingui/core/macro';
 
 import { Continent, EntryStage, EventCode } from '~/api/schemas';
 import { EVENT_NAMES } from '~/constants';
-import type { PlayerDirectory } from '~/hooks/usePlayers';
+import type { RankOf } from '~/contexts';
 import { lazyRecord } from '~/i18n/lazy';
 import type { DrawSlot, EntryListing, Match, Side, SideResult, Team } from '~/types';
 import { continentOf, countryName } from '~/utils/countries';
-import { isDoubles, isMainDraw, latestByTeam, sideStatus, teamEventKey, teamMatchesQuery } from '~/utils/matches';
-import { worldRank } from '~/utils/rankings';
+import { isMainDraw, latestByTeam, sideStatus, teamEventKey, teamMatchesQuery } from '~/utils/matches';
 
 export interface LatestEntry {
   key: string;
@@ -161,12 +160,10 @@ export const latestEntries = (
   return [...out.values()];
 };
 
-const pairRank = (e: LatestEntry) => (isDoubles(e.event) ? (e.listedRank ?? 0) : 0);
-
-export const rankEntries = (entries: LatestEntry[], dir: PlayerDirectory | undefined): Entry[] =>
+export const rankEntries = (entries: LatestEntry[], rankOf: RankOf | null): Entry[] =>
   entries.map((e) => ({
     ...e,
-    rank: pairRank(e) || worldRank(dir, e.team.players, e.event) || (e.listedRank ?? 0),
+    rank: rankOf?.(e.team.players, e.event) || (e.listedRank ?? 0),
   }));
 
 const byRank = (a: Entry, b: Entry) => (a.rank || 1e6) - (b.rank || 1e6);

@@ -2,63 +2,19 @@
   position: relative;
   z-index: 1;
   flex: none;
-  color: light-dark(var(--bwf-text-3), var(--bwf-green));
-  font-size: 11px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  cursor: help;
-
-  &[data-kind='rank'] {
-    color: var(--bwf-gold-accent);
-  }
-
-  &[data-variant='pill'] {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 8px;
-    border-radius: 999px;
-    line-height: 1;
-    background: light-dark(var(--bwf-raised), alpha(var(--bwf-green), 0.14));
-  }
-
-  &[data-variant='label'] {
-    font-size: inherit;
-    color: inherit;
-  }
-}
-
-.visual {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25em;
-}
-
-.icon {
-  flex: none;
-  font-size: 1.15em;
-}
-
-.rankSeed {
-  position: relative;
-  z-index: 1;
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  font-size: 11px;
+  font-size: var(--mark-size, 11px);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   line-height: 1;
   white-space: nowrap;
-
-  gap: 6px;
+  pointer-events: auto;
+  cursor: help;
 }
 
-.wr {
+.rank {
   color: var(--bwf-faint);
   font-weight: 600;
   letter-spacing: 0.02em;
-  cursor: help;
 
   b {
     margin-inline-start: 1px;
@@ -67,7 +23,16 @@
   }
 }
 
-.drawSeed {
-  color: light-dark(var(--bwf-text-3), var(--bwf-green));
-  cursor: help;
+.seed {
+  color: var(--bwf-green);
+}
+
+.rankSeed {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: light-dark(alpha(var(--bwf-text), 0.07), alpha(var(--bwf-bg-sunken), 0.75));
 }

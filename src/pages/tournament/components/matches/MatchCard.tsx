@@ -6,22 +6,19 @@ import type { MediaItem } from '~/api/schemas';
 import { FollowMark } from '~/components/follow';
 import { EventTag, MatchTime, MedalMark, SideMedal, SideNote, SideScores, TeamPlayers } from '~/components/match';
 import { WatchButton } from '~/components/media';
-import { RankSeed } from '~/components/player';
 import { CardHit, Duration, IconCheck } from '~/components/ui';
 import { useMatchTime } from '~/hooks/useMatchClock';
 import { useNow } from '~/hooks/useNow';
-import { usePlayerDirectory } from '~/hooks/usePlayers';
-import type { Match, Player, PlayerDirectory, Side } from '~/types';
+import type { Match, Player, Side } from '~/types';
 import { nextLabel, type NextKind } from '~/utils/match-time';
 import { detailsLabel, isDoubles, matchTitle, sideResult } from '~/utils/matches';
-import { worldRank } from '~/utils/rankings';
 
 import classes from './MatchCard.module.css';
 import utils from '~/styles/utils.module.css';
 
 const followMark = (p: Player) => <FollowMark player={p} />;
 
-const TeamRow: FC<{ match: Match; side: Side; dir: PlayerDirectory | undefined }> = ({ match: m, side, dir }) => {
+const TeamRow: FC<{ match: Match; side: Side }> = ({ match: m, side }) => {
   const result = sideResult(m, side);
   const { players, seed } = m.teams[side];
   return (
@@ -32,7 +29,8 @@ const TeamRow: FC<{ match: Match; side: Side; dir: PlayerDirectory | undefined }
           flag="sm"
           truncate
           mark={followMark}
-          badge={<RankSeed rank={worldRank(dir, players, m.event)} seed={seed} event={m.event} />}
+          seed={seed}
+          event={m.event}
           className={classes.players}
           nameClassName={classes.name}
         />
@@ -67,7 +65,6 @@ export const MatchCard = memo<{
   replay?: MediaItem;
   onOpen: (id: string) => void;
 }>(({ match: m, next, replay, onOpen }) => {
-  const { data: dir } = usePlayerDirectory();
   const doubles = isDoubles(m.event);
   const done = m.status === 'F';
   const { court } = m;
@@ -91,8 +88,8 @@ export const MatchCard = memo<{
         </span>
       </div>
       <div className={classes.teams}>
-        <TeamRow match={m} side={0} dir={dir} />
-        <TeamRow match={m} side={1} dir={dir} />
+        <TeamRow match={m} side={0} />
+        <TeamRow match={m} side={1} />
       </div>
       {replay && <WatchButton item={replay} size="strip" className={classes.replay} />}
     </div>

@@ -34,6 +34,7 @@ import {
   Series,
   TournamentMatches,
   TournamentMedia,
+  TournamentRanks,
   ViewerGeo,
 } from './schemas';
 
@@ -175,6 +176,15 @@ export const tournamentMatchesQuery = (t: TournamentRef) =>
             () => client.getQueryData<TournamentMatches>(queryKey) ?? fetchFallback(t.code, signal),
           ),
     ...matchesPolicy(t),
+  });
+
+export const tournamentRanksQuery = (t: TournamentRef) =>
+  queryOptions({
+    queryKey: ['tournament', t.code, 'ranks'],
+    queryFn: ({ signal }) => fetchJson(`tournament-ranks/${t.code}.json`, TournamentRanks, signal),
+    enabled: t.end < todayIso(),
+    retry: retryUnless(404),
+    ...STATIC,
   });
 
 const glanceInterval = (q: Query<TournamentMatches>) => (playHasBegun(q.state.data) ? false : UPCOMING_MS);

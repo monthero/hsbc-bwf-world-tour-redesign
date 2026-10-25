@@ -4,8 +4,8 @@ import { Fragment, memo, type FC, type ReactNode } from 'react';
 
 import { Flag, type FlagSize } from '~/components/country';
 import { PlayerName } from '~/components/player/PlayerName';
-import { SeedTag } from '~/components/player/RankMarks';
-import type { Player } from '~/types';
+import { RankSeed } from '~/components/player/RankMarks';
+import type { EventCode, Player } from '~/types';
 
 import { TBD } from './labels';
 
@@ -18,6 +18,8 @@ const Wrap: FC<{ when?: boolean; className?: string; children: ReactNode }> = ({
 export const TeamPlayers = memo<{
   players: readonly Player[];
   seed?: number | null;
+  event?: EventCode;
+  rank?: number;
   flag?: FlagSize | false;
   link?: boolean | ((p: Player) => boolean);
   layout?: 'stack' | 'inline';
@@ -30,13 +32,14 @@ export const TeamPlayers = memo<{
   mark?: (p: Player, i: number) => ReactNode;
   aside?: ReactNode;
   end?: ReactNode;
-  badge?: ReactNode;
   className?: string;
   nameClassName?: string;
 }>(
   ({
     players,
     seed,
+    event,
+    rank,
     flag = 'sm',
     link = true,
     layout = 'stack',
@@ -49,12 +52,11 @@ export const TeamPlayers = memo<{
     mark,
     aside,
     end,
-    badge,
     className,
     nameClassName,
   }) => {
     const { i18n } = useLingui();
-    const pairSeed = !badge && !!seed && layout === 'stack' && players.length > 1;
+    const marks = !!seed || !!event;
     const blank = empty === undefined ? i18n._(TBD) : empty;
     return (
       <span
@@ -63,19 +65,14 @@ export const TeamPlayers = memo<{
         data-align={align}
         data-truncate={truncate || undefined}
         data-wrap={wrap || undefined}
-        data-pair-seed={pairSeed || !!badge || undefined}
+        data-marked={(marks && layout === 'stack') || undefined}
         data-pair={players.length > 1 || undefined}
         data-slots={!!(aside || end) || undefined}
         data-marks={!!mark || undefined}
       >
         {players.length
           ? players.map((p, i) => {
-              const trail = (
-                <>
-                  {i === 0 && !pairSeed && !badge && <SeedTag seed={seed} />}
-                  {after?.(p, i)}
-                </>
-              );
+              const trail = after?.(p, i);
               return (
                 <Fragment key={p.id || p.name}>
                   <span className={classes.player}>
@@ -101,8 +98,7 @@ export const TeamPlayers = memo<{
               );
             })
           : blank && <span className={classes.player}>{blank}</span>}
-        {pairSeed && <SeedTag seed={seed} className={classes.pairSeed} />}
-        {badge && <span className={classes.badge}>{badge}</span>}
+        {marks && <RankSeed players={players} seed={seed} event={event} rank={rank} className={classes.rankSeed} />}
         {aside && <span className={classes.aside}>{aside}</span>}
         {end && <span className={classes.end}>{end}</span>}
       </span>

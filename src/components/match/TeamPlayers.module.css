@@ -16,7 +16,7 @@
     text-align: end;
   }
 
-  &[data-pair-seed] {
+  &[data-marked] {
     display: grid;
     --name-min: min-content;
     grid-template-columns: [name] minmax(var(--name-min), max-content) [seed] auto;
@@ -49,7 +49,7 @@
     }
   }
 
-  &[data-pair-seed] > .player,
+  &[data-marked] > .player,
   &[data-slots] > .player {
     grid-column: name;
   }
@@ -84,17 +84,10 @@
   gap: 4px;
 }
 
-.pairSeed {
-  grid-column: seed;
-  grid-row: 1 / span 2;
-  align-self: center;
-}
-
-.badge {
+.rankSeed {
   grid-column: seed;
   grid-row: 1;
   align-self: center;
-  display: flex;
 
   .team[data-pair] > & {
     grid-row: 1 / span 2;
@@ -123,7 +116,7 @@
   }
 }
 
-.team[data-slots] > .pairSeed {
+.team[data-slots] > .rankSeed {
   margin-inline: 6px 0;
 }
 
@@ -132,7 +125,7 @@
   margin-inline: 8px 0;
 }
 
-.team[data-slots][data-align='end'] > .pairSeed {
+.team[data-slots][data-align='end'] > .rankSeed {
   margin-inline: 0 6px;
 }
 

@@ -20,7 +20,7 @@ import { Equipment } from './Equipment';
 import { PlayerAvatar } from './PlayerAvatar';
 import { PlayerName } from './PlayerName';
 import { RankCard } from './Rank';
-import { SeedTag } from './RankMarks';
+import { RankSeed } from './RankMarks';
 import { RetiredBadge } from './RetiredBadge';
 import { SocialLinks } from './SocialLinks';
 
@@ -120,7 +120,7 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
           <PlayerName player={player} className={classes.name} />
           <span className={classes.meta}>
             {player.cc && <CountryLabel cc={player.cc} flagSize="sm" />}
-            <SeedTag seed={seed} variant="pill" />
+            <RankSeed seed={seed} />
             <RetiredBadge retired={retired} />
             <SocialLinks links={bio.links} size="sm" className={classes.socials} />
           </span>

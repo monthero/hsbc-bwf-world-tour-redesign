@@ -14,10 +14,9 @@ import {
   TeamPlayers,
 } from '~/components/match';
 import { WatchButton } from '~/components/media';
-import { AvatarGroup, RankSeed } from '~/components/player';
+import { AvatarGroup } from '~/components/player';
 import { CardHit, Duration, StatusChip, type StatusTone } from '~/components/ui';
-import { usePlayerDirectory } from '~/hooks/usePlayers';
-import type { EventCode, Game, Match, Player, PlayerDirectory, Side } from '~/types';
+import type { EventCode, Game, Match, Player, Side } from '~/types';
 import {
   CHALLENGE_LABELS,
   CHALLENGE_REVIEW,
@@ -27,7 +26,6 @@ import {
   type ChallengeOutcome,
 } from '~/utils/live';
 import { gameWon, matchTitle } from '~/utils/matches';
-import { worldRank } from '~/utils/rankings';
 
 import type { LiveView, SideView } from './liveView';
 
@@ -60,12 +58,7 @@ const GameScore: FC<{ game: Game; side: Side }> = ({ game, side }) => (
 
 const followMark = (p: Player) => <FollowMark player={p} />;
 
-const TeamRow: FC<{ view: LiveView; side: SideView; event: EventCode; dir: PlayerDirectory | undefined }> = ({
-  view: v,
-  side: s,
-  event,
-  dir,
-}) => {
+const TeamRow: FC<{ view: LiveView; side: SideView; event: EventCode }> = ({ view: v, side: s, event }) => {
   return (
     <div className={classes.row} data-lead={s.leading || undefined}>
       <div className={classes.team}>
@@ -75,7 +68,8 @@ const TeamRow: FC<{ view: LiveView; side: SideView; event: EventCode; dir: Playe
             players={s.team.players}
             flag="sm"
             mark={followMark}
-            badge={<RankSeed rank={worldRank(dir, s.team.players, event)} seed={s.team.seed} event={event} />}
+            seed={s.team.seed}
+            event={event}
             className={classes.names}
           />
           <Tags side={s} />
@@ -117,7 +111,6 @@ export const LiveCard = memo<{
   ref?: Ref<HTMLDivElement>;
 }>(({ match: m, view: v, stream, onOpen, className, ref }) => {
   const { t, i18n } = useLingui();
-  const { data: dir } = usePlayerDirectory();
   const [a, b] = v.sides;
   const { court, gameNo } = v;
   const title = matchTitle(m);
@@ -165,8 +158,8 @@ export const LiveCard = memo<{
           ))}
           <GameHead n={gameNo} className={classes.nowHead} />
         </div>
-        <TeamRow view={v} side={a} event={m.event} dir={dir} />
-        <TeamRow view={v} side={b} event={m.event} dir={dir} />
+        <TeamRow view={v} side={a} event={m.event} />
+        <TeamRow view={v} side={b} event={m.event} />
       </div>
       <div className={classes.footer}>
         <span className={classes.stats}>

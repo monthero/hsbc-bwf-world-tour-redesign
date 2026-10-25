@@ -7,6 +7,7 @@ import { useLayoutEffect, useMemo, useRef, type FC, type RefObject } from 'react
 
 import { NotFound } from '~/components/layout';
 import { MatchDetailModal } from '~/components/match';
+import { TournamentRanks } from '~/components/player';
 import { EmptyState } from '~/components/ui';
 import { TournamentContext } from '~/contexts';
 import { useDocumentMeta } from '~/hooks/useDocumentMeta';
@@ -117,37 +118,39 @@ const TournamentView: FC<{
 
   return (
     <TournamentContext value={tournament}>
-      <div ref={rootRef}>
-        <TournamentHeader tournament={tournament} prev={prev} next={next} schedule={schedule} />
-        {tournament.cancelled ? (
-          <section className={clsx(utils.container, classes.tabSection)}>
-            <EmptyState>{_(CANCELLED_NOTE)}</EmptyState>
-          </section>
-        ) : (
-          <TabNav
-            ref={barRef}
-            anchorRef={anchorRef}
-            tournament={tournament}
-            tab={tab}
-            available={available}
-            hasLive={hasLive}
-          />
-        )}
-        {schedule ? (
-          <>
-            <div ref={paneRef}>
-              <Tab tournament={tournament} schedule={schedule} draw={draw} entries={entries} />
-            </div>
-            <MatchDetailModal match={match} tournament={tournament} onClose={closeMatch} />
-          </>
-        ) : (
-          !tournament.cancelled && (
-            <div className={classes.loading}>
-              <Loader color="red" size="sm" />
-            </div>
-          )
-        )}
-      </div>
+      <TournamentRanks tournament={tournament}>
+        <div ref={rootRef}>
+          <TournamentHeader tournament={tournament} prev={prev} next={next} schedule={schedule} />
+          {tournament.cancelled ? (
+            <section className={clsx(utils.container, classes.tabSection)}>
+              <EmptyState>{_(CANCELLED_NOTE)}</EmptyState>
+            </section>
+          ) : (
+            <TabNav
+              ref={barRef}
+              anchorRef={anchorRef}
+              tournament={tournament}
+              tab={tab}
+              available={available}
+              hasLive={hasLive}
+            />
+          )}
+          {schedule ? (
+            <>
+              <div ref={paneRef}>
+                <Tab tournament={tournament} schedule={schedule} draw={draw} entries={entries} />
+              </div>
+              <MatchDetailModal match={match} tournament={tournament} onClose={closeMatch} />
+            </>
+          ) : (
+            !tournament.cancelled && (
+              <div className={classes.loading}>
+                <Loader color="red" size="sm" />
+              </div>
+            )
+          )}
+        </div>
+      </TournamentRanks>
     </TournamentContext>
   );
 };

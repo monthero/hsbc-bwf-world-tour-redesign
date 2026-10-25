@@ -120,6 +120,13 @@ export const TournamentMatches = z.object({
 });
 export type TournamentMatches = z.infer<typeof TournamentMatches>;
 
+export const TournamentRanks = z.object({
+  code: z.string(),
+  week: z.string(),
+  ranks: z.record(z.string(), z.partialRecord(EventCode, z.number())),
+});
+export type TournamentRanks = z.infer<typeof TournamentRanks>;
+
 export const PlayerBio = z.object({
   age: z.number().optional(),
   born: OptionalString,

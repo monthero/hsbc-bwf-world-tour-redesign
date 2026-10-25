@@ -12,7 +12,7 @@ export const BracketView: FC<{
   snap?: boolean;
   ref?: Ref<HTMLDivElement>;
 }> = ({ bracket, onOpen, snap, ref }) => {
-  const { columns, height, boxHeight } = bracket;
+  const { event, columns, height, boxHeight } = bracket;
   return (
     <div ref={ref} className={clsx(classes.scroller, snap && classes.snap)}>
       <div className={classes.grid} style={{ '--cols': columns.length } as CSSProperties}>
@@ -36,7 +36,7 @@ export const BracketView: FC<{
                   className={classes.slot}
                   style={{ top: (col.ys[j] ?? 0) - boxHeight / 2, height: boxHeight }}
                 >
-                  <DrawBox box={b} onOpen={onOpen} />
+                  <DrawBox box={b} event={event} onOpen={onOpen} />
                 </div>
               ))}
             </div>

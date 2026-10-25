@@ -57,7 +57,7 @@ const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, stan
   const { current } = standing;
   const hint = current ? (
     <>
-      <WorldRankTag rank={current.rank} variant="label" /> · {current.ev}
+      <WorldRankTag rank={current.rank} event={current.ev} /> · {current.ev}
     </>
   ) : (
     careerHighHint(standing)

@@ -1,7 +1,8 @@
 import { msg } from '@lingui/core/macro';
-import { useMemo } from 'react';
+import { use, useMemo } from 'react';
 
 import { SEASON_YEAR } from '~/constants';
+import { TournamentRankContext } from '~/contexts';
 import { useCareerIndex } from '~/hooks/useCareer';
 import { usePlayerDirectory, useRaceRankings } from '~/hooks/usePlayers';
 import { useSeasonIndex } from '~/hooks/useSeason';
@@ -29,6 +30,7 @@ const FORM_LIMIT = 5;
 
 export const useMatchInsights = (match: Match, tournament: Tournament) => {
   const { data: dir } = usePlayerDirectory();
+  const rankOf = use(TournamentRankContext);
   const { data: race } = useRaceRankings();
   const index = useSeasonIndex();
   const [a, b] = match.teams;
@@ -61,13 +63,18 @@ export const useMatchInsights = (match: Match, tournament: Tournament) => {
 
   const compare = useMemo(() => {
     const rows: CompareRow[] = [
-      rankRow('wr', WORLD_RANKING, worldRank(dir, a.players, ev), worldRank(dir, b.players, ev)),
+      rankRow(
+        'wr',
+        WORLD_RANKING,
+        rankOf ? rankOf(a.players, ev) : worldRank(dir, a.players, ev),
+        rankOf ? rankOf(b.players, ev) : worldRank(dir, b.players, ev),
+      ),
       rankRow('race', RACE, raceRank(race, a.players, ev), raceRank(race, b.players, ev)),
     ];
     if (record) rows.push(wlRow('career', CAREER_WL, record.careerA, record.careerB));
     rows.push(wlRow('season', SEASON_WL, history.wlA, history.wlB));
     return rows;
-  }, [dir, race, a, b, ev, record, history.wlA, history.wlB]);
+  }, [dir, rankOf, race, a, b, ev, record, history.wlA, history.wlB]);
 
   return { record, history, allMeets, compare };
 };

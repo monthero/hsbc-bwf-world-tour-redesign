@@ -92,7 +92,7 @@
       text-shadow: 0 1px 6px alpha(var(--mantine-color-black), 0.6);
     }
 
-    :is(.heroTop, .heroWho) :is(a, .stats) {
+    :is(.heroTop, .heroWho) a {
       pointer-events: auto;
     }
 
@@ -102,10 +102,6 @@
 
     .heroName {
       color: var(--mantine-color-white);
-    }
-
-    .stats {
-      color: alpha(var(--mantine-color-white), 0.78);
     }
   }
 }
@@ -161,20 +157,6 @@
   & [data-strong] {
     font-weight: 750;
   }
-}
-
-.stats {
-  position: relative;
-  z-index: 1;
-  align-self: flex-start;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 2px 6px;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.35;
-  color: var(--bwf-text-3);
 }
 
 .list {

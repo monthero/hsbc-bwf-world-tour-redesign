@@ -2,6 +2,7 @@ import { Modal } from '@mantine/core';
 import { clsx } from 'clsx';
 import { useState, type FC } from 'react';
 
+import { TournamentRanks } from '~/components/player/TournamentRanks';
 import { BottomSheet } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import type { Match, Tournament } from '~/types';
@@ -24,7 +25,11 @@ export const MatchDetailModal: FC<MatchDetailModalProps> = ({ match, tournament,
   const [shown, setShown] = useState(match);
   if (match && match !== shown) setShown(match);
   const opened = !!match;
-  const body = shown && <MatchDetail key={shown.id} match={shown} tournament={tournament} onClose={onClose} />;
+  const body = shown && (
+    <TournamentRanks tournament={tournament}>
+      <MatchDetail key={shown.id} match={shown} tournament={tournament} onClose={onClose} />
+    </TournamentRanks>
+  );
 
   if (mobile)
     return (

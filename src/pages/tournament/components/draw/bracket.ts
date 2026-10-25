@@ -70,6 +70,7 @@ interface BracketColumn {
 }
 
 export interface Bracket {
+  event: EventCode;
   columns: BracketColumn[];
   height: number;
   boxHeight: number;
@@ -226,5 +227,5 @@ export const buildBracket = (
       paths: next ? connectorPaths(bs, cy, next, off) : [],
     };
   });
-  return { columns, height: (n - 1) * pitch + Math.max(0, n / 2 - 1) * GG + bh, boxHeight: bh };
+  return { event: ev, columns, height: (n - 1) * pitch + Math.max(0, n / 2 - 1) * GG + bh, boxHeight: bh };
 };

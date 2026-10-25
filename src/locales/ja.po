@@ -205,6 +205,11 @@ msgstr "{day}：{rank}、{points}ポイント"
 msgid "{discipline} world No. {rank}"
 msgstr "{discipline} 世界ランキング{rank}位"
 
+#. Tooltip on a world ranking mark inside a tournament: the player’s ranking in the week the tournament began, e.g. “Men’s singles world No. 3 going into this tournament”
+#: src/components/player/RankMarks.tsx
+msgid "{discipline} world No. {rank} going into this tournament"
+msgstr "この大会開始時点の{discipline} 世界ランキング{rank}位"
+
 #. About page tier ladder: number of players or pairs in each discipline’s main draw
 #: src/pages/about/summaries.ts
 msgid "{DRAW_SIZE} per draw"
@@ -819,11 +824,6 @@ msgstr "BWF公式サイト"
 #: src/components/player/PlayerHoverCard.tsx
 msgid "BWF World Ranking · week {weekNo}"
 msgstr "BWF世界ランキング · 第{weekNo}週"
-
-#. Tooltip on an entry’s world rank. Category means the event, e.g. men’s singles
-#: src/components/player/RankMarks.tsx
-msgid "BWF World Ranking in this category"
-msgstr "この種目のBWF世界ランキング"
 
 #. Tooltip of the World option in the rankings switch
 #: src/pages/rankings/constants.ts
@@ -3142,11 +3142,6 @@ msgstr "{year}年の試合を見る、{record}"
 msgid "See full profile"
 msgstr "詳しいプロフィールを見る"
 
-#. A player’s seed number in a tournament draw, as a badge or after their world rank, e.g. Seed 3
-#: src/components/player/RankMarks.tsx
-msgid "Seed {seed}"
-msgstr "第{seed}シード"
-
 #. Seed is the player’s seeding number in the tournament draw, followed by the tournament name
 #: src/pages/player/components/OverviewTab.tsx
 msgid "Seed {seed} · {tournament}"
@@ -4003,11 +3998,6 @@ msgstr "世界・ツアー"
 #: src/pages/player/components/RankingsTab.tsx
 msgid "World rank"
 msgstr "世界ランク"
-
-#. A player’s current world ranking, e.g. “World rank #3”
-#: src/components/player/RankMarks.tsx
-msgid "World rank <0>{position}</0>"
-msgstr "世界ランク <0>{position}</0>"
 
 #. Head-to-head row: each side’s BWF world ranking
 #. Icon label on a ranking tile: the number is the BWF world ranking

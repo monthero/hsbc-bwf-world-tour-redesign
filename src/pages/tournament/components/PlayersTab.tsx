@@ -2,12 +2,12 @@ import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { memo, useCallback, useMemo, type FC } from 'react';
+import { memo, use, useCallback, useMemo, type FC } from 'react';
 
 import { EmptyState, FilterChip, SearchField, Segmented } from '~/components/ui';
 import { EVENT_NAMES, EVENT_OPTIONS } from '~/constants';
+import { TournamentRankContext } from '~/contexts';
 import { useIsMobile } from '~/hooks/useIsMobile';
-import { usePlayerDirectory } from '~/hooks/usePlayers';
 import { useLazyOptions, type LazyOption } from '~/i18n/useLazyOptions';
 import type { EventCode } from '~/types';
 
@@ -128,11 +128,11 @@ export const PlayersTab: FC<TabProps> = ({ schedule, draw, entries }) => {
   const q = route.useSearch({ select: (s) => s.q ?? '' });
   const { t } = useLingui();
   const update = useUpdateSearch();
-  const { data: directory } = usePlayerDirectory();
+  const rankOf = use(TournamentRankContext);
   const viewOptions = useLazyOptions(VIEW_OPTIONS);
 
   const latest = useMemo(() => latestEntries(schedule.matches, draw, entries), [schedule.matches, draw, entries]);
-  const ranked = useMemo(() => rankEntries(latest, directory), [latest, directory]);
+  const ranked = useMemo(() => rankEntries(latest, rankOf), [latest, rankOf]);
 
   const onView = useCallback(
     (v: PlayersView | null) => v && update({ pby: v === 'country' ? undefined : v }),
