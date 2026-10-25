@@ -4,6 +4,7 @@ export { LiveMark } from './LiveMark';
 export { MatchDetailModal } from './MatchDetailModal';
 export { ALL_TIME, CompareLine, FORM, HEAD_TO_HEAD, THIS_SEASON, useMatchInsights } from './detail';
 export { FollowRow } from './FollowRow';
+export { GameChips } from './GameChips';
 export { LIVE_NOW } from './labels';
 export { MedalMark, SideMedal } from './MedalMark';
 export { medalStake, sideMedal, type MedalStake } from './medals';

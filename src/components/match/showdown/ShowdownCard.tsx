@@ -19,22 +19,13 @@ import {
   StatusChip,
   Tip,
 } from '~/components/ui';
-import { usePlayerDirectory } from '~/hooks/usePlayers';
 import { DARK_SCOPE_PROPS } from '~/theme';
 import type { Game, Player, Side } from '~/types';
-import {
-  CHALLENGE_LABELS,
-  GAME_SHORT,
-  gameDone,
-  LONGEST_RUN,
-  RALLY_POINTS,
-  type CallKind,
-  type ChallengeOutcome,
-} from '~/utils/live';
-import { formatGames, gameWon, noteLabel, noteTip, opposite } from '~/utils/matches';
-import { worldRank } from '~/utils/rankings';
+import { CHALLENGE_LABELS, LONGEST_RUN, RALLY_POINTS, type CallKind, type ChallengeOutcome } from '~/utils/live';
+import { noteLabel, noteTip } from '~/utils/matches';
 
 import { ChallengeStocks } from '../ChallengeStocks';
+import { GameChips } from '../GameChips';
 import { ScheduledStart } from '../MatchTime';
 import { SideMedal } from '../MedalMark';
 import type { MedalStake } from '../medals';
@@ -140,8 +131,6 @@ const SoloPlate = memo<{
 const Corner = memo<{ view: ShowdownView; side: Side; follow?: boolean }>(({ view: v, side, follow }) => {
   const s = v.live.sides[side];
   const { players } = s.team;
-  const { data: dir } = usePlayerDirectory();
-  const rank = worldRank(dir, players, v.match.event);
   const pair = players.length > 1 || undefined;
   const play = v.phase === 'play';
   const serving = play && s.serving;
@@ -170,7 +159,7 @@ const Corner = memo<{ view: ShowdownView; side: Side; follow?: boolean }>(({ vie
       </span>
       {follow && <Follows players={players} />}
       <div className={classes.plate}>
-        <RankSeed rank={rank} seed={s.team.seed} event={v.match.event} className={classes.plateMarks} />
+        <RankSeed players={players} seed={s.team.seed} event={v.match.event} className={classes.plateMarks} />
         {teamServe && <ServeMark size={16} className={utils.raise} />}
         <SideMedal match={v.match} side={side} size={22} className={utils.raise} />
       </div>
@@ -241,36 +230,6 @@ const Hub = memo<{ view: ShowdownView }>(({ view: v }) => {
   );
 });
 
-const GameChip = memo<{ n: number; game: Game }>(({ n, game }) => {
-  const { i18n } = useLingui();
-  const finished = gameDone(game);
-  const lost = (side: Side) => !finished || gameWon(game, opposite(side)) || undefined;
-  const label = i18n._({ ...GAME_SHORT, values: { n } });
-  return (
-    <li className={classes.game} aria-label={`${label} ${formatGames([game])}`}>
-      <span className={classes.gameValue} data-lost={lost(0)} aria-hidden>
-        {game[0]}
-      </span>
-      <span className={classes.gameNo} aria-hidden>
-        {label}
-      </span>
-      <span className={classes.gameValue} data-side="1" data-lost={lost(1)} aria-hidden>
-        {game[1]}
-      </span>
-    </li>
-  );
-});
-
-const Rail = memo<{ games: readonly Game[] }>(({ games }) =>
-  games.length ? (
-    <ol className={classes.rail}>
-      {games.map((g, i) => (
-        <GameChip key={i} n={i + 1} game={g} />
-      ))}
-    </ol>
-  ) : null,
-);
-
 const hasTags = (s: SideView) => (!!s.stats && s.left !== null) || !!s.result || s.streak > 0;
 
 const Tags = memo<{ side: SideView }>(({ side: s }) => (
@@ -337,7 +296,7 @@ export const ShowdownCard = memo<{
         <Corner view={v} side={0} follow={follow} />
         <Hub view={v} />
         <Corner view={v} side={1} follow={follow} />
-        <Rail games={v.done} />
+        <GameChips games={v.done} className={classes.rail} />
       </div>
       {(duels || hasTags(a) || hasTags(b)) && (
         <div className={classes.tagRow}>

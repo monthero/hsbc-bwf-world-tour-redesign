@@ -1,0 +1,59 @@
+.chips {
+  display: var(--chips-display, flex);
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--chips-gap, 6px);
+  margin: 0;
+  padding-inline: 0;
+  list-style: none;
+}
+
+.game {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: var(--chip-columns, auto auto auto);
+  align-items: center;
+  gap: var(--chip-gap, 2px);
+  padding: var(--chip-pad, 2px);
+  border-radius: var(--chip-radius, 8px);
+  background: light-dark(var(--bwf-red-tint), color-mix(in srgb, var(--bwf-red) 12%, var(--bwf-bg-sunken)));
+  box-shadow: inset 0 0 0 1px alpha(var(--bwf-red), 0.32);
+}
+
+.value {
+  justify-self: end;
+  min-width: 2.6ch;
+  padding: var(--chip-value-pad, 2px 5px);
+  border-radius: var(--chip-value-radius, 6px);
+  background: light-dark(var(--bwf-red), alpha(var(--bwf-red), 0.42));
+  font-family: 'Archivo', var(--mantine-font-family);
+  font-stretch: 72%;
+  font-size: var(--chip-value-size, 15px);
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  color: light-dark(var(--bwf-on-brand), var(--bwf-text));
+
+  &[data-side='1'] {
+    justify-self: start;
+  }
+
+  &[data-lost] {
+    background: none;
+    font-weight: 500;
+    color: var(--bwf-muted);
+  }
+}
+
+.label {
+  padding-inline: var(--chip-label-pad, 3px);
+  font-family: 'Saira', var(--mantine-font-family);
+  font-stretch: 75%;
+  font-size: var(--chip-label-size, 11px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--bwf-gold-text);
+}

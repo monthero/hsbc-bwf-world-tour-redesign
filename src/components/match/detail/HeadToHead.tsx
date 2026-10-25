@@ -8,8 +8,8 @@ import { FIRST_SEASON } from '~/constants';
 import { useLazyOptions, type LazyOption } from '~/i18n/useLazyOptions';
 import type { Match, Tournament } from '~/types';
 import { formatNumber, joinDots } from '~/utils/format';
-import { gameWon } from '~/utils/matches';
 
+import { GameChips } from '../GameChips';
 import { FormStrip, OutcomeBadge } from '../Outcome';
 import { CompareLine } from './CompareLine';
 import { SideNames } from './SideNames';
@@ -54,19 +54,7 @@ const MeetingCard = memo<{ meet: Meeting }>(({ meet: x }) => {
       </div>
       <div className={classes.meetBody}>
         <OutcomeBadge outcome={x.won ? 'W' : 'L'} variant="pill" />
-        <span className={clsx(utils.num, classes.meetGames)}>
-          {x.games.map((g, i) => (
-            <span key={i}>
-              <span className={classes.gameScore} data-win={gameWon(g, 0) || undefined}>
-                {g[0]}
-              </span>
-              <span className={classes.colon}>:</span>
-              <span className={classes.gameScore} data-win={gameWon(g, 1) || undefined}>
-                {g[1]}
-              </span>
-            </span>
-          ))}
-        </span>
+        <GameChips games={x.games} className={classes.meetGames} />
         <OutcomeBadge outcome={x.won ? 'L' : 'W'} variant="pill" className={classes.resultEnd} />
       </div>
       {(x.venue || x.dur) && (
