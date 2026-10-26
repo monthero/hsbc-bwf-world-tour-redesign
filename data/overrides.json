@@ -802,6 +802,10 @@
         "plays": "R",
         "birthplace": "Kyoto Prefecture",
         "club": "BIPROGY",
+        "racket": "b27bceee-3b14-4bf4-bbd8-6acd851116f2",
+        "tension": "30",
+        "string": "b37eeb4e-b7d3-4c2a-9b14-80400a0f76e2",
+        "shoes": "b180780e-d69c-4b4e-ab9c-fdba1795e4c5",
         "achievements": "Asia Team Championships 2026 – gold (men's team); Asia Mixed Team Championships 2025 – bronze (mixed team)"
       }
     },
@@ -907,6 +911,18 @@
         "string": "78506bc2-603c-4284-b74b-c3e56b94c0f7",
         "shoes": "bf49e821-3e5b-419e-a281-c0e7bc60cfa1",
         "achievements": "Asia Team Championships 2026 – bronze (women's team); World University Games 2025 – silver (mixed team); World University Games 2025 – silver (WD)"
+      }
+    },
+    "65634": {
+      "hero": "https://livesport-ott-images.ssl.cdn.cra.cz/r900xfq60/e3f170c8-477c-4017-a436-ff5dab9d6add.jpeg",
+      "heroFocus": {
+        "x": 74,
+        "y": 21
+      },
+      "bio": {
+        "racket": "055a8740-29d2-4b39-97d7-eec352affaee",
+        "string": "f1721761-6a21-417a-97fe-b2bce31e5833",
+        "shoes": "dcfa40e6-4881-4522-9ccd-4715318e6163"
       }
     },
     "65674": {
@@ -1071,10 +1087,10 @@
     },
     "68282": {
       "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUqm2Wi40R6m2FdiwTFnfnZo0_kK2M7jLUTn1m7ZRWtRCgYZZtfjfV-Aw&s=10",
-      "hero": "https://resizer-vortals.eco.astro.com.my/tr:w-auto,h-auto,q-80,f-webp/https://d3lmgsai2rsy7d.cloudfront.net/stadium/media/article/2025/Apr/494527713_1116203427207501_3469629582443119080_n.jpg",
+      "hero": "https://spread-sports.jp/wp/wp-content/uploads/2026/10/1792655225-1271553031.jpg",
       "heroFocus": {
-        "x": 16,
-        "y": 20
+        "x": 59,
+        "y": 67
       },
       "photoCrop": {
         "x": 50,
@@ -1096,6 +1112,18 @@
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d",
         "shoes": "40e9f512-2595-4785-8220-1280b29a7046",
         "achievements": "Thomas Cup 2026 – bronze (Men's team); Asian Games 2026 – bronze (Men's team); Asian Championships 2026 – silver (Men's singles)"
+      }
+    },
+    "68479": {
+      "photo": "https://upload.wikimedia.org/wikipedia/commons/f/fe/%E6%98%8E%E5%9C%B0_%E9%99%BD%E8%8F%9C%28%E3%81%82%E3%81%91%E3%81%A1_%E3%81%B2%E3%81%AA%29_Akechi_Hina_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
+      "hero": "https://www.badminton.or.jp/storage/players/95/biography_20261014145408.jpg",
+      "bio": {
+        "height": 155,
+        "plays": "L",
+        "birthplace": "Osaka, Japan",
+        "racket": "399bf45c-56a6-4087-a303-c3401f124887",
+        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0",
+        "instagram": "https://www.instagram.com/hina.akechi"
       }
     },
     "68544": {
@@ -1155,9 +1183,15 @@
         "x": 44,
         "y": 9
       },
+      "photoCrop": {
+        "x": 50,
+        "y": 61.3,
+        "zoom": 1
+      },
       "bio": {
         "height": 160,
         "birthplace": "Pingtung City",
+        "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "achievements": "Asia Team Championships 2026 – bronze (Women's team)"
       }
     },
@@ -1596,6 +1630,16 @@
     "77832": {
       "retired": "2025-03"
     },
+    "77848": {
+      "hero": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/775858182_1626759995475450_7877113949617318667_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1366&ctp=s2048x1366&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=svUksB0_gDQQ7kNvwHs-voc&_nc_oc=Adp8wdVoGUAZPu4X4IQs3CZ93oowBqknSWvllHJkoFTY2UW0-UFyvlryFCPxFPJxNNqfxKkni0K7O2rzNrKgbEAB&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=mwjY1xBhgjI5xjfNpCyiCQ&_nc_ss=7b289&oh=00_AQP2lHv9fP-4YSamradjgN7LTVJ8jVQ1bvTGHJ1hdRbvvQ&oe=6AE4F5D7",
+      "heroFocus": {
+        "x": 100,
+        "y": 49
+      },
+      "bio": {
+        "racket": "ecc8e699-dc5f-454b-8894-ae1136585929"
+      }
+    },
     "77870": {
       "bio": {
         "club": "BIPROGY"
@@ -1715,6 +1759,10 @@
         "birthplace": "Ōsaki-shi",
         "coach": "Lee Wan Wah Hiroyuki Endo",
         "club": "BIPROGY",
+        "racket": "5c20210a-07bd-4dda-87af-77e5c791b0d4",
+        "tension": "31",
+        "string": "b37eeb4e-b7d3-4c2a-9b14-80400a0f76e2",
+        "shoes": "a69a47cf-a3ba-4cc1-a2e1-d11b2c429f61",
         "achievements": "Asia Team Championships 2026 – gold (Men's team)"
       }
     },
@@ -1737,8 +1785,14 @@
     },
     "80862": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/3/3e/%E9%82%B1%E5%93%81%E8%92%A8-2024%E5%8F%B0%E5%8C%97%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 59,
+        "y": 39
+      },
       "bio": {
         "height": 164,
+        "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
+        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0",
         "achievements": "Asia Team Championships 2026 – bronze (Women's team)"
       }
     },
@@ -2083,11 +2137,24 @@
       }
     },
     "85845": {
-      "hero": "https://upload.wikimedia.org/wikipedia/commons/8/88/%E5%B8%95%E5%B0%BC%E6%9F%A5%E8%93%AC%C2%B7%E6%8F%90%E6%8B%89%E8%96%A9%E5%BA%AB%E7%88%BE%E6%A6%AE%E7%8D%B22023%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E7%94%B7%E5%96%AE%E4%BA%9E%E8%BB%8D.jpg",
+      "photo": "https://www.realnewsthailand.net/wp-content/uploads/2026/07/Screenshot-2026-07-14-204941.png",
+      "hero": "https://apicms.thestar.com.my/uploads/images/2026/05/24/3923797.JPG",
+      "heroFocus": {
+        "x": 54,
+        "y": 64
+      },
+      "photoCrop": {
+        "x": 28.2,
+        "y": 0,
+        "zoom": 2.3
+      },
       "bio": {
         "height": 178,
         "plays": "L",
         "nickname": "EQ",
+        "racket": "f4bdfc14-4376-40ef-b54d-6572ec6e0fd6",
+        "racketNote": "Pink, 4U",
+        "shoes": "bf49e821-3e5b-419e-a281-c0e7bc60cfa1",
         "achievements": "Asia Mixed Team Championships 2023 – bronze (mixed team); Asia Mixed Team Championships 2025 – bronze (mixed team); SEA Games 2021 – gold (men's team); SEA Games 2023 – bronze (men's team); SEA Games 2025 – bronze (men's team); World University Games 2021 – silver (MS); World University Games 2021 – bronze (mixed team)"
       }
     },
@@ -2581,6 +2648,13 @@
         "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "string": "538a1b0a-3c92-46fa-b161-06e5a1f72a8e",
         "achievements": "Asia Mixed Team Championships 2023 – bronze (Mixed team); Asia Team Championships 2024 – gold (Women's team)"
+      }
+    },
+    "94519": {
+      "bio": {
+        "club": "Gifu Bluvic",
+        "racket": "4b9cafba-6606-49ec-bc5a-520c05e6f977",
+        "shoes": "9031ab0a-a952-4903-86c9-6d6825d8b9f8"
       }
     },
     "94567": {
