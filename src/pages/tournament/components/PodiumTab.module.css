@@ -228,24 +228,26 @@
 }
 
 .seeds {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  column-gap: 10px;
 }
 
 .seed {
-  display: flex;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
   align-items: center;
-  gap: 10px;
   padding: 9px 0;
   border-top: 1px solid var(--bwf-line);
 }
 
-.seedNum {
-  flex: none;
+.seedMarks {
+  grid-column: 2;
+  justify-self: end;
 }
 
 .seedPlayers {
-  flex: 1;
   min-width: 0;
   font-size: 13px;
   color: var(--bwf-text);
@@ -257,7 +259,7 @@
 }
 
 .status {
-  flex: none;
+  justify-self: end;
   font-size: 12px;
   color: var(--bwf-muted);
   font-variant-numeric: tabular-nums;
@@ -280,6 +282,7 @@
 }
 
 .noSeeds {
+  grid-column: 1 / -1;
   padding: 9px 0;
   border-top: 1px solid var(--bwf-line);
   font-size: 13px;
@@ -287,7 +290,6 @@
 }
 
 .missing {
-  flex: 1;
   min-width: 0;
   font-size: 13px;
   font-style: italic;

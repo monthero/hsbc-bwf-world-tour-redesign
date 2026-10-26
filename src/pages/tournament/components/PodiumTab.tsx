@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 import { memo, useMemo, type FC } from 'react';
 
 import { TeamPlayers, TimedStatus } from '~/components/match';
-import { AvatarGroup, SeedTag } from '~/components/player';
+import { AvatarGroup, RankSeed } from '~/components/player';
 import { Medal } from '~/components/tournament';
 import { SectionTitle, Tip } from '~/components/ui';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
@@ -123,14 +123,14 @@ const PlaceList: FC<PlaceProps> = ({ place: p, event }) => {
   );
 };
 
-const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
+const SeedRow: FC<{ entry: SeedEntry; event: EventCode }> = ({ entry: s, event }) => {
   const { i18n } = useLingui();
   return (
     <div className={classes.seed} data-tone={s.team ? s.tone : 'missing'}>
-      <SeedTag seed={s.seed} className={classes.seedNum} />
       {s.team ? (
         <>
           <TeamPlayers players={s.team.players} truncate className={classes.seedPlayers} />
+          <RankSeed players={s.team.players} seed={s.seed} event={event} className={classes.seedMarks} />
           <Tip label={s.tip} disabled={!s.tip}>
             <span className={classes.status} data-tip={s.tip ? true : undefined}>
               <TimedStatus match={s.match} tone={s.tone} label={s.status} />
@@ -138,11 +138,14 @@ const SeedRow: FC<{ entry: SeedEntry }> = ({ entry: s }) => {
           </Tip>
         </>
       ) : (
-        <Tip label={i18n._(MISSING_TIP)}>
-          <span className={classes.missing}>
-            <Trans comment="A seeded player or pair missing from the tournament data">Not in the data</Trans>
-          </span>
-        </Tip>
+        <>
+          <Tip label={i18n._(MISSING_TIP)}>
+            <span className={classes.missing}>
+              <Trans comment="A seeded player or pair missing from the tournament data">Not in the data</Trans>
+            </span>
+          </Tip>
+          <RankSeed seed={s.seed} className={classes.seedMarks} />
+        </>
       )}
     </div>
   );
@@ -176,7 +179,7 @@ const SeedCard = memo<{ data: PodiumEvent; hasMatches: boolean }>(({ data: e, ha
       <CardHead data={e} note={e.seedsNote} />
       <div className={classes.seeds}>
         {e.seeds.map((s) => (
-          <SeedRow key={s.key} entry={s} />
+          <SeedRow key={s.key} entry={s} event={e.event} />
         ))}
         {!e.seeds.length && (
           <div className={classes.noSeeds}>
