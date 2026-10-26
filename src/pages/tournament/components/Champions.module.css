@@ -67,6 +67,23 @@
   min-width: 0;
 }
 
+.photos[data-pair] > .photo {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60%;
+}
+
+.photos[data-pair] > .photo:first-child {
+  left: 0;
+  clip-path: polygon(0 0, 93.3% 0, 73.3% 100%, 0 100%);
+}
+
+.photos[data-pair] > .photo:last-child {
+  right: 0;
+  clip-path: polygon(26.7% 0, 100% 0, 100% 100%, 6.7% 100%);
+}
+
 .divider {
   position: absolute;
   z-index: 1;
@@ -74,16 +91,16 @@
   top: 3%;
   bottom: 3%;
   width: 2px;
-  transform: translateX(-50%);
+  transform: translateX(-50%) skewX(-8.5deg);
   border-radius: 2px;
   background: linear-gradient(
     180deg,
     transparent 0%,
-    alpha(var(--bwf-red-text), 0.85) 12%,
-    alpha(var(--bwf-red-text), 0.75) 80%,
+    alpha(var(--bwf-red-text), 0.5) 12%,
+    alpha(var(--bwf-red-text), 0.4) 80%,
     transparent 97%
   );
-  filter: drop-shadow(0 0 5px alpha(var(--bwf-red), 0.85));
+  filter: drop-shadow(0 0 3px alpha(var(--bwf-red), 0.35));
   pointer-events: none;
 }
 
@@ -93,6 +110,10 @@
   top: 10px;
   inset-inline-start: 10px;
   display: flex;
+
+  & > [data-event] {
+    background: color-mix(in srgb, var(--event) 32%, var(--bwf-bg-sunken));
+  }
 }
 
 .names {

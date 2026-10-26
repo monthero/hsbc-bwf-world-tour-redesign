@@ -17,7 +17,7 @@ import utils from '~/styles/utils.module.css';
 export const ChampionPhotos = memo<{ players: readonly Player[]; photos?: readonly (string | null)[] }>(
   ({ players, photos }) => (
     <>
-      <div className={classes.photos}>
+      <div className={classes.photos} data-pair={players.length > 1 || undefined}>
         {players.map((p, i) => (
           <PlayerAvatar key={p.id} player={p} photo={photos?.[i]} link className={classes.photo} />
         ))}
