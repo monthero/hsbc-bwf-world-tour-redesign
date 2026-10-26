@@ -4,7 +4,7 @@ import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
 import { memo, use, useCallback, useMemo, type FC } from 'react';
 
-import { EmptyState, FilterChip, SearchField, Segmented } from '~/components/ui';
+import { EmptyState, FilterChip, IconCheck, SearchField, Segmented } from '~/components/ui';
 import { EVENT_NAMES, EVENT_OPTIONS } from '~/constants';
 import { TournamentRankContext } from '~/contexts';
 import { useIsMobile } from '~/hooks/useIsMobile';
@@ -162,6 +162,9 @@ export const PlayersTab: FC<TabProps> = ({ schedule, draw, entries }) => {
             onClick={onTop10}
           >
             <Trans comment="Players tab filter chip: show only entries in the world ranking top 10">World top 10</Trans>
+            <span className={classes.check} data-on={top10 || undefined} aria-hidden>
+              {top10 && <IconCheck />}
+            </span>
           </FilterChip>
         </div>
         <SearchField value={q} onChange={onQuery} size="md" className={classes.search} />

@@ -34,7 +34,29 @@
 }
 
 .top10 {
-  height: 32px;
+  height: 46px;
+  padding-inline: 16px 14px;
+}
+
+.check {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  margin-inline-start: 8px;
+  border: 1.5px solid var(--bwf-border-strong);
+  border-radius: 4px;
+  font-size: 12px;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+
+  &[data-on] {
+    border-color: var(--bwf-red);
+    background: var(--bwf-red);
+    color: var(--bwf-on-brand);
+  }
 }
 
 .search {
