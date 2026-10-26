@@ -112,6 +112,11 @@
     "aliases": []
   },
   {
+    "id": "redson",
+    "name": "REDSON",
+    "aliases": []
+  },
+  {
     "id": "rsl",
     "name": "RSL",
     "aliases": []

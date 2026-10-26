@@ -246,10 +246,28 @@
     "model": "Acroforce 100"
   },
   {
+    "id": "b27bceee-3b14-4bf4-bbd8-6acd851116f2",
+    "kind": "racket",
+    "brand": "mizuno",
+    "model": "Acrospeed 1 Focus"
+  },
+  {
     "id": "721e7026-746b-40fa-b4e8-68e6a4bd68c5",
     "kind": "racket",
     "brand": "mizuno",
     "model": "Altius 01 Feel"
+  },
+  {
+    "id": "5c20210a-07bd-4dda-87af-77e5c791b0d4",
+    "kind": "racket",
+    "brand": "mizuno",
+    "model": "Fortius 10"
+  },
+  {
+    "id": "ecc8e699-dc5f-454b-8894-ae1136585929",
+    "kind": "racket",
+    "brand": "redson",
+    "model": "SHAPE ESG 07"
   },
   {
     "id": "bc6b47d5-3acd-4593-a97c-7c1857b8be13",
@@ -334,6 +352,12 @@
     "kind": "racket",
     "brand": "victor",
     "model": "Thruster F Claw Ultra"
+  },
+  {
+    "id": "f4bdfc14-4376-40ef-b54d-6572ec6e0fd6",
+    "kind": "racket",
+    "brand": "victor",
+    "model": "Thruster K Ryuga Metallic CPS"
   },
   {
     "id": "e74ef742-62cf-4d6c-90a0-14a1be023dd1",
@@ -504,22 +528,22 @@
     "model": "Blade 2 Pro"
   },
   {
-    "id": "5b0c5280-2b3d-4ffe-b8cc-3ea4ad93c163",
-    "kind": "shoes",
-    "brand": "li-ning",
-    "model": "Blade Max"
-  },
-  {
     "id": "dcfa40e6-4881-4522-9ccd-4715318e6163",
     "kind": "shoes",
     "brand": "li-ning",
-    "model": "DF-01 Max"
+    "model": "Blade DF-01 Max"
   },
   {
     "id": "934f0e53-1647-488d-b953-b235deb4d65f",
     "kind": "shoes",
     "brand": "li-ning",
-    "model": "DF-02 Pro"
+    "model": "Blade DF-02 Pro"
+  },
+  {
+    "id": "5b0c5280-2b3d-4ffe-b8cc-3ea4ad93c163",
+    "kind": "shoes",
+    "brand": "li-ning",
+    "model": "Blade Max"
   },
   {
     "id": "efcc39d2-c0f8-4ae3-b8cf-e3af663f7686",
@@ -540,10 +564,22 @@
     "model": "Yun Ting"
   },
   {
+    "id": "b180780e-d69c-4b4e-ab9c-fdba1795e4c5",
+    "kind": "shoes",
+    "brand": "mizuno",
+    "model": "Wave Claw 3"
+  },
+  {
     "id": "c7f9f15c-2d4b-4a34-a07c-afcd5034bf38",
     "kind": "shoes",
     "brand": "mizuno",
     "model": "Wave Claw 4"
+  },
+  {
+    "id": "a69a47cf-a3ba-4cc1-a2e1-d11b2c429f61",
+    "kind": "shoes",
+    "brand": "mizuno",
+    "model": "Wave Claw 4 Fit"
   },
   {
     "id": "a2752a95-187d-43d7-a67a-ebbf696eb752",
@@ -858,10 +894,16 @@
     "model": "No.7 Boost"
   },
   {
+    "id": "b37eeb4e-b7d3-4c2a-9b14-80400a0f76e2",
+    "kind": "string",
+    "brand": "mizuno",
+    "model": "M-SMOOTH 63H"
+  },
+  {
     "id": "c6862709-ee18-4d9d-b287-ac0c97845e40",
     "kind": "string",
     "brand": "mizuno",
-    "model": "M-Smooth 65R"
+    "model": "M-SMOOTH 65R"
   },
   {
     "id": "16bb7c1f-5656-4974-99e6-858d66614728",
