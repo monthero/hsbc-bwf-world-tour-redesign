@@ -11,6 +11,7 @@ import discipline from '~/styles/discipline.module.css';
 export interface SegmentedOption<T extends string> {
   value: T;
   label: string;
+  sub?: string;
   tip?: string;
   icon?: ReactNode;
   badge?: ReactNode;
@@ -68,7 +69,14 @@ export const Segmented = <T extends string>({
               onClick={() => onChange(on && deselectable ? null : o.value)}
             >
               {o.icon}
-              {o.label}
+              {o.sub ? (
+                <span className={classes.stack}>
+                  {o.label}
+                  <span className={classes.sub}>{o.sub}</span>
+                </span>
+              ) : (
+                o.label
+              )}
               {o.badge}
             </button>
           </Tip>

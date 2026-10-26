@@ -7,6 +7,7 @@ import { numberFormat } from '~/i18n/current';
 import type { BioView, Player, PlayerDirectory, PlayerMatch, RankingHistory, RankView, SeasonIndex } from '~/types';
 import { date, formatDayMonthYear } from '~/utils/dates';
 import { formatRank } from '~/utils/format';
+import { meetKey, type OtherMeet } from '~/utils/h2h';
 import { medalOfResult } from '~/utils/medals';
 import { compareText } from '~/utils/names';
 import { opponentsOf, ownTeam, playerById, winLoss } from '~/utils/season';
@@ -334,20 +335,43 @@ const teamKey = (players: readonly Player[]) =>
     .toSorted(compareText)
     .join('/');
 
+export const inResultGroup = (pm: PlayerMatch, g: ResultGroup) =>
+  pm.match.event === g.ev && (!g.partner || pm.match.teams[pm.side].players.some((p) => p.id === g.partner?.id));
+
 export const rivalsOf = (matches: readonly PlayerMatch[], repeatMin: number, limit: number): RivalRow[] => {
   const rows = new Map<string, RivalRow>();
   for (const pm of matches) {
     if (!decided(pm)) continue;
     const players = opponentsOf(pm);
     const key = teamKey(players);
-    const row = rows.get(key) ?? { key, players, matches: 0, wins: 0, losses: 0 };
+    const row = rows.get(key) ?? {
+      key,
+      players,
+      own: ownTeam(pm).players,
+      meets: new Set(),
+      matches: 0,
+      wins: 0,
+      losses: 0,
+    };
     rows.set(key, row);
     row.matches++;
+    row.meets.add(meetKey(pm.tournament.code, pm.match.code));
     tally(row, pm);
   }
   const all = [...rows.values()].sort((a, b) => b.matches - a.matches || b.wins - a.wins);
   const repeat = all.filter((r) => r.matches > 1);
   return (repeat.length >= repeatMin ? repeat : all).slice(0, limit);
+};
+
+export const withAllEvents = (row: RivalRow, others: readonly OtherMeet[]): RivalRow => {
+  const extra = others.filter((o) => !row.meets.has(o.key));
+  const wins = extra.filter((o) => o.won).length;
+  return {
+    ...row,
+    matches: row.matches + extra.length,
+    wins: row.wins + wins,
+    losses: row.losses + extra.length - wins,
+  };
 };
 
 export const seasonBreakdown = (season: SeasonView): SeasonBreakdown => {

@@ -156,6 +156,8 @@ export interface WinLoss {
 export interface RivalRow extends WinLoss {
   key: string;
   players: Player[];
+  own: Player[];
+  meets: Set<string>;
   matches: number;
 }
 

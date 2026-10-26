@@ -1,23 +1,31 @@
 import { msg } from '@lingui/core/macro';
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { useDisclosure } from '@mantine/hooks';
+import { useQueries, type UseQueryResult } from '@tanstack/react-query';
 import { memo, useMemo, type CSSProperties } from 'react';
 
+import { headToHeadQuery } from '~/api/queries';
 import { EventTag, TeamPlayers } from '~/components/match';
 import { AvatarGroup, PlayerAvatar, PlayerName } from '~/components/player';
 import { MoreButton } from '~/components/ui';
 import { SEASON_YEAR } from '~/constants';
+import type { Player } from '~/types';
 import { formatRecord } from '~/utils/format';
+import type { OtherMeet } from '~/utils/h2h';
 
 import { PARTNER_LIMIT } from '../constants';
 import type { PartnerRow, RivalRow } from '../types';
-import { yearRange } from '../utils';
+import { withAllEvents, yearRange } from '../utils';
 import { Section } from './parts';
 
 import classes from './People.module.css';
 import shared from './shared.module.css';
 
 const AVATAR = 28;
+
+const idsOf = (players: readonly Player[]) => players.map((p) => p.id);
+
+const dataOf = (results: UseQueryResult<OtherMeet[]>[]) => results.map((r) => r.data);
 
 const WON_LOST_LABEL = msg({
   message: '{wins, plural, one {# win} other {# wins}}, {losses, plural, one {# loss} other {# losses}}',
@@ -65,18 +73,30 @@ const RivalItem = memo<{ row: RivalRow }>(({ row: r }) => {
   );
 });
 
-export const RivalsSection = memo<{ rows: RivalRow[] }>(({ rows }) => (
-  <Section
-    label={<Trans comment="Section title: the opponents the player has faced most often">Most played</Trans>}
-    aside={WON_LOST}
-  >
-    <div className={shared.rows}>
-      {rows.map((r) => (
-        <RivalItem key={r.key} row={r} />
-      ))}
-    </div>
-  </Section>
-));
+export const RivalsSection = memo<{ rows: RivalRow[] }>(({ rows }) => {
+  const queries = useMemo(() => rows.map((r) => headToHeadQuery(idsOf(r.own), idsOf(r.players))), [rows]);
+  const others = useQueries({ queries, combine: dataOf });
+  const full = useMemo(
+    () =>
+      rows.map((r, i) => {
+        const o = others[i];
+        return o ? withAllEvents(r, o) : r;
+      }),
+    [rows, others],
+  );
+  return (
+    <Section
+      label={<Trans comment="Section title: the opponents the player has faced most often">Most played</Trans>}
+      aside={WON_LOST}
+    >
+      <div className={shared.rows}>
+        {full.map((r) => (
+          <RivalItem key={r.key} row={r} />
+        ))}
+      </div>
+    </Section>
+  );
+});
 
 export const PartnersSection = memo<{ rows: PartnerRow[] }>(({ rows }) => {
   const [all, { open: showAll }] = useDisclosure(false);

@@ -5,7 +5,7 @@ import { Skeleton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { memo, useCallback, useMemo, type ReactNode } from 'react';
+import { memo, useCallback, useMemo, useState, type ReactNode } from 'react';
 
 import { EventTag, FormStrip, OutcomeLabel, ScoreChips, TeamPlayers } from '~/components/match';
 import { WatchButton } from '~/components/media';
@@ -21,12 +21,13 @@ import { opponentsOf, ownTeam, recentForm } from '~/utils/season';
 import { tournamentParams } from '~/utils/tournaments';
 
 import { RECENT_LIMIT, TITLE_LIMIT } from '../constants';
-import type { HistoryView, PartnerRow, SeasonView } from '../types';
+import type { HistoryView, PartnerRow, ResultGroup, SeasonView } from '../types';
 import {
   eventsOf,
   hasProfile,
   lastMatchOf,
   nextMatchOf,
+  inResultGroup,
   rivalsOf,
   seasonBreakdown,
   shareVars,
@@ -93,6 +94,8 @@ const LOST = <Trans comment="Outcome of the player’s last match: they lost it"
 
 const formOutcome = (pm: PlayerMatch): 'W' | 'L' => (pm.outcome === 'W' ? 'W' : 'L');
 
+const NO_GROUPS: ResultGroup[] = [];
+
 const formTip = (i18n: I18n, pm: PlayerMatch) => {
   const opponents = opponentsOf(pm)
     .map((p) => p.name)
@@ -133,9 +136,15 @@ export const OverviewTab = memo<OverviewProps>(
     const next = useMemo(() => nextMatchOf(matches), [matches]);
     const last = useMemo(() => lastMatchOf(matches), [matches]);
     const multi = useMemo(() => eventsOf(matches).length > 1, [matches]);
-    const rivals = useMemo(() => rivalsOf(matches, RIVAL_REPEAT_MIN, RIVAL_LIMIT), [matches]);
+    const groups = useMemo(() => history?.results.filter((g) => g.items.length > 1) ?? NO_GROUPS, [history]);
+    const [groupKey, setGroupKey] = useState<string | null>(null);
+    const group = groups.find((g) => g.key === groupKey) ?? groups[0];
+    const rivals = useMemo(
+      () => rivalsOf(group ? matches.filter((pm) => inResultGroup(pm, group)) : matches, RIVAL_REPEAT_MIN, RIVAL_LIMIT),
+      [matches, group],
+    );
     const season = seasons[0];
-    const trend = historyLoading || !!history?.results.some((g) => g.items.length > 1);
+    const trend = historyLoading || groups.length > 0;
     const side = trend || partners.length > 1 || rivals.length > 0 || hasProfile(bio);
     return (
       <div className={classes.overview} data-side={side || undefined}>
@@ -178,7 +187,15 @@ export const OverviewTab = memo<OverviewProps>(
         {side && (
           <div className={clsx(utils.card, shared.panel)}>
             <ProfileSection bio={bio} />
-            {trend && <RankTrend history={history} loading={historyLoading} onResults={onResults} />}
+            {trend && (
+              <RankTrend
+                groups={groups}
+                group={group}
+                onPick={setGroupKey}
+                loading={historyLoading}
+                onResults={onResults}
+              />
+            )}
             {rivals.length > 0 && <RivalsSection rows={rivals} />}
             {partners.length > 1 && <PartnersSection rows={partners} />}
             <MediaTeaser playerId={playerId} matches={matches} onOpen={onMedia} />

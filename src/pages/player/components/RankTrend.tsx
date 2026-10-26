@@ -8,7 +8,7 @@ import { EVENT_NAMES } from '~/constants';
 import { formatNumber } from '~/utils/format';
 
 import { RESULT_TAGS } from '../constants';
-import type { BreakdownItem, HistoryView, ResultGroup } from '../types';
+import type { BreakdownItem, ResultGroup } from '../types';
 import { resultLabel, resultTier, shareVars } from '../utils';
 import { ResultText, Section, YearWeek } from './parts';
 
@@ -16,40 +16,45 @@ import classes from './RankTrend.module.css';
 import shared from './shared.module.css';
 import utils from '~/styles/utils.module.css';
 
-const groupLabel = (g: ResultGroup) => (g.partner ? `${g.ev} · ${g.partner.surname}` : g.ev);
+const PAIR_HEIGHT = 44;
 
-export const RankTrend = memo<{ history: HistoryView | undefined; loading: boolean; onResults: () => void }>(
-  ({ history, loading, onResults }) => {
-    const groups = useMemo(() => history?.results.filter((g) => g.items.length > 1) ?? [], [history]);
-    const [key, setKey] = useState<string | null>(null);
-    const group = groups.find((g) => g.key === key) ?? groups[0];
-    const options = useMemo(
-      (): SegmentedOption<string>[] => groups.map((g) => ({ value: g.key, label: groupLabel(g), event: g.ev })),
-      [groups],
-    );
-    const pick = useCallback((v: string | null) => v && setKey(v), []);
-    if (loading)
-      return (
-        <div className={shared.section}>
-          <Skeleton height={220} radius={12} />
-        </div>
-      );
-    if (!group) return null;
+export const RankTrend = memo<{
+  groups: readonly ResultGroup[];
+  group: ResultGroup | undefined;
+  onPick: (key: string) => void;
+  loading: boolean;
+  onResults: () => void;
+}>(({ groups, group, onPick, loading, onResults }) => {
+  const options = useMemo(
+    (): SegmentedOption<string>[] =>
+      groups.map((g) => ({ value: g.key, label: g.ev, sub: g.partner?.name, event: g.ev })),
+    [groups],
+  );
+  const paired = groups.some((g) => g.partner);
+  const pick = useCallback((v: string | null) => v && onPick(v), [onPick]);
+  if (loading)
     return (
-      <Section
-        label={<Trans comment="Section title: ranking points earned over the last 52 weeks">Last 52 weeks</Trans>}
-        aside={
-          <button type="button" className={shared.link} onClick={onResults}>
-            <Trans comment="Link to the points breakdown in the player’s Rankings tab">All results</Trans>
-          </button>
-        }
-      >
-        {options.length > 1 && <Segmented options={options} value={group.key} onChange={pick} height={30} />}
-        <TrendBody group={group} />
-      </Section>
+      <div className={shared.section}>
+        <Skeleton height={220} radius={12} />
+      </div>
     );
-  },
-);
+  if (!group) return null;
+  return (
+    <Section
+      label={<Trans comment="Section title: ranking points earned over the last 52 weeks">Last 52 weeks</Trans>}
+      aside={
+        <button type="button" className={shared.link} onClick={onResults}>
+          <Trans comment="Link to the points breakdown in the player’s Rankings tab">All results</Trans>
+        </button>
+      }
+    >
+      {options.length > 1 && (
+        <Segmented options={options} value={group.key} onChange={pick} height={paired ? PAIR_HEIGHT : 30} />
+      )}
+      <TrendBody group={group} />
+    </Section>
+  );
+});
 
 const TrendBody = memo<{ group: ResultGroup }>(({ group }) => {
   const ordered = useMemo(() => group.items.toReversed(), [group.items]);
