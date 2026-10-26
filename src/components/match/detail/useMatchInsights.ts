@@ -1,17 +1,19 @@
 import { msg } from '@lingui/core/macro';
+import { useQuery } from '@tanstack/react-query';
 import { use, useMemo } from 'react';
 
+import { headToHeadQuery } from '~/api/queries';
 import { SEASON_YEAR } from '~/constants';
 import { TournamentRankContext } from '~/contexts';
 import { useCareerIndex } from '~/hooks/useCareer';
 import { usePlayerDirectory, useRaceRankings } from '~/hooks/usePlayers';
 import { useSeasonIndex } from '~/hooks/useSeason';
 import type { Match, Tournament } from '~/types';
-import { careerRecord, meetingsVs, teamHistory } from '~/utils/h2h';
+import { careerRecord, meetingsVs, teamHistory, withOtherMeets } from '~/utils/h2h';
 import { raceRank, worldRank } from '~/utils/rankings';
 import { recentForm, winLoss } from '~/utils/season';
 
-import { formItems, rankRow, toMeetings, wlRow, type CompareRow } from './utils';
+import { allMeetings, formItems, rankRow, toMeetings, wlRow, type CompareRow } from './utils';
 
 const SEASON_WL = msg({
   message: `${SEASON_YEAR} W–L`,
@@ -40,11 +42,15 @@ export const useMatchInsights = (match: Match, tournament: Tournament) => {
     [a.players, b.players],
   );
   const career = useCareerIndex(leadIds);
+  const idsA = useMemo(() => a.players.map((p) => p.id), [a.players]);
+  const idsB = useMemo(() => b.players.map((p) => p.id), [b.players]);
+  const { data: others } = useQuery(headToHeadQuery(idsA, idsB));
 
-  const record = useMemo(
-    () => (career ? careerRecord(career, match, tournament.code) : null),
-    [career, match, tournament.code],
-  );
+  const record = useMemo(() => {
+    if (!career) return null;
+    const ours = careerRecord(career, match, tournament.code);
+    return others ? withOtherMeets(ours, others, match, tournament.code) : ours;
+  }, [career, others, match, tournament.code]);
 
   const history = useMemo(() => {
     const listA = teamHistory(index, match, 0);
@@ -59,7 +65,7 @@ export const useMatchInsights = (match: Match, tournament: Tournament) => {
     };
   }, [index, match, tournament.code]);
 
-  const allMeets = useMemo(() => (record ? toMeetings(record.meets, true) : []), [record]);
+  const allMeets = useMemo(() => (record ? allMeetings(record) : []), [record]);
 
   const compare = useMemo(() => {
     const rows: CompareRow[] = [

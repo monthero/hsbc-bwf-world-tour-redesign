@@ -1,9 +1,11 @@
+import type { Game } from '~/types';
+import { meetKey, type OtherMeet } from '~/utils/h2h';
 import { gameDone } from '~/utils/live';
 import { wallClock } from '~/utils/utc-offset';
 
 import { EventCode, type EntryStage, type MatchDto } from '../schemas';
 import { BWF_ROUNDS, BWF_STATUSES } from './codes';
-import type { BwfDrawData, BwfEntry, BwfLiveMatches, BwfMatch, BwfMatchStat } from './schemas';
+import type { BwfDrawData, BwfEntry, BwfHeadToHead, BwfLiveMatches, BwfMatch, BwfMatchStat } from './schemas';
 
 const REVIEW = 'H';
 const OFF_COURT = 'O';
@@ -124,3 +126,27 @@ export const toLiveServers = ({ results }: BwfLiveMatches): Record<string, LiveS
       return d && server ? [[d.code, server] as const] : [];
     }),
   );
+
+type H2hTeam = NonNullable<BwfHeadToHead['matches']>[number]['team1'];
+
+const h2hIds = (t: H2hTeam) => [t?.player1?.id, t?.player2?.id];
+
+export const toOtherMeets = ({ matches }: BwfHeadToHead, sideA: readonly string[]): OtherMeet[] =>
+  (matches ?? []).flatMap((m) => {
+    const winner = m.result?.winner;
+    if (winner !== 1 && winner !== 2) return [];
+    const flip = !h2hIds(m.team1).some((id) => !!id && sideA.includes(id));
+    const round = m.info.roundName ?? '';
+    return [
+      {
+        key: meetKey(m.tournament.code, m.info.matchCode ?? null),
+        tournament: m.tournament.name,
+        round: BWF_ROUNDS[round] ?? round,
+        date: (m.info.matchTime ?? '').slice(0, 10),
+        venue: m.location?.locationName || null,
+        durationMin: m.progress?.duration ?? null,
+        won: (winner === 1) !== flip,
+        games: (m.progress?.games ?? []).map((g): Game => (flip ? [g.team2, g.team1] : [g.team1, g.team2])),
+      },
+    ];
+  });

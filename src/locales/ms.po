@@ -399,6 +399,11 @@ msgstr "{titles, plural, other {# gelaran}}"
 msgid "{total, plural, one {{done} of # completed} other {{done} of # completed}}"
 msgstr "{total, plural, other {{done} daripada # selesai}}"
 
+#. Head-to-head summary counting every BWF event (World Tour, World Championships, Olympics, team events and more)
+#: src/components/match/detail/HeadToHead.tsx
+msgid "{total, plural, one {# meeting across all BWF events} other {# meetings across all BWF events}}"
+msgstr "{total, plural, other {# pertemuan dalam semua kejohanan BWF}}"
+
 #. Head-to-head summary; {FIRST_SEASON} is the first season with data, e.g. 2018
 #: src/components/match/detail/HeadToHead.tsx
 msgid "{total, plural, one {# meeting on the World Tour since {FIRST_SEASON}} other {# meetings on the World Tour since {FIRST_SEASON}}}"
@@ -639,7 +644,7 @@ msgstr "Semua keputusan"
 msgid "All rounds"
 msgstr "Semua pusingan"
 
-#. Head-to-head toggle: every World Tour meeting since 2018
+#. Head-to-head toggle: every meeting between the two sides, not just this season
 #: src/components/match/detail/utils.ts
 msgid "All time"
 msgstr "Sepanjang masa"
@@ -1356,6 +1361,11 @@ msgstr "Tamat"
 #: src/pages/tournament/components/TournamentHeader.tsx
 msgid "First event on record"
 msgstr "Kejohanan pertama dalam rekod"
+
+#. Head-to-head summary when the two sides have never played each other in any BWF event
+#: src/components/match/detail/HeadToHead.tsx
+msgid "First meeting"
+msgstr "Pertemuan pertama"
 
 #: src/components/match/detail/HeadToHead.tsx
 msgid "First meeting this season"

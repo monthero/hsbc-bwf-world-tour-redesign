@@ -40,6 +40,17 @@ const MEETINGS_SINCE = msg({
   comment: 'Head-to-head summary; {FIRST_SEASON} is the first season with data, e.g. 2018',
 });
 
+const MEETINGS_ALL_EVENTS = msg({
+  message: '{total, plural, one {# meeting across all BWF events} other {# meetings across all BWF events}}',
+  comment:
+    'Head-to-head summary counting every BWF event (World Tour, World Championships, Olympics, team events and more)',
+});
+
+const FIRST_MEETING = msg({
+  message: 'First meeting',
+  comment: 'Head-to-head summary when the two sides have never played each other in any BWF event',
+});
+
 const MEETINGS_THIS_SEASON = msg({
   message: '{n, plural, one {# meeting this season} other {# meetings this season}}',
   comment: 'Head-to-head summary',
@@ -81,7 +92,7 @@ export const HeadToHead = memo<{ match: Match; tournament: Tournament; className
     const { t, i18n } = useLingui();
     const scopes = useLazyOptions(SCOPES);
     const scoped = !!record && history.ready && record.a + record.b !== history.meets.length;
-    const all = scoped && scope === 'all';
+    const all = scoped ? scope === 'all' : !!record?.allEvents;
 
     const summary = useMemo(() => {
       if (all) {
@@ -89,6 +100,10 @@ export const HeadToHead = memo<{ match: Match; tournament: Tournament; className
         const total = record.a + record.b;
         const pa = formatNumber(record.pa);
         const pb = formatNumber(record.pb);
+        let text = t`First World Tour meeting`;
+        if (record.allEvents)
+          text = total ? i18n._({ ...MEETINGS_ALL_EVENTS, values: { total } }) : i18n._(FIRST_MEETING);
+        else if (total) text = i18n._({ ...MEETINGS_SINCE, values: { total, FIRST_SEASON } });
         return {
           a: record.a,
           b: record.b,
@@ -99,7 +114,7 @@ export const HeadToHead = memo<{ match: Match; tournament: Tournament; className
                 comment: 'Head-to-head: total points won by each side across all meetings',
               })
             : '',
-          text: total ? i18n._({ ...MEETINGS_SINCE, values: { total, FIRST_SEASON } }) : t`First World Tour meeting`,
+          text,
         };
       }
       const n = history.meets.length;

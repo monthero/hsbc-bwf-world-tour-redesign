@@ -82,6 +82,10 @@ const ROUTES: Record<string, Route> = {
     z.strictObject({ tmtTab: z.literal('draw'), tmtId: Id, drawId: Id, isPara: Flag }),
     () => SCHEDULE_CACHE,
   ),
+  '/h2h/statistics': route(
+    z.strictObject({ t1p1: Id, t1p2: Id.optional(), t2p1: Id, t2p2: Id.optional() }),
+    () => SETTLED_CACHE,
+  ),
   '/entries/vue-tournament-events': route(z.strictObject({ tmtId: Id }), () => SCHEDULE_CACHE),
   '/entries/vue-tournament-players': route(
     z.strictObject({ searchKey: z.literal(''), tmtId: Id, tmtType: Id, eventName: Id, isPara: Flag }),

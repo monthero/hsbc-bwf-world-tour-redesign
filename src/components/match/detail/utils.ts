@@ -6,7 +6,7 @@ import { numberFormat } from '~/i18n/current';
 import type { Game, Match, PlayerMatch, Side } from '~/types';
 import { date, formatDayMonth, formatDayMonthYear } from '~/utils/dates';
 import { formatDuration, formatNumber, formatRank, formatRecord, joinDots } from '~/utils/format';
-import type { WL } from '~/utils/h2h';
+import type { H2HRecord, OtherMeet, WL } from '~/utils/h2h';
 import { gameDone, LONGEST_RUN } from '~/utils/live';
 import { courtLabel, opposite, roundName } from '~/utils/matches';
 
@@ -71,7 +71,7 @@ export const HEAD_TO_HEAD = msg({
 export const THIS_SEASON = msg({ message: 'This season', comment: 'Head-to-head toggle: only meetings this season' });
 export const ALL_TIME = msg({
   message: 'All time',
-  comment: 'Head-to-head toggle: every World Tour meeting since 2018',
+  comment: 'Head-to-head toggle: every meeting between the two sides, not just this season',
 });
 export const FORM = msg({
   message: 'Form',
@@ -156,15 +156,35 @@ export const formItems = (list: readonly PlayerMatch[]): FormItem[] =>
 
 const venueOf = (pm: PlayerMatch) => joinDots([pm.tournament.venue, courtLabel(pm.match.court)]) || undefined;
 
+const toMeeting = (pm: PlayerMatch, full: boolean): Meeting => ({
+  key: pm.key,
+  tour: pm.tournament.shortTitle,
+  stage: `${roundName(pm.match.round)} · ${(full ? formatDayMonthYear : formatDayMonth)(pm.match.date)}`,
+  ...(full ? { venue: venueOf(pm), dur: formatDuration(pm.match.durationMin) || undefined } : {}),
+  won: pm.outcome === 'W',
+  games: pm.side ? flipGames(pm.match.games) : pm.match.games,
+});
+
 export const toMeetings = (list: readonly PlayerMatch[], full: boolean): Meeting[] =>
-  list.map((pm) => ({
-    key: pm.key,
-    tour: pm.tournament.shortTitle,
-    stage: `${roundName(pm.match.round)} · ${(full ? formatDayMonthYear : formatDayMonth)(pm.match.date)}`,
-    ...(full ? { venue: venueOf(pm), dur: formatDuration(pm.match.durationMin) || undefined } : {}),
-    won: pm.outcome === 'W',
-    games: pm.side ? flipGames(pm.match.games) : pm.match.games,
-  }));
+  list.map((pm) => toMeeting(pm, full));
+
+const otherMeeting = (o: OtherMeet): Meeting => ({
+  key: o.key,
+  tour: o.tournament,
+  stage: joinDots([roundName(o.round), o.date && formatDayMonthYear(o.date)]),
+  venue: o.venue ?? undefined,
+  dur: (o.durationMin && formatDuration(o.durationMin)) || undefined,
+  won: o.won,
+  games: o.games,
+});
+
+export const allMeetings = (record: H2HRecord): Meeting[] =>
+  [
+    ...record.meets.map((pm) => ({ date: pm.match.date, meet: toMeeting(pm, true) })),
+    ...record.others.map((o) => ({ date: o.date, meet: otherMeeting(o) })),
+  ]
+    .sort((x, y) => y.date.localeCompare(x.date))
+    .map((x) => x.meet);
 
 export const rankRow = (key: string, label: MessageDescriptor, x: number, y: number): CompareRow => ({
   key,

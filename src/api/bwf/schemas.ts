@@ -138,3 +138,33 @@ export const BwfLiveMatches = z.object({
     .nullish(),
 });
 export type BwfLiveMatches = z.infer<typeof BwfLiveMatches>;
+
+const BwfH2hPlayer = z.object({ id: Idish.transform(String) }).nullish();
+
+const BwfH2hTeam = z.object({ player1: BwfH2hPlayer, player2: BwfH2hPlayer }).nullish();
+
+export const BwfHeadToHead = z.object({
+  matches: z
+    .array(
+      z.object({
+        info: z.object({
+          matchCode: z.string().nullish(),
+          roundName: z.string().nullish(),
+          matchTime: z.string().nullish(),
+        }),
+        team1: BwfH2hTeam,
+        team2: BwfH2hTeam,
+        result: z.object({ winner: z.number().nullish() }).nullish(),
+        progress: z
+          .object({
+            games: z.array(z.object({ team1: z.number(), team2: z.number() })).nullish(),
+            duration: z.number().nullish(),
+          })
+          .nullish(),
+        location: z.object({ locationName: z.string().nullish() }).nullish(),
+        tournament: z.object({ code: z.string(), name: z.string() }),
+      }),
+    )
+    .nullish(),
+});
+export type BwfHeadToHead = z.infer<typeof BwfHeadToHead>;

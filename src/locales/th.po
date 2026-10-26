@@ -399,6 +399,11 @@ msgstr "{titles, plural, other {# แชมป์}}"
 msgid "{total, plural, one {{done} of # completed} other {{done} of # completed}}"
 msgstr "{total, plural, other {จบแล้ว {done} จาก # รายการ}}"
 
+#. Head-to-head summary counting every BWF event (World Tour, World Championships, Olympics, team events and more)
+#: src/components/match/detail/HeadToHead.tsx
+msgid "{total, plural, one {# meeting across all BWF events} other {# meetings across all BWF events}}"
+msgstr "{total, plural, other {พบกัน # ครั้งในทุกรายการของ BWF}}"
+
 #. Head-to-head summary; {FIRST_SEASON} is the first season with data, e.g. 2018
 #: src/components/match/detail/HeadToHead.tsx
 msgid "{total, plural, one {# meeting on the World Tour since {FIRST_SEASON}} other {# meetings on the World Tour since {FIRST_SEASON}}}"
@@ -639,7 +644,7 @@ msgstr "ผลการแข่งขันทั้งหมด"
 msgid "All rounds"
 msgstr "ทุกรอบ"
 
-#. Head-to-head toggle: every World Tour meeting since 2018
+#. Head-to-head toggle: every meeting between the two sides, not just this season
 #: src/components/match/detail/utils.ts
 msgid "All time"
 msgstr "ตลอดกาล"
@@ -1356,6 +1361,11 @@ msgstr "จบแล้ว"
 #: src/pages/tournament/components/TournamentHeader.tsx
 msgid "First event on record"
 msgstr "รายการแรกที่มีข้อมูล"
+
+#. Head-to-head summary when the two sides have never played each other in any BWF event
+#: src/components/match/detail/HeadToHead.tsx
+msgid "First meeting"
+msgstr "พบกันครั้งแรก"
 
 #: src/components/match/detail/HeadToHead.tsx
 msgid "First meeting this season"

@@ -6,6 +6,7 @@ import { dayjs, ISO_DAY, isoRange, today, todayIso } from '~/utils/dates';
 import { trackLiveStats, type LiveStats } from '~/utils/live';
 import { finalDayOver, hasMatchOnCourt, playHasBegun } from '~/utils/matches';
 
+import { fetchHeadToHead, flipMeets, headToHeadPair } from './bwf/headToHead';
 import { isRejected, LIVE_COOLDOWN_MS, livePollMs, liveRetry } from './bwf/http';
 import type { NameOf } from './bwf/normalize';
 import {
@@ -214,6 +215,21 @@ export const tournamentEntriesQuery = (t: LiveTournamentRef) =>
     queryFn: async ({ client, signal }) => fetchEntries(t.tmtId ?? 0, await directoryNames(client), signal),
     ...extrasPolicy(t),
   });
+
+const HEAD_TO_HEAD_MS = 24 * 60 * 60_000;
+
+export const headToHeadQuery = (a: readonly string[], b: readonly string[]) => {
+  const { first, second, flipped } = headToHeadPair(a, b);
+  return queryOptions({
+    queryKey: ['bwf', 'h2h', first.join('-'), second.join('-')],
+    queryFn: ({ signal }) => fetchHeadToHead(first, second, signal),
+    select: flipped ? flipMeets : undefined,
+    enabled: a.length > 0 && b.length > 0 && [...a, ...b].every(Boolean),
+    staleTime: HEAD_TO_HEAD_MS,
+    gcTime: HEAD_TO_HEAD_MS,
+    retry: retryUnless(404, 503),
+  });
+};
 
 const MEDIA_REFRESH_MS = 60 * 60_000;
 const MEDIA_SETTLE_DAYS = 3;

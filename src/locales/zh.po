@@ -399,6 +399,11 @@ msgstr "{titles, plural, other {# 个冠军}}"
 msgid "{total, plural, one {{done} of # completed} other {{done} of # completed}}"
 msgstr "{total, plural, other {已完成 {done}/# 站}}"
 
+#. Head-to-head summary counting every BWF event (World Tour, World Championships, Olympics, team events and more)
+#: src/components/match/detail/HeadToHead.tsx
+msgid "{total, plural, one {# meeting across all BWF events} other {# meetings across all BWF events}}"
+msgstr "{total, plural, other {所有 BWF 赛事交手 # 次}}"
+
 #. Head-to-head summary; {FIRST_SEASON} is the first season with data, e.g. 2018
 #: src/components/match/detail/HeadToHead.tsx
 msgid "{total, plural, one {# meeting on the World Tour since {FIRST_SEASON}} other {# meetings on the World Tour since {FIRST_SEASON}}}"
@@ -639,7 +644,7 @@ msgstr "全部成绩"
 msgid "All rounds"
 msgstr "全部轮次"
 
-#. Head-to-head toggle: every World Tour meeting since 2018
+#. Head-to-head toggle: every meeting between the two sides, not just this season
 #: src/components/match/detail/utils.ts
 msgid "All time"
 msgstr "历史"
@@ -1356,6 +1361,11 @@ msgstr "已结束"
 #: src/pages/tournament/components/TournamentHeader.tsx
 msgid "First event on record"
 msgstr "没有更早的赛事"
+
+#. Head-to-head summary when the two sides have never played each other in any BWF event
+#: src/components/match/detail/HeadToHead.tsx
+msgid "First meeting"
+msgstr "首次交手"
 
 #: src/components/match/detail/HeadToHead.tsx
 msgid "First meeting this season"

@@ -399,6 +399,11 @@ msgstr "{titles, plural, one {# título} other {# títulos}}"
 msgid "{total, plural, one {{done} of # completed} other {{done} of # completed}}"
 msgstr "{total, plural, one {{done} de # concluído} other {{done} de # concluídos}}"
 
+#. Head-to-head summary counting every BWF event (World Tour, World Championships, Olympics, team events and more)
+#: src/components/match/detail/HeadToHead.tsx
+msgid "{total, plural, one {# meeting across all BWF events} other {# meetings across all BWF events}}"
+msgstr "{total, plural, one {# confronto em todas as competições da BWF} other {# confrontos em todas as competições da BWF}}"
+
 #. Head-to-head summary; {FIRST_SEASON} is the first season with data, e.g. 2018
 #: src/components/match/detail/HeadToHead.tsx
 msgid "{total, plural, one {# meeting on the World Tour since {FIRST_SEASON}} other {# meetings on the World Tour since {FIRST_SEASON}}}"
@@ -639,7 +644,7 @@ msgstr "Todos os resultados"
 msgid "All rounds"
 msgstr "Todas as rodadas"
 
-#. Head-to-head toggle: every World Tour meeting since 2018
+#. Head-to-head toggle: every meeting between the two sides, not just this season
 #: src/components/match/detail/utils.ts
 msgid "All time"
 msgstr "Histórico"
@@ -1356,6 +1361,11 @@ msgstr "Encerrado"
 #: src/pages/tournament/components/TournamentHeader.tsx
 msgid "First event on record"
 msgstr "Primeiro torneio registrado"
+
+#. Head-to-head summary when the two sides have never played each other in any BWF event
+#: src/components/match/detail/HeadToHead.tsx
+msgid "First meeting"
+msgstr "Primeiro confronto"
 
 #: src/components/match/detail/HeadToHead.tsx
 msgid "First meeting this season"

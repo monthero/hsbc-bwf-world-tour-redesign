@@ -1,9 +1,22 @@
-import type { Match, PlayerMatch, SeasonIndex } from '~/types';
+import type { Game, Match, PlayerMatch, SeasonIndex } from '~/types';
 
 import { opposite, teamEventKey, winnerSide } from './matches';
 import { winLoss } from './season';
 
 export type WL = readonly [number, number];
+
+export interface OtherMeet {
+  key: string;
+  tournament: string;
+  round: string;
+  date: string;
+  venue: string | null;
+  durationMin: number | null;
+  won: boolean;
+  games: readonly Game[];
+}
+
+export const meetKey = (tournament: string, match: string | null) => `${tournament.toUpperCase()}|${match ?? ''}`;
 
 export interface H2HRecord {
   a: number;
@@ -13,6 +26,8 @@ export interface H2HRecord {
   careerA: WL;
   careerB: WL;
   meets: readonly PlayerMatch[];
+  others: readonly OtherMeet[];
+  allEvents: boolean;
 }
 
 const NONE: readonly PlayerMatch[] = [];
@@ -41,5 +56,38 @@ export const careerRecord = (index: SeasonIndex, match: Match, code: string): H2
       pb += g[opposite(pm.side)];
     }
   const [a, b] = winLoss(meets);
-  return { a, b, pa, pb, careerA: winLoss(listA), careerB: winLoss(teamHistory(index, match, 1)), meets };
+  return {
+    a,
+    b,
+    pa,
+    pb,
+    careerA: winLoss(listA),
+    careerB: winLoss(teamHistory(index, match, 1)),
+    meets,
+    others: [],
+    allEvents: false,
+  };
+};
+
+export const withOtherMeets = (
+  record: H2HRecord,
+  others: readonly OtherMeet[],
+  match: Match,
+  code: string,
+): H2HRecord => {
+  const known = new Set([
+    meetKey(code, match.code),
+    ...record.meets.map((pm) => meetKey(pm.tournament.code, pm.match.code)),
+  ]);
+  const extra = others.filter((o) => !known.has(o.key));
+  let { a, b, pa, pb } = record;
+  for (const o of extra) {
+    if (o.won) a++;
+    else b++;
+    for (const [x, y] of o.games) {
+      pa += x;
+      pb += y;
+    }
+  }
+  return { ...record, a, b, pa, pb, others: extra, allEvents: true };
 };
