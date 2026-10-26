@@ -10,6 +10,7 @@ import { detailsLabel, isScheduled, teamLabel } from '~/utils/matches';
 import { entryStatus, type Entry, type LatestEntry } from './entries';
 
 import classes from './Players.module.css';
+import discipline from '~/styles/discipline.module.css';
 import utils from '~/styles/utils.module.css';
 
 const QUALIFIER = (
@@ -46,7 +47,7 @@ export const EntryRow = memo<{ entry: Entry; onOpen: (id: string) => void }>(({ 
   const { event, team, match, rank } = entry;
 
   return (
-    <div className={classes.entry}>
+    <div className={clsx(classes.entry, discipline.tone)} data-event={event}>
       {match && isScheduled(match) && (
         <CardHit label={detailsLabel(teamLabel(team))} onClick={() => onOpen(match.id)} />
       )}
