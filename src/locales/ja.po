@@ -906,7 +906,9 @@ msgstr "自己最高{rank}位 · {event}"
 
 #. Match filters: label above the event chips (MS, WS, MD, WD, XD)
 #. Match filters: label above the event chips (MS, WS, MD, WD, XD)
+#. Match filters: label above the event chips (MS, WS, MD, WD, XD)
 #: src/pages/tournament/components/matches/FilterBars.tsx
+#: src/pages/tournament/components/MediaTab.tsx
 #: src/pages/tournament/constants.ts
 msgid "Category"
 msgstr "種目"

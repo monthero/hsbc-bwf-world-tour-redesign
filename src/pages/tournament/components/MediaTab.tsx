@@ -4,6 +4,7 @@ import { Loader } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
+import { EventCode, type MediaItem } from '~/api/schemas';
 import { VideoCard } from '~/components/media';
 import {
   CondensedBar,
@@ -21,11 +22,13 @@ import {
 import { useScrolledPast } from '~/hooks/useScrolledPast';
 import { useTournamentMedia } from '~/hooks/useTournamentMedia';
 import type { Match } from '~/types';
+import { toggleItem } from '~/utils/filter';
 import { roundName } from '~/utils/matches';
 import { regionHiddenNote } from '~/utils/media';
 
 import type { TabProps } from '../types';
-import { ClearButton, FilterSearch } from './matches/FilterControls';
+import { ClearButton, EventChips, FilterSearch } from './matches/FilterControls';
+import type { EventChipModel } from './matches/utils';
 import {
   buildMediaSections,
   mediaMatchesQuery,
@@ -42,6 +45,7 @@ import classes from './MediaTab.module.css';
 import utils from '~/styles/utils.module.css';
 
 const ALL = 'all';
+const NO_EVENTS: EventCode[] = [];
 const LIVE_SECTION = 'live';
 const LIVE_ICON = <LiveDot pulse size={8} />;
 
@@ -155,20 +159,33 @@ export const MediaTab: FC<TabProps> = ({ tournament }) => {
   const [q, setQ] = useState('');
   const [stagePick, setStagePick] = useState(ALL);
   const [typePick, setTypePick] = useState(ALL);
+  const [events = NO_EVENTS, setEvents] = useState<EventCode[]>();
+  const toggleEvent = useCallback((ev: EventCode) => setEvents((list) => toggleItem(list, ev)), []);
   const rounds = useMemo(() => mediaRounds(items, matchOf), [items, matchOf]);
   const types = useMemo(() => mediaTypes(items), [items]);
   const stage = rounds.includes(stagePick) ? stagePick : ALL;
   const activeType = types.find((v) => v === typePick);
   const type = activeType ?? ALL;
   const searched = useMemo(() => items.filter((i) => mediaMatchesQuery(i, matchOf, q)), [items, matchOf, q]);
-  const typed = useMemo(
-    () => (activeType ? searched.filter((i) => mediaType(i) === activeType) : searched),
-    [activeType, searched],
+  const eventOf = useCallback((i: MediaItem) => matchOf.get(i.id)?.event, [matchOf]);
+  const evOk = useCallback(
+    (i: MediaItem) => {
+      const ev = eventOf(i);
+      return !events.length || (!!ev && events.includes(ev));
+    },
+    [events, eventOf],
   );
-  const staged = useMemo(
-    () => (stage === ALL ? searched : searched.filter((i) => mediaRound(i, matchOf) === stage)),
-    [stage, searched, matchOf],
-  );
+  const typeOk = useCallback((i: MediaItem) => !activeType || mediaType(i) === activeType, [activeType]);
+  const stageOk = useCallback((i: MediaItem) => stage === ALL || mediaRound(i, matchOf) === stage, [stage, matchOf]);
+  const typed = useMemo(() => searched.filter((i) => evOk(i) && typeOk(i)), [searched, evOk, typeOk]);
+  const staged = useMemo(() => searched.filter((i) => evOk(i) && stageOk(i)), [searched, evOk, stageOk]);
+  const evChips = useMemo((): EventChipModel[] => {
+    const pool = searched.filter((i) => typeOk(i) && stageOk(i));
+    const counts = Map.groupBy(pool, eventOf);
+    return EventCode.options
+      .filter((code) => items.some((i) => eventOf(i) === code))
+      .map((code) => ({ code, count: counts.get(code)?.length ?? 0, active: events.includes(code) }));
+  }, [searched, typeOk, stageOk, eventOf, items, events]);
   const byStage = useMemo(() => Map.groupBy(typed, (i) => mediaRound(i, matchOf)), [typed, matchOf]);
   const typesIn = useMemo(() => new Set(staged.map((i) => mediaType(i))), [staged]);
   const roundPicker = useMemo(
@@ -214,9 +231,10 @@ export const MediaTab: FC<TabProps> = ({ tournament }) => {
   const clear = useCallback(() => {
     setStagePick(ALL);
     setTypePick(ALL);
+    setEvents(undefined);
     setQ('');
   }, []);
-  const count = Number(stage !== ALL) + Number(type !== ALL) + Number(!!q.trim());
+  const count = Number(stage !== ALL) + Number(type !== ALL) + Number(!!q.trim()) + Number(events.length > 0);
   const summary =
     stage !== ALL || activeType ? (
       <>
@@ -229,6 +247,7 @@ export const MediaTab: FC<TabProps> = ({ tournament }) => {
     <div className={classes.root}>
       {hasItems && (
         <CondensedBar visible={filtersOut}>
+          {evChips.length > 1 && <EventChips variant="compact" chips={evChips} onToggle={toggleEvent} />}
           <Selects rounds={roundPicker} types={typePicker} size="sm" />
           <FilterSearch variant="compact" value={q} onChange={setQ} />
         </CondensedBar>
@@ -242,6 +261,9 @@ export const MediaTab: FC<TabProps> = ({ tournament }) => {
         {!isLoading && !hasItems && <EmptyState>{tabMessage(enabled, isError, hidden)}</EmptyState>}
         {hasItems && (
           <div ref={filtersRef} className={classes.filters}>
+            {evChips.length > 1 && (
+              <EventChips variant="inline" chips={evChips} onToggle={toggleEvent} className={classes.eventChips} />
+            )}
             <Selects rounds={roundPicker} types={typePicker} size="md" />
             <div className={classes.searchWrap}>
               <FilterSearch variant="inline" value={q} onChange={setQ} />
@@ -272,6 +294,13 @@ export const MediaTab: FC<TabProps> = ({ tournament }) => {
           summary={summary}
           clear={count > 0 && <ClearButton variant="sheet" onClick={clear} />}
         >
+          {evChips.length > 1 && (
+            <FilterField
+              label={<Trans comment="Match filters: label above the event chips (MS, WS, MD, WD, XD)">Category</Trans>}
+            >
+              <EventChips variant="sheet" chips={evChips} onToggle={toggleEvent} />
+            </FilterField>
+          )}
           {typePicker && (
             <FilterField label={typePicker.title}>
               <OptionChips options={typePicker.options} value={type} onChange={setTypePick} />
