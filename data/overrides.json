@@ -47,6 +47,7 @@
       "retired": "2024-08"
     },
     "25831": {
+      "retired": "2026-04",
       "heroFocus": {
         "x": 33,
         "y": 78
@@ -994,12 +995,24 @@
       "retired": "2025-03"
     },
     "67761": {
-      "hero": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Amalia_Cahaya_Pratiwi.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Amalia_Cahaya_Pratiwi_%28cropped%29.jpg/960px-Amalia_Cahaya_Pratiwi_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail",
+      "hero": "https://thumb.tvonenews.com/images/2026/06/04/6a213df1d22bd-ganda-putri-indonesia-amallia-cahaya-pratiwisiti-fadia-silva-ramadhanti.jpg",
+      "heroFocus": {
+        "x": 48,
+        "y": 0
+      },
+      "photoCrop": {
+        "x": 34.4,
+        "y": 9.2,
+        "zoom": 1.4
+      },
       "bio": {
         "height": 170,
         "plays": "R",
         "birthplace": "Sukoharjo",
-        "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Uber Cup 2026 – bronze (Women's team); Asian Championships 2026 – bronze (Women's doubles); Asia Team Championships 2022 – gold (Women's team); Asia Team Championships 2024 – bronze (Women's team); Asia Team Championships 2026 – bronze (Women's team); SEA Games 2023 – gold (Women's doubles); SEA Games 2023 – silver (Women's team)"
+        "racket": "673de5e1-56a1-4638-9403-c7d4daab604f",
+        "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Uber Cup 2026 – bronze (Women's team); Asian Championships 2026 – bronze (Women's doubles); Asia Team Championships 2022 – gold (Women's team); Asia Team Championships 2024 – bronze (Women's team); Asia Team Championships 2026 – bronze (Women's team); SEA Games 2023 – gold (Women's doubles); SEA Games 2023 – silver (Women's team)",
+        "instagram": "https://www.instagram.com/amalliacahaya"
       }
     },
     "67903": {
@@ -1370,8 +1383,13 @@
       }
     },
     "73173": {
-      "photo": "https://img.olympics.com/images/image/private/t_1-1_300/f_auto/primary/ravhqy073xqoc25izxle",
+      "photo": "https://image.nordjyske.dk/users/nordjyske/images/145970476.jpg?t[strip]=true&t[quality]=75&t[crop][width]=3416&t[crop][height]=1922&t[crop][x]=0&t[crop][y]=0&t[resize][width]=1200&t[resize][height]=675&accessToken=0dd68f0502eb87e48ab00139bcaee1e09ac42ef1d9bd46a51d2a51c2ac3153c2",
       "hero": "https://media.telanganatoday.com/wp-content/uploads/2026/07/Pusarla-V-Sindhu-.jpg",
+      "photoCrop": {
+        "x": 61.1,
+        "y": 6.9,
+        "zoom": 2.05
+      },
       "bio": {
         "racket": "f46fd698-718f-4a78-ad2c-a6244df7c794"
       }
@@ -2505,6 +2523,7 @@
       }
     },
     "93074": {
+      "retired": "2025-10",
       "bio": {
         "racket": "f0725fdb-8630-4be6-a9f6-39d25172ef84",
         "racketNote": "4U",
