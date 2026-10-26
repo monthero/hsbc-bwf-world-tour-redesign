@@ -9,6 +9,7 @@
   min-width: 0;
   padding: 12px var(--pad-x) var(--pad-bottom);
   border-radius: 14px;
+  background-image: linear-gradient(alpha(var(--event), 0.04), alpha(var(--event), 0.04));
 }
 
 .replay {

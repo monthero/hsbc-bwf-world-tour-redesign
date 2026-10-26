@@ -14,6 +14,7 @@ import { nextLabel, type NextKind } from '~/utils/match-time';
 import { detailsLabel, isDoubles, matchTitle, sideResult } from '~/utils/matches';
 
 import classes from './MatchCard.module.css';
+import discipline from '~/styles/discipline.module.css';
 import utils from '~/styles/utils.module.css';
 
 const followMark = (p: Player) => <FollowMark player={p} />;
@@ -69,7 +70,12 @@ export const MatchCard = memo<{
   const done = m.status === 'F';
   const { court } = m;
   return (
-    <div className={clsx(utils.card, classes.card)} data-interactive data-doubles={doubles || undefined}>
+    <div
+      className={clsx(utils.card, classes.card, discipline.tone)}
+      data-event={m.event}
+      data-interactive
+      data-doubles={doubles || undefined}
+    >
       <CardHit label={detailsLabel(matchTitle(m))} onClick={() => onOpen(m.id)} />
       <div className={classes.head}>
         <span className={classes.when}>
