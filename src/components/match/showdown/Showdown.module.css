@@ -220,6 +220,7 @@
 
 .split {
   position: relative;
+  z-index: 1;
   grid-area: 1 / 1 / -1 / -1;
   min-width: 0;
   min-height: 0;
@@ -259,7 +260,7 @@
     padding-inline: 12px 18px;
   }
 
-  & > * {
+  & :is(a, [data-tip]) {
     pointer-events: auto;
   }
 }
