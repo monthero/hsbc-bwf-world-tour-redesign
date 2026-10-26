@@ -296,6 +296,7 @@ export const ShowdownCard = memo<{
         <Corner view={v} side={0} follow={follow} />
         <Hub view={v} />
         <Corner view={v} side={1} follow={follow} />
+        <span className={classes.shade} aria-hidden />
         <GameChips games={v.done} className={classes.rail} />
       </div>
       {(duels || hasTags(a) || hasTags(b)) && (

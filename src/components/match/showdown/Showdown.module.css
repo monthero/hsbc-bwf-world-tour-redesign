@@ -194,6 +194,10 @@
   }
 }
 
+.shade {
+  display: none;
+}
+
 .follow {
   grid-area: 1 / 1 / -1 / -1;
   min-width: 0;
@@ -946,5 +950,56 @@
 
   50% {
     opacity: 1;
+  }
+}
+
+@container showdown (width >= 800px) {
+  .portrait[data-pair] {
+    position: relative;
+
+    &::after {
+      z-index: 1;
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: alpha(var(--bwf-bg), 0.7);
+      clip-path: polygon(56% 0, calc(56% + 1px) 0, calc(44% + 1px) 100%, 44% 100%);
+    }
+  }
+
+  .portrait[data-pair] > .photo {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 60%;
+    border: 0;
+  }
+
+  .portrait[data-pair] > .photo:first-child {
+    left: 0;
+    clip-path: polygon(0 0, 93.3% 0, 73.3% 100%, 0 100%);
+  }
+
+  .portrait[data-pair] > .photo:last-child {
+    right: 0;
+    clip-path: polygon(26.7% 0, 100% 0, 100% 100%, 6.7% 100%);
+  }
+
+  .splitCell::before {
+    display: none;
+  }
+
+  .shade {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      alpha(var(--bwf-bg-sunken), 0.95),
+      alpha(var(--bwf-bg-sunken), 0.78) 40px,
+      alpha(var(--bwf-bg-sunken), 0.4) 80px,
+      transparent 120px
+    );
+    pointer-events: none;
   }
 }
