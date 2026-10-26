@@ -5,6 +5,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 
 import { useIsMobile } from '~/hooks/useIsMobile';
 import type { Level, Tournament } from '~/types';
+import { STAY } from '~/utils/navigation';
 import { isHeld } from '~/utils/tournaments';
 
 import { LEGEND_LEVELS } from '../constants';
@@ -49,7 +50,7 @@ export const SeasonCard = memo<{ tournaments: Tournament[]; year: number; focus:
       (l: Level) =>
         void navigate({
           search: (s) => ({ ...s, levels: toggleShown(LEGEND_LEVELS, s.levels, l) }),
-          resetScroll: false,
+          ...STAY,
         }),
       [navigate],
     );
@@ -57,7 +58,7 @@ export const SeasonCard = memo<{ tournaments: Tournament[]; year: number; focus:
       (v: SeasonStatus) =>
         void navigate({
           search: (s) => ({ ...s, status: toggleShown(SeasonStatus.options, s.status, v) }),
-          resetScroll: false,
+          ...STAY,
         }),
       [navigate],
     );

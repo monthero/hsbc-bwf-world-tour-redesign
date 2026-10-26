@@ -160,7 +160,8 @@ const Calendar: FC<{ year: number; tournaments: Tournament[] }> = ({ year, tourn
   );
 
   const onYear = useCallback(
-    (y: number) => void navigate({ search: (s) => ({ levels: s.levels, year: y === SEASON_YEAR ? undefined : y }) }),
+    (y: number) =>
+      void navigate({ search: (s) => ({ levels: s.levels, year: y === SEASON_YEAR ? undefined : y }), ...STAY }),
     [navigate],
   );
 

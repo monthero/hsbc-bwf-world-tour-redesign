@@ -115,7 +115,7 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
     [navigate],
   );
   const openSeason = useCallback(
-    (y: number) => void navigate({ to: '.', search: (s) => ({ ...s, tab: 'matches', season: y }), resetScroll: false }),
+    (y: number) => void navigate({ to: '.', search: (s) => ({ ...s, tab: 'matches', season: y }), ...STAY }),
     [navigate],
   );
   const openResults = useCallback(() => setTab('rankings'), [setTab]);
