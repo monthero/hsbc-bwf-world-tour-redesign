@@ -2728,6 +2728,19 @@
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f"
       }
     },
+    "95766": {
+      "hero": "https://badmintonline.nl/i/media/images/1500/2026_03_19__noah-haase.webp",
+      "heroFocus": {
+        "x": 52,
+        "y": 50
+      },
+      "bio": {
+        "height": 175,
+        "plays": "R",
+        "languages": "Dutch, English",
+        "racket": "0dfecd6d-9273-414e-b54b-2d1f0544437c"
+      }
+    },
     "96312": {
       "hero": "https://www.reuters.com/resizer/v2/52JFKMM75ROE7JIPGKAXGXJ24I.jpg?auth=7189c7785e310c6dcc1532e4abfef825ee55b23d2caa74eab1e30cf6b9985a88&width=1920&quality=80",
       "bio": {
