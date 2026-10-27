@@ -4,22 +4,30 @@ import { memo } from 'react';
 
 import { Tip } from '~/components/ui';
 import { useMatchTime } from '~/hooks/useMatchClock';
+import { useNow } from '~/hooks/useNow';
 import type { Match, SideResult } from '~/types';
-import { dayMark } from '~/utils/match-time';
+import { dayMark, dayTime, type ClockTime } from '~/utils/match-time';
 
 import { TBD } from './labels';
 
 import classes from './MatchTime.module.css';
 
+const DayTime = memo<{ time: ClockTime }>(({ time }) => {
+  const now = useNow();
+  return dayTime(time, now);
+});
+
 export const MatchTime = memo<{
   match: Match;
   zone?: boolean;
+  day?: boolean;
   stacked?: boolean;
   fallback?: string;
   className?: string;
-}>(({ match, zone = true, stacked = false, fallback = '', className }) => {
+}>(({ match, zone = true, day = false, stacked = false, fallback = '', className }) => {
   const t = useMatchTime(match);
   if (!t) return fallback ? <span className={className}>{fallback}</span> : null;
+  const dated = day && !!match.date;
   return (
     <Tip label={t.alt}>
       <span
@@ -27,8 +35,8 @@ export const MatchTime = memo<{
         data-tip={t.alt ? true : undefined}
         data-stacked={stacked || undefined}
       >
-        {t.text}
-        {t.shift !== 0 && <span className={classes.shift}>{dayMark(t.shift)}</span>}
+        {dated ? <DayTime time={t} /> : t.text}
+        {!dated && t.shift !== 0 && <span className={classes.shift}>{dayMark(t.shift)}</span>}
         {zone && t.zone && <span className={classes.zone}>{t.zone}</span>}
       </span>
     </Tip>
@@ -40,7 +48,7 @@ export const TimedStatus = memo<{ match: Match | null | undefined; tone: SideRes
     const { i18n } = useLingui();
     return tone === 'up' && match ? (
       <>
-        <MatchTime match={match} fallback={i18n._(TBD)} />
+        <MatchTime match={match} day fallback={i18n._(TBD)} />
         {label && ` · ${label}`}
       </>
     ) : (

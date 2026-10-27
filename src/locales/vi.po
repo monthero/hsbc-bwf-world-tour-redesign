@@ -3576,6 +3576,11 @@ msgctxt "tournament start"
 msgid "Today"
 msgstr "Hôm nay"
 
+#. When a match starts: today at {time}. Keep it short, e.g. "Today 14:30"
+#: src/utils/match-time.ts
+msgid "Today {time}"
+msgstr "Hôm nay {time}"
+
 #. Countdown: the tournament’s first match is today at {time}, e.g. "Today at 10:00"
 #: src/utils/tournaments.ts
 msgid "Today at {time}"
@@ -3585,6 +3590,11 @@ msgstr "Hôm nay lúc {time}"
 #: src/utils/tournaments.ts
 msgid "Tomorrow"
 msgstr "Ngày mai"
+
+#. When a match starts: tomorrow at {time}. Keep it short, e.g. "Tomorrow 10:00"
+#: src/utils/match-time.ts
+msgid "Tomorrow {time}"
+msgstr "Ngày mai {time}"
 
 #. About page tier ladder: the World Tour Finals field is the top {QUALIFY_SPOTS} players or pairs of the Race to Finals in each discipline
 #: src/pages/about/summaries.ts

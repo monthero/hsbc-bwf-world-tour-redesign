@@ -56,6 +56,17 @@ const ALT_TIMES = {
   }),
 };
 
+const DAY_TIMES = {
+  today: msg({
+    message: 'Today {time}',
+    comment: 'When a match starts: today at {time}. Keep it short, e.g. "Today 14:30"',
+  }),
+  tomorrow: msg({
+    message: 'Tomorrow {time}',
+    comment: 'When a match starts: tomorrow at {time}. Keep it short, e.g. "Tomorrow 10:00"',
+  }),
+};
+
 const zoneOffsets = new Map<string, number>();
 const zoneFormats = new Map<string, Intl.DateTimeFormat[]>();
 const zoneLabels = new Map<string, string>();
@@ -165,9 +176,20 @@ export type NextKind = 'first' | 'later';
 
 export const SOON_MIN = 60;
 
-export const nextLabel = (start: ClockTime, kind: NextKind, now: Dayjs) => {
+const daysAhead = (start: ClockTime, now: Dayjs) => {
   const today = now.utcOffset(start.at.utcOffset()).format(ISO_DAY);
-  const days = dayjs.utc(start.at.format(ISO_DAY)).diff(dayjs.utc(today), 'day');
+  return dayjs.utc(start.at.format(ISO_DAY)).diff(dayjs.utc(today), 'day');
+};
+
+export const dayTime = (start: ClockTime, now: Dayjs) => {
+  const days = daysAhead(start, now);
+  if (days === 0) return translate(DAY_TIMES.today, { time: start.text });
+  if (days === 1) return translate(DAY_TIMES.tomorrow, { time: start.text });
+  return formatWall(start.at, { ...WEEKDAY, ...TIME_FORMATS[start.clock] });
+};
+
+export const nextLabel = (start: ClockTime, kind: NextKind, now: Dayjs) => {
+  const days = daysAhead(start, now);
   if (days > 0) return null;
   if (kind === 'later' || days < 0)
     return t({
