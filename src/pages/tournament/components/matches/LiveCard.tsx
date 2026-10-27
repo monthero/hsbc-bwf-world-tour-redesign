@@ -14,17 +14,10 @@ import {
   TeamPlayers,
 } from '~/components/match';
 import { WatchButton } from '~/components/media';
-import { AvatarGroup } from '~/components/player';
+import { AvatarGroup, RankSeed } from '~/components/player';
 import { CardHit, Duration, StatusChip, type StatusTone } from '~/components/ui';
 import type { EventCode, Game, Match, Player, Side } from '~/types';
-import {
-  CHALLENGE_LABELS,
-  CHALLENGE_REVIEW,
-  GAME_SHORT,
-  LONGEST_RUN,
-  RALLY_POINTS,
-  type ChallengeOutcome,
-} from '~/utils/live';
+import { CHALLENGE_LABELS, CHALLENGE_REVIEW, GAME_SHORT, LONGEST_RUN, type ChallengeOutcome } from '~/utils/live';
 import { gameWon, matchTitle } from '~/utils/matches';
 
 import type { LiveView, SideView } from './liveView';
@@ -63,15 +56,9 @@ const TeamRow: FC<{ view: LiveView; side: SideView; event: EventCode }> = ({ vie
     <div className={classes.row} data-lead={s.leading || undefined}>
       <div className={classes.team}>
         <AvatarGroup players={s.team.players} size={AVATAR} className={classes.avatars} />
-        <div className={classes.who}>
-          <TeamPlayers
-            players={s.team.players}
-            flag="sm"
-            mark={followMark}
-            seed={s.team.seed}
-            event={event}
-            className={classes.names}
-          />
+        <div className={classes.who} data-side={s.side}>
+          <RankSeed players={s.team.players} seed={s.team.seed} event={event} />
+          <TeamPlayers players={s.team.players} flag="sm" mark={followMark} className={classes.names} />
           <Tags side={s} />
         </div>
       </div>
@@ -97,7 +84,9 @@ const FootStat: FC<{ label: string; a: number; b: number }> = ({ label, a, b }) 
   <span className={classes.foot}>
     {label}
     <span className={clsx(classes.footValues, utils.ltr)}>
-      <span data-lead={a > b || undefined}>{a}</span>–<span data-lead={b > a || undefined}>{b}</span>
+      <span data-lead={a > b || undefined}>{a}</span>
+      <span>–</span>
+      <span data-lead={b > a || undefined}>{b}</span>
     </span>
   </span>
 );
@@ -112,6 +101,7 @@ export const LiveCard = memo<{
 }>(({ match: m, view: v, stream, onOpen, className, ref }) => {
   const { t, i18n } = useLingui();
   const [a, b] = v.sides;
+  const runs = !!a.stats && !!b.stats;
   const { court, gameNo } = v;
   const title = matchTitle(m);
   const cols = useMemo(
@@ -161,13 +151,12 @@ export const LiveCard = memo<{
         <TeamRow view={v} side={a} event={m.event} />
         <TeamRow view={v} side={b} event={m.event} />
       </div>
-      <div className={classes.footer}>
-        <span className={classes.stats}>
-          <FootStat label={i18n._(RALLY_POINTS)} a={a.points} b={b.points} />
+      {(runs || stream) && (
+        <div className={classes.footer}>
           {a.stats && b.stats && <FootStat label={i18n._(LONGEST_RUN)} a={a.stats.longestRun} b={b.stats.longestRun} />}
-        </span>
-        {stream && <WatchButton item={stream} className={classes.watch} />}
-      </div>
+          {stream && <WatchButton item={stream} className={classes.watch} />}
+        </div>
+      )}
     </div>
   );
 });

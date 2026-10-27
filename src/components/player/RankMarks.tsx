@@ -26,9 +26,14 @@ const TOURNAMENT_RANK = msg({
     'Tooltip on a world ranking mark inside a tournament: the player’s ranking in the week the tournament began, e.g. “Men’s singles world No. 3 going into this tournament”',
 });
 
-const Mark: FC<{ tip: string; className?: string; children: ReactNode }> = ({ tip, className, children }) => (
+const Mark: FC<{ tip: string; kind: 'rank' | 'seed'; className?: string; children: ReactNode }> = ({
+  tip,
+  kind,
+  className,
+  children,
+}) => (
   <Tip label={tip}>
-    <span className={clsx(classes.mark, className)}>
+    <span className={clsx(classes.mark, className)} data-mark={kind}>
       <span aria-hidden>{children}</span>
       <VisuallyHidden>{tip}</VisuallyHidden>
     </span>
@@ -39,7 +44,7 @@ export const SeedTag: FC<{ seed: number | null | undefined; className?: string }
   const { i18n } = useLingui();
   if (!seed) return null;
   return (
-    <Mark tip={i18n._({ ...SEED_TIP, values: { seed } })} className={clsx(classes.seed, className)}>
+    <Mark tip={i18n._({ ...SEED_TIP, values: { seed } })} kind="seed" className={clsx(classes.seed, className)}>
       [{seed}]
     </Mark>
   );
@@ -56,6 +61,7 @@ export const WorldRankTag: FC<{ rank: number | null | undefined; event: EventCod
   return (
     <Mark
       tip={i18n._({ ...(frozen ? TOURNAMENT_RANK : PLAYER_RANK), values: { discipline: EVENT_NAMES[event], rank } })}
+      kind="rank"
       className={clsx(classes.rank, className)}
     >
       <Trans comment="Compact world ranking mark after a player’s name on match cards, e.g. “WR6”. WR is short for world ranking; keep it as short as possible and keep the number inside the tags">

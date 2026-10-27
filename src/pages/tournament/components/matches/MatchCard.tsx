@@ -6,7 +6,8 @@ import type { MediaItem } from '~/api/schemas';
 import { FollowMark } from '~/components/follow';
 import { EventTag, MatchTime, MedalMark, SideMedal, SideNote, SideScores, TeamPlayers } from '~/components/match';
 import { WatchButton } from '~/components/media';
-import { CardHit, Duration, IconCheck } from '~/components/ui';
+import { RankSeed } from '~/components/player';
+import { CardHit, Duration } from '~/components/ui';
 import { useMatchTime } from '~/hooks/useMatchClock';
 import { useNow } from '~/hooks/useNow';
 import type { Match, Player, Side } from '~/types';
@@ -30,16 +31,14 @@ const TeamRow: FC<{ match: Match; side: Side }> = ({ match: m, side }) => {
           flag="sm"
           truncate
           mark={followMark}
-          seed={seed}
-          event={m.event}
           className={classes.players}
           nameClassName={classes.name}
         />
         <SideMedal match={m} side={side} size={17} className={utils.raise} />
         <SideNote match={m} side={side} className={clsx(utils.raise, classes.note)} />
       </div>
-      <IconCheck className={classes.check} />
-      <SideScores match={m} side={side} />
+      <RankSeed players={players} seed={seed} event={m.event} className={classes.marks} />
+      <SideScores match={m} side={side} className={classes.scores} />
     </div>
   );
 };

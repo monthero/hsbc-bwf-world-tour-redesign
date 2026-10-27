@@ -88,9 +88,14 @@
   grid-column: seed;
   grid-row: 1;
   align-self: center;
+  justify-self: start;
 
   .team[data-pair] > & {
     grid-row: 1 / span 2;
+  }
+
+  .team[data-align='end'] > & {
+    justify-self: end;
   }
 }
 
