@@ -3,7 +3,7 @@ import { useLayoutEffect, useState } from 'react';
 const callbacks = new WeakMap<Element, () => void>();
 let observer: ResizeObserver | null = null;
 
-const SUBPIXEL = 0.5;
+const SUBPIXEL = 0.01;
 
 const shared = () =>
   (observer ??= new ResizeObserver((entries) => {

@@ -32,20 +32,16 @@ export interface NameForm {
 
 const initial = (w: string) => `${w.charAt(0)}.`;
 
-const initialCap = (w: string) => (/^\p{Lu}/u.test(w) ? initial(w) : w);
-
 const distinct = (forms: NameForm[]) =>
   forms.filter((f, i) => !i || f.first !== forms[i - 1]?.first || f.last !== forms[i - 1]?.last);
 
 export const nameForms = (p: Player): NameForm[] => {
   if (!p.last) return [];
   const { first, last } = p;
-  const [head = '', ...rest] = (p.surnameFirst ? last : first).split(' ');
+  const [head = ''] = (p.surnameFirst ? last : first).split(' ');
   const full = { first, last };
   const out = distinct(
-    p.surnameFirst
-      ? [full, { first, last: initial(head) }]
-      : [full, { first: [head, ...rest.map(initialCap)].join(' '), last }, { first: initial(head), last }],
+    p.surnameFirst ? [full, { first, last: initial(head) }] : [full, { first: initial(head), last }],
   );
   return out.length > 1 ? out : [];
 };
