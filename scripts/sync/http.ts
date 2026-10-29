@@ -157,10 +157,17 @@ export const createClient = (db: Db, { offline = false } = {}) => {
     }
   };
 
+  const cached = <T>(path: string): Cached<T> | null => {
+    const row = cachedRow(path);
+    return row ? fromRow<T>(row) : null;
+  };
+
+  const put = (path: string, data: unknown) => write.run(path, Date.now(), gzipSync(JSON.stringify(data)));
+
   const pruneRange = db.prepare('DELETE FROM responses WHERE path >= ? AND path < ? AND path != ?');
   const prune = (prefix: string, keep: string) => pruneRange.run(prefix, `${prefix}\uffff`, keep);
 
-  return { get, prune };
+  return { get, cached, put, prune };
 };
 
 export type Client = ReturnType<typeof createClient>;

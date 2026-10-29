@@ -39,6 +39,12 @@ const WEEKLY_FLOOR = 2008;
 const WEEKLY_GAP = 2;
 const HISTORY_STATE = 'rankings.history';
 const HISTORY_GAP_MS = 1000;
+const HISTORY_SAVE_EVERY = 100;
+
+interface Publication {
+  id: number;
+  previous: number | undefined;
+}
 
 interface HistoryState {
   key: string;
@@ -152,7 +158,7 @@ const syncTable = async ({ db, client }: Context, ranking: number, categories: R
     );
   });
   console.log(`rankings ${ranking}: publication ${pub.id} (${pub.date.slice(0, 10)}) · ${rows.length} rows`);
-  return pub.id;
+  return { id: pub.id, previous: res.data[1]?.id } satisfies Publication;
 };
 
 export const weeklyHistory = async (
@@ -178,6 +184,22 @@ export const weeklyHistory = async (
   return { rows, complete };
 };
 
+const carryWeekly = (
+  client: Client,
+  id: string,
+  history: readonly ApiHistoryRow[],
+  year: number,
+  { id: publication, previous }: Publication,
+) => {
+  const path = weeklyPath(id, year, publication);
+  if (!previous || client.cached(path)) return false;
+  const last = client.cached<ApiWeekly>(weeklyPath(id, year, previous));
+  if (!last) return false;
+  const current = history.filter((h) => h.ranking_publication_id === publication);
+  client.put(path, { ...last.data, data: [...current, ...last.data.data] });
+  return true;
+};
+
 const syncNames = async ({ db, client }: Context) => {
   const lead = all<{ player1: string }>(db, 'SELECT player1 FROM rankings ORDER BY ranking, rank LIMIT 1')[0];
   if (!lead) return;
@@ -189,15 +211,7 @@ const syncNames = async ({ db, client }: Context) => {
   for (const r of res.data) update.run(r.name, r.id);
 };
 
-export const syncRankings = async (ctx: Context) => {
-  const { db, client } = ctx;
-  unmapped.clear();
-  const world = await syncTable(ctx, WORLD, WORLD_CATEGORIES);
-  await syncTable(ctx, RACE, RACE_CATEGORIES);
-  await syncNames(ctx);
-  for (const [name, n] of unmapped) console.warn(`  ! unmapped ranking country "${name}" (${n})`);
-  if (!world) return;
-
+const syncHistory = async ({ db, client, currentYear }: Context, world: Publication) => {
   const ids = all<{ id: string }>(
     db,
     `SELECT p.id FROM players p WHERE EXISTS (
@@ -205,27 +219,43 @@ export const syncRankings = async (ctx: Context) => {
     WORLD,
   ).map((r) => r.id);
 
-  const key = `${world}:${ctx.currentYear}`;
+  const key = `${world.id}:${currentYear}`;
   const state = readState<HistoryState | null>(db, HISTORY_STATE, null);
   const complete = new Set(state?.key === key ? state.done : []);
   const todo = ids.filter((id) => !complete.has(id));
+  const save = () =>
+    writeState(db, HISTORY_STATE, { key, done: ids.filter((id) => complete.has(id)) } satisfies HistoryState);
 
   let done = 0;
+  let carried = 0;
   for (const id of todo) {
     if (isBlocked()) break;
-    const path = historyPath(id, world);
+    const path = historyPath(id, world.id);
     const res = await client.get<ApiHistory>(path, FOREVER);
     client.prune(historyPrefix(id), path);
-    const weekly = res?.data.data.length
-      ? await weeklyHistory(client, id, res.data.data, ctx.currentYear, world)
-      : { complete: true };
-    if (res && weekly.complete) complete.add(id);
-    if (++done % 500 === 0) console.log(`  ranking history ${done}/${todo.length}`);
+    const history = res?.data.data ?? [];
+    let weeklyDone = true;
+    if (history.length) {
+      if (carryWeekly(client, id, history, currentYear, world)) carried++;
+      weeklyDone = (await weeklyHistory(client, id, history, currentYear, world.id)).complete;
+    }
+    if (res && weeklyDone) complete.add(id);
+    if (++done % HISTORY_SAVE_EVERY === 0) save();
+    if (done % 500 === 0) console.log(`  ranking history ${done}/${todo.length}`);
     await sleep(HISTORY_GAP_MS);
   }
-  const finished = ids.filter((id) => complete.has(id));
-  writeState(db, HISTORY_STATE, { key, done: finished } satisfies HistoryState);
+  save();
+  const incomplete = ids.filter((id) => !complete.has(id)).length;
   console.log(
-    `ranking history: ${ids.length} ranked players · ${todo.length} checked · ${ids.length - finished.length} incomplete`,
+    `ranking history: ${ids.length} ranked players · ${todo.length} checked · ${carried} weekly carried over · ${incomplete} incomplete`,
   );
+};
+
+export const syncRankings = async (ctx: Context) => {
+  unmapped.clear();
+  const world = await syncTable(ctx, WORLD, WORLD_CATEGORIES);
+  await syncTable(ctx, RACE, RACE_CATEGORIES);
+  await syncNames(ctx);
+  for (const [name, n] of unmapped) console.warn(`  ! unmapped ranking country "${name}" (${n})`);
+  if (world) await syncHistory(ctx, world);
 };
