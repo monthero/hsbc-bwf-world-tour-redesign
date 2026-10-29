@@ -14,7 +14,7 @@ import {
   TeamPlayers,
 } from '~/components/match';
 import { WatchButton } from '~/components/media';
-import { AvatarGroup, RankSeed } from '~/components/player';
+import { RankSeed, TeamPhoto } from '~/components/player';
 import { CardHit, Duration, StatusChip, type StatusTone } from '~/components/ui';
 import type { EventCode, Game, Match, Player, Side } from '~/types';
 import { CHALLENGE_LABELS, CHALLENGE_REVIEW, GAME_SHORT, LONGEST_RUN, type ChallengeOutcome } from '~/utils/live';
@@ -25,7 +25,6 @@ import type { LiveView, SideView } from './liveView';
 import classes from './LiveCard.module.css';
 import utils from '~/styles/utils.module.css';
 
-const AVATAR = 34;
 const CHALLENGE_TONES: Record<ChallengeOutcome, StatusTone> = { won: 'green', lost: 'red' };
 
 const Tags: FC<{ side: SideView }> = ({ side: s }) => {
@@ -54,13 +53,11 @@ const followMark = (p: Player) => <FollowMark player={p} />;
 const TeamRow: FC<{ view: LiveView; side: SideView; event: EventCode }> = ({ view: v, side: s, event }) => {
   return (
     <div className={classes.row} data-lead={s.leading || undefined}>
-      <div className={classes.team}>
-        <AvatarGroup players={s.team.players} size={AVATAR} className={classes.avatars} />
-        <div className={classes.who} data-side={s.side}>
-          <RankSeed players={s.team.players} seed={s.team.seed} event={event} />
-          <TeamPlayers players={s.team.players} flag="sm" mark={followMark} className={classes.names} />
-          <Tags side={s} />
-        </div>
+      <div className={classes.team} data-side={s.side}>
+        <TeamPhoto players={s.team.players} className={classes.photo} />
+        <RankSeed players={s.team.players} seed={s.team.seed} event={event} className={classes.rank} />
+        <TeamPlayers players={s.team.players} flag="sm" mark={followMark} className={classes.names} />
+        <Tags side={s} />
       </div>
       <span className={classes.serveCell}>{s.serving && <ServeMark size={15} className={utils.raise} />}</span>
       {v.games.map((g, i) => (

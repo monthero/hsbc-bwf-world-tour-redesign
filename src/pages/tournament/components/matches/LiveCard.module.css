@@ -4,8 +4,8 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 16px 18px;
+  gap: 8px;
+  padding: 14px 16px;
   border-radius: 18px;
   color: var(--bwf-text);
   transition: border-color 0.2s;
@@ -95,56 +95,88 @@
 .colHead,
 .nowHead {
   align-self: stretch;
-  padding: 6px 0 4px;
+  box-sizing: border-box;
+  block-size: 19px;
+  padding: 13px 0 0;
   font-size: 11px;
   line-height: 1;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-align: center;
-  color: var(--bwf-muted);
+  color: alpha(var(--bwf-gold-text), 0.6);
 }
 
 .nowHead {
   border-radius: 10px 10px 0 0;
   background: var(--bwf-live-column);
-  color: var(--bwf-red-pale);
+  font-weight: 800;
+  color: var(--bwf-gold-text);
 }
 
 .team {
+  --name-size: 15px;
+  --photo-h: calc(var(--mark-size, 0.625rem) * 1.54 + 4px + var(--name-size) * var(--mantine-line-height));
   min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-block: 10px;
-}
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 10px;
+  justify-items: start;
+  padding-block: 6px;
 
-.avatars {
-  --avatar-ring: var(--bwf-surface-3);
+  & > .rank {
+    grid-area: 1 / 2;
+  }
+
+  & > .names {
+    grid-area: 2 / 2;
+  }
+
+  & > .tags {
+    grid-area: 3 / 2;
+  }
+
+  & > .photo {
+    grid-area: 1 / 1 / 3 / 2;
+    align-self: end;
+    height: var(--photo-h);
+  }
+
+  &[data-side='1'] {
+    & > .rank {
+      grid-row: 3;
+    }
+
+    & > .tags {
+      grid-row: 1;
+    }
+
+    & > .photo {
+      grid-row: 2 / 4;
+      align-self: start;
+    }
+  }
 
   @container live-card (width < 380px) {
-    display: none;
+    --name-size: 14px;
   }
 }
 
-.who {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
+.photo {
+  @container live-card (width < 440px) {
+    --w: 34px;
+    --w-solo: 38px;
+    --r: 8px;
+  }
 
-  &[data-side='1'] {
-    flex-direction: column-reverse;
+  @container live-card (width < 380px) {
+    --w: 28px;
+    --w-solo: 32px;
   }
 }
 
 .names {
-  font-size: 15px;
+  font-size: var(--name-size);
   font-weight: 500;
-
-  @container live-card (width < 380px) {
-    font-size: 14px;
-  }
 }
 
 .tags {
@@ -224,7 +256,6 @@
   display: flex;
   align-items: center;
   gap: 8px 16px;
-  margin-top: -4px;
   padding-top: 8px;
   border-top: 1px solid alpha(var(--bwf-red), 0.2);
 

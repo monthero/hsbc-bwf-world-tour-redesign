@@ -11,4 +11,5 @@ export { RetiredBadge } from './RetiredBadge';
 export { QualifyMark, RaceQualifier, RankChange, RankValue } from './Rank';
 export { RankSeed, SeedTag, WorldRankTag } from './RankMarks';
 export { SocialLinks } from './SocialLinks';
+export { TeamPhoto } from './TeamPhoto';
 export { TournamentRanks } from './TournamentRanks';
