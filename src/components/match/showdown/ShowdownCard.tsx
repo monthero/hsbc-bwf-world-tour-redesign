@@ -159,7 +159,7 @@ const Corner = memo<{ view: ShowdownView; side: Side; follow?: boolean }>(({ vie
       </span>
       {follow && <Follows players={players} />}
       <div className={classes.plate}>
-        <RankSeed players={players} seed={s.team.seed} event={v.match.event} className={classes.plateMarks} />
+        <RankSeed players={players} seed={s.team.seed} event={v.match.event} />
         {teamServe && <ServeMark size={16} className={utils.raise} />}
         <SideMedal match={v.match} side={side} size={22} className={utils.raise} />
       </div>

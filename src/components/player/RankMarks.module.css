@@ -2,7 +2,7 @@
   position: relative;
   z-index: 1;
   flex: none;
-  font-size: var(--mark-size, clamp(10px, 8.5px + 0.35vw, 11.5px));
+  font-size: var(--mark-size, 0.625rem);
   font-weight: 700;
   padding-block: 0.27em;
   line-height: 1;

@@ -389,10 +389,6 @@
   }
 }
 
-.plate > .plateMarks {
-  --mark-size: 12px;
-}
-
 .names {
   flex: 1;
   min-width: 0;
