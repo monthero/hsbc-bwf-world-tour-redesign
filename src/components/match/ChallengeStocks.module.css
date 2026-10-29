@@ -1,9 +1,14 @@
 .stocks {
+  --tone: var(--bwf-green-mark);
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  gap: 2px;
   color: var(--bwf-muted);
   cursor: help;
+
+  &[data-left='1'] {
+    --tone: color-mix(in srgb, var(--bwf-gold) 78%, var(--bwf-orange-text));
+  }
 
   &[data-left='0'] {
     color: var(--bwf-loss);
@@ -15,23 +20,42 @@
 }
 
 .stocks[data-mirror] .icon {
-  margin-inline: 2px 0;
+  margin-inline: 4px 0;
   transform: scaleX(-1);
 }
 
 .icon {
   width: 15px;
   height: 15px;
-  margin-inline-end: 2px;
+  margin-inline-end: 4px;
 }
 
 .stock {
-  width: 12px;
-  height: 6px;
-  border-radius: 2px;
-  background: alpha(var(--bwf-text), 0.14);
+  --fill: alpha(var(--bwf-text), 0.14);
+  --cut-start: 135deg;
+  --cut-end: -45deg;
+  width: 14px;
+  height: 7px;
+
+  &:first-of-type {
+    background: linear-gradient(var(--cut-start), transparent 2.5px, var(--fill) 2.5px);
+  }
+
+  &:last-of-type {
+    background: linear-gradient(var(--cut-end), transparent 2.5px, var(--fill) 2.5px);
+  }
 
   &[data-on] {
-    background: var(--bwf-green-mark);
+    --fill: var(--tone);
+    filter: drop-shadow(0 0 3px alpha(var(--tone), 0.7));
+  }
+
+  .stocks[data-left='0'] & {
+    --fill: alpha(var(--bwf-loss), 0.35);
+  }
+
+  .stocks[data-mirror] & {
+    --cut-start: -45deg;
+    --cut-end: 135deg;
   }
 }

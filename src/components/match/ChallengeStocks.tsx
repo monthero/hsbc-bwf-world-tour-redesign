@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { memo } from 'react';
 
 import type { SideStats } from '~/api/bwf/normalize';
-import { IconHand, InfoTip, Tip } from '~/components/ui';
+import { IconHandFill, InfoTip, Tip } from '~/components/ui';
 import { CHALLENGE_RULE, CHALLENGES_PER_GAME, challengeHeadline, challengeRows, challengeTip } from '~/utils/live';
 
 import classes from './ChallengeStocks.module.css';
@@ -30,7 +30,7 @@ export const ChallengeStocks = memo<{
         data-mirror={mirror || undefined}
         aria-label={challengeTip(stats, left)}
       >
-        <IconHand className={classes.icon} aria-hidden />
+        <IconHandFill className={classes.icon} aria-hidden />
         {SLOTS.map((i) => (
           <span key={i} className={classes.stock} data-on={i < left || undefined} />
         ))}
