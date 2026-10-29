@@ -1,6 +1,15 @@
 import { Link } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { use, useMemo, useState, type CSSProperties, type FC, type MouseEvent, type ReactNode } from 'react';
+import {
+  use,
+  useMemo,
+  useState,
+  type ClipboardEvent,
+  type CSSProperties,
+  type FC,
+  type MouseEvent,
+  type ReactNode,
+} from 'react';
 
 import { PlayerHoverContext } from '~/contexts';
 import { useFitLevel } from '~/hooks/useFitLevel';
@@ -13,22 +22,29 @@ import utils from '~/styles/utils.module.css';
 
 const stop = (e: MouseEvent) => e.stopPropagation();
 
+const copyAsWritten = (e: ClipboardEvent<HTMLElement>) => {
+  const sel = getSelection();
+  const text = sel?.rangeCount ? sel.getRangeAt(0).toString().trim() : '';
+  if (!text || !e.currentTarget.textContent?.includes(text)) return;
+  e.clipboardData.setData('text/plain', text);
+  e.preventDefault();
+};
+
 const NO_FORMS: NameForm[] = [];
 
 type PartsProps = {
   form: NameForm;
   surnameFirst: boolean;
-  layout: 'inline' | 'stacked';
   firstClassName?: string;
   lastClassName?: string;
 };
 
-const NameParts: FC<PartsProps> = ({ form, surnameFirst, layout, firstClassName, lastClassName }) => (
+const NameParts: FC<PartsProps> = ({ form, surnameFirst, firstClassName, lastClassName }) => (
   <>
     <span className={firstClassName} data-strong={surnameFirst || undefined}>
       {form.first}
     </span>
-    {form.last && layout === 'inline' && ' '}
+    {form.last && ' '}
     {form.last && (
       <span className={lastClassName} data-strong={!surnameFirst || undefined}>
         {form.last}
@@ -59,7 +75,7 @@ export const PlayerName: FC<{
   const fitted = forms.length > 0;
   const boxed = fitted && end !== undefined;
   const inline = fitted && !boxed;
-  const parts = { surnameFirst: player.surnameFirst, layout, firstClassName, lastClassName };
+  const parts = { surnameFirst: player.surnameFirst, firstClassName, lastClassName };
   const cls = clsx(classes.playerName, utils.bidiAuto, className);
   const measures = fitted && (
     <span key={forms.length} ref={sizer} className={classes.sizer} aria-hidden>
@@ -85,7 +101,14 @@ export const PlayerName: FC<{
   const label = fitted && level > 0 ? player.name : undefined;
   const named =
     !link || !player.id ? (
-      <span className={cls} data-layout={layout} data-fit={inline || undefined} aria-label={label} translate="no">
+      <span
+        className={cls}
+        data-layout={layout}
+        data-fit={inline || undefined}
+        aria-label={label}
+        translate="no"
+        onCopy={copyAsWritten}
+      >
         {body}
       </span>
     ) : (
@@ -99,6 +122,7 @@ export const PlayerName: FC<{
         aria-label={label}
         translate="no"
         onClick={stop}
+        onCopy={copyAsWritten}
       >
         {body}
       </Link>
