@@ -79,6 +79,7 @@ const sideView = (
   result: string | null,
 ): SideView => {
   const now = m.current?.[side] ?? 0;
+  const recent = challenge?.side === side ? challenge.outcome : null;
   return {
     side,
     team: m.teams[side],
@@ -91,8 +92,8 @@ const sideView = (
     leading: !!m.current && gameDone(m.current) && gameWon(m.current, side),
     stats: stats?.sides[side] ?? null,
     left: leftOf(side, m.games.length + 1, stats, game),
-    recent: challenge?.side === side ? challenge.outcome : null,
-    review: reviewBy(m) === side,
+    recent,
+    review: !recent && reviewBy(m) === side,
     result: m.current && gameWon(m.current, side) ? result : null,
   };
 };
