@@ -14,5 +14,5 @@ Social network logos are from [Simple Icons](https://simpleicons.org), released 
 [Noto Sans SC, TC, JP, KR, Thai and Devanagari](https://fonts.google.com/noto) by Google, licensed under the
 [SIL Open Font License 1.1](https://openfontlicense.org). Bundled via [Fontsource](https://fontsource.org).
 
-[Geist](https://vercel.com/font), [Archivo](https://fonts.google.com/specimen/Archivo) and
-[Saira](https://fonts.google.com/specimen/Saira), licensed under the SIL Open Font License 1.1. Loaded from Google Fonts.
+[Geist](https://vercel.com/font), [Archivo](https://fonts.google.com/specimen/Archivo),
+[Russo One](https://fonts.google.com/specimen/Russo+One) and [Saira](https://fonts.google.com/specimen/Saira), licensed under the SIL Open Font License 1.1. Loaded from Google Fonts.
