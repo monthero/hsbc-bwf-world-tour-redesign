@@ -1,8 +1,8 @@
 .header {
-  --logo: clamp(64px, 7.6vw, 96px);
+  --logo: clamp(72px, 9vw, 128px);
   --gx: clamp(14px, 1.8vw, 22px);
   --pl: clamp(12px, 1.6vw, 20px);
-  padding-top: clamp(12px, 2.4vw, 28px);
+  padding-top: clamp(10px, 1.4vw, 16px);
   display: flex;
   flex-direction: column;
 
@@ -17,7 +17,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: clamp(10px, 1.4vw, 16px);
+  margin-bottom: clamp(8px, 1vw, 12px);
 }
 
 .rounds {
@@ -26,10 +26,27 @@
   gap: 6px;
 }
 
+.stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto calc(var(--logo) / 3);
+  column-gap: var(--gx);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    display: block;
+  }
+}
+
 .banner {
-  height: clamp(120px, 14vw, 240px);
-  border-radius: clamp(14px, 1.6vw, 18px);
+  grid-column: 1 / -1;
+  grid-row: 1 / 3;
+  height: clamp(140px, 19vw, 340px);
+  border-radius: clamp(10px, 1.1vw, 14px);
   overflow: hidden;
+
+  &::after {
+    background: linear-gradient(180deg, transparent 20%, alpha(var(--bwf-bg), 0.55) 55%, alpha(var(--bwf-bg), 0.92));
+  }
 
   @mixin smaller-than $mantine-breakpoint-sm {
     height: clamp(176px, 50vw, 240px);
@@ -65,45 +82,56 @@
 }
 
 .body {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  grid-template-areas:
-    'logo title'
-    'logo meta';
-  align-items: start;
-  gap: 8px var(--gx);
-  padding-inline-start: var(--pl);
+  display: contents;
 
   @mixin smaller-than $mantine-breakpoint-sm {
     position: relative;
     z-index: 1;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      'logo'
-      'title'
-      'meta';
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
     margin-top: calc(-1 * var(--lift));
-    padding-inline-start: 0;
   }
 }
 
 .logo {
-  grid-area: logo;
+  grid-column: 1;
+  grid-row: 2 / 4;
+  align-self: end;
   position: relative;
   z-index: 1;
-  margin-top: calc(-1 * clamp(28px, 3.4vw, 44px));
+  --tile-radius: calc(var(--logo) * 0.17);
+  margin-inline-start: var(--pl);
   box-shadow: 0 10px 28px alpha(var(--bwf-shadow-ink), 0.5);
 
   @mixin smaller-than $mantine-breakpoint-sm {
-    margin-top: 0;
+    align-self: auto;
+    margin-inline-start: 0;
+  }
+}
+
+.text {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-block-end: 10px;
+  padding-inline-end: var(--pl);
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    align-self: stretch;
+    padding: 0;
   }
 }
 
 .title {
-  grid-area: title;
-  align-self: end;
   margin: 0;
-  padding-top: 10px;
   max-width: 60ch;
   font-size: clamp(22px, 2.6vw, 32px);
   line-height: 1.1;
@@ -112,7 +140,6 @@
   text-wrap: balance;
 
   @mixin smaller-than $mantine-breakpoint-sm {
-    padding-top: 0;
     font-size: 26px;
     line-height: 1.12;
   }
@@ -124,7 +151,6 @@
 }
 
 .meta {
-  grid-area: meta;
   display: flex;
   align-items: center;
   flex-wrap: wrap;

@@ -98,27 +98,31 @@ export const TournamentHeader = memo<{
           </RoundButton>
         </nav>
       </div>
-      <MediaCover src={tn.header} position="center 40%" muted={tn.cancelled} className={classes.banner}>
-        {tn.cancelled && <TournamentStatusBadge tournament={tn} variant="overlay" className={classes.cancelled} />}
-      </MediaCover>
-      <div className={classes.body}>
-        <LogoTile src={tn.logo} size="var(--logo)" alt={tn.name} flat className={classes.logo} />
-        <h1 className={classes.title}>
-          {tn.heading} {tn.subtitle && <span className={classes.subtitle}>{tn.subtitle}</span>}
-        </h1>
-        <div className={classes.meta}>
-          <span className={classes.dates}>{tn.dates}</span>
-          <TournamentPlace tournament={tn} />
-          {tn.venue && <span className={classes.venue}>{tn.venue}</span>}
-          <span className={classes.chip}>
-            <b className={classes.level}>
-              {LEVEL_META[tn.level].long}
-              {tn.level !== 'Finals' && <span className={classes.series}>World Tour</span>}
-            </b>
-            <IconLabel icon={IconCoins} label={PRIZE_MONEY} size={13} className={classes.prize}>
-              <strong>{tn.prizeLabel}</strong>
-            </IconLabel>
-          </span>
+      <div className={classes.stage}>
+        <MediaCover src={tn.header} position="center 40%" fade="none" muted={tn.cancelled} className={classes.banner}>
+          {tn.cancelled && <TournamentStatusBadge tournament={tn} variant="overlay" className={classes.cancelled} />}
+        </MediaCover>
+        <div className={classes.body}>
+          <LogoTile src={tn.logo} size="var(--logo)" alt={tn.name} flat className={classes.logo} />
+          <div className={classes.text}>
+            <h1 className={classes.title}>
+              {tn.heading} {tn.subtitle && <span className={classes.subtitle}>{tn.subtitle}</span>}
+            </h1>
+            <div className={classes.meta}>
+              <span className={classes.dates}>{tn.dates}</span>
+              <TournamentPlace tournament={tn} />
+              {tn.venue && <span className={classes.venue}>{tn.venue}</span>}
+              <span className={classes.chip}>
+                <b className={classes.level}>
+                  {LEVEL_META[tn.level].long}
+                  {tn.level !== 'Finals' && <span className={classes.series}>World Tour</span>}
+                </b>
+                <IconLabel icon={IconCoins} label={PRIZE_MONEY} size={13} className={classes.prize}>
+                  <strong>{tn.prizeLabel}</strong>
+                </IconLabel>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
       {schedule && <DayTimeline tournament={tn} schedule={schedule} />}
