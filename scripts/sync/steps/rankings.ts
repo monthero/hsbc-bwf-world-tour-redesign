@@ -53,6 +53,7 @@ const ALIASES: Record<string, string> = {
   Turkiye: 'TUR',
   'North Korea': 'PRK',
   'Brunei Darussalam': 'BRU',
+  'Syrian Arab Republic': 'SYR',
   'National Olympic Commitee KENYA': 'KEN',
   'French Polynesia (Tahiti)': 'PYF',
   'Northern Marianas': 'MNP',
