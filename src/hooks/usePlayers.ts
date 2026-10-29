@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useCallback } from 'react';
 
 import { playerQuery, playersQuery, raceRankingsQuery, rankingHistoryQuery } from '~/api/queries';
 import type { DirectoryRecord, Player, PlayerDirectory, PlayerRecord, PlayersData, Retirement } from '~/types';
@@ -48,6 +49,11 @@ export const usePlayerFile = (id: string | undefined) => useQuery({ ...playerQue
 
 export const useRankingHistory = (playerId: string | undefined) =>
   useQuery({ ...rankingHistoryQuery(playerId ?? ''), enabled: !!playerId });
+
+export const useHasPhoto = () => {
+  const { data: dir } = usePlayerDirectory();
+  return useCallback((p: Pick<Player, 'id'>) => !!dir?.get(p.id)?.photo, [dir]);
+};
 
 export const usePlayerPhoto = (id: string, opts?: PhotoOptions) => {
   const { data: dir } = usePlayerDirectory();

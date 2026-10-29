@@ -14,8 +14,9 @@ import {
   TeamPlayers,
 } from '~/components/match';
 import { WatchButton } from '~/components/media';
-import { RankSeed, TeamPhoto } from '~/components/player';
+import { PlayerAvatar, RankSeed } from '~/components/player';
 import { CardHit, Duration, StatusChip, type StatusTone } from '~/components/ui';
+import { useHasPhoto } from '~/hooks/usePlayers';
 import type { EventCode, Game, Match, Player, Side } from '~/types';
 import { CHALLENGE_LABELS, CHALLENGE_REVIEW, GAME_SHORT, LONGEST_RUN, type ChallengeOutcome } from '~/utils/live';
 import { gameWon, matchTitle } from '~/utils/matches';
@@ -50,13 +51,28 @@ const GameScore: FC<{ game: Game; side: Side }> = ({ game, side }) => (
 
 const followMark = (p: Player) => <FollowMark player={p} />;
 
-const TeamRow: FC<{ view: LiveView; side: SideView; event: EventCode }> = ({ view: v, side: s, event }) => {
+const PHOTO_SIZE = 48;
+
+const TeamPhotos: FC<{ players: readonly Player[] }> = ({ players }) => (
+  <span className={classes.photos} data-pair={players.length > 1 || undefined}>
+    {players.map((p) => (
+      <PlayerAvatar key={p.id} player={p} size={PHOTO_SIZE} className={classes.photo} />
+    ))}
+  </span>
+);
+
+const TeamRow: FC<{ view: LiveView; side: SideView; event: EventCode; photos: boolean }> = ({
+  view: v,
+  side: s,
+  event,
+  photos,
+}) => {
   return (
     <div className={classes.row} data-lead={s.leading || undefined}>
       <div className={classes.team} data-side={s.side}>
-        <TeamPhoto players={s.team.players} className={classes.photo} />
+        {photos && <TeamPhotos players={s.team.players} />}
         <RankSeed players={s.team.players} seed={s.team.seed} event={event} className={classes.rank} />
-        <TeamPlayers players={s.team.players} flag="sm" mark={followMark} className={classes.names} />
+        <TeamPlayers players={s.team.players} flag="sm" truncate mark={followMark} className={classes.names} />
         <Tags side={s} />
       </div>
       <span className={classes.serveCell}>{s.serving && <ServeMark size={15} className={utils.raise} />}</span>
@@ -97,7 +113,9 @@ export const LiveCard = memo<{
   ref?: Ref<HTMLDivElement>;
 }>(({ match: m, view: v, stream, onOpen, className, ref }) => {
   const { t, i18n } = useLingui();
+  const hasPhoto = useHasPhoto();
   const [a, b] = v.sides;
+  const photos = a.team.players.every(hasPhoto) && b.team.players.every(hasPhoto);
   const runs = !!a.stats && !!b.stats;
   const { court, gameNo } = v;
   const title = matchTitle(m);
@@ -145,8 +163,8 @@ export const LiveCard = memo<{
           ))}
           <GameHead n={gameNo} className={classes.nowHead} />
         </div>
-        <TeamRow view={v} side={a} event={m.event} />
-        <TeamRow view={v} side={b} event={m.event} />
+        <TeamRow view={v} side={a} event={m.event} photos={photos} />
+        <TeamRow view={v} side={b} event={m.event} photos={photos} />
       </div>
       {(runs || stream) && (
         <div className={classes.footer}>

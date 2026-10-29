@@ -71,7 +71,7 @@
   flex: 1;
   display: grid;
   grid-template-columns: var(--cols);
-  grid-template-rows: auto 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   column-gap: 8px;
 
   @container live-card (width < 380px) {
@@ -87,6 +87,22 @@
   grid-template-columns: subgrid;
   align-items: center;
 
+  &[data-head] {
+    position: relative;
+    z-index: 1;
+    grid-row: 1;
+    align-self: start;
+    pointer-events: none;
+  }
+
+  &[data-head] + & {
+    grid-row: 1;
+  }
+
+  &:not([data-head]) {
+    min-block-size: 74px;
+  }
+
   &:last-child {
     border-top: 1px solid alpha(var(--bwf-text), 0.1);
   }
@@ -94,10 +110,7 @@
 
 .colHead,
 .nowHead {
-  align-self: stretch;
-  box-sizing: border-box;
-  block-size: 19px;
-  padding: 13px 0 0;
+  padding-block-start: 7px;
   font-size: 11px;
   line-height: 1;
   font-weight: 600;
@@ -107,38 +120,39 @@
 }
 
 .nowHead {
-  border-radius: 10px 10px 0 0;
-  background: var(--bwf-live-column);
   font-weight: 800;
   color: var(--bwf-gold-text);
 }
 
 .team {
   --name-size: 15px;
-  --photo-h: calc(var(--mark-size, 0.625rem) * 1.54 + 4px + var(--name-size) * var(--mantine-line-height));
   min-width: 0;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
   gap: 4px 10px;
   justify-items: start;
   padding-block: 6px;
 
+  &:has(> .photos) {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  & > :is(.rank, .names, .tags) {
+    grid-column: -2;
+  }
+
   & > .rank {
-    grid-area: 1 / 2;
+    grid-row: 1;
   }
 
   & > .names {
-    grid-area: 2 / 2;
+    grid-row: 2;
+    max-width: 100%;
   }
 
   & > .tags {
-    grid-area: 3 / 2;
-  }
-
-  & > .photo {
-    grid-area: 1 / 1 / 3 / 2;
-    align-self: end;
-    height: var(--photo-h);
+    grid-row: 3;
   }
 
   &[data-side='1'] {
@@ -149,28 +163,43 @@
     & > .tags {
       grid-row: 1;
     }
-
-    & > .photo {
-      grid-row: 2 / 4;
-      align-self: start;
-    }
   }
 
   @container live-card (width < 380px) {
     --name-size: 14px;
+    column-gap: 8px;
   }
 }
 
-.photo {
-  @container live-card (width < 440px) {
-    --w: 34px;
-    --w-solo: 38px;
-    --r: 8px;
+.photos {
+  --p: 44px;
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  &[data-pair] {
+    --p: 30px;
   }
 
   @container live-card (width < 380px) {
-    --w: 28px;
-    --w-solo: 32px;
+    --p: 38px;
+
+    &[data-pair] {
+      --p: 26px;
+    }
+  }
+
+  & > .photo {
+    width: var(--p);
+    height: var(--p);
+    border-radius: 8px;
+  }
+
+  &[data-pair] > .photo {
+    border-radius: 6px;
   }
 }
 
@@ -197,7 +226,7 @@
 }
 
 .prev {
-  font-size: 17px;
+  font-size: 15px;
   line-height: 1;
   font-variant-numeric: tabular-nums;
   text-align: center;
@@ -209,7 +238,7 @@
   }
 
   @container live-card (width < 380px) {
-    font-size: 15px;
+    font-size: 14px;
   }
 }
 
@@ -223,6 +252,10 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--bwf-text);
+
+  .row[data-head] + .row & {
+    border-radius: 10px 10px 0 0;
+  }
 
   .row:last-child & {
     border-radius: 0 0 10px 10px;
