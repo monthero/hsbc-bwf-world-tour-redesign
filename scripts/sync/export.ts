@@ -25,7 +25,7 @@ import { createMapPlacer } from './geo.ts';
 import { FOREVER, type Client } from './http.ts';
 import type { Output } from './output.ts';
 import { weeklyHistory } from './steps/rankings.ts';
-import { groupBy, push, readOverrides } from './util.ts';
+import { groupBy, push, readJsonFile, readOverrides } from './util.ts';
 
 interface Person {
   id: string;
@@ -118,6 +118,10 @@ interface CurrentRank {
   hi: number | null;
   hw: string;
   hwid?: string;
+}
+
+interface PreviousPlayers {
+  players: Record<string, { ranks?: CurrentRank[] }>;
 }
 
 interface RankingPlayerRow {
@@ -229,8 +233,11 @@ export const exportData = async (
   overridesFile: string,
   reportFile: string,
   output: Output,
+  onlyPlayers?: ReadonlySet<string>,
 ) => {
   const write = (rel: string, data: unknown) => output.write(rel, JSON.stringify(data));
+  const playersFile = path.join(publicDir, 'data/players.json');
+  const full = !onlyPlayers || !fs.existsSync(playersFile);
 
   const editions = all<EditionRow>(
     db,
@@ -346,84 +353,88 @@ export const exportData = async (
 
   const placer = createMapPlacer();
   const zoneOf = (e: EditionRow) => placer.zoneOf(e.city, e.country);
-  for (const [year, list] of seasons)
-    write(`calendar-${year}.json`, {
-      year,
-      events: list.map((e) => ({
-        code: e.code,
-        tmtId: e.tmt_id,
+  if (full)
+    for (const [year, list] of seasons)
+      write(`calendar-${year}.json`, {
         year,
-        slug: e.slug,
-        series: e.series_id,
-        name: e.series_name,
-        title: e.title,
-        subtitle: e.subtitle,
-        city: e.city,
-        country: e.country,
-        venue: venueOf(e),
-        level: e.level,
-        start: e.start,
-        end: e.end,
-        prize: e.prize,
-        logoVersion: e.logo_version,
-        headerVersion: e.header_version,
-        cancelled: isCancelled(e),
-        archived: !!e.archived || isCancelled(e),
-        map: placer.pointOf(e.city, e.country),
-        timeZone: zoneOf(e),
-        etihad: !!e.etihad,
-        winners: finalsOf(e.code).map((f) => ({ event: f.event, players: f.winners })),
-      })),
-    });
-  placer.warn();
-
-  write('seasons.json', {
-    current: currentYear,
-    seasons: [...seasons]
-      .sort(([a], [b]) => b - a)
-      .map(([year, list]) => ({
-        year,
-        events: list.filter((e) => !isCancelled(e)).length,
-        completed: list.filter((e) => e.archived && !isCancelled(e)).length,
-      })),
-  });
-
-  for (const [code, list] of byEdition) {
-    const e = editionOf.get(code);
-    const days: Record<string, MatchDto[]> = {};
-    for (const { row, dto } of list) (days[row.day] ??= []).push(dto);
-    const utcOffsets = e && !zoneOf(e) ? dayOffsets(list.map(({ row }) => row)) : {};
-    write(`tournaments/${code}.json`, {
-      code,
-      asOf: e?.archived ? 'final results' : dayjs.utc().format('YYYY-MM-DD HH:mm'),
-      days,
-      plannedDays: {},
-      ...(Object.keys(utcOffsets).length ? { utcOffsets } : {}),
-    });
-  }
-
-  const seriesEditions = groupBy(editions, (e) => e.series_id);
-  for (const [id, list] of seriesEditions)
-    write(`series/${id}.json`, {
-      id,
-      name: list[0]?.series_name ?? id,
-      editions: list
-        .toSorted((a, b) => b.start.localeCompare(a.start))
-        .map((e) => ({
+        events: list.map((e) => ({
           code: e.code,
-          year: e.season,
+          tmtId: e.tmt_id,
+          year,
           slug: e.slug,
+          series: e.series_id,
+          name: e.series_name,
           title: e.title,
-          level: e.level,
+          subtitle: e.subtitle,
           city: e.city,
           country: e.country,
           venue: venueOf(e),
+          level: e.level,
           start: e.start,
           end: e.end,
+          prize: e.prize,
+          logoVersion: e.logo_version,
+          headerVersion: e.header_version,
           cancelled: isCancelled(e),
-          finals: finalsOf(e.code),
+          archived: !!e.archived || isCancelled(e),
+          map: placer.pointOf(e.city, e.country),
+          timeZone: zoneOf(e),
+          etihad: !!e.etihad,
+          winners: finalsOf(e.code).map((f) => ({ event: f.event, players: f.winners })),
+        })),
+      });
+  placer.warn();
+
+  if (full)
+    write('seasons.json', {
+      current: currentYear,
+      seasons: [...seasons]
+        .sort(([a], [b]) => b - a)
+        .map(([year, list]) => ({
+          year,
+          events: list.filter((e) => !isCancelled(e)).length,
+          completed: list.filter((e) => e.archived && !isCancelled(e)).length,
         })),
     });
+
+  if (full)
+    for (const [code, list] of byEdition) {
+      const e = editionOf.get(code);
+      const days: Record<string, MatchDto[]> = {};
+      for (const { row, dto } of list) (days[row.day] ??= []).push(dto);
+      const utcOffsets = e && !zoneOf(e) ? dayOffsets(list.map(({ row }) => row)) : {};
+      write(`tournaments/${code}.json`, {
+        code,
+        asOf: e?.archived ? 'final results' : dayjs.utc().format('YYYY-MM-DD HH:mm'),
+        days,
+        plannedDays: {},
+        ...(Object.keys(utcOffsets).length ? { utcOffsets } : {}),
+      });
+    }
+
+  const seriesEditions = groupBy(editions, (e) => e.series_id);
+  if (full)
+    for (const [id, list] of seriesEditions)
+      write(`series/${id}.json`, {
+        id,
+        name: list[0]?.series_name ?? id,
+        editions: list
+          .toSorted((a, b) => b.start.localeCompare(a.start))
+          .map((e) => ({
+            code: e.code,
+            year: e.season,
+            slug: e.slug,
+            title: e.title,
+            level: e.level,
+            city: e.city,
+            country: e.country,
+            venue: venueOf(e),
+            start: e.start,
+            end: e.end,
+            cancelled: isCancelled(e),
+            finals: finalsOf(e.code),
+          })),
+      });
 
   const pubs = new Map(
     all<{ ranking: number; id: number; date: string; week: string; name: string | null }>(
@@ -436,7 +447,10 @@ export const exportData = async (
   const ranksOf = new Map<string, CurrentRank[]>();
   const weeklyRank = new Map<string, Map<string, number>>();
   const rankWeeks = new Set<string>();
-  if (worldPub) {
+  if (!full)
+    for (const [id, rec] of Object.entries(readJsonFile<PreviousPlayers>(playersFile).players))
+      if (rec.ranks?.length) ranksOf.set(id, rec.ranks);
+  if (worldPub && full) {
     const ranked = all<{ id: string }>(
       db,
       `SELECT DISTINCT p.id FROM players p JOIN rankings r ON r.ranking = ? AND (r.player1 = p.id OR r.player2 = p.id)`,
@@ -514,46 +528,48 @@ export const exportData = async (
     }
   }
 
-  const publicationOn = new Map(
-    ((await client.get<ApiPublication[]>(publicationsPath(WORLD), FOREVER))?.data ?? []).map((p) => [
-      p.date.slice(0, 10),
-      p.id,
-    ]),
-  );
-  const weeks = [...new Set([...rankWeeks, ...publicationOn.keys()])].sort((a, b) => a.localeCompare(b));
-  const tables = new Map<number, Map<string, number>>();
-  const tableOf = (publication: number) => {
-    const known = tables.get(publication);
-    if (known) return known;
-    const table = new Map<string, number>();
-    for (const { body } of all<{ body: Uint8Array }>(
-      db,
-      'SELECT body FROM responses WHERE path LIKE ?',
-      `vue-rankingtable?rankId=${WORLD}&catId=%&publicationId=${publication}&%`,
-    ))
-      for (const r of (unzipJson(body) as ApiRankingTable).results.data) {
-        const ev = WORLD_CATEGORIES[r.ranking_category_id];
-        if (ev)
-          for (const id of [r.player1_id, r.player2_id])
-            if (id) table.set(`${ev}|${id}`, Math.min(r.rank, table.get(`${ev}|${id}`) ?? r.rank));
-      }
-    tables.set(publication, table);
-    return table;
-  };
-  for (const [code, list] of byEdition) {
-    const e = editionOf.get(code);
-    const week = e && weeks.findLast((w) => w <= e.start);
-    if (!week || !worldPub || week >= worldPub.date) continue;
-    const publication = publicationOn.get(week);
-    const table = publication ? tableOf(publication) : undefined;
-    const ranks: Record<string, Record<string, number>> = {};
-    for (const { dto } of list)
-      for (const p of dto.teams.flatMap((t) => t.players)) {
-        const key = `${dto.event}|${p.id}`;
-        const r = table?.get(key) ?? weeklyRank.get(p.id)?.get(`${dto.event}|${week}`);
-        if (r) (ranks[p.id] ??= {})[dto.event] = r;
-      }
-    write(`tournament-ranks/${code}.json`, { code, week, ranks });
+  if (full) {
+    const publicationOn = new Map(
+      ((await client.get<ApiPublication[]>(publicationsPath(WORLD), FOREVER))?.data ?? []).map((p) => [
+        p.date.slice(0, 10),
+        p.id,
+      ]),
+    );
+    const weeks = [...new Set([...rankWeeks, ...publicationOn.keys()])].sort((a, b) => a.localeCompare(b));
+    const tables = new Map<number, Map<string, number>>();
+    const tableOf = (publication: number) => {
+      const known = tables.get(publication);
+      if (known) return known;
+      const table = new Map<string, number>();
+      for (const { body } of all<{ body: Uint8Array }>(
+        db,
+        'SELECT body FROM responses WHERE path LIKE ?',
+        `vue-rankingtable?rankId=${WORLD}&catId=%&publicationId=${publication}&%`,
+      ))
+        for (const r of (unzipJson(body) as ApiRankingTable).results.data) {
+          const ev = WORLD_CATEGORIES[r.ranking_category_id];
+          if (ev)
+            for (const id of [r.player1_id, r.player2_id])
+              if (id) table.set(`${ev}|${id}`, Math.min(r.rank, table.get(`${ev}|${id}`) ?? r.rank));
+        }
+      tables.set(publication, table);
+      return table;
+    };
+    for (const [code, list] of byEdition) {
+      const e = editionOf.get(code);
+      const week = e && weeks.findLast((w) => w <= e.start);
+      if (!week || !worldPub || week >= worldPub.date) continue;
+      const publication = publicationOn.get(week);
+      const table = publication ? tableOf(publication) : undefined;
+      const ranks: Record<string, Record<string, number>> = {};
+      for (const { dto } of list)
+        for (const p of dto.teams.flatMap((t) => t.players)) {
+          const key = `${dto.event}|${p.id}`;
+          const r = table?.get(key) ?? weeklyRank.get(p.id)?.get(`${dto.event}|${week}`);
+          if (r) (ranks[p.id] ??= {})[dto.event] = r;
+        }
+      write(`tournament-ranks/${code}.json`, { code, week, ranks });
+    }
   }
 
   const race: Record<string, { ev: string; r: number; pr: number | null; n: string; w: string; pts: number }[]> = {};
@@ -683,6 +699,7 @@ export const exportData = async (
   });
 
   for (const p of players) {
+    if (!full && !onlyPlayers?.has(p.id)) continue;
     const career = careerOf(p.id);
     write(`players/${p.id}.json`, {
       id: p.id,

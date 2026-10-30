@@ -30,6 +30,7 @@ const { values } = parseArgs({
     skip: { type: 'string' },
     from: { type: 'string' },
     offline: { type: 'boolean', default: false },
+    players: { type: 'string' },
     db: { type: 'string' },
     'news-pages': { type: 'string' },
   },
@@ -45,6 +46,7 @@ const OVERRIDES = path.join(ROOT, 'data/overrides.json');
 const CATALOG = path.join(ROOT, 'data/catalog.json');
 const OUT = path.join(ROOT, 'public/data');
 const offline = values.offline;
+const onlyPlayers = values.players ? new Set(values.players.split(',')) : undefined;
 
 const db = openDb(values.db ? path.resolve(values.db) : path.join(ROOT, 'data/bwf.sqlite'), path.join(ROOT, 'data'));
 const ctx: Context = {
@@ -97,7 +99,9 @@ await step('export', async () => {
     OVERRIDES,
     path.join(ROOT, 'data/reports/missing-photos.csv'),
     output,
+    onlyPlayers,
   );
+  if (onlyPlayers) return;
   exportNews(db, output);
   exportPlayerMedia(db, output, OUT, path.join(ROOT, 'data/media'));
   const pruned = output.prune();

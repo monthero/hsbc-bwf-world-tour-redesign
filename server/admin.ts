@@ -176,10 +176,11 @@ const createAdmin = (root: string) => {
     if (issues.length) throw new HttpError(400, [...new Set(issues)].join('\n'));
   };
 
-  const runExport = () =>
+  const runExport = (players?: readonly string[]) =>
     new Promise<number>((resolve, reject) => {
       const started = Date.now();
-      const child = spawn(process.execPath, EXPORT_ARGS, { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
+      const args = players ? [...EXPORT_ARGS, '--players', players.join(',')] : EXPORT_ARGS;
+      const child = spawn(process.execPath, args, { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
       let output = '';
       const collect = (chunk: Buffer) => {
         output += chunk.toString('utf8');
@@ -223,8 +224,10 @@ const createAdmin = (root: string) => {
     const entry = canonicalOverride(parseWith(PlayerOverride, body));
     return serial(async (): Promise<SaveResult> => {
       checkEquipment([entry]);
-      await writeOverrides(setOverride(await readOverrides(), id, entry));
-      return { entry, exportMs: await runExport() };
+      const file = await readOverrides();
+      const renamed = canonicalOverride(file.players[id])?.name !== entry?.name;
+      await writeOverrides(setOverride(file, id, entry));
+      return { entry, exportMs: await runExport(renamed ? undefined : [id]) };
     });
   };
 
@@ -243,7 +246,7 @@ const createAdmin = (root: string) => {
       if (!changed) return { entries, changed, exportMs: 0 };
       checkEquipment(Object.values(entries));
       await writeOverrides(file);
-      return { entries, changed, exportMs: await runExport() };
+      return { entries, changed, exportMs: await runExport(Object.keys(entries)) };
     });
 
   const bulkUpdate = (body: unknown) => {
