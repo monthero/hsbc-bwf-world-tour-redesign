@@ -17,7 +17,7 @@ import {
   RankChange,
   RetiredBadge,
 } from '~/components/player';
-import { CardHit, Tip } from '~/components/ui';
+import { CardHit, IconButton, IconEdit, Tip } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerPhoto } from '~/hooks/usePlayers';
@@ -105,6 +105,15 @@ export const Hero = memo<HeroProps>(
           </span>
         )}
         <span className={classes.follow}>
+          {import.meta.env.DEV && (
+            <IconButton
+              label="Edit in admin"
+              tip="Edit in admin"
+              link={{ to: '/admin', search: { edit: player.id }, target: '_blank' }}
+            >
+              <IconEdit size={16} />
+            </IconButton>
+          )}
           <PlayerFollow player={player} variant="pill" />
         </span>
         <div className={classes.identity}>

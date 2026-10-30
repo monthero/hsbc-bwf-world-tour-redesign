@@ -235,8 +235,11 @@
   z-index: 1;
   top: var(--pad);
   inset-inline-end: var(--pad);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
-  button[data-variant] {
+  :is(a, button)[data-variant] {
     border-color: light-dark(var(--bwf-border-strong), alpha(var(--mantine-color-white), 0.18));
     background: var(--bwf-glass-bg);
     backdrop-filter: blur(8px);

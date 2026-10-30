@@ -6,7 +6,7 @@ import { useMemo, type FC, type ReactNode } from 'react';
 import { CountryLabel } from '~/components/country';
 import { PlayerFollow } from '~/components/follow';
 import { OutcomeBadge, OutcomeLabel, ScoreChips, TeamLabel } from '~/components/match';
-import { Eyebrow, IconButton, IconProfile } from '~/components/ui';
+import { Eyebrow, IconButton, IconEdit, IconProfile } from '~/components/ui';
 import { PlayerHoverContext } from '~/contexts';
 import { useHoverHull } from '~/hooks/useHoverHull';
 import { useIsMobile } from '~/hooks/useIsMobile';
@@ -114,6 +114,17 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
           >
             <IconProfile size={18} />
           </IconButton>
+          {import.meta.env.DEV && (
+            <IconButton
+              label="Edit in admin"
+              tip="Edit in admin"
+              shape="rounded"
+              className={classes.admin}
+              link={{ to: '/admin', search: { edit: id }, target: '_blank' }}
+            >
+              <IconEdit size={18} />
+            </IconButton>
+          )}
         </div>
         <PlayerAvatar player={player} photo={record?.photo} size={60} ring />
         <div className={classes.identity}>

@@ -49,6 +49,16 @@
   gap: 6px;
 }
 
+.header:has(.admin) {
+  padding-inline-end: 102px;
+}
+
+.admin {
+  position: absolute;
+  bottom: 0;
+  inset-inline-end: calc(100% + 6px);
+}
+
 .identity {
   min-width: 0;
   display: flex;
