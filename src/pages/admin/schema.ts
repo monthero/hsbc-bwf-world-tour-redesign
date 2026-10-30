@@ -127,6 +127,9 @@ export type OverridesFile = z.infer<typeof OverridesFile>;
 export const RetirementNews = z.object({ id: z.string(), title: z.string(), date: IsoDay, inTitle: z.boolean() });
 export type RetirementNews = z.infer<typeof RetirementNews>;
 
+export const AdminPartner = z.object({ id: z.string(), event: EventCode, matches: z.number(), last: IsoDay });
+export type AdminPartner = z.infer<typeof AdminPartner>;
+
 export const AdminPlayer = z.object({
   id: z.string(),
   name: z.string(),
@@ -139,6 +142,7 @@ export const AdminPlayer = z.object({
   rank: z.number().nullable(),
   rankEvent: EventCode.nullable(),
   events: z.array(EventCode),
+  partners: z.array(AdminPartner),
   bio: z.record(z.string(), z.union([z.string(), z.number()])),
   override: PlayerOverride.nullable(),
 });

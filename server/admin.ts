@@ -19,6 +19,7 @@ import {
   sameOverride,
   setOverride,
   withField,
+  type AdminPartner,
   type AdminPlayer,
   type BulkResult,
   type ImportRow,
@@ -55,6 +56,39 @@ SELECT p.id, p.name, p.cc, p.photo, p.hero, p.last_played, p.bio, b.rank, b.cate
 FROM players p LEFT JOIN best b ON b.id = p.id LEFT JOIN played pl ON pl.id = p.id
 LEFT JOIN editions e ON e.code = pl.edition LEFT JOIN series s ON s.id = e.series_id
 `;
+
+const PARTNERS_SQL = `
+WITH pairs AS (
+  SELECT a.player_id AS id, b.player_id AS partner, m.event, m.day || m.time AS at
+  FROM match_players a
+  JOIN match_players b ON b.match_id = a.match_id AND b.team = a.team AND b.pos <> a.pos
+  JOIN matches m ON m.id = a.match_id
+  WHERE m.event IN ('MD', 'WD', 'XD')
+)
+SELECT id, event, partner, count(*) AS matches, max(at) AS at FROM pairs GROUP BY id, event, partner ORDER BY at DESC
+`;
+
+interface PartnerRow {
+  id: string;
+  event: string;
+  partner: string;
+  matches: number;
+  at: string;
+}
+
+const partnersOf = (rows: readonly PartnerRow[]) => {
+  const out = new Map<string, AdminPartner[]>();
+  for (const r of rows) {
+    const event = EventCode.safeParse(r.event);
+    if (!event.success) continue;
+    const list = out.get(r.id) ?? [];
+    list.push({ id: r.partner, event: event.data, matches: r.matches, last: r.at.slice(0, 10) });
+    out.set(r.id, list);
+  }
+  return out;
+};
+
+const NO_PARTNERS: AdminPartner[] = [];
 
 interface PlayerRow {
   id: string;
@@ -164,6 +198,7 @@ const createAdmin = (root: string) => {
     return withDb(dbFile, true, (db) => {
       const rows = db.prepare(PLAYERS_SQL).all() as unknown as PlayerRow[];
       const news = retirementNews(db);
+      const partners = partnersOf(db.prepare(PARTNERS_SQL).all() as unknown as PartnerRow[]);
       const players = rows.map((r): AdminPlayer => ({
         id: r.id,
         name: r.name,
@@ -176,6 +211,7 @@ const createAdmin = (root: string) => {
         rank: r.rank,
         rankEvent: r.category === null ? null : eventOfCategory(r.category),
         events: eventsOf(r),
+        partners: partners.get(r.id) ?? NO_PARTNERS,
         bio: r.bio ? (JSON.parse(r.bio) as AdminPlayer['bio']) : {},
         override: overrides[r.id] ?? null,
       }));

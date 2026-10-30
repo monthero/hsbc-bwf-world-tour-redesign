@@ -16,7 +16,7 @@ import type { AdminSearch } from '../types';
 import { BulkEditor } from './BulkEditor';
 import { FilterControls, FilterShell } from './FilterBar';
 import { ImportCsv } from './ImportCsv';
-import { PlayerEditor } from './PlayerEditor';
+import { PlayerEditor, type EditorPartner } from './PlayerEditor';
 import { PlayerTable } from './PlayerTable';
 import { SelectionBar } from './SelectionBar';
 
@@ -27,6 +27,7 @@ const route = getRouteApi('/admin');
 
 const NO_FLAGS: readonly string[] = [];
 const NO_PLAYERS: readonly AdminPlayer[] = [];
+const NO_PARTNERS: readonly EditorPartner[] = [];
 const NO_IDS: ReadonlySet<string> = new Set();
 const NO_MATCHERS: readonly BrandMatcher[] = [];
 const NO_NAMES = catalogNames([]);
@@ -64,7 +65,16 @@ export const PlayersTab: FC = () => {
     () => filteredIds.length > 0 && filteredIds.every((id) => selected.has(id)),
     [filteredIds, selected],
   );
-  const editing = useMemo(() => data?.players.find((p) => p.id === search.edit) ?? null, [data, search.edit]);
+  const byId = useMemo(() => new Map((data?.players ?? NO_PLAYERS).map((p) => [p.id, p])), [data]);
+  const editing = (search.edit && byId.get(search.edit)) || null;
+  const partners = useMemo(
+    () =>
+      editing?.partners.flatMap(({ id, ...rest }): EditorPartner[] => {
+        const player = byId.get(id);
+        return player ? [{ ...rest, player }] : [];
+      }) ?? NO_PARTNERS,
+    [editing, byId],
+  );
   const bulkPlayers = useMemo(
     () => (bulkOpen ? (data?.players.filter((p) => selected.has(p.id)) ?? NO_PLAYERS) : NO_PLAYERS),
     [bulkOpen, data, selected],
@@ -138,7 +148,7 @@ export const PlayersTab: FC = () => {
           />
         )}
       </div>
-      <PlayerEditor player={editing} onClose={onClose} />
+      <PlayerEditor player={editing} partners={partners} onClose={onClose} onSwitch={onOpen} />
       <BulkEditor opened={bulkOpen} onClose={onBulkClose} players={bulkPlayers} />
       <ImportCsv opened={importOpen} onClose={onImportClose} players={data?.players ?? NO_PLAYERS} />
     </>
