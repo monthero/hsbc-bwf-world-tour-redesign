@@ -71,6 +71,45 @@ export type ImageSource = z.infer<typeof ImageSource>;
 
 export const isUploadSource = (source: string) => UPLOAD_SOURCE.test(source);
 
+const ALLOWED_IMAGE_HOSTS = [
+  'wikimedia.org',
+  'bwfbadminton.com',
+  'olympics.com',
+  'yonex.com',
+  'yonex.co.uk',
+  'yonex.cz',
+  'yonex.com.tw',
+  'badmintoneurope.com',
+  'badminton.dk',
+  'badminton.or.jp',
+  'german-open-badminton.de',
+  'hkbadmintonassn.org.hk',
+  'pbsi.id',
+  'usabadminton.org',
+  'djarumbadminton.com',
+];
+
+const ALLOWED_IMAGE_PREFIXES = ['https://res.cloudinary.com/badminton/'];
+
+const hostOf = (source: string) => {
+  try {
+    return new URL(source).hostname.toLowerCase();
+  } catch {
+    return null;
+  }
+};
+
+export const imageSourceIssue = (source: string) => {
+  const host = hostOf(source);
+  const allowed =
+    !!host &&
+    (ALLOWED_IMAGE_HOSTS.some((h) => host === h || host.endsWith(`.${h}`)) ||
+      ALLOWED_IMAGE_PREFIXES.some((p) => source.startsWith(p)));
+  return allowed
+    ? null
+    : `Blocked: images from ${host ?? 'this source'} aren't allowed (copyright risk). Use Wikimedia, BWF, a federation or a brand site.`;
+};
+
 export const imageSlot = (id: string, kind: ImageKind) => `${id}${kind === 'hero' ? '-hero' : ''}`;
 
 export const imageAssetPath = (id: string, kind: ImageKind) => `/assets/players/${imageSlot(id, kind)}.webp`;

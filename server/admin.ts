@@ -13,7 +13,9 @@ import {
   BulkRequest,
   ImportRequest,
   canonicalOverride,
+  ImageKind,
   ImageRequest,
+  imageSourceIssue,
   OverridesFile,
   PlayerOverride,
   sameOverride,
@@ -176,6 +178,15 @@ const createAdmin = (root: string) => {
     if (issues.length) throw new HttpError(400, [...new Set(issues)].join('\n'));
   };
 
+  const checkImages = (before: PlayerOverride | undefined, after: PlayerOverride | null) => {
+    const issues = ImageKind.options.flatMap((kind) => {
+      const source = after?.[kind];
+      const issue = source && source !== before?.[kind] ? imageSourceIssue(source) : null;
+      return issue ? [issue] : [];
+    });
+    if (issues.length) throw new HttpError(400, issues.join('\n'));
+  };
+
   const runExport = (players?: readonly string[]) =>
     new Promise<number>((resolve, reject) => {
       const started = Date.now();
@@ -225,6 +236,7 @@ const createAdmin = (root: string) => {
     return serial(async (): Promise<SaveResult> => {
       checkEquipment([entry]);
       const file = await readOverrides();
+      checkImages(file.players[id], entry);
       const renamed = canonicalOverride(file.players[id])?.name !== entry?.name;
       await writeOverrides(setOverride(file, id, entry));
       return { entry, exportMs: await runExport(renamed ? undefined : [id]) };
@@ -258,6 +270,8 @@ const createAdmin = (root: string) => {
 
   const fetchImage = async (body: unknown): Promise<ImageResult> => {
     const { id, kind, url, flip } = parseWith(ImageRequest, body);
+    const issue = url && imageSourceIssue(url);
+    if (issue) throw new HttpError(400, issue);
     const [image] = await images.store(id, [kind], url ?? null, flip);
     if (!image) throw new HttpError(500, 'Image was not stored');
     return image;
