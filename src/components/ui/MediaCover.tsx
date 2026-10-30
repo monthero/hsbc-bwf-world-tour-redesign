@@ -11,9 +11,10 @@ export const MediaCover: FC<{
   position?: string;
   fade?: 'bottom' | 'strong' | 'none';
   muted?: boolean;
+  priority?: boolean;
   className?: string;
   children?: ReactNode;
-}> = ({ src, position, fade = 'bottom', muted, className, children }) => {
+}> = ({ src, position, fade = 'bottom', muted, priority, className, children }) => {
   const { img, failed } = useImageState(src);
   return (
     <div className={clsx(classes.media, className)} data-fade={fade} data-muted={muted || undefined}>
@@ -22,7 +23,8 @@ export const MediaCover: FC<{
           className={clsx(utils.cover, classes.img)}
           src={src}
           alt=""
-          loading="lazy"
+          loading={priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : undefined}
           style={position ? { objectPosition: position } : undefined}
           {...img}
         />

@@ -99,7 +99,14 @@ export const TournamentHeader = memo<{
         </nav>
       </div>
       <div className={classes.stage}>
-        <MediaCover src={tn.header} position="center 40%" fade="none" muted={tn.cancelled} className={classes.banner}>
+        <MediaCover
+          src={tn.header}
+          position="center 40%"
+          fade="none"
+          muted={tn.cancelled}
+          priority
+          className={classes.banner}
+        >
           {tn.cancelled && <TournamentStatusBadge tournament={tn} variant="overlay" className={classes.cancelled} />}
         </MediaCover>
         <div className={classes.body}>

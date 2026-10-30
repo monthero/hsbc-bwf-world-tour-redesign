@@ -10,6 +10,10 @@
     background: linear-gradient(130deg, var(--bwf-surface-2), var(--bwf-bg-sunken) 85%);
   }
 
+  &:not([data-muted]):has(.img[data-loaded]) {
+    background: none;
+  }
+
   &::after {
     content: '';
     position: absolute;
