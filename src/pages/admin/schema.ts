@@ -79,6 +79,7 @@ const ALLOWED_IMAGE_HOSTS = [
   'yonex.co.uk',
   'yonex.cz',
   'yonex.com.tw',
+  'badmintonasia.org',
   'badmintoneurope.com',
   'badminton.dk',
   'badminton.or.jp',
