@@ -368,5 +368,20 @@ export const createImageStore = (root: string) => {
     return image ?? null;
   };
 
-  return { store, ensure };
+  const pruneDir = async (dir: string, keep: ReadonlySet<string>) => {
+    const names = await fs.readdir(dir).catch((): string[] => []);
+    const stale = names.filter((name) => !keep.has(path.parse(name).name));
+    await Promise.all(stale.map((name) => fs.rm(path.join(dir, name), { force: true })));
+    return stale.length;
+  };
+
+  const prune = async (keep: ReadonlySet<string>) => {
+    const [built] = await Promise.all([
+      pruneDir(path.dirname(outputFile('0', 'photo')), keep),
+      pruneDir(originalsDir, keep),
+    ]);
+    return built;
+  };
+
+  return { store, ensure, prune };
 };
