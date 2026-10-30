@@ -3,7 +3,7 @@
   grid-template-columns: var(--logo) minmax(0, 1fr);
   align-items: start;
   gap: 10px var(--gx);
-  margin-top: 20px;
+  margin-top: 10px;
   padding-inline-start: var(--pl);
 
   @mixin smaller-than $mantine-breakpoint-sm {
@@ -14,9 +14,16 @@
 }
 
 .head {
+  justify-self: center;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
+
+  @mixin smaller-than $mantine-breakpoint-sm {
+    justify-self: start;
+    white-space: normal;
+  }
   font-size: 13px;
   font-weight: 500;
   line-height: 1.35;
