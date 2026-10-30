@@ -474,8 +474,19 @@
       }
     },
     "59331": {
+      "photo": "https://badmintoneurope.com/o/adaptive-media/image/701264/preview-2000/20260410_EC26_LS_0016_Callum_Hemming_Estelle_Van_Leeuwen.jpg?t=1778137955344",
+      "hero": "https://i2-prod.mirror.co.uk/article36817340.ece/ALTERNATES/s1200c/0_Estelle-van-Leeuwen-Callum-Hemming-YONEX-All-England-2026-PLEASE-CREDIT-BadmintonPhoto.jpg",
+      "photoCrop": {
+        "x": 40.9,
+        "y": 22.8,
+        "zoom": 3.7
+      },
       "bio": {
-        "racket": "aabe89ec-0784-4211-aa13-6cade5d99dfd"
+        "racket": "aabe89ec-0784-4211-aa13-6cade5d99dfd",
+        "racketNote": "4U",
+        "string": "0f36440f-d2ab-48aa-bf07-05765b0654b5",
+        "shoes": "346069c8-1d5c-4f52-8bb7-fb3dbf7f2437",
+        "instagram": "https://www.instagram.com/estelle.vanl"
       }
     },
     "59609": {
@@ -1872,6 +1883,20 @@
         "shoes": "8d234e98-b425-435d-976d-710bca6b16a2"
       }
     },
+    "81705": {
+      "hero": "https://cms.bwfbadminton.com/wp-content/uploads/2025/03/Jesper-Toft-Amalie-Magelund_AE25-1024x554.jpg",
+      "heroFocus": {
+        "x": 83,
+        "y": 56
+      },
+      "bio": {
+        "height": 200,
+        "natTeam": "2000",
+        "racket": "b2cf1274-33d7-427f-bbdb-3421cf1bc3df",
+        "shoes": "eaa6b1e7-4069-4410-a210-e72d4d0d6422",
+        "instagram": "https://www.instagram.com/jespertoft99"
+      }
+    },
     "81844": {
       "photo": "data/uploads/81844.jpg",
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1616/v1731298369/wordpress_assets_test/Guo-Xin-Wa-Chen-Fang-Hui_KM24/Guo-Xin-Wa-Chen-Fang-Hui_KM24.jpg",
@@ -2234,6 +2259,21 @@
         "achievements": "Asia Team Championships 2026 – gold (men's team); Asia Mixed Team Championships 2025 – bronze (mixed team)"
       }
     },
+    "86756": {
+      "photo": "https://badmintoneurope.com/o/adaptive-media/image/701264/preview-2000/20260410_EC26_LS_0016_Callum_Hemming_Estelle_Van_Leeuwen.jpg?t=1778137955344",
+      "hero": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/667438688_1425561799615552_1636487130026279206_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x960&ctp=s1440x960&_nc_cat=105&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=8TyybTdBtFkQ7kNvwGacdi6&_nc_oc=AdrJTbm64O9-8qtTsJ3LazoruPZO4rk48t-fobsoYfDd7pzVPFWgzWYA3uhzBOF3eNp7Pxos3qWhNo0mfAvScEsr&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=mACIQfn1GnmsKklvBwbKdg&_nc_ss=7b289&oh=00_AQS19DYvli32IdEnk05OkK7QezrRhOhrbidn0B9SpXLpJA&oe=6AEA332B",
+      "photoCrop": {
+        "x": 57,
+        "y": 11,
+        "zoom": 3.5
+      },
+      "bio": {
+        "racket": "0fb90cbf-2008-43f2-b8e9-74e5fc2ca290",
+        "string": "0f36440f-d2ab-48aa-bf07-05765b0654b5",
+        "shoes": "346069c8-1d5c-4f52-8bb7-fb3dbf7f2437",
+        "instagram": "https://www.instagram.com/callumhem"
+      }
+    },
     "87176": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/8/8e/%E8%83%A1%E7%B6%BE%E8%8A%B32024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
       "heroFocus": {
@@ -2546,6 +2586,15 @@
         "shoes": "8d234e98-b425-435d-976d-710bca6b16a2"
       }
     },
+    "92404": {
+      "heroFocus": {
+        "x": 33,
+        "y": 34
+      },
+      "bio": {
+        "racket": "0dfecd6d-9273-414e-b54b-2d1f0544437c"
+      }
+    },
     "92593": {
       "bio": {
         "racket": "892d3869-aadd-4000-ab84-c0bc1fedea54",
@@ -2640,6 +2689,17 @@
         "string": "021d0b59-844e-408c-bc12-270b511aa796"
       }
     },
+    "94156": {
+      "hero": "https://static.grupojoly.com/clip/caff0d4d-cfce-4e85-8703-359d73b71dea_source-aspect-ratio_1600w_0.jpg",
+      "heroFocus": {
+        "x": 100,
+        "y": 26
+      },
+      "bio": {
+        "racket": "6e7c51df-e439-4094-b889-65cddec4edca",
+        "instagram": "https://www.instagram.com/rubengrcia._/"
+      }
+    },
     "94165": {
       "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP-IklpIWvejiEw_3VxlDdKyCWrPMyrUMEcXIsDCvYo2rOWx8g7lhDyj0&s=10",
       "bio": {
@@ -2721,6 +2781,15 @@
     "95476": {
       "bio": {
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d"
+      }
+    },
+    "95643": {
+      "bio": {
+        "racket": "4b9cafba-6606-49ec-bc5a-520c05e6f977",
+        "racketNote": "4U",
+        "tension": "29.5",
+        "string": "538a1b0a-3c92-46fa-b161-06e5a1f72a8e",
+        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
     "95661": {
