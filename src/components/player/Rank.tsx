@@ -6,7 +6,7 @@ import { EventTag } from '~/components/match';
 import { IconCheck, IconCheckCircle, Tip } from '~/components/ui';
 import { EVENT_NAMES, NOT_QUALIFY_TIP } from '~/constants';
 import { useFinalsCity } from '~/hooks/useTournaments';
-import type { RankView } from '~/types';
+import type { OtherPair, RankView } from '~/types';
 import { changeDir, formatChange, formatRank } from '~/utils/format';
 import { qualifyTip } from '~/utils/tournaments';
 
@@ -81,6 +81,20 @@ export const RaceQualifier: FC<{ rank: RankView; long?: boolean }> = ({ rank: k,
   <QualifyMark qualified={k.race?.qualified} blocked={k.race?.blocked} long={long} />
 );
 
+export const OtherPairs = memo<{ pairs: readonly OtherPair[]; className?: string }>(({ pairs, className }) =>
+  pairs.length > 0 ? (
+    <ul className={clsx(classes.others, className)}>
+      {pairs.map(({ rank, partner }) => (
+        <li key={partner.id || partner.name} className={classes.other}>
+          <Trans comment="The player’s other current world ranking in the same discipline, with a different partner, e.g. “Also #150 with Kudsk”. {rank} is the ranking number; the partner’s name follows">
+            Also <b className={classes.otherRank}>#{rank}</b> with <Partner player={partner} short />
+          </Trans>
+        </li>
+      ))}
+    </ul>
+  ) : null,
+);
+
 export const RankCard = memo<{ rank: RankView }>(({ rank: k }) => (
   <div className={classes.card}>
     <span className={classes.head}>
@@ -111,5 +125,6 @@ export const RankCard = memo<{ rank: RankView }>(({ rank: k }) => (
         {k.highestPartner && <Partner player={k.highestPartner} className={classes.cWith} />}
       </div>
     </div>
+    <OtherPairs pairs={k.others} />
   </div>
 ));

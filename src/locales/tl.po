@@ -658,6 +658,11 @@ msgstr "Ang lahat ng datos ng torneo, resulta, ranking, larawan, logo at imporma
 msgid "All videos"
 msgstr "Lahat ng video"
 
+#. The player’s other current world ranking in the same discipline, with a different partner, e.g. “Also #150 with Kudsk”. {rank} is the ranking number; the partner’s name follows
+#: src/components/player/Rank.tsx
+msgid "Also <0>#{rank}</0> with <1/>"
+msgstr "Gayundin <0>#{rank}</0> kasama si <1/>"
+
 #. Entry status: a reserve player or pair who only gets in if someone withdraws
 #: src/pages/tournament/components/players/entries.ts
 msgid "Alternate"

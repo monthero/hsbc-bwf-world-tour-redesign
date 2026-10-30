@@ -118,6 +118,7 @@ interface CurrentRank {
   hi: number | null;
   hw: string;
   hwid?: string;
+  also?: { r: number; pr: number | null; w: string; wid?: string }[];
 }
 
 interface PreviousPlayers {
@@ -474,6 +475,12 @@ export const exportData = async (
         );
         const now = rowsOf.filter((h) => h.ranking_publication_id === worldPub.id).sort((a, b) => a.rank - b.rank);
         const top = now[0];
+        const also = now.slice(1).map((h) => ({
+          r: h.rank,
+          pr: h.rank_previous,
+          w: partnerName(h),
+          ...(partnerId(h) && { wid: partnerId(h) }),
+        }));
         ranks.push({
           ev,
           r: top?.rank ?? null,
@@ -483,6 +490,7 @@ export const exportData = async (
           hi: best?.highest_rank ?? null,
           hw: best ? partnerName(best) : '',
           ...(best && partnerId(best) && { hwid: partnerId(best) }),
+          ...(also.length > 0 && { also }),
         });
       }
       ranksOf.set(id, ranks);

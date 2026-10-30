@@ -658,6 +658,11 @@ msgstr "ข้อมูลการแข่งขัน ผลการแข�
 msgid "All videos"
 msgstr "วิดีโอทั้งหมด"
 
+#. The player’s other current world ranking in the same discipline, with a different partner, e.g. “Also #150 with Kudsk”. {rank} is the ranking number; the partner’s name follows
+#: src/components/player/Rank.tsx
+msgid "Also <0>#{rank}</0> with <1/>"
+msgstr "อันดับ <0>#{rank}</0> คู่กับ <1/> ด้วย"
+
 #. Entry status: a reserve player or pair who only gets in if someone withdraws
 #: src/pages/tournament/components/players/entries.ts
 msgid "Alternate"

@@ -161,6 +161,14 @@ export const PlayerBio = z.object({
 });
 export type PlayerBio = z.infer<typeof PlayerBio>;
 
+export const PairRank = z.object({
+  r: z.number(),
+  pr: NullableNumber,
+  w: z.string(),
+  wid: z.string().default(''),
+});
+export type PairRank = z.infer<typeof PairRank>;
+
 export const CurrentRank = z.object({
   ev: EventCode,
   r: NullableNumber,
@@ -170,6 +178,7 @@ export const CurrentRank = z.object({
   hi: NullableNumber,
   hw: z.string(),
   hwid: z.string().default(''),
+  also: z.array(PairRank).optional(),
 });
 export type CurrentRank = z.infer<typeof CurrentRank>;
 

@@ -235,6 +235,13 @@ export interface RankView {
   highest: number | null;
   highestPartner: Player | null;
   samePartner: boolean;
+  others: OtherPair[];
+}
+
+export interface OtherPair {
+  rank: number;
+  change: number;
+  partner: Player;
 }
 
 export type SeasonPhase = 'past' | 'current' | 'future';

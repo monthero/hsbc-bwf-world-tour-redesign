@@ -116,6 +116,11 @@ export const buildRanks = (
       highest: c.hi,
       highestPartner: c.hw ? playerById(c.hwid, c.hw, index, dir) : null,
       samePartner: !!c.hw && (c.hwid || c.hw) === (c.wid || c.w),
+      others: (c.also ?? []).map((o) => ({
+        rank: o.r,
+        change: o.pr ? o.pr - o.r : 0,
+        partner: playerById(o.wid, o.w, index, dir),
+      })),
     };
   });
 };

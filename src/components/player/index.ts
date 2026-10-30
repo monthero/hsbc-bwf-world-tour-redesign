@@ -8,7 +8,7 @@ export { PlayerName } from './PlayerName';
 export { QualifyLine } from './QualifyLine';
 export { RankedNames } from './RankedNames';
 export { RetiredBadge } from './RetiredBadge';
-export { QualifyMark, RaceQualifier, RankChange, RankValue } from './Rank';
+export { OtherPairs, QualifyMark, RaceQualifier, RankChange, RankValue } from './Rank';
 export { RankSeed, SeedTag, WorldRankTag } from './RankMarks';
 export { SocialLinks } from './SocialLinks';
 export { TournamentRanks } from './TournamentRanks';

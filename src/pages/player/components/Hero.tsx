@@ -10,6 +10,7 @@ import { PlayerFollow } from '~/components/follow';
 import {
   FactLabel,
   FactTip,
+  OtherPairs,
   Partner,
   PlayerAvatar,
   PlayerName,
@@ -255,6 +256,7 @@ const RankTile = memo<{
         </span>
         {k.change ? <RankChange value={k.change} /> : null}
       </span>
+      <OtherPairs pairs={k.others} className={classes.rankOthers} />
       <dl className={classes.minis}>
         <MiniStat
           label={
