@@ -14,23 +14,11 @@
     },
     "18228": {
       "retired": "2026-03",
-      "photo": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/202501_Marin_1.jpg?v=1741016411&width=1320",
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/202501_Marin_2.jpg?v=1741016409&width=1320",
-      "heroFocus": {
-        "x": 49,
-        "y": 9
-      },
-      "photoCrop": {
-        "x": 46.7,
-        "y": 49.9,
-        "zoom": 2.1
-      },
       "bio": {
         "racket": "38ecd0b6-e2b1-4464-9543-84a5a6affa81"
       }
     },
     "19726": {
-      "hero": "https://img.ligaolahraga.com/public/images/news/2026/09/07/china-masters-gelar-perdana-sumire-nakade-miyu-takahashi-di-level-super-750.webp",
       "photoCrop": {
         "x": 50,
         "y": 86.9,
@@ -138,11 +126,6 @@
       }
     },
     "47007": {
-      "hero": "https://resizer-vortals.eco.astro.com.my/tr:w-auto,h-auto,q-80,f-webp/https://d3lmgsai2rsy7d.cloudfront.net/stadium/media/uploads/image/2026-10/pang%20ron%20pei%20jing.jpg",
-      "heroFocus": {
-        "x": 78,
-        "y": 15
-      },
       "bio": {
         "racket": "bc6b47d5-3acd-4593-a97c-7c1857b8be13",
         "string": "16bb7c1f-5656-4974-99e6-858d66614728",
@@ -265,7 +248,6 @@
       }
     },
     "55417": {
-      "photo": "https://bkimg.cdn.bcebos.com/pic/3bf33a87e950352ac65c892ffe18ecf2b21193131dda?x-bce-process=image/format,f_auto/watermark,image_d2F0ZXIvYmFpa2UyNzI,g_7,xp_5,yp_5,P_20/resize,m_lfit,limit_1,h_1080",
       "bio": {
         "birthplace": "Saitama Prefecture",
         "coach": "Norio Imai",
@@ -298,7 +280,6 @@
       }
     },
     "55669": {
-      "hero": "https://cdn-assets.jawapos.com/images/1/2025/03/06/GkYK1DhXgAAiT91-copy-2400580700.jpg",
       "bio": {
         "height": 170,
         "plays": "R",
@@ -368,24 +349,10 @@
       }
     },
     "57424": {
-      "hero": "https://img.ltn.com.tw/Upload/sports/page/800/2025/03/21/phpFwWtcg.jpg",
       "bio": {
         "racket": "6e7c51df-e439-4094-b889-65cddec4edca",
         "instagram": "https://www.instagram.com/chih.09.20/",
         "facebook": "https://www.facebook.com/p/%E6%9D%8E%E8%8A%B3%E8%87%B3-Lee-Fang-Chih-61558264833063/"
-      }
-    },
-    "57791": {
-      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGhhVYf7KM5xFTNNvvExX20KV15dVCox-JwRpDuvXGAZjz_Ebs8yG9LHbD&s=10",
-      "hero": "https://images.gofundme.com/A1bP25ELKdu8w3yJg8GNUhvTzqU=/1200x800/https://d2g8igdw686xgo.cloudfront.net/79156583_1712427105648836_r.jpeg",
-      "heroFocus": {
-        "x": 30,
-        "y": 0
-      },
-      "photoCrop": {
-        "x": 50.1,
-        "y": 13.8,
-        "zoom": 3.4
       }
     },
     "57823": {
@@ -418,7 +385,6 @@
     },
     "58180": {
       "retired": "2025-03",
-      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLsdlW4vvyvMRmAM3CmP6YphAsdQB50nLdChhKZW7QqwOS-j4rv1xKQjz7&s=10",
       "bio": {
         "racket": "43e1b756-2b7a-4b87-89e4-616bacacbb08",
         "shoes": "8046b3df-483e-45e5-97ee-2faf781f460c"
@@ -444,13 +410,6 @@
       }
     },
     "58931": {
-      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ3vzUqtCbr_Vwbv19WJsmrn7LE3m9InAFQKPNqIqvghib87uSGO0JY_s&s=10",
-      "hero": "https://www.xinhuanet.com/sports/20260904/59103125c5074ddc8fdd5d14e0cec3d5/2026090459103125c5074ddc8fdd5d14e0cec3d5_202609049fa1a24ffefa47e09f7cc8955330f641.jpg",
-      "photoCrop": {
-        "x": 17.6,
-        "y": 0,
-        "zoom": 2.4
-      },
       "bio": {
         "height": 184,
         "plays": "R",
@@ -475,7 +434,6 @@
     },
     "59331": {
       "photo": "https://badmintoneurope.com/o/adaptive-media/image/701264/preview-2000/20260410_EC26_LS_0016_Callum_Hemming_Estelle_Van_Leeuwen.jpg?t=1778137955344",
-      "hero": "https://i2-prod.mirror.co.uk/article36817340.ece/ALTERNATES/s1200c/0_Estelle-van-Leeuwen-Callum-Hemming-YONEX-All-England-2026-PLEASE-CREDIT-BadmintonPhoto.jpg",
       "photoCrop": {
         "x": 40.9,
         "y": 22.8,
@@ -540,11 +498,6 @@
       }
     },
     "59880": {
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSB00721.jpg?v=1773898237&width=1320",
-      "heroFocus": {
-        "x": 74,
-        "y": 0
-      },
       "bio": {
         "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "racketNote": "4U",
@@ -554,13 +507,7 @@
       }
     },
     "59966": {
-      "photo": "https://media.assettype.com/deccanherald%2F2026-08-21%2F2cm3ez9r%2Ffile87954wl49vp146h3vtq5.jpg?w=undefined&auto=format%2Ccompress&fit=max",
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1790426698/wordpress_assets_test/20260822_1752_WorldChampionships2026_BPJS4247/20260822_1752_WorldChampionships2026_BPJS4247.jpg",
-      "photoCrop": {
-        "x": 29.4,
-        "y": 3.3,
-        "zoom": 1.65
-      },
       "bio": {
         "birthplace": "Hyderabad",
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
@@ -569,7 +516,6 @@
       }
     },
     "60321": {
-      "hero": "https://cdn1-production-images-kly.akamaized.net/uOuVFXh5o6H_WxpnqH2j7lCKUY4=/0x0:4160x2345/1200x675/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/5489915/original/053126100_1769947793-WhatsApp_Image_2026-02-01_at_18.50.32.jpeg",
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0",
@@ -661,7 +607,6 @@
       }
     },
     "61731": {
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20260109_1651_MalaysiaOpen2026_BPTE6312.jpg?v=1773125394&width=1320",
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "racketNote": "4U",
@@ -680,7 +625,6 @@
       }
     },
     "61882": {
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20260303_1630_AllEngland2026_BPYN8170.jpg?v=1779414691&width=1320",
       "bio": {
         "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "racketNote": "4U",
@@ -688,11 +632,6 @@
       }
     },
     "62063": {
-      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t39.30808-6/699997095_1304036661892137_9141286312397794393_n.jpg?stp=c0.0.2047.1638a_dst-jpg_e35_s2047x1638_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=Mzg5Njc4MjQyNTQ1MjYxMTg1NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjA0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=8BDvF7jW3t4Q7kNvwHjCjkm&_nc_oc=Adolf898WaqujqW8GXTM5w4dfarUUjF2otHYpysvUMKCN8_2BFOeak1ZuhBl6pU_5CgtU56fsfGopMbnDWNilBrU&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=SgAucqTbjY517HdusGlOEw&_nc_ss=7b689&oh=00_AQNnFPI5GpqkEkD3z87BI9xGb3c6aBzBTYu0ZRLR2h031w&oe=6ADFCB60",
-      "heroFocus": {
-        "x": 52,
-        "y": 67
-      },
       "bio": {
         "racket": "5acde407-bbb3-4cc6-bf45-cbd52256de45"
       }
@@ -707,13 +646,6 @@
       }
     },
     "62618": {
-      "photo": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20260520_1549_MalaysiaMasters2026_BPTE6083.jpg?v=1779414096&width=1320",
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20260521_1038_MalaysiaMasters2026_BPTE2346_2.jpg?v=1779414061&width=1320",
-      "photoCrop": {
-        "x": 36.6,
-        "y": 17.8,
-        "zoom": 2.9
-      },
       "bio": {
         "racket": "4b9cafba-6606-49ec-bc5a-520c05e6f977",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
@@ -733,7 +665,6 @@
       }
     },
     "62713": {
-      "hero": "https://cdn.i-scmp.com/sites/default/files/styles/wide_landscape_style/public/d8/images/canvas/2026/03/08/b89a5763-b91c-4dc7-a770-693386007e1d_e3c9b32e.jpg?itok=j-JChkSn",
       "photoCrop": {
         "x": 50,
         "y": 100,
@@ -748,17 +679,6 @@
       }
     },
     "62804": {
-      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Qe5Eu51Z2AHY0cDUfvkpWvPZs8eAR_bp94jwMtUfDz_7aswZVqyw-wrg&s=10",
-      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9ZeF_s_XvQNwgwt6R1z3Kt4xO0oVZ0V6vhbZnLnBm24Vp7la7BDlWgOQ&s=10",
-      "heroFocus": {
-        "x": 30,
-        "y": 40
-      },
-      "photoCrop": {
-        "x": 62.5,
-        "y": 10.5,
-        "zoom": 1.6
-      },
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "racketNote": "4U",
@@ -821,17 +741,6 @@
       }
     },
     "63571": {
-      "photo": "https://awsimages.detik.net.id/community/media/visual/2026/06/02/adnan-maulanaindah-cahya-sari-jamil-1780382604246_169.jpeg?w=1200&q=90",
-      "hero": "https://assetd.kompas.id/xj8mmXzaUdqoZUN4CnnzQP8-5Tc=/1980x1340/smart/filters:format(webp):quality(80)/https://asset.kgnewsroom.com/photo/pre/2026/01/21/068d34a9-7007-4b04-b72e-93a751079400_jpg.jpg",
-      "heroFocus": {
-        "x": 86,
-        "y": 11
-      },
-      "photoCrop": {
-        "x": 58.4,
-        "y": 4.7,
-        "zoom": 2.55
-      },
       "bio": {
         "racket": "1b0c28bd-7761-4793-954f-bd48228237e2"
       }
@@ -852,12 +761,6 @@
       }
     },
     "64032": {
-      "photo": "https://imageio.forbes.com/specials-images/imageserve/6a036d0ffdd72f488531cd45/0x0.jpg?format=jpg&crop=380,380,x26,y0,safe&height=416&width=416&fit=bounds",
-      "hero": "https://imgcdn.acebadmintoncommunity.com/imago1066577719.jpg.jpeg",
-      "heroFocus": {
-        "x": 47,
-        "y": 47
-      },
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "racketNote": "4U",
@@ -892,7 +795,6 @@
       }
     },
     "65267": {
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20260111_1516_MalaysiaOpen2026_BPYL5972.jpg?v=1773119314&width=1320",
       "bio": {
         "racket": "275dd589-06a3-4c38-8399-f3184c4dc585",
         "racketNote": "4U",
@@ -908,7 +810,6 @@
       }
     },
     "65349": {
-      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t39.30808-6/700015065_1304036768558793_8621179559568070870_n.jpg?stp=c0.0.2047.1638a_dst-jpg_e35_s2047x1638_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=Mzg5Njc4MjQyNDcwNjA0MTYyMA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjA0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=vkLIPBkc8L0Q7kNvwFYwIF2&_nc_oc=AdpSucwhDXmDK5LlYZ1sy0tptrbZ2vLX6UJcnNUR03x75Zxnz_dS2pthxbFKW_SSXHFGox0Z4c6T8klWeiBSd626&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=SgAucqTbjY517HdusGlOEw&_nc_ss=7b689&oh=00_AQN2DvSF_lAETvU5_INx8BqbRj_3fhzRFFqSAn5jupDXjA&oe=6ADFC86A",
       "photoCrop": {
         "x": 56.3,
         "y": 56.8,
@@ -925,11 +826,6 @@
       }
     },
     "65634": {
-      "hero": "https://livesport-ott-images.ssl.cdn.cra.cz/r900xfq60/e3f170c8-477c-4017-a436-ff5dab9d6add.jpeg",
-      "heroFocus": {
-        "x": 74,
-        "y": 21
-      },
       "bio": {
         "racket": "055a8740-29d2-4b39-97d7-eec352affaee",
         "string": "f1721761-6a21-417a-97fe-b2bce31e5833",
@@ -937,7 +833,6 @@
       }
     },
     "65674": {
-      "hero": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/699928377_1457649656402912_6255779572597430757_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=W7LYLCLKWVQQ7kNvwGudpDG&_nc_oc=Adrz_wlDM_a6k_S1YjgAEVDG5M4BvTxM8V8J7TozojLxINDiGasywbfqWrbEfOBYeLCgv2UGPNv9jmYetzXPp9Od&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=iItyfNazrksW0FZcerANmw&_nc_ss=7b289&oh=00_AQNQVVGl_FGZvqnKCyDu3jPF6_ro8MiY_RbuFCeGe6-xtQ&oe=6ADFC058",
       "bio": {
         "height": 179,
         "plays": "L",
@@ -976,11 +871,6 @@
       "retired": "2023-06"
     },
     "66513": {
-      "hero": "https://apicms.thestar.com.my/uploads/images/2025/03/18/3218523.webp",
-      "heroFocus": {
-        "x": 78,
-        "y": 1
-      },
       "bio": {
         "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "racketNote": "3U",
@@ -1000,13 +890,6 @@
       }
     },
     "67158": {
-      "photo": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/797006412_18619944238048407_2656669180263247769_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ig_cache_key=Mzk4MDI3NjE0NTEyNzk0NzU2Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTY4MS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=jWH0PYMgqAMQ7kNvwFhFhsv&_nc_oc=Adqi_wpNzWbYRMIN2mCDoxGQ4V4EuhEviNg-ol8uCO44GRtc6tv4ePPf6xYEtEcmWD1gPA4uCRCFsiq-jUWI8hUg&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=vz9ooA6IJ1GtY358fgrq1A&_nc_ss=7b689&oh=00_AQNqRvqRmRmLSOmVckACwJ3VNukkJyxe7enf0d04K59R1g&oe=6ADFB895",
-      "hero": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/698494712_1457649476402930_2892307176698855027_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=peC0pQcRzgwQ7kNvwF4d4rQ&_nc_oc=Adr-qfOwcqQwmbgx6mOMm7_KvAdYJH2H7Apmf580umKS0-44jjQ3DfbSErgBvvgFxtJoYtakTVGJSAd3Nu7rPvEa&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=C4K4ARYq6TduZ6pzNmU7Bw&_nc_ss=7b289&oh=00_AQMaZQq6claMehDEfatGQhbNJco9goJh3RBQhW92mJk09g&oe=6ADFCA4D",
-      "photoCrop": {
-        "x": 44.2,
-        "y": 0,
-        "zoom": 2
-      },
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "racketNote": "3U",
@@ -1023,11 +906,6 @@
     },
     "67761": {
       "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Amalia_Cahaya_Pratiwi_%28cropped%29.jpg/960px-Amalia_Cahaya_Pratiwi_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail",
-      "hero": "https://thumb.tvonenews.com/images/2026/06/04/6a213df1d22bd-ganda-putri-indonesia-amallia-cahaya-pratiwisiti-fadia-silva-ramadhanti.jpg",
-      "heroFocus": {
-        "x": 48,
-        "y": 0
-      },
       "photoCrop": {
         "x": 34.4,
         "y": 9.2,
@@ -1097,17 +975,6 @@
       }
     },
     "68282": {
-      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUqm2Wi40R6m2FdiwTFnfnZo0_kK2M7jLUTn1m7ZRWtRCgYZZtfjfV-Aw&s=10",
-      "hero": "https://spread-sports.jp/wp/wp-content/uploads/2026/10/1792655225-1271553031.jpg",
-      "heroFocus": {
-        "x": 59,
-        "y": 67
-      },
-      "photoCrop": {
-        "x": 50,
-        "y": 0,
-        "zoom": 1.35
-      },
       "bio": {
         "racket": "6a66a126-f601-46b2-b165-fc595c19083f",
         "racketNote": "Shida"
@@ -1138,8 +1005,6 @@
       }
     },
     "68544": {
-      "photo": "data/uploads/68544.webp",
-      "hero": "data/uploads/68544-hero.webp",
       "bio": {
         "racket": "fd4632f8-0ee0-4ac0-a7a7-c48cfbb96a4c",
         "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
@@ -1147,11 +1012,6 @@
       }
     },
     "68628": {
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20250118_1251_IndiaOpen2025_BPJS4875.jpg?v=1758523037&width=1320",
-      "heroFocus": {
-        "x": 57,
-        "y": 12
-      },
       "bio": {
         "racket": "0babb235-86a5-4912-a4bc-911a3f7ad653",
         "racketNote": "(older modal), 4U",
@@ -1161,17 +1021,6 @@
       }
     },
     "68633": {
-      "photo": "data/uploads/68633.webp",
-      "hero": "https://cdn1-production-images-kly.akamaized.net/EK_o2Phj9F2vJO__5GW9iwUhe0Q=/800x400/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/9361499/original/067689800_1790735365-AP26272336422090.jpg",
-      "heroFocus": {
-        "x": 73,
-        "y": 100
-      },
-      "photoCrop": {
-        "x": 22.6,
-        "y": 20,
-        "zoom": 1.15
-      },
       "bio": {
         "racket": "3f151962-1ee8-4c34-88bc-2a8f41c99e75",
         "string": "d16fa969-6a4b-4522-8e81-b2088e28ea67",
@@ -1179,7 +1028,6 @@
       }
     },
     "68870": {
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSB01466.jpg?v=1771285559&width=1320",
       "bio": {
         "racket": "38ecd0b6-e2b1-4464-9543-84a5a6affa81",
         "racketNote": "3U",
@@ -1245,11 +1093,6 @@
       }
     },
     "70231": {
-      "hero": "https://news-images.tvbs.com.tw/legacy/img/upload/2026/03/15/20260315203352-90830e34.jpg?w=400&h=225",
-      "heroFocus": {
-        "x": 83,
-        "y": 65
-      },
       "bio": {
         "racket": "0dfecd6d-9273-414e-b54b-2d1f0544437c"
       }
@@ -1292,7 +1135,6 @@
       }
     },
     "70762": {
-      "hero": "data/uploads/70762-hero.webp",
       "bio": {
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f",
         "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
@@ -1359,13 +1201,6 @@
       }
     },
     "71612": {
-      "photo": "https://media.assettype.com/deccanherald%2F2026-08-21%2F2cm3ez9r%2Ffile87954wl49vp146h3vtq5.jpg?w=undefined&auto=format%2Ccompress&fit=max",
-      "hero": "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202405/treesa-jolly-and-gayatri-gopichand-310343258-3x4.jpeg?VersionId=UEE4_5L8B1_LOi4iBf2_F5JOhRLrtXqF",
-      "photoCrop": {
-        "x": 75.2,
-        "y": 7.3,
-        "zoom": 1.85
-      },
       "bio": {
         "birthplace": "Cherupuzha, Kannur",
         "coach": "Pullela Gopichand Arun Vishnu",
@@ -1384,8 +1219,6 @@
       }
     },
     "72478": {
-      "photo": "https://images.ctfassets.net/v8zaoys2pgzt/4NX1SBGBM50kAaqBnvlb3w/859dcf2f5ea72a2beef03515b1ea844f/Sean_Vendy.jpg",
-      "hero": "https://www.romfordrecorder.co.uk/resources/images/20605612.jpg?type=og-image",
       "bio": {
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d",
         "racketNote": "Kurenai",
@@ -1395,17 +1228,6 @@
       }
     },
     "72504": {
-      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU8lQUaXYpVCVZ-VJOHDtksl-GpfKKsujIK_m-Qkvm1vo8swUt6CwOqyD2&s=10",
-      "hero": "https://www.siamsport.co.th/static/41e704bf-5636-491b-bcf6-14fef89ba23b.jpg",
-      "heroFocus": {
-        "x": 54,
-        "y": 0
-      },
-      "photoCrop": {
-        "x": 50,
-        "y": 0,
-        "zoom": 1.15
-      },
       "bio": {
         "racket": "6b5a7536-c7dd-4718-bf7c-1961a951d390",
         "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
@@ -1428,38 +1250,17 @@
       }
     },
     "73173": {
-      "photo": "https://image.nordjyske.dk/users/nordjyske/images/145970476.jpg?t[strip]=true&t[quality]=75&t[crop][width]=3416&t[crop][height]=1922&t[crop][x]=0&t[crop][y]=0&t[resize][width]=1200&t[resize][height]=675&accessToken=0dd68f0502eb87e48ab00139bcaee1e09ac42ef1d9bd46a51d2a51c2ac3153c2",
-      "hero": "https://media.telanganatoday.com/wp-content/uploads/2026/07/Pusarla-V-Sindhu-.jpg",
-      "photoCrop": {
-        "x": 61.1,
-        "y": 6.9,
-        "zoom": 2.05
-      },
       "bio": {
         "racket": "f46fd698-718f-4a78-ad2c-a6244df7c794"
       }
     },
     "73323": {
-      "photo": "https://dicodusport.fr/blog/wp-content/uploads/2026/03/La-paire-Julien-Maio-William-Villeger-echoue-en-finale-de-lOpen-dAllemagne-2.png",
-      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/643556028_18060434654673598_2472538030195589924_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ig_cache_key=Mzg0MjY3MjcxNzExMjExOTU4Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=lqLMK9XhFUIQ7kNvwGHltYB&_nc_oc=Adqc5FcNEwXEfYh9Ztg_FZROgUxWlPkLkKD8R44iQWn-1twi9e8GWUQWB_Tn-XUhhGkfq62bmhAms4ieLFaLkSDX&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=a98eI6KFzbTXlJKGZ415OA&_nc_ss=7b689&oh=00_AQNzjmZBSn78cZsvdwMj2YLz_be0H2ZCSw5y8yO3uI0huw&oe=6ADBCADF",
-      "photoCrop": {
-        "x": 72.6,
-        "y": 26.3,
-        "zoom": 2
-      },
       "bio": {
         "racket": "e17437ff-db83-48c4-94a0-6b5ff7ab0aeb",
         "racketNote": "3U"
       }
     },
     "73442": {
-      "photo": "https://asset.mediaindonesia.com/news/2024/04/d35a702ecb5908c8182c51e16a607e98.jpg",
-      "hero": "https://cdn.antaranews.com/cache/1200x800/2026/07/23/IMG-20260723-WA0256.jpg",
-      "photoCrop": {
-        "x": 48.7,
-        "y": 0,
-        "zoom": 1.75
-      },
       "bio": {
         "racket": "66590a6a-8a13-48f4-9e57-f5938b4d048b",
         "racketNote": "3U",
@@ -1484,13 +1285,7 @@
       }
     },
     "74980": {
-      "photo": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20251217_1354_WorldTourFinals2025_BPYL6637.jpg?v=1773125590&width=1320",
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1706/v1786354262/wordpress_assets_test/20260515_1912_ThailandOpen2026_BPYL9442/20260515_1912_ThailandOpen2026_BPYL9442.jpg",
-      "photoCrop": {
-        "x": 56.9,
-        "y": 7.5,
-        "zoom": 3.2
-      },
       "bio": {
         "nickname": "Fame",
         "birthplace": "Nakhon Pathom",
@@ -1503,7 +1298,6 @@
       }
     },
     "75049": {
-      "hero": "https://smooth-storage.aptoma.no/users/sndk/images/127188563.jpg?accessToken=e41c95cd4ca3752c043eb830841ad4c0eb645a38aaff6976cec49e08daaf38ec",
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
@@ -1522,11 +1316,6 @@
       }
     },
     "75904": {
-      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/743496928_18445082326188897_1976127550230172047_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=MzkzODE2MDgwMTUxNDY2Njc1Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjg2OS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=6f_p_D4__EQQ7kNvwHFJxdo&_nc_oc=AdrPJ7MhczvU0jk6dbkYr_Kn6asJX655NaEjtvFmPULj8FB-623GtzZzz5CMM86j5OJkCGh1iD4GN1lhVS96943N&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=9y057qZmLHBlcivynN1O0g&_nc_ss=7b689&oh=00_AQOa2KlX0xOvRFJsX1RVtXSYEZcgefKcRgLVwtkkizfYkA&oe=6ADBBE4E",
-      "heroFocus": {
-        "x": 78,
-        "y": 25
-      },
       "bio": {
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f"
       }
@@ -1572,7 +1361,6 @@
       }
     },
     "76295": {
-      "hero": "https://www.smash-net.tv/wp-content/uploads/2026/10/b_20261013_1507_DenmarkOpen2026_BPYN6742.jpg",
       "photoCrop": {
         "x": 59.5,
         "y": 10.7,
@@ -1642,11 +1430,6 @@
       "retired": "2025-03"
     },
     "77848": {
-      "hero": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/775858182_1626759995475450_7877113949617318667_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1366&ctp=s2048x1366&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=svUksB0_gDQQ7kNvwHs-voc&_nc_oc=Adp8wdVoGUAZPu4X4IQs3CZ93oowBqknSWvllHJkoFTY2UW0-UFyvlryFCPxFPJxNNqfxKkni0K7O2rzNrKgbEAB&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=mwjY1xBhgjI5xjfNpCyiCQ&_nc_ss=7b289&oh=00_AQP2lHv9fP-4YSamradjgN7LTVJ8jVQ1bvTGHJ1hdRbvvQ&oe=6AE4F5D7",
-      "heroFocus": {
-        "x": 100,
-        "y": 49
-      },
       "bio": {
         "racket": "ecc8e699-dc5f-454b-8894-ae1136585929"
       }
@@ -1673,13 +1456,6 @@
       }
     },
     "78778": {
-      "photo": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/498596678_1009102404761055_9086464734765975896_n.jpg?stp=dst-jpg_tt6&cstp=mx1365x2048&ctp=p526x296&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=l3kAF1p4pi8Q7kNvwGAqQWz&_nc_oc=Adr3cWOIjpKlYAI_A66PbYb4Cxc0sGbdR_vo_4iRq0yixlS7a3fm85LMwCfXXSMQqQIiaYq2Vi9v8l44iqmd0kI0&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=Z_fJsYoAV_l7cHwGIgYfyg&_nc_ss=7b289&oh=00_AQMCEVU2pSTqMm8c74wfyrRyB8GW4Q0gN7m_XpiF7mv2Ng&oe=6ADFB6DD",
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSC01235.jpg?v=1773910571&width=1320",
-      "photoCrop": {
-        "x": 56.9,
-        "y": 15,
-        "zoom": 1.9
-      },
       "bio": {
         "racket": "275dd589-06a3-4c38-8399-f3184c4dc585",
         "tension": "26/27",
@@ -1734,19 +1510,6 @@
         "club": "BIPROGY",
         "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
-      }
-    },
-    "79658": {
-      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpU68V8pzFwRk1ULtFWg0PIUpXQg1k42s0p06vSjSlK_Y2VGzxNw-enyY&s=10",
-      "hero": "https://cdn-assets.jawapos.com/images/1/2025/03/08/ok-Bulu-copy-272624310.jpg",
-      "heroFocus": {
-        "x": 58,
-        "y": 73
-      },
-      "photoCrop": {
-        "x": 60.4,
-        "y": 6,
-        "zoom": 2.2
       }
     },
     "79664": {
@@ -1819,11 +1582,6 @@
       "retired": "2024-11"
     },
     "81108": {
-      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t39.30808-6/461262102_946136947548840_8710072213623765654_n.jpg?stp=c0.0.2047.1364a_dst-jpg_e35_s2047x1364_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=MzQ2NjIwNjM3NTE2MzAyOTAwNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjA0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=eQ5OElQZDDgQ7kNvwHmuvDs&_nc_oc=Adqz0BQ4AII1tVWzEYBoijE6y5SQvTT2MUIIGVE83bohgqlBxDeIRTo0TwKB85rFxxH0NNB-Pd8hZKKDR1Eb-Rne&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=bkM1rPDd1IlLvhUXtHqQ4w&_nc_ss=7b689&oh=00_AQO1uOABUeCNOSPpaqL5FV3Od89dV7O2FJHyPkuHqDJOEQ&oe=6ADBD18F",
-      "heroFocus": {
-        "x": 44,
-        "y": 5
-      },
       "bio": {
         "birthplace": "Taichung",
         "racket": "620fa032-07ed-4a25-bf39-69f1770aaab4",
@@ -1898,7 +1656,6 @@
       }
     },
     "81844": {
-      "photo": "data/uploads/81844.jpg",
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1616/v1731298369/wordpress_assets_test/Guo-Xin-Wa-Chen-Fang-Hui_KM24/Guo-Xin-Wa-Chen-Fang-Hui_KM24.jpg",
       "heroFocus": {
         "x": 74,
@@ -1970,13 +1727,6 @@
       }
     },
     "83419": {
-      "photo": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/20251018_1424_DenmarkOpen2025_BPLL7068.jpg?v=1773117917&width=1320",
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSB06972.jpg?v=1773117847&width=1320",
-      "photoCrop": {
-        "x": 0,
-        "y": 0,
-        "zoom": 1.45
-      },
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "racketNote": "4U",
@@ -2069,12 +1819,6 @@
       }
     },
     "84786": {
-      "photo": "https://awsimages.detik.net.id/community/media/visual/2025/06/26/2199397750-1750948407916_169.jpeg?w=600&q=90",
-      "hero": "https://rri-portal-app-assets.obs.ap-southeast-4.myhuaweicloud.com/upload/berita/image/english-news/1790576122311674_5ef8e12a3a_berita_english-news.webp",
-      "heroFocus": {
-        "x": 41,
-        "y": 0
-      },
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
@@ -2091,13 +1835,6 @@
       }
     },
     "84838": {
-      "photo": "https://www.badmintonplanet.com/wp-content/uploads/2026/02/2-12-2026-badminton-news-leong-jun-hao-all-england.jpg",
-      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/548327184_18120746218497508_8928773923959889934_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=MzcyMTE0Njc4NTI4NjE2NDM0OQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQzOS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=GUzDgBgxmhEQ7kNvwGBSFb4&_nc_oc=AdrRefLLycSWev0ORB5yHifSNvt-u6gnHDWOwMeekqKiJMtXiNVxVAOCZ7MW5j1v4pmTwJbdGlsp3S8LU_jXf1tZ&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=Nlujab4CzfEbhwWsjHTorQ&_nc_ss=7b689&oh=00_AQNO3D1DKfioaTTaCNvNaLdmrObACFEYDYf2J2bA7p_Aog&oe=6ADF8649",
-      "photoCrop": {
-        "x": 86.7,
-        "y": 4,
-        "zoom": 1.7
-      },
       "bio": {
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d",
         "racketNote": "Kurenai",
@@ -2123,7 +1860,6 @@
       }
     },
     "85302": {
-      "hero": "data/uploads/85302-hero.jpg",
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "shoes": "4427cbc7-3aad-4045-8e3f-3ca22559b24f"
@@ -2152,7 +1888,6 @@
       }
     },
     "85551": {
-      "hero": "https://static.promediateknologi.id/crop/0x0:0x0/1200x0/webp/photo/p3/163/2026/05/05/FotoJet-2026-05-05T154344198-2490810312.jpg",
       "bio": {
         "racket": "96afc7f5-4b0d-4703-bc9c-02aa72758292",
         "racketNote": "4U",
@@ -2162,17 +1897,6 @@
       }
     },
     "85845": {
-      "photo": "https://www.realnewsthailand.net/wp-content/uploads/2026/07/Screenshot-2026-07-14-204941.png",
-      "hero": "https://apicms.thestar.com.my/uploads/images/2026/05/24/3923797.JPG",
-      "heroFocus": {
-        "x": 54,
-        "y": 64
-      },
-      "photoCrop": {
-        "x": 28.2,
-        "y": 0,
-        "zoom": 2.3
-      },
       "bio": {
         "height": 178,
         "plays": "L",
@@ -2242,9 +1966,6 @@
         "club": "BIPROGY"
       }
     },
-    "86532": {
-      "photo": "data/uploads/86532.jpg"
-    },
     "86672": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_2414/v1784291073/wordpress_assets_test/20260717_1416_JapanOpen2026_BPJS9922/20260717_1416_JapanOpen2026_BPJS9922.jpg",
       "bio": {
@@ -2261,7 +1982,6 @@
     },
     "86756": {
       "photo": "https://badmintoneurope.com/o/adaptive-media/image/701264/preview-2000/20260410_EC26_LS_0016_Callum_Hemming_Estelle_Van_Leeuwen.jpg?t=1778137955344",
-      "hero": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/667438688_1425561799615552_1636487130026279206_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x960&ctp=s1440x960&_nc_cat=105&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=127cfc&_nc_ohc=8TyybTdBtFkQ7kNvwGacdi6&_nc_oc=AdrJTbm64O9-8qtTsJ3LazoruPZO4rk48t-fobsoYfDd7pzVPFWgzWYA3uhzBOF3eNp7Pxos3qWhNo0mfAvScEsr&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=mACIQfn1GnmsKklvBwbKdg&_nc_ss=7b289&oh=00_AQS19DYvli32IdEnk05OkK7QezrRhOhrbidn0B9SpXLpJA&oe=6AEA332B",
       "photoCrop": {
         "x": 57,
         "y": 11,
@@ -2347,23 +2067,11 @@
       }
     },
     "88264": {
-      "photo": "https://dicodusport.fr/blog/wp-content/uploads/2026/03/La-paire-Julien-Maio-William-Villeger-echoue-en-finale-de-lOpen-dAllemagne-2-1000x600.png",
-      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/645716773_18060434705673598_3336471096883055396_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ig_cache_key=Mzg0MjY3Mjg0Nzg4MjExMDM1Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=GNrgC-v4rYQQ7kNvwFObCRZ&_nc_oc=Adp4aIJ-5_WOW8rMNnyphWzauG4YURd9teuKHnXcrhGaWvgTy7SYxUuitE9nTbxpxjQhH0GvFngueR8IJgo-XWjq&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=a98eI6KFzbTXlJKGZ415OA&_nc_ss=7b689&oh=00_AQPHlFGE0ruRna3WoyPj0ur2C8nF36BmH7boxtqTUZUZPA&oe=6ADBCBAA",
-      "photoCrop": {
-        "x": 35,
-        "y": 0,
-        "zoom": 1.85
-      },
       "bio": {
         "instagram": "https://www.instagram.com/william.villeger/"
       }
     },
     "88322": {
-      "hero": "https://storage.googleapis.com/origin-awsassets.nst.com.my/images/articles/9FCB377F73FB89E044A670467E20C4C9_low_11.jpg",
-      "heroFocus": {
-        "x": 38,
-        "y": 88
-      },
       "bio": {
         "height": 180,
         "plays": "R",
@@ -2381,11 +2089,6 @@
       }
     },
     "88450": {
-      "hero": "https://instagram.fosl6-1.fna.fbcdn.net/v/t51.82787-15/615563452_18446254384103496_5082007343469559050_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=MzgwOTY5Nzg4MjQwOTM3MTA5MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=2PcR9ngQHsAQ7kNvwHbOYI9&_nc_oc=Adr8LBfNXJvvKEc2xudWRXdNLx3blyby9Xj7uaEN8sflfOwBU4LPx7Lq2XxBcezTyDlIvxC5BosJhOwogDztD3R2&_nc_zt=23&_nc_ht=instagram.fosl6-1.fna&_nc_gid=RmlplnJbDSI0_3jRRMbGcg&_nc_ss=7b689&oh=00_AQOnq4XzAWisk9fS2htNGUSOUVgXHSihlakSauTRBgU0lw&oe=6ADBB7A0",
-      "heroFocus": {
-        "x": 34,
-        "y": 26
-      },
       "photoCrop": {
         "x": 65,
         "y": 27.4,
@@ -2400,11 +2103,6 @@
       }
     },
     "88779": {
-      "hero": "https://akamai-aptoma-production.bmcdn.dk/users/berlingske/images/152527260.webp?t[strip]=true&t[resize][width]=1440&t[quality]=70&accessToken=3a98aa98e61763e4c643ad88c30f6c0edb8b4f6531b1541fd4745d250c0cf882",
-      "heroFocus": {
-        "x": 62,
-        "y": 43
-      },
       "bio": {
         "racket": "69c8cab3-c7b7-40b6-88e4-beb38e7c088b",
         "shoes": "346069c8-1d5c-4f52-8bb7-fb3dbf7f2437"
@@ -2412,7 +2110,6 @@
     },
     "88876": {
       "photo": "https://pbsi.id/wp-content/uploads/2026/07/FajarFikri13_SF_ChinaOpen2026_PBSI_20260725-scaled.jpg",
-      "hero": "https://scontent.fosl6-1.fna.fbcdn.net/v/t39.30808-6/854296165_1438708678424934_521922851256985994_n.jpg?stp=dst-jpg_tt6&cstp=mx1051x1051&ctp=s1051x1051&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=833d8c&_nc_ohc=wXSIU9nRYJwQ7kNvwE5SDs9&_nc_oc=AdqtN8NEdNkP-lngHss2M65Ff54_DPDiAA76oJodhHJMz9nwDAFYjoluDPCyalJBRxn1L-s0JSk2WYoqdSaiAXT0&_nc_zt=23&_nc_ht=scontent.fosl6-1.fna&_nc_gid=TBJo_zLqqBVuWgPGSC1bkA&_nc_ss=7b289&oh=00_AQO87FptB-UeYGzj8m3W2t1wiwXMf-oCHusObLz4As9oBQ&oe=6ADEC1CF",
       "photoCrop": {
         "x": 29.9,
         "y": 4,
@@ -2427,18 +2124,7 @@
       }
     },
     "89068": {
-      "retired": "2025-03",
-      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNbgad2S8pZmsR7OoHvBsikxn6ls_GBUp2jxQxSCijWVFZh86dR88AFcXX&s=10",
-      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSv42RtwJdvtsmXe53eVOtHDSYR1rzEnRCTbksjlA3D9bKEdWr3uZpjOLI&s=10",
-      "heroFocus": {
-        "x": 77,
-        "y": 1
-      },
-      "photoCrop": {
-        "x": 91.3,
-        "y": 17.5,
-        "zoom": 2.8
-      }
+      "retired": "2025-03"
     },
     "89426": {
       "bio": {
@@ -2485,7 +2171,6 @@
       }
     },
     "91090": {
-      "photo": "data/uploads/91090.jpg",
       "hero": "https://www.yonex.co.uk/cdn/shop/files/TSB02083.jpg",
       "heroFocus": {
         "x": 50,
@@ -2556,11 +2241,6 @@
       }
     },
     "91554": {
-      "hero": "https://images.augustman.com/wp-content/uploads/sites/2/2025/08/21201020/snapins-ai_3634515570651543018-1-1.jpeg",
-      "heroFocus": {
-        "x": 56,
-        "y": 93
-      },
       "bio": {
         "racket": "3e5da6f4-ccb1-4644-a0c3-003af71b2573",
         "tension": "31/33",
@@ -2620,11 +2300,6 @@
       }
     },
     "92967": {
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSB07215_50.jpg?v=1759794327&width=1320",
-      "heroFocus": {
-        "x": 59,
-        "y": 16
-      },
       "bio": {
         "racket": "275dd589-06a3-4c38-8399-f3184c4dc585",
         "tension": "28/30",
@@ -2648,11 +2323,6 @@
       }
     },
     "93130": {
-      "hero": "https://campus-cdhk.oss-cn-hongkong.aliyuncs.com/attachments/image/2024/02/17/4986cd11-3a02-4145-be1a-ea2e4d11c419.jpg",
-      "heroFocus": {
-        "x": 67,
-        "y": 51
-      },
       "bio": {
         "height": 191,
         "plays": "R",
@@ -2675,7 +2345,6 @@
       }
     },
     "94032": {
-      "hero": "https://cassette.sphdigital.com.sg/image/straitstimes/1cb69b7c741483b1bf842b77a3552996b7747cab599b8bbf3c1f5877e5881176",
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "racketNote": "4U",
@@ -2690,18 +2359,12 @@
       }
     },
     "94156": {
-      "hero": "https://static.grupojoly.com/clip/caff0d4d-cfce-4e85-8703-359d73b71dea_source-aspect-ratio_1600w_0.jpg",
-      "heroFocus": {
-        "x": 100,
-        "y": 26
-      },
       "bio": {
         "racket": "6e7c51df-e439-4094-b889-65cddec4edca",
         "instagram": "https://www.instagram.com/rubengrcia._/"
       }
     },
     "94165": {
-      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP-IklpIWvejiEw_3VxlDdKyCWrPMyrUMEcXIsDCvYo2rOWx8g7lhDyj0&s=10",
       "bio": {
         "birthplace": "Dubai",
         "coach": "Pullela Gopichand Arun Vishnu Tan Kim Her Manu Attri",
@@ -2729,17 +2392,6 @@
       }
     },
     "94580": {
-      "photo": "https://images.indianexpress.com/2026/08/Lanier.jpg",
-      "hero": "https://www.radiofrance.fr/pikapi/images/6d44f118-dea3-4374-b214-178b70539616/2048",
-      "heroFocus": {
-        "x": 57,
-        "y": 56
-      },
-      "photoCrop": {
-        "x": 52.6,
-        "y": 17.7,
-        "zoom": 1.45
-      },
       "bio": {
         "racket": "f46fd698-718f-4a78-ad2c-a6244df7c794",
         "racketNote": "4U",
@@ -2798,11 +2450,6 @@
       }
     },
     "95766": {
-      "hero": "https://badmintonline.nl/i/media/images/1500/2026_03_19__noah-haase.webp",
-      "heroFocus": {
-        "x": 52,
-        "y": 50
-      },
       "bio": {
         "height": 175,
         "plays": "R",
@@ -2811,7 +2458,6 @@
       }
     },
     "96312": {
-      "hero": "https://www.reuters.com/resizer/v2/52JFKMM75ROE7JIPGKAXGXJ24I.jpg?auth=7189c7785e310c6dcc1532e4abfef825ee55b23d2caa74eab1e30cf6b9985a88&width=1920&quality=80",
       "bio": {
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d",
         "racketNote": "Kurenai, 3U",
@@ -2861,7 +2507,6 @@
       }
     },
     "96877": {
-      "hero": "https://sports.inquirer.net/files/2026/08/AFP__20250826__72G32XW__v1__HighRes__BadmintonWorldFra.jpg",
       "bio": {
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d",
         "racketNote": "Kurenai, 4U",
@@ -2896,17 +2541,6 @@
       }
     },
     "97174": {
-      "photo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnXVOK9MFzxMsjpx2Ph4X_YO1RoLIvKqLcGVXag36yDfvHC1mbib3OQVAr&s=10",
-      "hero": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKo434Xg-M2ntum3igZdlBjjUTcRRTcOqER3H9tlhU2Tt5Ti_HXqpzvNAh&s=10",
-      "heroFocus": {
-        "x": 63,
-        "y": 35
-      },
-      "photoCrop": {
-        "x": 56.9,
-        "y": 14.9,
-        "zoom": 4
-      },
       "bio": {
         "birthplace": "Koshigaya",
         "coach": "Sho Sasaki",
@@ -2946,11 +2580,6 @@
       }
     },
     "99389": {
-      "hero": "https://cdn.shopify.com/s/files/1/0710/8457/2893/files/TSB00559.jpg?v=1756786213&width=1320",
-      "heroFocus": {
-        "x": 60,
-        "y": 11
-      },
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "string": "a2186ed4-9866-4d92-9cf7-218d152584a7",
@@ -2980,11 +2609,6 @@
       }
     },
     "99781": {
-      "hero": "https://thumbs.tvonenews.com/images/2026/01/22/697211e27c1c9-ganda-putra-indonesia-raymond-indranikolaus-joaquin.jpg",
-      "heroFocus": {
-        "x": 83,
-        "y": 0
-      },
       "bio": {
         "height": 172,
         "plays": "R",
