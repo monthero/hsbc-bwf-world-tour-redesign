@@ -136,14 +136,19 @@ export const dataIssues = (catalog: Catalog, overrides: Record<string, PlayerOve
 
 export const resolveEquipment = <T extends Record<string, unknown>>(
   bio: T | undefined,
-  names: ReadonlyMap<string, string>,
+  products: ReadonlyMap<string, Pick<EquipmentRow, 'name' | 'brand'>>,
 ) =>
   bio && {
     ...bio,
     ...Object.fromEntries(
       EquipmentKind.options.flatMap((kind) => {
-        const name = names.get(String(bio[kind]));
-        return name ? [[kind, name]] : [];
+        const product = products.get(String(bio[kind]));
+        return product
+          ? [
+              [kind, product.name],
+              [`${kind}Brand`, product.brand],
+            ]
+          : [];
       }),
     ),
   };

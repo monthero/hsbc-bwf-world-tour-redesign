@@ -204,6 +204,7 @@ export interface FactItem {
   value: string;
   unit?: string;
   sub?: string;
+  brand?: string;
   lang?: 'en';
 }
 

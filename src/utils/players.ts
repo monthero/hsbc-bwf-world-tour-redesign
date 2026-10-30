@@ -10,13 +10,29 @@ import { playerSquareUrl, playerThumbUrl } from './images';
 import { unshout } from './names';
 
 const facts = (
-  list: { key: string; label: string; value: string | undefined; sub?: string; translated?: boolean }[],
+  list: {
+    key: string;
+    label: string;
+    value: string | undefined;
+    sub?: string;
+    brand?: string;
+    translated?: boolean;
+  }[],
   fmt: (s: string) => string,
 ) =>
   list.flatMap((f): FactItem[] => {
     const sub = f.sub?.trim();
     return f.value
-      ? [{ key: f.key, label: f.label, value: fmt(f.value), ...(sub && { sub }), ...(!f.translated && { lang: 'en' }) }]
+      ? [
+          {
+            key: f.key,
+            label: f.label,
+            value: fmt(f.value),
+            ...(sub && { sub }),
+            ...(f.brand && { brand: f.brand }),
+            ...(!f.translated && { lang: 'en' }),
+          },
+        ]
       : [];
   });
 
@@ -147,15 +163,15 @@ export const buildBio = (bio: PlayerBio | undefined, units: BioUnits): BioView =
     ...facts([{ key: 'club', label: LABELS.club, value: b.club }], keep),
   ];
   const equipment = [
-    ...facts([{ key: 'racket', label: LABELS.racket, value: b.racket, sub: b.racketNote }], keep),
-    ...tensionFact(b, units.tension),
     ...facts(
       [
-        { key: 'string', label: LABELS.string, value: b.string },
-        { key: 'shoes', label: LABELS.shoes, value: b.shoes, sub: b.shoesNote },
+        { key: 'racket', label: LABELS.racket, value: b.racket, sub: b.racketNote, brand: b.racketBrand },
+        { key: 'string', label: LABELS.string, value: b.string, brand: b.stringBrand },
       ],
       keep,
     ),
+    ...tensionFact(b, units.tension),
+    ...facts([{ key: 'shoes', label: LABELS.shoes, value: b.shoes, sub: b.shoesNote, brand: b.shoesBrand }], keep),
   ];
   const notes = facts(
     [

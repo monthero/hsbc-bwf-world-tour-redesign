@@ -133,6 +133,11 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
           ))}
         </div>
       )}
+      {bio.equipment.length > 0 && (
+        <div className={classes.section}>
+          <Equipment items={bio.equipment} size="sm" className={utils.inset} />
+        </div>
+      )}
       {ranks.length > 0 && (
         <div className={classes.section}>
           <Eyebrow>
@@ -150,11 +155,6 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
           {bio.details.map((f) => (
             <FactTile key={f.key} id={f.key} label={f.label} value={f.value} lang={f.lang} size="sm" />
           ))}
-        </div>
-      )}
-      {bio.equipment.length > 0 && (
-        <div className={classes.section}>
-          <Equipment items={bio.equipment} size="sm" className={utils.inset} />
         </div>
       )}
       {bio.ambition && (

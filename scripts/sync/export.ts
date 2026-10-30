@@ -243,7 +243,7 @@ export const exportData = async (
   const catalog = readCatalog(path.dirname(overridesFile));
   const issues = dataIssues(catalog, overrides);
   if (issues.length) throw new Error(`Curated data has problems:\n${issues.join('\n')}`);
-  const equipmentNames = new Map(toRows(catalog).map((r) => [r.id, r.name]));
+  const products = new Map(toRows(catalog).map((r) => [r.id, r]));
   const nameOverride = (id: string) => overrides[id]?.name?.trim() || undefined;
   const missingAssets: string[] = [];
   const overrideAssets = new Map(
@@ -278,7 +278,7 @@ export const exportData = async (
   const playerOf = new Map(players.map((p) => [p.id, p]));
   const bioOf = (p: PlayerRow) => {
     const { racket: _bwfRacket, ...bwf } = p.bio ? (JSON.parse(p.bio) as Record<string, unknown>) : {};
-    return normalizeBio({ ...bwf, ...resolveEquipment(overrides[p.id]?.bio, equipmentNames) });
+    return normalizeBio({ ...bwf, ...resolveEquipment(overrides[p.id]?.bio, products) });
   };
   const nameOf = (id: number | string | null | undefined, fallback: string | null = '') => {
     const key = id ? String(id) : '';

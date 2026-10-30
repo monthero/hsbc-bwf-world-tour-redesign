@@ -1,9 +1,10 @@
 import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
+import { VisuallyHidden } from '@mantine/core';
 import { clsx } from 'clsx';
 import { memo, type FC } from 'react';
 
-import { Footnote, IconRacket, IconShoe, IconStrings, IconTension, type IconProps } from '~/components/ui';
+import { Footnote, IconRacket, IconShoe, IconStrings, IconTension, Tip, type IconProps } from '~/components/ui';
 import type { FactItem } from '~/types';
 
 import classes from './Equipment.module.css';
@@ -26,14 +27,18 @@ const ICON_SIZE = { sm: 14, md: 22 } as const;
 
 type EquipmentSize = keyof typeof ICON_SIZE;
 
-const splitBrand = (value: string) => {
-  const space = value.indexOf(' ');
-  return space > 0 ? { brand: value.slice(0, space), model: value.slice(space + 1) } : { brand: '', model: value };
-};
+const splitBrand = ({ value, brand }: FactItem) =>
+  brand && value.startsWith(`${brand} `)
+    ? { brand, model: value.slice(brand.length + 1) }
+    : { brand: '', model: value };
+
+const stringTension = (items: readonly FactItem[]) =>
+  items.some((q) => q.key === 'string') ? items.find((q) => q.key === 'tension') : undefined;
 
 export const Equipment = memo<{ items: readonly FactItem[]; size?: EquipmentSize; className?: string }>(
   ({ items, size = 'md', className }) => {
     const { t, i18n } = useLingui();
+    const tension = size === 'sm' ? stringTension(items) : undefined;
     return (
       <div className={classes.frame} data-size={size}>
         <section
@@ -44,9 +49,12 @@ export const Equipment = memo<{ items: readonly FactItem[]; size?: EquipmentSize
             <Trans comment="Player’s badminton gear: racket, string, tension, shoes">Equipment</Trans>
           </Footnote>
           <div className={clsx(utils.noScrollbar, classes.items)}>
-            {items.map((q) => (
-              <EquipmentItem key={q.key} item={q} size={size} />
-            ))}
+            {items.map(
+              (q) =>
+                q !== tension && (
+                  <EquipmentItem key={q.key} item={q} size={size} tension={q.key === 'string' ? tension : undefined} />
+                ),
+            )}
           </div>
         </section>
       </div>
@@ -54,24 +62,35 @@ export const Equipment = memo<{ items: readonly FactItem[]; size?: EquipmentSize
   },
 );
 
-const EquipmentItem = memo<{ item: FactItem; size: EquipmentSize }>(({ item, size }) => {
+const EquipmentItem = memo<{ item: FactItem; size: EquipmentSize; tension?: FactItem }>(({ item, size, tension }) => {
   const Icon = ICONS[item.key];
-  const { brand, model } = item.unit ? { brand: '', model: item.value } : splitBrand(item.value);
+  const { brand, model } = splitBrand(item);
+  const compact = size === 'sm';
+  const icon = Icon && (
+    <span className={classes.icon}>
+      <Icon size={ICON_SIZE[size]} />
+    </span>
+  );
   return (
     <div className={classes.item}>
-      {Icon && (
-        <span className={classes.icon}>
-          <Icon size={ICON_SIZE[size]} />
-        </span>
-      )}
+      {icon && compact ? <Tip label={item.label}>{icon}</Tip> : icon}
       <span className={classes.text}>
-        <span className={classes.label}>{item.label}</span>
+        {compact ? <VisuallyHidden>{item.label}</VisuallyHidden> : <span className={classes.label}>{item.label}</span>}
         <span className={classes.value} lang={item.lang}>
           {brand && <span className={classes.brand}>{brand}</span>}
           {model}
           {item.unit && <span className={classes.unit}>{item.unit}</span>}
+          {compact && item.sub && <span className={classes.extra}>{item.sub}</span>}
+          {tension && (
+            <span className={classes.extra}>
+              <VisuallyHidden>{tension.label}</VisuallyHidden>
+              {tension.value}
+              {tension.unit && <span className={classes.unit}>{tension.unit}</span>}
+              {tension.sub && ` · ${tension.sub}`}
+            </span>
+          )}
         </span>
-        {item.sub && (
+        {!compact && item.sub && (
           <span className={classes.sub} lang={item.lang}>
             {item.sub}
           </span>
