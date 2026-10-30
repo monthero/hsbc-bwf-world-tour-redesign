@@ -5,7 +5,6 @@ import { clsx } from 'clsx';
 import { memo, useCallback, useLayoutEffect, useMemo, useRef, type FC, type KeyboardEvent } from 'react';
 
 import { IconBack, IconButton, IconNext, LiveDot, type IconProps } from '~/components/ui';
-import { useIsMobile } from '~/hooks/useIsMobile';
 import { useScrollEdges } from '~/hooks/useScrollEdges';
 import type { TournamentDay } from '~/types';
 import { centerChild, inlineSign, scrollBehavior } from '~/utils/scroll';
@@ -81,9 +80,8 @@ const Arrow = memo<{
 const DayButton = memo<{
   d: TournamentDay;
   selected: boolean;
-  short: boolean;
   onChange: (day: number) => void;
-}>(({ d, selected, short, onChange }) => {
+}>(({ d, selected, onChange }) => {
   return (
     <button
       type="button"
@@ -95,10 +93,10 @@ const DayButton = memo<{
       tabIndex={selected ? 0 : -1}
       onClick={() => onChange(d.index)}
     >
-      <span className={classes.weekday}>{short ? d.weekday : d.weekdayLong}</span>
+      <span className={classes.weekday}>{d.weekdayLong}</span>
       <span className={classes.date}>
         <span className={classes.num}>{d.dayNum}</span>
-        <span className={classes.month}>{short ? d.month : d.monthLong}</span>
+        <span className={classes.month}>{d.monthLong}</span>
       </span>
       {d.isLive && <LiveDot pulse size={5} className={classes.today} />}
     </button>
@@ -111,7 +109,6 @@ export const DayPicker = memo<{
   onChange: (day: number) => void;
 }>(({ days, day, onChange }) => {
   const { t } = useLingui();
-  const short = useIsMobile();
   const ref = useRef<HTMLDivElement>(null);
   const shown = useRef(-1);
   const edges = useScrollEdges(ref);
@@ -159,7 +156,7 @@ export const DayPicker = memo<{
           s.rest ? (
             <RestBreak key={s.key} label={s.rest} active={s.live} className={classes.rest} />
           ) : (
-            <DayButton key={s.key} d={s.day} selected={s.day.index === day} short={short} onChange={onChange} />
+            <DayButton key={s.key} d={s.day} selected={s.day.index === day} onChange={onChange} />
           ),
         )}
       </div>

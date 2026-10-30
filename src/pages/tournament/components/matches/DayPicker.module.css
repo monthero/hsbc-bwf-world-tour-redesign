@@ -61,7 +61,7 @@
   gap: 3px;
   min-width: max-content;
   padding: 10px 12px;
-  border-radius: 5px;
+  border-radius: 12px;
   border: 1px solid var(--bwf-border);
   background: var(--bwf-surface);
   color: var(--bwf-text);
@@ -88,18 +88,16 @@
   }
 
   &[data-selected] {
-    background: var(--bwf-text);
-    border-color: var(--bwf-text);
-    color: var(--bwf-bg);
+    background: var(--bwf-live-surface), var(--bwf-surface);
+    border-color: var(--bwf-red-text);
+    color: var(--bwf-text);
+
+    .num {
+      color: var(--bwf-red-pale);
+    }
 
     @mixin light {
       background: var(--bwf-live-surface);
-      border-color: var(--bwf-red-text);
-      color: var(--bwf-text);
-
-      .num {
-        color: var(--bwf-red-pale);
-      }
     }
   }
 }
@@ -134,8 +132,8 @@
 
 .today {
   position: absolute;
-  top: 6px;
-  inset-inline-end: 7px;
+  top: 8px;
+  inset-inline-end: 9px;
 }
 
 .root .arrow {
