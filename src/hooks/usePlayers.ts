@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
-import { playerQuery, playersQuery, raceRankingsQuery, rankingHistoryQuery } from '~/api/queries';
+import { imageCreditsQuery, playerQuery, playersQuery, raceRankingsQuery, rankingHistoryQuery } from '~/api/queries';
 import type { DirectoryRecord, Player, PlayerDirectory, PlayerRecord, PlayersData, Retirement } from '~/types';
 import { weakCached } from '~/utils/cache';
 import { toPlayer } from '~/utils/names';
@@ -44,6 +44,8 @@ export const usePlayerSearchIndex = (enabled: boolean) =>
   useQuery({ ...playersQuery(), select: selectSearchIndex, enabled });
 
 export const useRaceRankings = () => useQuery(raceRankingsQuery());
+
+export const useImageCredits = () => useQuery(imageCreditsQuery());
 
 export const usePlayerFile = (id: string | undefined) => useQuery({ ...playerQuery(id ?? ''), enabled: !!id });
 

@@ -18,6 +18,7 @@ import {
   type ApiRankingTable,
   type ApiWeeklyRow,
 } from './bwf.ts';
+import { readCredits, wikimediaImages } from './credits.ts';
 import { dayjs } from './dates.ts';
 import { all, unzipJson, type Db } from './db.ts';
 import { dataIssues, readCatalog, resolveEquipment, toRows } from './equipment.ts';
@@ -704,6 +705,17 @@ export const exportData = async (
         },
       ]),
     ),
+  });
+
+  const credits = readCredits(path.dirname(overridesFile));
+  write('image-credits.json', {
+    credits: wikimediaImages(overrides)
+      .flatMap(({ id, kind, source }) => {
+        const credit = credits[source];
+        const p = playerOf.get(id);
+        return credit && p ? [{ id, name: p.name, cc: p.cc, kind, image: imageAssetPath(id, kind), ...credit }] : [];
+      })
+      .sort((a, b) => a.name.localeCompare(b.name, 'en')),
   });
 
   for (const p of players) {

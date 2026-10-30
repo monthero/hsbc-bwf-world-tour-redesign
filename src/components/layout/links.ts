@@ -12,6 +12,7 @@ import {
   IconYouTube,
   type IconProps,
 } from '~/components/ui';
+import { CREDITS_PAGE_META } from '~/utils/meta';
 
 export type Label = string | MessageDescriptor;
 
@@ -22,9 +23,11 @@ export interface ExternalItem {
   href: string;
 }
 
+export type NavPath = '/' | '/about' | '/calendar' | '/rankings' | '/news';
+
 export interface InternalItem {
   label: MessageDescriptor;
-  to: '/' | '/about' | '/calendar' | '/rankings' | '/news';
+  to: NavPath | '/credits';
   sections: readonly string[];
 }
 
@@ -144,7 +147,7 @@ export const BWF_WEBSITES = msg({
 export const FOOTER_GROUPS: readonly { label: MessageDescriptor; items: readonly SiteItem[] }[] = [
   {
     label: msg({ message: 'Explore', comment: 'Footer heading above links to this site’s pages' }),
-    items: [...SITE_NAV, NEWSLETTER],
+    items: [...SITE_NAV, NEWSLETTER, { label: CREDITS_PAGE_META.title, to: '/credits', sections: ['/credits'] }],
   },
   {
     label: BWF_WEBSITES,

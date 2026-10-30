@@ -545,6 +545,11 @@ msgstr "<0>진행 중: </0>{targetName}"
 msgid "<0>Photo: </0>{credit}"
 msgstr "<0>사진: </0>{credit}"
 
+#. Small print on the last row of the site footer, beside the GitHub source link
+#: src/components/layout/SiteFooter.tsx
+msgid "<0>Unofficial and non-commercial.</0> Built by a badminton fan, for badminton fans."
+msgstr "<0>비공식, 비상업적 사이트입니다.</0> 배드민턴 팬이 배드민턴 팬을 위해 만들었습니다."
+
 #: src/components/layout/SiteSettings.tsx
 msgid "12-hour clock"
 msgstr "12시간제"
@@ -586,6 +591,7 @@ msgid "About the Tour"
 msgstr "투어 소개"
 
 #: src/components/layout/SiteFooter.tsx
+#: src/pages/credits/CreditsPage.tsx
 msgid "About this site"
 msgstr "사이트 소개"
 
@@ -684,8 +690,8 @@ msgid "Americas"
 msgstr "아메리카"
 
 #: src/components/layout/SiteFooter.tsx
-msgid "An unofficial redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
-msgstr "BWF 웹사이트의 HSBC BWF World Tour 섹션을 위한 비공식 리디자인 콘셉트입니다. 세계배드민턴연맹(BWF) 및 HSBC와 제휴하거나 그 승인을 받거나 그들이 운영하는 사이트가 아닙니다. 데이터는 불완전하거나 늦거나 부정확할 수 있습니다."
+msgid "An <0>unofficial</0> redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
+msgstr "BWF 웹사이트의 HSBC BWF World Tour 섹션을 위한 <0>비공식</0> 리디자인 콘셉트입니다. 세계배드민턴연맹(BWF) 및 HSBC와 제휴하거나 그 승인을 받거나 그들이 운영하는 사이트가 아닙니다. 데이터는 불완전하거나 늦거나 부정확할 수 있습니다."
 
 #. Settings label above the button that installs the site as an app on the device
 #: src/components/layout/SiteSettings.tsx
@@ -755,6 +761,11 @@ msgstr "{year} 일정으로 돌아가기"
 #: src/components/layout/NotFound.tsx
 msgid "Back to the calendar"
 msgstr "일정으로 돌아가기"
+
+#. Credits table: this credit is for the wide photo at the top of the player’s profile
+#: src/pages/credits/CreditsPage.tsx
+msgid "Banner photo"
+msgstr "배너 사진"
 
 #. Best world ranking reached; rank is e.g. #3
 #: src/pages/player/components/RankingsTab.tsx
@@ -1024,11 +1035,6 @@ msgstr "종료"
 msgctxt "filter"
 msgid "Completed"
 msgstr "종료"
-
-#. Small tag beside the site logo: this site is an unofficial redesign concept
-#: src/components/layout/Wordmark.tsx
-msgid "Concept"
-msgstr "콘셉트"
 
 #: src/components/layout/links.ts
 msgid "Contact BWF"
@@ -1644,6 +1650,11 @@ msgstr "HSBC, 월드투어 타이틀 파트너 (새 탭에서 열림)"
 msgid "I understand"
 msgstr "확인"
 
+#. Credits table column: thumbnail of the credited photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Image"
+msgstr "이미지"
+
 #. When a player’s next match is: later today, more than an hour away
 #: src/utils/match-time.ts
 msgid "In a few hours"
@@ -1826,6 +1837,11 @@ msgstr "왼손"
 #: src/pages/about/components/SeasonLegend.tsx
 msgid "Levels"
 msgstr "등급"
+
+#. Credits table column: the license the photo is shared under, e.g. CC BY 4.0
+#: src/pages/credits/CreditsPage.tsx
+msgid "License"
+msgstr "라이선스"
 
 #. Settings option: light colour theme
 #: src/components/layout/SiteSettings.tsx
@@ -2525,7 +2541,19 @@ msgstr "파트너"
 msgid "Past winners"
 msgstr "역대 우승자"
 
+#. Credits table column: the person or organization who took the photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Photo by"
+msgstr "촬영"
+
+#. Page title and footer link: who took the photos used on this site
+#: src/utils/meta.ts
+msgid "Photo credits"
+msgstr "사진 출처"
+
 #. Rankings table column: the player
+#. Rankings table column: the player
+#: src/pages/credits/CreditsPage.tsx
 #: src/pages/rankings/components/RankingList.tsx
 msgid "Player"
 msgstr "선수"
@@ -2533,6 +2561,11 @@ msgstr "선수"
 #: src/components/layout/SiteSettings.tsx
 msgid "Player heights"
 msgstr "선수 키"
+
+#. Short intro on the photo credits page, also used as its page description
+#: src/utils/meta.ts
+msgid "Player photos from Wikimedia Commons, used under their free licenses. Some are cropped to fit."
+msgstr "선수 사진은 Wikimedia Commons에서 가져와 각 자유 라이선스에 따라 사용합니다. 일부는 크기에 맞게 잘랐습니다."
 
 #: src/pages/player/components/SubNav.tsx
 msgid "Player sections"
@@ -2661,6 +2694,11 @@ msgstr "프로필"
 #: src/components/player/RankedNames.tsx
 msgid "Profile on bwfbadminton.com"
 msgstr "bwfbadminton.com 프로필"
+
+#. Credits table: this credit is for the player’s round profile photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Profile photo"
+msgstr "프로필 사진"
 
 #. Tag next to a future season’s year in the calendar header: the schedule is not final yet and may change
 #: src/pages/calendar/components/Hero.tsx
@@ -3314,6 +3352,11 @@ msgstr "곧"
 msgid "Sort matches"
 msgstr "경기 정렬"
 
+#. Credits table column: link to the original photo on Wikimedia Commons
+#: src/pages/credits/CreditsPage.tsx
+msgid "Source"
+msgstr "출처"
+
 #. Top bar menu group: BWF programmes for grassroots badminton
 #: src/components/layout/links.ts
 msgid "Sport For All"
@@ -3706,10 +3749,10 @@ msgstr "선수 팔로우 취소"
 msgid "Unfollow this pair"
 msgstr "이 조 팔로우 취소"
 
-#. Small print on the last row of the site footer, beside the GitHub source link
-#: src/components/layout/SiteFooter.tsx
-msgid "Unofficial and non-commercial. Built by a badminton fan, for badminton fans."
-msgstr "비공식, 비상업적 사이트입니다. 배드민턴 팬이 배드민턴 팬을 위해 만들었습니다."
+#. Small tag beside the site logo, shown in capitals: this site is not an official BWF website. Keep it as short as possible
+#: src/components/layout/Wordmark.tsx
+msgid "Unofficial"
+msgstr "비공식"
 
 #. End of a ranking spell; month is e.g. Mar 2019
 #: src/pages/player/components/RankingsTab.tsx

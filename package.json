@@ -24,6 +24,7 @@
     "i18n:extract": "lingui extract --clean",
     "i18n:check": "node --disable-warning=ExperimentalWarning scripts/i18n-check.ts",
     "i18n:ids": "node --disable-warning=ExperimentalWarning scripts/i18n-ids-check.ts",
+    "credits": "node --disable-warning=ExperimentalWarning scripts/image-credits.ts",
     "data:check": "node --disable-warning=ExperimentalWarning scripts/data-check.ts",
     "prepare": "vp config"
   },

@@ -545,6 +545,11 @@ msgstr "<0>अभी लाइव: </0>{targetName}"
 msgid "<0>Photo: </0>{credit}"
 msgstr "<0>फ़ोटो: </0>{credit}"
 
+#. Small print on the last row of the site footer, beside the GitHub source link
+#: src/components/layout/SiteFooter.tsx
+msgid "<0>Unofficial and non-commercial.</0> Built by a badminton fan, for badminton fans."
+msgstr "<0>अनौपचारिक और गैर-व्यावसायिक।</0> एक बैडमिंटन प्रशंसक की ओर से, बैडमिंटन प्रशंसकों के लिए।"
+
 #: src/components/layout/SiteSettings.tsx
 msgid "12-hour clock"
 msgstr "12-घंटे की घड़ी"
@@ -586,6 +591,7 @@ msgid "About the Tour"
 msgstr "टूर के बारे में"
 
 #: src/components/layout/SiteFooter.tsx
+#: src/pages/credits/CreditsPage.tsx
 msgid "About this site"
 msgstr "इस साइट के बारे में"
 
@@ -684,8 +690,8 @@ msgid "Americas"
 msgstr "अमेरिका महाद्वीप"
 
 #: src/components/layout/SiteFooter.tsx
-msgid "An unofficial redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
-msgstr "BWF वेबसाइट के HSBC BWF World Tour सेक्शन का एक अनौपचारिक रीडिज़ाइन कॉन्सेप्ट। यह बैडमिंटन वर्ल्ड फ़ेडरेशन (BWF) या HSBC से संबद्ध नहीं है, न ही उनके द्वारा समर्थित या संचालित है। डेटा अधूरा, देर से अपडेट या गलत हो सकता है।"
+msgid "An <0>unofficial</0> redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
+msgstr "BWF वेबसाइट के HSBC BWF World Tour सेक्शन का एक <0>अनौपचारिक</0> रीडिज़ाइन कॉन्सेप्ट। यह बैडमिंटन वर्ल्ड फ़ेडरेशन (BWF) या HSBC से संबद्ध नहीं है, न ही उनके द्वारा समर्थित या संचालित है। डेटा अधूरा, देर से अपडेट या गलत हो सकता है।"
 
 #. Settings label above the button that installs the site as an app on the device
 #: src/components/layout/SiteSettings.tsx
@@ -755,6 +761,11 @@ msgstr "{year} के कैलेंडर पर वापस"
 #: src/components/layout/NotFound.tsx
 msgid "Back to the calendar"
 msgstr "कैलेंडर पर वापस"
+
+#. Credits table: this credit is for the wide photo at the top of the player’s profile
+#: src/pages/credits/CreditsPage.tsx
+msgid "Banner photo"
+msgstr "बैनर फ़ोटो"
 
 #. Best world ranking reached; rank is e.g. #3
 #: src/pages/player/components/RankingsTab.tsx
@@ -1024,11 +1035,6 @@ msgstr "समाप्त"
 msgctxt "filter"
 msgid "Completed"
 msgstr "समाप्त"
-
-#. Small tag beside the site logo: this site is an unofficial redesign concept
-#: src/components/layout/Wordmark.tsx
-msgid "Concept"
-msgstr "कॉन्सेप्ट"
 
 #: src/components/layout/links.ts
 msgid "Contact BWF"
@@ -1644,6 +1650,11 @@ msgstr "HSBC, World Tour का टाइटल पार्टनर (नए �
 msgid "I understand"
 msgstr "ठीक है, समझ लिया"
 
+#. Credits table column: thumbnail of the credited photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Image"
+msgstr "तस्वीर"
+
 #. When a player’s next match is: later today, more than an hour away
 #: src/utils/match-time.ts
 msgid "In a few hours"
@@ -1826,6 +1837,11 @@ msgstr "बाएँ हाथ"
 #: src/pages/about/components/SeasonLegend.tsx
 msgid "Levels"
 msgstr "स्तर"
+
+#. Credits table column: the license the photo is shared under, e.g. CC BY 4.0
+#: src/pages/credits/CreditsPage.tsx
+msgid "License"
+msgstr "लाइसेंस"
 
 #. Settings option: light colour theme
 #: src/components/layout/SiteSettings.tsx
@@ -2525,7 +2541,19 @@ msgstr "जोड़ीदार"
 msgid "Past winners"
 msgstr "पिछले विजेता"
 
+#. Credits table column: the person or organization who took the photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Photo by"
+msgstr "फ़ोटो"
+
+#. Page title and footer link: who took the photos used on this site
+#: src/utils/meta.ts
+msgid "Photo credits"
+msgstr "फ़ोटो श्रेय"
+
 #. Rankings table column: the player
+#. Rankings table column: the player
+#: src/pages/credits/CreditsPage.tsx
 #: src/pages/rankings/components/RankingList.tsx
 msgid "Player"
 msgstr "खिलाड़ी"
@@ -2533,6 +2561,11 @@ msgstr "खिलाड़ी"
 #: src/components/layout/SiteSettings.tsx
 msgid "Player heights"
 msgstr "खिलाड़ियों की लंबाई"
+
+#. Short intro on the photo credits page, also used as its page description
+#: src/utils/meta.ts
+msgid "Player photos from Wikimedia Commons, used under their free licenses. Some are cropped to fit."
+msgstr "Wikimedia Commons से ली गई खिलाड़ियों की तस्वीरें, उनके मुक्त लाइसेंस के तहत उपयोग की गई हैं। कुछ को फ़िट करने के लिए क्रॉप किया गया है।"
 
 #: src/pages/player/components/SubNav.tsx
 msgid "Player sections"
@@ -2661,6 +2694,11 @@ msgstr "प्रोफ़ाइल"
 #: src/components/player/RankedNames.tsx
 msgid "Profile on bwfbadminton.com"
 msgstr "bwfbadminton.com पर प्रोफ़ाइल"
+
+#. Credits table: this credit is for the player’s round profile photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Profile photo"
+msgstr "प्रोफ़ाइल फ़ोटो"
 
 #. Tag next to a future season’s year in the calendar header: the schedule is not final yet and may change
 #: src/pages/calendar/components/Hero.tsx
@@ -3314,6 +3352,11 @@ msgstr "जल्द"
 msgid "Sort matches"
 msgstr "मैच क्रमबद्ध करें"
 
+#. Credits table column: link to the original photo on Wikimedia Commons
+#: src/pages/credits/CreditsPage.tsx
+msgid "Source"
+msgstr "स्रोत"
+
 #. Top bar menu group: BWF programmes for grassroots badminton
 #: src/components/layout/links.ts
 msgid "Sport For All"
@@ -3706,10 +3749,10 @@ msgstr "खिलाड़ी को अनफ़ॉलो करें"
 msgid "Unfollow this pair"
 msgstr "इस जोड़ी को अनफ़ॉलो करें"
 
-#. Small print on the last row of the site footer, beside the GitHub source link
-#: src/components/layout/SiteFooter.tsx
-msgid "Unofficial and non-commercial. Built by a badminton fan, for badminton fans."
-msgstr "अनौपचारिक और गैर-व्यावसायिक। एक बैडमिंटन प्रशंसक की ओर से, बैडमिंटन प्रशंसकों के लिए।"
+#. Small tag beside the site logo, shown in capitals: this site is not an official BWF website. Keep it as short as possible
+#: src/components/layout/Wordmark.tsx
+msgid "Unofficial"
+msgstr "अनौपचारिक"
 
 #. End of a ranking spell; month is e.g. Mar 2019
 #: src/pages/player/components/RankingsTab.tsx

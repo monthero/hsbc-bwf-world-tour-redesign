@@ -545,6 +545,11 @@ msgstr "<0>En vivo: </0>{targetName}"
 msgid "<0>Photo: </0>{credit}"
 msgstr "<0>Foto: </0>{credit}"
 
+#. Small print on the last row of the site footer, beside the GitHub source link
+#: src/components/layout/SiteFooter.tsx
+msgid "<0>Unofficial and non-commercial.</0> Built by a badminton fan, for badminton fans."
+msgstr "<0>No oficial y sin fines comerciales.</0> Hecho por un aficionado al bádminton, para aficionados al bádminton."
+
 #: src/components/layout/SiteSettings.tsx
 msgid "12-hour clock"
 msgstr "Formato de 12 horas"
@@ -586,6 +591,7 @@ msgid "About the Tour"
 msgstr "Sobre el Tour"
 
 #: src/components/layout/SiteFooter.tsx
+#: src/pages/credits/CreditsPage.tsx
 msgid "About this site"
 msgstr "Acerca de este sitio"
 
@@ -684,8 +690,8 @@ msgid "Americas"
 msgstr "América"
 
 #: src/components/layout/SiteFooter.tsx
-msgid "An unofficial redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
-msgstr "Un concepto no oficial de rediseño de la sección HSBC BWF World Tour del sitio web de la BWF. Sin afiliación, respaldo ni gestión de la Badminton World Federation (BWF) ni de HSBC. Los datos pueden estar incompletos, retrasados o ser inexactos."
+msgid "An <0>unofficial</0> redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
+msgstr "Un concepto <0>no oficial</0> de rediseño de la sección HSBC BWF World Tour del sitio web de la BWF. Sin afiliación, respaldo ni gestión de la Badminton World Federation (BWF) ni de HSBC. Los datos pueden estar incompletos, retrasados o ser inexactos."
 
 #. Settings label above the button that installs the site as an app on the device
 #: src/components/layout/SiteSettings.tsx
@@ -755,6 +761,11 @@ msgstr "Volver al calendario {year}"
 #: src/components/layout/NotFound.tsx
 msgid "Back to the calendar"
 msgstr "Volver al calendario"
+
+#. Credits table: this credit is for the wide photo at the top of the player’s profile
+#: src/pages/credits/CreditsPage.tsx
+msgid "Banner photo"
+msgstr "Foto de portada"
 
 #. Best world ranking reached; rank is e.g. #3
 #: src/pages/player/components/RankingsTab.tsx
@@ -1024,11 +1035,6 @@ msgstr "Finalizado"
 msgctxt "filter"
 msgid "Completed"
 msgstr "Finalizados"
-
-#. Small tag beside the site logo: this site is an unofficial redesign concept
-#: src/components/layout/Wordmark.tsx
-msgid "Concept"
-msgstr "Concepto"
 
 #: src/components/layout/links.ts
 msgid "Contact BWF"
@@ -1644,6 +1650,11 @@ msgstr "HSBC, patrocinador principal del World Tour (se abre en una pestaña nue
 msgid "I understand"
 msgstr "Entendido"
 
+#. Credits table column: thumbnail of the credited photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Image"
+msgstr "Imagen"
+
 #. When a player’s next match is: later today, more than an hour away
 #: src/utils/match-time.ts
 msgid "In a few hours"
@@ -1826,6 +1837,11 @@ msgstr "Izquierda"
 #: src/pages/about/components/SeasonLegend.tsx
 msgid "Levels"
 msgstr "Categorías"
+
+#. Credits table column: the license the photo is shared under, e.g. CC BY 4.0
+#: src/pages/credits/CreditsPage.tsx
+msgid "License"
+msgstr "Licencia"
 
 #. Settings option: light colour theme
 #: src/components/layout/SiteSettings.tsx
@@ -2525,7 +2541,19 @@ msgstr "Compañeros"
 msgid "Past winners"
 msgstr "Campeones anteriores"
 
+#. Credits table column: the person or organization who took the photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Photo by"
+msgstr "Foto de"
+
+#. Page title and footer link: who took the photos used on this site
+#: src/utils/meta.ts
+msgid "Photo credits"
+msgstr "Créditos de las fotos"
+
 #. Rankings table column: the player
+#. Rankings table column: the player
+#: src/pages/credits/CreditsPage.tsx
 #: src/pages/rankings/components/RankingList.tsx
 msgid "Player"
 msgstr "Jugador"
@@ -2533,6 +2561,11 @@ msgstr "Jugador"
 #: src/components/layout/SiteSettings.tsx
 msgid "Player heights"
 msgstr "Estatura de los jugadores"
+
+#. Short intro on the photo credits page, also used as its page description
+#: src/utils/meta.ts
+msgid "Player photos from Wikimedia Commons, used under their free licenses. Some are cropped to fit."
+msgstr "Fotos de jugadores de Wikimedia Commons, usadas bajo sus licencias libres. Algunas están recortadas para encajar."
 
 #: src/pages/player/components/SubNav.tsx
 msgid "Player sections"
@@ -2661,6 +2694,11 @@ msgstr "Perfil"
 #: src/components/player/RankedNames.tsx
 msgid "Profile on bwfbadminton.com"
 msgstr "Perfil en bwfbadminton.com"
+
+#. Credits table: this credit is for the player’s round profile photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Profile photo"
+msgstr "Foto de perfil"
 
 #. Tag next to a future season’s year in the calendar header: the schedule is not final yet and may change
 #: src/pages/calendar/components/Hero.tsx
@@ -3314,6 +3352,11 @@ msgstr "Pronto"
 msgid "Sort matches"
 msgstr "Ordenar partidos"
 
+#. Credits table column: link to the original photo on Wikimedia Commons
+#: src/pages/credits/CreditsPage.tsx
+msgid "Source"
+msgstr "Fuente"
+
 #. Top bar menu group: BWF programmes for grassroots badminton
 #: src/components/layout/links.ts
 msgid "Sport For All"
@@ -3706,10 +3749,10 @@ msgstr "Dejar de seguir al jugador"
 msgid "Unfollow this pair"
 msgstr "Dejar de seguir a esta pareja"
 
-#. Small print on the last row of the site footer, beside the GitHub source link
-#: src/components/layout/SiteFooter.tsx
-msgid "Unofficial and non-commercial. Built by a badminton fan, for badminton fans."
-msgstr "No oficial y sin fines comerciales. Hecho por un aficionado al bádminton, para aficionados al bádminton."
+#. Small tag beside the site logo, shown in capitals: this site is not an official BWF website. Keep it as short as possible
+#: src/components/layout/Wordmark.tsx
+msgid "Unofficial"
+msgstr "No oficial"
 
 #. End of a ranking spell; month is e.g. Mar 2019
 #: src/pages/player/components/RankingsTab.tsx

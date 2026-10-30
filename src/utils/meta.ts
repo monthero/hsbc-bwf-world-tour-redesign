@@ -60,6 +60,17 @@ export const ERROR_META: DocumentMeta = {
   description: ERROR_DESCRIPTION,
 };
 
+export const CREDITS_PAGE_META = {
+  title: msg({
+    message: 'Photo credits',
+    comment: 'Page title and footer link: who took the photos used on this site',
+  }),
+  description: msg({
+    message: 'Player photos from Wikimedia Commons, used under their free licenses. Some are cropped to fit.',
+    comment: 'Short intro on the photo credits page, also used as its page description',
+  }),
+};
+
 export const ABOUT_PAGE_META: DocumentMeta = {
   title: msg({ message: 'About', comment: 'Browser tab title for the page explaining how the World Tour works' }),
   description: msg({

@@ -28,9 +28,9 @@ export const SiteFooter = memo(() => {
           <Wordmark />
           <p className={classes.note}>
             <Trans>
-              An unofficial redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated
-              with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete,
-              delayed or inaccurate.
+              An <strong className={classes.unofficial}>unofficial</strong> redesign concept for the HSBC BWF World Tour
+              section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation
+              (BWF) or HSBC. Data may be incomplete, delayed or inaccurate.
             </Trans>
           </p>
           <ExternalButton item={OFFICIAL_SITE} />
@@ -96,7 +96,8 @@ export const SiteFooter = memo(() => {
         <div className={clsx(utils.container, classes.fanInner)}>
           <p className={classes.fanNote}>
             <Trans comment="Small print on the last row of the site footer, beside the GitHub source link">
-              Unofficial and non-commercial. Built by a badminton fan, for badminton fans.
+              <strong className={classes.unofficial}>Unofficial and non-commercial.</strong> Built by a badminton fan,
+              for badminton fans.
             </Trans>
           </p>
           <a href={SOURCE_URL} target="_blank" rel="noopener noreferrer" className={clsx(classes.link, classes.source)}>

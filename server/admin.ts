@@ -5,6 +5,7 @@ import path from 'node:path';
 import type { Connect, Plugin } from 'vite';
 
 import { WORLD, WORLD_CATEGORIES } from '../scripts/sync/bwf.ts';
+import { creditIssues, readCredits, refreshCredits } from '../scripts/sync/credits.ts';
 import { withDb } from '../scripts/sync/db.ts';
 import { equipmentIssues, itemsById, readCatalog } from '../scripts/sync/equipment.ts';
 import { prettyJson } from '../scripts/sync/util.ts';
@@ -187,6 +188,13 @@ const createAdmin = (root: string) => {
     if (issues.length) throw new HttpError(400, issues.join('\n'));
   };
 
+  const updateCredits = async ({ players }: OverridesFile) => {
+    if (!creditIssues(players, readCredits(dataDir)).length) return;
+    await refreshCredits(dataDir, players).catch((e: unknown) => {
+      console.warn(`Could not update image credits: ${errorMessage(e)}`);
+    });
+  };
+
   const runExport = (players?: readonly string[]) =>
     new Promise<number>((resolve, reject) => {
       const started = Date.now();
@@ -238,7 +246,9 @@ const createAdmin = (root: string) => {
       const file = await readOverrides();
       checkImages(file.players[id], entry);
       const renamed = canonicalOverride(file.players[id])?.name !== entry?.name;
-      await writeOverrides(setOverride(file, id, entry));
+      const next = setOverride(file, id, entry);
+      await writeOverrides(next);
+      await updateCredits(next);
       return { entry, exportMs: await runExport(renamed ? undefined : [id]) };
     });
   };

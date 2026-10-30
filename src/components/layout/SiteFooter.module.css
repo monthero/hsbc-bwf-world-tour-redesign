@@ -227,3 +227,8 @@
     max-width: none;
   }
 }
+
+.unofficial {
+  font-weight: 700;
+  color: var(--bwf-text);
+}

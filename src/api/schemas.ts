@@ -169,6 +169,22 @@ export const PairRank = z.object({
 });
 export type PairRank = z.infer<typeof PairRank>;
 
+export const ImageCredit = z.object({
+  id: z.string(),
+  name: z.string(),
+  cc: z.string(),
+  kind: z.enum(['photo', 'hero']),
+  image: z.string(),
+  author: z.string(),
+  license: z.string(),
+  licenseUrl: OptionalString,
+  page: z.string(),
+});
+export type ImageCredit = z.infer<typeof ImageCredit>;
+
+export const ImageCredits = z.object({ credits: z.array(ImageCredit) });
+export type ImageCredits = z.infer<typeof ImageCredits>;
+
 export const CurrentRank = z.object({
   ev: EventCode,
   r: NullableNumber,

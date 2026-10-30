@@ -125,6 +125,7 @@ const entriesOf = (db: Db, today: string): Entry[] => {
     { path: '/rankings?kind=race', lastmod: pubDate(RACE), key: true },
     { path: '/news', lastmod: latestNews, key: true },
     { path: '/about', key: true },
+    { path: '/credits', key: false },
     ...editions.map((e) => ({
       path: `/world-tour/${e.season}/${encodeURIComponent(e.slug)}`,
       lastmod: tournamentLastmod(e),

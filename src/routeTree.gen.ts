@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as CreditsRouteImport } from './routes/credits'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as RankingsRouteImport } from './routes/rankings'
 import { Route as NewsIdRouteImport } from './routes/news_.$id'
@@ -38,6 +39,11 @@ const AdminRoute = AdminRouteImport.update({
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreditsRoute = CreditsRouteImport.update({
+  id: '/credits',
+  path: '/credits',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewsRoute = NewsRouteImport.update({
@@ -76,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/calendar': typeof CalendarRoute
+  '/credits': typeof CreditsRoute
   '/news': typeof NewsRoute
   '/rankings': typeof RankingsRoute
   '/news/$id': typeof NewsIdRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/calendar': typeof CalendarRoute
+  '/credits': typeof CreditsRoute
   '/news': typeof NewsRoute
   '/rankings': typeof RankingsRoute
   '/news/$id': typeof NewsIdRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/calendar': typeof CalendarRoute
+  '/credits': typeof CreditsRoute
   '/news': typeof NewsRoute
   '/rankings': typeof RankingsRoute
   '/news_/$id': typeof NewsIdRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/calendar'
+    | '/credits'
     | '/news'
     | '/rankings'
     | '/news/$id'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/calendar'
+    | '/credits'
     | '/news'
     | '/rankings'
     | '/news/$id'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/calendar'
+    | '/credits'
     | '/news'
     | '/rankings'
     | '/news_/$id'
@@ -152,6 +164,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRoute
   CalendarRoute: typeof CalendarRoute
+  CreditsRoute: typeof CreditsRoute
   NewsRoute: typeof NewsRoute
   RankingsRoute: typeof RankingsRoute
   NewsIdRoute: typeof NewsIdRoute
@@ -188,6 +201,13 @@ declare module '@tanstack/react-router' {
       path: '/calendar'
       fullPath: '/calendar'
       preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/credits': {
+      id: '/credits'
+      path: '/credits'
+      fullPath: '/credits'
+      preLoaderRoute: typeof CreditsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/news': {
@@ -240,6 +260,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdminRoute: AdminRoute,
   CalendarRoute: CalendarRoute,
+  CreditsRoute: CreditsRoute,
   NewsRoute: NewsRoute,
   RankingsRoute: RankingsRoute,
   NewsIdRoute: NewsIdRoute,

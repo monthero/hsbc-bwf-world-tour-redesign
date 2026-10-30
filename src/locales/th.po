@@ -545,6 +545,11 @@ msgstr "<0>กำลังแข่ง: </0>{targetName}"
 msgid "<0>Photo: </0>{credit}"
 msgstr "<0>ภาพ: </0>{credit}"
 
+#. Small print on the last row of the site footer, beside the GitHub source link
+#: src/components/layout/SiteFooter.tsx
+msgid "<0>Unofficial and non-commercial.</0> Built by a badminton fan, for badminton fans."
+msgstr "<0>ไม่เป็นทางการและไม่แสวงหากำไร</0> สร้างโดยแฟนแบดมินตัน เพื่อแฟนแบดมินตัน"
+
 #: src/components/layout/SiteSettings.tsx
 msgid "12-hour clock"
 msgstr "แบบ 12 ชั่วโมง"
@@ -586,6 +591,7 @@ msgid "About the Tour"
 msgstr "เกี่ยวกับทัวร์"
 
 #: src/components/layout/SiteFooter.tsx
+#: src/pages/credits/CreditsPage.tsx
 msgid "About this site"
 msgstr "เกี่ยวกับเว็บไซต์นี้"
 
@@ -684,8 +690,8 @@ msgid "Americas"
 msgstr "อเมริกา"
 
 #: src/components/layout/SiteFooter.tsx
-msgid "An unofficial redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
-msgstr "แนวคิดการออกแบบใหม่อย่างไม่เป็นทางการสำหรับส่วน HSBC BWF World Tour ของเว็บไซต์ BWF ไม่มีส่วนเกี่ยวข้อง ไม่ได้รับการรับรอง และไม่ได้ดำเนินการโดยสหพันธ์แบดมินตันโลก (BWF) หรือ HSBC ข้อมูลอาจไม่ครบถ้วน ล่าช้า หรือคลาดเคลื่อน"
+msgid "An <0>unofficial</0> redesign concept for the HSBC BWF World Tour section of the BWF website. Not affiliated with, endorsed by or operated by the Badminton World Federation (BWF) or HSBC. Data may be incomplete, delayed or inaccurate."
+msgstr "แนวคิดการออกแบบใหม่อย่าง<0>ไม่เป็นทางการ</0>สำหรับส่วน HSBC BWF World Tour ของเว็บไซต์ BWF ไม่มีส่วนเกี่ยวข้อง ไม่ได้รับการรับรอง และไม่ได้ดำเนินการโดยสหพันธ์แบดมินตันโลก (BWF) หรือ HSBC ข้อมูลอาจไม่ครบถ้วน ล่าช้า หรือคลาดเคลื่อน"
 
 #. Settings label above the button that installs the site as an app on the device
 #: src/components/layout/SiteSettings.tsx
@@ -755,6 +761,11 @@ msgstr "กลับไปที่ปฏิทินปี {year}"
 #: src/components/layout/NotFound.tsx
 msgid "Back to the calendar"
 msgstr "กลับไปที่ปฏิทิน"
+
+#. Credits table: this credit is for the wide photo at the top of the player’s profile
+#: src/pages/credits/CreditsPage.tsx
+msgid "Banner photo"
+msgstr "ภาพแบนเนอร์"
 
 #. Best world ranking reached; rank is e.g. #3
 #: src/pages/player/components/RankingsTab.tsx
@@ -1024,11 +1035,6 @@ msgstr "จบแล้ว"
 msgctxt "filter"
 msgid "Completed"
 msgstr "จบแล้ว"
-
-#. Small tag beside the site logo: this site is an unofficial redesign concept
-#: src/components/layout/Wordmark.tsx
-msgid "Concept"
-msgstr "คอนเซปต์"
 
 #: src/components/layout/links.ts
 msgid "Contact BWF"
@@ -1644,6 +1650,11 @@ msgstr "HSBC ผู้สนับสนุนหลักของ World Tour (
 msgid "I understand"
 msgstr "รับทราบ"
 
+#. Credits table column: thumbnail of the credited photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Image"
+msgstr "ภาพ"
+
 #. When a player’s next match is: later today, more than an hour away
 #: src/utils/match-time.ts
 msgid "In a few hours"
@@ -1826,6 +1837,11 @@ msgstr "ถนัดซ้าย"
 #: src/pages/about/components/SeasonLegend.tsx
 msgid "Levels"
 msgstr "ระดับรายการ"
+
+#. Credits table column: the license the photo is shared under, e.g. CC BY 4.0
+#: src/pages/credits/CreditsPage.tsx
+msgid "License"
+msgstr "สัญญาอนุญาต"
 
 #. Settings option: light colour theme
 #: src/components/layout/SiteSettings.tsx
@@ -2525,7 +2541,19 @@ msgstr "คู่หู"
 msgid "Past winners"
 msgstr "แชมป์ในอดีต"
 
+#. Credits table column: the person or organization who took the photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Photo by"
+msgstr "ภาพโดย"
+
+#. Page title and footer link: who took the photos used on this site
+#: src/utils/meta.ts
+msgid "Photo credits"
+msgstr "เครดิตภาพ"
+
 #. Rankings table column: the player
+#. Rankings table column: the player
+#: src/pages/credits/CreditsPage.tsx
 #: src/pages/rankings/components/RankingList.tsx
 msgid "Player"
 msgstr "นักกีฬา"
@@ -2533,6 +2561,11 @@ msgstr "นักกีฬา"
 #: src/components/layout/SiteSettings.tsx
 msgid "Player heights"
 msgstr "ส่วนสูงนักกีฬา"
+
+#. Short intro on the photo credits page, also used as its page description
+#: src/utils/meta.ts
+msgid "Player photos from Wikimedia Commons, used under their free licenses. Some are cropped to fit."
+msgstr "ภาพนักกีฬาจาก Wikimedia Commons ใช้ภายใต้สัญญาอนุญาตเสรีของแต่ละภาพ บางภาพถูกครอปให้พอดี"
 
 #: src/pages/player/components/SubNav.tsx
 msgid "Player sections"
@@ -2661,6 +2694,11 @@ msgstr "โปรไฟล์"
 #: src/components/player/RankedNames.tsx
 msgid "Profile on bwfbadminton.com"
 msgstr "โปรไฟล์บน bwfbadminton.com"
+
+#. Credits table: this credit is for the player’s round profile photo
+#: src/pages/credits/CreditsPage.tsx
+msgid "Profile photo"
+msgstr "รูปโปรไฟล์"
 
 #. Tag next to a future season’s year in the calendar header: the schedule is not final yet and may change
 #: src/pages/calendar/components/Hero.tsx
@@ -3314,6 +3352,11 @@ msgstr "เร็ว ๆ นี้"
 msgid "Sort matches"
 msgstr "เรียงแมตช์"
 
+#. Credits table column: link to the original photo on Wikimedia Commons
+#: src/pages/credits/CreditsPage.tsx
+msgid "Source"
+msgstr "ที่มา"
+
 #. Top bar menu group: BWF programmes for grassroots badminton
 #: src/components/layout/links.ts
 msgid "Sport For All"
@@ -3706,10 +3749,10 @@ msgstr "เลิกติดตามนักกีฬา"
 msgid "Unfollow this pair"
 msgstr "เลิกติดตามคู่นี้"
 
-#. Small print on the last row of the site footer, beside the GitHub source link
-#: src/components/layout/SiteFooter.tsx
-msgid "Unofficial and non-commercial. Built by a badminton fan, for badminton fans."
-msgstr "ไม่เป็นทางการและไม่แสวงหากำไร สร้างโดยแฟนแบดมินตัน เพื่อแฟนแบดมินตัน"
+#. Small tag beside the site logo, shown in capitals: this site is not an official BWF website. Keep it as short as possible
+#: src/components/layout/Wordmark.tsx
+msgid "Unofficial"
+msgstr "ไม่เป็นทางการ"
 
 #. End of a ranking spell; month is e.g. Mar 2019
 #: src/pages/player/components/RankingsTab.tsx

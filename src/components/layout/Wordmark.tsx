@@ -24,7 +24,9 @@ export const Wordmark: FC<{ onNavigate?: () => void; className?: string }> = ({ 
     >
       <img src={LOGO} alt="" className={classes.logo} width={151} height={46} />
       <span className={classes.tag}>
-        <Trans comment="Small tag beside the site logo: this site is an unofficial redesign concept">Concept</Trans>
+        <Trans comment="Small tag beside the site logo, shown in capitals: this site is not an official BWF website. Keep it as short as possible">
+          Unofficial
+        </Trans>
       </span>
     </Link>
   );

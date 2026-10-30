@@ -19,7 +19,7 @@ import RankingFill from '~icons/ph/ranking-fill';
 
 import { icon, type IconProps } from '~/components/ui';
 
-import { SITE_NAV, type InternalItem, type SiteItem } from '../links';
+import { SITE_NAV, type InternalItem, type NavPath, type SiteItem } from '../links';
 
 export interface NavItem {
   item: InternalItem;
@@ -30,9 +30,9 @@ export interface NavItem {
   glyph: FC<IconProps>;
 }
 
-const isInternal = (i: SiteItem): i is InternalItem => 'to' in i;
+const isInternal = (i: SiteItem): i is InternalItem & { to: NavPath } => 'to' in i;
 
-const META: Record<InternalItem['to'], Omit<NavItem, 'item' | 'index'>> = {
+const META: Record<NavPath, Omit<NavItem, 'item' | 'index'>> = {
   '/': {
     blurb: msg({ message: 'Home', comment: 'Menu caption under the Home link' }),
     icon: icon(House),

@@ -27,6 +27,7 @@ import {
   PlayerMediaIndex,
   PlayerProfileDto,
   PlayersData,
+  ImageCredits,
   RaceRankings,
   RankingHistory,
   type RankingKind,
@@ -43,6 +44,8 @@ const staticQuery = <K extends QueryKey, S extends z.ZodType>(queryKey: K, path:
   queryOptions({ queryKey, queryFn: ({ signal }) => fetchJson(path, schema, signal), ...STATIC });
 
 export const playersQuery = () => staticQuery(['players'], 'players.json', PlayersData);
+
+export const imageCreditsQuery = () => staticQuery(['image-credits'], 'image-credits.json', ImageCredits);
 
 const directoryNames = async (client: QueryClient): Promise<NameOf> => {
   const { players } = await client.ensureQueryData(playersQuery());
