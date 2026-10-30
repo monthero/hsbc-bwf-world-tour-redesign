@@ -19,6 +19,11 @@
       }
     },
     "19726": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1774684271/wordpress_assets_test/Sumire-Nakade_OM26.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 30
+      },
       "photoCrop": {
         "x": 50,
         "y": 86.9,
@@ -29,6 +34,13 @@
         "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "racketNote": "4U",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+      }
+    },
+    "23008": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1206/v1729847995/wordpress_assets_test/Low-Zi-Yu_WJC24/Low-Zi-Yu_WJC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
       }
     },
     "24686": {
@@ -150,6 +162,13 @@
         "string": "d8cd94db-b7b9-486d-912a-835f23b508db"
       }
     },
+    "50322": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1691/v1714227117/wordpress_assets_test/Priya-Konjengbam-Shruti-Mishra/Priya-Konjengbam-Shruti-Mishra.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 21
+      }
+    },
     "50469": {
       "hero": "https://www.yonex.co.uk/cdn/shop/files/TSB01199.jpg",
       "bio": {
@@ -248,6 +267,11 @@
       }
     },
     "55417": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1705/v1744469935/wordpress_assets_test/Hiroki-Midorikawa-Natsu-Saito_BAC25-1/Hiroki-Midorikawa-Natsu-Saito_BAC25-1.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 41
+      },
       "bio": {
         "birthplace": "Saitama Prefecture",
         "coach": "Norio Imai",
@@ -280,6 +304,11 @@
       }
     },
     "55669": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1780580976/wordpress_assets_test/20260604_1809_IndonesiaOpen2026_BPJS5613.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 32
+      },
       "bio": {
         "height": 170,
         "plays": "R",
@@ -297,6 +326,13 @@
         "racketNote": "3u",
         "string": "a2186ed4-9866-4d92-9cf7-218d152584a7",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+      }
+    },
+    "56350": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1718199636/wordpress_assets_test/cr_20240612_1256_AustralianOpen2024_BPLV0327.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 28
       }
     },
     "56352": {
@@ -349,10 +385,29 @@
       }
     },
     "57424": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/4/41/%E6%9D%8E%E8%8A%B3%E8%87%B32023%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      },
       "bio": {
         "racket": "6e7c51df-e439-4094-b889-65cddec4edca",
         "instagram": "https://www.instagram.com/chih.09.20/",
         "facebook": "https://www.facebook.com/p/%E6%9D%8E%E8%8A%B3%E8%87%B3-Lee-Fang-Chih-61558264833063/"
+      }
+    },
+    "57560": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260124_1813_IndonesiaMasters2026_BPKS8831.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 40
+      }
+    },
+    "57791": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/2AE24_Catherine-Choi-Josephine-Wu3.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 32
       }
     },
     "57823": {
@@ -385,6 +440,11 @@
     },
     "58180": {
       "retired": "2025-03",
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1741885023/wordpress_assets_test/Greg-Jenny_3AE25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 48
+      },
       "bio": {
         "racket": "43e1b756-2b7a-4b87-89e4-616bacacbb08",
         "shoes": "8046b3df-483e-45e5-97ee-2faf781f460c"
@@ -407,6 +467,13 @@
     "58488": {
       "bio": {
         "racket": "3869e90d-3be6-4d9c-98ec-066a87876b05"
+      }
+    },
+    "58664": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1549/v1713434941/wordpress_assets_test/Badminton-Asia_Anmol-Kharb/Badminton-Asia_Anmol-Kharb.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 32
       }
     },
     "58931": {
@@ -432,6 +499,13 @@
         "achievements": "Sudirman Cup 2025 – bronze (mixed team); Asian Games 2026 – silver (women's team)"
       }
     },
+    "59322": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1749024961/wordpress_assets_test/2INO25_Lee-Chia-Hao.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 44
+      }
+    },
     "59331": {
       "photo": "https://badmintoneurope.com/o/adaptive-media/image/701264/preview-2000/20260410_EC26_LS_0016_Callum_Hemming_Estelle_Van_Leeuwen.jpg?t=1778137955344",
       "photoCrop": {
@@ -447,7 +521,26 @@
         "instagram": "https://www.instagram.com/estelle.vanl"
       }
     },
+    "59367": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1779356933/wordpress_assets_test/20260521_1435_MalaysiaMasters2026_BPYL5877.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 40
+      }
+    },
+    "59543": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1760126935/wordpress_assets_test/cr_20251010_1547_ArcticOpen2025_BPLJ2125.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 27
+      }
+    },
     "59609": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1788326400/wordpress_assets_test/cr_20260902_1150_ChinaMasters2026_BPGE2715.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 28
+      },
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "racketNote": "4U",
@@ -515,7 +608,19 @@
         "achievements": "World Championships 2026 – bronze (WD); Commonwealth Games 2022 – silver (mixed team); Commonwealth Games 2022 – bronze (WD); Asia Mixed Team Championships 2023 – bronze (mixed team); Asia Team Championships 2024 – gold (women's team); South Asian Games 2019 – gold (women's team); South Asian Games 2019 – silver (WS)"
       }
     },
+    "60145": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1655/v1787143888/wordpress_assets_test/20260819_1748_WorldChampionships2026_BPGE0612/20260819_1748_WorldChampionships2026_BPGE0612.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 38
+      }
+    },
     "60321": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1770186013/wordpress_assets_test/Zaki-Ubaidillah_TM26.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 33
+      },
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0",
@@ -563,6 +668,20 @@
         "achievements": "World Championships 2026 – bronze (Mixed doubles); Asian Games 2026 – silver (Mixed doubles); Asian Games 2026 – bronze (Women's team); Asia Team Championships 2022 – gold (Women's team); SEA Games 2025 – silver (Women's team)"
       }
     },
+    "60915": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1790/v1776149278/wordpress_assets_test/Xu-Wen-Jing_WJC25/Xu-Wen-Jing_WJC25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 38
+      }
+    },
+    "60980": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/Rohan-Kapoor-Ruthvika_AE2025.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      }
+    },
     "61427": {
       "retired": "2025-11"
     },
@@ -596,11 +715,17 @@
         "achievements": "Olympic Games 2024 – silver (Mixed doubles); World Championships 2025 – gold (Men's doubles); World Championships 2026 – bronze (Men's doubles); Sudirman Cup 2017 – gold (Mixed team); Sudirman Cup 2023 – silver (Mixed team); Sudirman Cup 2025 – silver (Mixed team); Sudirman Cup 2021 – bronze (Mixed team); Asian Games 2022 – silver (Men's doubles); Asian Games 2022 – bronze (Men's team); Asian Games 2026 – bronze (Men's doubles); Asia Championships 2026 – gold (Men's doubles); Asia Championships 2019 – bronze (Men's doubles); Asia Mixed Team Championships 2023 – silver (Mixed team); Asia Team Championships 2018 – bronze (Men's team); Asia Team Championships 2024 – bronze (Men's team); Asia Team Championships 2026 – bronze (Men's team)"
       }
     },
+    "61614": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Badminton_at_2025_National_Games_of_Taiwan_-_02.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 39
+      }
+    },
     "61628": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1784996302/wordpress_assets_test/cr_20260725_1833_ChinaOpen2026_BPGE1640/cr_20260725_1833_ChinaOpen2026_BPGE1640.jpg",
       "bio": {
-        "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
-        "racketNote": "3UG4",
+        "racket": "38ecd0b6-e2b1-4464-9543-84a5a6affa81",
         "tension": "32",
         "string": "538a1b0a-3c92-46fa-b161-06e5a1f72a8e",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
@@ -625,15 +750,34 @@
       }
     },
     "61882": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Francesca_Corbett_Guat_September_26_2021_B.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 5
+      },
       "bio": {
         "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "racketNote": "4U",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
+    "62035": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/Wang-Ting-Ge_22.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 2
+      }
+    },
     "62063": {
       "bio": {
         "racket": "5acde407-bbb3-4cc6-bf45-cbd52256de45"
+      }
+    },
+    "62220": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1774/v1728727777/wordpress_assets_test/Lin-Xiang-Yi-Liu-Yuan-Yuan_WJC24/Lin-Xiang-Yi-Liu-Yuan-Yuan_WJC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 34
       }
     },
     "62277": {
@@ -665,6 +809,11 @@
       }
     },
     "62713": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/Ye-Hong-Wei-Nicole-Gonzales-Chan_AE26.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 22
+      },
       "photoCrop": {
         "x": 50,
         "y": 100,
@@ -706,8 +855,22 @@
         "achievements": "World Championships 2025 – silver (XD); World Championships 2023 – bronze (XD); World Championships 2026 – bronze (XD); Sudirman Cup 2025 – gold (mixed team); Asian Games 2026 – gold (XD); Asian Games 2026 – silver (men's team); Asia Championships 2023 – gold (XD); Asia Championships 2024 – bronze (XD); Asia Championships 2025 – bronze (XD); Asia Mixed Team Championships 2023 – gold (mixed team)"
       }
     },
+    "63122": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1442/v1745225287/wordpress_assets_test/Brian-Yang_AE25/Brian-Yang_AE25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 9
+      }
+    },
     "63168": {
       "retired": "2025-01"
+    },
+    "63170": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1761613088/wordpress_assets_test/cr_20250429_1818_SudirmanCup2025_BPJS0818.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 28
+      }
     },
     "63437": {
       "heroFocus": {
@@ -715,10 +878,16 @@
         "y": 53
       },
       "bio": {
-        "racket": "69c8cab3-c7b7-40b6-88e4-beb38e7c088b"
+        "racket": "69c8cab3-c7b7-40b6-88e4-beb38e7c088b",
+        "shoes": "a2205a54-0af7-43ea-bea6-70df7c16d502"
       }
     },
     "63520": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20251015_1153_DenmarkOpen2025_BPYL1736.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 8
+      },
       "bio": {
         "racket": "a2cfcd7b-9111-4b63-8bc2-b73b391fb3c7",
         "tension": "30",
@@ -741,8 +910,27 @@
       }
     },
     "63571": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/2INO25_Maulana-Jamil.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      },
       "bio": {
         "racket": "1b0c28bd-7761-4793-954f-bd48228237e2"
+      }
+    },
+    "63670": {
+      "hero": "https://hkbadmintonassn.org.hk/wp-content/uploads/2025/09/2025_Li-Ning-Hong-Kong-Open_HUNG-Kuei-Chun_LUI-Chun-Wai-1.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 37
+      }
+    },
+    "63683": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1377/v1743247359/wordpress_assets_test/Josephine-Wu-Ty-Alexander-Lindemann/Josephine-Wu-Ty-Alexander-Lindemann.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 1
       }
     },
     "63739": {
@@ -760,6 +948,13 @@
         "achievements": "Pan American Championships 2024 – gold (MD); Pan American Championships 2024 – gold (XD); Pan American Championships 2025 – gold (MD); Pan American Championships 2026 – gold (MD); Pan American Championships 2026 – gold (XD); Pan American Championships 2023 – bronze (MD); Pan American Championships 2025 – bronze (XD); Pan American Championships team 2025 – silver (mixed team); Pan American Championships and Female team 2026 – silver (men's team)"
       }
     },
+    "64023": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/f/fc/%E9%BB%83%E7%9D%BF%E7%92%BF-2024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 20
+      }
+    },
     "64032": {
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
@@ -771,7 +966,25 @@
         "facebook": "https://www.facebook.com/ViewKunlavut/"
       }
     },
+    "64600": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260514_1758_ThailandOpen2026_BPYL3827.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 30
+      }
+    },
+    "64909": {
+      "bio": {
+        "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
+        "shoes": "4427cbc7-3aad-4045-8e3f-3ca22559b24f"
+      }
+    },
     "64944": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1768492438/wordpress_assets_test/20260115_1936_IndiaOpen2026_BPJS1564.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      },
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "racketNote": "4UG6",
@@ -786,6 +999,13 @@
         "racketNote": "3U",
         "string": "267060f8-e4a2-4aba-889c-8ab3029a2322",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+      }
+    },
+    "65203": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/1/1f/%E6%9E%97%E7%AD%B1%E9%96%94-2024%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 35
       }
     },
     "65212": {
@@ -826,6 +1046,11 @@
       }
     },
     "65634": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1788771571/wordpress_assets_test/cr_20260906_1719_ChinaMasters2026_BPLJ1224.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 29
+      },
       "bio": {
         "racket": "055a8740-29d2-4b39-97d7-eec352affaee",
         "string": "f1721761-6a21-417a-97fe-b2bce31e5833",
@@ -833,6 +1058,11 @@
       }
     },
     "65674": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/8/8e/%E5%B8%95%E5%85%8B%E5%8D%A1%E6%B3%A2%C2%B7%E6%8F%90%E6%8B%89%E8%96%A9%E5%BA%AB%E7%88%BE.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 33
+      },
       "bio": {
         "height": 179,
         "plays": "L",
@@ -901,11 +1131,23 @@
     "67176": {
       "retired": "2024-07"
     },
+    "67373": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1706/v1744277212/wordpress_assets_test/Sara-Thygesen-Debora-Jille_BEC25/Sara-Thygesen-Debora-Jille_BEC25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 33
+      }
+    },
     "67654": {
       "retired": "2025-03"
     },
     "67761": {
       "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Amalia_Cahaya_Pratiwi_%28cropped%29.jpg/960px-Amalia_Cahaya_Pratiwi_%28cropped%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail",
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Amalia_Cahaya_Pratiwi.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 28
+      },
       "photoCrop": {
         "x": 34.4,
         "y": 9.2,
@@ -918,6 +1160,13 @@
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f",
         "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Uber Cup 2026 – bronze (Women's team); Asian Championships 2026 – bronze (Women's doubles); Asia Team Championships 2022 – gold (Women's team); Asia Team Championships 2024 – bronze (Women's team); Asia Team Championships 2026 – bronze (Women's team); SEA Games 2023 – gold (Women's doubles); SEA Games 2023 – silver (Women's team)",
         "instagram": "https://www.instagram.com/amalliacahaya"
+      }
+    },
+    "67828": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1751864656/wordpress_assets_test/Manami-Suizu_CO25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 28
       }
     },
     "67903": {
@@ -1004,11 +1253,24 @@
         "instagram": "https://www.instagram.com/hina.akechi"
       }
     },
+    "68532": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1773808766/wordpress_assets_test/20260212_1143_EuropeanMenWomenTeamChampionships2026_BPYN1343/20260212_1143_EuropeanMenWomenTeamChampionships2026_BPYN1343.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      }
+    },
     "68544": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1766102207/wordpress_assets_test/Thom-Gicquel-Delphine-Delrue-WTF25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 32
+      },
       "bio": {
         "racket": "fd4632f8-0ee0-4ac0-a7a7-c48cfbb96a4c",
         "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
-        "shoes": "dceb8ad7-da91-4c41-a0d6-6d1bd1602d5a"
+        "shoes": "dceb8ad7-da91-4c41-a0d6-6d1bd1602d5a",
+        "instagram": "https://www.instagram.com/thomgicquel"
       }
     },
     "68628": {
@@ -1077,6 +1339,13 @@
         "achievements": "Asia Championships 2025 – bronze (XD); SEA Games 2025 – silver (women's team); SEA Games 2025 – bronze (XD)"
       }
     },
+    "69313": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1787052613/wordpress_assets_test/20260818_1358_WorldChampionships2026_BPJS6188/20260818_1358_WorldChampionships2026_BPJS6188.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 25
+      }
+    },
     "69448": {
       "retired": "2024-12"
     },
@@ -1092,7 +1361,19 @@
         "achievements": "Uber Cup 2022 – bronze (women's team); SEA Games 2021 – gold (women's team); SEA Games 2023 – gold (women's team)"
       }
     },
+    "70093": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1650/v1785300562/wordpress_assets_test/20260304_1519_AllEngland2026_BPYN2310/20260304_1519_AllEngland2026_BPYN2310.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 28
+      }
+    },
     "70231": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Badminton_at_2023_National_Games_of_Taiwan_-_49.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 5
+      },
       "bio": {
         "racket": "0dfecd6d-9273-414e-b54b-2d1f0544437c"
       }
@@ -1100,7 +1381,19 @@
     "70333": {
       "retired": "2021-05"
     },
+    "70399": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1779719712/wordpress_assets_test/cr_20250827_1601_WorldChampionships2025_BPYL2405.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 1
+      }
+    },
     "70443": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260904_2226_ChinaMasters2026_BPGE9374.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 11
+      },
       "bio": {
         "racket": "49d2c030-35d2-4206-a781-00c6ef06c42c",
         "racketNote": "3U",
@@ -1135,10 +1428,22 @@
       }
     },
     "70762": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1581/v1787388816/wordpress_assets_test/20260822_1332_WorldChampionships2026_BPGE3290/20260822_1332_WorldChampionships2026_BPGE3290.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 5
+      },
       "bio": {
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f",
         "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
         "shoes": "a2205a54-0af7-43ea-bea6-70df7c16d502"
+      }
+    },
+    "70860": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/5/54/%E6%A5%8A%E7%AD%91%E4%BA%91114%E5%B9%B4%E5%85%A8%E5%A4%A7%E9%81%8B.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 21
       }
     },
     "70930": {
@@ -1183,6 +1488,13 @@
         "achievements": "World Championships 2025 – silver (Men's doubles); Thomas Cup 2026 – gold (Men's team); Sudirman Cup 2025 – gold (Mixed team); Asian Games 2026 – silver (Men's team); Asian Championships 2025 – silver (Men's doubles); Asia Team Championships 2024 – gold (Men's team)"
       }
     },
+    "71294": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1650/v1785300562/wordpress_assets_test/20260304_1519_AllEngland2026_BPYN2310/20260304_1519_AllEngland2026_BPYN2310.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 33
+      }
+    },
     "71349": {
       "retired": "2024-11"
     },
@@ -1201,12 +1513,24 @@
       }
     },
     "71612": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/Treesa-Jolly-Pullela_AE25-1.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      },
       "bio": {
         "birthplace": "Cherupuzha, Kannur",
         "coach": "Pullela Gopichand Arun Vishnu",
         "racket": "96afc7f5-4b0d-4703-bc9c-02aa72758292",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0",
         "achievements": "World Championships 2026 – bronze (Women's doubles); Commonwealth Games 2022 – silver (Mixed team); Commonwealth Games 2022 – bronze (Women's doubles); Asian Mixed Team Championships 2023 – bronze (Mixed team); Asian Team Championships 2024 – gold (Women's team)"
+      }
+    },
+    "71848": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/5/55/Chen_Yan-fei_%26_Sun_Liang-ching_at_2024_National_Middle_School_Athletic_Games_of_Taiwan_2.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 28
       }
     },
     "72435": {
@@ -1224,10 +1548,15 @@
         "racketNote": "Kurenai",
         "tension": "32/35",
         "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5",
-        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+        "shoes": "82caf749-ee15-4429-b905-273ad64747fa"
       }
     },
     "72504": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/8/81/%E5%93%B2%E5%A6%AE%E5%B7%AE%C2%B7%E7%B4%A0%E5%93%89%E5%B8%95%E5%B7%B4%E5%8F%BB%E7%8D%B2%E5%BE%972024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E6%B7%B7%E9%9B%99%E5%86%A0%E8%BB%8D.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 20
+      },
       "bio": {
         "racket": "6b5a7536-c7dd-4718-bf7c-1961a951d390",
         "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
@@ -1235,6 +1564,11 @@
       }
     },
     "72675": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1788658008/wordpress_assets_test/20260905_1134_ChinaMasters2026_BPGE1422PK/20260905_1134_ChinaMasters2026_BPGE1422PK.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      },
       "bio": {
         "racket": "43e1b756-2b7a-4b87-89e4-616bacacbb08",
         "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260",
@@ -1249,12 +1583,24 @@
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
+    "73023": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1713512632/wordpress_assets_test/Ercetin-Inci_EC24/Ercetin-Inci_EC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 14
+      }
+    },
     "73173": {
       "bio": {
         "racket": "f46fd698-718f-4a78-ad2c-a6244df7c794"
       }
     },
     "73323": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/Julien-Maio-William-Villeger_GO26.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 36
+      },
       "bio": {
         "racket": "e17437ff-db83-48c4-94a0-6b5ff7ab0aeb",
         "racketNote": "3U"
@@ -1269,6 +1615,20 @@
         "shoes": "bf49e821-3e5b-419e-a281-c0e7bc60cfa1"
       }
     },
+    "73591": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1782052927/wordpress_assets_test/20260621_1713_MacauOpen2026_BPGE5093.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 30
+      }
+    },
+    "73936": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20240529_1254_SingaporeOpen2024_BPYL8248.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 20
+      }
+    },
     "74331": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1772643214/wordpress_assets_test/20260304_1257_AllEngland2026_BPLL8182/20260304_1257_AllEngland2026_BPLL8182.jpg",
       "bio": {
@@ -1277,6 +1637,11 @@
       }
     },
     "74561": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/9/9d/%E8%A8%B1%E9%9B%85%E6%99%B42024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 16
+      },
       "bio": {
         "racket": "43e1b756-2b7a-4b87-89e4-616bacacbb08",
         "string": "5fd90db2-b5b4-4645-b3bf-ec60ffe04045",
@@ -1303,6 +1668,27 @@
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
+    "75270": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/3/3b/%E5%BC%B5%E6%B7%A8%E6%83%A02024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E6%BA%96%E6%B1%BA%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 22
+      }
+    },
+    "75628": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260808_1553_KoreaMasters2026_BPSL4479.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 20
+      }
+    },
+    "75678": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1768402647/wordpress_assets_test/20251108_1411_KoreaMasters2025_BPSL0845new.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 37
+      }
+    },
     "75787": {
       "retired": "2023-05"
     },
@@ -1316,8 +1702,20 @@
       }
     },
     "75904": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/9/93/%E9%AD%AF%E5%A1%94%E7%B4%8D%E5%B8%95%E5%85%8B%C2%B7%E7%83%8F%E9%80%9A-2024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 20
+      },
       "bio": {
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f"
+      }
+    },
+    "76079": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260304_1128_AllEngland2026_BPYN3674.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 28
       }
     },
     "76115": {
@@ -1341,12 +1739,17 @@
       }
     },
     "76278": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1784819065/wordpress_assets_test/20260723_1017_ChinaOpen2026_BPGE22131/20260723_1017_ChinaOpen2026_BPGE22131.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 25
+      },
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "racketNote": "3U",
         "tension": "31/33",
         "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5",
-        "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+        "shoes": "82caf749-ee15-4429-b905-273ad64747fa"
       }
     },
     "76281": {
@@ -1361,6 +1764,11 @@
       }
     },
     "76295": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Suzuki_Hinata.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      },
       "photoCrop": {
         "x": 59.5,
         "y": 10.7,
@@ -1371,8 +1779,29 @@
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
+    "76507": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1774/v1692484044/wordpress_assets_test/Davi-Silva-Samia-Lima_USO23/Davi-Silva-Samia-Lima_USO23.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 34
+      }
+    },
     "76594": {
       "retired": "2021-08"
+    },
+    "76674": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20240611_1647_AustralianOpen2024_BPLV0126.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 32
+      }
+    },
+    "76851": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1632/v1714226928/wordpress_assets_test/Isharani-Baruah_TUC24/Isharani-Baruah_TUC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 30
+      }
     },
     "76890": {
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1765336005/wordpress_assets_test/20250919_1427_ChinaMasters2025_BPMC1597/20250919_1427_ChinaMasters2025_BPMC1597.jpg",
@@ -1396,12 +1825,24 @@
       "retired": "2026-03"
     },
     "77042": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1334/v1726837637/wordpress_assets_test/Weng-Hong-Yang_CO24/Weng-Hong-Yang_CO24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 6
+      },
       "bio": {
         "racket": "38ecd0b6-e2b1-4464-9543-84a5a6affa81",
         "racketNote": "3U",
         "tension": "30/32",
         "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5",
         "shoes": "40e9f512-2595-4785-8220-1280b29a7046"
+      }
+    },
+    "77168": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1513/v1730798048/wordpress_assets_test/Dev-Ayyappan-Dhiren-Ayyappan/Dev-Ayyappan-Dhiren-Ayyappan.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 31
       }
     },
     "77262": {
@@ -1414,8 +1855,22 @@
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f"
       }
     },
+    "77296": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Wong_Ling_Ching%E6%96%BC2023%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 34
+      }
+    },
     "77427": {
       "retired": "2026-10"
+    },
+    "77589": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1681/v1729848003/wordpress_assets_test/Elsa-Jacob_WJC24/Elsa-Jacob_WJC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 41
+      }
     },
     "77689": {
       "bio": {
@@ -1430,6 +1885,11 @@
       "retired": "2025-03"
     },
     "77848": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/e/ea/%E6%88%9A%E5%8F%88%E4%BB%81%E5%8F%83%E5%8A%A02024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 5
+      },
       "bio": {
         "racket": "ecc8e699-dc5f-454b-8894-ae1136585929"
       }
@@ -1455,6 +1915,13 @@
         "achievements": "Sudirman Cup 2021 – bronze (mixed team); Asia Team Championships 2022 – gold (men's team); SEA Games 2021 – silver (men's team); SEA Games 2025 – silver (men's team); SEA Games 2025 – bronze (MD)"
       }
     },
+    "78687": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/2/22/%E6%A5%8A%E6%99%AF%E6%83%87%E6%96%BC2024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      }
+    },
     "78778": {
       "bio": {
         "racket": "275dd589-06a3-4c38-8399-f3184c4dc585",
@@ -1464,6 +1931,11 @@
       }
     },
     "78839": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/1/1e/%E9%87%8E%E6%9D%91%E6%8B%93%E6%B5%B72025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 20
+      },
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "racketNote": "4U",
@@ -1472,8 +1944,22 @@
         "shoes": "8d234e98-b425-435d-976d-710bca6b16a2"
       }
     },
+    "78948": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1774/v1692484044/wordpress_assets_test/Davi-Silva-Samia-Lima_USO23/Davi-Silva-Samia-Lima_USO23.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 18
+      }
+    },
     "79059": {
       "retired": "2021-11"
+    },
+    "79188": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1706/v1739971625/wordpress_assets_test/20250214_1631_EuropeanMixedTeamChampionships2025_BPYS3572/20250214_1631_EuropeanMixedTeamChampionships2025_BPYS3572.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      }
     },
     "79198": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/8/80/Nuntakarn_Aimsaard_2024%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original",
@@ -1526,7 +2012,19 @@
         "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Uber Cup 2026 – bronze (Women's team); Asian Games 2026 – bronze (Women's team); Asia Team Championships 2022 – gold (Women's team); Asia Team Championships 2024 – bronze (Women's team); Asia Team Championships 2026 – bronze (Women's team); SEA Games 2023 – gold (Women's doubles); SEA Games 2023 – silver (Women's team); SEA Games 2025 – silver (Women's doubles); SEA Games 2025 – silver (Women's team)"
       }
     },
+    "79739": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1728473104/wordpress_assets_test/Dhiren-Taabia_WJC24/Dhiren-Taabia_WJC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      }
+    },
     "79906": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1770562494/wordpress_assets_test/20251111_1836_KumamotoMastersJapan2025_BPTE3810-1/20251111_1836_KumamotoMastersJapan2025_BPTE3810-1.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 27
+      },
       "bio": {
         "height": 172,
         "plays": "L",
@@ -1552,9 +2050,23 @@
     "80057": {
       "retired": "2024-05"
     },
+    "80293": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1775994647/wordpress_assets_test/Kim-Jae-HyeonJang-Ha-Jeong_F_BAC26/Kim-Jae-HyeonJang-Ha-Jeong_F_BAC26.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 27
+      }
+    },
     "80532": {
       "bio": {
         "club": "BIPROGY"
+      }
+    },
+    "80605": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1784276128/wordpress_assets_test/20260717_1600_JapanOpen2026_BPJS4978.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 32
       }
     },
     "80862": {
@@ -1582,6 +2094,11 @@
       "retired": "2024-11"
     },
     "81108": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1772924908/wordpress_assets_test/20260307_1332_AllEngland2026_BPLL7923.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 24
+      },
       "bio": {
         "birthplace": "Taichung",
         "racket": "620fa032-07ed-4a25-bf39-69f1770aaab4",
@@ -1687,6 +2204,13 @@
         "achievements": "Sudirman Cup 2025 – bronze (mixed team); Uber Cup 2024 – bronze (women's team); Uber Cup 2026 – bronze (women's team); Asian Games 2026 – silver (women's team); Asia Mixed Team Championships 2025 – bronze (mixed team); Asia Team Championships 2024 – bronze (women's team)"
       }
     },
+    "82167": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260904_1158_ChinaMasters2026_BPLJ2243.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      }
+    },
     "82249": {
       "retired": "2022-01"
     },
@@ -1703,6 +2227,20 @@
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
+    "82367": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1779263230/wordpress_assets_test/cr_20260516_1918_ThailandOpen2026_BPYL0276/cr_20260516_1918_ThailandOpen2026_BPYL0276.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 10
+      }
+    },
+    "82378": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1601/v1745236408/wordpress_assets_test/Jiri-Kral-Ondrej-Kral_TC24/Jiri-Kral-Ondrej-Kral_TC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 33
+      }
+    },
     "82494": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/5/5c/%E5%A5%87%E6%9D%B1%E6%9F%B12025%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
       "bio": {
@@ -1710,6 +2248,20 @@
         "plays": "R",
         "racket": "5ff9b700-be55-44b1-91de-45f4d3f0cc13",
         "achievements": "Sudirman Cup 2025 – silver (Mixed team); Asian Championships 2026 – silver (Men's doubles); Asia Team Championships 2024 – bronze (Men's team); Asia Team Championships 2026 – bronze (Men's team)"
+      }
+    },
+    "82502": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20240524_1822_MalaysiaMasters2024_BPTE2298.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 13
+      }
+    },
+    "82732": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/d/d0/%E7%BE%BD%E7%90%83%E6%B7%B7%E5%92%8C%E9%9B%99%E6%89%93%E6%A5%8A%E4%B8%8A%E5%B0%81%E9%81%B8%E6%89%8B%E3%80%81%E9%84%AD%E5%AE%87%E5%80%A2%E9%81%B8%E6%89%8B%28%E7%94%B1%E5%B7%A6%E8%87%B3%E5%8F%B3%29%E7%8D%B2%E5%BE%97%E9%8A%85%E7%89%8C.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 10
       }
     },
     "83046": {
@@ -1726,7 +2278,19 @@
         "achievements": "Pan American Games 2023 – silver (Women's singles); Pan American Games 2023 – silver (Mixed doubles); Pan American Championships 2026 – gold (Mixed doubles); Pan American Championships 2024 – silver (Mixed doubles); Pan American Championships 2026 – silver (Women's doubles); Pan American Championships 2018 – bronze (Women's doubles); Pan American Championships 2019 – bronze (Women's singles); Pan American Championships 2025 – bronze (Mixed doubles); Pan Am Mixed Team Championships 2019 – silver (Mixed team); Pan Am Mixed Team Championships 2023 – silver (Mixed team); Pan Am Mixed Team Championships 2025 – silver (Mixed team); Pan Am Mixed Team Championships 2017 – bronze (Mixed team); Pan Am Female Cup 2022 – gold (Women's team); Pan Am Female Cup 2026 – silver (Women's team); Youth Olympic Games 2018 – gold (Mixed team)"
       }
     },
+    "83211": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1788937091/wordpress_assets_test/20260903_1847_ChinaMasters2026_BPGE1730/20260903_1847_ChinaMasters2026_BPGE1730.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 26
+      }
+    },
     "83419": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/Kim-Hye-Jeong-Kong-Hee-Yong_IO25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 38
+      },
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "racketNote": "4U",
@@ -1772,6 +2336,13 @@
         "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260"
       }
     },
+    "84050": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1762149669/wordpress_assets_test/cr_20251102_1442_HyloOpen2025_BPLN3451/cr_20251102_1442_HyloOpen2025_BPLN3451.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 30
+      }
+    },
     "84062": {
       "bio": {
         "racket": "22347764-1832-47ab-b14b-0743eacd305a",
@@ -1784,6 +2355,13 @@
     "84064": {
       "bio": {
         "racket": "6ed9b005-4dd9-41f9-b35e-e7e5a5ec7932"
+      }
+    },
+    "84102": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1635/v1714428777/wordpress_assets_test/Pakkapon-Teeraratsakul-Peeratchai-Sukphun_TUC24/Pakkapon-Teeraratsakul-Peeratchai-Sukphun_TUC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 3
       }
     },
     "84159": {
@@ -1799,6 +2377,20 @@
         "racket": "399bf45c-56a6-4087-a303-c3401f124887",
         "shoes": "8d234e98-b425-435d-976d-710bca6b16a2",
         "achievements": "Asia Team Championships 2022 – bronze (Women's team)"
+      }
+    },
+    "84196": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/2/2d/%E8%B3%B4%E6%9F%8F%E4%BD%91-2024%E5%8F%B0%E5%8C%97%E7%BE%BD%E7%90%83%E5%85%AC%E9%96%8B%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 37
+      }
+    },
+    "84340": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1784276128/wordpress_assets_test/20260717_1600_JapanOpen2026_BPJS4978.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 20
       }
     },
     "84523": {
@@ -1819,6 +2411,11 @@
       }
     },
     "84786": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1272/v1744290084/wordpress_assets_test/Fikri-Marthin2_BAC25/Fikri-Marthin2_BAC25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 25
+      },
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
@@ -1835,10 +2432,29 @@
       }
     },
     "84838": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Leong_Jun_Hao_-_Indonesia_Open_2026.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 20
+      },
       "bio": {
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d",
         "racketNote": "Kurenai",
         "shoes": "9031ab0a-a952-4903-86c9-6d6825d8b9f8"
+      }
+    },
+    "84897": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1587/v1755785017/wordpress_assets_test/Juliana-Vieira_USO25/Juliana-Vieira_USO25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 14
+      }
+    },
+    "85095": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1559/v1787181465/wordpress_assets_test/20260819_2017_WorldChampionships2026_BPGE2959/20260819_2017_WorldChampionships2026_BPGE2959.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 30
       }
     },
     "85129": {
@@ -1860,6 +2476,11 @@
       }
     },
     "85302": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260304_1550_AllEngland2026_BPYN3664.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 33
+      },
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "shoes": "4427cbc7-3aad-4045-8e3f-3ca22559b24f"
@@ -1869,6 +2490,20 @@
       "bio": {
         "racket": "5acde407-bbb3-4cc6-bf45-cbd52256de45",
         "string": "d911c27e-f41f-49ff-a9f2-003cf53a1260"
+      }
+    },
+    "85452": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/1/1a/%E7%9F%B3%E5%B7%9D%E5%BF%83%E8%8F%9C%E6%A6%AE%E7%8D%B22025%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E5%A5%B3%E9%9B%99%E5%86%A0%E8%BB%8D.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 35
+      }
+    },
+    "85508": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/f/f2/%E5%AD%AB%E4%BA%AE%E6%99%B4-2024%E7%AC%AC%E4%BA%8C%E6%AC%A1%E9%9D%92%E5%B0%91%E5%B9%B4%E6%8E%92%E5%90%8D%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 17
       }
     },
     "85540": {
@@ -1887,6 +2522,13 @@
         "achievements": "World Championships 2026 – bronze (Women's doubles); Uber Cup 2026 – silver (Women's team); Asian Championships 2026 – gold (Women's doubles); Asia Mixed Team Championships 2023 – gold (Mixed team)"
       }
     },
+    "85542": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1392/v1731560972/wordpress_assets_test/Ella-Lin3_WJC24/Ella-Lin3_WJC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 27
+      }
+    },
     "85551": {
       "bio": {
         "racket": "96afc7f5-4b0d-4703-bc9c-02aa72758292",
@@ -1896,7 +2538,19 @@
         "shoes": "4427cbc7-3aad-4045-8e3f-3ca22559b24f"
       }
     },
+    "85563": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1484/v1773387147/wordpress_assets_test/Joakim-Oldorff/Joakim-Oldorff.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 47
+      }
+    },
     "85845": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/8/88/%E5%B8%95%E5%B0%BC%E6%9F%A5%E8%93%AC%C2%B7%E6%8F%90%E6%8B%89%E8%96%A9%E5%BA%AB%E7%88%BE%E6%A6%AE%E7%8D%B22023%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E7%94%B7%E5%96%AE%E4%BA%9E%E8%BB%8D.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      },
       "bio": {
         "height": 178,
         "plays": "L",
@@ -1961,9 +2615,28 @@
         "shoes": "7a877bac-f4a9-452e-a5fb-f85a72381349"
       }
     },
+    "86470": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1868/v1714010648/wordpress_assets_test/20230712_1704_USOpen2023_BPYL3663/20230712_1704_USOpen2023_BPYL3663.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 27
+      }
+    },
     "86479": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/7/71/Okamura_Hiroki2023%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 24
+      },
       "bio": {
         "club": "BIPROGY"
+      }
+    },
+    "86621": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1169/v1787052433/wordpress_assets_test/20260818_1359_WorldChampionships2026_BPJS6345/20260818_1359_WorldChampionships2026_BPJS6345.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 33
       }
     },
     "86672": {
@@ -1994,11 +2667,39 @@
         "instagram": "https://www.instagram.com/callumhem"
       }
     },
+    "87029": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/8/8d/%E7%8E%8B%E6%9F%8F%E5%B4%B4%E6%A6%AE%E7%8D%B22025%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD%E7%94%B7%E5%96%AE%E5%86%A0%E8%BB%8D.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 22
+      }
+    },
+    "87045": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1521/v1686668846/wordpress_assets_test/Rehan-Naufal-Kusharjanto_InO2023/Rehan-Naufal-Kusharjanto_InO2023.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 35
+      }
+    },
+    "87112": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260903_1619_ChinaMasters2026_BPLJ1126.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      }
+    },
     "87176": {
       "hero": "https://upload.wikimedia.org/wikipedia/commons/8/8e/%E8%83%A1%E7%B6%BE%E8%8A%B32024%E9%AB%98%E9%9B%84%E7%BE%BD%E7%90%83%E5%A4%A7%E5%B8%AB%E8%B3%BD.jpg",
       "heroFocus": {
         "x": 43,
         "y": 20
+      }
+    },
+    "87403": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1639/v1777416213/wordpress_assets_test/Eloi-Adam-Leo-Rossi_TUC26/Eloi-Adam-Leo-Rossi_TUC26.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 26
       }
     },
     "87428": {
@@ -2038,6 +2739,34 @@
         "shoes": "8d234e98-b425-435d-976d-710bca6b16a2"
       }
     },
+    "87483": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1169/v1787052433/wordpress_assets_test/20260818_1359_WorldChampionships2026_BPJS6345/20260818_1359_WorldChampionships2026_BPJS6345.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 33
+      }
+    },
+    "87610": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1367/v1787100867/wordpress_assets_test/20260624_1913_USOpen2026_BPYL7038/20260624_1913_USOpen2026_BPYL7038.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 44
+      }
+    },
+    "87885": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1654/v1744245342/wordpress_assets_test/Neslihan-Arin_BEC25/Neslihan-Arin_BEC25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 41
+      }
+    },
+    "87893": {
+      "hero": "https://hkbadmintonassn.org.hk/wp-content/uploads/2024/10/20240910_Hong-Kong-Open_WD_Lui-Lok-Lok_Tsang-Hiu-Yan_01-scaled.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 36
+      }
+    },
     "88094": {
       "retired": "2025-01"
     },
@@ -2072,6 +2801,11 @@
       }
     },
     "88322": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1713513089/wordpress_assets_test/20240331_1409_SpainMasters2024_BPRS8213/20240331_1409_SpainMasters2024_BPRS8213.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 22
+      },
       "bio": {
         "height": 180,
         "plays": "R",
@@ -2089,6 +2823,11 @@
       }
     },
     "88450": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Zhang_Chi_-_Indonesia_Open_2026.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      },
       "photoCrop": {
         "x": 65,
         "y": 27.4,
@@ -2102,10 +2841,31 @@
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
+    "88471": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1726725756/wordpress_assets_test/Malvika-Bansod2_CO24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 32
+      }
+    },
+    "88642": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1449/v1714706969/wordpress_assets_test/Choong-Hon-Jian-Muhammad-Haikal_SM23/Choong-Hon-Jian-Muhammad-Haikal_SM23.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 27
+      }
+    },
     "88779": {
       "bio": {
         "racket": "69c8cab3-c7b7-40b6-88e4-beb38e7c088b",
         "shoes": "346069c8-1d5c-4f52-8bb7-fb3dbf7f2437"
+      }
+    },
+    "88832": {
+      "hero": "https://hkbadmintonassn.org.hk/wp-content/uploads/2025/09/2025_Li-Ning-Hong-Kong-Open_HUNG-Kuei-Chun_LUI-Chun-Wai-3.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 35
       }
     },
     "88876": {
@@ -2124,7 +2884,12 @@
       }
     },
     "89068": {
-      "retired": "2025-03"
+      "retired": "2025-03",
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1683/v1741826627/wordpress_assets_test/Greg-Jenny-Mairs2-AE25/Greg-Jenny-Mairs2-AE25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
+      }
     },
     "89426": {
       "bio": {
@@ -2142,6 +2907,20 @@
         "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5"
       }
     },
+    "90130": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260429_2336_ThomasUberCupFinals2026_BPRS0270.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 22
+      }
+    },
+    "90287": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1769866483/wordpress_assets_test/Devika-Sihag_TM26.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 55
+      }
+    },
     "90531": {
       "bio": {
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d",
@@ -2155,6 +2934,11 @@
       "retired": "2022-02"
     },
     "90735": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1762647896/wordpress_assets_test/Yudai-Okimoto_KM25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 50
+      },
       "bio": {
         "club": "BIPROGY",
         "racket": "275dd589-06a3-4c38-8399-f3184c4dc585",
@@ -2192,6 +2976,20 @@
         "tension": "31/33",
         "string": "78506bc2-603c-4284-b74b-c3e56b94c0f7",
         "shoes": "6b6a41fc-0527-44fb-b99a-80184a1222e0"
+      }
+    },
+    "91167": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1679/v1751429634/wordpress_assets_test/Rasmus-Espersen-Amalie-Kudsk2_USO25/Rasmus-Espersen-Amalie-Kudsk2_USO25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 30
+      }
+    },
+    "91174": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/a/a1/RR2025_D4_044_Simon_Krax_Jonathan_Dresp.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 0
       }
     },
     "91224": {
@@ -2233,6 +3031,11 @@
       }
     },
     "91533": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1651/v1741341922/wordpress_assets_test/Gao-Jia-Xuan-Wu-Meng-Ying25/Gao-Jia-Xuan-Wu-Meng-Ying25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 20
+      },
       "bio": {
         "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "tension": "27/29",
@@ -2241,6 +3044,11 @@
       }
     },
     "91554": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1729365671/wordpress_assets_test/20241019_1824_DenmarkOpen2024_BPYS7027/20241019_1824_DenmarkOpen2024_BPYS7027.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 25
+      },
       "bio": {
         "racket": "3e5da6f4-ccb1-4644-a0c3-003af71b2573",
         "tension": "31/33",
@@ -2249,7 +3057,26 @@
         "shoes": "a2205a54-0af7-43ea-bea6-70df7c16d502"
       }
     },
+    "91560": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1791/v1714695020/wordpress_assets_test/Wen-Yu-Zhang_WC/Wen-Yu-Zhang_WC.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 45
+      }
+    },
+    "91710": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1557/v1714404526/wordpress_assets_test/Jiri-Kral_TUC24/Jiri-Kral_TUC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 30
+      }
+    },
     "91715": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/6/69/Julie_MacPherson_2026.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 36
+      },
       "bio": {
         "racket": "f6813947-b78e-461f-a721-85830f4527ba",
         "tension": "30",
@@ -2257,7 +3084,19 @@
         "shoes": "dcc93ae3-bdd9-454a-8b6e-1325e393b47d"
       }
     },
+    "91894": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1440/v1744429970/wordpress_assets_test/cr_20250411_1713_EuropeanChampionships2025_BPYN0500/cr_20250411_1713_EuropeanChampionships2025_BPYN0500.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 33
+      }
+    },
     "91896": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1719806486/wordpress_assets_test/Natsuki-Nidaira_USO24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 36
+      },
       "bio": {
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "racketNote": "3U",
@@ -2275,6 +3114,13 @@
         "racket": "0dfecd6d-9273-414e-b54b-2d1f0544437c"
       }
     },
+    "92504": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/c/cb/%E6%9E%97%E7%85%9C%E5%82%912025%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%8E%92%E5%90%8D%E8%B3%BD%E7%94%B7%E9%9B%99%E5%86%A0%E8%BB%8D.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 17
+      }
+    },
     "92593": {
       "bio": {
         "racket": "892d3869-aadd-4000-ab84-c0bc1fedea54",
@@ -2282,6 +3128,32 @@
         "tension": "33",
         "string": "5fd90db2-b5b4-4645-b3bf-ec60ffe04045",
         "shoes": "b710ee00-c9db-4e7c-ab58-614f9f6596d7"
+      }
+    },
+    "92655": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20240612_1242_AustralianOpen2024_BPLV0293PK.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 62
+      },
+      "bio": {
+        "racket": "1b449567-b0a4-4958-92f3-c33e98d061c9",
+        "shoes": "3604574c-0234-423d-916c-255d933ca48b",
+        "instagram": "https://www.instagram.com/kallekoljonen94"
+      }
+    },
+    "92796": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1672/v1685961867/wordpress_assets_test/20230531_2038_ThailandOpen2023_BPYL2348/20230531_2038_ThailandOpen2023_BPYL2348.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 24
+      }
+    },
+    "92846": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1722/v1729848395/wordpress_assets_test/Muhammad-Faiq_WJC24/Muhammad-Faiq_WJC24.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 21
       }
     },
     "92913": {
@@ -2297,6 +3169,13 @@
         "coach": "Chen Hung-ling",
         "racket": "38ecd0b6-e2b1-4464-9543-84a5a6affa81",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
+      }
+    },
+    "92928": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1772428186/wordpress_assets_test/Han-Qian-Xi_GO26.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 23
       }
     },
     "92967": {
@@ -2345,6 +3224,11 @@
       }
     },
     "94032": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/Kantemyr-Buhrova2_AE25.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 15
+      },
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
         "racketNote": "4U",
@@ -2359,18 +3243,35 @@
       }
     },
     "94156": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1774047854/wordpress_assets_test/Ruben-Garcia-Lucia-Rodriguez_OM26.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 33
+      },
       "bio": {
         "racket": "6e7c51df-e439-4094-b889-65cddec4edca",
         "instagram": "https://www.instagram.com/rubengrcia._/"
       }
     },
     "94165": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1344/v1730337143/wordpress_assets_test/Tanisha-Crasto_Paris2024/Tanisha-Crasto_Paris2024.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 28
+      },
       "bio": {
         "birthplace": "Dubai",
         "coach": "Pullela Gopichand Arun Vishnu Tan Kim Her Manu Attri",
         "racket": "159209e2-7ca3-45ca-a142-4b9f175d088d",
         "string": "538a1b0a-3c92-46fa-b161-06e5a1f72a8e",
         "achievements": "Asia Mixed Team Championships 2023 – bronze (Mixed team); Asia Team Championships 2024 – gold (Women's team)"
+      }
+    },
+    "94397": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1782627131/wordpress_assets_test/20260627_1937_USOpen2026_BPYL2901.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 38
       }
     },
     "94519": {
@@ -2435,6 +3336,13 @@
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d"
       }
     },
+    "95516": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1781258928/wordpress_assets_test/cr_20260612_1534_AustralianOpen2026_BPPF7773.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 38
+      }
+    },
     "95643": {
       "bio": {
         "racket": "4b9cafba-6606-49ec-bc5a-520c05e6f977",
@@ -2484,6 +3392,13 @@
         "club": "BIPROGY"
       }
     },
+    "96690": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/2/2e/L%C3%A9o_Rossi_Taipei_Open_2024.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 43
+      }
+    },
     "96713": {
       "photo": "https://img.olympics.com/images/image/private/t_s_pog_staticContent_hero_lg_2x/f_auto/primary/cpd2q4nz9itaq7crasjr",
       "photoCrop": {
@@ -2500,6 +3415,11 @@
       }
     },
     "96725": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1978/v1777589161/wordpress_assets_test/Lin-Hsiang-Ti_TUC26/Lin-Hsiang-Ti_TUC26.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 40
+      },
       "bio": {
         "height": 169,
         "plays": "R",
@@ -2507,6 +3427,11 @@
       }
     },
     "96877": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260702_1327_CanadaOpen2026_BPYL4990.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 10
+      },
       "bio": {
         "racket": "e32bf45c-504b-4944-94e7-7f518bf8575d",
         "racketNote": "Kurenai, 4U",
@@ -2527,6 +3452,13 @@
         "achievements": "Asia Team Championships 2026 – bronze (women's team); World University Games 2025 – silver (mixed team); World University Games 2025 – silver (XD)"
       }
     },
+    "97030": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1762036835/wordpress_assets_test/cr_20251101_1714_HyloOpen2025_BPLN9178.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 30
+      }
+    },
     "97115": {
       "name": "YOO Tae-bin",
       "hero": "https://img.olympics.com/images/image/private/t_s_16_9_g_auto/t_s_w1460/f_auto/primary/svhhow4k4izdwht8v73b",
@@ -2541,6 +3473,11 @@
       }
     },
     "97174": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20241020_1607_DenmarkOpen2024_BPYS8243.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 28
+      },
       "bio": {
         "birthplace": "Koshigaya",
         "coach": "Sho Sasaki",
@@ -2548,6 +3485,34 @@
         "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
         "achievements": "Sudirman Cup 2025 – bronze (Mixed team); Asian Games 2022 – bronze (Men's team); Asia Team Championships 2026 – gold (Men's team); Asia Team Championships 2020 – bronze (Men's team); Asia Team Championships 2024 – bronze (Men's team)",
         "instagram": "https://www.instagram.com/watakou0123/"
+      }
+    },
+    "97345": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20260809_1405_KoreaMasters2026_BPSL9200.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 21
+      }
+    },
+    "97685": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1853/v1777244001/wordpress_assets_test/20260426_2314_ThomasUberCupFinals2026_BPYN1184/20260426_2314_ThomasUberCupFinals2026_BPYN1184.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 50
+      }
+    },
+    "97737": {
+      "hero": "https://upload.wikimedia.org/wikipedia/commons/5/52/Badminton_at_2025_National_Games_of_Taiwan_-_22.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 31
+      }
+    },
+    "99042": {
+      "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1707/v1769050561/wordpress_assets_test/20260121_1938_IndonesiaMasters2026_BPRS0171/20260121_1938_IndonesiaMasters2026_BPRS0171.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 1
       }
     },
     "99066": {
@@ -2601,6 +3566,11 @@
       }
     },
     "99778": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1/wordpress_assets_test/20240124_1551_IndonesiaMasters2024_BPRS0733.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 30
+      },
       "bio": {
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f",
         "tension": "29/30",
@@ -2609,6 +3579,11 @@
       }
     },
     "99781": {
+      "hero": "https://res.cloudinary.com/badminton/image/upload/f_auto,q_auto,c_limit,w_2560/v1780580976/wordpress_assets_test/20260604_1809_IndonesiaOpen2026_BPJS5613.jpg",
+      "heroFocus": {
+        "x": 50,
+        "y": 35
+      },
       "bio": {
         "height": 172,
         "plays": "R",
