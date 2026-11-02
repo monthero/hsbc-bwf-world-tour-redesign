@@ -745,7 +745,7 @@
         "racket": "275dd589-06a3-4c38-8399-f3184c4dc585",
         "racketNote": "3U",
         "tension": "27/29",
-        "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5",
+        "string": "a2186ed4-9866-4d92-9cf7-218d152584a7",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
@@ -791,7 +791,10 @@
     },
     "62618": {
       "bio": {
-        "racket": "4b9cafba-6606-49ec-bc5a-520c05e6f977",
+        "racket": "5958e8c6-d63b-4c1b-84e2-a4d434e28d38",
+        "racketNote": "4U",
+        "tension": "30/31",
+        "string": "9f0544c3-5160-4bc7-9488-9fa20480f0f5",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
     },
@@ -943,6 +946,8 @@
         "height": 182,
         "birthplace": "Albany",
         "racket": "399bf45c-56a6-4087-a303-c3401f124887",
+        "racketNote": "4U",
+        "tension": "29/31",
         "string": "538a1b0a-3c92-46fa-b161-06e5a1f72a8e",
         "shoes": "9031ab0a-a952-4903-86c9-6d6825d8b9f8",
         "achievements": "Pan American Championships 2024 – gold (MD); Pan American Championships 2024 – gold (XD); Pan American Championships 2025 – gold (MD); Pan American Championships 2026 – gold (MD); Pan American Championships 2026 – gold (XD); Pan American Championships 2023 – bronze (MD); Pan American Championships 2025 – bronze (XD); Pan American Championships team 2025 – silver (mixed team); Pan American Championships and Female team 2026 – silver (men's team)"
@@ -1069,7 +1074,9 @@
         "nickname": "Omo",
         "birthplace": "Bangkok",
         "racket": "673de5e1-56a1-4638-9403-c7d4daab604f",
-        "tension": "30",
+        "racketNote": "4U",
+        "tension": "31",
+        "string": "78506bc2-603c-4284-b74b-c3e56b94c0f7",
         "achievements": "Asian Games 2026 – bronze (Men's team); Asia Mixed Team Championships 2023 – bronze (Mixed team); Asia Mixed Team Championships 2025 – bronze (Mixed team); World University Games 2021 – bronze (Mixed team); World University Games 2025 – bronze (Men's doubles); SEA Games 2021 – gold (Men's team); SEA Games 2023 – silver (Men's doubles); SEA Games 2023 – bronze (Mixed doubles); SEA Games 2023 – bronze (Men's team); SEA Games 2025 – bronze (Men's team)"
       }
     },
@@ -1579,6 +1586,8 @@
       "hero": "https://res.cloudinary.com/badminton/images/f_auto,q_auto/w_2560,h_1676/v1784522747/wordpress_assets_test/20260719_1439_JapanOpen2026_BPJS7657-1/20260719_1439_JapanOpen2026_BPJS7657-1.jpg",
       "bio": {
         "racket": "cb0f917f-08f3-4092-ac32-cc15f8cc4ab5",
+        "racketNote": "3UG5",
+        "tension": "33",
         "string": "538a1b0a-3c92-46fa-b161-06e5a1f72a8e",
         "shoes": "9cc7347c-e8f6-4001-a3d3-bd8f9b76f2d0"
       }
@@ -2362,6 +2371,12 @@
       "heroFocus": {
         "x": 50,
         "y": 3
+      },
+      "bio": {
+        "racket": "6b5a7536-c7dd-4718-bf7c-1961a951d390",
+        "racketNote": "3U",
+        "tension": "32",
+        "string": "78506bc2-603c-4284-b74b-c3e56b94c0f7"
       }
     },
     "84159": {
@@ -2994,7 +3009,8 @@
     },
     "91224": {
       "bio": {
-        "racket": "5b547627-9d44-49a8-bcf6-7998ba94cfe1"
+        "racket": "5b547627-9d44-49a8-bcf6-7998ba94cfe1",
+        "tension": "30/31"
       }
     },
     "91292": {
