@@ -3,14 +3,14 @@ import { clsx } from 'clsx';
 import { memo } from 'react';
 
 import type { Game, Side } from '~/types';
-import { GAME_SHORT, gameDone } from '~/utils/live';
+import { GAME_SHORT, gameDone, type Scoring } from '~/utils/live';
 import { formatGames, gameWon, opposite } from '~/utils/matches';
 
 import classes from './GameChips.module.css';
 
-const GameChip = memo<{ n: number; game: Game }>(({ n, game }) => {
+const GameChip = memo<{ n: number; game: Game; scoring: Scoring }>(({ n, game, scoring }) => {
   const { i18n } = useLingui();
-  const finished = gameDone(game);
+  const finished = gameDone(game, scoring);
   const lost = (side: Side) => !finished || gameWon(game, opposite(side)) || undefined;
   const label = i18n._({ ...GAME_SHORT, values: { n } });
   return (
@@ -28,12 +28,13 @@ const GameChip = memo<{ n: number; game: Game }>(({ n, game }) => {
   );
 });
 
-export const GameChips = memo<{ games: readonly Game[]; className?: string }>(({ games, className }) =>
-  games.length ? (
-    <ol className={clsx(classes.chips, className)}>
-      {games.map((g, i) => (
-        <GameChip key={i} n={i + 1} game={g} />
-      ))}
-    </ol>
-  ) : null,
+export const GameChips = memo<{ games: readonly Game[]; scoring: Scoring; className?: string }>(
+  ({ games, scoring, className }) =>
+    games.length ? (
+      <ol className={clsx(classes.chips, className)}>
+        {games.map((g, i) => (
+          <GameChip key={i} n={i + 1} game={g} scoring={scoring} />
+        ))}
+      </ol>
+    ) : null,
 );

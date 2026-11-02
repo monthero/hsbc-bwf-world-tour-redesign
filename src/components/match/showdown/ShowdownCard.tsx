@@ -20,7 +20,14 @@ import {
 } from '~/components/ui';
 import { DARK_SCOPE_PROPS } from '~/theme';
 import type { Game, Player, Side } from '~/types';
-import { CHALLENGE_LABELS, LONGEST_RUN, RALLY_POINTS, type CallKind, type ChallengeOutcome } from '~/utils/live';
+import {
+  CHALLENGE_LABELS,
+  LONGEST_RUN,
+  matchScoring,
+  RALLY_POINTS,
+  type CallKind,
+  type ChallengeOutcome,
+} from '~/utils/live';
 import { noteLabel, noteTip } from '~/utils/matches';
 
 import { ChallengeStocks } from '../ChallengeStocks';
@@ -28,6 +35,7 @@ import { GameChips } from '../GameChips';
 import { ScheduledStart } from '../MatchTime';
 import { SideMedal } from '../MedalMark';
 import type { MedalStake } from '../medals';
+import { SavedMark } from '../SavedMark';
 import { ReceiveMark, ServeMark } from '../ServeMark';
 import { StreakMark } from '../StreakMark';
 import { TeamPlayers } from '../TeamPlayers';
@@ -229,12 +237,13 @@ const Hub = memo<{ view: ShowdownView }>(({ view: v }) => {
   );
 });
 
-const hasTags = (s: SideView) => (!!s.stats && s.left !== null) || s.streak > 0;
+const hasTags = (s: SideView) => (!!s.stats && s.left !== null) || s.streak > 0 || !!s.saved;
 
 const Tags = memo<{ side: SideView }>(({ side: s }) => (
   <span className={classes.tags} data-side={s.side}>
     <ChallengeStocks stats={s.stats} left={s.left} mirror={s.side === 1} />
     {s.streak > 0 && <StreakMark n={s.streak} mirror={s.side === 1} />}
+    {s.saved && <SavedMark saved={s.saved} mirror={s.side === 1} />}
   </span>
 ));
 
@@ -295,7 +304,7 @@ export const ShowdownCard = memo<{
         <Hub view={v} />
         <Corner view={v} side={1} follow={follow} />
         <span className={classes.shade} aria-hidden />
-        <GameChips games={v.done} className={classes.rail} />
+        <GameChips games={v.done} scoring={matchScoring(v.match)} className={classes.rail} />
       </div>
       {(duels || hasTags(a) || hasTags(b)) && (
         <div className={classes.tagRow}>

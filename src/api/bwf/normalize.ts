@@ -1,6 +1,6 @@
 import type { Game } from '~/types';
 import { meetKey, type OtherMeet } from '~/utils/h2h';
-import { gameDone } from '~/utils/live';
+import { gameDone, scoringOn, type Scoring } from '~/utils/live';
 import { wallClock } from '~/utils/utc-offset';
 
 import { EventCode, type EntryStage, type MatchDto } from '../schemas';
@@ -12,8 +12,8 @@ const OFF_COURT = 'O';
 
 type Score = NonNullable<BwfMatch['score']>;
 
-const winnerOf = (score: Score) => {
-  const done = score.filter((s) => gameDone([s.home, s.away]));
+const winnerOf = (score: Score, scoring: Scoring) => {
+  const done = score.filter((s) => gameDone([s.home, s.away], scoring));
   const home = done.filter((s) => s.home > s.away).length;
   const away = done.length - home;
   if (home === away) return 0;
@@ -48,7 +48,7 @@ export const toMatchDto = (m: BwfMatch, names: NameOf): MatchDto | null => {
     event: event.data,
     round: BWF_ROUNDS[m.roundName] ?? m.roundName,
     status,
-    winner: m.winner || (m.matchStatus === OFF_COURT ? winnerOf(score) : 0),
+    winner: m.winner || (m.matchStatus === OFF_COURT ? winnerOf(score, scoringOn(m.matchTime?.slice(0, 10) ?? '')) : 0),
     teams: [toTeam(m.team1, m.team1seed, names), toTeam(m.team2, m.team2seed, names)],
     games: score.map((s) => [s.home, s.away]),
     durationMin: m.duration ?? 0,

@@ -1542,6 +1542,11 @@ msgstr "게임 포인트"
 msgid "Game points"
 msgstr "게임 포인트"
 
+#. Live score: how many of the opponent’s game points this side has saved since the opponent reached game point, e.g. "Game points saved: 3 of 6"
+#: src/utils/live.ts
+msgid "Game points saved: {count} of {total}"
+msgstr "막아낸 게임 포인트: {total}개 중 {count}개"
+
 #. Link at the bottom of a tournament’s popover in the calendar season strip
 #: src/pages/calendar/components/EventDetails.tsx
 msgid "Go to tournament"

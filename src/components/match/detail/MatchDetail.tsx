@@ -5,6 +5,7 @@ import { MatchVideos } from '~/components/media';
 import { IconButton, IconClose } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import type { Match, Tournament } from '~/types';
+import { matchScoring } from '~/utils/live';
 import { allGames, roundName } from '~/utils/matches';
 
 import { MatchTime } from '../MatchTime';
@@ -56,6 +57,7 @@ export const MatchDetail: FC<{
       {games.length > 0 && (
         <StatsPanel
           games={games}
+          scoring={matchScoring(match)}
           teams={match.teams}
           live={live}
           tmtId={tournament.tmtId ?? 0}

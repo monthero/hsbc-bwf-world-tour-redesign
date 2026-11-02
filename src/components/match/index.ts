@@ -21,5 +21,6 @@ export {
   type ShowdownView,
   type SideView,
 } from './showdown';
+export { SavedMark } from './SavedMark';
 export { StreakMark } from './StreakMark';
 export { TeamLabel, TeamPlayers } from './TeamPlayers';

@@ -4,6 +4,7 @@ import type { LiveServer, MatchStats } from '~/api/bwf/normalize';
 import { lazyRecord, translate } from '~/i18n/lazy';
 import type { Game, Match, Side } from '~/types';
 
+import { todayIso } from './dates';
 import { labelValue } from './format';
 import { gameWon, opposite } from './matches';
 
@@ -60,6 +61,12 @@ export const LONGEST_RUN = msg({
 export const STREAK_LABEL = msg({
   message: '{n, plural, one {# in a row} other {# in a row}}',
   comment: 'Live score: points won in a row by one side without the opponent scoring',
+});
+
+export const SAVED_LABEL = msg({
+  message: 'Game points saved: {count} of {total}',
+  comment:
+    'Live score: how many of the opponent’s game points this side has saved since the opponent reached game point, e.g. "Game points saved: 3 of 6"',
 });
 
 export const GAME_SHORT = msg({
@@ -119,20 +126,60 @@ export const challengeTip = (s: MatchStats[number], left: number) =>
 
 const SIDES: readonly Side[] = [0, 1];
 
-const GAME_TO = 21;
-const GAME_CAP = 30;
+export interface Scoring {
+  to: number;
+  cap: number;
+}
+
+const SCORING_21: Scoring = { to: 21, cap: 30 };
+const SCORING_15: Scoring = { to: 15, cap: 21 };
+const SCORING_15_FROM = '2027-01-01';
 const GAMES_TO_WIN = 2;
 
-export const gameDone = (g: Game) => {
+export const scoringOn = (day: string): Scoring => ((day || todayIso()) >= SCORING_15_FROM ? SCORING_15 : SCORING_21);
+
+export const matchScoring = (m: Pick<Match, 'date'>) => scoringOn(m.date);
+
+export const gameDone = (g: Game, s: Scoring) => {
   const hi = Math.max(g[0], g[1]);
-  return hi >= GAME_CAP || (hi >= GAME_TO && hi - Math.min(g[0], g[1]) >= 2);
+  return hi >= s.cap || (hi >= s.to && hi - Math.min(g[0], g[1]) >= 2);
+};
+
+export interface SavedPoints {
+  side: Side;
+  count: number;
+  total: number;
+}
+
+const gamePointStarts = new Map<string, { side: Side; from: number; total: number }>();
+
+const gamePointStart = (m: Match, g: Game, s: Scoring) => {
+  const key = `${m.id}|${m.games.length}`;
+  const known = gamePointStarts.get(key);
+  if (known) return known;
+  const leader = SIDES.find((x) => g[x] === s.to - 1 && g[opposite(x)] < s.to - 1 && m.lastPoint === x + 1);
+  if (leader === undefined) return null;
+  const side = opposite(leader);
+  const start = { side, from: g[side], total: s.to - 1 - g[side] };
+  gamePointStarts.set(key, start);
+  return start;
+};
+
+export const savedGamePoints = (m: Match): SavedPoints | null => {
+  const g = m.current;
+  const s = matchScoring(m);
+  if (!g || gameDone(g, s)) return null;
+  const start = gamePointStart(m, g, s);
+  if (!start) return null;
+  const count = Math.min(start.total, g[start.side] - start.from);
+  return count > 0 ? { side: start.side, count, total: start.total } : null;
 };
 
 export type LivePhase = 'play' | 'between' | 'over';
 
 export const livePhase = (m: Match): LivePhase => {
   const g = m.current;
-  if (!g || !gameDone(g)) return 'play';
+  if (!g || !gameDone(g, matchScoring(m))) return 'play';
   const all = [...m.games, g];
   return SIDES.some((s) => all.filter((x) => gameWon(x, s)).length >= GAMES_TO_WIN) ? 'over' : 'between';
 };
@@ -204,13 +251,14 @@ export const trackLiveStats = (prev: LiveStats | null | undefined, sides: MatchS
     ? { sides, streak: nextStreak(prev, sides), challenge: nextChallenge(prev, sides, at) }
     : { sides, streak: null, challenge: null };
 
-const hasGamePoint = (own: number, opp: number) => own >= GAME_TO - 1 && (own > opp || own === GAME_CAP - 1);
+const hasGamePoint = (own: number, opp: number, s: Scoring) => own >= s.to - 1 && (own > opp || own === s.cap - 1);
 
 export type CallKind = 'game' | 'match';
 
 export const pointCallKind = (m: Match, side: Side): CallKind | null => {
   const g = m.current;
-  if (!g || gameDone(g) || !hasGamePoint(g[side], g[opposite(side)])) return null;
+  const scoring = matchScoring(m);
+  if (!g || gameDone(g, scoring) || !hasGamePoint(g[side], g[opposite(side)], scoring)) return null;
   return m.games.some((x) => gameWon(x, side)) ? 'match' : 'game';
 };
 

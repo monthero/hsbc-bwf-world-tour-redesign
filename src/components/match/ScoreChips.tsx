@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { memo } from 'react';
 
 import type { Match, Side } from '~/types';
-import { gameDone } from '~/utils/live';
+import { gameDone, matchScoring } from '~/utils/live';
 import { gameWon } from '~/utils/matches';
 import { perspectiveGames } from '~/utils/season';
 
@@ -34,10 +34,11 @@ export const SideScores = memo<{
   const count = Math.max(slots ?? 0, m.games.length);
   const cells = Array.from({ length: count }, (_, i) => m.games[i]);
   const current = withCurrent && m.current ? m.current[side] : null;
+  const scoring = matchScoring(m);
   return (
     <span className={clsx(classes.scores, className)} data-variant={variant}>
       {cells.map((g, i) => (
-        <span key={i} className={classes.score} data-won={(g && gameDone(g) && gameWon(g, side)) || undefined}>
+        <span key={i} className={classes.score} data-won={(g && gameDone(g, scoring) && gameWon(g, side)) || undefined}>
           {g?.[side] ?? ''}
         </span>
       ))}

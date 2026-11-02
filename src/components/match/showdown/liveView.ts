@@ -7,10 +7,12 @@ import {
   challengesLeft,
   gameDone,
   livePhase,
+  matchScoring,
   liveStatus,
   pointCall,
   pointCallKind,
   reviewBy,
+  savedGamePoints,
   receivingPlayer,
   servingPlayer,
   STREAK_MIN,
@@ -20,6 +22,7 @@ import {
   type LivePhase,
   type LiveStats,
   type LiveStatus,
+  type SavedPoints,
 } from '~/utils/live';
 import { allGames, gameWon, matchRoundName, noteLabel, opposite, winnerSide } from '~/utils/matches';
 
@@ -39,6 +42,7 @@ export interface SideView {
   left: number | null;
   recent: ChallengeOutcome | null;
   review: boolean;
+  saved: SavedPoints | null;
 }
 
 export interface LiveView {
@@ -67,6 +71,7 @@ const sideView = (
   stats: LiveStats | null,
   game: MatchStats | null,
   challenge: ChallengeResult | null,
+  saved: SavedPoints | null,
 ): SideView => {
   const now = m.current?.[side] ?? 0;
   const recent = challenge?.side === side ? challenge.outcome : null;
@@ -79,11 +84,12 @@ const sideView = (
     streak: stats?.streak?.side === side && stats.streak.count >= STREAK_MIN ? stats.streak.count : 0,
     serving: m.serve === side + 1,
     flash: m.lastPoint === side + 1,
-    leading: !!m.current && gameDone(m.current) && gameWon(m.current, side),
+    leading: !!m.current && gameDone(m.current, matchScoring(m)) && gameWon(m.current, side),
     stats: stats?.sides[side] ?? null,
     left: leftOf(side, phase, m.games.length + 1, stats, game),
     recent,
     review: !recent && reviewBy(m) === side,
+    saved: saved?.side === side ? saved : null,
   };
 };
 
@@ -97,6 +103,7 @@ export const toLiveView = (
 ): LiveView => {
   const phase = livePhase(m);
   const gameNo = m.games.length + 1;
+  const saved = savedGamePoints(m);
   return {
     court: m.court,
     event: EVENT_NAMES[m.event],
@@ -107,7 +114,7 @@ export const toLiveView = (
     status: liveStatus(m),
     server: servingPlayer(m, server),
     receiver: receivingPlayer(m, server, receiver),
-    sides: [sideView(m, 0, phase, stats, game, challenge), sideView(m, 1, phase, stats, game, challenge)],
+    sides: [sideView(m, 0, phase, stats, game, challenge, saved), sideView(m, 1, phase, stats, game, challenge, saved)],
   };
 };
 
@@ -141,7 +148,7 @@ const phaseOf = (m: Match): ShowdownPhase => {
 
 const doneGames = (m: Match, phase: ShowdownPhase) => {
   if (phase === 'pre') return [];
-  return m.current && !gameDone(m.current) ? m.games : allGames(m);
+  return m.current && !gameDone(m.current, matchScoring(m)) ? m.games : allGames(m);
 };
 
 const winnerOf = (m: Match, phase: ShowdownPhase, done: readonly Game[]): Side | null => {

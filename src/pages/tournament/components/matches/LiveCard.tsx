@@ -10,6 +10,7 @@ import {
   EventTag,
   RoundTag,
   ServeMark,
+  SavedMark,
   StreakMark,
   TeamPlayers,
 } from '~/components/match';
@@ -36,6 +37,7 @@ const Tags: FC<{ side: SideView }> = ({ side: s }) => {
       <ChallengeStocks stats={s.stats} left={s.left} />
       {s.call && <StatusChip tone="gold">{s.call}</StatusChip>}
       {s.streak > 0 && <StreakMark n={s.streak} />}
+      {s.saved && <SavedMark saved={s.saved} />}
       {s.review && <StatusChip tone="blue">{review}</StatusChip>}
       {s.recent && <StatusChip tone={CHALLENGE_TONES[s.recent]}>{CHALLENGE_LABELS[s.recent]}</StatusChip>}
     </span>

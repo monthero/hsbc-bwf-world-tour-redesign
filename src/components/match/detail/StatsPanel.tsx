@@ -7,6 +7,7 @@ import { memo, useCallback, useMemo, useState, type FC } from 'react';
 import { liveGameStatsQuery, liveMatchStatsQuery } from '~/api/queries';
 import { LiveDot, SectionTitle, TabBar, type TabItem } from '~/components/ui';
 import type { Game, Team } from '~/types';
+import type { Scoring } from '~/utils/live';
 
 import { CompareLine } from './CompareLine';
 import { SideNames } from './SideNames';
@@ -59,16 +60,17 @@ const useTabStats = (tmtId: number, code: string, tab: number, live: number) => 
 
 export const StatsPanel = memo<{
   games: readonly Game[];
+  scoring: Scoring;
   teams: readonly [Team, Team];
   live: number;
   tmtId: number;
   code: string;
   className?: string;
-}>(({ games, teams, live, tmtId, code, className }) => {
+}>(({ games, scoring, teams, live, tmtId, code, className }) => {
   const [tab, setTab] = useState(0);
   const active = Math.min(tab, games.length);
   const stats = useTabStats(tmtId, code, active, live);
-  const view = useMemo(() => statView(games, active, stats), [games, active, stats]);
+  const view = useMemo(() => statView(games, scoring, active, stats), [games, scoring, active, stats]);
   const { t, i18n } = useLingui();
   const items = useMemo(() => tabsFor(i18n, games.length, live), [i18n, games.length, live]);
   const onTab = useCallback((v: string) => setTab(Number(v)), []);

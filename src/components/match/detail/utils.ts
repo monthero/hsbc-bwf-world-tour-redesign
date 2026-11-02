@@ -7,7 +7,7 @@ import type { Game, Match, PlayerMatch, Side } from '~/types';
 import { date, formatDayMonth, formatDayMonthYear } from '~/utils/dates';
 import { formatDuration, formatNumber, formatRank, formatRecord, joinDots } from '~/utils/format';
 import type { H2HRecord, OtherMeet, WL } from '~/utils/h2h';
-import { gameDone, LONGEST_RUN } from '~/utils/live';
+import { gameDone, LONGEST_RUN, matchScoring, scoringOn, type Scoring } from '~/utils/live';
 import { courtLabel, opposite, roundName } from '~/utils/matches';
 
 import type { FormItem } from '../Outcome';
@@ -46,6 +46,7 @@ export interface Meeting {
   dur?: string;
   won: boolean;
   games: readonly Game[];
+  scoring: Scoring;
 }
 
 const both = <T>(f: (s: Side) => T) => [f(0), f(1)] as const;
@@ -133,10 +134,10 @@ const apiRows = (stats: MatchStats | null): SplitRow[] => {
   ];
 };
 
-export const statView = (games: readonly Game[], tab: number, stats: MatchStats | null): StatView => {
+export const statView = (games: readonly Game[], scoring: Scoring, tab: number, stats: MatchStats | null): StatView => {
   if (!games.length) return NO_STATS;
   if (tab === 0) {
-    const done = games.filter(gameDone);
+    const done = games.filter((g) => gameDone(g, scoring));
     const [pA, pB] = both((s) => games.reduce((x, g) => x + g[s], 0));
     const [mA, mB] = both((s) => Math.max(0, ...done.map((g) => lead(g, s))));
     return {
@@ -147,7 +148,7 @@ export const statView = (games: readonly Game[], tab: number, stats: MatchStats 
   if (!g) return NO_STATS;
   const [a, b] = g;
   const rows = [pointsRow(a, b), ...apiRows(stats)];
-  if (gameDone(g)) rows.push(marginRow(WINNING_MARGIN, lead(g, 0), lead(g, 1)));
+  if (gameDone(g, scoring)) rows.push(marginRow(WINNING_MARGIN, lead(g, 0), lead(g, 1)));
   return { rows };
 };
 
@@ -163,6 +164,7 @@ const toMeeting = (pm: PlayerMatch, full: boolean): Meeting => ({
   ...(full ? { venue: venueOf(pm), dur: formatDuration(pm.match.durationMin) || undefined } : {}),
   won: pm.outcome === 'W',
   games: pm.side ? flipGames(pm.match.games) : pm.match.games,
+  scoring: matchScoring(pm.match),
 });
 
 export const toMeetings = (list: readonly PlayerMatch[], full: boolean): Meeting[] =>
@@ -176,6 +178,7 @@ const otherMeeting = (o: OtherMeet): Meeting => ({
   dur: (o.durationMin && formatDuration(o.durationMin)) || undefined,
   won: o.won,
   games: o.games,
+  scoring: scoringOn(o.date),
 });
 
 export const allMeetings = (record: H2HRecord): Meeting[] =>
