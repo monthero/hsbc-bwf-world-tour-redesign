@@ -500,8 +500,8 @@ export const exportData = async (
       const weekly = weeklySeries(weeks, id, worldPub.date);
       const byWeek = new Map<string, number>();
       for (const { ev, w } of weekly)
-        for (const [date, rank] of w) {
-          byWeek.set(`${ev}|${date}`, rank);
+        for (const [date, rank, , partner] of w) {
+          byWeek.set(`${ev}|${date}|${partner ?? ''}`, rank);
           rankWeeks.add(date);
         }
       weeklyRank.set(id, byWeek);
@@ -558,8 +558,14 @@ export const exportData = async (
         for (const r of (unzipJson(body) as ApiRankingTable).results.data) {
           const ev = WORLD_CATEGORIES[r.ranking_category_id];
           if (ev)
-            for (const id of [r.player1_id, r.player2_id])
-              if (id) table.set(`${ev}|${id}`, Math.min(r.rank, table.get(`${ev}|${id}`) ?? r.rank));
+            for (const [id, partner] of [
+              [r.player1_id, r.player2_id],
+              [r.player2_id, r.player1_id],
+            ])
+              if (id) {
+                const key = `${ev}|${id}|${partner || ''}`;
+                table.set(key, Math.min(r.rank, table.get(key) ?? r.rank));
+              }
         }
       tables.set(publication, table);
       return table;
@@ -572,16 +578,22 @@ export const exportData = async (
       const table = publication ? tableOf(publication) : undefined;
       const ranks: Record<string, Record<string, number>> = {};
       for (const { dto } of list)
-        for (const p of dto.teams.flatMap((t) => t.players)) {
-          const key = `${dto.event}|${p.id}`;
-          const r = table?.get(key) ?? weeklyRank.get(p.id)?.get(`${dto.event}|${week}`);
-          if (r) (ranks[p.id] ??= {})[dto.event] = r;
-        }
+        for (const team of dto.teams)
+          for (const p of team.players) {
+            const partner = team.players.find((x) => x.id !== p.id)?.id ?? '';
+            const r =
+              table?.get(`${dto.event}|${p.id}|${partner}`) ??
+              weeklyRank.get(p.id)?.get(`${dto.event}|${week}|${partner}`);
+            if (r) (ranks[p.id] ??= {})[dto.event] = r;
+          }
       write(`tournament-ranks/${code}.json`, { code, week, ranks });
     }
   }
 
-  const race: Record<string, { ev: string; r: number; pr: number | null; n: string; w: string; pts: number }[]> = {};
+  const race: Record<
+    string,
+    { ev: string; r: number; pr: number | null; n: string; w: string; wid: string; pts: number }[]
+  > = {};
   for (const r of all<{
     category: number;
     player1: string;
@@ -607,6 +619,7 @@ export const exportData = async (
         pr: r.rank_previous,
         n: nameOf(self),
         w: nameOf(partner),
+        wid: partner || '',
         pts: r.points,
       });
     }

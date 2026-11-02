@@ -32,19 +32,32 @@ const bestRank = (players: readonly Player[], rankOf: (p: Player) => number) => 
   return best;
 };
 
+const teamRank = (players: readonly Player[], rankWith: (p: Player, partner: string) => number) => {
+  const [a, b] = players;
+  if (!a) return 0;
+  if (!b) return rankWith(a, '');
+  return rankWith(a, b.id) || rankWith(b, a.id);
+};
+
+const pairRank = (rank: CurrentRank | undefined, partner: string) => {
+  if (!rank) return 0;
+  if (rank.wid === partner) return rank.r ?? 0;
+  return rank.also?.find((x) => x.wid === partner)?.r ?? 0;
+};
+
 export const worldRank = (dir: PlayerDirectory | undefined, players: readonly Player[], ev: EventCode) =>
-  bestRank(players, (p) => dir?.get(p.id)?.ranks?.find((c) => c.ev === ev)?.r ?? 0);
+  teamRank(players, (p, partner) =>
+    pairRank(
+      dir?.get(p.id)?.ranks?.find((c) => c.ev === ev),
+      partner,
+    ),
+  );
 
 export const frozenRank = (ranks: TournamentRanks['ranks'], players: readonly Player[], ev: EventCode) =>
   bestRank(players, (p) => ranks[p.id]?.[ev] ?? 0);
 
-export const raceRank = (race: RaceRankings | undefined, players: readonly Player[], ev: EventCode) => {
-  for (const p of players) {
-    const r = race?.players[p.id]?.find((x) => x.ev === ev)?.r;
-    if (r) return r;
-  }
-  return 0;
-};
+export const raceRank = (race: RaceRankings | undefined, players: readonly Player[], ev: EventCode) =>
+  teamRank(players, (p, partner) => race?.players[p.id]?.find((x) => x.ev === ev && x.wid === partner)?.r ?? 0);
 
 const pickQualifiers = <T>(entries: readonly T[], countriesOf: (e: T) => readonly string[]): Set<T> => {
   const perCountry = new Map<string, number>();

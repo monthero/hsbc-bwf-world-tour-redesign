@@ -277,6 +277,7 @@ const RaceRank = z.object({
   pr: NullableNumber,
   n: z.string(),
   w: z.string(),
+  wid: z.string().default(''),
   pts: z.number(),
 });
 
