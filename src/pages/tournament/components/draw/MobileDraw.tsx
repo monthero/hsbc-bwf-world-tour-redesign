@@ -57,6 +57,16 @@ const follow = (el: HTMLElement, bracket: Bracket, from: number, to: number) => 
   window.scrollBy({ top: y - want, behavior: scrollBehavior() });
 };
 
+const reveal = (el: HTMLElement, bracket: Bracket, i: number) => {
+  const body = columnsOf(el)[i]?.lastElementChild;
+  const y = bracket.columns[i]?.ys[0];
+  if (!body || y === undefined) return;
+  const half = bracket.boxHeight / 2;
+  const boxTop = body.getBoundingClientRect().top + y - half;
+  if (boxTop + bracket.boxHeight + VIEW_MARGIN <= window.innerHeight) return;
+  window.scrollBy({ top: boxTop - headerOffset() - tabbarHeight(el) - VIEW_MARGIN, behavior: scrollBehavior(true) });
+};
+
 export const MobileDraw: FC<{
   bracket: Bracket;
   round: number;
@@ -87,6 +97,7 @@ export const MobileDraw: FC<{
     const behavior = scrollBehavior(instant);
     target.current = d && behavior === 'smooth' ? i : null;
     if (d) el.scrollBy({ left: inlineSign(el) * d, behavior });
+    if (from === null && i > 0) reveal(el, latest.current.bracket, i);
   }, []);
 
   useLayoutEffect(() => {

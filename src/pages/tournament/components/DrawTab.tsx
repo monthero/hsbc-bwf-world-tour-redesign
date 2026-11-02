@@ -11,7 +11,7 @@ import type { EventCode } from '~/types';
 
 import { useOpenMatch, useUpdateSearch } from '../hooks';
 import type { TabProps } from '../types';
-import { buildBracket, hasDraw } from './draw/bracket';
+import { buildBracket, currentRound, hasDraw } from './draw/bracket';
 import { BracketView } from './draw/BracketView';
 import { MobileDraw } from './draw/MobileDraw';
 
@@ -23,7 +23,7 @@ const route = getRouteApi('/world-tour/$year/$slug');
 
 export const DrawTab: FC<TabProps> = ({ tournament, schedule, draw }) => {
   const ev = route.useSearch({ select: (s) => s.draw ?? 'MS' });
-  const round = route.useSearch({ select: (s) => s.round ?? 0 });
+  const round = route.useSearch({ select: (s) => s.round });
   const update = useUpdateSearch();
   const onOpen = useOpenMatch();
   const mobile = useIsMobile();
@@ -32,6 +32,7 @@ export const DrawTab: FC<TabProps> = ({ tournament, schedule, draw }) => {
   const event = EVENT_NAMES[ev];
   const has = useMemo(() => hasDraw(schedule, draw, ev), [schedule, draw, ev]);
   const bracket = useMemo(() => (has ? buildBracket(schedule, draw, ev, live) : null), [has, schedule, draw, ev, live]);
+  const current = bracket ? currentRound(bracket, tournament.status) : 0;
 
   const onEvent = useCallback((v: EventCode | null) => v && update({ draw: v }), [update]);
   const onRound = useCallback((r: number) => update({ round: r }), [update]);
@@ -48,7 +49,7 @@ export const DrawTab: FC<TabProps> = ({ tournament, schedule, draw }) => {
       ) : (
         <FlagTipGroup>
           {mobile ? (
-            <MobileDraw bracket={bracket} round={round} onRound={onRound} onOpen={onOpen} />
+            <MobileDraw bracket={bracket} round={round ?? current} onRound={onRound} onOpen={onOpen} />
           ) : (
             <BracketView bracket={bracket} onOpen={onOpen} />
           )}

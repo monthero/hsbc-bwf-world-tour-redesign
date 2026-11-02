@@ -1,7 +1,7 @@
 import { i18n } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 
-import type { DrawSlot, EventCode, Match, Side, Team, TournamentSchedule } from '~/types';
+import type { DrawSlot, EventCode, Match, Side, Team, TournamentSchedule, TournamentStatus } from '~/types';
 import { date } from '~/utils/dates';
 import { isDoubles, roundName, winnerSide } from '~/utils/matches';
 
@@ -178,6 +178,12 @@ const roundDay = (schedule: TournamentSchedule, ev: EventCode, id: string) => {
 const activeRound = (schedule: TournamentSchedule) => {
   const today = schedule.days[schedule.focusIndex]?.matches ?? [];
   return (today.find((m) => m.status === 'P') ?? today.find((m) => m.status === 'N') ?? today[0])?.round;
+};
+
+export const currentRound = (bracket: Bracket, status: TournamentStatus) => {
+  const active = bracket.columns.findIndex((c) => c.active);
+  if (active >= 0) return active;
+  return status === 'done' ? bracket.columns.length - 1 : 0;
 };
 
 export const isBracketMatch = (m: Pick<Match, 'round'>) => DRAW_ROUNDS.some((r) => r.id === m.round);
