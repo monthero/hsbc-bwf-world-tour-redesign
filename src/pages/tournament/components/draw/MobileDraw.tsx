@@ -13,13 +13,13 @@ const VIEW_MARGIN = 12;
 const closest = (ys: number[], from: number, to: number, y: number) => {
   let best = from;
   for (let j = from + 1; j < Math.min(to, ys.length); j++) {
-    if (Math.abs((ys[j] ?? 0) - y) < Math.abs((ys[best] ?? 0) - y)) best = j;
+    if (Math.abs((ys.at(j) ?? 0) - y) < Math.abs((ys.at(best) ?? 0) - y)) best = j;
   }
   return best;
 };
 
 const follow = (el: HTMLElement, bracket: Bracket, from: number, to: number) => {
-  const body = snapPages(el)[to]?.lastElementChild;
+  const body = snapPages(el).at(to)?.lastElementChild;
   if (!body) return;
   const top = headerOffset() + tabbarHeight(el);
   const bottom = window.innerHeight;
@@ -27,22 +27,22 @@ const follow = (el: HTMLElement, bracket: Bracket, from: number, to: number) => 
   const lo = Math.max(top, y0);
   const hi = Math.min(bottom, y1);
   if (hi <= lo) return;
-  const src = bracket.columns[from]?.ys ?? [];
-  const dst = bracket.columns[to]?.ys ?? [];
+  const src = bracket.columns.at(from)?.ys ?? [];
+  const dst = bracket.columns.at(to)?.ys ?? [];
   const mid = (lo + hi) / 2 - y0;
   const a = closest(src, 0, src.length, mid);
   const d = to - from;
   const t = d > 0 ? a >> d : closest(dst, a << -d, (a + 1) << -d, mid);
-  const y = y0 + (dst[t] ?? 0);
+  const y = y0 + (dst.at(t) ?? 0);
   const half = bracket.boxHeight / 2 + VIEW_MARGIN;
   if (y - half >= top && y + half <= bottom) return;
-  const want = Math.min(Math.max(y0 + (src[a] ?? 0), top + half), bottom - half);
+  const want = Math.min(Math.max(y0 + (src.at(a) ?? 0), top + half), bottom - half);
   window.scrollBy({ top: y - want, behavior: scrollBehavior() });
 };
 
 const reveal = (el: HTMLElement, bracket: Bracket, i: number) => {
-  const body = snapPages(el)[i]?.lastElementChild;
-  const y = bracket.columns[i]?.ys[0];
+  const body = snapPages(el).at(i)?.lastElementChild;
+  const y = bracket.columns.at(i)?.ys.at(0);
   if (!body || y === undefined) return;
   const half = bracket.boxHeight / 2;
   const boxTop = body.getBoundingClientRect().top + y - half;

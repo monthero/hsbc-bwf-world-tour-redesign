@@ -19,7 +19,7 @@ const offsetsOf = (el: HTMLElement) => {
 };
 
 const nearestOf = (offsets: number[]) =>
-  offsets.reduce((best, o, i) => (Math.abs(o) < Math.abs(offsets[best] ?? Infinity) ? i : best), 0);
+  offsets.reduce((best, o, i) => (Math.abs(o) < Math.abs(offsets.at(best) ?? Infinity) ? i : best), 0);
 
 export type PageMove<T extends HTMLElement> = (el: T, from: number | null, to: number) => void;
 
@@ -45,7 +45,7 @@ export const useSnapPager = <T extends HTMLElement>(
     settled.current = i;
     setShown(i);
     if (from !== i) latest.current.onMove?.(el, from, i);
-    const d = offsetsOf(el)[i] ?? 0;
+    const d = offsetsOf(el).at(i) ?? 0;
     const behavior = scrollBehavior(instant);
     target.current = d && behavior === 'smooth' ? i : null;
     if (!d) return;
@@ -67,7 +67,7 @@ export const useSnapPager = <T extends HTMLElement>(
       el.style.scrollSnapType = '';
       const offsets = offsetsOf(el);
       const i = nearestOf(offsets);
-      if (Math.abs(offsets[i] ?? 0) > ALIGNED_PX) return;
+      if (Math.abs(offsets.at(i) ?? 0) > ALIGNED_PX) return;
       target.current = null;
       setShown(i);
       if (i === settled.current) return;

@@ -232,7 +232,7 @@ const PodiumPages: FC<PagesProps> = ({ events, dir, hasMatches }) => {
   const seedsTitle = i18n._(SEEDS_TITLE);
   return (
     <div className={clsx(utils.container, page.tabSection, classes.section)}>
-      <Segmented options={EVENT_OPTIONS} value={events[shown]?.event ?? null} onChange={onSelect} />
+      <Segmented options={EVENT_OPTIONS} value={events.at(shown)?.event ?? null} onChange={onSelect} />
       <div ref={ref} className={clsx(utils.noScrollbar, classes.pager)}>
         <div className={classes.pages}>
           {events.map((e) => (
