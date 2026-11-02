@@ -3,7 +3,7 @@ import { useLingui } from '@lingui/react';
 import { Loader } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { useLayoutEffect, useMemo, useRef, type FC, type RefObject } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef, type FC, type RefObject } from 'react';
 
 import { NotFound } from '~/components/layout';
 import { MatchDetailModal } from '~/components/match';
@@ -12,6 +12,7 @@ import { EmptyState } from '~/components/ui';
 import { TournamentContext } from '~/contexts';
 import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { useSlideIn } from '~/hooks/useSlideIn';
+import { useSwipeTabs } from '~/hooks/useSwipeTabs';
 import { useLiveStreamSync } from '~/hooks/useTournamentMedia';
 import { useSchedule, useTournament } from '~/hooks/useTournaments';
 import type { Tournament } from '~/types';
@@ -28,7 +29,7 @@ import { PodiumTab } from './components/PodiumTab';
 import { TabNav } from './components/TabNav';
 import { TournamentHeader } from './components/TournamentHeader';
 import { CANCELLED_NOTE } from './constants';
-import { useCalendarBack, useCloseMatch, useTabData } from './hooks';
+import { useCalendarBack, useCloseMatch, useTabData, useUpdateSearch } from './hooks';
 import { TournamentTab } from './types';
 import { resolveTab } from './utils';
 
@@ -109,9 +110,13 @@ const TournamentView: FC<{
     [schedule, search.match],
   );
   const tabIndex = schedule ? TournamentTab.options.indexOf(tab) : null;
+  const tabs = useMemo(() => TournamentTab.options.filter((id) => !available || available[id]), [available]);
+  const update = useUpdateSearch();
+  const openTab = useCallback((id: TournamentTab) => update({ tab: id }), [update]);
 
   useScrollToAnchor(anchorRef, tabIndex);
   useSlideIn(paneRef, tabIndex);
+  useSwipeTabs(paneRef, tabs, tab, openTab, !!schedule && !tournament.cancelled);
   usePublishHeight(rootRef, barRef);
 
   const Tab = TABS[tab];

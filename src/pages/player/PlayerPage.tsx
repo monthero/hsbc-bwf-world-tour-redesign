@@ -4,7 +4,7 @@ import { Trans } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
 import { getRouteApi, useCanGoBack, useNavigate, useRouter } from '@tanstack/react-router';
 import { clsx } from 'clsx';
-import { memo, useCallback, useMemo, useState, type FC } from 'react';
+import { memo, useCallback, useMemo, useRef, useState, type FC } from 'react';
 
 import { NotFound, type NotFoundAction } from '~/components/layout';
 import { MatchDetailModal } from '~/components/match';
@@ -12,6 +12,8 @@ import { Equipment } from '~/components/player';
 import { BackPill } from '~/components/ui';
 import { useDocumentMeta } from '~/hooks/useDocumentMeta';
 import { usePlayerProfile } from '~/hooks/useSeason';
+import { useSlideIn } from '~/hooks/useSlideIn';
+import { useSwipeTabs } from '~/hooks/useSwipeTabs';
 import { useTournamentsByCode } from '~/hooks/useTournaments';
 import type { EventCode, PlayerMatch } from '~/types';
 import { NOT_FOUND_META, playerMeta } from '~/utils/meta';
@@ -25,7 +27,7 @@ import { OverviewTab } from './components/OverviewTab';
 import { RankingsTab } from './components/RankingsTab';
 import { Disciplines, SubNav } from './components/SubNav';
 import { usePlayerHistory, usePlayerMediaCount } from './hooks';
-import type { PlayerSearch, PlayerTab } from './types';
+import { PlayerTab, type PlayerSearch } from './types';
 import { careerHighs, careerOf, eventsOf, partnerHistory, rankedEventsOf, scopeHistory } from './utils';
 
 import classes from './PlayerPage.module.css';
@@ -120,6 +122,9 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
   );
   const openResults = useCallback(() => setTab('rankings'), [setTab]);
   const openMedia = useCallback(() => setTab('media'), [setTab]);
+  const paneRef = useRef<HTMLDivElement>(null);
+  useSlideIn(paneRef, player ? PlayerTab.options.indexOf(tab) : null);
+  useSwipeTabs(paneRef, PlayerTab.options, tab, setTab, !!player);
 
   if (missing) return <NotFound title={MISSING_TITLE} description={MISSING_DESCRIPTION} action={missingAction} />;
 
@@ -144,39 +149,41 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
           />
           {bio.equipment.length > 0 && <Equipment items={bio.equipment} className={clsx(utils.card, classes.kit)} />}
           <SubNav tab={tab} onTab={setTab} mediaCount={mediaCount} />
-          {tab !== 'media' && events.length > 1 && <Disciplines events={events} event={event} onEvent={setEvent} />}
-          {tab === 'overview' && (
-            <OverviewTab
-              playerId={id}
-              matches={scoped}
-              seasons={scopedCareer.seasons}
-              titles={scopedCareer.titles}
-              partners={partners}
-              bio={bio}
-              history={view}
-              historyLoading={history.loading}
-              ready={ready}
-              retired={!!profile.retired}
-              onOpenMatch={setSelected}
-              onSeason={openSeason}
-              onResults={openResults}
-              onMedia={openMedia}
-            />
-          )}
-          {tab === 'matches' && (
-            <MatchesTab
-              playerId={id}
-              seasons={scopedCareer.seasons}
-              season={season}
-              ready={ready}
-              onSeason={setSeason}
-              onOpenMatch={setSelected}
-            />
-          )}
-          {tab === 'rankings' && (
-            <RankingsTab ranks={ranks} history={view} loading={history.loading} playerId={id} matches={scoped} />
-          )}
-          {tab === 'media' && <MediaTab playerId={id} matches={matches} />}
+          <div ref={paneRef} className={classes.pane}>
+            {tab !== 'media' && events.length > 1 && <Disciplines events={events} event={event} onEvent={setEvent} />}
+            {tab === 'overview' && (
+              <OverviewTab
+                playerId={id}
+                matches={scoped}
+                seasons={scopedCareer.seasons}
+                titles={scopedCareer.titles}
+                partners={partners}
+                bio={bio}
+                history={view}
+                historyLoading={history.loading}
+                ready={ready}
+                retired={!!profile.retired}
+                onOpenMatch={setSelected}
+                onSeason={openSeason}
+                onResults={openResults}
+                onMedia={openMedia}
+              />
+            )}
+            {tab === 'matches' && (
+              <MatchesTab
+                playerId={id}
+                seasons={scopedCareer.seasons}
+                season={season}
+                ready={ready}
+                onSeason={setSeason}
+                onOpenMatch={setSelected}
+              />
+            )}
+            {tab === 'rankings' && (
+              <RankingsTab ranks={ranks} history={view} loading={history.loading} playerId={id} matches={scoped} />
+            )}
+            {tab === 'media' && <MediaTab playerId={id} matches={matches} />}
+          </div>
         </>
       )}
       {selected && <MatchDetailModal match={selected.match} tournament={selected.tournament} onClose={closeMatch} />}
