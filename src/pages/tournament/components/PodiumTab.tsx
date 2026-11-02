@@ -1,13 +1,16 @@
 import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
-import { memo, useMemo, type FC } from 'react';
+import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
 import { TeamPlayers, TimedStatus } from '~/components/match';
 import { AvatarGroup, RankSeed } from '~/components/player';
 import { Medal } from '~/components/tournament';
-import { SectionTitle, Tip } from '~/components/ui';
+import { SectionTitle, Segmented, Tip } from '~/components/ui';
+import { EVENT_OPTIONS } from '~/constants';
+import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePlayerDirectory } from '~/hooks/usePlayers';
+import { useSnapPager } from '~/hooks/useSnapPager';
 import { DARK_SCOPE_PROPS } from '~/theme';
 import type { EventCode, PlayerDirectory } from '~/types';
 import { playerPhoto } from '~/utils/players';
@@ -25,6 +28,16 @@ const LINE_AVATAR = 32;
 const LINE_CROP = 96;
 
 const LINE_MEDAL = 18;
+
+const MEDALISTS = msg({
+  message: 'Medalists',
+  comment: 'Podium tab section: the champion, runner-up and semi-finalists of each event',
+});
+
+const SEEDS_TITLE = msg({
+  message: 'How the seeds did',
+  comment: 'Podium tab section: how far each seeded (top-ranked) player or pair got in each event',
+});
 
 const MISSING_TIP = msg({
   message: 'Withdrew, or their matches are missing from this data',
@@ -151,10 +164,10 @@ const SeedRow: FC<{ entry: SeedEntry; event: EventCode }> = ({ entry: s, event }
   );
 };
 
-const CardHead: FC<{ data: PodiumEvent; note?: string }> = ({ data, note }) => {
+const CardHead: FC<{ title: string; note?: string }> = ({ title, note }) => {
   return (
     <div className={classes.head}>
-      <span className={classes.name}>{data.name}</span>
+      <span className={classes.name}>{title}</span>
       {note && <span className={classes.note}>{note}</span>}
     </div>
   );
@@ -164,7 +177,7 @@ const MedalCard = memo<{ data: PodiumEvent; dir: PlayerDirectory | undefined }>(
   const [champion, ...rest] = e.places;
   return (
     <div className={clsx(utils.card, classes.card, classes.medalCard)}>
-      <CardHead data={e} />
+      <CardHead title={e.name} />
       {champion && <ChampionBlock place={champion} event={e.event} dir={dir} />}
       {rest.map((p) => (
         <PlaceList key={p.medal} place={p} event={e.event} dir={dir} />
@@ -173,10 +186,10 @@ const MedalCard = memo<{ data: PodiumEvent; dir: PlayerDirectory | undefined }>(
   );
 });
 
-const SeedCard = memo<{ data: PodiumEvent; hasMatches: boolean }>(({ data: e, hasMatches }) => {
+const SeedCard = memo<{ data: PodiumEvent; hasMatches: boolean; title?: string }>(({ data: e, hasMatches, title }) => {
   return (
     <div className={clsx(utils.card, classes.card)}>
-      <CardHead data={e} note={e.seedsNote} />
+      <CardHead title={title ?? e.name} note={e.seedsNote} />
       <div className={classes.seeds}>
         {e.seeds.map((s) => (
           <SeedRow key={s.key} entry={s} event={e.event} />
@@ -199,18 +212,52 @@ const SeedCard = memo<{ data: PodiumEvent; hasMatches: boolean }>(({ data: e, ha
   );
 });
 
+interface PagesProps {
+  events: PodiumEvent[];
+  dir: PlayerDirectory | undefined;
+  hasMatches: boolean;
+}
+
+const PodiumPages: FC<PagesProps> = ({ events, dir, hasMatches }) => {
+  const { i18n } = useLingui();
+  const [index, setIndex] = useState(0);
+  const { ref, shown, select } = useSnapPager<HTMLDivElement>(index, setIndex);
+  const onSelect = useCallback(
+    (v: EventCode | null) => {
+      const i = events.findIndex((e) => e.event === v);
+      if (i >= 0) select(i);
+    },
+    [events, select],
+  );
+  const seedsTitle = i18n._(SEEDS_TITLE);
+  return (
+    <div className={clsx(utils.container, page.tabSection, classes.section)}>
+      <Segmented options={EVENT_OPTIONS} value={events[shown]?.event ?? null} onChange={onSelect} />
+      <div ref={ref} className={clsx(utils.noScrollbar, classes.pager)}>
+        <div className={classes.pages}>
+          {events.map((e) => (
+            <div key={e.event} className={classes.page}>
+              <MedalCard data={e} dir={dir} />
+              <SeedCard data={e} hasMatches={hasMatches} title={seedsTitle} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const PodiumTab: FC<TabProps> = ({ tournament, schedule }) => {
+  const { i18n } = useLingui();
+  const mobile = useIsMobile();
   const events = useMemo(() => buildPodium(tournament, schedule), [tournament, schedule]);
   const hasMatches = schedule.matches.length > 0;
   const { data: dir } = usePlayerDirectory();
+  if (mobile) return <PodiumPages events={events} dir={dir} hasMatches={hasMatches} />;
   return (
     <div className={clsx(utils.container, page.tabSection, classes.tab)}>
       <section className={classes.section}>
-        <SectionTitle>
-          <Trans comment="Podium tab section: the champion, runner-up and semi-finalists of each event">
-            Medalists
-          </Trans>
-        </SectionTitle>
+        <SectionTitle>{i18n._(MEDALISTS)}</SectionTitle>
         <div className={page.eventGridWrap}>
           <div className={clsx(page.eventGrid, classes.grid)}>
             {events.map((e) => (
@@ -220,11 +267,7 @@ export const PodiumTab: FC<TabProps> = ({ tournament, schedule }) => {
         </div>
       </section>
       <section className={classes.section}>
-        <SectionTitle>
-          <Trans comment="Podium tab section: how far each seeded (top-ranked) player or pair got in each event">
-            How the seeds did
-          </Trans>
-        </SectionTitle>
+        <SectionTitle>{i18n._(SEEDS_TITLE)}</SectionTitle>
         <div className={page.eventGridWrap}>
           <div className={clsx(page.eventGrid, classes.grid)}>
             {events.map((e) => (

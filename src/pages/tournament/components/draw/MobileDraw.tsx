@@ -1,31 +1,14 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type FC } from 'react';
+import { useCallback, useMemo, type FC } from 'react';
 
 import { Segmented } from '~/components/ui';
+import { snapPages, useSnapPager } from '~/hooks/useSnapPager';
 import { headerOffset, tabbarHeight } from '~/utils/layout';
-import { inlineSign, scrollBehavior } from '~/utils/scroll';
+import { scrollBehavior } from '~/utils/scroll';
 
 import type { Bracket } from './bracket';
 import { BracketView } from './BracketView';
 
-const SETTLE_MS = 150;
-const ALIGNED_PX = 2;
 const VIEW_MARGIN = 12;
-
-const columnsOf = (el: HTMLElement) => Array.from(el.firstElementChild?.children ?? []);
-
-const offsetsOf = (el: HTMLElement) => {
-  const rtl = inlineSign(el) < 0;
-  const r = el.getBoundingClientRect();
-  const pad = Number.parseFloat(getComputedStyle(el).scrollPaddingInlineStart) || 0;
-  const edge = rtl ? r.right - pad : r.left + pad;
-  return columnsOf(el).map((c) => {
-    const b = c.getBoundingClientRect();
-    return rtl ? edge - b.right : b.left - edge;
-  });
-};
-
-const nearestOf = (offsets: number[]) =>
-  offsets.reduce((best, o, i) => (Math.abs(o) < Math.abs(offsets[best] ?? Infinity) ? i : best), 0);
 
 const closest = (ys: number[], from: number, to: number, y: number) => {
   let best = from;
@@ -36,7 +19,7 @@ const closest = (ys: number[], from: number, to: number, y: number) => {
 };
 
 const follow = (el: HTMLElement, bracket: Bracket, from: number, to: number) => {
-  const body = columnsOf(el)[to]?.lastElementChild;
+  const body = snapPages(el)[to]?.lastElementChild;
   if (!body) return;
   const top = headerOffset() + tabbarHeight(el);
   const bottom = window.innerHeight;
@@ -58,7 +41,7 @@ const follow = (el: HTMLElement, bracket: Bracket, from: number, to: number) => 
 };
 
 const reveal = (el: HTMLElement, bracket: Bracket, i: number) => {
-  const body = columnsOf(el)[i]?.lastElementChild;
+  const body = snapPages(el)[i]?.lastElementChild;
   const y = bracket.columns[i]?.ys[0];
   if (!body || y === undefined) return;
   const half = bracket.boxHeight / 2;
@@ -73,87 +56,22 @@ export const MobileDraw: FC<{
   onRound: (round: number) => void;
   onOpen: (id: string) => void;
 }> = ({ bracket, round, onRound, onOpen }) => {
-  const ref = useRef<HTMLDivElement>(null);
   const { columns } = bracket;
   const index = Math.min(round, columns.length - 1);
-  const [shown, setShown] = useState(index);
-  const settled = useRef<number | null>(null);
-  const target = useRef<number | null>(null);
-  const latest = useRef({ bracket, index, onRound });
-  const options = useMemo(() => columns.map((c, i) => ({ value: String(i), label: c.short, tip: c.label })), [columns]);
-
-  useLayoutEffect(() => {
-    latest.current = { bracket, index, onRound };
-  });
-
-  const go = useCallback((i: number, instant: boolean) => {
-    const el = ref.current;
-    if (!el) return;
-    const from = settled.current;
-    settled.current = i;
-    setShown(i);
-    if (from !== null && from !== i) follow(el, latest.current.bracket, from, i);
-    const d = offsetsOf(el)[i] ?? 0;
-    const behavior = scrollBehavior(instant);
-    target.current = d && behavior === 'smooth' ? i : null;
-    if (d) el.scrollBy({ left: inlineSign(el) * d, behavior });
-    if (from === null && i > 0) reveal(el, latest.current.bracket, i);
-  }, []);
-
-  useLayoutEffect(() => {
-    if (settled.current !== index) go(index, settled.current === null);
-  }, [index, go]);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    let frame = 0;
-    let timer = 0;
-    const settle = () => {
-      window.clearTimeout(timer);
-      const offsets = offsetsOf(el);
-      const i = nearestOf(offsets);
-      if (Math.abs(offsets[i] ?? 0) > ALIGNED_PX) return;
-      target.current = null;
-      setShown(i);
-      if (i === settled.current) return;
-      const { bracket: b, index: current, onRound: report } = latest.current;
-      const from = settled.current;
-      settled.current = i;
-      if (from !== null) follow(el, b, from, i);
-      if (i !== current) report(i);
-    };
-    const onScroll = () => {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => {
-        if (target.current === null) setShown(nearestOf(offsetsOf(el)));
-      });
-      window.clearTimeout(timer);
-      timer = window.setTimeout(settle, SETTLE_MS);
-    };
-    el.addEventListener('scroll', onScroll, { passive: true });
-    el.addEventListener('scrollend', settle);
-    return () => {
-      el.removeEventListener('scroll', onScroll);
-      el.removeEventListener('scrollend', settle);
-      window.cancelAnimationFrame(frame);
-      window.clearTimeout(timer);
-    };
-  }, []);
-
-  const select = useCallback(
-    (v: string | null) => {
-      if (v === null) return;
-      const i = Number(v);
-      go(i, false);
-      onRound(i);
+  const onMove = useCallback(
+    (el: HTMLDivElement, from: number | null, to: number) => {
+      if (from !== null) follow(el, bracket, from, to);
+      else if (to > 0) reveal(el, bracket, to);
     },
-    [go, onRound],
+    [bracket],
   );
+  const { ref, shown, select } = useSnapPager<HTMLDivElement>(index, onRound, onMove);
+  const options = useMemo(() => columns.map((c, i) => ({ value: String(i), label: c.short, tip: c.label })), [columns]);
+  const onSelect = useCallback((v: string | null) => v !== null && select(Number(v)), [select]);
 
   return (
     <>
-      <Segmented options={options} value={String(shown)} onChange={select} />
+      <Segmented options={options} value={String(shown)} onChange={onSelect} />
       <BracketView ref={ref} bracket={bracket} onOpen={onOpen} snap />
     </>
   );

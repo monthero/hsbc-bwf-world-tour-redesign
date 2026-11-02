@@ -10,6 +10,35 @@
   gap: 12px;
 }
 
+.pager {
+  --page-w: calc(100cqi - 2 * var(--bwf-gutter));
+  container-type: inline-size;
+  margin-inline: calc(-1 * var(--bwf-gutter));
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  scroll-padding-inline-start: var(--bwf-gutter);
+}
+
+.pages {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--page-w);
+  align-items: start;
+  gap: 12px;
+  width: max-content;
+  padding-inline: var(--bwf-gutter);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
 .grid.grid {
   @container (max-width: 1240px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
