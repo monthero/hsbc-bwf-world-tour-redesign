@@ -1,8 +1,9 @@
 import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Skeleton } from '@mantine/core';
+import { useMergedRef } from '@mantine/hooks';
 import { clsx } from 'clsx';
-import { memo, useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, type ReactNode, type Ref } from 'react';
 import RankingIcon from '~icons/ph/ranking';
 
 import { CountryLabel } from '~/components/country';
@@ -48,6 +49,7 @@ interface HeroProps {
   mobile?: boolean;
   event?: EventCode;
   onEvent?: (event: EventCode | undefined) => void;
+  ref?: Ref<HTMLElement>;
 }
 
 interface Cell {
@@ -63,7 +65,7 @@ const PORTRAIT_CROP = 520;
 const STAT_SKELETON = [0, 1, 2, 3];
 
 export const Hero = memo<HeroProps>(
-  ({ player, hero, focus, retired, bio, ranks, highs, career, ready, mobile, event, onEvent }) => {
+  ({ player, hero, focus, retired, bio, ranks, highs, career, ready, mobile, event, onEvent, ref }) => {
     const viewportMobile = useIsMobile();
     const isMobile = mobile ?? viewportMobile;
     const hasPhoto = !!usePlayerPhoto(player.id).src;
@@ -75,6 +77,7 @@ export const Hero = memo<HeroProps>(
     const pairs = ranked.some((k) => k.partner);
     const switchable = ranked.length > 1 ? onEvent : undefined;
     const heroRef = useRef<HTMLElement>(null);
+    const sectionRef = useMergedRef(heroRef, ref);
     useEffect(() => {
       const el = heroRef.current;
       if (!el || !switchable || !event) return;
@@ -93,7 +96,7 @@ export const Hero = memo<HeroProps>(
     }, [switchable, event]);
     return (
       <section
-        ref={heroRef}
+        ref={sectionRef}
         className={classes.hero}
         style={style}
         data-mantine-color-scheme="dark"

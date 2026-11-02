@@ -11,11 +11,12 @@ import { MatchDetailModal } from '~/components/match';
 import { Equipment } from '~/components/player';
 import { BackPill } from '~/components/ui';
 import { useDocumentMeta } from '~/hooks/useDocumentMeta';
+import { useScrolledPast } from '~/hooks/useScrolledPast';
 import { usePlayerProfile } from '~/hooks/useSeason';
 import { useSlideIn } from '~/hooks/useSlideIn';
 import { useSwipeTabs } from '~/hooks/useSwipeTabs';
 import { useTournamentsByCode } from '~/hooks/useTournaments';
-import type { EventCode, PlayerMatch } from '~/types';
+import type { EventCode, PlayerMatch, RankView } from '~/types';
 import { NOT_FOUND_META, playerMeta } from '~/utils/meta';
 import { STAY } from '~/utils/navigation';
 import { tournamentParams } from '~/utils/tournaments';
@@ -74,6 +75,11 @@ export const Back = memo<{ from: string | undefined }>(({ from }) => {
   );
 });
 
+const HERO_PAST = { offset: 0 };
+
+const lowerRank = (best: RankView | undefined, k: RankView) =>
+  !best || (k.rank ?? Infinity) < (best.rank ?? Infinity) ? k : best;
+
 export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, search }) => {
   const { tab = 'overview', from, season, event: picked } = search;
   const navigate = useNavigate();
@@ -123,6 +129,11 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
   const openResults = useCallback(() => setTab('rankings'), [setTab]);
   const openMedia = useCallback(() => setTab('media'), [setTab]);
   const paneRef = useRef<HTMLDivElement>(null);
+  const [heroRef, compact] = useScrolledPast<HTMLElement>(HERO_PAST);
+  const bestRank = useMemo(
+    () => ranks.filter((k) => k.rank).reduce<RankView | undefined>(lowerRank, undefined),
+    [ranks],
+  );
   useSlideIn(paneRef, player ? PlayerTab.options.indexOf(tab) : null);
   useSwipeTabs(paneRef, PlayerTab.options, tab, setTab, !!player);
 
@@ -135,6 +146,7 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
       {player && (
         <>
           <Hero
+            ref={heroRef}
             player={player}
             hero={profile.profile?.hero}
             focus={profile.profile?.heroFocus}
@@ -148,7 +160,7 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
             onEvent={setEvent}
           />
           {bio.equipment.length > 0 && <Equipment items={bio.equipment} className={clsx(utils.card, classes.kit)} />}
-          <SubNav tab={tab} onTab={setTab} mediaCount={mediaCount} />
+          <SubNav player={player} rank={bestRank} compact={compact} tab={tab} onTab={setTab} mediaCount={mediaCount} />
           <div ref={paneRef} className={classes.pane}>
             {tab !== 'media' && events.length > 1 && <Disciplines events={events} event={event} onEvent={setEvent} />}
             {tab === 'overview' && (

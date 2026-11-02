@@ -5,7 +5,7 @@ import { clsx } from 'clsx';
 import { memo, useCallback, useMemo, type Ref, type RefObject } from 'react';
 
 import { LevelBadge, LogoTile, TournamentStatusBadge } from '~/components/tournament';
-import { IconBack, IconButton, LiveDot, StickyBar, TabBar, type TabItem } from '~/components/ui';
+import { IconBack, IconButton, LiveDot, MiniRow, StickyBar, TabBar, type TabItem } from '~/components/ui';
 import { useScrolledPast } from '~/hooks/useScrolledPast';
 import type { Tournament } from '~/types';
 
@@ -53,23 +53,21 @@ export const TabNav = memo<{
   return (
     <>
       <div ref={anchor} className={classes.anchor} />
-      <StickyBar ref={ref} glass zIndex={20} className={classes.bar} data-mini={mini || undefined}>
-        <div className={classes.mini} inert={!mini}>
-          <div className={clsx(utils.container, classes.miniRow)}>
-            <IconButton
-              label={t({ message: 'Back to calendar', comment: 'Icon button in the condensed tournament bar' })}
-              link={back.link}
-              shape="rounded"
-              className={classes.miniBack}
-            >
-              <IconBack size={18} />
-            </IconButton>
-            <LogoTile src={tournament.logo} size={28} flat />
-            <span className={clsx(utils.ellipsis, utils.bidiAuto, classes.miniTitle)}>{tournament.heading}</span>
-            <LevelBadge level={tournament.level} size="sm" long />
-            <TournamentStatusBadge tournament={tournament} variant="inline" short className={classes.miniStatus} />
-          </div>
-        </div>
+      <StickyBar ref={ref} glass zIndex={20}>
+        <MiniRow open={mini} className={utils.container}>
+          <IconButton
+            label={t({ message: 'Back to calendar', comment: 'Icon button in the condensed tournament bar' })}
+            link={back.link}
+            shape="rounded"
+            className={classes.miniBack}
+          >
+            <IconBack size={18} />
+          </IconButton>
+          <LogoTile src={tournament.logo} size={28} flat />
+          <span className={clsx(utils.ellipsis, utils.bidiAuto, classes.miniTitle)}>{tournament.heading}</span>
+          <LevelBadge level={tournament.level} size="sm" long />
+          <TournamentStatusBadge tournament={tournament} variant="inline" short className={classes.miniStatus} />
+        </MiniRow>
         <TabBar
           items={items}
           value={tab}

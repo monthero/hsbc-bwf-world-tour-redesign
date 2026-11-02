@@ -25,6 +25,7 @@ export { ShuttleIcon } from './ShuttleIcon';
 export { Segmented, type SegmentedOption } from './Segmented';
 export { StarButton, type StarBox, type StarVariant } from './StarButton';
 export { StatusChip, type StatusTone } from './StatusChip';
+export { MiniRow } from './MiniRow';
 export { StickyBar } from './StickyBar';
 export { TabBar, type TabItem } from './TabBar';
 export { Tip, type TipProps } from './Tip';

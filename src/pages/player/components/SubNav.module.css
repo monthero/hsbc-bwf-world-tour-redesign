@@ -5,6 +5,19 @@
   color: var(--bwf-muted);
 }
 
+.miniName {
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.miniRank {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-inline-start: auto;
+}
+
 .disciplines {
   display: flex;
 }
