@@ -972,6 +972,11 @@ msgstr "優勝"
 msgid "Champions"
 msgstr "優勝者"
 
+#. Live match in a final: this side wins the title if it wins the next rally
+#: src/utils/live.ts
+msgid "Championship point"
+msgstr "マッチポイント"
+
 #. Rankings table column: places gained or lost since last week
 #: src/pages/rankings/components/RankingList.tsx
 msgid "Change since last week"
@@ -2582,16 +2587,6 @@ msgstr "選手"
 msgid "Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome on GitHub."
 msgstr "選手は好みやスポンサーの都合で用具をよく変更するため、この情報は古い可能性があります。サイトの作成者が手作業で管理しています。修正の提案はGitHubで受け付けています。"
 
-#. Short line on the live score of a semi-final: what the match decides. Keep it short, one line on a phone
-#: src/components/match/medals.ts
-msgid "Playing for a place in the final"
-msgstr "決勝進出をかけた一戦"
-
-#. What is at stake in a semi-final. World Tour events have no bronze play-off, so both semi-final losers get bronze
-#: src/components/match/medals.ts
-msgid "Playing for a place in the final. Both sides have already secured at least bronze."
-msgstr "決勝進出をかけた一戦。両者とも銅メダル以上が確定しています。"
-
 #. Short line on the live score of a tournament final: what the match decides. Keep it short, one line on a phone
 #: src/components/match/medals.ts
 msgid "Playing for gold"
@@ -4033,16 +4028,6 @@ msgstr "勝ち"
 #: src/utils/matches.ts
 msgid "Won · Group {group}"
 msgstr "勝利 · グループ{group}"
-
-#. Live score chip next to the side that just won a game. A badminton match is best of three games
-#: src/components/match/showdown/liveView.ts
-msgid "Won game {gameNo}"
-msgstr "第{gameNo}ゲーム獲得"
-
-#. Live score chip next to the side that just won the match
-#: src/components/match/showdown/liveView.ts
-msgid "Won the match"
-msgstr "試合に勝利"
 
 #. Tooltip on a recent-form tile: match won against these opponents at this tournament
 #: src/pages/player/components/OverviewTab.tsx

@@ -6,8 +6,8 @@ import type { MediaItem } from '~/api/schemas';
 import { FollowMark } from '~/components/follow';
 import {
   ChallengeStocks,
+  decidesMedals,
   EventTag,
-  medalStake,
   RoundTag,
   ServeMark,
   StreakMark,
@@ -34,7 +34,6 @@ const Tags: FC<{ side: SideView }> = ({ side: s }) => {
   return (
     <span className={classes.tags}>
       <ChallengeStocks stats={s.stats} left={s.left} />
-      {s.result && <StatusChip tone="green">{s.result}</StatusChip>}
       {s.call && <StatusChip tone="gold">{s.call}</StatusChip>}
       {s.streak > 0 && <StreakMark n={s.streak} />}
       {s.review && <StatusChip tone="blue">{review}</StatusChip>}
@@ -130,7 +129,7 @@ export const LiveCard = memo<{
     <div
       ref={ref}
       className={clsx(utils.live, classes.card, className)}
-      data-medal={!!medalStake(m.round) || undefined}
+      data-medal={decidesMedals(m.round) || undefined}
     >
       <CardHit
         label={t({

@@ -972,6 +972,11 @@ msgstr "Kampeon"
 msgid "Champions"
 msgstr "Mga kampeon"
 
+#. Live match in a final: this side wins the title if it wins the next rally
+#: src/utils/live.ts
+msgid "Championship point"
+msgstr "Match point"
+
 #. Rankings table column: places gained or lost since last week
 #: src/pages/rankings/components/RankingList.tsx
 msgid "Change since last week"
@@ -2582,16 +2587,6 @@ msgstr "Mga player"
 msgid "Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome on GitHub."
 msgstr "Madalas magpalit ng gamit ang mga player, dahil sa personal na gusto o dahil sa sponsorship, kaya maaaring luma na ito. Mano-manong ina-update ito ng gumawa ng site. Bukas kami sa mga mungkahi sa GitHub."
 
-#. Short line on the live score of a semi-final: what the match decides. Keep it short, one line on a phone
-#: src/components/match/medals.ts
-msgid "Playing for a place in the final"
-msgstr "Laban para sa puwesto sa final"
-
-#. What is at stake in a semi-final. World Tour events have no bronze play-off, so both semi-final losers get bronze
-#: src/components/match/medals.ts
-msgid "Playing for a place in the final. Both sides have already secured at least bronze."
-msgstr "Laban para sa puwesto sa final. Parehong panig ay sigurado na sa hindi bababa sa bronze."
-
 #. Short line on the live score of a tournament final: what the match decides. Keep it short, one line on a phone
 #: src/components/match/medals.ts
 msgid "Playing for gold"
@@ -4033,16 +4028,6 @@ msgstr "PANALO"
 #: src/utils/matches.ts
 msgid "Won · Group {group}"
 msgstr "Panalo · Group {group}"
-
-#. Live score chip next to the side that just won a game. A badminton match is best of three games
-#: src/components/match/showdown/liveView.ts
-msgid "Won game {gameNo}"
-msgstr "Panalo sa game {gameNo}"
-
-#. Live score chip next to the side that just won the match
-#: src/components/match/showdown/liveView.ts
-msgid "Won the match"
-msgstr "Panalo sa laban"
 
 #. Tooltip on a recent-form tile: match won against these opponents at this tournament
 #: src/pages/player/components/OverviewTab.tsx

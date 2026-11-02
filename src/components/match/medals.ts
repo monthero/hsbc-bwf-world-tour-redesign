@@ -10,7 +10,7 @@ export interface MedalStake {
   tip: string;
 }
 
-const ROUND_MEDALS: Partial<Record<string, MedalKind>> = { F: 'gold', SF: 'gold' };
+const ROUND_MEDALS: Partial<Record<string, MedalKind>> = { F: 'gold' };
 
 const RESULT_MEDALS: Partial<Record<string, Partial<Record<SideResult, MedalKind>>>> = {
   F: { won: 'gold', lost: 'silver' },
@@ -23,21 +23,12 @@ const STAKES: Partial<Record<string, string>> = lazyRecord({
     comment:
       'Short line on the live score of a tournament final: what the match decides. Keep it short, one line on a phone',
   }),
-  SF: msg({
-    message: 'Playing for a place in the final',
-    comment: 'Short line on the live score of a semi-final: what the match decides. Keep it short, one line on a phone',
-  }),
 });
 
 const STAKE_TIPS: Partial<Record<string, string>> = lazyRecord({
   F: msg({
     message: 'Playing for gold. The runner-up takes silver.',
     comment: 'What is at stake in a tournament final. World Tour events have no bronze play-off',
-  }),
-  SF: msg({
-    message: 'Playing for a place in the final. Both sides have already secured at least bronze.',
-    comment:
-      'What is at stake in a semi-final. World Tour events have no bronze play-off, so both semi-final losers get bronze',
   }),
 });
 
@@ -56,6 +47,8 @@ export const medalStake = (round: string): MedalStake | null => {
   const tip = STAKE_TIPS[round];
   return kind && text && tip ? { kind, text, tip } : null;
 };
+
+export const decidesMedals = (round: string) => !!RESULT_MEDALS[round];
 
 export const sideMedal = (m: Match, side: Side): MedalKind | null =>
   RESULT_MEDALS[m.round]?.[sideResult(m, side)] ?? null;

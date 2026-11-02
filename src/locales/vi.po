@@ -972,6 +972,11 @@ msgstr "Vô địch"
 msgid "Champions"
 msgstr "Nhà vô địch"
 
+#. Live match in a final: this side wins the title if it wins the next rally
+#: src/utils/live.ts
+msgid "Championship point"
+msgstr "Match point"
+
 #. Rankings table column: places gained or lost since last week
 #: src/pages/rankings/components/RankingList.tsx
 msgid "Change since last week"
@@ -2582,16 +2587,6 @@ msgstr "Tay vợt"
 msgid "Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome on GitHub."
 msgstr "Các tay vợt thường xuyên thay đổi dụng cụ, do sở thích cá nhân hoặc vì nhà tài trợ, nên thông tin này có thể đã cũ. Thông tin do tác giả trang web tự cập nhật thủ công. Mọi góp ý xin gửi qua GitHub."
 
-#. Short line on the live score of a semi-final: what the match decides. Keep it short, one line on a phone
-#: src/components/match/medals.ts
-msgid "Playing for a place in the final"
-msgstr "Tranh suất vào chung kết"
-
-#. What is at stake in a semi-final. World Tour events have no bronze play-off, so both semi-final losers get bronze
-#: src/components/match/medals.ts
-msgid "Playing for a place in the final. Both sides have already secured at least bronze."
-msgstr "Tranh suất vào chung kết. Cả hai bên đều đã chắc chắn ít nhất huy chương đồng."
-
 #. Short line on the live score of a tournament final: what the match decides. Keep it short, one line on a phone
 #: src/components/match/medals.ts
 msgid "Playing for gold"
@@ -4033,16 +4028,6 @@ msgstr "THẮNG"
 #: src/utils/matches.ts
 msgid "Won · Group {group}"
 msgstr "Thắng · Bảng {group}"
-
-#. Live score chip next to the side that just won a game. A badminton match is best of three games
-#: src/components/match/showdown/liveView.ts
-msgid "Won game {gameNo}"
-msgstr "Thắng ván {gameNo}"
-
-#. Live score chip next to the side that just won the match
-#: src/components/match/showdown/liveView.ts
-msgid "Won the match"
-msgstr "Thắng trận"
 
 #. Tooltip on a recent-form tile: match won against these opponents at this tournament
 #: src/pages/player/components/OverviewTab.tsx

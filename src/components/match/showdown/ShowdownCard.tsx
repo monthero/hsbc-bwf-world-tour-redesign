@@ -16,7 +16,6 @@ import {
   IconClose,
   IconTrophy,
   ShuttleIcon,
-  StatusChip,
   Tip,
 } from '~/components/ui';
 import { DARK_SCOPE_PROPS } from '~/theme';
@@ -230,12 +229,11 @@ const Hub = memo<{ view: ShowdownView }>(({ view: v }) => {
   );
 });
 
-const hasTags = (s: SideView) => (!!s.stats && s.left !== null) || !!s.result || s.streak > 0;
+const hasTags = (s: SideView) => (!!s.stats && s.left !== null) || s.streak > 0;
 
 const Tags = memo<{ side: SideView }>(({ side: s }) => (
   <span className={classes.tags} data-side={s.side}>
     <ChallengeStocks stats={s.stats} left={s.left} mirror={s.side === 1} />
-    {s.result && <StatusChip tone="green">{s.result}</StatusChip>}
     {s.streak > 0 && <StreakMark n={s.streak} mirror={s.side === 1} />}
   </span>
 ));

@@ -3,7 +3,7 @@ import { useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo } from 'react';
 
-import { LIVE_NOW, medalStake } from '~/components/match';
+import { decidesMedals, LIVE_NOW } from '~/components/match';
 import { LiveDot, SectionTitle } from '~/components/ui';
 import { useMatchStream } from '~/hooks/useTournamentMedia';
 import type { Match, Tournament } from '~/types';
@@ -38,7 +38,7 @@ export const LiveSection = memo<{
   const { i18n } = useLingui();
   const n = matches.length;
   const [first] = matches;
-  const hero = n === 1 && first && medalStake(first.round) ? first : null;
+  const hero = n === 1 && first && decidesMedals(first.round) ? first : null;
   const title = (
     <SectionTitle icon={LIVE_ICON} count={i18n._({ ...ON_COURT, values: { n } })}>
       {i18n._(LIVE_NOW)}

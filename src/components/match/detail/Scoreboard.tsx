@@ -11,7 +11,7 @@ import classes from './MatchDetail.module.css';
 
 const LiveStatus: FC<{ view: ShowdownView }> = ({ view: v }) => {
   const paused = useLivePaused();
-  const chip = v.live.status;
+  const chip = v.status;
   return (
     <>
       <span className={classes.sbLive}>

@@ -7,7 +7,7 @@ export { FollowRow } from './FollowRow';
 export { GameChips } from './GameChips';
 export { LIVE_NOW } from './labels';
 export { MedalMark, SideMedal } from './MedalMark';
-export { medalStake, sideMedal, type MedalStake } from './medals';
+export { decidesMedals, medalStake, sideMedal, type MedalStake } from './medals';
 export { MatchTime, ScheduledStart, TimedStatus } from './MatchTime';
 export { FormStrip, OutcomeBadge, OutcomeLabel } from './Outcome';
 export { ScoreChips, SideScores } from './ScoreChips';

@@ -217,10 +217,18 @@ export const pointCallKind = (m: Match, side: Side): CallKind | null => {
 export const pointCall = (m: Match, side: Side) => {
   const kind = pointCallKind(m, side);
   if (!kind) return null;
-  return kind === 'match'
-    ? t({
-        message: 'Match point',
-        comment: 'Live match: this side wins the whole match if it wins the next rally',
-      })
-    : t({ message: 'Game point', comment: 'Live match: this side wins the current game if it wins the next rally' });
+  if (kind === 'game')
+    return t({
+      message: 'Game point',
+      comment: 'Live match: this side wins the current game if it wins the next rally',
+    });
+  if (m.round === 'F')
+    return t({
+      message: 'Championship point',
+      comment: 'Live match in a final: this side wins the title if it wins the next rally',
+    });
+  return t({
+    message: 'Match point',
+    comment: 'Live match: this side wins the whole match if it wins the next rally',
+  });
 };

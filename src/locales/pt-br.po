@@ -972,6 +972,11 @@ msgstr "Título"
 msgid "Champions"
 msgstr "Campeões"
 
+#. Live match in a final: this side wins the title if it wins the next rally
+#: src/utils/live.ts
+msgid "Championship point"
+msgstr "Match point"
+
 #. Rankings table column: places gained or lost since last week
 #: src/pages/rankings/components/RankingList.tsx
 msgid "Change since last week"
@@ -2582,16 +2587,6 @@ msgstr "Atletas"
 msgid "Players change equipment often, by preference or for sponsorship reasons, so this may be outdated. It's maintained by hand by the site's author. Suggestions are welcome on GitHub."
 msgstr "Os atletas trocam de equipamento com frequência, por preferência ou por questões de patrocínio, então estas informações podem estar desatualizadas. Elas são mantidas manualmente pelo autor do site. Sugestões são bem-vindas no GitHub."
 
-#. Short line on the live score of a semi-final: what the match decides. Keep it short, one line on a phone
-#: src/components/match/medals.ts
-msgid "Playing for a place in the final"
-msgstr "Valendo vaga na final"
-
-#. What is at stake in a semi-final. World Tour events have no bronze play-off, so both semi-final losers get bronze
-#: src/components/match/medals.ts
-msgid "Playing for a place in the final. Both sides have already secured at least bronze."
-msgstr "Valendo vaga na final. Os dois lados já garantiram pelo menos o bronze."
-
 #. Short line on the live score of a tournament final: what the match decides. Keep it short, one line on a phone
 #: src/components/match/medals.ts
 msgid "Playing for gold"
@@ -4033,16 +4028,6 @@ msgstr "VITÓRIA"
 #: src/utils/matches.ts
 msgid "Won · Group {group}"
 msgstr "Vitória · Grupo {group}"
-
-#. Live score chip next to the side that just won a game. A badminton match is best of three games
-#: src/components/match/showdown/liveView.ts
-msgid "Won game {gameNo}"
-msgstr "Venceu o game {gameNo}"
-
-#. Live score chip next to the side that just won the match
-#: src/components/match/showdown/liveView.ts
-msgid "Won the match"
-msgstr "Venceu a partida"
 
 #. Tooltip on a recent-form tile: match won against these opponents at this tournament
 #: src/pages/player/components/OverviewTab.tsx

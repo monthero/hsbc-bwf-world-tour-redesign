@@ -39,7 +39,6 @@ export interface SideView {
   left: number | null;
   recent: ChallengeOutcome | null;
   review: boolean;
-  result: string | null;
 }
 
 export interface LiveView {
@@ -55,17 +54,8 @@ export interface LiveView {
   sides: readonly [SideView, SideView];
 }
 
-const resultOf = (phase: LivePhase, gameNo: number) => {
-  if (phase === 'play') return null;
-  return phase === 'over'
-    ? t({ message: 'Won the match', comment: 'Live score chip next to the side that just won the match' })
-    : t({
-        message: `Won game ${gameNo}`,
-        comment: 'Live score chip next to the side that just won a game. A badminton match is best of three games',
-      });
-};
-
-const leftOf = (side: Side, gameNo: number, stats: LiveStats | null, game: MatchStats | null) => {
+const leftOf = (side: Side, phase: LivePhase, gameNo: number, stats: LiveStats | null, game: MatchStats | null) => {
+  if (phase === 'between') return challengesLeft(0);
   const lost = game?.[side].challenges.lost ?? (gameNo === 1 ? stats?.sides[side].challenges.lost : undefined);
   return lost === undefined ? null : challengesLeft(lost);
 };
@@ -73,10 +63,10 @@ const leftOf = (side: Side, gameNo: number, stats: LiveStats | null, game: Match
 const sideView = (
   m: Match,
   side: Side,
+  phase: LivePhase,
   stats: LiveStats | null,
   game: MatchStats | null,
   challenge: ChallengeResult | null,
-  result: string | null,
 ): SideView => {
   const now = m.current?.[side] ?? 0;
   const recent = challenge?.side === side ? challenge.outcome : null;
@@ -91,10 +81,9 @@ const sideView = (
     flash: m.lastPoint === side + 1,
     leading: !!m.current && gameDone(m.current) && gameWon(m.current, side),
     stats: stats?.sides[side] ?? null,
-    left: leftOf(side, m.games.length + 1, stats, game),
+    left: leftOf(side, phase, m.games.length + 1, stats, game),
     recent,
     review: !recent && reviewBy(m) === side,
-    result: m.current && gameWon(m.current, side) ? result : null,
   };
 };
 
@@ -108,7 +97,6 @@ export const toLiveView = (
 ): LiveView => {
   const phase = livePhase(m);
   const gameNo = m.games.length + 1;
-  const result = resultOf(phase, gameNo);
   return {
     court: m.court,
     event: EVENT_NAMES[m.event],
@@ -119,7 +107,7 @@ export const toLiveView = (
     status: liveStatus(m),
     server: servingPlayer(m, server),
     receiver: receivingPlayer(m, server, receiver),
-    sides: [sideView(m, 0, stats, game, challenge, result), sideView(m, 1, stats, game, challenge, result)],
+    sides: [sideView(m, 0, phase, stats, game, challenge), sideView(m, 1, phase, stats, game, challenge)],
   };
 };
 
