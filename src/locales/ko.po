@@ -44,6 +44,8 @@ msgstr "{count, plural, other {#개국}}"
 
 #. Number of players or pairs entered in a tournament draw, e.g. "32 entries"
 #. Players tab event heading: number of entries (players or pairs)
+#. Players tab section summary: number of entries (players or pairs)
+#: src/pages/tournament/components/players/ContinentSection.tsx
 #: src/pages/tournament/components/players/DisciplineSection.tsx
 #: src/utils/format.ts
 msgid "{count, plural, one {# entry} other {# entries}}"
@@ -594,6 +596,11 @@ msgstr "투어 소개"
 #: src/pages/credits/CreditsPage.tsx
 msgid "About this site"
 msgstr "사이트 소개"
+
+#. Players tab section title, shown in place of a continent name: doubles pairs whose two players come from different continents
+#: src/pages/tournament/components/players/ContinentSection.tsx
+msgid "Across continents"
+msgstr "여러 대륙"
 
 #. Continent name
 #: src/utils/countries.ts
@@ -1684,6 +1691,11 @@ msgstr "개인 중립 선수"
 #: src/components/layout/SiteSettings.tsx
 msgid "Install app"
 msgstr "앱 설치"
+
+#. Players tab card title: doubles pairs whose two players represent different countries
+#: src/pages/tournament/components/players/CountryCard.tsx
+msgid "International pairs"
+msgstr "국적이 다른 조"
 
 #. Player profile fact: when the player first competed internationally. "Intl." is short for international
 #: src/utils/players.ts

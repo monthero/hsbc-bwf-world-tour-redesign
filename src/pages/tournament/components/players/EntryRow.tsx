@@ -43,27 +43,29 @@ export const EntryStatus: FC<{ entry: LatestEntry; withStage?: boolean }> = ({ e
   );
 };
 
-export const EntryRow = memo<{ entry: Entry; onOpen: (id: string) => void }>(({ entry, onOpen }) => {
-  const { event, team, match, rank } = entry;
+export const EntryRow = memo<{ entry: Entry; flags?: boolean; onOpen: (id: string) => void }>(
+  ({ entry, flags, onOpen }) => {
+    const { event, team, match, rank } = entry;
 
-  return (
-    <div className={clsx(classes.entry, discipline.tone)} data-event={event}>
-      {match && isScheduled(match) && (
-        <CardHit label={detailsLabel(teamLabel(team))} onClick={() => onOpen(match.id)} />
-      )}
-      <EventTag event={event} className={classes.entryEvent} />
-      <div className={classes.entryBody}>
-        <TeamPlayers
-          players={team.players}
-          seed={team.seed}
-          event={event}
-          rank={rank}
-          flag={false}
-          end={<TeamFollow players={team.players} iconSize={15} />}
-          nameClassName={classes.entryName}
-        />
-        <EntryStatus entry={entry} />
+    return (
+      <div className={clsx(classes.entry, discipline.tone)} data-event={event}>
+        {match && isScheduled(match) && (
+          <CardHit label={detailsLabel(teamLabel(team))} onClick={() => onOpen(match.id)} />
+        )}
+        <EventTag event={event} className={classes.entryEvent} />
+        <div className={classes.entryBody}>
+          <TeamPlayers
+            players={team.players}
+            seed={team.seed}
+            event={event}
+            rank={rank}
+            flag={flags ? 'sm' : false}
+            end={<TeamFollow players={team.players} iconSize={15} />}
+            nameClassName={classes.entryName}
+          />
+          <EntryStatus entry={entry} />
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);

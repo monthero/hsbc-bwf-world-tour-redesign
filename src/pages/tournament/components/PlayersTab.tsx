@@ -66,7 +66,7 @@ const ByCountry: FC<{ entries: Entry[]; q: string; top10: boolean }> = ({ entrie
   return (
     <>
       {continents.map((c) => (
-        <ContinentSection key={c.name} continent={c} accordion={mobile} forceOpen={searching} onOpen={onOpen} />
+        <ContinentSection key={c.key} continent={c} accordion={mobile} forceOpen={searching} onOpen={onOpen} />
       ))}
       {continents.length === 0 && <EmptyNote q={q} filtered={top10 || !!ev} />}
     </>

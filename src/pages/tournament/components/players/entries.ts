@@ -24,14 +24,17 @@ export interface Entry extends LatestEntry {
 }
 
 export interface CountryGroup {
-  cc: string;
+  key: string;
+  cc: string | null;
   name: string;
   entries: Entry[];
 }
 
 export interface ContinentGroup {
-  name: Continent;
+  key: string;
+  continent: Continent | null;
   count: number;
+  nations: number;
   countries: CountryGroup[];
 }
 
@@ -178,25 +181,58 @@ const isAttending = (e: Entry) => e.stage === 'main' || e.stage === 'qual';
 const passes = (e: Entry, { q, top10 }: Pick<EntryFilters, 'q' | 'top10'>) =>
   (!top10 || (e.rank > 0 && e.rank <= 10)) && teamMatchesQuery(e.team, q);
 
+const countriesOf = (e: Entry) => new Set(e.team.players.map((p) => p.cc));
+
+const isMixed = (e: Entry) => countriesOf(e).size > 1;
+
+const homeContinent = (e: Entry): Continent | null => {
+  const continents = new Set([...countriesOf(e)].map(continentOf));
+  return continents.size === 1 ? ([...continents].at(0) ?? null) : null;
+};
+
+const ACROSS = 'across';
+
+const mixedCard = (key: string, list: Entry[]): CountryGroup => ({
+  key: `mixed-${key}`,
+  cc: null,
+  name: '',
+  entries: list.sort(byRankThenEvent),
+});
+
+const byCardSize = (a: CountryGroup, b: CountryGroup) =>
+  b.entries.length - a.entries.length || a.name.localeCompare(b.name);
+
 export const groupEntries = (entries: Entry[], filters: EntryFilters): ContinentGroup[] => {
   const visible = entries.filter(
     (e) => isAttending(e) && (!filters.ev || e.event === filters.ev) && passes(e, filters),
   );
-  const byCountry = Map.groupBy(visible, (e) => e.team.players[0]?.cc ?? '');
+  const mixed = Map.groupBy(visible.filter(isMixed), (e) => homeContinent(e) ?? ACROSS);
+  const byCountry = Map.groupBy(
+    visible.filter((e) => !isMixed(e)),
+    (e) => e.team.players[0]?.cc ?? '',
+  );
   const countries = [...byCountry].map(([cc, list]): CountryGroup => ({
+    key: cc,
     cc,
     name: countryName(cc),
     entries: list.sort(byRankThenEvent),
   }));
-  return Continent.options
-    .map((name): ContinentGroup => {
-      const cs = countries
-        .filter((c) => continentOf(c.cc) === name)
-        .sort((a, b) => b.entries.length - a.entries.length || a.name.localeCompare(b.name));
-      return { name, count: cs.reduce((n, c) => n + c.entries.length, 0), countries: cs };
+  const continents = Continent.options
+    .map((continent): ContinentGroup => {
+      const cs = countries.filter((c) => c.cc !== null && continentOf(c.cc) === continent).sort(byCardSize);
+      const pairs = mixed.get(continent);
+      const nations = new Set([...cs.map((c) => c.cc), ...(pairs ?? []).flatMap((e) => [...countriesOf(e)])]).size;
+      if (pairs) cs.push(mixedCard(continent, pairs));
+      return { key: continent, continent, count: cs.reduce((n, c) => n + c.entries.length, 0), nations, countries: cs };
     })
     .filter((c) => c.countries.length)
     .sort((a, b) => b.count - a.count);
+  const across = mixed.get(ACROSS);
+  if (!across) return continents;
+  return [
+    ...continents,
+    { key: ACROSS, continent: null, count: across.length, nations: 0, countries: [mixedCard(ACROSS, across)] },
+  ];
 };
 
 const stageGroup = (stage: EntryStage, list: readonly Entry[]): StageGroup => {

@@ -44,6 +44,8 @@ msgstr "{count, plural, one {# देश} other {# देश}}"
 
 #. Number of players or pairs entered in a tournament draw, e.g. "32 entries"
 #. Players tab event heading: number of entries (players or pairs)
+#. Players tab section summary: number of entries (players or pairs)
+#: src/pages/tournament/components/players/ContinentSection.tsx
 #: src/pages/tournament/components/players/DisciplineSection.tsx
 #: src/utils/format.ts
 msgid "{count, plural, one {# entry} other {# entries}}"
@@ -594,6 +596,11 @@ msgstr "टूर के बारे में"
 #: src/pages/credits/CreditsPage.tsx
 msgid "About this site"
 msgstr "इस साइट के बारे में"
+
+#. Players tab section title, shown in place of a continent name: doubles pairs whose two players come from different continents
+#: src/pages/tournament/components/players/ContinentSection.tsx
+msgid "Across continents"
+msgstr "कई महाद्वीप"
 
 #. Continent name
 #: src/utils/countries.ts
@@ -1684,6 +1691,11 @@ msgstr "व्यक्तिगत तटस्थ एथलीट"
 #: src/components/layout/SiteSettings.tsx
 msgid "Install app"
 msgstr "ऐप इंस्टॉल करें"
+
+#. Players tab card title: doubles pairs whose two players represent different countries
+#: src/pages/tournament/components/players/CountryCard.tsx
+msgid "International pairs"
+msgstr "अलग-अलग देशों की जोड़ियाँ"
 
 #. Player profile fact: when the player first competed internationally. "Intl." is short for international
 #: src/utils/players.ts
