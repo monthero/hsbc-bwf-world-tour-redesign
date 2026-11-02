@@ -16,6 +16,7 @@ const selectEvents = (s: TournamentSearch) => s.events?.join(',') ?? '';
 const selectCourts = (s: TournamentSearch) => s.courts?.join(',') ?? '';
 const selectQ = (s: TournamentSearch) => s.q ?? '';
 const selectFollowing = (s: TournamentSearch) => !!s.following;
+const selectFlame = (s: TournamentSearch) => !!s.flame;
 const selectSort = (s: TournamentSearch): MatchSort => s.sort ?? 'time';
 
 export interface MatchFilters {
@@ -24,6 +25,7 @@ export interface MatchFilters {
   courts: number[];
   q: string;
   following: boolean;
+  flame: boolean;
   sort: MatchSort;
   count: number;
   hasFilters: boolean;
@@ -33,6 +35,7 @@ export interface MatchFilters {
   clear: () => void;
   setQ: (q: string) => void;
   toggleFollowing: () => void;
+  toggleFlame: () => void;
   setSort: (sort: MatchSort) => void;
 }
 
@@ -42,6 +45,7 @@ export const useMatchFilters = (dayCount: number, focusIndex: number): MatchFilt
   const courtsKey = route.useSearch({ select: selectCourts });
   const urlQ = route.useSearch({ select: selectQ });
   const following = route.useSearch({ select: selectFollowing });
+  const flame = route.useSearch({ select: selectFlame });
   const sort = route.useSearch({ select: selectSort });
   const [q, setDraft] = useState(urlQ);
 
@@ -63,9 +67,10 @@ export const useMatchFilters = (dayCount: number, focusIndex: number): MatchFilt
     [update],
   );
   const toggleFollowing = useCallback(() => update((s) => ({ following: s.following ? undefined : true })), [update]);
+  const toggleFlame = useCallback(() => update((s) => ({ flame: s.flame ? undefined : true })), [update]);
   const setSort = useCallback((v: MatchSort) => update({ sort: v === 'time' ? undefined : v }), [update]);
 
-  const count = events.length + courts.length + (q ? 1 : 0) + (following ? 1 : 0);
+  const count = events.length + courts.length + (q ? 1 : 0) + (following ? 1 : 0) + (flame ? 1 : 0);
 
   return useMemo(
     () => ({
@@ -74,6 +79,7 @@ export const useMatchFilters = (dayCount: number, focusIndex: number): MatchFilt
       courts,
       q,
       following,
+      flame,
       sort,
       count,
       hasFilters: events.length > 0 || courts.length > 0,
@@ -83,6 +89,7 @@ export const useMatchFilters = (dayCount: number, focusIndex: number): MatchFilt
       clear,
       setQ,
       toggleFollowing,
+      toggleFlame,
       setSort,
     }),
     [
@@ -91,6 +98,7 @@ export const useMatchFilters = (dayCount: number, focusIndex: number): MatchFilt
       courts,
       q,
       following,
+      flame,
       sort,
       count,
       setDay,
@@ -99,6 +107,7 @@ export const useMatchFilters = (dayCount: number, focusIndex: number): MatchFilt
       clear,
       setQ,
       toggleFollowing,
+      toggleFlame,
       setSort,
     ],
   );

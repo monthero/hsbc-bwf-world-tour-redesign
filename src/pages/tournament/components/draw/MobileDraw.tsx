@@ -5,7 +5,7 @@ import { snapPages, useSnapPager } from '~/hooks/useSnapPager';
 import { headerOffset, tabbarHeight } from '~/utils/layout';
 import { scrollBehavior } from '~/utils/scroll';
 
-import type { Bracket } from './bracket';
+import type { Bracket, BracketBox } from './bracket';
 import { BracketView } from './BracketView';
 
 const VIEW_MARGIN = 12;
@@ -55,7 +55,8 @@ export const MobileDraw: FC<{
   round: number;
   onRound: (round: number) => void;
   onOpen: (id: string) => void;
-}> = ({ bracket, round, onRound, onOpen }) => {
+  dim?: (box: BracketBox) => boolean;
+}> = ({ bracket, round, onRound, onOpen, dim }) => {
   const { columns } = bracket;
   const index = Math.min(round, columns.length - 1);
   const onMove = useCallback(
@@ -72,7 +73,7 @@ export const MobileDraw: FC<{
   return (
     <>
       <Segmented options={options} value={String(shown)} onChange={onSelect} />
-      <BracketView ref={ref} bracket={bracket} onOpen={onOpen} snap />
+      <BracketView ref={ref} bracket={bracket} onOpen={onOpen} dim={dim} snap />
     </>
   );
 };

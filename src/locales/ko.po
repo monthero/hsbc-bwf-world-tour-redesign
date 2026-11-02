@@ -1599,6 +1599,11 @@ msgstr "키"
 msgid "Hide route"
 msgstr "경로 숨기기"
 
+#. Flame toggle on the Draw tab: fades every other match so the big ones stand out. Seeded entries are the top-ranked ones placed apart in the draw
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Highlight big matches: both sides in the world top 30, or both seeded"
+msgstr "빅매치 강조: 양쪽 모두 세계 TOP 30이거나 모두 시드"
+
 #. Label on a short YouTube highlights video of the match
 #. Video type label: match highlights
 #. Videos tab section: short highlight videos of matches
@@ -3297,6 +3302,11 @@ msgstr "접기"
 #: src/pages/player/components/ProfileSection.tsx
 msgid "Show less"
 msgstr "접기"
+
+#. Flame toggle in the match filters. Seeded entries are the top-ranked ones placed apart in the draw
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Show only big matches: both sides in the world top 30, or both seeded"
+msgstr "빅매치만 보기: 양쪽 모두 세계 TOP 30이거나 모두 시드"
 
 #. Star toggle in the match filters
 #: src/pages/tournament/components/matches/FilterControls.tsx

@@ -22,6 +22,7 @@ import {
   Divider,
   EventChips,
   FilterSearch,
+  FlameToggle,
   FollowToggle,
   SortChips,
   type FilterVariant,
@@ -100,6 +101,7 @@ export const InlineFilters = memo<BarProps & { ref: (el: HTMLDivElement | null) 
         <div className={classes.searchWrap}>
           <FilterSearch variant="inline" value={f.q} onChange={f.setQ} />
           <FollowToggle variant="inline" active={f.following} onToggle={f.toggleFollowing} />
+          <FlameToggle variant="inline" active={f.flame} onToggle={f.toggleFlame} />
           {view.sorts.length > 1 && (
             <SortControl variant="inline" sorts={view.sorts} sort={view.sort} onChange={f.setSort} />
           )}
@@ -125,6 +127,7 @@ export const CondensedFilters = memo<BarProps & { days: TournamentDay[]; visible
         {f.hasFilters && <ClearButton variant="compact" onClick={f.clear} />}
         <FilterSearch variant="compact" value={f.q} onChange={f.setQ} />
         <FollowToggle variant="compact" active={f.following} onToggle={f.toggleFollowing} />
+        <FlameToggle variant="compact" active={f.flame} onToggle={f.toggleFlame} />
         {view.sorts.length > 1 && (
           <SortControl variant="compact" sorts={view.sorts} sort={view.sort} onChange={f.setSort} />
         )}
@@ -165,6 +168,7 @@ export const MobileFilters = memo<BarProps & { days: TournamentDay[]; visible: b
         <div className={classes.searchRow}>
           <FilterSearch variant="sheet" value={f.q} onChange={f.setQ} />
           <FollowToggle variant="sheet" active={f.following} onToggle={f.toggleFollowing} />
+          <FlameToggle variant="sheet" active={f.flame} onToggle={f.toggleFlame} />
         </div>
       </FilterSheet>
     );

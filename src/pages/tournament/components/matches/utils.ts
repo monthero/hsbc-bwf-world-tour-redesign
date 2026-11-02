@@ -208,8 +208,8 @@ export const followedBy =
   (m) =>
     matcher(teamPlayers(m));
 
-export const filterBase = (matches: Match[], q: string, following: boolean, followed: Followed) =>
-  matches.filter((m) => matchesQuery(m, q) && (!following || followed(m)));
+export const filterBase = (matches: Match[], q: string, following: boolean, followed: Followed, big: Followed | null) =>
+  matches.filter((m) => matchesQuery(m, q) && (!following || followed(m)) && (!big || big(m)));
 
 export const buildView = (
   dayMatches: Match[],

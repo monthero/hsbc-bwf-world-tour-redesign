@@ -2,7 +2,16 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { clsx } from 'clsx';
 import { memo, useCallback, useLayoutEffect, useMemo, useRef, type FC } from 'react';
 
-import { FilterChip, LiveDot, SearchField, Segmented, StarButton, type SegmentedOption } from '~/components/ui';
+import {
+  FilterChip,
+  IconButton,
+  IconFire,
+  LiveDot,
+  SearchField,
+  Segmented,
+  StarButton,
+  type SegmentedOption,
+} from '~/components/ui';
 import type { TournamentDay } from '~/types';
 import { centerChild } from '~/utils/scroll';
 
@@ -110,6 +119,40 @@ export const FollowToggle = memo<{
       size={STAR_SIZE[variant]}
       onClick={onToggle}
     />
+  );
+});
+
+const FLAME_ICON: Record<FilterVariant, number> = { compact: 14, inline: 16, sheet: 18 };
+
+export const FlameToggle = memo<{
+  active: boolean;
+  onToggle: () => void;
+  variant: FilterVariant;
+  highlight?: boolean;
+}>(({ active, onToggle, variant, highlight }) => {
+  const { t } = useLingui();
+  const label = highlight
+    ? t({
+        message: 'Highlight big matches: both sides in the world top 30, or both seeded',
+        comment:
+          'Flame toggle on the Draw tab: fades every other match so the big ones stand out. Seeded entries are the top-ranked ones placed apart in the draw',
+      })
+    : t({
+        message: 'Show only big matches: both sides in the world top 30, or both seeded',
+        comment: 'Flame toggle in the match filters. Seeded entries are the top-ranked ones placed apart in the draw',
+      });
+  return (
+    <IconButton
+      label={label}
+      tip={label}
+      size={variant === 'compact' ? 'sm' : 'md'}
+      active={active}
+      aria-pressed={active}
+      className={variant === 'sheet' ? classes.sheetButton : undefined}
+      onClick={onToggle}
+    >
+      <IconFire size={FLAME_ICON[variant]} />
+    </IconButton>
   );
 });
 

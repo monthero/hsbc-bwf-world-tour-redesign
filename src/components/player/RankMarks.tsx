@@ -7,10 +7,9 @@ import { memo, use, type FC, type ReactNode } from 'react';
 import { Tip } from '~/components/ui';
 import { EVENT_NAMES } from '~/constants';
 import { TournamentRankContext } from '~/contexts';
-import { usePlayerDirectory } from '~/hooks/usePlayers';
+import { useTeamRank } from '~/hooks/useTeamRank';
 import type { EventCode, Player } from '~/types';
 import { PLAYER_RANK } from '~/utils/meta';
-import { worldRank } from '~/utils/rankings';
 
 import classes from './RankMarks.module.css';
 
@@ -78,10 +77,9 @@ export const RankSeed = memo<{
   rank?: number;
   className?: string;
 }>(({ players, seed, event, rank, className }) => {
-  const { data: dir } = usePlayerDirectory();
-  const rankOf = use(TournamentRankContext);
+  const teamRank = useTeamRank();
   let r = rank ?? 0;
-  if (rank === undefined && event && players) r = rankOf ? rankOf(players, event) : worldRank(dir, players, event);
+  if (rank === undefined && event && players) r = teamRank(players, event);
   if (!r && !seed) return null;
   return (
     <span className={clsx(classes.rankSeed, className)}>

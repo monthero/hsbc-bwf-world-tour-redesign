@@ -22,6 +22,7 @@ export const TournamentSearch = z.object({
   courts: z.array(z.number().int()).optional().catch(undefined),
   q: z.string().optional().catch(undefined),
   following: z.boolean().optional().catch(undefined),
+  flame: z.boolean().optional().catch(undefined),
   sort: MatchSort.optional().catch(undefined),
   match: z.string().optional().catch(undefined),
   draw: EventCode.optional().catch(undefined),

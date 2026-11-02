@@ -1599,6 +1599,11 @@ msgstr "ส่วนสูง"
 msgid "Hide route"
 msgstr "ซ่อนเส้นทาง"
 
+#. Flame toggle on the Draw tab: fades every other match so the big ones stand out. Seeded entries are the top-ranked ones placed apart in the draw
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Highlight big matches: both sides in the world top 30, or both seeded"
+msgstr "ไฮไลต์แมตช์ใหญ่: ทั้งสองฝ่ายอยู่ในท็อป 30 โลก หรือเป็นมือวางทั้งคู่"
+
 #. Label on a short YouTube highlights video of the match
 #. Video type label: match highlights
 #. Videos tab section: short highlight videos of matches
@@ -3297,6 +3302,11 @@ msgstr "แสดงน้อยลง"
 #: src/pages/player/components/ProfileSection.tsx
 msgid "Show less"
 msgstr "แสดงน้อยลง"
+
+#. Flame toggle in the match filters. Seeded entries are the top-ranked ones placed apart in the draw
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Show only big matches: both sides in the world top 30, or both seeded"
+msgstr "แสดงเฉพาะแมตช์ใหญ่: ทั้งสองฝ่ายอยู่ในท็อป 30 โลก หรือเป็นมือวางทั้งคู่"
 
 #. Star toggle in the match filters
 #: src/pages/tournament/components/matches/FilterControls.tsx

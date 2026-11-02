@@ -44,8 +44,8 @@ const BoxSide: FC<{ box: BracketBox; k: Side; event: EventCode }> = ({ box, k, e
   );
 };
 
-export const DrawBox = memo<{ box: BracketBox; event: EventCode; onOpen: (id: string) => void }>(
-  ({ box, event, onOpen }) => {
+export const DrawBox = memo<{ box: BracketBox; event: EventCode; dimmed: boolean; onOpen: (id: string) => void }>(
+  ({ box, event, dimmed, onOpen }) => {
     const m = box.match;
     const open = !!m && isScheduled(m);
     return (
@@ -54,6 +54,7 @@ export const DrawBox = memo<{ box: BracketBox; event: EventCode; onOpen: (id: st
         data-live={m?.status === 'P' || undefined}
         data-tbd={(!m && !box.teams[0] && !box.teams[1]) || undefined}
         data-idle={!open || undefined}
+        data-dim={dimmed || undefined}
       >
         {open && <CardHit label={detailsLabel(matchTitle(m))} onClick={() => onOpen(m.id)} />}
         <BoxSide box={box} k={0} event={event} />

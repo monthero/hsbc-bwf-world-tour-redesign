@@ -1599,6 +1599,11 @@ msgstr "Taille"
 msgid "Hide route"
 msgstr "Masquer le parcours"
 
+#. Flame toggle on the Draw tab: fades every other match so the big ones stand out. Seeded entries are the top-ranked ones placed apart in the draw
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Highlight big matches: both sides in the world top 30, or both seeded"
+msgstr "Mettre en avant les grosses affiches : les deux camps dans le top 30 mondial, ou deux têtes de série"
+
 #. Label on a short YouTube highlights video of the match
 #. Video type label: match highlights
 #. Videos tab section: short highlight videos of matches
@@ -3297,6 +3302,11 @@ msgstr "Afficher moins"
 #: src/pages/player/components/ProfileSection.tsx
 msgid "Show less"
 msgstr "Réduire"
+
+#. Flame toggle in the match filters. Seeded entries are the top-ranked ones placed apart in the draw
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Show only big matches: both sides in the world top 30, or both seeded"
+msgstr "N’afficher que les grosses affiches : les deux camps dans le top 30 mondial, ou deux têtes de série"
 
 #. Star toggle in the match filters
 #: src/pages/tournament/components/matches/FilterControls.tsx

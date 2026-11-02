@@ -1,16 +1,16 @@
 import { msg } from '@lingui/core/macro';
 import { useQuery } from '@tanstack/react-query';
-import { use, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { headToHeadQuery } from '~/api/queries';
 import { SEASON_YEAR } from '~/constants';
-import { TournamentRankContext } from '~/contexts';
 import { useCareerIndex } from '~/hooks/useCareer';
-import { usePlayerDirectory, useRaceRankings } from '~/hooks/usePlayers';
+import { useRaceRankings } from '~/hooks/usePlayers';
 import { useSeasonIndex } from '~/hooks/useSeason';
+import { useTeamRank } from '~/hooks/useTeamRank';
 import type { Match, Tournament } from '~/types';
 import { careerRecord, meetingsVs, teamHistory, withOtherMeets } from '~/utils/h2h';
-import { raceRank, worldRank } from '~/utils/rankings';
+import { raceRank } from '~/utils/rankings';
 import { recentForm, winLoss } from '~/utils/season';
 
 import { allMeetings, formItems, rankRow, toMeetings, wlRow, type CompareRow } from './utils';
@@ -31,8 +31,7 @@ const RACE = msg({
 const FORM_LIMIT = 5;
 
 export const useMatchInsights = (match: Match, tournament: Tournament) => {
-  const { data: dir } = usePlayerDirectory();
-  const rankOf = use(TournamentRankContext);
+  const teamRank = useTeamRank();
   const { data: race } = useRaceRankings();
   const index = useSeasonIndex();
   const [a, b] = match.teams;
@@ -69,18 +68,13 @@ export const useMatchInsights = (match: Match, tournament: Tournament) => {
 
   const compare = useMemo(() => {
     const rows: CompareRow[] = [
-      rankRow(
-        'wr',
-        WORLD_RANKING,
-        rankOf ? rankOf(a.players, ev) : worldRank(dir, a.players, ev),
-        rankOf ? rankOf(b.players, ev) : worldRank(dir, b.players, ev),
-      ),
+      rankRow('wr', WORLD_RANKING, teamRank(a.players, ev), teamRank(b.players, ev)),
       rankRow('race', RACE, raceRank(race, a.players, ev), raceRank(race, b.players, ev)),
     ];
     if (record) rows.push(wlRow('career', CAREER_WL, record.careerA, record.careerB));
     rows.push(wlRow('season', SEASON_WL, history.wlA, history.wlB));
     return rows;
-  }, [dir, rankOf, race, a, b, ev, record, history.wlA, history.wlB]);
+  }, [teamRank, race, a, b, ev, record, history.wlA, history.wlB]);
 
   return { record, history, allMeets, compare };
 };

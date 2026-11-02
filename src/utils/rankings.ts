@@ -1,5 +1,6 @@
 import type { TournamentRanks } from '~/api/schemas';
 import { QUALIFY_PER_COUNTRY, QUALIFY_SPOTS } from '~/constants';
+import type { RankOf } from '~/contexts';
 import type {
   CurrentRank,
   EventCode,
@@ -13,6 +14,7 @@ import type {
   RankRow,
   RankView,
   SeasonIndex,
+  Team,
 } from '~/types';
 
 import { weakCached } from './cache';
@@ -52,6 +54,21 @@ export const worldRank = (dir: PlayerDirectory | undefined, players: readonly Pl
       partner,
     ),
   );
+
+const TOP_10 = 10;
+const BIG_MATCH_TOP = 30;
+
+const inTop = (rank: number, top: number) => rank > 0 && rank <= top;
+
+export const inWorldTop10 = (rank: number) => inTop(rank, TOP_10);
+
+const inBigMatchTop = (players: readonly Player[], ev: EventCode, rankOf: RankOf) =>
+  inTop(rankOf(players, ev), BIG_MATCH_TOP);
+
+export const isBigMatch = (a: Team | null | undefined, b: Team | null | undefined, ev: EventCode, rankOf: RankOf) =>
+  !!a &&
+  !!b &&
+  ((!!a.seed && !!b.seed) || (inBigMatchTop(a.players, ev, rankOf) && inBigMatchTop(b.players, ev, rankOf)));
 
 export const frozenRank = (ranks: TournamentRanks['ranks'], players: readonly Player[], ev: EventCode) =>
   bestRank(players, (p) => ranks[p.id]?.[ev] ?? 0);

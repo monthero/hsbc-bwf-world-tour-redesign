@@ -98,3 +98,7 @@
     );
   }
 }
+
+.sheetButton {
+  --size: 44px;
+}

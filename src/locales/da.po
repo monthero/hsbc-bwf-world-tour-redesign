@@ -1599,6 +1599,11 @@ msgstr "Højde"
 msgid "Hide route"
 msgstr "Skjul ruten"
 
+#. Flame toggle on the Draw tab: fades every other match so the big ones stand out. Seeded entries are the top-ranked ones placed apart in the draw
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Highlight big matches: both sides in the world top 30, or both seeded"
+msgstr "Fremhæv storkampe: begge sider i top 30 i verden, eller begge seedede"
+
 #. Label on a short YouTube highlights video of the match
 #. Video type label: match highlights
 #. Videos tab section: short highlight videos of matches
@@ -3297,6 +3302,11 @@ msgstr "Vis færre"
 #: src/pages/player/components/ProfileSection.tsx
 msgid "Show less"
 msgstr "Vis mindre"
+
+#. Flame toggle in the match filters. Seeded entries are the top-ranked ones placed apart in the draw
+#: src/pages/tournament/components/matches/FilterControls.tsx
+msgid "Show only big matches: both sides in the world top 30, or both seeded"
+msgstr "Vis kun storkampe: begge sider i top 30 i verden, eller begge seedede"
 
 #. Star toggle in the match filters
 #: src/pages/tournament/components/matches/FilterControls.tsx

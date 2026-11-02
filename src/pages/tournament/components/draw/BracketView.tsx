@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import type { CSSProperties, FC, Ref } from 'react';
 
-import { GAP, type Bracket } from './bracket';
+import { GAP, type Bracket, type BracketBox } from './bracket';
 import { DrawBox } from './DrawBox';
 
 import classes from './Draw.module.css';
@@ -10,8 +10,9 @@ export const BracketView: FC<{
   bracket: Bracket;
   onOpen: (id: string) => void;
   snap?: boolean;
+  dim?: (box: BracketBox) => boolean;
   ref?: Ref<HTMLDivElement>;
-}> = ({ bracket, onOpen, snap, ref }) => {
+}> = ({ bracket, onOpen, snap, dim, ref }) => {
   const { event, columns, height, boxHeight } = bracket;
   return (
     <div ref={ref} className={clsx(classes.scroller, snap && classes.snap)}>
@@ -36,7 +37,7 @@ export const BracketView: FC<{
                   className={classes.slot}
                   style={{ top: (col.ys[j] ?? 0) - boxHeight / 2, height: boxHeight }}
                 >
-                  <DrawBox box={b} event={event} onOpen={onOpen} />
+                  <DrawBox box={b} event={event} dimmed={!!dim?.(b)} onOpen={onOpen} />
                 </div>
               ))}
             </div>

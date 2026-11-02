@@ -7,6 +7,7 @@ import { lazyRecord } from '~/i18n/lazy';
 import type { DrawSlot, EntryListing, Match, Side, SideResult, Team } from '~/types';
 import { continentOf, countryName } from '~/utils/countries';
 import { isMainDraw, latestByTeam, sideStatus, teamEventKey, teamMatchesQuery } from '~/utils/matches';
+import { inWorldTop10 } from '~/utils/rankings';
 
 export interface LatestEntry {
   key: string;
@@ -179,7 +180,7 @@ const bySeedThenRank = (a: Entry, b: Entry) => (a.team.seed || 1e3) - (b.team.se
 const isAttending = (e: Entry) => e.stage === 'main' || e.stage === 'qual';
 
 const passes = (e: Entry, { q, top10 }: Pick<EntryFilters, 'q' | 'top10'>) =>
-  (!top10 || (e.rank > 0 && e.rank <= 10)) && teamMatchesQuery(e.team, q);
+  (!top10 || inWorldTop10(e.rank)) && teamMatchesQuery(e.team, q);
 
 const countriesOf = (e: Entry) => new Set(e.team.players.map((p) => p.cc));
 

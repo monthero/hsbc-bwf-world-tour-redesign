@@ -4,6 +4,18 @@
   gap: 16px;
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.events {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .scroller {
   overflow-x: auto;
   padding-bottom: 8px;
@@ -145,7 +157,13 @@
   border: 1px solid var(--bwf-border);
   background: var(--bwf-raised);
   color: var(--bwf-text);
-  transition: border-color 0.15s;
+  transition:
+    border-color 0.15s,
+    opacity 0.2s;
+
+  &[data-dim] {
+    opacity: 0.35;
+  }
 
   &:hover:not([data-idle]) {
     border-color: var(--bwf-border-hover);

@@ -7,13 +7,16 @@ import { FlagTipGroup } from '~/components/country';
 import { EmptyState, Segmented } from '~/components/ui';
 import { EVENT_NAMES, EVENT_OPTIONS } from '~/constants';
 import { useIsMobile } from '~/hooks/useIsMobile';
+import { useTeamRank } from '~/hooks/useTeamRank';
 import type { EventCode } from '~/types';
+import { isBigMatch } from '~/utils/rankings';
 
 import { useOpenMatch, useUpdateSearch } from '../hooks';
 import type { TabProps } from '../types';
-import { buildBracket, currentRound, hasDraw } from './draw/bracket';
+import { buildBracket, currentRound, hasDraw, type BracketBox } from './draw/bracket';
 import { BracketView } from './draw/BracketView';
 import { MobileDraw } from './draw/MobileDraw';
+import { FlameToggle } from './matches/FilterControls';
 
 import page from '../TournamentPage.module.css';
 import classes from './draw/Draw.module.css';
@@ -24,6 +27,8 @@ const route = getRouteApi('/world-tour/$year/$slug');
 export const DrawTab: FC<TabProps> = ({ tournament, schedule, draw }) => {
   const ev = route.useSearch({ select: (s) => s.draw ?? 'MS' });
   const round = route.useSearch({ select: (s) => s.round });
+  const flame = route.useSearch({ select: (s) => !!s.flame });
+  const teamRank = useTeamRank();
   const update = useUpdateSearch();
   const onOpen = useOpenMatch();
   const mobile = useIsMobile();
@@ -36,10 +41,18 @@ export const DrawTab: FC<TabProps> = ({ tournament, schedule, draw }) => {
 
   const onEvent = useCallback((v: EventCode | null) => v && update({ draw: v }), [update]);
   const onRound = useCallback((r: number) => update({ round: r }), [update]);
+  const onFlame = useCallback(() => update((s) => ({ flame: s.flame ? undefined : true })), [update]);
+  const dim = useMemo(
+    () => (flame ? (box: BracketBox) => !isBigMatch(box.teams[0], box.teams[1], ev, teamRank) : undefined),
+    [flame, ev, teamRank],
+  );
 
   return (
     <section className={clsx(utils.container, page.tabSection, classes.section)}>
-      <Segmented options={EVENT_OPTIONS} value={ev} onChange={onEvent} maxWidth={420} center />
+      <div className={classes.controls}>
+        <Segmented options={EVENT_OPTIONS} value={ev} onChange={onEvent} maxWidth={420} className={classes.events} />
+        <FlameToggle variant="inline" active={flame} onToggle={onFlame} highlight />
+      </div>
       {!bracket ? (
         <EmptyState>
           <Trans comment="Draw tab empty state. {event} is an event name, e.g. Men’s singles. The order of play is the daily match schedule">
@@ -49,9 +62,9 @@ export const DrawTab: FC<TabProps> = ({ tournament, schedule, draw }) => {
       ) : (
         <FlagTipGroup>
           {mobile ? (
-            <MobileDraw bracket={bracket} round={round ?? current} onRound={onRound} onOpen={onOpen} />
+            <MobileDraw bracket={bracket} round={round ?? current} onRound={onRound} onOpen={onOpen} dim={dim} />
           ) : (
-            <BracketView bracket={bracket} onOpen={onOpen} />
+            <BracketView bracket={bracket} onOpen={onOpen} dim={dim} />
           )}
         </FlagTipGroup>
       )}

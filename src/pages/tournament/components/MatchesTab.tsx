@@ -7,9 +7,11 @@ import { EmptyState } from '~/components/ui';
 import { useLivePaused } from '~/hooks/useLivePaused';
 import { useMatchClock } from '~/hooks/useMatchClock';
 import { useScrolledPast } from '~/hooks/useScrolledPast';
+import { useTeamRank } from '~/hooks/useTeamRank';
 import { useMatchReplays } from '~/hooks/useTournamentMedia';
 import { FOLLOW_KINDS, useFavoriteCount, useFavoritesMatcher } from '~/stores/favorites';
 import type { Match, TournamentDay } from '~/types';
+import { isBigMatch } from '~/utils/rankings';
 
 import { useOpenMatch } from '../hooks';
 import type { TabProps } from '../types';
@@ -85,7 +87,15 @@ export const MatchesTab: FC<TabProps> = ({ tournament, schedule }) => {
   );
   const followed = useMemo(() => followedBy(matcher), [matcher]);
   const sorting = useMemo(() => ({ sort: f.sort, following: f.following, followed }), [f.sort, f.following, followed]);
-  const base = useMemo(() => filterBase(dayMatches, q, f.following, followed), [dayMatches, q, f.following, followed]);
+  const teamRank = useTeamRank();
+  const big = useMemo(
+    () => (f.flame ? (m: Match) => isBigMatch(m.teams[0], m.teams[1], m.event, teamRank) : null),
+    [f.flame, teamRank],
+  );
+  const base = useMemo(
+    () => filterBase(dayMatches, q, f.following, followed, big),
+    [dayMatches, q, f.following, followed, big],
+  );
   const view = useMemo(
     () => buildView(dayMatches, base, f.events, f.courts, sorting, clock),
     [dayMatches, base, f.events, f.courts, sorting, clock],
