@@ -161,10 +161,13 @@ export const PlayerBio = z.object({
 });
 export type PlayerBio = z.infer<typeof PlayerBio>;
 
+const RankNumber = NullableNumber.default(null);
+const PartnerName = z.string().default('');
+
 export const PairRank = z.object({
   r: z.number(),
-  pr: NullableNumber,
-  w: z.string(),
+  pr: RankNumber,
+  w: PartnerName,
   wid: z.string().default(''),
 });
 export type PairRank = z.infer<typeof PairRank>;
@@ -187,12 +190,12 @@ export type ImageCredits = z.infer<typeof ImageCredits>;
 
 export const CurrentRank = z.object({
   ev: EventCode,
-  r: NullableNumber,
-  pr: NullableNumber,
-  w: z.string(),
+  r: RankNumber,
+  pr: RankNumber,
+  w: PartnerName,
   wid: z.string().default(''),
-  hi: NullableNumber,
-  hw: z.string(),
+  hi: RankNumber,
+  hw: PartnerName,
   hwid: z.string().default(''),
   also: z.array(PairRank).optional(),
 });
@@ -209,10 +212,21 @@ export const PlayerRecord = z.object({
 });
 export type PlayerRecord = z.infer<typeof PlayerRecord>;
 
-export const PlayersData = z.object({
-  rankingsWeek: z.string(),
-  players: z.record(z.string(), PlayerRecord),
-});
+export const PlayersData = z
+  .object({
+    rankingsWeek: z.string(),
+    players: z.record(z.string(), PlayerRecord),
+  })
+  .transform((d) => {
+    const nameOf = (id: string) => d.players[id]?.name ?? '';
+    for (const rec of Object.values(d.players))
+      for (const x of rec.ranks ?? []) {
+        x.w ||= nameOf(x.wid);
+        x.hw ||= nameOf(x.hwid);
+        for (const a of x.also ?? []) a.w ||= nameOf(a.wid);
+      }
+    return d;
+  });
 export type PlayersData = z.infer<typeof PlayersData>;
 
 const CareerMatchDto = MatchDto.extend({ tournament: z.string(), day: z.string() });

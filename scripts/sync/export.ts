@@ -112,15 +112,29 @@ interface PlayerRow {
 
 interface CurrentRank {
   ev: string;
-  r: number | null;
-  pr: number | null;
-  w: string;
+  r?: number | null;
+  pr?: number | null;
+  w?: string;
   wid?: string;
-  hi: number | null;
-  hw: string;
+  hi?: number | null;
+  hw?: string;
   hwid?: string;
-  also?: { r: number; pr: number | null; w: string; wid?: string }[];
+  also?: { r: number; pr?: number | null; w?: string; wid?: string }[];
 }
+
+const filled = <T extends object>(o: T): Partial<T> =>
+  Object.fromEntries(Object.entries(o).filter(([, v]) => v !== null && v !== undefined && v !== '')) as Partial<T>;
+
+const slimRank = (ids: ReadonlySet<string>) => {
+  const listed = (id: string | undefined) => !!id && ids.has(id);
+  return (x: CurrentRank): CurrentRank =>
+    filled({
+      ...x,
+      w: listed(x.wid) ? undefined : x.w,
+      hw: listed(x.hwid) ? undefined : x.hw,
+      also: x.also?.map((a) => filled({ ...a, w: listed(a.wid) ? undefined : a.w }) as typeof a),
+    }) as CurrentRank;
+};
 
 interface PreviousPlayers {
   players: Record<string, { ranks?: CurrentRank[] }>;
@@ -702,6 +716,7 @@ export const exportData = async (
     }),
   );
 
+  const slim = slimRank(new Set(players.map((p) => p.id)));
   write('players.json', {
     rankingsWeek: worldPub?.week ?? '',
     players: Object.fromEntries(
@@ -713,7 +728,7 @@ export const exportData = async (
           cc: p.cc,
           ...(p.photo ? { photo: p.photo } : {}),
           ...(p.photo && overrides[p.id]?.photoCrop ? { photoCrop: overrides[p.id]?.photoCrop } : {}),
-          ...(ranksOf.get(p.id)?.length ? { ranks: ranksOf.get(p.id) } : {}),
+          ...(ranksOf.get(p.id)?.length ? { ranks: ranksOf.get(p.id)?.map(slim) } : {}),
           retired: retired.get(p.id),
         },
       ]),
