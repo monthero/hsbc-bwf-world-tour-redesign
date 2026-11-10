@@ -43,7 +43,7 @@
 
 .value {
   margin: 0;
-  font-family: 'Archivo', var(--mantine-font-family);
+  font-family: 'Archivo Variable', var(--mantine-font-family);
   font-size: 34px;
   font-stretch: 72%;
   font-weight: 800;

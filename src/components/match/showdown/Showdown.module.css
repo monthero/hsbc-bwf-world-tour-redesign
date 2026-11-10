@@ -304,7 +304,7 @@
     border-radius: 0;
     background: none;
     backdrop-filter: none;
-    font-family: 'Saira', var(--mantine-font-family);
+    font-family: 'Saira Variable', var(--mantine-font-family);
     font-stretch: 75%;
     font-size: 14px;
     font-weight: 700;
@@ -401,7 +401,7 @@
 }
 
 .name {
-  font-family: 'Archivo', var(--mantine-font-family);
+  font-family: 'Archivo Variable', var(--mantine-font-family);
   font-stretch: 72%;
   font-weight: 500;
   letter-spacing: -0.005em;
@@ -487,7 +487,7 @@
 }
 
 .hubLabel {
-  font-family: 'Saira', var(--mantine-font-family);
+  font-family: 'Saira Variable', var(--mantine-font-family);
   font-stretch: 75%;
   font-size: 16px;
   font-weight: 700;
@@ -503,7 +503,7 @@
   align-items: center;
   gap: 12px;
   width: 100%;
-  font-family: 'Archivo', var(--mantine-font-family);
+  font-family: 'Archivo Variable', var(--mantine-font-family);
   font-stretch: 62%;
   font-size: 84px;
   font-weight: 900;
@@ -550,7 +550,7 @@
 }
 
 .vs {
-  font-family: 'Saira', var(--mantine-font-family);
+  font-family: 'Saira Variable', var(--mantine-font-family);
   font-stretch: 75%;
   font-style: italic;
   font-size: 80px;
@@ -586,7 +586,7 @@
 }
 
 .startTime {
-  font-family: 'Archivo', var(--mantine-font-family);
+  font-family: 'Archivo Variable', var(--mantine-font-family);
   font-stretch: 72%;
   font-size: 28px;
   font-weight: 800;
@@ -671,7 +671,7 @@
 }
 
 .duelValue {
-  font-family: 'Archivo', var(--mantine-font-family);
+  font-family: 'Archivo Variable', var(--mantine-font-family);
   font-stretch: 72%;
   font-size: 19px;
   font-weight: 500;
@@ -686,7 +686,7 @@
 }
 
 .duelLabel {
-  font-family: 'Saira', var(--mantine-font-family);
+  font-family: 'Saira Variable', var(--mantine-font-family);
   font-stretch: 75%;
   font-size: 11px;
   font-weight: 700;

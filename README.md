@@ -88,7 +88,7 @@ pnpm start              # http://localhost:5173
 - [dayjs](https://day.js.org) for dates and time zones
 - [Lingui](https://lingui.dev) for internationalization
 - [Phosphor Icons](https://phosphoricons.com) via [unplugin-icons](https://github.com/unplugin/unplugin-icons)
-- [Fontsource](https://fontsource.org) Noto fonts for Chinese, Japanese, Korean, Thai, Hindi and Arabic
+- [Fontsource](https://fontsource.org) for Geist, Archivo, Saira and Russo One, plus Noto fonts for Chinese, Japanese, Korean, Thai, Hindi and Arabic
 - [d3-geo](https://d3js.org/d3-geo), [TopoJSON](https://github.com/topojson/topojson-client) and [world-atlas](https://github.com/topojson/world-atlas) for the season map
 - [sharp](https://sharp.pixelplumbing.com) to process player photos
 - [Vite+](https://viteplus.dev) to run [Oxlint](https://oxc.rs/docs/guide/usage/linter) and [Oxfmt](https://oxc.rs/docs/guide/usage/formatter) for linting, formatting and type-aware checks, plus the pre-commit hook

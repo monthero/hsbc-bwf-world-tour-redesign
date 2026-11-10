@@ -23,7 +23,7 @@ import tooltip from '~/components/ui/Tooltip.module.css';
 import variants from '~/components/ui/variants.module.css';
 import utils from '~/styles/utils.module.css';
 
-const FONT_STACK = "'Geist', var(--bwf-script-font, system-ui), system-ui, sans-serif";
+const FONT_STACK = "'Geist Variable', var(--bwf-script-font, system-ui), system-ui, sans-serif";
 
 const red: MantineColorsTuple = [
   '#ffe9ea',

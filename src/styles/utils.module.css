@@ -23,7 +23,7 @@
   }
 
   .figure {
-    font-family: 'Archivo', var(--mantine-font-family);
+    font-family: 'Archivo Variable', var(--mantine-font-family);
     font-stretch: 72%;
     font-weight: 800;
     line-height: 1;

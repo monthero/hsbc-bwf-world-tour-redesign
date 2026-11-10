@@ -1,4 +1,8 @@
 import '@mantine/core/styles.layer.css';
+import '@fontsource-variable/geist/wght.css';
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/saira/wdth.css';
+import '@fontsource/russo-one/400.css';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
 import { DirectionProvider, MantineProvider } from '@mantine/core';

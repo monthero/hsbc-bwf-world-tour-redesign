@@ -275,7 +275,7 @@
 
 .label {
   margin-top: auto;
-  font-family: 'Saira', var(--mantine-font-family);
+  font-family: 'Saira Variable', var(--mantine-font-family);
   font-stretch: 75%;
   font-size: calc(min(34px, 24cqi) * var(--fit, 1));
   font-weight: 800;
@@ -288,7 +288,7 @@
 .blurb {
   overflow: hidden;
   color: var(--bwf-on-brand-faint);
-  font-family: 'Saira', var(--mantine-font-family);
+  font-family: 'Saira Variable', var(--mantine-font-family);
   font-size: 12px;
   font-weight: 500;
   line-height: 1.3;
