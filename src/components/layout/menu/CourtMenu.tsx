@@ -33,6 +33,10 @@ const BOX_STYLES = NAV_ITEMS.map((_, i) => ({ gridArea: BOX_AREAS[i], '--i': i }
 const FAR = NAV_ITEMS.slice(0, 2);
 const NEAR = NAV_ITEMS.slice(2);
 
+const LABEL_FONT = "1em 'Saira Variable'";
+
+const warmLabelFont = () => void document.fonts.load(LABEL_FONT);
+
 const useScrollLock = (locked: boolean) => {
   useEffect(() => {
     if (!locked) return;
@@ -167,6 +171,8 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
     const { open, modal, id, triggerId, trap, toggle, close } = useNavMenu(defaultOpen);
     const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
     const [settings, setSettings] = useState(false);
+    const [opened, setOpened] = useState(open);
+    if (open && !opened) setOpened(true);
     const desktop = useMediaQuery(DESKTOP_QUERY);
     const { t } = useLingui();
     const settingsLabel = t`Settings`;
@@ -183,7 +189,14 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
     }, [triggerId]);
 
     return (
-      <div ref={trap} className={classes.scope} {...DARK_SCOPE_PROPS}>
+      <div
+        ref={trap}
+        className={classes.scope}
+        {...DARK_SCOPE_PROPS}
+        onPointerEnter={warmLabelFont}
+        onPointerDown={warmLabelFont}
+        onFocus={warmLabelFont}
+      >
         <MenuButton
           id={triggerId}
           controls={id}
@@ -220,7 +233,7 @@ export const CourtMenu = memo<{ defaultOpen?: boolean; contained?: boolean; clas
                 <IconSettings size={18} />
               </IconButton>
             </div>
-            <Court onNavigate={close} />
+            {opened && <Court onNavigate={close} />}
           </div>
         </dialog>
         <SettingsSheet opened={settings} onClose={closeSettings} />
