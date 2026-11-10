@@ -9,6 +9,7 @@ import { EventTag, TeamPlayers } from '~/components/match';
 import { AvatarGroup, PlayerAvatar, PlayerName } from '~/components/player';
 import { MoreButton } from '~/components/ui';
 import { SEASON_YEAR } from '~/constants';
+import { useInView } from '~/hooks/useInView';
 import type { Player } from '~/types';
 import { formatRecord } from '~/utils/format';
 import type { OtherMeet } from '~/utils/h2h';
@@ -22,6 +23,8 @@ import classes from './People.module.css';
 import shared from './shared.module.css';
 
 const AVATAR = 28;
+
+const NEAR_VIEW = { rootMargin: '400px', once: true };
 
 const idsOf = (players: readonly Player[]) => players.map((p) => p.id);
 
@@ -74,7 +77,11 @@ const RivalItem = memo<{ row: RivalRow }>(({ row: r }) => {
 });
 
 export const RivalsSection = memo<{ rows: RivalRow[] }>(({ rows }) => {
-  const queries = useMemo(() => rows.map((r) => headToHeadQuery(idsOf(r.own), idsOf(r.players))), [rows]);
+  const [ref, near] = useInView<HTMLDivElement>(NEAR_VIEW);
+  const queries = useMemo(
+    () => rows.map((r) => ({ ...headToHeadQuery(idsOf(r.own), idsOf(r.players)), enabled: near })),
+    [rows, near],
+  );
   const others = useQueries({ queries, combine: dataOf });
   const full = useMemo(
     () =>
@@ -89,7 +96,7 @@ export const RivalsSection = memo<{ rows: RivalRow[] }>(({ rows }) => {
       label={<Trans comment="Section title: the opponents the player has faced most often">Most played</Trans>}
       aside={WON_LOST}
     >
-      <div className={shared.rows}>
+      <div ref={ref} className={shared.rows}>
         {full.map((r) => (
           <RivalItem key={r.key} row={r} />
         ))}
