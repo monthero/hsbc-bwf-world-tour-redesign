@@ -5,7 +5,7 @@ import { clsx } from 'clsx';
 import { memo, use, useCallback, useMemo, type FC } from 'react';
 
 import { EmptyState, FilterChip, IconCheck, SearchField, Segmented } from '~/components/ui';
-import { EVENT_NAMES, EVENT_OPTIONS } from '~/constants';
+import { EVENT_CODES, EVENT_NAMES, EVENT_OPTIONS } from '~/constants';
 import { TournamentRankContext } from '~/contexts';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { useLazyOptions, type LazyOption } from '~/i18n/useLazyOptions';
@@ -87,7 +87,7 @@ const JumpChip = memo<{ event: EventCode; count: number }>(({ event, count }) =>
       })}
       onClick={() => jumpTo(event)}
     >
-      {event}
+      {EVENT_CODES[event]}
       <span className={classes.jumpCount}>{count}</span>
     </FilterChip>
   );

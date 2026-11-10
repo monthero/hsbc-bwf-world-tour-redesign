@@ -12,6 +12,7 @@ import {
   StarButton,
   type SegmentedOption,
 } from '~/components/ui';
+import { EVENT_CODES } from '~/constants';
 import type { TournamentDay } from '~/types';
 import { centerChild } from '~/utils/scroll';
 
@@ -72,7 +73,7 @@ export const EventChips = memo<ChipsProps & { chips: EventChipModel[]; onToggle:
             disabled={!c.count && !c.active}
             onClick={() => onToggle(c.code)}
           >
-            {c.code}
+            {EVENT_CODES[c.code]}
           </FilterChip>
         ))}
       </div>

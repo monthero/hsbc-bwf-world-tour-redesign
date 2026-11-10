@@ -2071,6 +2071,12 @@ msgstr "試合スタッツ"
 msgid "Matches"
 msgstr "試合"
 
+#. Short tag for men's doubles in chips and tabs. Use the abbreviation local badminton sites use
+#: src/constants.ts
+msgctxt "discipline code"
+msgid "MD"
+msgstr "男子複"
+
 #. Podium tab section: the champion, runner-up and semi-finalists of each event
 #: src/pages/tournament/components/PodiumTab.tsx
 msgid "Medalists"
@@ -2151,6 +2157,12 @@ msgstr "対戦の多い相手"
 #: src/components/news/PopularNews.tsx
 msgid "Most popular"
 msgstr "よく読まれている記事"
+
+#. Short tag for men's singles in chips and tabs. Use the abbreviation local badminton sites use
+#: src/constants.ts
+msgctxt "discipline code"
+msgid "MS"
+msgstr "男子単"
 
 #. Settings option: show match times in the visitor’s own time zone
 #: src/components/layout/SiteSettings.tsx
@@ -3944,6 +3956,12 @@ msgstr "試合をフルで見る"
 msgid "Watch the highlights"
 msgstr "ハイライトを見る"
 
+#. Short tag for women's doubles in chips and tabs. Use the abbreviation local badminton sites use
+#: src/constants.ts
+msgctxt "discipline code"
+msgid "WD"
+msgstr "女子複"
+
 #. Heading on the page shown when a player profile doesn’t exist
 #: src/pages/player/PlayerPage.tsx
 msgid "We couldn’t find that player"
@@ -4127,6 +4145,18 @@ msgstr "ワールドツアー勝敗"
 #: src/components/player/RankMarks.tsx
 msgid "WR<0>{rank}</0>"
 msgstr "世界<0>{rank}</0>位"
+
+#. Short tag for women's singles in chips and tabs. Use the abbreviation local badminton sites use
+#: src/constants.ts
+msgctxt "discipline code"
+msgid "WS"
+msgstr "女子単"
+
+#. Short tag for mixed doubles in chips and tabs. Use the abbreviation local badminton sites use
+#: src/constants.ts
+msgctxt "discipline code"
+msgid "XD"
+msgstr "混合"
 
 #. Button on the About page season map that zooms the map in
 #: src/pages/about/components/MapControls.tsx

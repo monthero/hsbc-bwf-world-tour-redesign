@@ -7,6 +7,7 @@ import { CountryLabel } from '~/components/country';
 import { PlayerFollow } from '~/components/follow';
 import { OutcomeBadge, OutcomeLabel, ScoreChips, TeamLabel } from '~/components/match';
 import { Eyebrow, IconButton, IconEdit, IconProfile } from '~/components/ui';
+import { EVENT_CODES } from '~/constants';
 import { PlayerHoverContext } from '~/contexts';
 import { useHoverHull } from '~/hooks/useHoverHull';
 import { useIsMobile } from '~/hooks/useIsMobile';
@@ -196,7 +197,7 @@ const PlayerCard: FC<{ id: string }> = ({ id }) => {
                   </Trans>
                 </span>
                 <span className={classes.runMeta}>
-                  {roundName(pm.match.round)} · {pm.match.event}
+                  {roundName(pm.match.round)} · {EVENT_CODES[pm.match.event]}
                 </span>
               </span>
               <ScoreChips match={pm.match} side={pm.side} size="sm" />

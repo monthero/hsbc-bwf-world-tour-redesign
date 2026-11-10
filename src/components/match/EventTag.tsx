@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { memo } from 'react';
 
 import { Tip } from '~/components/ui';
-import { EVENT_NAMES } from '~/constants';
+import { EVENT_CODES, EVENT_NAMES } from '~/constants';
 import type { EventCode, Match, Side } from '~/types';
 import { matchRoundName, noteLabel, noteTip, opposite, roundCode, winnerSide } from '~/utils/matches';
 
@@ -22,7 +22,7 @@ const Tag = memo<{ label: string; tip: string; note?: string; event?: EventCode;
 export const EventTag = memo<{ event: EventCode; tip?: boolean; className?: string }>(
   ({ event, tip = true, className }) => (
     <Tag
-      label={event}
+      label={EVENT_CODES[event]}
       tip={tip ? EVENT_NAMES[event] : ''}
       event={event}
       className={clsx(discipline.tone, classes.eventTag, className)}

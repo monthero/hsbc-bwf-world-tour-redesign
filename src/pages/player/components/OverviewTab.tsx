@@ -11,7 +11,7 @@ import { EventTag, FormStrip, OutcomeLabel, ScoreChips, TeamPlayers } from '~/co
 import { WatchButton } from '~/components/media';
 import { LevelBadge, LogoTile } from '~/components/tournament';
 import { CardHit, Duration, EmptyState, LiveDot, MoreButton } from '~/components/ui';
-import { SEASON_YEAR } from '~/constants';
+import { EVENT_CODES, SEASON_YEAR } from '~/constants';
 import { useMatchReplays } from '~/hooks/useTournamentMedia';
 import type { BioView, PlayerMatch } from '~/types';
 import { formatDayMonth } from '~/utils/dates';
@@ -448,7 +448,7 @@ const TitleRow = memo<{ pm: PlayerMatch; multi: boolean }>(({ pm, multi }) => {
         <span className={clsx(utils.ellipsis, utils.bidiAuto)}>{t.shortTitle}</span>
       </Link>
       <span className={shared.rowSide}>
-        {multi && <span>{pm.match.event}</span>}
+        {multi && <span>{EVENT_CODES[pm.match.event]}</span>}
         <LevelBadge level={t.level} size="sm" />
         <b>{t.year}</b>
       </span>

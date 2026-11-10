@@ -2071,6 +2071,12 @@ msgstr "สถิติแมตช์"
 msgid "Matches"
 msgstr "แมตช์"
 
+#. Short tag for men's doubles in chips and tabs. Use the abbreviation local badminton sites use
+#: src/constants.ts
+msgctxt "discipline code"
+msgid "MD"
+msgstr "MD"
+
 #. Podium tab section: the champion, runner-up and semi-finalists of each event
 #: src/pages/tournament/components/PodiumTab.tsx
 msgid "Medalists"
@@ -2151,6 +2157,12 @@ msgstr "พบบ่อยที่สุด"
 #: src/components/news/PopularNews.tsx
 msgid "Most popular"
 msgstr "ยอดนิยม"
+
+#. Short tag for men's singles in chips and tabs. Use the abbreviation local badminton sites use
+#: src/constants.ts
+msgctxt "discipline code"
+msgid "MS"
+msgstr "MS"
 
 #. Settings option: show match times in the visitor’s own time zone
 #: src/components/layout/SiteSettings.tsx
@@ -3944,6 +3956,12 @@ msgstr "ดูการแข่งขันเต็ม"
 msgid "Watch the highlights"
 msgstr "ดูไฮไลต์"
 
+#. Short tag for women's doubles in chips and tabs. Use the abbreviation local badminton sites use
+#: src/constants.ts
+msgctxt "discipline code"
+msgid "WD"
+msgstr "WD"
+
 #. Heading on the page shown when a player profile doesn’t exist
 #: src/pages/player/PlayerPage.tsx
 msgid "We couldn’t find that player"
@@ -4127,6 +4145,18 @@ msgstr "ชนะ–แพ้ World Tour"
 #: src/components/player/RankMarks.tsx
 msgid "WR<0>{rank}</0>"
 msgstr "อันดับ #<0>{rank}</0>"
+
+#. Short tag for women's singles in chips and tabs. Use the abbreviation local badminton sites use
+#: src/constants.ts
+msgctxt "discipline code"
+msgid "WS"
+msgstr "WS"
+
+#. Short tag for mixed doubles in chips and tabs. Use the abbreviation local badminton sites use
+#: src/constants.ts
+msgctxt "discipline code"
+msgid "XD"
+msgstr "XD"
 
 #. Button on the About page season map that zooms the map in
 #: src/pages/about/components/MapControls.tsx

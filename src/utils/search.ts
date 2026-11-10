@@ -1,5 +1,6 @@
 import { msg } from '@lingui/core/macro';
 
+import { EVENT_CODES } from '~/constants';
 import { translate } from '~/i18n/lazy';
 import type { CurrentRank, EventCode } from '~/types';
 
@@ -84,4 +85,4 @@ const CAREER_HIGH = msg({
 });
 
 export const careerHighHint = ({ high }: PlayerStanding) =>
-  high ? translate(CAREER_HIGH, { rank: high.rank, event: high.ev }) : null;
+  high ? translate(CAREER_HIGH, { rank: high.rank, event: EVENT_CODES[high.ev] }) : null;

@@ -23,9 +23,39 @@ export const EVENT_NAMES: Record<EventCode, string> = lazyRecord({
   }),
 });
 
+export const EVENT_CODES: Record<EventCode, string> = lazyRecord({
+  MS: msg({
+    message: 'MS',
+    context: 'discipline code',
+    comment: "Short tag for men's singles in chips and tabs. Use the abbreviation local badminton sites use",
+  }),
+  WS: msg({
+    message: 'WS',
+    context: 'discipline code',
+    comment: "Short tag for women's singles in chips and tabs. Use the abbreviation local badminton sites use",
+  }),
+  MD: msg({
+    message: 'MD',
+    context: 'discipline code',
+    comment: "Short tag for men's doubles in chips and tabs. Use the abbreviation local badminton sites use",
+  }),
+  WD: msg({
+    message: 'WD',
+    context: 'discipline code',
+    comment: "Short tag for women's doubles in chips and tabs. Use the abbreviation local badminton sites use",
+  }),
+  XD: msg({
+    message: 'XD',
+    context: 'discipline code',
+    comment: 'Short tag for mixed doubles in chips and tabs. Use the abbreviation local badminton sites use',
+  }),
+});
+
 export const EVENT_OPTIONS: readonly SegmentedOption<EventCode>[] = EventCode.options.map((code) => ({
   value: code,
-  label: code,
+  get label() {
+    return EVENT_CODES[code];
+  },
   get tip() {
     return EVENT_NAMES[code];
   },

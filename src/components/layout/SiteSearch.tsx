@@ -21,6 +21,7 @@ import { Flag } from '~/components/country';
 import { PlayerAvatar, PlayerName, RetiredBadge, WorldRankTag } from '~/components/player';
 import { LevelBadge, LogoTile, TournamentStatusBadge } from '~/components/tournament';
 import { BottomSheet, IconClose, IconSearch, SearchField } from '~/components/ui';
+import { EVENT_CODES } from '~/constants';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import type { PlayerSearchEntry } from '~/hooks/usePlayers';
 import { useSiteSearch, type SiteSearchResults } from '~/hooks/useSiteSearch';
@@ -57,7 +58,7 @@ const PlayerOption = memo<{ entry: PlayerSearchEntry }>(({ entry: { player, stan
   const { current } = standing;
   const hint = current ? (
     <>
-      <WorldRankTag rank={current.rank} event={current.ev} /> · {current.ev}
+      <WorldRankTag rank={current.rank} event={current.ev} /> · {EVENT_CODES[current.ev]}
     </>
   ) : (
     careerHighHint(standing)
