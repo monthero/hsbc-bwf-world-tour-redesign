@@ -759,6 +759,7 @@ export const exportData = async (
       slug: p.slug,
       bio: bioOf(p),
       retired: retired.get(p.id),
+      seasons: [...new Set(career.flatMap((c) => editionOf.get(c.tournament)?.season ?? []))].sort((a, b) => b - a),
       matches: career.map((c) => ({ tournament: c.tournament, day: c.day, ...c.dto })),
     });
   }

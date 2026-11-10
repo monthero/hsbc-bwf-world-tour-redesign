@@ -67,7 +67,7 @@ const dayOffset = (n: number) => today().add(n, 'day').format(ISO_DAY);
 
 const isSettledDay = (day: string) => day < dayOffset(-1);
 
-const isSnapshotEvent = (t: TournamentRef) => !LIVE_DATA || t.archived;
+export const isSnapshotEvent = (t: TournamentRef) => !LIVE_DATA || t.archived;
 
 const isLiveEvent = (t: TournamentRef) => t.start <= todayIso() && !isSettledDay(t.end);
 

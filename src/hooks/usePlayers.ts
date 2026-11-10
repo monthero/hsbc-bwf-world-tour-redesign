@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { imageCreditsQuery, playerQuery, playersQuery, raceRankingsQuery, rankingHistoryQuery } from '~/api/queries';
 import type { DirectoryRecord, Player, PlayerDirectory, PlayerRecord, PlayersData, Retirement } from '~/types';
@@ -7,6 +7,9 @@ import { weakCached } from '~/utils/cache';
 import { toPlayer } from '~/utils/names';
 import { playerPhoto, type PhotoOptions } from '~/utils/players';
 import { playerStanding, searchKey, type PlayerStanding } from '~/utils/search';
+
+import { careerYears } from './useCareer';
+import { NO_YEARS } from './useTournaments';
 
 export type { PlayerDirectory } from '~/types';
 
@@ -48,6 +51,14 @@ export const useRaceRankings = () => useQuery(raceRankingsQuery());
 export const useImageCredits = () => useQuery(imageCreditsQuery());
 
 export const usePlayerFile = (id: string | undefined) => useQuery({ ...playerQuery(id ?? ''), enabled: !!id });
+
+export const usePlayerSeasons = (id: string | undefined) => {
+  const file = usePlayerFile(id);
+  return useMemo(
+    () => (file.isPending ? NO_YEARS : careerYears(file.data ? [file.data] : [])),
+    [file.isPending, file.data],
+  );
+};
 
 export const useRankingHistory = (playerId: string | undefined) =>
   useQuery({ ...rankingHistoryQuery(playerId ?? ''), enabled: !!playerId });

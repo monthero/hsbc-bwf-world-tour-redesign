@@ -2,10 +2,10 @@ import { useMemo } from 'react';
 
 import { tournamentKey, type TournamentLookup } from '~/utils/news';
 
-import { useTournamentsByCode } from './useTournaments';
+import { NO_YEARS, useTournamentsByCode } from './useTournaments';
 
-export const useTournamentLookup = (): TournamentLookup | undefined => {
-  const byCode = useTournamentsByCode();
+export const useTournamentLookup = (enabled = true): TournamentLookup | undefined => {
+  const byCode = useTournamentsByCode(enabled ? undefined : NO_YEARS);
   return useMemo(() => {
     if (!byCode) return undefined;
     const all = [...byCode.values()];

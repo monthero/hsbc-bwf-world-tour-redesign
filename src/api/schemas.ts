@@ -241,6 +241,7 @@ export const PlayerProfileDto = z.object({
   slug: NullableString,
   bio: PlayerBio,
   retired: Retirement.optional(),
+  seasons: z.array(z.number()).optional(),
   matches: z.array(CareerMatchDto),
 });
 export type PlayerProfileDto = z.infer<typeof PlayerProfileDto>;

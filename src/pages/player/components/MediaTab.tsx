@@ -10,8 +10,9 @@ import { VideoCard } from '~/components/media';
 import { NewsGrid } from '~/components/news';
 import { EmptyState, MoreButton } from '~/components/ui';
 import { useTournamentLookup } from '~/hooks/useNews';
+import { usePlayerSeasons } from '~/hooks/usePlayers';
 import { useTournamentMedia, useVisibleMedia } from '~/hooks/useTournamentMedia';
-import { useTournamentsByCode } from '~/hooks/useTournaments';
+import { useTournamentsFor } from '~/hooks/useTournaments';
 import type { PlayerMatch, Tournament } from '~/types';
 import { regionHiddenNote } from '~/utils/media';
 import { toStories } from '~/utils/news';
@@ -42,13 +43,19 @@ const emptyMessage = (i18n: I18n, failed: boolean, hidden: number) => {
   return hidden ? regionHiddenNote(hidden) : i18n._(EMPTY);
 };
 
-const usePlayerFeed = (playerId: string, matches: readonly PlayerMatch[], live: readonly VideoEntry[]) => {
+const usePlayerFeed = (
+  playerId: string,
+  matches: readonly PlayerMatch[],
+  live: readonly VideoEntry[],
+  withStories: boolean,
+) => {
   const count = usePlayerMediaCount(playerId);
   const file = usePlayerMedia(playerId, !!count.data);
-  const byCode = useTournamentsByCode();
-  const lookup = useTournamentLookup();
+  const lookup = useTournamentLookup(withStories);
   const index = useMemo(() => indexPlayerMatches(matches), [matches]);
   const all = file.data?.videos ?? NO_VIDEOS;
+  const codes = useMemo(() => all.map((v) => v.tournament), [all]);
+  const byCode = useTournamentsFor(usePlayerSeasons(playerId), codes);
   const archived = useVisibleMedia(all);
   const videos = useMemo(
     () => mergeVideos(archivedVideos(archived, index, byCode), live),
@@ -90,7 +97,7 @@ const LoadMore = memo<{ hidden: number; step: number; onClick: () => void }>(({ 
 );
 
 const MediaBody = memo<MediaProps & { live: readonly VideoEntry[] }>(({ playerId, matches, live }) => {
-  const feed = usePlayerFeed(playerId, matches, live);
+  const feed = usePlayerFeed(playerId, matches, live, true);
   const [videoLimit, moreVideos] = useLimit(VIDEO_STEP);
   const [newsLimit, moreNews] = useLimit(NEWS_STEP);
   const videos = useMemo(() => feed.videos.slice(0, videoLimit), [feed.videos, videoLimit]);
@@ -150,7 +157,7 @@ export const MediaTab = memo<MediaProps>(({ playerId, matches }) => {
 });
 
 export const MediaTeaser = memo<MediaProps & { onOpen: () => void }>(({ playerId, matches, onOpen }) => {
-  const feed = usePlayerFeed(playerId, matches, NO_LIVE);
+  const feed = usePlayerFeed(playerId, matches, NO_LIVE, false);
   const shown = useMemo(() => feed.videos.slice(0, TEASER_LIMIT), [feed.videos]);
   if (!shown.length) return null;
   return (

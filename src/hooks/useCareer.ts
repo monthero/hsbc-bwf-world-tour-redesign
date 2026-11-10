@@ -2,16 +2,23 @@ import { useQueries, type UseQueryResult } from '@tanstack/react-query';
 import { useMemo } from 'react';
 
 import { playerQuery } from '~/api/queries';
+import { SEASON_YEAR } from '~/constants';
 import type { PlayerProfileDto, SeasonIndex, SeasonMatch, Tournament } from '~/types';
 import { date } from '~/utils/dates';
 import { venueTimeOn } from '~/utils/match-time';
 import { toMatch } from '~/utils/matches';
 import { seasonIndexOf } from '~/utils/season';
 
-import { useSeasonMatches, useTournamentsByCode } from './useTournaments';
+import { NO_YEARS, useLiveSeasonMatches, useTournamentsByCode } from './useTournaments';
 
 const combineFiles = (results: UseQueryResult<PlayerProfileDto>[]) =>
   results.every((r) => !r.isPending) ? results.flatMap((r) => (r.data ? [r.data] : [])) : undefined;
+
+export const careerYears = (files: readonly PlayerProfileDto[] | undefined) => {
+  if (!files) return NO_YEARS;
+  if (files.some((f) => !f.seasons)) return undefined;
+  return [...new Set([SEASON_YEAR, ...files.flatMap((f) => f.seasons ?? [])])].sort((a, b) => b - a);
+};
 
 const careerMatches = (
   files: readonly PlayerProfileDto[],
@@ -35,12 +42,14 @@ const careerMatches = (
 };
 
 export const useCareerIndex = (ids: readonly string[]): SeasonIndex | undefined => {
-  const byCode = useTournamentsByCode();
-  const season = useSeasonMatches();
   const files = useQueries({ queries: ids.map((id) => playerQuery(id)), combine: combineFiles });
+  const years = useMemo(() => careerYears(files), [files]);
+  const byCode = useTournamentsByCode(years);
+  const live = useLiveSeasonMatches();
   return useMemo(() => {
-    if (!byCode || !season.ready || !files) return undefined;
-    const skip = new Set(season.matches.map((s) => s.tournament.code));
-    return seasonIndexOf([...careerMatches(files, byCode, skip), ...season.matches]);
-  }, [byCode, season, files]);
+    if (!byCode || !live.ready || !live.tournaments || !files) return undefined;
+    const lookup = new Map([...byCode, ...live.tournaments.map((t) => [t.code, t] as const)]);
+    const skip = new Set(live.matches.map((s) => s.tournament.code));
+    return seasonIndexOf([...careerMatches(files, lookup, skip), ...live.matches]);
+  }, [byCode, live.ready, live.tournaments, live.matches, files]);
 };

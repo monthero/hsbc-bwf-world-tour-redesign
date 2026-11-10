@@ -6,9 +6,8 @@ import { headToHeadQuery } from '~/api/queries';
 import { SEASON_YEAR } from '~/constants';
 import { useCareerIndex } from '~/hooks/useCareer';
 import { useRaceRankings } from '~/hooks/usePlayers';
-import { useSeasonIndex } from '~/hooks/useSeason';
 import { useTeamRank } from '~/hooks/useTeamRank';
-import type { Match, Tournament } from '~/types';
+import type { Match, PlayerMatch, Tournament } from '~/types';
 import { careerRecord, meetingsVs, teamHistory, withOtherMeets } from '~/utils/h2h';
 import { raceRank } from '~/utils/rankings';
 import { recentForm, winLoss } from '~/utils/season';
@@ -30,10 +29,11 @@ const RACE = msg({
 });
 const FORM_LIMIT = 5;
 
+const thisSeason = (list: readonly PlayerMatch[]) => list.filter((pm) => pm.tournament.year === SEASON_YEAR);
+
 export const useMatchInsights = (match: Match, tournament: Tournament) => {
   const teamRank = useTeamRank();
   const { data: race } = useRaceRankings();
-  const index = useSeasonIndex();
   const [a, b] = match.teams;
   const ev = match.event;
   const leadIds = useMemo(
@@ -52,17 +52,17 @@ export const useMatchInsights = (match: Match, tournament: Tournament) => {
   }, [career, others, match, tournament.code]);
 
   const history = useMemo(() => {
-    const listA = teamHistory(index, match, 0);
-    const listB = teamHistory(index, match, 1);
+    const listA = thisSeason(teamHistory(career, match, 0));
+    const listB = thisSeason(teamHistory(career, match, 1));
     return {
-      ready: !!index,
+      ready: !!career,
       wlA: winLoss(listA),
       wlB: winLoss(listB),
       formA: formItems(recentForm(listA, FORM_LIMIT)),
       formB: formItems(recentForm(listB, FORM_LIMIT)),
       meets: toMeetings(meetingsVs(listA, match, tournament.code), false),
     };
-  }, [index, match, tournament.code]);
+  }, [career, match, tournament.code]);
 
   const allMeets = useMemo(() => (record ? allMeetings(record) : []), [record]);
 

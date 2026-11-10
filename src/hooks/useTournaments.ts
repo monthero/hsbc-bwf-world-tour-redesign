@@ -3,6 +3,7 @@ import { useCallback, useMemo } from 'react';
 
 import {
   calendarQuery,
+  isSnapshotEvent,
   seasonsQuery,
   seriesQuery,
   tournamentDrawQuery,
@@ -129,47 +130,60 @@ export const useDraw = (t: Tournament) => useQuery({ ...tournamentDrawQuery(t), 
 
 export const useEntries = (t: Tournament) => useQuery({ ...tournamentEntriesQuery(t), select: toEntryListings });
 
-export const useSeasonMatches = (enabled = true) => {
+export const useLiveSeasonMatches = () => {
   const { data: held } = useQuery({ ...calendarQuery(), select: selectHeld });
   const tournaments = useResolved(held);
-  const list = enabled ? (tournaments ?? []) : [];
+  const live = useMemo(() => tournaments?.filter((t) => !isSnapshotEvent(t)) ?? [], [tournaments]);
   const combine = useCallback(
     (results: UseQueryResult<TournamentMatches>[]) => {
-      const ready = !!tournaments && results.length > 0 && results.every((r) => r.isSuccess);
-      if (!ready) return { ready: false, matches: [] as SeasonMatch[] };
-      const matches = tournaments.flatMap((t, i) => {
+      if (!tournaments || !results.every((r) => r.isSuccess)) return { ready: false, matches: [] as SeasonMatch[] };
+      const matches = live.flatMap((t, i) => {
         const d = results[i]?.data;
         return d ? buildSchedule(t, d, todayIso()).matches.map((match) => ({ match, tournament: t })) : [];
       });
       return { ready: true, matches };
     },
-    [tournaments],
+    [tournaments, live],
   );
-  return useQueries({ queries: list.map((t) => tournamentMatchesQuery(t)), combine });
+  const season = useQueries({ queries: live.map((t) => tournamentMatchesQuery(t)), combine });
+  return { ...season, tournaments };
 };
 
 export const useSeasons = () => useQuery(seasonsQuery());
 
 export const useSeries = (id: string | undefined) => useQuery({ ...seriesQuery(id ?? ''), enabled: !!id });
 
-const useSeasonCalendars = <T>(enabled: boolean, combine: (results: UseQueryResult<Tournament[]>[]) => T) => {
+const useSeasonCalendars = <T>(
+  years: readonly number[] | undefined,
+  combine: (results: UseQueryResult<Tournament[]>[]) => T,
+) => {
   const { data } = useSeasons();
-  const seasons = enabled ? (data?.seasons ?? []) : [];
+  const listed = data?.seasons ?? [];
+  const seasons = years ? listed.filter((s) => years.includes(s.year)) : listed;
   return useQueries({
     queries: seasons.map((s) => ({ ...calendarQuery(s.year), select: selectTournaments })),
     combine,
   });
 };
 
+export const NO_YEARS: readonly number[] = [];
+
 const combineByCode = (results: UseQueryResult<Tournament[]>[]) => {
   if (!results.length || !results.every((r) => r.isSuccess)) return undefined;
   return new Map(results.flatMap((r) => r.data ?? []).map((t) => [t.code, t]));
 };
 
-export const useTournamentsByCode = () => useSeasonCalendars(true, combineByCode);
+export const useTournamentsByCode = (years?: readonly number[]) => useSeasonCalendars(years, combineByCode);
+
+export const useTournamentsFor = (years: readonly number[] | undefined, codes: readonly string[]) => {
+  const known = useTournamentsByCode(years);
+  const missing = !!known && codes.some((c) => !known.has(c));
+  const all = useTournamentsByCode(missing ? undefined : NO_YEARS);
+  return missing ? all : known;
+};
 
 const combineAll = (results: UseQueryResult<Tournament[]>[]) => results.flatMap((r) => r.data ?? []);
 
-export const useAllTournaments = (enabled: boolean) => useSeasonCalendars(enabled, combineAll);
+export const useAllTournaments = (enabled: boolean) => useSeasonCalendars(enabled ? undefined : NO_YEARS, combineAll);
 
 export const useFinalsCity = () => useQuery({ ...calendarQuery(), select: selectFinalsCity }).data ?? null;

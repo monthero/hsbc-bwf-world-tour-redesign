@@ -11,11 +11,12 @@ import { MatchDetailModal } from '~/components/match';
 import { Equipment } from '~/components/player';
 import { BackPill } from '~/components/ui';
 import { useDocumentMeta } from '~/hooks/useDocumentMeta';
+import { usePlayerSeasons } from '~/hooks/usePlayers';
 import { useScrolledPast } from '~/hooks/useScrolledPast';
 import { usePlayerProfile } from '~/hooks/useSeason';
 import { useSlideIn } from '~/hooks/useSlideIn';
 import { useSwipeTabs } from '~/hooks/useSwipeTabs';
-import { useTournamentsByCode } from '~/hooks/useTournaments';
+import { useTournamentsFor } from '~/hooks/useTournaments';
 import type { EventCode, PlayerMatch, RankView } from '~/types';
 import { NOT_FOUND_META, playerMeta } from '~/utils/meta';
 import { STAY } from '~/utils/navigation';
@@ -49,11 +50,14 @@ export const PlayerPage: FC = () => {
   return <PlayerProfile key={id} id={id} search={search} />;
 };
 
-export const Back = memo<{ from: string | undefined }>(({ from }) => {
+const NO_CODES: readonly string[] = [];
+
+export const Back = memo<{ from: string | undefined; id: string }>(({ from, id }) => {
   const router = useRouter();
   const canGoBack = useCanGoBack();
-  const byCode = useTournamentsByCode();
-  const tournament = from ? byCode?.get(from) : undefined;
+  const seasons = usePlayerSeasons(from ? id : undefined);
+  const codes = useMemo(() => (from ? [from] : NO_CODES), [from]);
+  const tournament = useTournamentsFor(seasons, codes)?.get(from ?? '');
   const goBack = useCallback(() => router.history.back(), [router]);
   const { _ } = useLingui();
   if (canGoBack)
@@ -141,7 +145,7 @@ export const PlayerProfile: FC<{ id: string; search: PlayerSearch }> = ({ id, se
 
   return (
     <section className={clsx(utils.container, classes.page)}>
-      <Back from={from} />
+      <Back from={from} id={id} />
       {!player && <Skeleton height={440} radius={22} />}
       {player && (
         <>

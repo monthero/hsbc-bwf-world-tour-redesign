@@ -91,10 +91,10 @@ const pickQualifiers = <T>(entries: readonly T[], countriesOf: (e: T) => readonl
 
 const isBlocked = (rank: number, qualified: boolean) => !qualified && rank <= QUALIFY_SPOTS;
 
-const buildQualifiers = (race: RaceRankings, index: SeasonIndex): Qualifiers => {
+const buildQualifiers = (race: RaceRankings, dir: PlayerDirectory): Qualifiers => {
   const byEv = new Map<EventCode, Map<number, Set<string>>>();
   for (const [id, rows] of Object.entries(race.players)) {
-    const cc = index.players.get(id)?.cc;
+    const cc = dir.get(id)?.cc;
     for (const x of rows) {
       let ranks = byEv.get(x.ev);
       if (!ranks) byEv.set(x.ev, (ranks = new Map()));
@@ -112,10 +112,10 @@ const buildQualifiers = (race: RaceRankings, index: SeasonIndex): Qualifiers => 
 };
 
 const qualifiersByRace = weakCached((race: RaceRankings) =>
-  weakCached((index: SeasonIndex) => buildQualifiers(race, index)),
+  weakCached((dir: PlayerDirectory) => buildQualifiers(race, dir)),
 );
 
-export const raceQualifiers = (race: RaceRankings, index: SeasonIndex) => qualifiersByRace(race)(index);
+export const raceQualifiers = (race: RaceRankings, dir: PlayerDirectory) => qualifiersByRace(race)(dir);
 
 export const buildRanks = (
   current: CurrentRank[],
